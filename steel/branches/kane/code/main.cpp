@@ -2,6 +2,8 @@
 #include "graph/opengl_engine.h"
 #include "res/res.h"
 #include "res/image/bmp.h"
+#include "common/logger.h"
+#include "SDL.h"
 
 void test()
 {
@@ -11,6 +13,8 @@ int main()
 {
 //	test();	return 0;
 
+	alog.open("steel.log");
+	
 	ResCollection a;
 
 	a.registerClass(new BMP, sizeof(BMP), "bmp");
@@ -27,10 +31,21 @@ int main()
 
 //	GraphInterface world;
 
+#ifdef __linux
+	while ( true )
+	{
+		SDL_Event event;
+		if ( SDL_PollEvent(&event) )
+			if ( event.type==SDL_QUIT ) break;
+		graph.clear();
+		graph.process();
+		SDL_Delay(1);
+	}
+#else	// __linux
 	MSG msg;
 	while(true)											// Do our infinate loop
 	{													// Check if there was a message
-		BOOL wasmsg;
+		bool wasmsg;
         if (wasmsg = PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             if(msg.message == WM_QUIT)					// If the message wasnt to quit
@@ -48,7 +63,9 @@ int main()
 		}
 	}
 	return(msg.wParam);									// Return from the program
+#endif	// __linux
 
 	graph.deinit();
+	alog.close();
 	return 0;
 }

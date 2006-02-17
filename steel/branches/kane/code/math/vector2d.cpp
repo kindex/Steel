@@ -12,7 +12,7 @@
 //	Created:	8th November 2002
 //////////////////////////////////////////////////////////////////////////////////////////
 
-#include "Maths.h"
+#include "maths.h"
 #include "vector2d.h"
 
 void v2::Normalize()
@@ -42,4 +42,3 @@ v2 v2::GetNormalized() const
 {
 	return rhs*scaleFactor;
 }*/
-

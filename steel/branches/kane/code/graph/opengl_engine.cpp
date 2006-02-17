@@ -3,7 +3,11 @@
 
 #include "time.h"
 #include "../utils.h"
-
+#include <iostream>
+#ifdef __linux
+#include "../common/logger.h"
+#include "SDL.h"
+#endif
 
 // Override
 Window *window;
@@ -17,7 +21,7 @@ void onResize(int w, int h)
 //    setCamera();
 }
 
-
+#ifndef __linux
 LRESULT CALLBACK WinProc(HWND hWnd,UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     LONG    lRet = 0;
@@ -69,7 +73,6 @@ LRESULT CALLBACK WinProc(HWND hWnd,UINT uMsg, WPARAM wParam, LPARAM lParam)
 //	return DefWindowProc (hWnd, uMsg, wParam, lParam);
 }
 
-
 HWND CreateMyWindow(Window &w)
 {
 	HWND hWnd;
@@ -118,11 +121,47 @@ HWND CreateMyWindow(Window &w)
 
 	return hWnd;
 }
-
+#endif	// __linux
 
 bool Window::createWin()
 {
 //    handle = opengl->opengl->Handle; DOWNGRADE
+	#ifdef __linux
+	int videoFlags;
+	const SDL_VideoInfo *videoInfo;
+	
+	videoInfo=SDL_GetVideoInfo();
+	if ( !videoInfo )
+	{
+		alog.out("Video query failed: %s\n",SDL_GetError());
+		SDL_Quit();
+		return false;
+	}
+	
+	videoFlags=SDL_OPENGL;
+	videoFlags|=SDL_GL_DOUBLEBUFFER;
+	videoFlags|=SDL_HWPALETTE;
+	videoFlags|=SDL_RESIZABLE;
+	
+	if ( videoInfo->hw_available )
+		videoFlags |= SDL_HWSURFACE;
+	else
+		videoFlags |= SDL_SWSURFACE;
+	
+	if ( videoInfo->blit_hw )
+		videoFlags |= SDL_HWACCEL;
+	
+	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+	handle = SDL_SetVideoMode(width,height,bpp,videoFlags);
+	if ( !handle )
+	{
+		alog.out("Video mode set failed: %s\n",SDL_GetError());
+		SDL_Quit();
+		return false;
+	}
+	return true;
+	
+	#else	// __linux
     handle = CreateMyWindow(*this);
 
     if (handle) 
@@ -131,6 +170,7 @@ bool Window::createWin()
 		return true;
 	else
 		return false;
+	#endif	// __linux
 }
 
 /*bool glInitExtensions(HDC &DC)
@@ -152,9 +192,13 @@ bool Window::createWin()
 //    return true;
 }*/
 
-
+#ifdef __linux
+bool glInit( void )
+#else
 bool glInit(HDC &DC, HGLRC &RC)
+#endif
 {
+	#ifndef __linux
     PIXELFORMATDESCRIPTOR pfd, *ppfd;
     int pixelformat;
 
@@ -183,12 +227,13 @@ bool glInit(HDC &DC, HGLRC &RC)
 
     RC = wglCreateContext(DC);
     wglMakeCurrent(DC, RC);
-
+	#endif
+	
     glEnable(GL_DEPTH_TEST);
 
  //   glInitExtensions(DC);
 
-    return TRUE;
+    return true;
 }
 
 
@@ -196,11 +241,30 @@ bool glInit(HDC &DC, HGLRC &RC)
 bool OpenGL_Engine::init()
 {
     initTime();
-
+	
 	this->window = new Window;
 	::window = this->window;
+	
+	#ifdef __linux
+	if ( SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER)<0 )
+	{
+		alog.out("SDL initialization failed: %s\n",SDL_GetError());
+		return false;
+	}
+	
+	if ( !window->createWin() )
+		return false;
+	if ( !glInit() )
+	{
+		SDL_Quit();
+		return false;
+	}
+	
+	#else	// __linux
 	if(!window->createWin())return false;
 	if(!glInit(window->DC, window->RC)) return false;
+	#endif	// __linux
+	
 	window->needupdate = true;
 	return true;
 		//&& glInitExtensions(window->DC);
@@ -214,9 +278,10 @@ bool OpenGL_Engine::init()
 
 bool OpenGL_Engine::process()
 {
+	//static int c=0;
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-/*	glBegin(GL_TRIANGLES);
+	glBegin(GL_TRIANGLES);
 		glVertex2f(-0.5f, -1.0f);
 		glVertex2f(0.0f, +1.0f);
 		glVertex2f(0.0f, +1.0f);
@@ -225,28 +290,34 @@ bool OpenGL_Engine::process()
 		glVertex2f(-0.275f, -0.1f);
 		glVertex2f(+0.275f, -0.1f);
 	glEnd();
-*/
-/*	
+
+	//std::cout << c++ << std::endl;
+	
 	glVertexPointer(3, GL_FLOAT, sizeof(v3), &vertex[0]);
 	glEnableClientState(GL_VERTEX_ARRAY);
 
 	glDrawElements(GL_TRIANGLES, triangle.size(), GL_UNSIGNED_SHORT, &triangle[0]);
 	glDisableClientState(GL_VERTEX_ARRAY);
-*/	
+	
 
 // 
 //    DrawScene();
     updateTime();
+	
     getfps();
     if (fpsupdated)
     {
         window->caption =  window->title + "FPS = " + FloatToStr(getfps());
-        SetWindowText(window->handle, window->caption.c_str() );
+		SDL_WM_SetCaption(window->caption.c_str(),"test");
+        //SetWindowText(window->handle, window->caption.c_str() );
     }
 
 
 	glFlush();
-	SwapBuffers(window->DC);
+	#ifdef __linux
+	//SDL_Flip(window->handle);
+	#endif
+	//SwapBuffers(window->DC);
 
 	window->needupdate = false;
 	return true;
@@ -260,7 +331,11 @@ bool OpenGL_Engine::deinit()
 
 Window::Window() 
 { 
+	#ifdef __linux
+	handle=NULL;
+	#else
 	DC = 0; 	RC = 0; 	handle = 0; 
+	#endif
 
 	title	= "Steel Demo"; 
 	width	= 975; 
@@ -270,4 +345,3 @@ Window::Window()
 	bpp		= 32;
 	needupdate = false;
 }
-

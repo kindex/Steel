@@ -2,20 +2,25 @@
 
 #pragma hdrstop
 #include "time.h"
+#include "SDL.h"
 
 //#define NORMAL_FPS 140
 #define NORMAL_FPS 40
 
-time systemTime, programTime, programStartTime, one = 1.0;
+Time systemTime, programTime, programStartTime;//, one = 1.0;
 Frame frame, lastframe;
-time speed, speed2;   // x += 1*speed - x menjaetsja na 1 metr v sekundu
+//Time speed, speed2;   // x += 1*speed - x menjaetsja na 1 metr v sekundu
 
-time lastfpstime, fps, updatefpstime;
+Time lastfpstime, updatefpstime;
 bool fpsupdated;
 
-time getSystemTime() 
+Time getSystemTime() 
 { 
-	return GetTickCount()*0.001; 
+	#ifdef __linux
+	return SDL_GetTicks();
+	#else
+	return GetTickCount(); 
+	#endif
 }
 
 void initTime()
@@ -24,13 +29,13 @@ void initTime()
     programStartTime = systemTime;
     programTime = 0;
     frame = 0;
-    lastframe = 0;
+    //lastframe = 0;
     lastfpstime = programTime;
-    fps = NORMAL_FPS;
+    //fps = NORMAL_FPS;
 
-    speed = 1.0f/NORMAL_FPS;
-    speed2 = speed*speed;   // x += 1*speed - x menjaetsja na 1 metr v sekundu
-    updatefpstime = 0.1;
+  //  speed = 1.0f/NORMAL_FPS;
+  //  speed2 = speed*speed;   // x += 1*speed - x menjaetsja na 1 metr v sekundu
+    updatefpstime = 1000;
 }
 
 void updateTime()
@@ -39,21 +44,25 @@ void updateTime()
     programTime = getSystemTime() - programStartTime;
 }
 
-time getfps()
+double getfps()
 {
+	double fps;
     if (programTime-lastfpstime>updatefpstime)
     {
-        fps = (frame-lastframe) / (programTime-lastfpstime);
-        lastfpstime += updatefpstime;
+        fps = 1000.0 * (double)frame / (programTime-lastfpstime);
+        //lastfpstime += updatefpstime;
+		lastfpstime=programTime;
 
-        if (frame-lastframe<30) updatefpstime *= 2.0;
-        if (frame-lastframe>30) updatefpstime /= 2.0;
+        //if (frame-lastframe<30) updatefpstime *= 2.0;
+        //if (frame-lastframe>30) updatefpstime /= 2.0;
 
-        lastframe = frame;
+        //lastframe = frame;
+		frame=0;
         fpsupdated = true;
 
 
-        if (fps>0)
+        /*
+		if (fps>0)
         {
             time lastspeed = speed;
             speed = one/fps;
@@ -62,6 +71,7 @@ time getfps()
 
             speed2 = speed*speed;
         }
+		*/
     }
     else
         fpsupdated = false;
@@ -74,10 +84,9 @@ void Timer::clear()
     last = programTime;
 }
 
-time Timer::get()
+Time Timer::get()
 {
     return programTime - last;
 }
 
 Timer timer;
-

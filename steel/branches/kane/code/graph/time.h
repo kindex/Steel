@@ -3,9 +3,11 @@
 #ifndef timeH
 #define timeH
 
+#ifndef __linux
 #include <windows.h>
+#endif
 
-typedef double time;
+typedef unsigned int Time;
 typedef long Frame;
 
 
@@ -14,21 +16,21 @@ extern bool fpsupdated;
 
 
 
-time getSystemTime();
+Time getSystemTime();
 
 
 void initTime();
 void updateTime();
-time getfps();
+double getfps();
 
-extern time systemTime, programTime, programStartTime;
-extern time speed, speed2;
+extern Time systemTime, programTime, programStartTime;
+extern Time speed, speed2;
 
 struct Timer
 {
-    time last;
+    Time last;
     void clear();
-    time get();
+    Time get();
 };
 extern Timer timer;
 

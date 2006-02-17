@@ -11,7 +11,7 @@
 //				17th December 2002	-	Converted from radians to degrees
 //////////////////////////////////////////////////////////////////////////////////////////	
 
-#include "Maths.h"
+#include "maths.h"
 #include "vector3d.h"
 
 void v3::Normalize()
@@ -154,4 +154,3 @@ bool v3::operator==(const v3 & rhs) const
 
 	return false;
 }
-
