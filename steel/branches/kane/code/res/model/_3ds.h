@@ -9,7 +9,7 @@
 class _3DS: public Model
 {
 	virtual bool load(string& name);
-	virtual bool unload() {}
+	virtual bool unload() { return true; }
 };
 
 //---------------------------------------------------------------------------

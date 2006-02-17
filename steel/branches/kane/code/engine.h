@@ -19,7 +19,7 @@ public:
 class Engine
 {
 public:
-
+	virtual ~Engine() {}
 	virtual bool init() = 0; // initialization
 //	virtual bool inject(Interface *object) { return false; }; // add object to process by engine
 	virtual bool clear() = 0; 

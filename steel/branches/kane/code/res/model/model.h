@@ -47,10 +47,9 @@ struct Model: public Res
     //( Nx Ny Nz )
     // links: http://www.ati.com/developer/sdk/RADEONSDK/Html/Tutorials/RADEONBumpMap.html
  
-//    mat_id mat;   
+//    mat_id mat;  
+	string name;	
 	string MatName;
-
-    string name;
 
     Model(): name(), MatName("") { }
     void updateMaterial();

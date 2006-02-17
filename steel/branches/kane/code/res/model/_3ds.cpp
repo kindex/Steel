@@ -8,13 +8,15 @@ http://kindex.times.lv
 20040228 Stated 3DS TriMesh OpenGL
 20040301 Materials Colors DEPTH_TEST
 20040501 Fix materials
-Вывод: 3DMAX экспортирует не все данные о материале в .3DS.
-Он не экспортирует Bump, Reflection, Self_Illum
-Решение: дополнительные данные о материале хранить в файлах настроек. (res/materials/<mat_name>.mat)
-Это делает процедура updatematerial()
+Г‚Г»ГўГ®Г¤: 3DMAX ГЅГЄГ±ГЇГ®Г°ГІГЁГ°ГіГҐГІ Г­ГҐ ГўГ±ГҐ Г¤Г Г­Г­Г»ГҐ Г® Г¬Г ГІГҐГ°ГЁГ Г«ГҐ Гў .3DS.
+ГЋГ­ Г­ГҐ ГЅГЄГ±ГЇГ®Г°ГІГЁГ°ГіГҐГІ Bump, Reflection, Self_Illum
+ГђГҐГёГҐГ­ГЁГҐ: Г¤Г®ГЇГ®Г«Г­ГЁГІГҐГ«ГјГ­Г»ГҐ Г¤Г Г­Г­Г»ГҐ Г® Г¬Г ГІГҐГ°ГЁГ Г«ГҐ ГµГ°Г Г­ГЁГІГј Гў ГґГ Г©Г«Г Гµ Г­Г Г±ГІГ°Г®ГҐГЄ. (res/materials/<mat_name>.mat)
+ГќГІГ® Г¤ГҐГ«Г ГҐГІ ГЇГ°Г®Г¶ГҐГ¤ГіГ°Г  updatematerial()
 
 **********************************************************************/
+#ifndef __linux
 #pragma hdrstop
+#endif
 
 #include "_3ds.h"
 #include <stdio.h>

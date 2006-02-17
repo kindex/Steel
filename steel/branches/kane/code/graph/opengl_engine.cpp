@@ -253,7 +253,10 @@ bool OpenGL_Engine::init()
 	}
 	
 	if ( !window->createWin() )
+	{
+		SDL_Quit();
 		return false;
+	}
 	if ( !glInit() )
 	{
 		SDL_Quit();
@@ -315,6 +318,7 @@ bool OpenGL_Engine::process()
 
 	glFlush();
 	#ifdef __linux
+	//std::cout << window->handle << std::endl;
 	//SDL_Flip(window->handle);
 	#endif
 	//SwapBuffers(window->DC);

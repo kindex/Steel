@@ -1,8 +1,12 @@
 //---------------------------------------------------------------------------
 
+#ifndef __linux
 #pragma hdrstop
+#endif
 #include "time.h"
+#ifdef __linux
 #include "SDL.h"
+#endif
 
 //#define NORMAL_FPS 140
 #define NORMAL_FPS 40

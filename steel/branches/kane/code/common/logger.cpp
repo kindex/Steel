@@ -33,7 +33,7 @@ bool Logger::open( std::string filename )
 bool Logger::close( void )
 {
 	Logger::out("Finished Logging\n");
-	fprintf(f,"\n<<<<<<<<<<<<<<<<\n");
+	fprintf(f,"<<<<<<<<<<<<<<<<\n");
 	if ( fclose(f)==-1 )
 		return false;
 	return true;
