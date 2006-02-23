@@ -23,12 +23,14 @@ ResCollection служит хранилищем для всех ресурсов, вызывает методы для загрузки,
 #include <map>
 #include <vector>
 #include <string>
+#include <fstream>
 using namespace std;
 
 class Res
 {
 public:
-	virtual bool load(string& name) = 0;
+	virtual bool init(string& name);
+	virtual bool load(ifstream &f) = 0;
 	virtual bool unload() = 0;
 //	virtual bool reload() = 0; // reload image on driver change
 };

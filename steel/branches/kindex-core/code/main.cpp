@@ -17,9 +17,6 @@ int main()
 
 	a.add("1.bmp");
 	a.add("2.bmp");
-	a.add("3.bmp");
-	a.add("3.bmp");
-	a.add("3.bmp");
 
 
 	OpenGL_Engine graph;

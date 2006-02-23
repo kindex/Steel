@@ -62,6 +62,8 @@ typedef struct
 	long size;
 }    Chunk_hdr; 
 
+#include <fstream>
+
 color_f string2color(string s)
 {
     int first  = s.find(":");

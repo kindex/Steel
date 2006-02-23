@@ -37,7 +37,7 @@ Res* ResCollection::addForce(const string& name)
 	data[freeindex] = getClass(ext);
 
 	string namecopy = name;
-	data[freeindex]->load(namecopy); // в последствии хочу передавать параметр из загрузки через изменённое имя
+	data[freeindex]->init(namecopy); // в последствии хочу передавать параметр из загрузки через изменённое имя
 
     return data[freeindex++];
 }
@@ -50,4 +50,12 @@ Res* ResCollection::add(const string& name)
 	}
 	else
 	return data[index[name]];
+}
+
+bool Res::init(string& name)
+{
+	ifstream f(("../res/"+name).c_str());
+	if(!f.good()) return false;
+	if(!this->load(f)) return false;
+	return !f.bad();
 }
