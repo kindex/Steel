@@ -50,7 +50,7 @@ void updateTime()
 
 double getfps()
 {
-	double fps;
+	static double fps;
     if (programTime-lastfpstime>updatefpstime)
     {
         fps = 1000.0 * (double)frame / (programTime-lastfpstime);
@@ -76,10 +76,13 @@ double getfps()
             speed2 = speed*speed;
         }
 		*/
-    }
-    else
+		//return fps;
+    }	else
+	{
         fpsupdated = false;
-    return fps;
+    	//return 0;
+	}
+	return fps;
 }
 
 

@@ -10,7 +10,6 @@
 #define __BONES_H__
 
 #include <string>
-#include <vector>
 #include "../../common/types.h"
 #include "model.h"
 
@@ -139,7 +138,7 @@ namespace boneSpace
 			Получить квант,
 				i - его номер в анимации
 		*/
-		boneANode *operator [] ( int i );
+		boneANode *operator [] ( unsigned int i );
 		
 	private:
 		//	количество квантов
