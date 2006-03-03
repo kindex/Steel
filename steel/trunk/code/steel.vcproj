@@ -314,6 +314,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\graph\graph_interface.h"
+					>
+				</File>
+				<File
 					RelativePath=".\graph\opengl_engine.cpp"
 					>
 				</File>
@@ -329,6 +333,14 @@
 					RelativePath=".\graph\time.h"
 					>
 				</File>
+				<Filter
+					Name="primitives"
+					>
+					<File
+						RelativePath=".\graph\primiteves\res_model.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="res"

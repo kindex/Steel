@@ -47,7 +47,7 @@ public:
 //    virtual void loadraw(const string& name)=0;
     void convertFromHeightMapToNormalMap();
 
-    void makeCubeMap(const string& name);
+    void makeCubeMap(const std::string& name);
 
 //    void init(const string& name);
 

@@ -1,5 +1,6 @@
 #include "res.h"
 
+using namespace std;
 
 void ResCollection::registerClass(Res* Class, int size, string fileextension)
 {
@@ -37,7 +38,7 @@ Res* ResCollection::addForce(const string& name)
 	data[freeindex] = getClass(ext);
 
 	string namecopy = name;
-	data[freeindex]->load(namecopy); // в последствии хочу передавать параметр из загрузки через изменённое имя
+	data[freeindex]->init(namecopy); // в последствии хочу передавать параметр из загрузки через изменённое имя
 
     return data[freeindex++];
 }
@@ -50,4 +51,42 @@ Res* ResCollection::add(const string& name)
 	}
 	else
 	return data[index[name]];
+}
+
+/*bool Res::init(string& name)
+{
+	rstream f("../res/"+name);
+
+	if(!f.good()) return false;
+	if(!this->load(f, 0)) return false;
+	return !f.bad();
+}*/
+
+//TEMP
+#define bufsize 1024
+char buf[bufsize];
+
+void rstream::skip(int n)
+{
+	while(n>0)
+	{
+		int m =n;
+		if(m > bufsize) m = bufsize;
+		read(buf, m);
+		n -= m;
+	}
+}
+
+/*rstream::rstream(string s)
+{
+	f = fopen(s.c_str(), "rb");
+	if(f)
+		ok = true;
+	else
+		ok = false;
+}*/
+
+void rstream::read(void *dest, int size)
+{
+	ifstream::read((char*)dest, size);
 }

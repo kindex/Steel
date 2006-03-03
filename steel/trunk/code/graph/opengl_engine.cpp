@@ -226,13 +226,13 @@ bool OpenGL_Engine::process()
 		glVertex2f(+0.275f, -0.1f);
 	glEnd();
 */
-/*	
-	glVertexPointer(3, GL_FLOAT, sizeof(v3), &vertex[0]);
+
+	glVertexPointer(3, GL_FLOAT, vertex.size() , &vertex[0]);
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	glDrawElements(GL_TRIANGLES, triangle.size(), GL_UNSIGNED_SHORT, &triangle[0]);
+	glDrawElements(GL_TRIANGLES, triangle.size()*3, GL_UNSIGNED_SHORT, &triangle[0]);
 	glDisableClientState(GL_VERTEX_ARRAY);
-*/	
+	
 
 // 
 //    DrawScene();
