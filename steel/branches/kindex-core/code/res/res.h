@@ -29,7 +29,10 @@ ResCollection служит хранилищем для всех ресурсов, вызывает методы для загрузки,
 class rstream: public std::ifstream
 {
 public:
-	rstream(std::string s) { open(s.c_str()); }
+	rstream(std::string s) 
+	{ 
+		open(s.c_str(), std::ios::binary | std::ios::in); 
+	}
 /*	bool good();
 	bool bad();*/
 	void read(void *dest, int size);

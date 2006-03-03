@@ -37,9 +37,9 @@ struct color_f
 
 
  //3D Object as triangles mesh, Abstract class
-struct Model: public Res
+class Model: public Res
 {
-//public:
+public:
     std::vector<v3> vertex;    // Vertexes
     std::vector <Triangle> triangle;        // Triangles
 //    vector <Faces> face;        // Triangles

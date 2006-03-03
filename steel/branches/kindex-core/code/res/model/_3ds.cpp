@@ -45,9 +45,8 @@ int readstring(rstream &f, string &res)
 	char c;
 	do
 	{
-		f.read (&c, 1);
+		f.read (&c, 1);	reads++;
 		if(c != '\0') res.push_back(c);
-		reads++;
 	}while (c != '\0' && f.good());
 
 	return reads;
@@ -224,15 +223,6 @@ int parsechain(_3DS &m, rstream &f, vector<chainProcessor> tags, int size = 0)
 				creads += it->f(m, f, subChainSize-6);
 					break;
 			}
-
-//            case 0xAFFF: /*Material*/   reads += loadmaterial(file, _len-6); break;
-/*            case 0x4000: //EDIT_OBJECT Model
-				int sp1 = (int)f.tellg().seekpos();
-				string modelName = readstring(f);
-				int sp2 = (int)f.tellg().seekpos();
-				loadmodel(f, subChainSize - 6 - (sp2-sp1)); break;
-				*/
-
 		int add = subChainSize - creads;
 		f.skip(add); 
 		creads += add;
@@ -244,12 +234,14 @@ int parsechain(_3DS &m, rstream &f, vector<chainProcessor> tags, int size = 0)
 }
 
 
-int chain_faces(_3DS &m, rstream &f, int size)
+int chain_triangles(_3DS &m, rstream &f, int size)
 {
 	int r = 0;
 	unsigned short count;
 
 	f.read((char*)&count, 2); r += 2;
+
+	int x = sizeof(m.triangle[0]);
 
     m.triangle.resize(count);
 	for(int i=0; i<count; i++)
@@ -271,9 +263,11 @@ int chain_vertexes(_3DS &m, rstream &f, int size)
 {
 	unsigned short count;
 
-	f.read((char*)&count, 2);	
+	f.read(&count, 2);	
+	if(count*12 +2!= size)
+			throw;
 	m.vertex.resize(count);
-	f.read((char*)&m.vertex[0], count*4*3); // count*3*float (x, y, z)
+	f.read(&m.vertex[0], count*4*3); // count*3*float (x, y, z)
 
 	return 2+count*3*4;
 }
@@ -282,7 +276,7 @@ int chain_mesh(_3DS &m, rstream &f, int size)
 {
 	vector<chainProcessor> t;
 	t.push_back(chainProcessor(0x4110, chain_vertexes));
-	t.push_back(chainProcessor(0x4120, chain_faces));
+	t.push_back(chainProcessor(0x4120, chain_triangles));
 	return parsechain(m, f, t, size);
 }
 

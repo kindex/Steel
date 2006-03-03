@@ -4,6 +4,10 @@
 #include "res/image/bmp.h"
 #include "res/model/_3ds.h"
 
+#include "graph/primiteves/res_model.h"
+
+ResCollection res;
+
 void test()
 {
 }
@@ -12,19 +16,20 @@ int main()
 {
 //	test();	return 0;
 
-	ResCollection a;
+	res.registerClass(new BMP, sizeof(BMP), "bmp");
+	res.registerClass(new _3DS, sizeof(_3DS), "3ds");
 
-	a.registerClass(new BMP, sizeof(BMP), "bmp");
-	a.registerClass(new _3DS, sizeof(_3DS), "3ds");
-
-	a.add("1.bmp");
-	a.add("4.3ds");
+	res.add("1.bmp");
+	res.add("-.3ds");
+	res.add("4.3ds");
 
 
 	OpenGL_Engine graph;
 	if(!graph.init()) return 1;
 
-//	GraphInterface world;
+	res_model world;
+
+	world.assign((Model*)res["-.3ds"]);
 
 	MSG msg;
 	while(true)											// Do our infinate loop
@@ -40,7 +45,7 @@ int main()
 		if(!wasmsg || graph.window->needupdate)											// if there wasn't a message
 		{
 			graph.clear();
-//			graph.inject(world);
+			graph.inject(&world);
 
 			graph.process();								// Render the scene every frame
 			Sleep(1);
