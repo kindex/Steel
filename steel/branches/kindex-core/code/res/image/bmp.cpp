@@ -94,13 +94,15 @@ typedef struct { // 14 bytes
 
 
 
-bool BMP::load(ifstream &f)
+bool BMP::init(std::string& name)
 {   // TODO: load through CLASS (WADfile, disk,...)
 	bmpBITMAPFILEHEADER fh; // file header
 	bmpBITMAPINFOHEADER ih;
 
 	if(sizeof(fh)!= 14) throw;
 //	int tty2 = sizeof(ih);
+
+	rstream f(name);
 
 	f.read((char*)&fh,sizeof(fh));
 

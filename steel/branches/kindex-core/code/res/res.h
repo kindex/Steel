@@ -24,13 +24,23 @@ ResCollection служит хранилищем для всех ресурсов, вызывает методы для загрузки,
 #include <vector>
 #include <string>
 #include <fstream>
-using namespace std;
+
+// Resourse stream
+class rstream: public std::ifstream
+{
+public:
+	rstream(std::string s) { open(s.c_str()); }
+/*	bool good();
+	bool bad();*/
+	void read(void *dest, int size);
+	void skip(int n);// skip n byten in input stream
+};
 
 class Res
 {
 public:
-	virtual bool init(string& name);
-	virtual bool load(ifstream &f) = 0;
+	virtual bool init(std::string& name) = 0;
+//	virtual bool load(rstream &f, int size) = 0;
 	virtual bool unload() = 0;
 //	virtual bool reload() = 0; // reload image on driver change
 };
@@ -47,37 +57,37 @@ class ResCollection
 //	typedef t_index::value_type value_type;
 //	typedef vector<string> t_names;
 
-	vector<Res*> data;
-	map<const string,int> index; // По имени возврашает индекс в массиве data
-	vector<string> names;
+	std::vector<Res*> data;
+	std::map<const std::string,int> index; // По имени возврашает индекс в массиве data
+	std::vector<std::string> names;
 
-	map<const string, ClassCopy> classes;
+	std::map<const std::string, ClassCopy> classes;
 
 	int freeindex;
 public:
 	ResCollection(): freeindex(0) {}
 
 	Res* operator [] (const int n)        { return data[n]; }
-    Res* operator [] (const string& name) { return data[getindex(name)]; }
+    Res* operator [] (const std::string& name) { return data[getindex(name)]; }
 
-    int getindex(const string& name)
+    int getindex(const std::string& name)
     {
         return index[name];
     }  /*If exist - return*, esle 0 */
 
     int lastinsertedid(){ return freeindex-1; }
-    void setname(int n, string name) { index[name] = n; names[n] = name; }
+    void setname(int n, std::string name) { index[name] = n; names[n] = name; }
 
-	Res* addForce(const string& name);
-	Res* add(const string& name);
+	Res* addForce(const std::string& name);
+	Res* add(const std::string& name);
 
 /*
 Следующие 2 функции запоминают класс по имени и создают экземпляр запомненного класса.
 Стандартного решения не нашел, по этому я просто через malloc+memcpy копирую объект
 и вызываю его конструктор еще раз.
 */
-	void registerClass(Res* Class, int size, string fileextension);
-	Res* getClass(string fileextension);
+	void registerClass(Res* Class, int size, std::string fileextension);
+	Res* getClass(std::string fileextension);
 };
 
 

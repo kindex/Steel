@@ -2,6 +2,7 @@
 #include "graph/opengl_engine.h"
 #include "res/res.h"
 #include "res/image/bmp.h"
+#include "res/model/_3ds.h"
 
 void test()
 {
@@ -14,9 +15,10 @@ int main()
 	ResCollection a;
 
 	a.registerClass(new BMP, sizeof(BMP), "bmp");
+	a.registerClass(new _3DS, sizeof(_3DS), "3ds");
 
 	a.add("1.bmp");
-	a.add("2.bmp");
+	a.add("4.3ds");
 
 
 	OpenGL_Engine graph;

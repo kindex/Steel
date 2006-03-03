@@ -1,5 +1,6 @@
 #include "res.h"
 
+using namespace std;
 
 void ResCollection::registerClass(Res* Class, int size, string fileextension)
 {
@@ -52,10 +53,40 @@ Res* ResCollection::add(const string& name)
 	return data[index[name]];
 }
 
-bool Res::init(string& name)
+/*bool Res::init(string& name)
 {
-	ifstream f(("../res/"+name).c_str());
+	rstream f("../res/"+name);
+
 	if(!f.good()) return false;
-	if(!this->load(f)) return false;
+	if(!this->load(f, 0)) return false;
 	return !f.bad();
+}*/
+
+//TEMP
+#define bufsize 1024
+char buf[bufsize];
+
+void rstream::skip(int n)
+{
+	while(n>0)
+	{
+		int m =n;
+		if(m > bufsize) m = bufsize;
+		read(buf, m);
+		n -= m;
+	}
+}
+
+/*rstream::rstream(string s)
+{
+	f = fopen(s.c_str(), "rb");
+	if(f)
+		ok = true;
+	else
+		ok = false;
+}*/
+
+void rstream::read(void *dest, int size)
+{
+	ifstream::read((char*)dest, size);
 }

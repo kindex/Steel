@@ -6,20 +6,13 @@
 #include "../math/vector3d.h"
 #include "../math/geometry.h"
 
+// RES
+#include "../res/model/model.h"
 
 /********************************* GRAPH **********************************************/
 
 
 
-typedef vector<v3> vertexes;
-
-// One triangle, indexes of vertexes
-struct Triangle // anti-clockwise direction (one side Triangle)
-{
-	unsigned short a[3];
-};
-
-typedef vector<Triangle> triangles;
 
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 
