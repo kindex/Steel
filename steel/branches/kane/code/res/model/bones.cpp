@@ -8,9 +8,6 @@
 
 #include "bones.h"
 #include "../../common/logger.h"
-#include "bones_engines/simple.h"
-
-using namespace boneSpace;
 
 //	набор костей
 boneSet::boneSet( unsigned int initialSize )
@@ -77,13 +74,16 @@ Bones::Bones( void )
 Bones::~Bones( void )
 {
 	if ( (flags&BFL_LOADED)==BFL_LOADED )
-		uload();
+		unload();
 }
 
-boneErr Bones::load( const std::string file, boneFmt format )
+bool Bones::load( const std::string file )
 {
 	if ( (flags&BFL_LOADED)==BFL_LOADED )
-		return BE_LOADED;
+	{
+		lastError=SE_LOADED;
+		return false;
+	}
 	
 	flags|=BFL_LOADED;
 	bones=NULL;
@@ -91,39 +91,38 @@ boneErr Bones::load( const std::string file, boneFmt format )
 	curFrame=0;
 	curTime=0;
 	
-	switch ( format )
-	{
-		case FMT_SIMPLE:
-			return simple_load(file,bones_static,animation_static,totalAnims,totalTime);
-		
-		default:
-			flags&=~BFL_LOADED;
-			return BE_INV_FMT;
-	}
-	
-	return BE_NONE;
+	return true;
 }
 
-boneErr Bones::uload( void )
+bool Bones::unload( void )
 {
 	if ( (flags&BFL_LOADED)!=BFL_LOADED )
-		return BE_NOT_LOADED;
+	{
+		lastError=SE_NOT_LOADED;
+		return false;
+	}
 	free(bones_static);
 	free(animation_static);
 	flags&=~BFL_LOADED;
-	return BE_NONE;
+	return true;
 }
 
-boneErr Bones::resetAnimation( unsigned int animNum )
+bool Bones::resetAnimation( unsigned int animNum )
 {
 	if ( (flags&BFL_LOADED)!=BFL_LOADED )
-		return BE_NOT_LOADED;
-	return BE_NONE;
+	{
+		lastError=SE_NOT_LOADED;
+		return false;
+	}
+	return true;
 }
 
-boneErr Bones::frame( steelTimeM_t ftime )
+bool Bones::frame( steelTimeM_t ftime )
 {
 	if ( (flags&BFL_LOADED)!=BFL_LOADED )
-		return BE_NOT_LOADED;
-	return BE_NONE;
+	{
+		lastError=SE_NOT_LOADED;
+		return false;
+	}
+	return true;
 }

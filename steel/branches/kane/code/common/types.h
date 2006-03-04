@@ -9,6 +9,10 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
+#ifdef __linux
+#include <linux/types.h>
+#endif
+
 /*
 	Промежуток времени (секунды)
 */
@@ -44,5 +48,21 @@ uint32_t steelFlag32_t;
 */
 typedef
 uint32_t steelAngle_t;
+
+/*
+	Коды ошибок
+*/
+typedef
+enum
+{
+	SE_NONE,		//	нет ошибки
+	SE_NOMEM,		//	ошибка памяти
+	SE_LOADED,		//	объект уже загружен
+	SE_NOT_LOADED,	//	объект ещё не загружен
+	SE_INV_FMT,		//	неверный формат
+	SE_SDL_VQUERY,	//	неудачный запрос к SDL
+	SE_SDL_VIDEO,	//	не удалось создать видео режим
+	SE_SDL_INIT		//	ошибка инициализации библиотеки SDL
+}	steelError_t;
 
 #endif

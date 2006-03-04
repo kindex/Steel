@@ -23,9 +23,13 @@ ResCollection ñëóæèò õðàíèëèùåì äëÿ âñåõ ðåñóðñîâ
 #include <map>
 #include <vector>
 #include <string>
+
+#include "../common/types.h"
+#include "../steel.h"
+
 using namespace std;
 
-class Res
+class Res: public steelAbstract
 {
 public:
 	virtual ~Res() {}

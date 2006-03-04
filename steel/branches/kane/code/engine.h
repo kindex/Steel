@@ -3,6 +3,9 @@
 #define ENGINE_H
 
 #include <vector>
+
+#include "steel.h"
+
 using namespace std;
 
 class Interface;
@@ -16,7 +19,7 @@ public:
 };
 
 
-class Engine
+class Engine: public steelAbstract
 {
 public:
 	virtual ~Engine() {}

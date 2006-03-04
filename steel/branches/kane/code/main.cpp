@@ -31,7 +31,6 @@ int main()
 
 //	GraphInterface world;
 
-#ifdef __linux
 	while ( true )
 	{
 		SDL_Event event;
@@ -41,29 +40,6 @@ int main()
 		graph.process();
 		SDL_Delay(1);
 	}
-#else	// __linux
-	MSG msg;
-	while(true)											// Do our infinate loop
-	{													// Check if there was a message
-		bool wasmsg;
-        if (wasmsg = PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-        {
-            if(msg.message == WM_QUIT)					// If the message wasnt to quit
-		        break;
-            TranslateMessage(&msg);						// Find out what the message does
-            DispatchMessage(&msg);						// Execute the message
-		}
-		if(!wasmsg || graph.window->needupdate)											// if there wasn't a message
-		{
-			graph.clear();
-//			graph.inject(world);
-
-			graph.process();								// Render the scene every frame
-			Sleep(1);
-		}
-	}
-	return(msg.wParam);									// Return from the program
-#endif	// __linux
 
 	graph.deinit();
 	alog.close();
