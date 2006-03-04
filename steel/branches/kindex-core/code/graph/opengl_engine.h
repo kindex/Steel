@@ -7,9 +7,11 @@
 #include <gl\glu.h>			// Header File For The GLu32 Library
 #include <gl\glaux.h>		// Header File For The Glaux Library
 
+#include <string>
+
 struct Window
 {
-    string caption, title; // if not fullscreen
+    std::string caption, title; // if not fullscreen
 
     HWND handle;
     HDC DC;    // Window Handle, Device Context

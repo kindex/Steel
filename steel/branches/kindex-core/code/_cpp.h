@@ -11,11 +11,7 @@
 #define STEEL_VS8 // Visual Studio 8 (2005)
 
 //STL
-#include <map>
-#include <string>
-#include <vector>
 
 // string -> char*
-using namespace std;
 
 #endif

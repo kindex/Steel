@@ -1,6 +1,7 @@
 #ifndef __GRAPH_INTERFACE_H
 #define __GRAPH_INTERFACE_H
 
+#include <vector>
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 
 страндартный рендерер. Объекты составные. Родитель возвращает список
@@ -13,7 +14,7 @@
 */
 
 class GraphInterface;
-typedef vector<GraphInterface*> GraphInterfaceList;
+typedef std::vector<GraphInterface*> GraphInterfaceList;
 
 class GraphInterface: public Interface
 {

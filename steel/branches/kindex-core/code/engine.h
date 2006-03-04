@@ -3,11 +3,10 @@
 #define ENGINE_H
 
 #include <vector>
-using namespace std;
 
 class Interface;
 
-typedef vector<Interface*> InterfaceList;
+typedef std::vector<Interface*> InterfaceList;
 
 
 class Interface
