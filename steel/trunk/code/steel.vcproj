@@ -395,6 +395,18 @@
 						>
 					</File>
 					<File
+						RelativePath=".\res\model\bones.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\model\bones.h"
+						>
+					</File>
+					<File
+						RelativePath=".\res\model\lightwave.h"
+						>
+					</File>
+					<File
 						RelativePath=".\res\model\model.cpp"
 						>
 					</File>
@@ -408,32 +420,27 @@
 				Name="audio"
 				>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
-			>
+			<Filter
+				Name="common"
+				>
+				<File
+					RelativePath=".\common\logger.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\common\logger.h"
+					>
+				</File>
+				<File
+					RelativePath=".\common\types.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 			>
-		</Filter>
-		<Filter
-			Name="common"
-			>
-			<File
-				RelativePath=".\common\logger.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\common\logger.h"
-				>
-			</File>
-			<File
-				RelativePath=".\common\types.h"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

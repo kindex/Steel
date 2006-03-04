@@ -16,10 +16,6 @@ http://kindex.times.lv
 Это делает процедура updatematerial()
 
 **********************************************************************/
-#ifndef __linux
-#pragma hdrstop
-#endif
-
 #include "_3ds.h"
 
 using namespace std;
@@ -223,7 +219,7 @@ int parsechain(_3DS &m, rstream &f, vector<chainProcessor> tags, int size = 0)
 			if(it->tag == subChainId)
 			{
 				creads += it->f(m, f, subChainSize-6);
-					break;
+				break;
 			}
 		int add = subChainSize - creads;
 		f.skip(add); 

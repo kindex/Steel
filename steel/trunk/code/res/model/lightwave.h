@@ -14,13 +14,13 @@
 
 class LightWaveAnimation: public Bones
 {
-	virtual bool load(string& name);
+	virtual bool init(std::string& name);
 	virtual bool unload() { return true; }
 };
 
 class LightWave: public Model
 {
-	virtual bool load(string& name);
+	virtual bool init(std::string& name);
 	virtual bool unload() { return true; }
 };
 

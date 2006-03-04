@@ -36,8 +36,6 @@ public:
 	{ 
 		open(s.c_str(), std::ios::binary | std::ios::in); 
 	}
-/*	bool good();
-	bool bad();*/
 	void read(void *dest, int size);
 	void skip(int n);// skip n byten in input stream
 };
