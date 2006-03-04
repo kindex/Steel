@@ -16,7 +16,9 @@ http://kindex.times.lv
 Это делает процедура updatematerial()
 
 **********************************************************************/
+#ifndef __linux
 #pragma hdrstop
+#endif
 
 #include "_3ds.h"
 

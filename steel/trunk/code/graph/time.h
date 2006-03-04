@@ -3,34 +3,33 @@
 #ifndef timeH
 #define timeH
 
-#include <windows.h>
+#include "../common/types.h"
 
-typedef double time;
-typedef long Frame;
-
-
-extern Frame frame;
+/*
+extern steelFrame_t frame;
 extern bool fpsupdated;
-
-
-
-time getSystemTime();
-
 
 void initTime();
 void updateTime();
-time getfps();
+double getfps();
 
-extern time systemTime, programTime, programStartTime;
-extern time speed, speed2;
+extern Time systemTime, programTime, programStartTime;
+extern Time speed, speed2;
 
+*/
+
+extern double curFPS;
+void initTime();
+bool updateFPS();
+
+/*
 struct Timer
 {
-    time last;
+    Time last;
     void clear();
-    time get();
+    Time get();
 };
 extern Timer timer;
-
+*/
 //---------------------------------------------------------------------------
 #endif

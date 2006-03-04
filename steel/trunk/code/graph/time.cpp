@@ -1,83 +1,69 @@
 //---------------------------------------------------------------------------
 
+#ifndef __linux
 #pragma hdrstop
+#endif
 #include "time.h"
+#include "SDL.h"
 
-//#define NORMAL_FPS 140
-#define NORMAL_FPS 40
+#define NORMAL_FPS 140
+#define UPDATE_FPS_TIME 1000
 
-time systemTime, programTime, programStartTime, one = 1.0;
+/*
+Time systemTime, programTime, programStartTime;//, one = 1.0;
 Frame frame, lastframe;
-time speed, speed2;   // x += 1*speed - x menjaetsja na 1 metr v sekundu
-
-time lastfpstime, fps, updatefpstime;
+//Time speed, speed2;   // x += 1*speed - x menjaetsja na 1 metr v sekundu
+Time lastfpstime, updatefpstime;
 bool fpsupdated;
 
-time getSystemTime() 
+Time getSystemTime() 
 { 
-	return GetTickCount()*0.001; 
+	#ifdef __linux
+	return SDL_GetTicks();
+	#else
+	return GetTickCount(); 
+	#endif
 }
+*/
 
-void initTime()
-{
-    systemTime = getSystemTime();
-    programStartTime = systemTime;
-    programTime = 0;
-    frame = 0;
-    lastframe = 0;
-    lastfpstime = programTime;
-    fps = NORMAL_FPS;
-
-    speed = 1.0f/NORMAL_FPS;
-    speed2 = speed*speed;   // x += 1*speed - x menjaetsja na 1 metr v sekundu
-    updatefpstime = 0.1;
-}
-
-void updateTime()
-{
-    frame++;
-    programTime = getSystemTime() - programStartTime;
-}
-
-time getfps()
-{
-    if (programTime-lastfpstime>updatefpstime)
-    {
-        fps = (frame-lastframe) / (programTime-lastfpstime);
-        lastfpstime += updatefpstime;
-
-        if (frame-lastframe<30) updatefpstime *= 2.0;
-        if (frame-lastframe>30) updatefpstime /= 2.0;
-
-        lastframe = frame;
-        fpsupdated = true;
-
-
-        if (fps>0)
-        {
-            time lastspeed = speed;
-            speed = one/fps;
-            if (speed>2*lastspeed) speed = 1.1f*lastspeed;
-
-
-            speed2 = speed*speed;
-        }
-    }
-    else
-        fpsupdated = false;
-    return fps;
-}
-
-
+/*
 void Timer::clear()
 {
     last = programTime;
 }
 
-time Timer::get()
+Time Timer::get()
 {
     return programTime - last;
 }
 
 Timer timer;
+*/
 
+double curFPS;
+steelTimeM_t fpsTime, updatefpsTime;
+steelFrame_t frame;
+
+void initTime()
+{
+	fpsTime=SDL_GetTicks();
+    frame = 0;
+    updatefpsTime = UPDATE_FPS_TIME;
+	curFPS=NORMAL_FPS;
+}
+
+bool updateFPS()
+{
+	steelTimeM_t passedTime=SDL_GetTicks()-fpsTime;
+	frame++;
+	if ( passedTime>=updatefpsTime )
+	{
+		curFPS=1000.0*frame/passedTime;
+		frame=0;
+		fpsTime+=passedTime;
+		return true;
+	}	else
+	{
+		return false;
+	}
+}

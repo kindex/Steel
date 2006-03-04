@@ -2,28 +2,31 @@
 #define __RES_H
 
 /*
-Хранение ресурсов. Ресурсы бывают трёх видов:
-* Бинарные
-* Массив, индексированный строками (хранение настроек)
-* Своя структура, вроде моделей
-Должно быть по классу на такие типы данных, как:
+O?aiaiea ?ano?nia. ?ano?nu auaa?o o?zo aeaia:
+* Aeia?iua
+* Iannea, eiaaene?iaaiiue no?ieaie (o?aiaiea iano?iae)
+* Naiy no?oeoo?a, a?iaa iiaaeae
+Aie?ii auou ii eeanno ia oaeea oeiu aaiiuo, eae:
 Model, Image, Audio, Engine Settings, Animation, Weapon Settings
-От них наследуются классы с детализированным хранением, например:
+Io ieo ianeaao?ony eeannu n aaoaeece?iaaiiui o?aiaieai, iai?eia?:
 Image: BMP, JPEG, PNG
 
-Каждый ресурс идентифицируется путём к файлу, из которого он загружается, исключая
-расширение файла, так как формат хранения не должен указываться в ссулках на этот файл.
-По идее, ресурс может и ничего не загружать - а быть чисто программной эмуляцией, вроде 
-видео-текстуры??
+Ea?aue ?ano?n eaaioeoeoe?oaony ioozi e oaeeo, ec eioi?iai ii caa?o?aaony, enee??ay
+?anoe?aiea oaeea, oae eae oi?iao o?aiaiey ia aie?ai oeacuaaouny a nnoeeao ia yoio oaee.
+Ii eaaa, ?ano?n ii?ao e ie?aai ia caa?o?aou - a auou ?enoi i?ia?aiiiie yioeyoeae, a?iaa 
+aeaai-oaenoo?u??
 
-ResCollection служит хранилищем для всех ресурсов, вызывает методы для загрузки, выгрузки,
-если это необходимо для отчистки памяти.
+ResCollection neo?eo o?aieeeuai aey anao ?ano?nia, aucuaaao iaoiau aey caa?ocee, aua?ocee,
+anee yoi iaiaoiaeii aey io?enoee iaiyoe.
 */
 
 #include <map>
 #include <vector>
 #include <string>
 #include <fstream>
+
+#include "../common/types.h"
+#include "../steel.h"
 
 // Resourse stream
 class rstream: public std::ifstream
@@ -39,7 +42,8 @@ public:
 	void skip(int n);// skip n byten in input stream
 };
 
-class Res
+
+class Res: public steelAbstract
 {
 public:
 	virtual bool init(std::string& name) = 0;
@@ -47,6 +51,7 @@ public:
 	virtual bool unload() = 0;
 //	virtual bool reload() = 0; // reload image on driver change
 };
+
 
 struct ClassCopy
 {
@@ -85,9 +90,9 @@ public:
 	Res* add(const std::string& name);
 
 /*
-Следующие 2 функции запоминают класс по имени и создают экземпляр запомненного класса.
-Стандартного решения не нашел, по этому я просто через malloc+memcpy копирую объект
-и вызываю его конструктор еще раз.
+Neaao?uea 2 ooieoee caiiieia?o eeann ii eiaie e nicaa?o yecaiiey? caiiiiaiiiai eeanna.
+Noaiaa?oiiai ?aoaiey ia iaoae, ii yoiio y i?inoi ?a?ac malloc+memcpy eiie?o? iauaeo
+e aucuaa? aai eiino?oeoi? aua ?ac.
 */
 	void registerClass(Res* Class, int size, std::string fileextension);
 	Res* getClass(std::string fileextension);

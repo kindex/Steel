@@ -3,7 +3,8 @@
 #include "res/res.h"
 #include "res/image/bmp.h"
 #include "res/model/_3ds.h"
-
+#include "common/logger.h"
+#include <SDL.h>
 #include "graph/primiteves/res_model.h"
 
 ResCollection res;
@@ -12,12 +13,15 @@ void test()
 {
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 //	test();	return 0;
 
 	res.registerClass(new BMP, sizeof(BMP), "bmp");
 	res.registerClass(new _3DS, sizeof(_3DS), "3ds");
+	alog.open("steel.log");
+	
+	ResCollection a;
 
 	res.add("1.bmp");
 	res.add("-.3ds");
@@ -30,29 +34,18 @@ int main()
 	res_model world;
 
 	world.assign((Model*)res["-.3ds"]);
-
-	MSG msg;
-	while(true)											// Do our infinate loop
-	{													// Check if there was a message
-		BOOL wasmsg;
-        if (wasmsg = PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-        {
-            if(msg.message == WM_QUIT)					// If the message wasnt to quit
-		        break;
-            TranslateMessage(&msg);						// Find out what the message does
-            DispatchMessage(&msg);						// Execute the message
-		}
-		if(!wasmsg || graph.window->needupdate)											// if there wasn't a message
-		{
-			graph.clear();
-			graph.inject(&world);
-
-			graph.process();								// Render the scene every frame
-			Sleep(1);
-		}
+	while ( true )
+	{
+		SDL_Event event;
+		if ( SDL_PollEvent(&event) )
+			if ( event.type==SDL_QUIT ) break;
+		graph.clear();
+		graph.inject(&world);
+		graph.process();
+		SDL_Delay(1);
 	}
-	return(msg.wParam);									// Return from the program
 
 	graph.deinit();
+	alog.close();
 	return 0;
 }

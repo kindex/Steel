@@ -3,6 +3,9 @@
 #define ENGINE_H
 
 #include <vector>
+
+#include "steel.h"
+
 using namespace std;
 
 class Interface;
@@ -16,10 +19,10 @@ public:
 };
 
 
-class Engine
+class Engine: public steelAbstract
 {
 public:
-
+	virtual ~Engine() {}
 	virtual bool init() = 0; // initialization
 //	virtual bool inject(Interface *object) { return false; }; // add object to process by engine
 	virtual bool clear() = 0; 

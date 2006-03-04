@@ -54,7 +54,7 @@ public:
     //( Nx Ny Nz )
     // links: http://www.ati.com/developer/sdk/RADEONSDK/Html/Tutorials/RADEONBumpMap.html
  
-//    mat_id mat;   
+//    mat_id mat;  
 	std::string MatName;
 
     std::string name;

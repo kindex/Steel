@@ -78,7 +78,8 @@ void Image::convertFromHeightMapToNormalMap()
             X = ((float)C-(float)D)/255.0f;
             Y = ((float)E-A)/255.0f;
 
-            Z = 1 - sqr(X) -sqr(Y);
+            //Z = 1 - sqr(X) -sqr(Y);
+			Z=1-X*X-Y*Y;
 
             float r = (X+1)/2;
             float g = (Y+1)/2;
@@ -206,4 +207,3 @@ void Image::clear(float r, float g, float b)
             bitmap[y*bpl + x*3 + 2] = (int)(b*255);
         }
 }
-
