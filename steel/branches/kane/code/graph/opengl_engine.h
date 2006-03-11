@@ -2,7 +2,7 @@
 #define __GRAPH_OPENGL_ENGINE_H
 
 #include <string>
-#include "SDL.h"			// Header File For SDL
+#include <SDL.h>			// Header File For SDL
 
 #include "graph_engine.h"
 #ifdef __linux

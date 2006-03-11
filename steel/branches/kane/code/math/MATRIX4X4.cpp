@@ -15,7 +15,7 @@
 //										with OpenGL. Should have been done a long time ago...
 //////////////////////////////////////////////////////////////////////////////////////////	
 #include <memory.h>
-#include "maths.h"
+#include "Maths.h"
 #include "matrix4x4.h"
 
 MATRIX4X4::MATRIX4X4(float e0, float e1, float e2, float e3,

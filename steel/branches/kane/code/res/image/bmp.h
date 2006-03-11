@@ -5,7 +5,7 @@
 
 class BMP: public Image
 {
-	bool load(string& name);
+	bool init(std::string& name);
 	bool unload();
 };
 

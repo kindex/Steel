@@ -95,49 +95,41 @@ typedef struct { // 14 bytes
 
 
 
-bool BMP::load(string& name)
+bool BMP::init(std::string& name)
 {   // TODO: load through CLASS (WADfile, disk,...)
-   FILE *file;
-   file = fopen(name.c_str(),"rb");
-
-    if (file == NULL)
-    {
-//        console.writeln(0, "Cannot open file '"+name+"'"); // file not open
-        return false;
-    }
-
-   bmpBITMAPFILEHEADER fh; // file header
-   bmpBITMAPINFOHEADER ih;
+	bmpBITMAPFILEHEADER fh; // file header
+	bmpBITMAPINFOHEADER ih;
 
 	if(sizeof(fh)!= 14) throw;
 //	int tty2 = sizeof(ih);
 
-   if (fread(&fh,sizeof(fh), 1,file) != 1) throw;
+	rstream f(name);
 
-   if (fread(&ih.biSize,sizeof(ih.biSize), 1,file) != 1) throw;
+	f.read((char*)&fh,sizeof(fh));
 
-int siz = ih.biSize-sizeof(ih.biSize);
+	f.read((char*)&ih.biSize, sizeof(ih.biSize));
 
-	if (fread(&ih.biWidth,siz,1,file) != 1) throw;
+	int siz = ih.biSize-sizeof(ih.biSize);
 
+	f.read((char*)&ih.biWidth,siz);
 
-   if (ih.biSizeImage == 0)
-      ih.biSizeImage = ih.biHeight * ih.biWidth * (ih.biBitCount /8);
+	if (ih.biSizeImage == 0)
+		ih.biSizeImage = ih.biHeight * ih.biWidth * (ih.biBitCount /8);
 
-unsigned int bpl  = ih.biWidth*(ih.biBitCount/8); // Bypes per line
+	unsigned int bpl  = ih.biWidth*(ih.biBitCount/8); // Bypes per line
 ///unsigned int rbpl = ih.biSizeImage / ih.biHeight; // real bpl
 
 int r;
 
 //    image.init(ih.biWidth, ih.biHeight, 24);
-   width = ih.biWidth;
-   height = ih.biHeight;
-   bpp = 24;
-   switch (ih.biBitCount)
-   {
-   case 24:
+	width = ih.biWidth;
+	height = ih.biHeight;
+	bpp = 24;
+	switch (ih.biBitCount)
+	{
+	case 24:
   //   fseek(file,fh.bfOffbits, SEEK_SET );
-     bitmap = (unsigned char*)malloc(ih.biSizeImage);
+		bitmap = (unsigned char*)malloc(ih.biSizeImage);
 
 /*     for (unsigned int i=0; i<ih.biHeight; i++)
      {
@@ -145,10 +137,10 @@ int r;
         if (rbpl>bpl)
           fseek(file,rbpl-bpl, SEEK_CUR );
      }*/
-     if (fread(bitmap, ih.biSizeImage, 1, file) != 1) throw;
+		f.read((char*)bitmap, ih.biSizeImage);
      // SWAP BGR ->  RGB
-     for (unsigned int i=0; i<ih.biHeight; i++)
-     {
+		for (unsigned int i=0; i<ih.biHeight; i++)
+		{
         for (unsigned int j=0; j<ih.biWidth; j++) // TODO - change format when registring
         {
           r = bitmap[i*bpl + j*3];
@@ -184,11 +176,9 @@ int r;
      free(pal);
      break;*/
 
-   default: return false; // unsupported format 
+	   default: return false; // unsupported format 
    }
-   fclose(file);
    kind = Image::colormap;
-
    return true;
 }
 

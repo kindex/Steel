@@ -41,13 +41,13 @@ unsigned int steelFrame_t;
 	Поле флагов (32 бита)
 */
 typedef
-uint32_t steelFlag32_t;
+unsigned int steelFlag32_t;
 
 /*
 	Угол (0 = 0 градусов, 2^32-1 -> 360-0 градусам)
 */
 typedef
-uint32_t steelAngle_t;
+unsigned int steelAngle_t;
 
 /*
 	Коды ошибок

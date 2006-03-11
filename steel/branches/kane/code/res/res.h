@@ -2,41 +2,54 @@
 #define __RES_H
 
 /*
-Õðàíåíèå ðåñóðñîâ. Ðåñóðñû áûâàþò òðžõ âèäîâ:
-* Áèíàðíûå
-* Ìàññèâ, èíäåêñèðîâàííûé ñòðîêàìè (õðàíåíèå íàñòðîåê)
-* Ñâîÿ ñòðóêòóðà, âðîäå ìîäåëåé
-Äîëæíî áûòü ïî êëàññó íà òàêèå òèïû äàííûõ, êàê:
+O?aiaiea ?ano?nia. ?ano?nu auaa?o o?zo aeaia:
+* Aeia?iua
+* Iannea, eiaaene?iaaiiue no?ieaie (o?aiaiea iano?iae)
+* Naiy no?oeoo?a, a?iaa iiaaeae
+Aie?ii auou ii eeanno ia oaeea oeiu aaiiuo, eae:
 Model, Image, Audio, Engine Settings, Animation, Weapon Settings
-Îò íèõ íàñëåäóþòñÿ êëàññû ñ äåòàëèçèðîâàííûì õðàíåíèåì, íàïðèìåð:
+Io ieo ianeaao?ony eeannu n aaoaeece?iaaiiui o?aiaieai, iai?eia?:
 Image: BMP, JPEG, PNG
 
-Êàæäûé ðåñóðñ èäåíòèôèöèðóåòñÿ ïóòžì ê ôàéëó, èç êîòîðîãî îí çàãðóæàåòñÿ, èñêëþ÷àÿ
-ðàñøèðåíèå ôàéëà, òàê êàê ôîðìàò õðàíåíèÿ íå äîëæåí óêàçûâàòüñÿ â ññóëêàõ íà ýòîò ôàéë.
-Ïî èäåå, ðåñóðñ ìîæåò è íè÷åãî íå çàãðóæàòü - à áûòü ÷èñòî ïðîãðàììíîé ýìóëÿöèåé, âðîäå 
-âèäåî-òåêñòóðû??
+Ea?aue ?ano?n eaaioeoeoe?oaony ioozi e oaeeo, ec eioi?iai ii caa?o?aaony, enee??ay
+?anoe?aiea oaeea, oae eae oi?iao o?aiaiey ia aie?ai oeacuaaouny a nnoeeao ia yoio oaee.
+Ii eaaa, ?ano?n ii?ao e ie?aai ia caa?o?aou - a auou ?enoi i?ia?aiiiie yioeyoeae, a?iaa 
+aeaai-oaenoo?u??
 
-ResCollection ñëóæèò õðàíèëèùåì äëÿ âñåõ ðåñóðñîâ, âûçûâàåò ìåòîäû äëÿ çàãðóçêè, âûãðóçêè,
-åñëè ýòî íåîáõîäèìî äëÿ îò÷èñòêè ïàìÿòè.
+ResCollection neo?eo o?aieeeuai aey anao ?ano?nia, aucuaaao iaoiau aey caa?ocee, aua?ocee,
+anee yoi iaiaoiaeii aey io?enoee iaiyoe.
 */
 
 #include <map>
 #include <vector>
 #include <string>
+#include <fstream>
 
 #include "../common/types.h"
 #include "../steel.h"
 
-using namespace std;
+// Resourse stream
+class rstream: public std::ifstream
+{
+public:
+	rstream(std::string s) 
+	{ 
+		open(s.c_str(), std::ios::binary | std::ios::in); 
+	}
+	void read(void *dest, int size);
+	void skip(int n);// skip n byten in input stream
+};
+
 
 class Res: public steelAbstract
 {
 public:
-	virtual ~Res() {}
-	virtual bool load(string& name) = 0;
+	virtual bool init(std::string& name) = 0;
+//	virtual bool load(rstream &f, int size) = 0;
 	virtual bool unload() = 0;
 //	virtual bool reload() = 0; // reload image on driver change
 };
+
 
 struct ClassCopy
 {
@@ -50,37 +63,37 @@ class ResCollection
 //	typedef t_index::value_type value_type;
 //	typedef vector<string> t_names;
 
-	vector<Res*> data;
-	map<const string,int> index; // Ïî èìåíè âîçâðàøàåò èíäåêñ â ìàññèâå data
-	vector<string> names;
+	std::vector<Res*> data;
+	std::map<const std::string,int> index; // �� ����� ���������� ������ � ������� data
+	std::vector<std::string> names;
 
-	map<const string, ClassCopy> classes;
+	std::map<const std::string, ClassCopy> classes;
 
 	int freeindex;
 public:
 	ResCollection(): freeindex(0) {}
 
 	Res* operator [] (const int n)        { return data[n]; }
-    Res* operator [] (const string& name) { return data[getindex(name)]; }
+    Res* operator [] (const std::string& name) { return data[getindex(name)]; }
 
-    int getindex(const string& name)
+    int getindex(const std::string& name)
     {
         return index[name];
     }  /*If exist - return*, esle 0 */
 
     int lastinsertedid(){ return freeindex-1; }
-    void setname(int n, string name) { index[name] = n; names[n] = name; }
+    void setname(int n, std::string name) { index[name] = n; names[n] = name; }
 
-	Res* addForce(const string& name);
-	Res* add(const string& name);
+	Res* addForce(const std::string& name);
+	Res* add(const std::string& name);
 
 /*
-Ñëåäóþùèå 2 ôóíêöèè çàïîìèíàþò êëàññ ïî èìåíè è ñîçäàþò ýêçåìïëÿð çàïîìíåííîãî êëàññà.
-Ñòàíäàðòíîãî ðåøåíèÿ íå íàøåë, ïî ýòîìó ÿ ïðîñòî ÷åðåç malloc+memcpy êîïèðóþ îáúåêò
-è âûçûâàþ åãî êîíñòðóêòîð åùå ðàç.
+Neaao?uea 2 ooieoee caiiieia?o eeann ii eiaie e nicaa?o yecaiiey? caiiiiaiiiai eeanna.
+Noaiaa?oiiai ?aoaiey ia iaoae, ii yoiio y i?inoi ?a?ac malloc+memcpy eiie?o? iauaeo
+e aucuaa? aai eiino?oeoi? aua ?ac.
 */
-	void registerClass(Res* Class, int size, string fileextension);
-	Res* getClass(string fileextension);
+	void registerClass(Res* Class, int size, std::string fileextension);
+	Res* getClass(std::string fileextension);
 };
 
 

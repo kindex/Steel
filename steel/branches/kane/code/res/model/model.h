@@ -11,10 +11,17 @@
 	unsigned short flags;
 } Faces;
 */
-struct Triangle
+
+typedef std::vector<v3> vertexes;
+
+// One triangle, indexes of vertexes
+struct Triangle // anti-clockwise direction (one side Triangle)
 {
-	unsigned short a,b,c;
+	unsigned short a[3];
 };
+
+typedef std::vector<Triangle> triangles;
+
 
 struct color_24
 {
@@ -30,16 +37,16 @@ struct color_f
 
 
  //3D Object as triangles mesh, Abstract class
-struct Model: public Res
+class Model: public Res
 {
-//public:
-    vector<v3> vertex;    // Vertexes
-    vector <Triangle> triangle;        // Triangles
+public:
+    std::vector<v3> vertex;    // Vertexes
+    std::vector <Triangle> triangle;        // Triangles
 //    vector <Faces> face;        // Triangles
     
-    vector<v2> mapcoord; // Texture coordinates
+    std::vector<v2> mapcoord; // Texture coordinates
 
-    vector<v3> normal, sTangent, tTangent, tangentSpaceLight;    // Vertex normals
+    std::vector<v3> normal, sTangent, tTangent, tangentSpaceLight;    // Vertex normals
     // sTangent - vektor v storonu uveli4enija S teksturnoj koordinati (vpravo)
     // tangentSpaceLight - vektor ot ver6uni do to4ki osveshenija v TBN (Tangent, Binormal, Normal) prostrastve (sTangent, tTangent, normal) - tangent space http://www.paulsprojects.net/tutorials/tutorials.html
     //( Sx Sy Sz )
@@ -48,8 +55,9 @@ struct Model: public Res
     // links: http://www.ati.com/developer/sdk/RADEONSDK/Html/Tutorials/RADEONBumpMap.html
  
 //    mat_id mat;  
-	string name;	
-	string MatName;
+	std::string MatName;
+
+    std::string name;
 
     Model(): name(), MatName("") { }
     void updateMaterial();

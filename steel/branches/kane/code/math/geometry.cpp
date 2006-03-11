@@ -68,11 +68,7 @@ bool intersect(v2  const &a, v2 const &bb,v2 const &c)
 }
 
 // to4ka perese4enija otrezkov (a; a+b) i (c;c+d) v to4ke point
-#ifdef __linux
-bool intersect(v2   a, v2   b,v2   c, v2   d, v2 point)
-#else
 bool intersect(v2   &a, v2   &b,v2   &c, v2   &d, v2 &point)  // to4ka perese4enija otrezkov (a; a+b) i (c;c+d) v to4ke point
-#endif
 {
     coord db = d.pseudoscalarProduct(b);
     if (db!=0)
@@ -366,7 +362,7 @@ bool intersect(/*triang*/v3 A, v3 B, v3 C, v3 e/*point*/, v3 c/*direction*/, coo
         v3 normal = S.vectorProduct(T).GetNormalized(); // face normal, 4tobi uznat', lu4 vihodit iz tela ili vhodit
 
         bool in = normal.dotProduct(direction)<0; // vhodim vnutr'
-*/
+
 /*      reflection
         coord cosalfa = fabs(normal.dotProduct(direction));
         coord sinalfa = sqrt(1-sqr(cosalfa)); // sin^2 + cos^2 =1

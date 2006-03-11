@@ -50,7 +50,7 @@
 				InlineFunctionExpansion="1"
 				PreprocessorDefinitions="WIN32;_WINDOWS"
 				StringPooling="true"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				PrecompiledHeaderFile="..\temp/steel.pch"
 				AssemblerListingLocation="..\temp/"
@@ -72,7 +72,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
+				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB SDLmain.lib SDL.lib"
 				OutputFile="..\build.release/steel.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -145,7 +145,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				PrecompiledHeaderFile="..\temp/steel.pch"
 				AssemblerListingLocation="..\temp/"
 				ObjectFile="..\temp/"
@@ -167,16 +167,18 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib "
+				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib  SDLmain.lib  SDL.lib"
 				ShowProgress="0"
 				OutputFile="..\build.debug/steel.exe"
 				Version="1.0.0.1"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
+				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\build.debug/steel.pdb"
 				GenerateMapFile="true"
-				SubSystem="2"
+				SubSystem="1"
+				EntryPointSymbol=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -314,6 +316,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\graph\graph_interface.h"
+					>
+				</File>
+				<File
 					RelativePath=".\graph\opengl_engine.cpp"
 					>
 				</File>
@@ -329,6 +335,14 @@
 					RelativePath=".\graph\time.h"
 					>
 				</File>
+				<Filter
+					Name="primitives"
+					>
+					<File
+						RelativePath=".\graph\primiteves\res_model.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="res"
@@ -381,6 +395,18 @@
 						>
 					</File>
 					<File
+						RelativePath=".\res\model\bones.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\model\bones.h"
+						>
+					</File>
+					<File
+						RelativePath=".\res\model\lightwave.h"
+						>
+					</File>
+					<File
 						RelativePath=".\res\model\model.cpp"
 						>
 					</File>
@@ -394,11 +420,22 @@
 				Name="audio"
 				>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
-			>
+			<Filter
+				Name="common"
+				>
+				<File
+					RelativePath=".\common\logger.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\common\logger.h"
+					>
+				</File>
+				<File
+					RelativePath=".\common\types.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
