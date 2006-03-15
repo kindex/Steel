@@ -145,7 +145,7 @@ Window::Window()
 	surface=NULL;
 
 	title	= "Steel Demo"; 
-	width	= 975; 
+	width	= 650; 
 	height	= width*3/4; 
 	bpp		= 32;
 	needupdate = false;

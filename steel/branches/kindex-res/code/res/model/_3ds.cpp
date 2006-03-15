@@ -203,7 +203,7 @@ int _3DS::loadmodel(rstream &f, int size)  // example: Box01
 */
 
 // ************************ SCENE
-int parsechain(_3DS &m, rstream &f, vector<chainProcessor> tags, int size = 0)
+int parsechain(_3DS &m, rstream &f, std::vector<chainProcessor> tags, int size = 0)
 {
     unsigned short subChainId;
     int subChainSize, reads = 0;
@@ -306,15 +306,16 @@ int chain_4d4d(_3DS &m, rstream &f, int size)
 	return parsechain(m, f, t, size);
 }
 
-bool _3DS::init(string &name)
-{
-	rstream f("../res/" + name);
+
+bool _3DS::init(const std::string name,  ResLocatorArray &loadBefore, ResLocatorArray &loadAfter)
+	{
+		rstream f("../res/" + name + ".3ds");
 	
-	vector<chainProcessor> t;
-	t.push_back(chainProcessor(0x4D4D, chain_4d4d));
+		std::vector<chainProcessor> t;
+		t.push_back(chainProcessor(0x4D4D, chain_4d4d));
 
-	parsechain(*this, f, t);
+		parsechain(*this, f, t);
 
-	return true;
-}
+		return true;
+	}
 

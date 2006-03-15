@@ -23,7 +23,7 @@ struct chainProcessor
 
 class _3DS: public Model
 {
-	bool init(std::string &name);
+	bool init(const std::string name, ResLocatorArray &loadBefore, ResLocatorArray &loadAfter);
 	bool unload() { return false; }
 };
 

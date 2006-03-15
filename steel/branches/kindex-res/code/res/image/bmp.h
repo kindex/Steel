@@ -5,7 +5,8 @@
 
 class BMP: public Image
 {
-	bool init(std::string& name);
+public:
+	bool init(const std::string name, ResLocatorArray &loadBefore, ResLocatorArray &loadAfter);
 	bool unload();
 };
 

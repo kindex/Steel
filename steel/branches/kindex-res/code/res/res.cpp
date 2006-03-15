@@ -2,16 +2,15 @@
 
 using namespace std;
 
-void ResCollection::registerClass(Res* Class, int size, string fileextension)
+void ResCollection::registerClass(Res* Class, int size, const Res::res_kind kind)
 {
-	classes[fileextension].data = Class;
-	classes[fileextension].size = size;
+	classes[kind].push_back(ClassCopy(Class,size));
 }
 
-Res* ResCollection::getClass(string fileextension)
+Res* ResCollection::createClass(ClassCopy *aclass)
 {
-	Res *a = (Res*)malloc(classes[fileextension].size);
-	memcpy((void*)a, classes[fileextension].data, classes[fileextension].size);
+	Res *a = (Res*)malloc(aclass->size);
+	memcpy((void*)a, aclass->data, aclass->size);
 	return a;
 }
 
@@ -26,31 +25,74 @@ string getext(string name)
 	return r;
 }
 
-Res* ResCollection::addForce(const string& name)
+bool ResCollection::add(Res::ResLocatorArray &names)
 {
-    index[name] = freeindex;
-    data.resize(freeindex+1);
-    names.resize(freeindex+1);
-    setname(freeindex, name);
-
-	string ext = getext(name);
-
-	data[freeindex] = getClass(ext);
-
-	string namecopy = name;
-	data[freeindex]->init(namecopy); // в последствии хочу передавать параметр из загрузки через изменённое имя
-
-    return data[freeindex++];
+	for(Res::ResLocatorArray::iterator it = names.begin();
+		it != names.end();
+		it++)
+	{
+		if(!find(it->name))
+		{
+			bool ret = addForce(it->kind, it->name);
+			if(!ret) return false;
+		}
+	}
+	return true;
 }
 
-Res* ResCollection::add(const string& name)
+
+/*
+name - идентификатор ресурса. Обычно это имя файла без расширения, 
+но может быть ипрограммно генерируемой тестурой.
+Пробуем загрузить всеми доступными загрузчиками по порядку.
+*/
+
+bool ResCollection::addForce(const Res::res_kind kind, const std::string& name)
+{
+	for(ResClassArray::iterator it = classes[kind].begin(); it != classes[kind].end(); it++)
+	{
+		Res *loader = createClass(&(*it));
+
+		Res::ResLocatorArray loadBefore, loadAfter;
+		bool ok = loader->init(name, loadBefore, loadAfter);
+
+		bool loaded = true;
+		while(!ok) // resource loaded
+		{
+			if(!add(loadBefore))
+			{
+				loaded = false;
+				break;
+			}
+			// preload complete
+			loadBefore.clear();
+			ok = loader->init(name, loadBefore, loadAfter);
+		} // exit whel all preloads complete or some error
+		if(!loaded) continue;
+		if(!add(loadAfter))
+			continue;
+		// else all laoded
+
+		index[name] = freeindex;
+	    data.resize(freeindex+1);
+	    names.resize(freeindex+1);
+	    setname(freeindex, name);
+		data[freeindex] = loader;
+	
+		freeindex++;
+		return true;
+	}
+	return false;
+}
+
+bool ResCollection::add(const Res::res_kind kind, const std::string& name)
 {
 	if(index.find(name) == index.end())
 	{
-		return addForce(name);
+		return addForce(kind, name);
 	}
 	else
-	return data[index[name]];
+		return true;
 }
 
 /*bool Res::init(string& name)
