@@ -8,12 +8,12 @@ http://kindex.times.lv
 20040228 Stated 3DS TriMesh OpenGL
 20040301 Materials Colors DEPTH_TEST
 20040501 Fix materials
-Вывод: 3DMAX экспортирует не все данные о материале в .3DS.
-Он не экспортирует Bump, Reflection, Self_Illum
-Решение: дополнительные данные о материале хранить в файлах настроек. 
+Г‚Г»ГўГ®Г¤: 3DMAX ГЅГЄГ±ГЇГ®Г°ГІГЁГ°ГіГҐГІ Г­ГҐ ГўГ±ГҐ Г¤Г Г­Г­Г»ГҐ Г® Г¬Г ГІГҐГ°ГЁГ Г«ГҐ Гў .3DS.
+ГЋГ­ Г­ГҐ ГЅГЄГ±ГЇГ®Г°ГІГЁГ°ГіГҐГІ Bump, Reflection, Self_Illum
+ГђГҐГёГҐГ­ГЁГҐ: Г¤Г®ГЇГ®Г«Г­ГЁГІГҐГ«ГјГ­Г»ГҐ Г¤Г Г­Г­Г»ГҐ Г® Г¬Г ГІГҐГ°ГЁГ Г«ГҐ ГµГ°Г Г­ГЁГІГј Гў ГґГ Г©Г«Г Гµ Г­Г Г±ГІГ°Г®ГҐГЄ. 
 (res/materials/<mat_name>.mat)
 
-Это делает процедура updatematerial()
+ГќГІГ® Г¤ГҐГ«Г ГҐГІ ГЇГ°Г®Г¶ГҐГ¤ГіГ°Г  updatematerial()
 
 **********************************************************************/
 #include "_3ds.h"
@@ -239,7 +239,7 @@ int chain_triangles(_3DS &m, rstream &f, int size)
 
 	f.read((char*)&count, 2); r += 2;
 
-	int x = sizeof(m.triangle[0]);
+	//int x = sizeof(m.triangle[0]);
 
     m.triangle.resize(count);
 	for(int i=0; i<count; i++)
@@ -317,4 +317,3 @@ bool _3DS::init(string &name)
 
 	return true;
 }
-

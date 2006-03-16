@@ -23,7 +23,7 @@ public:
 	// Collect information about object: how to render it
 	virtual bool inject(GraphInterface *object);
 	// Draw colelcted information. May be called few times without recollection information
-	bool process() = 0; // Override OpenGL, D3D, ...\
+	bool process() = 0; // Override OpenGL, D3D, ...
 	// Clear collected information
 	bool clear()
 	{
@@ -34,4 +34,3 @@ public:
 };
 
 #endif
-

@@ -36,3 +36,4 @@ libpaths = Split("""
 	""")
 
 Default(env.Program("steel",sources,LIBS=libs,LIBPATH=libpaths))
+#Default(env.Install("../build.debug","steel")

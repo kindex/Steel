@@ -27,6 +27,7 @@ anee yoi iaiaoiaeii aey io?enoee iaiyoe.
 
 #include "../common/types.h"
 #include "../steel.h"
+#include "../utils.h"
 
 // Resourse stream
 class rstream: public std::ifstream
@@ -34,7 +35,9 @@ class rstream: public std::ifstream
 public:
 	rstream(std::string s) 
 	{ 
+		_
 		open(s.c_str(), std::ios::binary | std::ios::in); 
+		_
 	}
 	void read(void *dest, int size);
 	void skip(int n);// skip n byten in input stream
@@ -57,14 +60,14 @@ struct ClassCopy
 	int size;
 };
 
-class ResCollection
+class ResCollection: public steelAbstract
 {
 //	typedef map<const string,int> t_index;
 //	typedef t_index::value_type value_type;
 //	typedef vector<string> t_names;
 
 	std::vector<Res*> data;
-	std::map<const std::string,int> index; // По имени возврашает индекс в массиве data
+	std::map<const std::string,int> index; // ГЏГ® ГЁГ¬ГҐГ­ГЁ ГўГ®Г§ГўГ°Г ГёГ ГҐГІ ГЁГ­Г¤ГҐГЄГ± Гў Г¬Г Г±Г±ГЁГўГҐ data
 	std::vector<std::string> names;
 
 	std::map<const std::string, ClassCopy> classes;

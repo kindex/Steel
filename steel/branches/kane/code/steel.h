@@ -17,6 +17,7 @@
 class steelAbstract
 {
 public:
+	virtual ~steelAbstract( void ) {}
 	steelError_t getError( void ) { return lastError; }
 protected:
 	steelError_t lastError;

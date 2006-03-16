@@ -68,7 +68,7 @@ bool intersect(v2  const &a, v2 const &bb,v2 const &c)
 }
 
 // to4ka perese4enija otrezkov (a; a+b) i (c;c+d) v to4ke point
-bool intersect(v2   &a, v2   &b,v2   &c, v2   &d, v2 &point)  // to4ka perese4enija otrezkov (a; a+b) i (c;c+d) v to4ke point
+bool intersect(v2   &a, v2   b,v2   &c, v2   d, v2 &point)  // to4ka perese4enija otrezkov (a; a+b) i (c;c+d) v to4ke point
 {
     coord db = d.pseudoscalarProduct(b);
     if (db!=0)
@@ -363,7 +363,7 @@ bool intersect(/*triang*/v3 A, v3 B, v3 C, v3 e/*point*/, v3 c/*direction*/, coo
 
         bool in = normal.dotProduct(direction)<0; // vhodim vnutr'
 
-/*      reflection
+        reflection
         coord cosalfa = fabs(normal.dotProduct(direction));
         coord sinalfa = sqrt(1-sqr(cosalfa)); // sin^2 + cos^2 =1
         coord k1 = 1.3, k2 = 1; // TODO koef prelomlenija

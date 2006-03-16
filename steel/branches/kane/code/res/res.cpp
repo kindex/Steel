@@ -1,4 +1,5 @@
 #include "res.h"
+#include "../utils.h"
 
 using namespace std;
 
@@ -32,35 +33,40 @@ Res* ResCollection::addForce(const string& name)
     data.resize(freeindex+1);
     names.resize(freeindex+1);
     setname(freeindex, name);
-
+	_
 	string ext = getext(name);
 
 	data[freeindex] = getClass(ext);
-
+	_
 	string namecopy = name;
-	data[freeindex]->init(namecopy); // â ïîñëåäñòâèè õî÷ó ïåðåäàâàòü ïàðàìåòð èç çàãðóçêè ÷åðåç èçìåí¸ííîå èìÿ
-
+	_
+	data[freeindex]->init(namecopy); // Ã¢ Ã¯Ã®Ã±Ã«Ã¥Ã¤Ã±Ã²Ã¢Ã¨Ã¨ ÃµÃ®Ã·Ã³ Ã¯Ã¥Ã°Ã¥Ã¤Ã Ã¢Ã Ã²Ã¼ Ã¯Ã Ã°Ã Ã¬Ã¥Ã²Ã° Ã¨Ã§ Ã§Ã Ã£Ã°Ã³Ã§ÃªÃ¨ Ã·Ã¥Ã°Ã¥Ã§ Ã¨Ã§Ã¬Ã¥Ã­Å¾Ã­Ã­Ã®Ã¥ Ã¨Ã¬Ã¿
+	_
     return data[freeindex++];
 }
 
 Res* ResCollection::add(const string& name)
 {
+	_
 	if(index.find(name) == index.end())
 	{
+		_
 		return addForce(name);
 	}
 	else
 	return data[index[name]];
 }
 
-/*bool Res::init(string& name)
+bool Res::init(string& name)
 {
+	_
 	rstream f("../res/"+name);
 
+	_
 	if(!f.good()) return false;
-	if(!this->load(f, 0)) return false;
+	//if(!this->load(f, 0)) return false;
 	return !f.bad();
-}*/
+}
 
 //TEMP
 #define bufsize 1024

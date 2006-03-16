@@ -16,6 +16,7 @@ typedef vector<Interface*> InterfaceList;
 class Interface
 {
 public:
+	virtual ~Interface( void ){};
 };
 
 

@@ -55,9 +55,9 @@ public:
     // links: http://www.ati.com/developer/sdk/RADEONSDK/Html/Tutorials/RADEONBumpMap.html
  
 //    mat_id mat;  
-	std::string MatName;
 
     std::string name;
+	std::string MatName;
 
     Model(): name(), MatName("") { }
     void updateMaterial();

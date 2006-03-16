@@ -4,8 +4,9 @@
 #include "res/image/bmp.h"
 #include "res/model/_3ds.h"
 #include "common/logger.h"
-#include <SDL.h>
+#include "SDL.h"
 #include "graph/primiteves/res_model.h"
+#include "utils.h"
 
 ResCollection res;
 
@@ -20,19 +21,19 @@ int main(int argc, char *argv[])
 	res.registerClass(new BMP, sizeof(BMP), "bmp");
 	res.registerClass(new _3DS, sizeof(_3DS), "3ds");
 	alog.open("steel.log");
-	
+	_
 	ResCollection a;
-
+	_
 	res.add("1.bmp");
 	res.add("-.3ds");
 	res.add("4.3ds");
 
-
+	_
 	OpenGL_Engine graph;
 	if(!graph.init()) return 1;
 
 	res_model world;
-
+	_
 	world.assign((Model*)res["-.3ds"]);
 	while ( true )
 	{
