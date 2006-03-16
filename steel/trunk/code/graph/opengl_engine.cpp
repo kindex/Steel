@@ -24,11 +24,11 @@ bool Window::createWin()
 	int videoFlags;
 	const SDL_VideoInfo *videoInfo;
 	
-	videoInfo=SDL_GetVideoInfo();
+	videoInfo = SDL_GetVideoInfo();
 	if ( !videoInfo )
 	{
 		alog.out("Video query failed: %s\n",SDL_GetError());
-		lastError=SE_SDL_VQUERY;
+		lastError = SE_SDL_VQUERY;
 		return false;
 	}
 	
@@ -101,7 +101,7 @@ bool OpenGL_Engine::init()
 		lastError=window->getError();
 		return false;
 	}
-	glEnable(GL_DEPTH_TEST);
+//	glEnable(GL_DEPTH_TEST);
 	window->needupdate = true;
 	
 	alog.out("OpenGL engine has been initialized!\n");
@@ -113,12 +113,12 @@ bool OpenGL_Engine::process()
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	glVertexPointer(3, GL_FLOAT, vertex.size() , &vertex[0]);
+	glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &vertex[0]);
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	glDrawElements(GL_TRIANGLES, triangle.size()*3, GL_UNSIGNED_SHORT, &triangle[0]);
+	glDrawElements(GL_TRIANGLES, triangle.size(), GL_UNSIGNED_INT, &triangle[0]);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	
+
 	glFlush();
 	SDL_GL_SwapBuffers();
 	
@@ -145,8 +145,27 @@ Window::Window()
 	surface=NULL;
 
 	title	= "Steel Demo"; 
-	width	= 975; 
+	width	= 650; 
 	height	= width*3/4; 
 	bpp		= 32;
 	needupdate = false;
+}
+
+void OpenGL_Engine::processCamera()
+{
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    
+//	gluPerspective( camera.fov, (float)window.width/window.height, front, back );
+
+	gluPerspective(90.0, 1.0, 0, 1.0e+10);
+
+
+    gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, 
+			camera.center.x, camera.center.y, camera.center.z, 
+			camera.up.x, camera.up.y, camera.up.z);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }

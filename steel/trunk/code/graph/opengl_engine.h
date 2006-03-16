@@ -37,6 +37,7 @@ class OpenGL_Engine: public GraphEngine
 //	void clearWindow();
 
 public:
+	void processCamera();
 	bool init();
 	bool process();
 	bool deinit();

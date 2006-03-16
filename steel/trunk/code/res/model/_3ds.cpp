@@ -203,7 +203,7 @@ int _3DS::loadmodel(rstream &f, int size)  // example: Box01
 */
 
 // ************************ SCENE
-int parsechain(_3DS &m, rstream &f, vector<chainProcessor> tags, int size = 0)
+int parsechain(_3DS &m, rstream &f, std::vector<chainProcessor> tags, int size = 0)
 {
     unsigned short subChainId;
     int subChainSize, reads = 0;
@@ -244,7 +244,15 @@ int chain_triangles(_3DS &m, rstream &f, int size)
     m.triangle.resize(count);
 	for(int i=0; i<count; i++)
 	{
-		f.read(&m.triangle[i], 3*2); // short*3 
+		unsigned short a,b,c;
+		f.read(&a, 2); // short
+		f.read(&b, 2); // short
+		f.read(&c, 2); // short
+
+		m.triangle[i].a[0] = a;
+		m.triangle[i].a[1] = b;
+		m.triangle[i].a[2] = c;
+
 		short face_flags;
 		f.read(&face_flags, 2);
 		r += 8;
@@ -306,15 +314,16 @@ int chain_4d4d(_3DS &m, rstream &f, int size)
 	return parsechain(m, f, t, size);
 }
 
-bool _3DS::init(string &name)
-{
-	rstream f("../res/" + name);
+
+bool _3DS::init(const std::string name,  ResLocatorArray &loadBefore, ResLocatorArray &loadAfter)
+	{
+		rstream f("../res/" + name + ".3ds");
 	
-	vector<chainProcessor> t;
-	t.push_back(chainProcessor(0x4D4D, chain_4d4d));
+		std::vector<chainProcessor> t;
+		t.push_back(chainProcessor(0x4D4D, chain_4d4d));
 
-	parsechain(*this, f, t);
+		parsechain(*this, f, t);
 
-	return true;
-}
+		return true;
+	}
 

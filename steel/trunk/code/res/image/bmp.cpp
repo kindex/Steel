@@ -94,16 +94,17 @@ typedef struct { // 14 bytes
     } bmpBITMAPINFO;
 
 
-
-bool BMP::init(std::string& name)
-{   // TODO: load through CLASS (WADfile, disk,...)
+bool BMP::init(const std::string name, ResLocatorArray &loadBefore, ResLocatorArray &loadAfter)
+{  
+	// TODO: load through CLASS (WADfile, disk,...)
 	bmpBITMAPFILEHEADER fh; // file header
 	bmpBITMAPINFOHEADER ih;
 
 	if(sizeof(fh)!= 14) throw;
 //	int tty2 = sizeof(ih);
 
-	rstream f(name);
+	rstream f("../res/" + name + ".bmp");
+	if(!f.good()) return false;
 
 	f.read((char*)&fh,sizeof(fh));
 
@@ -179,6 +180,7 @@ int r;
 	   default: return false; // unsupported format 
    }
    kind = Image::colormap;
+ 
    return true;
 }
 
