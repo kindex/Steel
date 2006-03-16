@@ -15,6 +15,14 @@
 
 class GraphEngine;
 
+struct WindowSettings
+{
+    string caption, title; // if not fullscreen
+    int left, top, width, height, bpp;
+
+	WindowSettings();
+};
+
 class Camera
 {
 public:
@@ -22,6 +30,12 @@ public:
 public:
     void seteye(const v3 &EYE) { eye = EYE; }
     void setcenter(const v3 &CENTER) { center = CENTER; }
+
+	void setup(const v3 &EYE, const v3 &DIR)
+	{
+		eye = EYE;
+		center = EYE + DIR;
+	}
 
 	Camera(): 
 		up(v3(0.0, 0.0, 1.0)), 
@@ -41,6 +55,7 @@ protected:
 	vertexes		vertex;
 	vertexNumbers	triangle;
 public:
+	WindowSettings window;
 	Camera camera;
 	virtual void processCamera() = 0;
 	// Collect information about object: how to render it

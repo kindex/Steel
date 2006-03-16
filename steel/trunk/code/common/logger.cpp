@@ -15,7 +15,7 @@ Logger alog;
 
 bool Logger::open( char *filename )
 {
-	f=fopen(filename,"a");
+	f = fopen(filename, "wt");
 	if ( f==NULL )
 	{
 		return false;
@@ -58,6 +58,7 @@ void Logger::out( char *fmt, ... )
 	vprintf(fmt,ap);
 	#endif
 	va_end(ap);
+	fprintf(f,"\n");
 }
 
 void Logger::out( std::string str )

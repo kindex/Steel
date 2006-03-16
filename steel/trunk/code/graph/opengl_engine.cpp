@@ -7,19 +7,7 @@
 #include "../common/logger.h"
 #include "SDL.h"
 
-// Override
-Window *window;
-
-void onResize(int w, int h)
-{
-    window->width = w; // TODO
-    window->height= h; // TODO
-
-    glViewport( 0, 0, w,h);
-//    setCamera();
-}
-
-bool Window::createWin()
+bool OpenGL_Engine::createWin()
 {
 	int videoFlags;
 	const SDL_VideoInfo *videoInfo;
@@ -32,7 +20,7 @@ bool Window::createWin()
 		return false;
 	}
 	
-	videoFlags=SDL_OPENGL;
+	videoFlags = SDL_OPENGL;
 	//videoFlags|=SDL_GL_DOUBLEBUFFER;
 	videoFlags|=SDL_HWPALETTE;
 	//videoFlags|=SDL_RESIZABLE;
@@ -46,7 +34,7 @@ bool Window::createWin()
 		videoFlags |= SDL_HWACCEL;
 	
 	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
-	surface = SDL_SetVideoMode(width,height,bpp,videoFlags);
+	surface = SDL_SetVideoMode(window.width, window.height, window.bpp, videoFlags);
 	if ( !surface )
 	{
 		alog.out("Video mode set failed: %s\n",SDL_GetError());
@@ -66,7 +54,7 @@ bool Window::createWin()
 		"\tSoftware colourkey blits: %s\n" \
 		"\tSoftware alpha blits: %s\n" \
 		"\tAccelerated colour fills: %s\n", \
-		width,height,bpp,videoInfo->video_mem, \
+		window.width, window.height, window.bpp, videoInfo->video_mem, \
 		videoInfo->hw_available?"yes":"no", \
 		videoInfo->wm_available?"yes":"no", \
 		videoInfo->blit_hw?"yes":"no", \
@@ -83,10 +71,8 @@ bool Window::createWin()
 
 bool OpenGL_Engine::init()
 {
+	surface = NULL;
     initTime();
-	
-	this->window = new Window;
-	::window = this->window;
 	
 	if ( SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER)<0 )
 	{
@@ -95,14 +81,13 @@ bool OpenGL_Engine::init()
 		return false;
 	}
 	
-	if ( !window->createWin() )
+	if (!createWin())
 	{
 		SDL_Quit();
-		lastError=window->getError();
+		lastError = getError();
 		return false;
 	}
 //	glEnable(GL_DEPTH_TEST);
-	window->needupdate = true;
 	
 	alog.out("OpenGL engine has been initialized!\n");
 	
@@ -124,11 +109,10 @@ bool OpenGL_Engine::process()
 	
     if ( updateFPS() )
     {
-        window->caption =  window->title + " FPS = " + FloatToStr(curFPS);
-		SDL_WM_SetCaption(window->caption.c_str(),"test");
+        window.caption =  window.title + " FPS = " + FloatToStr(curFPS);
+		SDL_WM_SetCaption(window.caption.c_str(),"test");
     }
 
-	window->needupdate = false;
 	return true;
 }
 
@@ -140,16 +124,7 @@ bool OpenGL_Engine::deinit()
 }
 
 
-Window::Window() 
-{ 
-	surface=NULL;
 
-	title	= "Steel Demo"; 
-	width	= 650; 
-	height	= width*3/4; 
-	bpp		= 32;
-	needupdate = false;
-}
 
 void OpenGL_Engine::processCamera()
 {

@@ -1,6 +1,13 @@
 #include "graph_engine.h"
 
 
+WindowSettings::WindowSettings() 
+{ 
+	title	= "Steel Demo"; 
+	width	= 650; 
+	height	= width*3/4; 
+	bpp		= 32;
+}
 
 bool GraphEngine::inject(GraphInterface *object)
 {

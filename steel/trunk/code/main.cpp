@@ -6,45 +6,80 @@
 #include "common/logger.h"
 #include <SDL.h>
 #include "graph/primiteves/res_model.h"
+#include "game/game.h"
 
 int main(int argc, char *argv[])
 {
+	alog.open("steel.log");
+
+
 	ResCollection res;
 
-	res.registerClass(new BMP, sizeof(BMP), Res::image);
-	res.registerClass(new _3DS, sizeof(_3DS), Res::model);
-	alog.open("steel.log");
-	
-	res.add(Res::image, "1");
-	res.add(Res::model, "-");
-	res.add(Res::model, "4");
+	res.registerClass(new BMP,	sizeof(BMP),	Res::image);
+	res.registerClass(new _3DS, sizeof(_3DS),	Res::model);
 
 	OpenGL_Engine graph;
+//	graph.window.
 	if(!graph.init()) return 1;
 
-	graph.camera.seteye(v3(60, 50, 31));
 
-	res_model world;
+	Game game(&res, &graph);
+	game.init();
+	
+	int cx = graph.window.width/2;
+	int cy = graph.window.height/2;
+	int sx = cx, sy = cy, mx, my;
 
-	world.assign((Model*)res["4"]);
+
+	SDL_WarpMouse(cx, cy);
+
+	int lastdx = 0, lastdy = 0;
+	bool first = true;
+
 	bool alive = true;
-	while(alive)
+	while(alive && game.alive())
 	{
 		SDL_Event event;
 		if(SDL_PollEvent(&event))
 			switch(event.type)
 			{
 				case SDL_QUIT:  
-				case SDL_KEYDOWN:
 					alive = false;
+					break;
+
+				case SDL_KEYDOWN:
+					game.handleEventKeyDown(SDL_GetKeyName(event.key.keysym.sym));
+					break;
+
+				case SDL_KEYUP:
+					game.handleEventKeyUp(SDL_GetKeyName(event.key.keysym.sym));
+					break;
+
+				case SDL_MOUSEMOTION:
+					if(!first && (event.motion.xrel != lastdx || event.motion.yrel != lastdy))
+					{
+						mx = event.motion.x;
+						my = event.motion.y;
+
+						SDL_WarpMouse(cx, cy);
+				
+						lastdx = cx - mx;
+						lastdy = cy - my;
+
+						game.handleMouse(lastdx, -lastdy);
+					}
+					else
+					{
+						lastdx = 0;
+						lastdy = 0;
+					}
+					first = false;
 					break;
 			}
 		if(!alive)break;
 
-		graph.clear();
-		graph.inject(&world);
-		graph.processCamera();
-		graph.process();
+		game.process();
+
 		SDL_Delay(1);
 	}
 
