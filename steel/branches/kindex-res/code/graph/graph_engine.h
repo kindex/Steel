@@ -13,13 +13,36 @@
 
 #include "graph_interface.h"
 
+class GraphEngine;
+
+class Camera
+{
+public:
+    v3 eye, center, up;
+public:
+    void seteye(const v3 &EYE) { eye = EYE; }
+    void setcenter(const v3 &CENTER) { center = CENTER; }
+
+	Camera(): 
+		up(v3(0.0, 0.0, 1.0)), 
+		eye(10.0, 10.0, 1.0), 
+		center(v3(0.0, 0.0, 0.0)) {}
+
+};
+
+typedef
+	vector<unsigned int>
+	vertexNumbers;
+
 class GraphEngine: public Engine
 {
 protected:
 	// data, to store collected information
-	vertexes	vertex;
-	triangles	triangle;
+	vertexes		vertex;
+	vertexNumbers	triangle;
 public:
+	Camera camera;
+	virtual void processCamera() = 0;
 	// Collect information about object: how to render it
 	virtual bool inject(GraphInterface *object);
 	// Draw colelcted information. May be called few times without recollection information

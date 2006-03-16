@@ -27,16 +27,28 @@ int main(int argc, char *argv[])
 	OpenGL_Engine graph;
 	if(!graph.init()) return 1;
 
+	graph.camera.seteye(v3(60, 50, 21));
+
 	res_model world;
 
-	world.assign((Model*)res["-"]);
-	while ( true )
+	world.assign((Model*)res["4"]);
+	bool alive = true;
+	while(alive)
 	{
 		SDL_Event event;
-		if ( SDL_PollEvent(&event) )
-			if ( event.type==SDL_QUIT ) break;
+		if(SDL_PollEvent(&event))
+			switch(event.type)
+			{
+				case SDL_QUIT:  
+				case SDL_KEYDOWN:
+					alive = false;
+					break;
+			}
+		if(!alive)break;
+
 		graph.clear();
 		graph.inject(&world);
+		graph.processCamera();
 		graph.process();
 		SDL_Delay(1);
 	}

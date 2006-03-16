@@ -17,7 +17,7 @@ typedef std::vector<v3> vertexes;
 // One triangle, indexes of vertexes
 struct Triangle // anti-clockwise direction (one side Triangle)
 {
-	unsigned short a[3];
+	unsigned int a[3];
 };
 
 typedef std::vector<Triangle> triangles;

@@ -244,7 +244,15 @@ int chain_triangles(_3DS &m, rstream &f, int size)
     m.triangle.resize(count);
 	for(int i=0; i<count; i++)
 	{
-		f.read(&m.triangle[i], 3*2); // short*3 
+		unsigned short a,b,c;
+		f.read(&a, 2); // short
+		f.read(&b, 2); // short
+		f.read(&c, 2); // short
+
+		m.triangle[i].a[0] = a;
+		m.triangle[i].a[1] = b;
+		m.triangle[i].a[2] = c;
+
 		short face_flags;
 		f.read(&face_flags, 2);
 		r += 8;
