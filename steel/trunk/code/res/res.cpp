@@ -1,4 +1,5 @@
 #include "res.h"
+#include "../common/logger.h"
 
 using namespace std;
 
@@ -79,9 +80,12 @@ bool ResCollection::addForce(const Res::res_kind kind, const std::string& name)
 	    setname(freeindex, name);
 		data[freeindex] = loader;
 	
+		alog.out("Res: loaded %s", name.c_str());
+
 		freeindex++;
 		return true;
 	}
+	alog.out("Res: failed %s", name.c_str());
 	return false;
 }
 

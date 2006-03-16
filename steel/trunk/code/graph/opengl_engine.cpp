@@ -7,6 +7,30 @@
 #include "../common/logger.h"
 #include "SDL.h"
 
+bool OpenGL_Engine::process()
+{
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+	glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &vertex[0]);
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	glDrawElements(GL_TRIANGLES, triangle.size(), GL_UNSIGNED_INT, &triangle[0]);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+	glFlush();
+	SDL_GL_SwapBuffers();
+	
+    if ( updateFPS() )
+    {
+        window.caption =  window.title + " FPS = " + FloatToStr(curFPS);
+		SDL_WM_SetCaption(window.caption.c_str(),"test");
+    }
+
+	return true;
+}
+
+
+
 bool OpenGL_Engine::createWin()
 {
 	int videoFlags;
@@ -91,28 +115,6 @@ bool OpenGL_Engine::init()
 	
 	alog.out("OpenGL engine has been initialized!\n");
 	
-	return true;
-}
-
-bool OpenGL_Engine::process()
-{
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-	glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &vertex[0]);
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	glDrawElements(GL_TRIANGLES, triangle.size(), GL_UNSIGNED_INT, &triangle[0]);
-	glDisableClientState(GL_VERTEX_ARRAY);
-
-	glFlush();
-	SDL_GL_SwapBuffers();
-	
-    if ( updateFPS() )
-    {
-        window.caption =  window.title + " FPS = " + FloatToStr(curFPS);
-		SDL_WM_SetCaption(window.caption.c_str(),"test");
-    }
-
 	return true;
 }
 

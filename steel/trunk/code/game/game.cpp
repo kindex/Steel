@@ -63,13 +63,10 @@ bool Game::init()
 
 	graph->camera.seteye(eye);
 
-
-	res->add(Res::image, "1");
-	res->add(Res::model, "-");
-	res->add(Res::model, "4");
+	res->add(Res::model, "teapot");
 
 	obj.resize(1);
-	obj[0].assign((Model*)res->operator[]("4"));
+	obj[0].assign((Model*)res->operator[]("teapot"));
 
 	_alive = true;
 	return true;

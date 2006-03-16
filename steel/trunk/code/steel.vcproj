@@ -415,6 +415,26 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="material"
+					>
+					<File
+						RelativePath=".\res\material\material.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\material\material.h"
+						>
+					</File>
+					<File
+						RelativePath=".\res\material\material_conf.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\material\material_conf.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audio"

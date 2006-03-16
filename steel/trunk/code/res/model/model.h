@@ -41,7 +41,7 @@ class Model: public Res
 {
 public:
     std::vector<v3> vertex;    // Vertexes
-    std::vector <Triangle> triangle;        // Triangles
+    std::vector<Triangle> triangle;        // Triangles
 //    vector <Faces> face;        // Triangles
     
     std::vector<v2> mapcoord; // Texture coordinates
@@ -55,11 +55,11 @@ public:
     // links: http://www.ati.com/developer/sdk/RADEONSDK/Html/Tutorials/RADEONBumpMap.html
  
 //    mat_id mat;  
-	std::string MatName;
+	std::map<std::string, std::vector<int> > faceMaterial;
 
     std::string name;
 
-    Model(): name(), MatName("") { }
+    Model(): name() { }
     void updateMaterial();
     void updateNormals();
     void updateTangentSpace();

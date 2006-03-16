@@ -232,6 +232,26 @@ int parsechain(_3DS &m, rstream &f, std::vector<chainProcessor> tags, int size =
 }
 
 
+int chain_model_material(_3DS &m, rstream &f, int size) // model material info
+{
+	int r = 0;
+	string materialName;
+	r += readstring(f, materialName);
+
+	unsigned short count;
+	f.read(&count, 2); // face count
+	r += 2;
+	vector<int> &a = m.faceMaterial[materialName];
+	for(int i=0; i<count; i++)
+	{
+		unsigned short tmp;
+		f.read(&tmp, 2);
+		a.push_back(tmp);
+		r += 2;
+	}
+	return r;
+}
+
 int chain_triangles(_3DS &m, rstream &f, int size)
 {
 	int r = 0;
@@ -258,7 +278,10 @@ int chain_triangles(_3DS &m, rstream &f, int size)
 		r += 8;
 	}
 
-	return r;
+	vector<chainProcessor> t;
+	t.push_back(chainProcessor(0x4130, chain_model_material)); // TRI_MATERIAL
+
+	return r + parsechain(m, f, t, size-r);
 }
 
 /*
@@ -278,11 +301,27 @@ int chain_vertexes(_3DS &m, rstream &f, int size)
 	return 2+count*3*4;
 }
 
+int chain_map_coords(_3DS &m, rstream &f, int size)
+{
+	unsigned short count;
+
+	f.read(&count, 2);	
+	m.mapcoord.resize(count);
+
+	f.read(&m.mapcoord[0], count*4*2); // float+float (u, v)
+
+	return 2+count*3*4;
+}
+
+
 int chain_mesh(_3DS &m, rstream &f, int size)
 {
 	vector<chainProcessor> t;
-	t.push_back(chainProcessor(0x4110, chain_vertexes));
-	t.push_back(chainProcessor(0x4120, chain_triangles));
+	t.push_back(chainProcessor(0x4110, chain_vertexes)); // coordinates
+	t.push_back(chainProcessor(0x4120, chain_triangles)); // indexes
+
+	t.push_back(chainProcessor(0x4140, chain_map_coords)); // indexes
+
 	return parsechain(m, f, t, size);
 }
 
@@ -316,7 +355,7 @@ int chain_4d4d(_3DS &m, rstream &f, int size)
 
 
 bool _3DS::init(const std::string name,  ResLocatorArray &loadBefore, ResLocatorArray &loadAfter)
-	{
+{
 		rstream f("../res/" + name + ".3ds");
 	
 		std::vector<chainProcessor> t;
@@ -324,6 +363,12 @@ bool _3DS::init(const std::string name,  ResLocatorArray &loadBefore, ResLocator
 
 		parsechain(*this, f, t);
 
+		for(map<string, vector<int> >::iterator it = faceMaterial.begin();
+					it != faceMaterial.end(); it++)
+		{
+			loadAfter.push_back(ResLocator(material, it->first));
+		}
+
 		return true;
-	}
+}
 

@@ -5,8 +5,9 @@
 #endif
 
 #include "bmp.h"
+#include "../../common/logger.h"
 
-#include <stdio.h> // TODO - load file with res.h
+#include <string> 
 
 
 //#pragma option -a1 // align on bytes !!!!!!!!!! 4tobi pravilno zagruzit' headeri, 
@@ -100,11 +101,20 @@ bool BMP::init(const std::string name, ResLocatorArray &loadBefore, ResLocatorAr
 	bmpBITMAPFILEHEADER fh; // file header
 	bmpBITMAPINFOHEADER ih;
 
-	if(sizeof(fh)!= 14) throw;
+	if(sizeof(fh)!= 14) 
+	{	
+		alog.out("Res/Image/BMP: head struct size 14 != %d", sizeof(fh));
+		throw;
+	}
 //	int tty2 = sizeof(ih);
+	std::string file = "../res/" + name + ".bmp";
+	rstream f(file);
 
-	rstream f("../res/" + name + ".bmp");
-	if(!f.good()) return false;
+	if(!f.good()) 
+	{
+		alog.out("Res/Image/BMP: cannot open file %s", file.c_str());
+		return false;
+	}
 
 	f.read((char*)&fh,sizeof(fh));
 

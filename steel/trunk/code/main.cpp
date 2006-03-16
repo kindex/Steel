@@ -3,6 +3,7 @@
 #include "res/res.h"
 #include "res/image/bmp.h"
 #include "res/model/_3ds.h"
+#include "res/material/material_conf.h"
 #include "common/logger.h"
 #include <SDL.h>
 #include "graph/primiteves/res_model.h"
@@ -12,11 +13,11 @@ int main(int argc, char *argv[])
 {
 	alog.open("steel.log");
 
-
 	ResCollection res;
 
 	res.registerClass(new BMP,	sizeof(BMP),	Res::image);
 	res.registerClass(new _3DS, sizeof(_3DS),	Res::model);
+	res.registerClass(new MaterialConf, sizeof(MaterialConf),	Res::material);
 
 	OpenGL_Engine graph;
 //	graph.window.

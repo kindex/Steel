@@ -1,24 +1,6 @@
 #ifndef __RES_H
 #define __RES_H
 
-/*
-O?aiaiea ?ano?nia. ?ano?nu auaa?o o?zo aeaia:
-* Aeia?iua
-* Iannea, eiaaene?iaaiiue no?ieaie (o?aiaiea iano?iae)
-* Naiy no?oeoo?a, a?iaa iiaaeae
-Aie?ii auou ii eeanno ia oaeea oeiu aaiiuo, eae:
-Model, Image, Audio, Engine Settings, Animation, Weapon Settings
-Io ieo ianeaao?ony eeannu n aaoaeece?iaaiiui o?aiaieai, iai?eia?:
-Image: BMP, JPEG, PNG
-
-Ea?aue ?ano?n eaaioeoeoe?oaony ioozi e oaeeo, ec eioi?iai ii caa?o?aaony, enee??ay
-?anoe?aiea oaeea, oae eae oi?iao o?aiaiey ia aie?ai oeacuaaouny a nnoeeao ia yoio oaee.
-Ii eaaa, ?ano?n ii?ao e ie?aai ia caa?o?aou - a auou ?enoi i?ia?aiiiie yioeyoeae, a?iaa 
-aeaai-oaenoo?u??
-
-ResCollection neo?eo o?aieeeuai aey anao ?ano?nia, aucuaaao iaoiau aey caa?ocee, aua?ocee,
-anee yoi iaiaoiaeii aey io?enoee iaiyoe.
-*/
 
 #include <map>
 #include <vector>
@@ -32,9 +14,9 @@ anee yoi iaiaoiaeii aey io?enoee iaiyoe.
 class rstream: public std::ifstream
 {
 public:
-	rstream(std::string s) 
+	rstream(std::string s, ios_base::openmode _Mode = std::ios::binary) 
 	{ 
-		open(s.c_str(), std::ios::binary | std::ios::in); 
+		open(s.c_str(), _Mode | std::ios::in); 
 	}
 	void read(void *dest, int size);
 	void skip(int n);// skip n byten in input stream
@@ -44,24 +26,28 @@ public:
 class Res: public steelAbstract
 {
 public:
+#define RES_KIND_COUNT 4
 	typedef enum 
 	{
 			none,
 			image,
-			model
+			model,
+			material
 	}	res_kind;
 
 	struct ResLocator
 	{
-		std::string name;
 		res_kind kind;
+		std::string name;
+
+		ResLocator(res_kind akind, std::string aname): kind(akind), name(aname) {}
 	};
 
 	typedef
 		std::vector<ResLocator>
 		ResLocatorArray;
 
-#define RES_KIND_COUNT 3
+
 
 	virtual bool init(const std::string name, ResLocatorArray &loadBefore, ResLocatorArray &loadAfter) = 0;
 //	virtual bool load(rstream &f, int size) = 0;
