@@ -9,10 +9,6 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
-#ifdef __linux
-#include <linux/types.h>
-#endif
-
 /*
 	Промежуток времени (секунды)
 */
@@ -38,16 +34,16 @@ typedef
 unsigned int steelFrame_t;
 
 /*
-	Поле флагов (32 бита)
+	Поле флагов
 */
 typedef
-unsigned int steelFlag32_t;
+unsigned long int steelFlag_t;
 
 /*
 	Угол (0 = 0 градусов, 2^32-1 -> 360-0 градусам)
 */
 typedef
-unsigned int steelAngle_t;
+unsigned long int steelAngle_t;
 
 /*
 	Коды ошибок

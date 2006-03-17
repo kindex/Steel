@@ -5,6 +5,8 @@ env.Append(CCFLAGS=" -DDEBUG -g")
 #env.Append(CCFLAGS=" -O3")
 
 sources = Split("""
+	game/game.cpp
+	common/debug.cpp
 	common/logger.cpp
 	graph/opengl_engine.cpp
 	graph/time.cpp
@@ -30,6 +32,7 @@ sources = Split("""
 libs = Split("""
 	SDL
 	GL
+	glut
 	""")
 
 libpaths = Split("""

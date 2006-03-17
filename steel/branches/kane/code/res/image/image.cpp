@@ -3,6 +3,8 @@
 #include "../../math/geometry.h"
 #include "../../math/maths.h"
 
+#include "../../common/debug.h"
+
 /*int Image::Register2d()
 {
     switch (platform)
@@ -97,11 +99,15 @@ void Image::convertFromHeightMapToNormalMap()
 
 bool Image::init(int WIDTH, int HEIGHT, int BPP)
 {
+	_
     width = WIDTH;
     height = HEIGHT;
     bpp = BPP;
+	_
     bitmap = (unsigned char*)malloc(bpp/8*width*height);
+	_
     representation = raw;
+	_
     kind = colormap;
     return bitmap != NULL;
 }

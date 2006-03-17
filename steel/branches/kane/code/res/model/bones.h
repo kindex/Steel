@@ -29,8 +29,8 @@ enum boneAFmt
 		NONE:		не установлен ни один флаг
 		LOADED:		файл загружен
 */
-const steelFlag32_t BFL_NONE=0;
-const steelFlag32_t BFL_LOADED=1;
+const steelFlag_t BFL_NONE=0;
+const steelFlag_t BFL_LOADED=1;
 
 /*
 	Одна кость,
@@ -158,7 +158,7 @@ public:
 	
 protected:
 	//	флаги
-	steelFlag32_t flags;
+	steelFlag_t flags;
 	
 	//	номер текущего кадра
 	steelFrame_t curFrame;

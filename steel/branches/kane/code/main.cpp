@@ -7,42 +7,79 @@
 #include "SDL.h"
 #include "graph/primiteves/res_model.h"
 #include "utils.h"
-
-ResCollection res;
-
-void test()
-{
-}
+#include "game/game.h"
+#include "common/debug.h"
 
 int main(int argc, char *argv[])
 {
-//	test();	return 0;
-
-	res.registerClass(new BMP, sizeof(BMP), "bmp");
-	res.registerClass(new _3DS, sizeof(_3DS), "3ds");
 	alog.open("steel.log");
-	_
-	ResCollection a;
-	_
-	res.add("1.bmp");
-	res.add("-.3ds");
-	res.add("4.3ds");
+	
+	ResCollection res;
+	res.registerClass(new BMP,	sizeof(BMP),	Res::image);
+	res.registerClass(new _3DS, sizeof(_3DS),	Res::model);
 
-	_
 	OpenGL_Engine graph;
+//	graph.window.
 	if(!graph.init()) return 1;
 
-	res_model world;
 	_
-	world.assign((Model*)res["-.3ds"]);
-	while ( true )
+	Game game(&res, &graph);
+	_
+	game.init();
+	_
+	int cx = graph.window.width/2;
+	int cy = graph.window.height/2;
+	int sx = cx, sy = cy, mx, my;
+	_
+	SDL_WarpMouse(cx, cy);
+	_
+	int lastdx = 0, lastdy = 0;
+	bool first = true;
+	_
+	bool alive = true;
+	while(alive && game.alive())
 	{
 		SDL_Event event;
-		if ( SDL_PollEvent(&event) )
-			if ( event.type==SDL_QUIT ) break;
-		graph.clear();
-		graph.inject(&world);
-		graph.process();
+		if(SDL_PollEvent(&event))
+			switch(event.type)
+			{
+				case SDL_QUIT:  
+					alive = false;
+					break;
+
+				case SDL_KEYDOWN:
+					game.handleEventKeyDown(SDL_GetKeyName(event.key.keysym.sym));
+					break;
+
+				case SDL_KEYUP:
+					game.handleEventKeyUp(SDL_GetKeyName(event.key.keysym.sym));
+					break;
+
+				case SDL_MOUSEMOTION:
+					if(!first && (event.motion.xrel != lastdx || event.motion.yrel != lastdy))
+					{
+						mx = event.motion.x;
+						my = event.motion.y;
+
+						SDL_WarpMouse(cx, cy);
+				
+						lastdx = cx - mx;
+						lastdy = cy - my;
+
+						game.handleMouse(lastdx, -lastdy);
+					}
+					else
+					{
+						lastdx = 0;
+						lastdy = 0;
+					}
+					first = false;
+					break;
+			}
+		if(!alive)break;
+
+		game.process();
+
 		SDL_Delay(1);
 	}
 

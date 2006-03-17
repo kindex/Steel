@@ -13,13 +13,51 @@
 
 #include "graph_interface.h"
 
+class GraphEngine;
+
+struct WindowSettings
+{
+    string caption, title; // if not fullscreen
+    int left, top, width, height, bpp;
+
+	WindowSettings();
+};
+
+class Camera
+{
+public:
+    v3 up, eye, center;
+public:
+    void seteye(const v3 &EYE) { eye = EYE; }
+    void setcenter(const v3 &CENTER) { center = CENTER; }
+
+	void setup(const v3 &EYE, const v3 &DIR)
+	{
+		eye = EYE;
+		center = EYE + DIR;
+	}
+
+	Camera(): 
+		up(v3(0.0, 0.0, 1.0)), 
+		eye(10.0, 10.0, 1.0), 
+		center(v3(0.0, 0.0, 0.0)) {}
+
+};
+
+typedef
+	vector<unsigned int>
+	vertexNumbers;
+
 class GraphEngine: public Engine
 {
 protected:
 	// data, to store collected information
-	vertexes	vertex;
-	triangles	triangle;
+	vertexes		vertex;
+	vertexNumbers	triangle;
 public:
+	WindowSettings window;
+	Camera camera;
+	virtual void processCamera() = 0;
 	// Collect information about object: how to render it
 	virtual bool inject(GraphInterface *object);
 	// Draw colelcted information. May be called few times without recollection information

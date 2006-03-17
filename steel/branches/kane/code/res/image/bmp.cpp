@@ -16,7 +16,7 @@ typedef unsigned char byte; // 1 byte
 typedef unsigned short word; // 2 bytes
 typedef unsigned long dword; // 4 bytes
 
-typedef struct { // 14 bytes
+typedef struct __attribute__((packed)) { // 14 bytes
 	unsigned char	bfType[2];		//òèï ôàéëà (äëÿ áèòîâîãî îáðàçà - BM)
 	dword	bfSize;		//ðàçìåð ôàéëà â dword
 	word	bfReserved1;	//íå èñïîëüçóåòñÿ
@@ -94,16 +94,17 @@ typedef struct { // 14 bytes
     } bmpBITMAPINFO;
 
 
-
-bool BMP::init(std::string& name)
-{   // TODO: load through CLASS (WADfile, disk,...)
+bool BMP::init(const std::string name, ResLocatorArray &loadBefore, ResLocatorArray &loadAfter)
+{  
+	// TODO: load through CLASS (WADfile, disk,...)
 	bmpBITMAPFILEHEADER fh; // file header
 	bmpBITMAPINFOHEADER ih;
 
 	if(sizeof(fh)!= 14) throw;
 //	int tty2 = sizeof(ih);
 
-	rstream f(name);
+	rstream f("../res/" + name + ".bmp");
+	if(!f.good()) return false;
 
 	f.read((char*)&fh,sizeof(fh));
 
@@ -179,6 +180,7 @@ int r;
 	   default: return false; // unsupported format 
    }
    kind = Image::colormap;
+ 
    return true;
 }
 

@@ -27,7 +27,6 @@ anee yoi iaiaoiaeii aey io?enoee iaiyoe.
 
 #include "../common/types.h"
 #include "../steel.h"
-#include "../utils.h"
 
 // Resourse stream
 class rstream: public std::ifstream
@@ -35,9 +34,7 @@ class rstream: public std::ifstream
 public:
 	rstream(std::string s) 
 	{ 
-		_
 		open(s.c_str(), std::ios::binary | std::ios::in); 
-		_
 	}
 	void read(void *dest, int size);
 	void skip(int n);// skip n byten in input stream
@@ -47,7 +44,26 @@ public:
 class Res: public steelAbstract
 {
 public:
-	virtual bool init(std::string& name) = 0;
+	typedef enum 
+	{
+			none,
+			image,
+			model
+	}	res_kind;
+
+	struct ResLocator
+	{
+		std::string name;
+		res_kind kind;
+	};
+
+	typedef
+		std::vector<ResLocator>
+		ResLocatorArray;
+
+#define RES_KIND_COUNT 3
+
+	virtual bool init(const std::string name, ResLocatorArray &loadBefore, ResLocatorArray &loadAfter) = 0;
 //	virtual bool load(rstream &f, int size) = 0;
 	virtual bool unload() = 0;
 //	virtual bool reload() = 0; // reload image on driver change
@@ -56,6 +72,8 @@ public:
 
 struct ClassCopy
 {
+	ClassCopy(Res* adata, int asize): data(adata), size(asize) {}
+
 	Res* data;
 	int size;
 };
@@ -66,17 +84,24 @@ class ResCollection: public steelAbstract
 //	typedef t_index::value_type value_type;
 //	typedef vector<string> t_names;
 
-	std::vector<Res*> data;
+	std::vector<Res*> data; // resources
+
 	std::map<const std::string,int> index; // Ïî èìåíè âîçâðàøàåò èíäåêñ â ìàññèâå data
 	std::vector<std::string> names;
 
-	std::map<const std::string, ClassCopy> classes;
+	typedef 
+		std::vector<ClassCopy> 
+		ResClassArray;
+
+	
+	ResClassArray classes[RES_KIND_COUNT];
 
 	int freeindex;
 public:
 	ResCollection(): freeindex(0) {}
 
 	Res* operator [] (const int n)        { return data[n]; }
+	bool find(const std::string& name) {return index.find(name) != index.end(); } 
     Res* operator [] (const std::string& name) { return data[getindex(name)]; }
 
     int getindex(const std::string& name)
@@ -87,16 +112,18 @@ public:
     int lastinsertedid(){ return freeindex-1; }
     void setname(int n, std::string name) { index[name] = n; names[n] = name; }
 
-	Res* addForce(const std::string& name);
-	Res* add(const std::string& name);
+	bool addForce(const Res::res_kind kind, const std::string& name);
+	bool add(const Res::res_kind kind, const std::string& name);
+
+	bool add(Res::ResLocatorArray &names);
 
 /*
 Neaao?uea 2 ooieoee caiiieia?o eeann ii eiaie e nicaa?o yecaiiey? caiiiiaiiiai eeanna.
 Noaiaa?oiiai ?aoaiey ia iaoae, ii yoiio y i?inoi ?a?ac malloc+memcpy eiie?o? iauaeo
 e aucuaa? aai eiino?oeoi? aua ?ac.
 */
-	void registerClass(Res* Class, int size, std::string fileextension);
-	Res* getClass(std::string fileextension);
+	void registerClass(Res* Class, int size, const Res::res_kind kind);
+	Res* createClass(ClassCopy *aclass);
 };
 
 

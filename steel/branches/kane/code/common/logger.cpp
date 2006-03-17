@@ -15,13 +15,13 @@ Logger alog;
 
 bool Logger::open( char *filename )
 {
-	f=fopen(filename,"a");
+	f = fopen(filename, "wt");
 	if ( f==NULL )
 	{
 		return false;
 	}
 	fprintf(f,"\n>>>>>>>>>>>>>>>>\n");
-	Logger::out("Started Logging\n");
+	Logger::out("Started Logging");
 	return true;
 }
 
@@ -32,7 +32,7 @@ bool Logger::open( std::string filename )
 
 bool Logger::close( void )
 {
-	Logger::out("Finished Logging\n");
+	Logger::out("Finished Logging");
 	fprintf(f,"<<<<<<<<<<<<<<<<\n");
 	if ( fclose(f)==-1 )
 		return false;
@@ -58,9 +58,21 @@ void Logger::out( char *fmt, ... )
 	vprintf(fmt,ap);
 	#endif
 	va_end(ap);
+	fprintf(f,"\n");
+	printf("\n");
 }
 
 void Logger::out( std::string str )
 {
-	
+	out(str.c_str());
+}
+
+void Logger::operator << ( std::string str )
+{
+	out(str.c_str());
+}
+
+void Logger::operator << ( char *str )
+{
+	out(str);
 }

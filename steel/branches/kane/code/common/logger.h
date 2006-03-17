@@ -28,6 +28,8 @@ public:
 	*/
 	void out( char *fmt, ... );
 	void out( std::string str );
+	void operator << ( std::string str );
+	void operator << ( char *str );
 
 private:
 	FILE *f;

@@ -1,6 +1,13 @@
 #include "graph_engine.h"
 
 
+WindowSettings::WindowSettings() 
+{ 
+	title	= "Steel Demo"; 
+	width	= 650; 
+	height	= width*3/4; 
+	bpp		= 32;
+}
 
 bool GraphEngine::inject(GraphInterface *object)
 {
@@ -20,11 +27,9 @@ bool GraphEngine::inject(GraphInterface *object)
 	triangles *t = object->getTriangles();
 	for(triangles::iterator it=t->begin(); it != t->end(); it++)
 	{
-		Triangle r;
-		r.a[0] = it->a[0] + start;
-		r.a[1] = it->a[1] + start;
-		r.a[2] = it->a[2] + start;
-		triangle.push_back(r);
+		triangle.push_back(it->a[0] + start);
+		triangle.push_back(it->a[1] + start);
+		triangle.push_back(it->a[2] + start);
 	}
 
 //		v3 pos = o.getPos();

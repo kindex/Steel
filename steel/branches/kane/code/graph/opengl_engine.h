@@ -16,18 +16,7 @@
 #include <gl\glaux.h>		// Header File For The Glaux Library
 #endif
 
-struct Window: public steelAbstract
-{
-    string caption, title; // if not fullscreen
-	SDL_Surface *surface;	// SDL surface
-    int width, height, bpp;
-	bool needupdate; // true on resize
 
-	Window();
-    bool createWin();
-    void create();
-    void repair();
-};
 
 
 
@@ -36,12 +25,17 @@ class OpenGL_Engine: public GraphEngine
 //protected:
 //	void clearWindow();
 
+	SDL_Surface *surface;	// SDL surface
+    bool createWin();
+    void create();
+    void repair();
+
+
 public:
+	void processCamera();
 	bool init();
 	bool process();
 	bool deinit();
-
-	Window *window;
 };
 
 

@@ -1,18 +1,18 @@
 #include "res.h"
-#include "../utils.h"
+
+#include "../common/debug.h"
 
 using namespace std;
 
-void ResCollection::registerClass(Res* Class, int size, string fileextension)
+void ResCollection::registerClass(Res* Class, int size, const Res::res_kind kind)
 {
-	classes[fileextension].data = Class;
-	classes[fileextension].size = size;
+	classes[kind].push_back(ClassCopy(Class,size));
 }
 
-Res* ResCollection::getClass(string fileextension)
+Res* ResCollection::createClass(ClassCopy *aclass)
 {
-	Res *a = (Res*)malloc(classes[fileextension].size);
-	memcpy((void*)a, classes[fileextension].data, classes[fileextension].size);
+	Res *a = (Res*)malloc(aclass->size);
+	memcpy((void*)a, aclass->data, aclass->size);
 	return a;
 }
 
@@ -27,46 +27,92 @@ string getext(string name)
 	return r;
 }
 
-Res* ResCollection::addForce(const string& name)
+bool ResCollection::add(Res::ResLocatorArray &names)
 {
-    index[name] = freeindex;
-    data.resize(freeindex+1);
-    names.resize(freeindex+1);
-    setname(freeindex, name);
-	_
-	string ext = getext(name);
-
-	data[freeindex] = getClass(ext);
-	_
-	string namecopy = name;
-	_
-	data[freeindex]->init(namecopy); // â ïîñëåäñòâèè õî÷ó ïåðåäàâàòü ïàðàìåòð èç çàãðóçêè ÷åðåç èçìåížííîå èìÿ
-	_
-    return data[freeindex++];
+	for(Res::ResLocatorArray::iterator it = names.begin();
+		it != names.end();
+		it++)
+	{
+		if(!find(it->name))
+		{
+			bool ret = addForce(it->kind, it->name);
+			if(!ret) return false;
+		}
+	}
+	return true;
 }
 
-Res* ResCollection::add(const string& name)
+
+/*
+name - èäåíòèôèêàòîð ðåñóðñà. Îáû÷íî ýòî èìÿ ôàéëà áåç ðàñøèðåíèÿ, 
+íî ìîæåò áûòü èïðîãðàììíî ãåíåðèðóåìîé òåñòóðîé.
+Ïðîáóåì çàãðóçèòü âñåìè äîñòóïíûìè çàãðóç÷èêàìè ïî ïîðÿäêó.
+*/
+
+bool ResCollection::addForce(const Res::res_kind kind, const std::string& name)
 {
-	_
+	for(ResClassArray::iterator it = classes[kind].begin(); it != classes[kind].end(); it++)
+	{
+		Res *loader = createClass(&(*it));
+		_
+		Res::ResLocatorArray loadBefore, loadAfter;
+		_
+		//std::cout << (void*)(loader->init) << std::endl;
+		_
+		std::cout << "name: " << name << std::endl;
+		//std::cout << "loadBefore: " << loadBefore << std::endl;
+		//std::cout << "loadAfter: " << loadAfter << std::endl;
+		bool ok = loader->init(name, loadBefore, loadAfter);
+		_
+		bool loaded = true;
+		while(!ok) // resource loaded
+		{
+			_
+			if(!add(loadBefore))
+			{
+				loaded = false;
+				break;
+			}
+			// preload complete
+			loadBefore.clear();
+			ok = loader->init(name, loadBefore, loadAfter);
+		} // exit whel all preloads complete or some error
+		if(!loaded) continue;
+		if(!add(loadAfter))
+			continue;
+		// else all laoded
+		_
+		index[name] = freeindex;
+	    data.resize(freeindex+1);
+	    names.resize(freeindex+1);
+	    setname(freeindex, name);
+		data[freeindex] = loader;
+	
+		freeindex++;
+		return true;
+	}
+	return false;
+}
+
+bool ResCollection::add(const Res::res_kind kind, const std::string& name)
+{
 	if(index.find(name) == index.end())
 	{
 		_
-		return addForce(name);
+		return addForce(kind, name);
 	}
 	else
-	return data[index[name]];
+		return true;
 }
 
-bool Res::init(string& name)
+/*bool Res::init(string& name)
 {
-	_
 	rstream f("../res/"+name);
 
-	_
 	if(!f.good()) return false;
-	//if(!this->load(f, 0)) return false;
+	if(!this->load(f, 0)) return false;
 	return !f.bad();
-}
+}*/
 
 //TEMP
 #define bufsize 1024
