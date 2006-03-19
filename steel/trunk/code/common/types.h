@@ -16,8 +16,10 @@
 /*
 	Промежуток времени (секунды)
 */
-typedef
-double steelTime_t;
+
+typedef double time;
+typedef float coord;
+typedef coord steelLength_t;
 
 /*
 	Промежуток времени (миллисекунды)
@@ -26,17 +28,10 @@ typedef
 unsigned int steelTimeM_t;
 
 /*
-	Путь (метры)
-*/
-typedef
-double steelLength_t;
-
-/*
 	Кадры
 */
 typedef
 unsigned int steelFrame_t;
-
 /*
 	Поле флагов (32 бита)
 */
@@ -45,10 +40,9 @@ unsigned int steelFlag32_t;
 
 /*
 	Угол (0 = 0 градусов, 2^32-1 -> 360-0 градусам)
-*/
+*/ 
 typedef
-unsigned int steelAngle_t;
-
+unsigned long int steelAngle_t;
 /*
 	Коды ошибок
 */

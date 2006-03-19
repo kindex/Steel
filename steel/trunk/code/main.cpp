@@ -15,6 +15,7 @@
 #include "res/material/material_conf.h"
 #include "common/logger.h"
 #include "graph/primiteves/res_model.h"
+#include "graph/time.h"
 #include "game/game.h"
 #include <SDL.h>
 
@@ -22,8 +23,11 @@ int main(int argc, char *argv[])
 {
 	alog.open("steel.log");
 
-	ResCollection res;
+	SDL_Init(SDL_INIT_TIMER);
+	Timer_SDL timer;
+	timer.start();
 
+	ResCollection res;
 	res.registerClass(new BMP,	sizeof(BMP),	Res::image);
 	res.registerClass(new _3DS, sizeof(_3DS),	Res::model);
 	res.registerClass(new MaterialConf, sizeof(MaterialConf),	Res::material);
@@ -36,7 +40,6 @@ int main(int argc, char *argv[])
 #endif
 
 	graph.bindResColelntion(&res);
-//	graph.window.
 	if(!graph.init()) return 1;
 
 
@@ -95,6 +98,9 @@ int main(int argc, char *argv[])
 		if(!alive)break;
 
 		game.process();
+		timer.incframe();
+
+		graph.setCaption(graph.window.title + " FPS = " + timer.getfps_s());
 
 		SDL_Delay(1);
 	}

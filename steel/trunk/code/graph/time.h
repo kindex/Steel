@@ -4,32 +4,64 @@
 #define timeH
 
 #include "../common/types.h"
+#include <string>
 
-/*
-extern steelFrame_t frame;
-extern bool fpsupdated;
-
-void initTime();
-void updateTime();
-double getfps();
-
-extern Time systemTime, programTime, programStartTime;
-extern Time speed, speed2;
-
-*/
-
-extern double curFPS;
-void initTime();
-bool updateFPS();
-
-/*
-struct Timer
+class Timer
 {
-    Time last;
-    void clear();
-    Time get();
+	bool active;
+    time startTime, skip, pausedTime, lastIntervalTime, curIntervalStartTime, fps;
+	int frameCnt, lastIntervalFrameCnt, curIntervalFrameCnt, totalFrames;
+
+public:
+// Время в секундах от момента clear, исключая промежутки между pause и resume
+	time total() 
+	{ 
+		return (timestamp() - startTime) - skip; 
+	}
+
+// Абсолютное время
+	virtual time timestamp() = 0; 
+// Обнулить таймер
+	virtual void start()
+	{
+		startTime	= timestamp();
+		skip	= 0.0;
+		active	= true;
+		frameCnt = 0;
+		fps		= -1.0;
+		lastIntervalTime		= 0.0;
+		curIntervalStartTime	= startTime;
+		lastIntervalFrameCnt	= 0;
+		curIntervalFrameCnt		= 0;
+		totalFrames	= 0;
+	}
+	virtual void pause()
+	{
+		active		= false;
+		pausedTime = timestamp();
+	}
+	virtual void resume()
+	{
+		if(!active)
+		{
+			active	= true;
+			skip	+= (timestamp() - pausedTime);
+		}
+	}
+// Сообщение таймеру о том, что кадр был обработан и следует обновить FPS
+	virtual void incframe();
+// Вернуть текушее количество кадров в секунду (FPS)
+	virtual time getfps();
+	virtual std::string getfps_s();
+
 };
-extern Timer timer;
-*/
+
+class Timer_SDL: public Timer
+{
+public:
+	time timestamp();
+
+};
+
 //---------------------------------------------------------------------------
 #endif

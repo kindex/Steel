@@ -16,6 +16,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////	
 
 #include "vector4d.h"
+#include "../common/types.h"
                 
 #ifndef MATRIX4X4_H
 #define MATRIX4X4_H

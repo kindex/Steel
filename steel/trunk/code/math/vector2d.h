@@ -17,6 +17,7 @@
 #define __MATH_V2_H
 
 #include "maths.h"
+#include "../common/types.h"
 
 class v2
 {

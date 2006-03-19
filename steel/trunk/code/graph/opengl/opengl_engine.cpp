@@ -97,12 +97,6 @@ bool OpenGL_Engine::process()
 //	glFlush();
 	swapBuffers();
 
-    if ( updateFPS() )
-    {
-        window.caption =  window.title + " FPS = " + FloatToStr(curFPS);
-		setCaption(window.caption);
-    }
-
 	return true;
 }
 
@@ -110,8 +104,6 @@ bool OpenGL_Engine::process()
 
 bool OpenGL_Engine::init()
 {
-    initTime();
-	
 	if (!createWindow())
 	{
 		lastError = getError();

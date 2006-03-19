@@ -23,7 +23,6 @@
 #define EPSILON 1.0e-10
 #endif
 
-typedef float coord; // ??
 
 template<typename T> T sqr(T x);
 template<typename T>int sgn(T A);

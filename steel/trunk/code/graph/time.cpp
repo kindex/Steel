@@ -4,69 +4,45 @@
 #pragma hdrstop
 #endif
 #include "time.h"
-#include "SDL.h"
+#include <SDL.h>
+#include "../utils.h"
 
-#define NORMAL_FPS 140
-#define UPDATE_FPS_TIME 1000
+#define NORMAL_FPS		(100.0)
+#define UPDATE_FPS_TIME (1.0)
 
-/*
-Time systemTime, programTime, programStartTime;//, one = 1.0;
-Frame frame, lastframe;
-//Time speed, speed2;   // x += 1*speed - x menjaetsja na 1 metr v sekundu
-Time lastfpstime, updatefpstime;
-bool fpsupdated;
-
-Time getSystemTime() 
-{ 
-	#ifdef __linux
-	return SDL_GetTicks();
-	#else
-	return GetTickCount(); 
-	#endif
-}
-*/
-
-/*
-void Timer::clear()
+void Timer::incframe()
 {
-    last = programTime;
+	frameCnt++;
+	totalFrames++;
 }
 
-Time Timer::get()
+
+time Timer::getfps()
 {
-    return programTime - last;
-}
-
-Timer timer;
-*/
-
-double curFPS;
-steelTimeM_t fpsTime, updatefpsTime;
-steelFrame_t frame;
-
-void initTime()
-{
-	SDL_Init(SDL_INIT_TIMER);
-
-	fpsTime		= SDL_GetTicks();
-    frame		= 0;
-    updatefpsTime = UPDATE_FPS_TIME;
-	curFPS		= NORMAL_FPS;
-}
-
-bool updateFPS()
-{
-	steelTimeM_t passedTime=SDL_GetTicks()-fpsTime;
-	frame++;
-	if ( passedTime>=updatefpsTime )
+	time ts = total();
+	time cur = ts - curIntervalStartTime;
+	if(cur >= UPDATE_FPS_TIME)
 	{
-		curFPS=1000.0*frame/passedTime;
-		frame=0;
-		fpsTime+=passedTime;
-		return true;
-	}	
-	else
-	{
-		return false;
+		lastIntervalTime = cur;
+		curIntervalStartTime = ts;
+		lastIntervalFrameCnt = frameCnt;
+		frameCnt = 0;
 	}
+	if(lastIntervalTime > 0.0)
+	{
+		fps = lastIntervalFrameCnt/lastIntervalTime;
+	}
+	return fps;
+}
+
+std::string Timer::getfps_s()
+{
+	return FloatToStr(getfps());
+}
+
+
+
+time Timer_SDL::timestamp()
+{
+	return SDL_GetTicks()*0.001;
 }
