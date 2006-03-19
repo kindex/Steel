@@ -316,14 +316,6 @@
 					RelativePath=".\graph\graph_interface.h"
 					>
 				</File>
-				<File
-					RelativePath=".\graph\time.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\graph\time.h"
-					>
-				</File>
 				<Filter
 					Name="primitives"
 					>
@@ -466,6 +458,14 @@
 				</File>
 				<File
 					RelativePath=".\common\logger.h"
+					>
+				</File>
+				<File
+					RelativePath=".\common\timer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\common\timer.h"
 					>
 				</File>
 				<File

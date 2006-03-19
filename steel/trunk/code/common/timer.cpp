@@ -3,7 +3,7 @@
 #ifndef __linux
 #pragma hdrstop
 #endif
-#include "time.h"
+#include "timer.h"
 #include <SDL.h>
 #include "../utils.h"
 

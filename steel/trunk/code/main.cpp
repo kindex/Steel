@@ -13,10 +13,13 @@
 #include "res/image/bmp.h"
 #include "res/model/_3ds.h"
 #include "res/material/material_conf.h"
-#include "common/logger.h"
 #include "graph/primiteves/res_model.h"
-#include "graph/time.h"
+
+#include "common/logger.h"
+#include "common/timer.h"
+
 #include "game/game.h"
+
 #include <SDL.h>
 
 int main(int argc, char *argv[])
@@ -26,6 +29,7 @@ int main(int argc, char *argv[])
 	SDL_Init(SDL_INIT_TIMER);
 	Timer_SDL timer;
 	timer.start();
+	double speed = 0.01; // 100 FPS
 
 	ResCollection res;
 	res.registerClass(new BMP,	sizeof(BMP),	Res::image);
@@ -96,11 +100,13 @@ int main(int argc, char *argv[])
 					break;
 			}
 		if(!alive)break;
-
+	
+		game.setspeed(speed);
 		game.process();
 		timer.incframe();
 
 		graph.setCaption(graph.window.title + " FPS = " + timer.getfps_s());
+		speed = 1.0/timer.getfps();
 
 		SDL_Delay(1);
 	}

@@ -1,31 +1,33 @@
 #include "game.h"
 #include "../common/logger.h"
 
+#define MOVE_SPEED (50.0f)
+#define LOOK_SPEED (0.01f)
 
 void Game::processKeyboard()
 {
-	if(isPressed("w")) eye += direction;
-	if(isPressed("s")) eye -= direction;
+	if(isPressed("w")) eye += MOVE_SPEED*speed*direction;
+	if(isPressed("s")) eye -= MOVE_SPEED*speed*direction;
 	if(isPressed("a"))
 	{
         v3 d(direction.y, -direction.x, 0);
         d.Normalize();
-        eye -= d;
+        eye -= MOVE_SPEED*speed*d;
 	}
 	if(isPressed("d"))
 	{
         v3 d(direction.y, -direction.x, 0);
         d.Normalize();
-        eye += d;
+        eye += MOVE_SPEED*speed*d;
 	}
 }
 
 void Game::handleMouse(double dx, double dy)
 {
-	angle.x += (float)dx*0.01f;
-	angle.y += (float)dy*0.01f;
-	if(angle.y >  M_PI*0.4f) angle.y =  (float)M_PI*0.4f;
-	if(angle.y < -M_PI*0.4f) angle.y = -(float)M_PI*0.4f;
+	angle.x += (float)dx*LOOK_SPEED;
+	angle.y += (float)dy*LOOK_SPEED;
+	if(angle.y >  M_PI*0.45f) angle.y =  (float)M_PI*0.45f;
+	if(angle.y < -M_PI*0.45f) angle.y = -(float)M_PI*0.45f;
 }
 
 

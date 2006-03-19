@@ -6,13 +6,13 @@
 #include "../graph/graph_engine.h"
 #include "../graph/primiteves/res_model.h"
 #include "../res/res.h"
-#include <SDL.h>
 #include <string>
 #include <map>
 
 class Game: public steelAbstract
 {
 private:
+	double speed;
 	bool _alive;
 //  Input-Output 
 	ResCollection *res;
@@ -35,6 +35,7 @@ public:
 	void handleEventKeyUp(std::string key);
 	void handleMouse(double dx, double dy);
 	bool alive() {return _alive;} 
+	void setspeed(double _speed) {speed = _speed;} 
 };
 
 #endif
