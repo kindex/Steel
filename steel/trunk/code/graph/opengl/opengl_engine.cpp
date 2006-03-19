@@ -88,10 +88,10 @@ bool OpenGL_Engine::process()
 
    glBegin(GL_QUADS);
     glColor3f(1,1,1);
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(-5.0f, -5.0f, -20.0f);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f( 5.0f, -5.0f, -20.0f);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f( 5.0f,  5.0f, -20.0f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(-5.0f,  5.0f, -20.0f);
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-5.0f, -5.0f, 0.0f);
+    glTexCoord2f(1.0f, 0.0f); glVertex3f( 5.0f, -5.0f, 0.0f);
+    glTexCoord2f(1.0f, 1.0f); glVertex3f( 5.0f,  5.0f, 0.0f);
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(-5.0f,  5.0f, 0.0f);
     glEnd();
 
 //	glFlush();
@@ -119,9 +119,12 @@ bool OpenGL_Engine::init()
 	}
 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL); 
+	glDepthRange(0.01, 1.0e+6);
+
+	glDepthFunc(GL_LESS); 
 	glCullFace(GL_BACK);
-    glFrontFace(GL_CCW);
+
+//    glFrontFace(GL_CCW);
     glEnable(GL_CULL_FACE);
 	glShadeModel(GL_SMOOTH);
 	
@@ -151,7 +154,7 @@ void OpenGL_Engine::processCamera()
     
 //	gluPerspective( camera.fov, (float)window.width/window.height, front, back );
 
-	gluPerspective(90.0, 1.0, 0, 1.0e+10);
+	gluPerspective(90.0, 1.0, 0.01, 1.0e+6);
 
 
     gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, 
