@@ -11,7 +11,11 @@ using namespace std;
 #include "main.h"
 
 
+//#define OPENGL_WIN
+
 HINSTANCE hInstance;
+
+/*extern int mainCRTStartup(void);
 
 /*int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 					HINSTANCE	hPrevInstance,		// Previous Instance
@@ -20,5 +24,6 @@ HINSTANCE hInstance;
 {
 	::hInstance = hInstance;
 
-	return main();							// Exit The Program
-}*/
+	return main(0, NULL);							// Exit The Program
+}
+*/

@@ -20,6 +20,8 @@ struct WindowSettings
 {
     string caption, title; // if not fullscreen
     int left, top, width, height, bpp;
+	
+	bool fullscreen;
 
 	WindowSettings();
 };

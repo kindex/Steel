@@ -46,10 +46,12 @@ steelFrame_t frame;
 
 void initTime()
 {
-	fpsTime=SDL_GetTicks();
-    frame = 0;
+	SDL_Init(SDL_INIT_TIMER);
+
+	fpsTime		= SDL_GetTicks();
+    frame		= 0;
     updatefpsTime = UPDATE_FPS_TIME;
-	curFPS=NORMAL_FPS;
+	curFPS		= NORMAL_FPS;
 }
 
 bool updateFPS()
@@ -62,7 +64,8 @@ bool updateFPS()
 		frame=0;
 		fpsTime+=passedTime;
 		return true;
-	}	else
+	}	
+	else
 	{
 		return false;
 	}

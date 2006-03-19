@@ -1,13 +1,22 @@
 
-#include "graph/opengl_engine.h"
+#include "_cpp.h"
+
+#ifdef OPENGL_SDL	
+	#include "graph/opengl/opengl_sdl_engine.h"
+#endif
+#ifdef OPENGL_WIN
+	#include "graph/opengl/opengl_win_engine.h"
+#endif
+
+
 #include "res/res.h"
 #include "res/image/bmp.h"
 #include "res/model/_3ds.h"
 #include "res/material/material_conf.h"
 #include "common/logger.h"
-#include <SDL.h>
 #include "graph/primiteves/res_model.h"
 #include "game/game.h"
+#include <SDL.h>
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +28,13 @@ int main(int argc, char *argv[])
 	res.registerClass(new _3DS, sizeof(_3DS),	Res::model);
 	res.registerClass(new MaterialConf, sizeof(MaterialConf),	Res::material);
 
-	OpenGL_Engine graph;
+#ifdef OPENGL_SDL	
+	OpenGL_SDL_Engine graph;
+#endif
+#ifdef OPENGL_WIN
+	OpenGL_WIN_Engine graph;
+#endif
+
 	graph.bindResColelntion(&res);
 //	graph.window.
 	if(!graph.init()) return 1;
@@ -31,7 +46,6 @@ int main(int argc, char *argv[])
 	int cx = graph.window.width/2;
 	int cy = graph.window.height/2;
 	int sx = cx, sy = cy, mx, my;
-
 
 	SDL_WarpMouse(cx, cy);
 
