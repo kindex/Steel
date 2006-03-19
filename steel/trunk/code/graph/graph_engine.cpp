@@ -12,6 +12,8 @@ WindowSettings::WindowSettings()
 bool GraphEngine::inject(GraphInterface *object)
 {
 //		Engine::inject(object);
+	objects.push_back(object);
+
 	GraphInterface &o = *(GraphInterface*)object;
 	GraphInterfaceList children = o.getChildrens();
 	for(GraphInterfaceList::iterator it=children.begin();
@@ -19,20 +21,46 @@ bool GraphEngine::inject(GraphInterface *object)
 		it++)
 		if(!inject(*it)) return false;
 
-	int start = vertex.size();
-	vertexes *v = object->getVertexes();
-	for(vertexes::iterator it=v->begin(); it != v->end(); it++)
-		vertex.push_back(*it);
+	FaceMaterials* m = object->getFaceMaterials();
+	Vertexes *v = object->getVertexes();
+	Triangles *t = object->getTriangles();
 
-	triangles *t = object->getTriangles();
-	for(triangles::iterator it=t->begin(); it != t->end(); it++)
+	if(t != NULL)
+	for(FaceMaterials::iterator it = m->begin(); it != m->end(); it++)
 	{
-		triangle.push_back(it->a[0] + start);
-		triangle.push_back(it->a[1] + start);
-		triangle.push_back(it->a[2] + start);
+		int c = elements.size();
+		elements.resize(c+1);
+
+		elements[c].material = it->first;
+
+// TODO	it->secondm olny tringles from this material
+
+		elements[c].triangle = new Triangles;
+
+		int s = it->second.size();
+		elements[c].triangle->clear();
+
+		for(int i=0; i<s; i++)
+			elements[c].triangle->push_back(t->operator [](it->second[i]));
+
+		elements[c].vertex = v;
+		elements[c].mapcoord = object->getMapCoords();
 	}
 
 //		v3 pos = o.getPos();
 	return true;
 }
 
+bool GraphEngine::clear()
+{
+//	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
+		//it->
+
+	for(vector<DrawElement>::iterator it = elements.begin(); it != elements.end(); it++)
+		delete it->triangle;
+
+	objects.clear();
+	elements.clear();
+
+	return true;
+}

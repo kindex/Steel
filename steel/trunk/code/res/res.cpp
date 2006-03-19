@@ -77,8 +77,10 @@ bool ResCollection::addForce(const Res::res_kind kind, const std::string& name)
 		index[name] = freeindex;
 	    data.resize(freeindex+1);
 	    names.resize(freeindex+1);
+	    resType.resize(freeindex+1);
 	    setname(freeindex, name);
 		data[freeindex] = loader;
+		resType[freeindex] = kind;
 	
 		alog.out("Res: loaded %s", name.c_str());
 

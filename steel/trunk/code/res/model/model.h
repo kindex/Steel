@@ -5,35 +5,7 @@
 #include "../../math/vector2d.h"
 #include "../../math/vector3d.h"
 
-/*typedef struct {
-	unsigned char material, filler;
-	unsigned long sm_group;
-	unsigned short flags;
-} Faces;
-*/
-
-typedef std::vector<v3> vertexes;
-
-// One triangle, indexes of vertexes
-struct Triangle // anti-clockwise direction (one side Triangle)
-{
-	unsigned int a[3];
-};
-
-typedef std::vector<Triangle> triangles;
-
-
-struct color_24
-{
-    unsigned char r,g,b;
-};
-
-struct color_f
-{
-    float r,g,b;
-    color_f() {}
-    color_f(float R, float G, float B): r(R), g(G), b(B) {}
-};
+#include "../../graph/graph_interface.h"
 
 
  //3D Object as triangles mesh, Abstract class
@@ -55,7 +27,7 @@ public:
     // links: http://www.ati.com/developer/sdk/RADEONSDK/Html/Tutorials/RADEONBumpMap.html
  
 //    mat_id mat;  
-	std::map<std::string, std::vector<int> > faceMaterial;
+	FaceMaterials faceMaterial;
 
     std::string name;
 

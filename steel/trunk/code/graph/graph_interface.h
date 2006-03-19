@@ -1,6 +1,34 @@
 #ifndef __GRAPH_INTERFACE_H
 #define __GRAPH_INTERFACE_H
 
+#include "../engine.h"
+#include "../math/geometry.h"
+
+
+// One triangle, indexes of vertexes
+struct Triangle // anti-clockwise direction (one side Triangle)
+{
+	unsigned int a[3];
+};
+
+typedef std::vector<v3>			Vertexes;
+typedef std::vector<Triangle>	Triangles;
+typedef std::vector<v2>			MapCoords;
+typedef std::map<std::string, std::vector<int> >  FaceMaterials;
+
+struct color_24
+{
+    unsigned char r,g,b;
+};
+
+struct color_f
+{
+    float r,g,b;
+    color_f() {}
+    color_f(float R, float G, float B): r(R), g(G), b(B) {}
+};
+
+
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 
 страндартный рендерер. Объекты составные. Родитель возвращает список
@@ -48,9 +76,14 @@ Video textures (avi, camera)
 	// отвечать за хранние этих данных до следующего вызова этой функции
 	// или вызова cleanup
 	virtual bool cleanup() = 0; // при необходимости отчищает 
-	virtual vertexes*	getVertexes() = 0; // список вершин. 
+	virtual Vertexes*	getVertexes() = 0; // список вершин. 
+
 	// массив индексов вершин, которые образуют треугольники (грани)
-	virtual triangles*	getTriangles() = 0; 
+	virtual Triangles*	getTriangles() = 0; 
+
+	virtual MapCoords*	getMapCoords() = 0; 
+	virtual FaceMaterials* getFaceMaterials() = 0;
+
 	// материал каждой грани
 //	virtual faces*	getFaces() = 0; // NULL if none
 

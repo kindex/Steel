@@ -79,14 +79,14 @@ void Game::handleEventKeyDown(std::string key)
 	
 	keyPressed[key] = true;
 
-	alog.out("KeyDOWN: %s", key.c_str());
+//	alog.out("KeyDOWN: %s", key.c_str());
 }
 
 void Game::handleEventKeyUp(std::string key)
 {
 	keyPressed[key] = false;
 
-	alog.out("KeyUP  : %s", key.c_str());
+//	alog.out("KeyUP  : %s", key.c_str());
 }
 
 bool Game::isPressed(std::string key)

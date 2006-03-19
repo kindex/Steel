@@ -7,7 +7,8 @@
 #include "../math/geometry.h"
 
 // RES
-#include "../res/model/model.h"
+#include "../res/res.h"
+#include "../res/material/material.h"
 
 /********************************* GRAPH **********************************************/
 
@@ -44,16 +45,27 @@ public:
 
 };
 
-typedef
-	vector<unsigned int>
-	vertexNumbers;
-
 class GraphEngine: public Engine
 {
 protected:
+	struct DrawElement
+	{
+		std::string material;
+
+		Vertexes	*vertex;
+		Triangles	*triangle;
+		MapCoords	*mapcoord;
+	};
+
 	// data, to store collected information
-	vertexes		vertex;
-	vertexNumbers	triangle;
+	vector<DrawElement> elements;
+	vector<GraphInterface*> objects;
+
+	ResCollection *res;
+
+
+//	vertexes		vertex;
+	//vertexNumbers	triangle;
 public:
 	WindowSettings window;
 	Camera camera;
@@ -63,12 +75,9 @@ public:
 	// Draw colelcted information. May be called few times without recollection information
 	bool process() = 0; // Override OpenGL, D3D, ...\
 	// Clear collected information
-	bool clear()
-	{
-		vertex.clear();
-		triangle.clear();
-		return true;
-	}
+	bool clear();
+
+	void bindResColelntion(ResCollection *_res) { res = _res; }
 };
 
 #endif

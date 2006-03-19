@@ -71,6 +71,7 @@ class ResCollection
 //	typedef vector<string> t_names;
 
 	std::vector<Res*> data; // resources
+	std::vector<Res::res_kind> resType;
 
 	std::map<const std::string,int> index; // ѕо имени возврашает индекс в массиве data
 	std::vector<std::string> names;
@@ -88,11 +89,34 @@ public:
 
 	Res* operator [] (const int n)        { return data[n]; }
 	bool find(const std::string& name) {return index.find(name) != index.end(); } 
-    Res* operator [] (const std::string& name) { return data[getindex(name)]; }
+    
+	Res* operator [] (const std::string& name) 
+	{
+		Res::res_kind kind;
+		return get(name, kind);
+	}
 
-    int getindex(const std::string& name)
+	Res* get(const std::string& name, Res::res_kind &kind) 
+	{ 
+		int i = getIndex(name);
+		if(i<0)
+		{
+			kind = Res::none;
+			return NULL;
+		}
+		else
+		{
+			kind = resType[i];
+			return data[i]; 
+		}
+}
+
+    int getIndex(const std::string name)
     {
-        return index[name];
+		if(index.find(name) != index.end())
+			return index[name];
+		else
+			return -1;
     }  /*If exist - return*, esle 0 */
 
     int lastinsertedid(){ return freeindex-1; }

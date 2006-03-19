@@ -16,14 +16,10 @@
 #include <gl\glaux.h>		// Header File For The Glaux Library
 #endif
 
-
-
-
-
 class OpenGL_Engine: public GraphEngine
 {
-//protected:
-//	void clearWindow();
+protected:
+	map<std::string, GLuint> registredTextures;
 
 	SDL_Surface *surface;	// SDL surface
     bool createWin();
@@ -36,6 +32,9 @@ public:
 	bool init();
 	bool process();
 	bool deinit();
+
+	void drawElement(DrawElement &e);
+	GLuint getTexture(std::string imageName);
 };
 
 

@@ -33,6 +33,7 @@ public:
         enum {none2, colormap, normalmap}  imagekindtype;
 
 protected:
+	public:// todo
     unsigned char* bitmap;
     int width, height, bpp;
     unsigned int id; // for OpenGL

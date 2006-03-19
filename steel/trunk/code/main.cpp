@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
 	res.registerClass(new MaterialConf, sizeof(MaterialConf),	Res::material);
 
 	OpenGL_Engine graph;
+	graph.bindResColelntion(&res);
 //	graph.window.
 	if(!graph.init()) return 1;
 

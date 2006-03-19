@@ -32,14 +32,23 @@ public:
 	{
 		return true;
 	}
-	vertexes*	getVertexes()
+	Vertexes*	getVertexes()
 	{
 		return &m->vertex;
 	}
-	triangles*	getTriangles()
+	Triangles*	getTriangles()
 	{
 		return &m->triangle;
 	}
+	MapCoords*	getMapCoords()
+	{
+		return &m->mapcoord;
+	}
+	FaceMaterials* getFaceMaterials()
+	{
+		return &m->faceMaterial;
+	}
+
 };
 
 #endif
