@@ -3,6 +3,7 @@
 
 #include "../engine.h"
 #include "../math/geometry.h"
+#include "../math/matrix4x4.h"
 
 
 // One triangle, indexes of vertexes
@@ -84,9 +85,7 @@ Video textures (avi, camera)
 	virtual MapCoords*	getMapCoords() = 0; 
 	virtual FaceMaterials* getFaceMaterials() = 0;
 
-	// материал каждой грани
-//	virtual faces*	getFaces() = 0; // NULL if none
-
+	virtual MATRIX4X4 getMatrix() = 0;
 };
 
 #endif

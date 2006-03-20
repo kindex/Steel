@@ -63,5 +63,12 @@ void Logger::out( char *fmt, ... )
 
 void Logger::out( std::string str )
 {
-	
+	out("%s", str.c_str());
+}
+
+void Logger::msg(std::string keywords, std::string str)
+{
+	// check heywords
+
+	out("%s [%s]", str.c_str(), keywords.c_str());
 }

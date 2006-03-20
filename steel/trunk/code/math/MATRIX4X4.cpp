@@ -102,10 +102,10 @@ v4 MATRIX4X4::GetColumn(int position) const
 void MATRIX4X4::LoadIdentity(void)
 {
 	memset(entries, 0, 16*sizeof(float));
-	entries[0]=1.0f;
-	entries[5]=1.0f;
-	entries[10]=1.0f;
-	entries[15]=1.0f;
+	entries[0]	= 1.0f;
+	entries[5]	= 1.0f;
+	entries[10]	= 1.0f;
+	entries[15]	= 1.0f;
 }
 
 void MATRIX4X4::LoadZero(void)

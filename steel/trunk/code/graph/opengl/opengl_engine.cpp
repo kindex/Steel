@@ -44,6 +44,7 @@ GLuint OpenGL_Engine::getTexture(std::string imageName)
 
 void OpenGL_Engine::drawElement(DrawElement &e)
 {
+	glLoadMatrixf(e.matrix.entries);
 	if(e.triangle && e.vertex)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
@@ -85,15 +86,7 @@ bool OpenGL_Engine::process()
 	for(vector<DrawElement>::iterator it = elements.begin(); it != elements.end(); it++)
 		drawElement((*it));
 
-   glBegin(GL_QUADS);
-    glColor3f(1,1,1);
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(-5.0f, -5.0f, 0.0f);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f( 5.0f, -5.0f, 0.0f);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f( 5.0f,  5.0f, 0.0f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(-5.0f,  5.0f, 0.0f);
-    glEnd();
-
-//	glFlush();
+	glFlush();
 	swapBuffers();
 
 	return true;

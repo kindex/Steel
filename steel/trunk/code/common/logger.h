@@ -29,6 +29,9 @@ public:
 	void out( char *fmt, ... );
 	void out( std::string str );
 
+	void msg(std::string keywords, std::string str);
+
+
 private:
 	FILE *f;
 };

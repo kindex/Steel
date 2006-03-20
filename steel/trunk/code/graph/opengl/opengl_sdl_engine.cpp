@@ -43,13 +43,11 @@ bool OpenGL_SDL_Engine::createWindow()
 		videoFlags |= SDL_HWACCEL;
 	
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,   1 );
-/*	SDL_GL_SetAttribute(SDL_GL_RED_SIZE,   8 ); // min 8bit red
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE,   8 ); // min 8bit red
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8 ); // min 8bit green
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,  8 ); // min 8bit blue	
 	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);*/
-
-
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
 
 	surface = SDL_SetVideoMode(window.width, window.height, window.bpp, videoFlags);
 	if ( !surface )

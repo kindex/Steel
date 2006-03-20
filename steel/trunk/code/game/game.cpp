@@ -35,6 +35,10 @@ void Game::process()
 {
 		processKeyboard();
 
+
+		obj[0].pos.entries[0] = sin(time);
+		obj[0].pos.entries[5] = cos(time);
+
 		graph->clear();
 
 	    direction = 
@@ -48,7 +52,7 @@ void Game::process()
 
 		graph->processCamera();
 
-		for(vector<res_model>::iterator it = obj.begin(); it != obj.end(); it++)
+		for(vector<Game_obj>::iterator it = obj.begin(); it != obj.end(); it++)
 			graph->inject(&(*it));
 
 		graph->process();
@@ -69,7 +73,7 @@ bool Game::init()
 
 	obj.resize(1);
 	obj[0].assign((Model*)res->operator[]("teapot"));
-
+	
 	_alive = true;
 	return true;
 }

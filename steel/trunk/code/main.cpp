@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 			}
 		if(!alive)break;
 	
-		game.setspeed(speed);
+		game.setspeed(speed, timer.total());
 		game.process();
 		timer.incframe();
 

@@ -5,6 +5,7 @@
 #include "../math/maths.h"
 #include "../math/vector3d.h"
 #include "../math/geometry.h"
+#include "../math/matrix4x4.h"
 
 // RES
 #include "../res/res.h"
@@ -57,6 +58,7 @@ protected:
 		Vertexes	*vertex;
 		Triangles	*triangle;
 		MapCoords	*mapcoord;
+		MATRIX4X4	matrix;
 	};
 
 	// data, to store collected information

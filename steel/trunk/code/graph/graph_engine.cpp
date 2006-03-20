@@ -49,6 +49,7 @@ bool GraphEngine::inject(GraphInterface *object)
 
 		elements[c].vertex = v;
 		elements[c].mapcoord = object->getMapCoords();
+		elements[c].matrix = object->getMatrix();
 	}
 
 //		v3 pos = o.getPos();

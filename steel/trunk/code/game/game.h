@@ -9,10 +9,21 @@
 #include <string>
 #include <map>
 
+class Game_obj: public res_model
+{
+public:
+	MATRIX4X4 pos;
+
+	MATRIX4X4 getMatrix()
+	{
+		return pos;
+	}
+};
+
 class Game: public steelAbstract
 {
 private:
-	double speed;
+	double speed, time;
 	bool _alive;
 //  Input-Output 
 	ResCollection *res;
@@ -23,7 +34,7 @@ private:
 	void processKeyboard();
 
 // World
-	vector<res_model> obj;
+	vector<Game_obj> obj;
 // Camera
 	v3	eye, direction, angle;
 
@@ -35,7 +46,7 @@ public:
 	void handleEventKeyUp(std::string key);
 	void handleMouse(double dx, double dy);
 	bool alive() {return _alive;} 
-	void setspeed(double _speed) {speed = _speed;} 
+	void setspeed(double _speed, double _time) {speed = _speed; time = _time; } 
 };
 
 #endif

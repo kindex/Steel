@@ -48,6 +48,13 @@ public:
 	{
 		return &m->faceMaterial;
 	}
+	MATRIX4X4 getMatrix()
+	{
+		MATRIX4X4 a;
+		a.LoadIdentity();
+		return a;
+	}
+
 
 };
 
