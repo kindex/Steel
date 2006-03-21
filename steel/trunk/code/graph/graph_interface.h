@@ -12,9 +12,16 @@ struct Triangle // anti-clockwise direction (one side Triangle)
 	unsigned int a[3];
 };
 
+struct Light
+{
+	v3 pos;
+	float intensivity, range;
+};
+
 typedef std::vector<v3>			Vertexes;
 typedef std::vector<Triangle>	Triangles;
 typedef std::vector<v2>			MapCoords;
+typedef std::vector<Light>		Lights;
 typedef std::map<std::string, std::vector<int> >  FaceMaterials;
 
 struct color_24
@@ -50,8 +57,6 @@ public:
 /*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
 	virtual GraphInterfaceList getChildrens() = 0;
 
-/*Любая точка внутри объекта. Относительно этой точки рисуется оьъект (координатывершин)*/
-	virtual v3 getPos() = 0; // return center of object, origin
 /*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
 	virtual aabb getFrame() = 0; // AABB of object
 /*Форма объектя для рисования (без формы потомков)
@@ -60,9 +65,7 @@ public:
  quality = 1 - со всеми деталями
  В зависимости от расстояния и производительности машины.
 
-Vertex
-Face
-Material
+
 Sprites ?
 NURBS ?
 Lights
@@ -84,7 +87,9 @@ Video textures (avi, camera)
 
 	virtual MapCoords*	getMapCoords() = 0; 
 	virtual FaceMaterials* getFaceMaterials() = 0;
+	virtual Lights* getLights() = 0;
 
+/*?? Любая точка внутри объекта. Относительно этой точки рисуется оьъект (координатывершин)*/
 	virtual MATRIX4X4 getMatrix() = 0;
 };
 

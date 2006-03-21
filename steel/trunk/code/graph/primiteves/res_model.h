@@ -9,7 +9,10 @@ class res_model: public GraphInterface
 private:
 	Model *m;
 public:
-	void assign(Model *M)
+
+	res_model() { m = NULL; }
+
+	void assignModel(Model *M)
 	{
 		m = M;
 	}
@@ -18,10 +21,6 @@ public:
 	{
 		GraphInterfaceList a;
 		return a;
-	}
-	v3 getPos()
-	{
-		return v3(0.0, 0.0, 0.0);
 	}
 	aabb getFrame()
 	{
@@ -34,25 +33,39 @@ public:
 	}
 	Vertexes*	getVertexes()
 	{
-		return &m->vertex;
+		if(m)
+			return &m->vertex;
+		else
+			return NULL;
 	}
 	Triangles*	getTriangles()
 	{
-		return &m->triangle;
+		if(m)
+			return &m->triangle;
+		else
+			return NULL;
 	}
 	MapCoords*	getMapCoords()
 	{
-		return &m->mapcoord;
+		if(m)
+			return &m->mapcoord;
+		else
+			return NULL;
 	}
 	FaceMaterials* getFaceMaterials()
 	{
-		return &m->faceMaterial;
+		if(m)
+			return &m->faceMaterial;
+		else
+			return NULL;
 	}
 	MATRIX4X4 getMatrix()
 	{
-		MATRIX4X4 a;
-		a.LoadIdentity();
-		return a;
+		return MATRIX4X4();
+	}
+	Lights* getLights()
+	{
+		return NULL;
 	}
 
 

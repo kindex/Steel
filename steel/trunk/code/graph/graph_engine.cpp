@@ -13,17 +13,22 @@ WindowSettings::WindowSettings()
 	fullscreen = false;
 }
 
-bool GraphEngine::inject(GraphInterface *object)
+bool GraphEngine::inject(GraphInterface *object, MATRIX4X4 matrix)
 {
-//		Engine::inject(object);
 	objects.push_back(object);
+	MATRIX4X4 cur_matrix, new_matrix;
+
+	cur_matrix = object->getMatrix();
+	new_matrix = matrix*cur_matrix;
+
+	
 
 	GraphInterface &o = *(GraphInterface*)object;
 	GraphInterfaceList children = o.getChildrens();
 	for(GraphInterfaceList::iterator it=children.begin();
 		it != children.end();
 		it++)
-		if(!inject(*it)) return false;
+		if(!inject(*it, new_matrix)) return false;
 
 	FaceMaterials* m = object->getFaceMaterials();
 	Vertexes *v = object->getVertexes();
@@ -49,7 +54,7 @@ bool GraphEngine::inject(GraphInterface *object)
 
 		elements[c].vertex = v;
 		elements[c].mapcoord = object->getMapCoords();
-		elements[c].matrix = object->getMatrix();
+		elements[c].matrix = new_matrix;
 	}
 
 //		v3 pos = o.getPos();

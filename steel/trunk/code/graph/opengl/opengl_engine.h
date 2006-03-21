@@ -23,6 +23,8 @@ protected:
     void create();
     void repair();
 
+	GLuint normalisationCubeMap;
+	void makeNormalisationCubeMap();
 
 public:
 	void processCamera();

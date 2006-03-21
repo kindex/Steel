@@ -328,6 +328,14 @@
 					Name="OpenGL"
 					>
 					<File
+						RelativePath=".\graph\opengl\extensions.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\graph\opengl\extensions.h"
+						>
+					</File>
+					<File
 						RelativePath=".\graph\opengl\opengl_engine.cpp"
 						>
 					</File>

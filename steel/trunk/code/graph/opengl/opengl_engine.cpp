@@ -6,7 +6,7 @@
 #include "../../common/logger.h"
 
 #include "../../res/image/image.h"
-
+#include "extensions.h"
 
 GLuint OpenGL_Engine::getTexture(std::string imageName)
 {
@@ -58,7 +58,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			return;
 		}
 
-		GLuint texture = getTexture(m->diffuse);
+		GLuint texture = getTexture(m->var_s->operator []("diffuse"));
 
 		if(e.mapcoord && texture>=0)
 		{
@@ -114,6 +114,9 @@ bool OpenGL_Engine::init()
 	
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
+	SetUpARB_multitexture();
+	makeNormalisationCubeMap();
+
 	alog.out("OpenGL engine has been initialized!\n");
 
 	setCaption("Steel Engine");
@@ -147,4 +150,18 @@ void OpenGL_Engine::processCamera()
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+}
+
+
+void OpenGL_Engine::makeNormalisationCubeMap()
+{
+	glGenTextures(1, &normalisationCubeMap);
+	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, normalisationCubeMap);
+	GenerateNormalisationCubeMap();
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 }

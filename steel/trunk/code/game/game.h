@@ -9,16 +9,54 @@
 #include <string>
 #include <map>
 
-class Game_obj: public res_model
+class GameObj: public res_model
 {
 public:
+	GameObj *parent;
+	vector<GameObj*> children;
+public:
 	MATRIX4X4 pos;
-
+	
+	GameObj() {}
+	GameObj(Model *M) { assignModel(M);}
 	MATRIX4X4 getMatrix()
 	{
 		return pos;
 	}
+	void attach(GameObj *obj) 
+	{ 
+		parent = obj; 
+	}
+	void addChildren(GameObj *obj)
+	{
+		children.push_back(obj);
+		obj->attach(this);
+	}
+	GraphInterfaceList getChildrens()
+	{
+		GraphInterfaceList a;
+		for(vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
+			a.push_back(*it);
+		return a;
+	}
 };
+
+class GameLight: public GameObj
+{
+public:
+	v3 pos;
+
+	Lights* getLights()
+	{
+		Lights *a = new Lights(1);
+		a->operator [](0).intensivity = 1.0f;
+		a->operator [](0).range = 1000;
+		a->operator [](0).pos = pos;
+		return a;
+	}
+	
+};
+
 
 class Game: public steelAbstract
 {
@@ -34,7 +72,7 @@ private:
 	void processKeyboard();
 
 // World
-	vector<Game_obj> obj;
+	vector<GameObj*> obj;
 // Camera
 	v3	eye, direction, angle;
 

@@ -3,12 +3,15 @@
 
 #include "../res.h"
 #include <string>
+#include <map>
 
 class Material: public Res
 {
 public:
-	std::string diffuse;
-
+//string settings
+	std::map<std::string, std::string> *var_s;
+// float-number settings
+	std::map<std::string, float> *var_f;
 };
 
 #endif

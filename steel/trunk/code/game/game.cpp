@@ -6,19 +6,19 @@
 
 void Game::processKeyboard()
 {
-	if(isPressed("w")) eye += MOVE_SPEED*speed*direction;
-	if(isPressed("s")) eye -= MOVE_SPEED*speed*direction;
+	if(isPressed("w")) eye += (float)MOVE_SPEED*(float)speed*direction;
+	if(isPressed("s")) eye -= (float)MOVE_SPEED*(float)speed*direction;
 	if(isPressed("a"))
 	{
         v3 d(direction.y, -direction.x, 0);
         d.Normalize();
-        eye -= MOVE_SPEED*speed*d;
+        eye -= (float)MOVE_SPEED*(float)speed*d;
 	}
 	if(isPressed("d"))
 	{
         v3 d(direction.y, -direction.x, 0);
         d.Normalize();
-        eye += MOVE_SPEED*speed*d;
+        eye += (float)MOVE_SPEED*(float)speed*d;
 	}
 }
 
@@ -35,9 +35,19 @@ void Game::process()
 {
 		processKeyboard();
 
+		for(int i=0; i<3; i++)
+			obj[1]->pos.entries[i+i*4] = 0.20f;
 
-		obj[0].pos.entries[0] = sin(time);
-		obj[0].pos.entries[5] = cos(time);
+		obj[1]->pos.entries[12] = (float)cos(time)*50.0f;
+		obj[1]->pos.entries[13] = (float)sin(time)*50.0f;
+		obj[1]->pos.entries[14] = 20;
+
+		for(int i=0; i<3; i++)
+			obj[1]->children[0]->pos.entries[i+i*4] = 0.20f;
+
+		obj[1]->children[0]->pos.entries[12] = (float)cos(-time)*60.0f;
+		obj[1]->children[0]->pos.entries[13] = (float)sin(-time)*60.0f;
+		obj[1]->children[0]->pos.entries[14] = 20;
 
 		graph->clear();
 
@@ -52,8 +62,8 @@ void Game::process()
 
 		graph->processCamera();
 
-		for(vector<Game_obj>::iterator it = obj.begin(); it != obj.end(); it++)
-			graph->inject(&(*it));
+		for(vector<GameObj*>::iterator it = obj.begin(); it != obj.end(); it++)
+			graph->inject((*it));
 
 		graph->process();
 
@@ -71,8 +81,17 @@ bool Game::init()
 
 	res->add(Res::model, "teapot");
 
-	obj.resize(1);
-	obj[0].assign((Model*)res->operator[]("teapot"));
+	obj.resize(2);
+	obj[0] = new GameObj;
+	obj[0]->assignModel((Model*)res->getModel("teapot"));
+
+	obj[1] = new GameObj;
+	obj[1]->assignModel((Model*)res->getModel("teapot"));
+
+	obj[1]->addChildren(new GameObj((Model*)res->getModel("teapot")));
+
+
+//	obj[2] = new GameLight;
 	
 	_alive = true;
 	return true;
@@ -84,15 +103,11 @@ void Game::handleEventKeyDown(std::string key)
 	if(key == "escape") _alive = false;
 	
 	keyPressed[key] = true;
-
-//	alog.out("KeyDOWN: %s", key.c_str());
 }
 
 void Game::handleEventKeyUp(std::string key)
 {
 	keyPressed[key] = false;
-
-//	alog.out("KeyUP  : %s", key.c_str());
 }
 
 bool Game::isPressed(std::string key)

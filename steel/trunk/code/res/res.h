@@ -9,6 +9,7 @@
 
 #include "../common/types.h"
 #include "../steel.h"
+#include "../_cpp.h"
 
 // Resourse stream
 class rstream: public std::ifstream
@@ -109,7 +110,19 @@ public:
 			kind = resType[i];
 			return data[i]; 
 		}
-}
+	}
+	Res* getModel(const std::string& name)
+	{
+		Res::res_kind kind;
+		Res* m = get(name, kind);
+		if(kind == Res::model)
+			return m;
+		else
+		{
+			alog.msg("error res model", "Model not found: "+name);
+			return NULL;
+		}
+	}
 
     int getIndex(const std::string name)
     {
