@@ -8,7 +8,6 @@
 	#include "graph/opengl/opengl_win_engine.h"
 #endif
 
-
 #include "res/res.h"
 #include "res/image/bmp.h"
 #include "res/model/_3ds.h"
@@ -35,6 +34,7 @@ int main(int argc, char *argv[])
 	res.registerClass(new BMP,	sizeof(BMP),	Res::image);
 	res.registerClass(new _3DS, sizeof(_3DS),	Res::model);
 	res.registerClass(new MaterialConf, sizeof(MaterialConf),	Res::material);
+	res.registerClass(new NormalMap, sizeof(NormalMap),	Res::normalMap);
 
 #ifdef OPENGL_SDL	
 	OpenGL_SDL_Engine graph;
@@ -44,10 +44,10 @@ int main(int argc, char *argv[])
 #endif
 
 	graph.bindResColelntion(&res);
+
 	if(!graph.init()) return 1;
-
-
-	Game game(&res, &graph);
+	
+	Game game(&res);
 	game.init();
 	
 	int cx = graph.window.width/2;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
 // ******************* MAIN LOOP ************************
 	alog.msg("core", "Entering main loop");
-	bool first = true, alive = true;
+	bool first = true, firstMouse = true, alive = true;
 	while(alive && game.alive())
 	{
 		SDL_Event event;
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
 					break;
 
 				case SDL_MOUSEMOTION:
-					if(!first && (event.motion.xrel != lastdx || event.motion.yrel != lastdy))
+					if(!firstMouse && (event.motion.xrel != lastdx || event.motion.yrel != lastdy))
 					{
 						mx = event.motion.x;
 						my = event.motion.y;
@@ -98,17 +98,28 @@ int main(int argc, char *argv[])
 						lastdx = 0;
 						lastdy = 0;
 					}
-					first = false;
+					firstMouse = false;
 					break;
 			}
 		if(!alive)break;
 	
 		game.setspeed(speed, timer.total());
+		
 		game.process();
+
+		graph.clear();
+		game.draw(&graph);
+
 		timer.incframe();
 
 		graph.setCaption(graph.window.title + " FPS = " + timer.getfps_s());
 		speed = 1.0/timer.getfps();
+
+		if(first)
+		{
+			first = false;
+			alog.msg("core", "Main loop: first frame passed");
+		}
 
 		SDL_Delay(1);
 	}

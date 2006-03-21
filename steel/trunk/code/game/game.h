@@ -63,8 +63,7 @@ private:
 	bool _alive;
 //  Input-Output 
 	ResCollection *res;
-	GraphEngine *graph;
-	
+
 	std::map<std::string, bool> keyPressed;
 	bool isPressed(std::string key);
 	void processKeyboard();
@@ -75,9 +74,10 @@ private:
 	v3	eye, direction, angle;
 
 public:
-	Game(ResCollection *ares, GraphEngine *agraph) { res = ares; graph = agraph; } 
+	Game(ResCollection *_res) { res = _res;  } 
 	bool init();
 	void process();
+	void draw(GraphEngine *graph);
 	void handleEventKeyDown(std::string key);
 	void handleEventKeyUp(std::string key);
 	void handleMouse(double dx, double dy);

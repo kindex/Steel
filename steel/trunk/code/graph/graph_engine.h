@@ -60,10 +60,7 @@ protected:
 		MapCoords	*mapcoord;
 		Normals		*normal;
 		MATRIX4X4	matrix;
-		std::vector<v3> sTangent, tTangent, tangentSpaceLight;
-
-		void updateTangentSpace();
-
+//		std::vector<v3> sTangent, tTangent, tangentSpaceLight;
 	};
 
 	// data, to store collected information

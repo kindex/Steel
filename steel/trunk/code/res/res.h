@@ -23,15 +23,17 @@ public:
 	void skip(int n);// skip n byten in input stream
 };
 
+class ResCollection;
 
 class Res: public steelAbstract
 {
 public:
-#define RES_KIND_COUNT 4
+#define RES_KIND_COUNT 5
 	typedef enum 
 	{
 			none,
 			image,
+			normalMap,
 			model,
 			material
 	}	res_kind;
@@ -50,7 +52,7 @@ public:
 
 
 
-	virtual bool init(const std::string name, ResLocatorArray &loadBefore, ResLocatorArray &loadAfter) = 0;
+	virtual bool init(const std::string name, ResCollection &res) = 0;
 //	virtual bool load(rstream &f, int size) = 0;
 	virtual bool unload() = 0;
 //	virtual bool reload() = 0; // reload image on driver change
@@ -93,11 +95,29 @@ public:
     
 	Res* operator [] (const std::string& name) 
 	{
-		Res::res_kind kind;
-		return get(name, kind);
+		int i = getIndex(name);
+		if(i<0)
+			return NULL;
+		else
+			return data[i];
 	}
 
-	Res* get(const std::string& name, Res::res_kind &kind) 
+	Res* get(const Res::res_kind kind, const std::string& name) 
+	{ 
+		int i = getIndex(name);
+		if(i<0)
+			return NULL;
+		else
+		{
+			if(kind == resType[i])
+				return data[i]; 
+			else
+				return NULL;
+		}
+	}
+
+
+/*	Res* get(Res::res_kind &kind, const std::string& name) 
 	{ 
 		int i = getIndex(name);
 		if(i<0)
@@ -110,12 +130,12 @@ public:
 			kind = resType[i];
 			return data[i]; 
 		}
-	}
+	}*/
+
 	Res* getModel(const std::string& name)
 	{
-		Res::res_kind kind;
-		Res* m = get(name, kind);
-		if(kind == Res::model)
+		Res* m = get(Res::model, name);
+		if(m != NULL)
 			return m;
 		else
 		{
@@ -137,7 +157,7 @@ public:
 
 	bool addForce(const Res::res_kind kind, const std::string& name);
 	bool add(const Res::res_kind kind, const std::string& name);
-
+	
 	bool add(Res::ResLocatorArray &names);
 
 /*

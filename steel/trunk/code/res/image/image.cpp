@@ -3,53 +3,6 @@
 #include "../../math/geometry.h"
 #include "../../math/maths.h"
 
-/*int Image::Register2d()
-{
-    switch (platform)
-    {
-    case OpenGL:
-        glGenTextures(1, &id);
-        glBindTexture(GL_TEXTURE_2D, id);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //{ all of the above can be used }
-
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, width, height,0,
-               GL_RGB,  GL_UNSIGNED_BYTE , bitmap);
-
-        representation = texture2d;
-//        kill();
-        break;
-    }
-    return id;
-}
-
-int Image::Register1d()
-{
-    switch (platform)
-    {
-    case OpenGL:
-        glGenTextures(1, &id);
-        glBindTexture(GL_TEXTURE_1D, id);
-
-        glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //{ all of the above can be used }
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        glTexImage1D(GL_TEXTURE_1D, 0 , GL_RGBA, width,0,GL_RGB,  GL_UNSIGNED_BYTE , bitmap);
-//        kill();
-        representation = texture1d;
-        break;
-    }
-    return id;
-}
-*/
 void Image::convertFromHeightMapToNormalMap()
 {
 //    if (!bumpSupported) return;
@@ -92,7 +45,6 @@ void Image::convertFromHeightMapToNormalMap()
     }
     free(a);
     free(b);
-    kind = normalmap;
 }
 
 bool Image::init(int WIDTH, int HEIGHT, int BPP)
@@ -101,8 +53,7 @@ bool Image::init(int WIDTH, int HEIGHT, int BPP)
     height = HEIGHT;
     bpp = BPP;
     bitmap = (unsigned char*)malloc(bpp/8*width*height);
-    representation = raw;
-    kind = colormap;
+	bitmapSize = bpp/8*width*height;
     return bitmap != NULL;
 }
 
@@ -207,3 +158,24 @@ void Image::clear(float r, float g, float b)
             bitmap[y*bpl + x*3 + 2] = (int)(b*255);
         }
 }
+
+
+bool NormalMap::init(const std::string name, ResCollection &res)
+{
+	// «агружаем как обычное изображение
+	// дополнение nm к расширению сообщает о том, что это NormalMap (карта нормалей)
+
+    if(!res.add(Res::image, name+".nm")) return false;
+	Image *i = (Image*)res.get(Res::image, name+".nm");
+	if(!i) return false;
+
+	// ѕосле чего мы просто копируем это изображение
+	bitmap = new unsigned char[i->bitmapSize];
+	width = i->width;
+	height = i->height;
+	bpp = i->bpp;
+	bitmapSize = i->bitmapSize;
+
+	return true;
+}
+

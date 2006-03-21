@@ -95,7 +95,7 @@ typedef struct { // 14 bytes
     } bmpBITMAPINFO;
 
 
-bool BMP::init(const std::string name, ResLocatorArray &loadBefore, ResLocatorArray &loadAfter)
+bool BMP::init(const std::string name, ResCollection &res)
 {  
 	// TODO: load through CLASS (WADfile, disk,...)
 	bmpBITMAPFILEHEADER fh; // file header
@@ -140,7 +140,8 @@ int r;
 	{
 	case 24:
   //   fseek(file,fh.bfOffbits, SEEK_SET );
-		bitmap = (unsigned char*)malloc(ih.biSizeImage);
+		bitmapSize = ih.biSizeImage;
+		bitmap = new unsigned char [ih.biSizeImage];
 
 /*     for (unsigned int i=0; i<ih.biHeight; i++)
      {
@@ -189,7 +190,6 @@ int r;
 
 	   default: return false; // unsupported format 
    }
-   kind = Image::colormap;
  
    return true;
 }

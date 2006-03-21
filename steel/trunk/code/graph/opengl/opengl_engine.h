@@ -26,17 +26,45 @@ protected:
 	GLuint normalisationCubeMap;
 	void makeNormalisationCubeMap();
 
+	typedef
+		std::vector<v3>
+		v3List;
+	typedef 
+		std::map<int, v3List*>
+		tangentCache;
+
+	 tangentCache tangentSpaceCacheS, tangentSpaceCacheT;
+
 public:
 	void processCamera();
 	bool init();
 	bool process();
 	virtual bool deinit();
+	
 	void drawElement(DrawElement &e);
+	void drawBump(DrawElement &e, GLuint normalMap, MATRIX4X4 const matrix, v3 const light);
+	void drawFaces(DrawElement &e);
+
 	GLuint getTexture(std::string imageName);
 
 	virtual void swapBuffers() = 0;
 	virtual bool createWindow() = 0;
 	virtual void setCaption(std::string caption) = 0;
+
+	void getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals const *normal,
+									std::vector<v3> **sTangent, std::vector<v3> **tTangent);
+
+	void genTangentSpaceLight(
+	std::vector<v3> const &sTangent, 
+	std::vector<v3> const &tTangent, 
+	Vertexes const &vertex, 
+	Normals	const &normal,
+	MATRIX4X4 const matrix, const v3 light,
+	v3List **tangentSpaceLight);
+
+	void drawNormals(DrawElement &e);
+
+
 };
 
 

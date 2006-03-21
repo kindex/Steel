@@ -26,23 +26,15 @@ right	corner of the texture image.
 
 class Image: public Res
 {
-public:
-    typedef
-        enum {none, texture1d, texture2d, cubemap, raw/*not registred bitmap*/}  imagerepresentationtype;
-    typedef
-        enum {none2, colormap, normalmap}  imagekindtype;
 
 protected:
-	public:// todo
+public:// todo
     unsigned char* bitmap;
-    int width, height, bpp;
-    unsigned int id; // for OpenGL
-    imagerepresentationtype representation;
-    imagekindtype kind;
+    int width, height, bpp, bitmapSize;
 
 public:
 
-    Image(): Res() { bpp = 0; id = 0;  bitmap = NULL; kind = none2; representation = none; }
+    Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; }
     ~Image() { }
 
 //    virtual void loadraw(const string& name)=0;
@@ -52,18 +44,14 @@ public:
 
 //    void init(const string& name);
 
-    void kill() {
-    if (bitmap != NULL)
-      free(bitmap);
-      bitmap = NULL;
-      kind = none2;
-      representation = none;
-      }
-
-    unsigned int getid()   { return id;   }
-    unsigned int getkind() { return kind; }
-
-    //int Register1d();    int Register2d();
+    bool unload() 
+	{
+		if (bitmap != NULL)
+			delete bitmap;
+		bitmap = NULL;
+		bpp = 0; width = 0; height = 0; bitmapSize = 0;
+		return true;
+     }
 
     bool init(int WIDTH, int HEIGHT, int BPP);
 
@@ -77,5 +65,10 @@ public:
  //   void operator=(const Image &A) { memcpy(this, &A, sizeof(Image)); } 
 };
 
+
+class NormalMap: public Image
+{
+	bool init(const std::string name, ResCollection &res);
+};
 
 #endif

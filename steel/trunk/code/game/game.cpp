@@ -49,8 +49,6 @@ void Game::process()
 		obj[1]->children[0]->pos.entries[13] = (float)sin(2*time)*60.0f;
 		obj[1]->children[0]->pos.entries[14] = 20;
 
-		graph->clear();
-
 	    direction = 
 			v3(
 			cos(angle.x) * cos(angle.y),
@@ -58,6 +56,10 @@ void Game::process()
 			-sin(angle.y)
 			);
 
+}
+
+void Game::draw(GraphEngine *graph)
+{
 		graph->camera.setup(eye, direction);
 
 		graph->processCamera();
@@ -66,8 +68,8 @@ void Game::process()
 			graph->inject((*it));
 
 		graph->process();
-
 }
+
 
 bool Game::init()
 {
@@ -76,8 +78,6 @@ bool Game::init()
 
 	direction = v3(-1.0f/eye.x, -1.0f/eye.y, -1.0f/eye.z);
 	direction.Normalize();
-
-	graph->camera.seteye(eye);
 
 	res->add(Res::model, "teapot");
 

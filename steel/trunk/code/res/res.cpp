@@ -54,26 +54,8 @@ bool ResCollection::addForce(const Res::res_kind kind, const std::string& name)
 	{
 		Res *loader = createClass(&(*it));
 
-		Res::ResLocatorArray loadBefore, loadAfter;
-		bool ok = loader->init(name, loadBefore, loadAfter);
-
-		bool loaded = true;
-		while(!ok) // resource loaded
-		{
-			if(!add(loadBefore))
-			{
-				loaded = false;
-				break;
-			}
-			// preload complete
-			loadBefore.clear();
-			ok = loader->init(name, loadBefore, loadAfter);
-		} // exit whel all preloads complete or some error
-		if(!loaded) continue;
-		if(!add(loadAfter))
-			continue;
-		// else all laoded
-
+		if(!loader->init(name, *this)) continue;
+		
 		index[name] = freeindex;
 	    data.resize(freeindex+1);
 	    names.resize(freeindex+1);
@@ -100,6 +82,7 @@ bool ResCollection::add(const Res::res_kind kind, const std::string& name)
 	else
 		return true;
 }
+
 
 /*bool Res::init(string& name)
 {

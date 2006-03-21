@@ -2,7 +2,7 @@
 #include "../../common/logger.h"
 #include <fstream>
 
-bool MaterialConf::init(const std::string name, ResLocatorArray &loadBefore, ResLocatorArray &loadAfter)
+bool MaterialConf::init(const std::string name, ResCollection &res)
 {
 	var_s = new std::map<std::string, std::string>;
 	var_f = new std::map<std::string, float>;

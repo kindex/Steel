@@ -354,7 +354,7 @@ int chain_4d4d(_3DS &m, rstream &f, int size)
 }
 
 
-bool _3DS::init(const std::string name,  ResLocatorArray &loadBefore, ResLocatorArray &loadAfter)
+bool _3DS::init(const std::string name, ResCollection &res)
 {
 		rstream f("../res/" + name + ".3ds");
 	
@@ -369,7 +369,7 @@ bool _3DS::init(const std::string name,  ResLocatorArray &loadBefore, ResLocator
 		for(map<string, vector<int> >::iterator it = faceMaterial.begin();
 					it != faceMaterial.end(); it++)
 		{
-			loadAfter.push_back(ResLocator(material, it->first));
+			if(!res.add(material, it->first)) return false;
 		}
 
 		return true;
