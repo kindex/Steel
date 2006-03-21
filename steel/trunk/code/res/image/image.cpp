@@ -171,6 +171,8 @@ bool NormalMap::init(const std::string name, ResCollection &res)
 
 	// ѕосле чего мы просто копируем это изображение
 	bitmap = new unsigned char[i->bitmapSize];
+
+	memcpy(bitmap, i->bitmap, i->bitmapSize);
 	width = i->width;
 	height = i->height;
 	bpp = i->bpp;
