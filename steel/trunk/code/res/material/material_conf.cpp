@@ -20,8 +20,9 @@ bool MaterialConf::init(const std::string name, ResLocatorArray &loadBefore, Res
 	{
 		char buf[1024];
 		f.getline(buf, 1023);
-		if(buf[0] == '/' || buf[0] == ';' || buf[0] == ';') continue;
 		std::string s = buf;
+
+		if(s.substr(0,2) == "//" || s[0] == ';' || s[0] == '#') continue;
 
 		int d = s.find('=');
 		if(d<0) continue;
@@ -31,9 +32,6 @@ bool MaterialConf::init(const std::string name, ResLocatorArray &loadBefore, Res
 		var_s->operator[](key) = value;
 	//	var_f->insert(key, atof(value.c_str()));
 	}
-	
-	if(var_s->find("diffuse") != var_s->end())
-		loadAfter.push_back(ResLocator(Res::image, var_s->operator[]("diffuse")));
 
 	return true;
 }

@@ -58,12 +58,18 @@ protected:
 		Vertexes	*vertex;
 		Triangles	*triangle;
 		MapCoords	*mapcoord;
+		Normals		*normal;
 		MATRIX4X4	matrix;
+		std::vector<v3> sTangent, tTangent, tangentSpaceLight;
+
+		void updateTangentSpace();
+
 	};
 
 	// data, to store collected information
 	vector<DrawElement> elements;
 	vector<GraphInterface*> objects;
+	Lights light;
 
 	ResCollection *res;
 

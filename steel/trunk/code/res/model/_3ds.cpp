@@ -363,6 +363,9 @@ bool _3DS::init(const std::string name,  ResLocatorArray &loadBefore, ResLocator
 
 		parsechain(*this, f, t);
 
+		// Следует сгенерировать нормали, так как в 3DS файле нет нормалей
+		generateNormals();
+
 		for(map<string, vector<int> >::iterator it = faceMaterial.begin();
 					it != faceMaterial.end(); it++)
 		{

@@ -38,6 +38,7 @@ public:
 	float GetEntry(int position) const;
 	v4 GetRow(int position) const;
 	v4 GetColumn(int position) const;
+	v3 getCoords() { return v3(entries[12], entries[13], entries[14]); }
 	
 	void LoadIdentity(void);
 	void LoadZero(void);

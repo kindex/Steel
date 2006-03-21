@@ -8,12 +8,66 @@
 #include "../../res/image/image.h"
 #include "extensions.h"
 
+
+void OpenGL_Engine::drawElement(DrawElement &e)
+{
+	glLoadMatrixf(e.matrix.entries);
+	if(e.triangle && e.vertex)
+	{
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &e.vertex->front());
+
+		Res::res_kind kind;
+		Material *m = (Material*)res->get(e.material, kind);
+		if(kind != Res::material)
+		{
+			alog.out("Cannot find material '%s'", e.material.c_str());
+			return;
+		}
+
+		GLuint texture = getTexture(m->var_s->operator []("diffuse_map"));
+
+		if(e.mapcoord && texture>=0)
+		{
+		    glEnable(GL_TEXTURE_2D);
+	        glBindTexture(GL_TEXTURE_2D, texture);
+			glTexCoordPointer(2, GL_FLOAT, 2*4, &e.mapcoord->front());
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		}
+
+		glDrawElements(GL_TRIANGLES, e.triangle->size()*3, GL_UNSIGNED_INT, &(e.triangle->front()));
+		glDisableClientState(GL_VERTEX_ARRAY);
+		if(e.mapcoord)
+		{
+		    glDisable(GL_TEXTURE_2D);
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		}
+
+		glBegin(GL_LINES);
+		for(unsigned int i=0; i < e.vertex->size(); i++)
+		{
+			v3 s = e.vertex->operator [](i);
+			v3 d = e.vertex->operator [](i) + e.normal->operator [](i)*5;
+
+			glVertex3f(s.x, s.y, s.z);
+			glVertex3f(d.x, d.y, d.z);
+		}
+
+		glEnd();
+	}
+}
+
+
 GLuint OpenGL_Engine::getTexture(std::string imageName)
 {
 	if(registredTextures.find(imageName) != registredTextures.end())
 		return registredTextures[imageName];
 
 	Res::res_kind kind;
+
+	res->add(Res::image, imageName);
+
+
 	Image *a = (Image*)res->get(imageName, kind);
 	if(kind != Res::image)
 	{
@@ -42,41 +96,6 @@ GLuint OpenGL_Engine::getTexture(std::string imageName)
 }
 
 
-void OpenGL_Engine::drawElement(DrawElement &e)
-{
-	glLoadMatrixf(e.matrix.entries);
-	if(e.triangle && e.vertex)
-	{
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &e.vertex->front());
-
-		Res::res_kind kind;
-		Material *m = (Material*)res->get(e.material, kind);
-		if(kind != Res::material)
-		{
-			alog.out("Cannot find material '%s'", e.material.c_str());
-			return;
-		}
-
-		GLuint texture = getTexture(m->var_s->operator []("diffuse"));
-
-		if(e.mapcoord && texture>=0)
-		{
-		    glEnable(GL_TEXTURE_2D);
-	        glBindTexture(GL_TEXTURE_2D, texture);
-			glTexCoordPointer(2, GL_FLOAT, 2*4, &e.mapcoord->front());
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		}
-
-		glDrawElements(GL_TRIANGLES, e.triangle->size()*3, GL_UNSIGNED_INT, &(e.triangle->front()));
-		glDisableClientState(GL_VERTEX_ARRAY);
-		if(e.mapcoord)
-		{
-		    glDisable(GL_TEXTURE_2D);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		}
-	}
-}
 
 
 bool OpenGL_Engine::process()

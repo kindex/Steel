@@ -44,14 +44,12 @@ public:
 class GameLight: public GameObj
 {
 public:
-	v3 pos;
-
 	Lights* getLights()
 	{
 		Lights *a = new Lights(1);
 		a->operator [](0).intensivity = 1.0f;
 		a->operator [](0).range = 1000;
-		a->operator [](0).pos = pos;
+
 		return a;
 	}
 	

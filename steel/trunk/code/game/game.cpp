@@ -45,8 +45,8 @@ void Game::process()
 		for(int i=0; i<3; i++)
 			obj[1]->children[0]->pos.entries[i+i*4] = 0.20f;
 
-		obj[1]->children[0]->pos.entries[12] = (float)cos(-time)*60.0f;
-		obj[1]->children[0]->pos.entries[13] = (float)sin(-time)*60.0f;
+		obj[1]->children[0]->pos.entries[12] = (float)cos(2*time)*60.0f;
+		obj[1]->children[0]->pos.entries[13] = (float)sin(2*time)*60.0f;
 		obj[1]->children[0]->pos.entries[14] = 20;
 
 		graph->clear();
@@ -88,7 +88,8 @@ bool Game::init()
 	obj[1] = new GameObj;
 	obj[1]->assignModel((Model*)res->getModel("teapot"));
 
-	obj[1]->addChildren(new GameObj((Model*)res->getModel("teapot")));
+//	obj[1]->addChildren(new GameObj((Model*)res->getModel("teapot")));
+	obj[1]->addChildren(new GameLight());
 
 
 //	obj[2] = new GameLight;

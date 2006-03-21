@@ -52,6 +52,13 @@ public:
 		else
 			return NULL;
 	}
+	Normals* getNormals()
+	{
+		if(m)
+			return &m->normal;
+		else
+			return NULL;
+	}
 	FaceMaterials* getFaceMaterials()
 	{
 		if(m)

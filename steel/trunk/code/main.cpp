@@ -57,9 +57,11 @@ int main(int argc, char *argv[])
 	SDL_WarpMouse(cx, cy);
 
 	int lastdx = 0, lastdy = 0;
-	bool first = true;
 
-	bool alive = true;
+
+// ******************* MAIN LOOP ************************
+	alog.msg("core", "Entering main loop");
+	bool first = true, alive = true;
 	while(alive && game.alive())
 	{
 		SDL_Event event;
@@ -110,6 +112,8 @@ int main(int argc, char *argv[])
 
 		SDL_Delay(1);
 	}
+	alog.msg("core", "Exit from main loop");
+// ******************* MAIN LOOP ************************
 
 	graph.deinit();
 	alog.close();

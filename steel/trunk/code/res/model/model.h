@@ -18,7 +18,7 @@ public:
     
     std::vector<v2> mapcoord; // Texture coordinates
 
-    std::vector<v3> normal, sTangent, tTangent, tangentSpaceLight;    // Vertex normals
+    std::vector<v3> normal;    // Vertex normals
     // sTangent - vektor v storonu uveli4enija S teksturnoj koordinati (vpravo)
     // tangentSpaceLight - vektor ot ver6uni do to4ki osveshenija v TBN (Tangent, Binormal, Normal) prostrastve (sTangent, tTangent, normal) - tangent space http://www.paulsprojects.net/tutorials/tutorials.html
     //( Sx Sy Sz )
@@ -45,6 +45,8 @@ public:
     void updateReflectCoords();
     void updateSphereMap(v3 &center);
     int duplicateVertex(int src, v3 newnormal);
+
+	void generateNormals();
 };
 
 

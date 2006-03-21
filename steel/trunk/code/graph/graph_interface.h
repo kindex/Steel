@@ -19,6 +19,7 @@ struct Light
 };
 
 typedef std::vector<v3>			Vertexes;
+typedef std::vector<v3>			Normals;
 typedef std::vector<Triangle>	Triangles;
 typedef std::vector<v2>			MapCoords;
 typedef std::vector<Light>		Lights;
@@ -68,7 +69,6 @@ public:
 
 Sprites ?
 NURBS ?
-Lights
 Decals ?
 
 Прогаммно сгенерированные текстуры? no
@@ -80,7 +80,8 @@ Video textures (avi, camera)
 	// отвечать за хранние этих данных до следующего вызова этой функции
 	// или вызова cleanup
 	virtual bool cleanup() = 0; // при необходимости отчищает 
-	virtual Vertexes*	getVertexes() = 0; // список вершин. 
+	virtual Vertexes*	getVertexes() = 0; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	virtual Normals*	getNormals() = 0; // список нормалей в вершинам
 
 	// массив индексов вершин, которые образуют треугольники (грани)
 	virtual Triangles*	getTriangles() = 0; 
