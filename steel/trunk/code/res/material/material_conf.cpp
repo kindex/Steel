@@ -7,7 +7,7 @@ bool MaterialConf::init(const std::string name, ResCollection &res)
 	var_s = new std::map<std::string, std::string>;
 	var_f = new std::map<std::string, float>;
 
-	std::string file = "../res/" + name + ".mat";
+	std::string file = "../res/material/" + name + ".mat";
 
 	rstream f(file, 0); // no binary acces, only text
 	if(!f.good()) 

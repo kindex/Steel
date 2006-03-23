@@ -24,7 +24,6 @@ struct chainProcessor
 class _3DS: public Model
 {
 	bool init(const std::string name, ResCollection &res);
-	bool unload() { return false; }
 };
 
 

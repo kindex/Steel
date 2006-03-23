@@ -1,5 +1,6 @@
 #include "game.h"
 #include "../common/logger.h"
+using namespace std;
 
 #define MOVE_SPEED (50.0f)
 #define LOOK_SPEED (0.01f)
@@ -42,13 +43,13 @@ void Game::process()
 		obj[1]->pos.entries[13] = (float)sin(time)*50.0f;
 		obj[1]->pos.entries[14] = 20;
 
-		for(int i=0; i<3; i++)
+/*		for(int i=0; i<3; i++)
 			obj[1]->children[0]->pos.entries[i+i*4] = 0.20f;
 
 		obj[1]->children[0]->pos.entries[12] = (float)cos(2*time)*60.0f;
 		obj[1]->children[0]->pos.entries[13] = (float)sin(2*time)*60.0f;
 		obj[1]->children[0]->pos.entries[14] = 20;
-
+*/
 	    direction = 
 			v3(
 			cos(angle.x) * cos(angle.y),
@@ -79,17 +80,23 @@ bool Game::init()
 	direction = v3(-1.0f/eye.x, -1.0f/eye.y, -1.0f/eye.z);
 	direction.Normalize();
 
-	res->add(Res::model, "teapot");
+	res->add(Res::model, "metal_teapot");
+	res->add(Res::model, "room");
 
-	obj.resize(2);
+	obj.resize(3);
 	obj[0] = new GameObj;
-	obj[0]->assignModel((Model*)res->getModel("teapot"));
+	obj[0]->assignModel((Model*)res->getModel("metal_teapot"));
 
-	obj[1] = new GameObj;
-	obj[1]->assignModel((Model*)res->getModel("teapot"));
+//	obj[1] = new GameObj;
+//	obj[1]->assignModel((Model*)res->getModel("metal_teapot"));
 
 //	obj[1]->addChildren(new GameObj((Model*)res->getModel("teapot")));
-	obj[1]->addChildren(new GameLight());
+	//obj[1]->addChildren(new GameLight());
+
+	obj[1] = new GameLight;
+
+	obj[2] = new GameObj;
+	obj[2]->assignModel((Model*)res->getModel("room"));
 
 
 //	obj[2] = new GameLight;

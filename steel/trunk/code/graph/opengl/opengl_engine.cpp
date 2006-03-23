@@ -8,6 +8,133 @@
 #include "../../res/image/image.h"
 #include "extensions.h"
 
+using namespace std;
+
+
+void OpenGL_Engine::drawElement(DrawElement &e)
+{
+	glLoadMatrixf(e.matrix.entries);
+	if(e.triangle && e.vertex)
+	{
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &e.vertex->front());
+
+		Material *m = (Material*)res->get(Res::material, e.material);
+		if(m == NULL)
+		{
+			alog.out("Cannot find material '%s'", e.material.c_str());
+			return;
+		}
+
+		GLuint colorMap = 0;
+
+		if(m->var_s->find("color_map") != m->var_s->end())
+			colorMap = getTexture(Res::image, m->var_s->operator []("color_map"));
+
+		GLuint normalMap = 0;
+		if(m->var_s->find("normal_map") != m->var_s->end())
+			normalMap = getTexture(Res::normalMap, m->var_s->operator []("normal_map"));
+
+		GLuint illuminateMap = 0;
+		if(m->var_s->find("illuminate_map") != m->var_s->end())
+			illuminateMap = getTexture(Res::image, m->var_s->operator []("illuminate_map"));
+
+		
+		int tex = 0;
+
+
+		if(normalMap>0)
+		{
+			drawBump(e, normalMap, e.matrix, light[0].pos);
+			tex++;
+		}
+
+		if(e.mapcoord && colorMap>0) // Color map
+		{
+			if(tex>0)
+			{
+				glDepthFunc(GL_LEQUAL); // For blending
+				glBlendFunc(GL_DST_COLOR, GL_ZERO);
+				glEnable(GL_BLEND);
+			}
+
+		    glEnable(GL_TEXTURE_2D);
+	        glBindTexture(GL_TEXTURE_2D, colorMap);
+			glTexCoordPointer(2, GL_FLOAT, 2*4, &e.mapcoord->front());
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			drawFaces(e);
+		    glDisable(GL_TEXTURE_2D);
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+			if(tex>0)
+	            glDisable(GL_BLEND);
+			tex++;
+		}
+
+		if(e.mapcoord && colorMap>0 && normalMap ==0) // Color map (Diffuse)
+		{
+			if(tex>0)
+			{
+				glDepthFunc(GL_LEQUAL); // For blending
+				glBlendFunc(GL_DST_COLOR, GL_ZERO);
+				glEnable(GL_BLEND);
+			}
+
+			drawDiffuse(e, e.matrix, light[0].pos);
+
+			if(tex>0)
+	            glDisable(GL_BLEND);
+			tex++;
+		}
+
+		if(e.mapcoord) // Distabce from light
+		{
+			if(tex>0)
+			{
+				glDepthFunc(GL_LEQUAL); // For blending
+				glBlendFunc(GL_DST_COLOR, GL_ZERO);
+				glEnable(GL_BLEND);
+			}
+
+			drawDistColor(e, e.matrix, light[0].pos, 300);
+
+			if(tex>0)
+	            glDisable(GL_BLEND);
+
+			tex++;
+		}
+
+
+		if(e.mapcoord && illuminateMap>0)
+		{
+			if(tex>0)
+			{
+				glDepthFunc(GL_LEQUAL); // For blending
+				glBlendFunc(GL_ONE, GL_DST_COLOR);
+				glEnable(GL_BLEND);
+			}
+
+		    glEnable(GL_TEXTURE_2D);
+	        glBindTexture(GL_TEXTURE_2D, illuminateMap);
+			glTexCoordPointer(2, GL_FLOAT, 2*4, &e.mapcoord->front());
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+			drawFaces(e);
+
+		    glDisable(GL_TEXTURE_2D);
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+			
+if(tex>0)
+				glDisable(GL_BLEND);
+
+			tex++;
+		}
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+	}
+}
+
+
 v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 {
     A.Normalize();
@@ -32,8 +159,7 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 
 
 
-void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals	const *normal,
-									std::vector<v3> **sTangent, std::vector<v3> **tTangent)
+void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals	const *normal,	std::vector<v3> **sTangent, std::vector<v3> **tTangent)
 {
 	// TODO: hash
 	if(tangentSpaceCacheS.find((int)vertex) != tangentSpaceCacheS.end())
@@ -106,13 +232,7 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *map
 	*tTangent = S;	tangentSpaceCacheT[(int)vertex] = T;
 };
 
-void OpenGL_Engine::genTangentSpaceLight(
-	std::vector<v3> const &sTangent, 
-	std::vector<v3> const &tTangent, 
-	Vertexes const &vertex, 
-	Normals	const &normal,
-	MATRIX4X4 const matrix, const v3 light,
-	v3List **tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	MATRIX4X4 const matrix, const v3 light,	v3List **tangentSpaceLight)
 {
 	MATRIX4X4 inverseModelMatrix;
     inverseModelMatrix = matrix.GetInverse();
@@ -131,6 +251,69 @@ void OpenGL_Engine::genTangentSpaceLight(
 		tl[i].y = tTangent[i] * lightVector;
 		tl[i].z =   normal[i] * lightVector;
     }
+}
+
+
+
+
+
+void OpenGL_Engine::drawDistColor(DrawElement &e, MATRIX4X4 const matrix, v3 const light, float const distance)
+{
+	float *coords = new float[e.vertex->size()];
+
+	int i = 0;
+	for(Vertexes::iterator it = e.vertex->begin(); it != e.vertex->end(); it++)
+	{
+		float d = (light-(*it)).GetLength();
+		float c = 1 - d/distance;
+		if(c<0) c = 0;
+		if(c>1) c = 1;
+		coords[i] = c;
+		i++;
+
+		alog.out("%f", c);
+	}
+
+	glBindTexture(GL_TEXTURE_2D, distMap);
+    glEnable(GL_TEXTURE_2D);
+
+	glTexCoordPointer(1, GL_FLOAT, 0, coords);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    drawFaces(e);
+
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	delete coords;
+}
+
+
+void OpenGL_Engine::drawDiffuse(DrawElement &e, MATRIX4X4 const matrix, v3 const light)
+{
+	v3List *sTangent, *tTangent, *tangentSpaceLight;
+
+	getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
+	
+	genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
+
+
+	//Bind normalisation cube map to texture unit 1
+	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, lightCubeMap);
+    glEnable(GL_TEXTURE_3D);
+	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+
+	glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+
+    drawFaces(e);
+
+	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
+    glDisable(GL_TEXTURE_3D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	delete tangentSpaceLight;
 }
 
 
@@ -217,85 +400,16 @@ void OpenGL_Engine::drawNormals(DrawElement &e)
 		glEnd();
 }
 
-void OpenGL_Engine::drawElement(DrawElement &e)
-{
-	glLoadMatrixf(e.matrix.entries);
-	if(e.triangle && e.vertex)
-	{
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &e.vertex->front());
-
-		Material *m = (Material*)res->get(Res::material, e.material);
-		if(m == NULL)
-		{
-			alog.out("Cannot find material '%s'", e.material.c_str());
-			return;
-		}
-
-		GLuint colorMap = 0;
-
-		if(m->var_s->find("color_map") != m->var_s->end())
-			colorMap = getTexture(m->var_s->operator []("color_map"));
-
-		GLuint normalMap = 0;
-		if(m->var_s->find("normal_map") != m->var_s->end())
-			normalMap = getTexture(m->var_s->operator []("normal_map"));
-
-	    bool blend = false;
-
-		if(normalMap)
-		{
-			drawBump(e, normalMap, e.matrix, light[0].pos);
-		}
-
-		if(e.mapcoord && normalMap)
-		{
-			glDepthFunc(GL_LEQUAL); // For blending
-			glBlendFunc(GL_DST_COLOR, GL_ZERO);
-//           glBlendFunc(GL_ONE, GL_ONE);
-			glEnable(GL_BLEND);
-			blend = true;
-		}
-
-		if(e.mapcoord && colorMap>0)
-		{
-		    glEnable(GL_TEXTURE_2D);
-	        glBindTexture(GL_TEXTURE_2D, colorMap);
-			glTexCoordPointer(2, GL_FLOAT, 2*4, &e.mapcoord->front());
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		}
-		drawFaces(e);
-		if(e.mapcoord)
-		{
-		    glDisable(GL_TEXTURE_2D);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		}
-
-		if (blend)
-		{
-            glDisable(GL_BLEND);
-            blend = false;
-		}
-
-		glDisableClientState(GL_VERTEX_ARRAY);
-	}
-}
 
 
-GLuint OpenGL_Engine::getTexture(std::string imageName)
+GLuint OpenGL_Engine::getTexture(Res::res_kind kind, std::string imageName)
 {
 	if(registredTextures.find(imageName) != registredTextures.end())
 		return registredTextures[imageName];
 
-	res->add(Res::image, imageName);
+	res->add(kind, imageName);
 
-	Image *a = (Image*)res->get(Res::image, imageName);
-
-	if(a == NULL)
-	{
-		res->add(Res::normalMap, imageName);
-		a = (Image*)res->get(Res::normalMap, imageName);
-	}
+	Image *a = (Image*)res->get(kind, imageName);
 
 	if(a == NULL)
 	{
@@ -359,7 +473,10 @@ bool OpenGL_Engine::init()
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 	SetUpARB_multitexture();
-	makeNormalisationCubeMap();
+	
+	normalisationCubeMap	= GenerateNormalisationCubeMap();
+	lightCubeMap			= GenerateLightCubeMap();
+	distMap					= generateDistanceLinearMap();
 
 	alog.out("OpenGL engine has been initialized!\n");
 
@@ -375,18 +492,14 @@ bool OpenGL_Engine::deinit()
 }
 
 
-
-
 void OpenGL_Engine::processCamera()
 {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-
     
 //	gluPerspective( camera.fov, (float)window.width/window.height, front, back );
 
-	gluPerspective(90.0, 1.0, 0.01, 1.0e+6);
-
+	gluPerspective(80.0, 1.0, 0.01, 1.0e+6);
 
     gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, 
 			camera.center.x, camera.center.y, camera.center.z, 
@@ -397,15 +510,4 @@ void OpenGL_Engine::processCamera()
 }
 
 
-void OpenGL_Engine::makeNormalisationCubeMap()
-{
-	glGenTextures(1, &normalisationCubeMap);
-	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, normalisationCubeMap);
-	GenerateNormalisationCubeMap();
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-}

@@ -6,11 +6,9 @@
 
 #include "steel.h"
 
-using namespace std;
-
 class Interface;
 
-typedef vector<Interface*> InterfaceList;
+typedef std::vector<Interface*> InterfaceList;
 
 
 class Interface

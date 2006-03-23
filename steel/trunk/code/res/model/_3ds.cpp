@@ -241,7 +241,7 @@ int chain_model_material(_3DS &m, rstream &f, int size) // model material info
 	unsigned short count;
 	f.read(&count, 2); // face count
 	r += 2;
-	vector<int> &a = m.faceMaterial[materialName];
+	vector<int> &a = m.faceMaterial->operator [](materialName);
 	for(int i=0; i<count; i++)
 	{
 		unsigned short tmp;
@@ -356,7 +356,9 @@ int chain_4d4d(_3DS &m, rstream &f, int size)
 
 bool _3DS::init(const std::string name, ResCollection &res)
 {
-		rstream f("../res/" + name + ".3ds");
+		rstream f("../res/model/" + name + ".3ds");
+
+		faceMaterial = new FaceMaterials;
 	
 		std::vector<chainProcessor> t;
 		t.push_back(chainProcessor(0x4D4D, chain_4d4d));
@@ -366,8 +368,8 @@ bool _3DS::init(const std::string name, ResCollection &res)
 		// Следует сгенерировать нормали, так как в 3DS файле нет нормалей
 		generateNormals();
 
-		for(map<string, vector<int> >::iterator it = faceMaterial.begin();
-					it != faceMaterial.end(); it++)
+		for(map<string, vector<int> >::iterator it = faceMaterial->begin();
+					it != faceMaterial->end(); it++)
 		{
 			if(!res.add(material, it->first)) return false;
 		}

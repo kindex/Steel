@@ -18,13 +18,12 @@
 class OpenGL_Engine: public GraphEngine
 {
 protected:
-	map<std::string, GLuint> registredTextures;
+	std::map<std::string, GLuint> registredTextures;
 
     void create();
     void repair();
 
-	GLuint normalisationCubeMap;
-	void makeNormalisationCubeMap();
+	GLuint normalisationCubeMap, lightCubeMap, distMap;
 
 	typedef
 		std::vector<v3>
@@ -43,9 +42,12 @@ public:
 	
 	void drawElement(DrawElement &e);
 	void drawBump(DrawElement &e, GLuint normalMap, MATRIX4X4 const matrix, v3 const light);
+	void drawDiffuse(DrawElement &e, MATRIX4X4 const matrix, v3 const light);
+	void drawDistColor(DrawElement &e, MATRIX4X4 const matrix, v3 const light, float const distance);
+
 	void drawFaces(DrawElement &e);
 
-	GLuint getTexture(std::string imageName);
+	GLuint getTexture(Res::res_kind kind, std::string imageName);
 
 	virtual void swapBuffers() = 0;
 	virtual bool createWindow() = 0;
@@ -54,16 +56,8 @@ public:
 	void getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals const *normal,
 									std::vector<v3> **sTangent, std::vector<v3> **tTangent);
 
-	void genTangentSpaceLight(
-	std::vector<v3> const &sTangent, 
-	std::vector<v3> const &tTangent, 
-	Vertexes const &vertex, 
-	Normals	const &normal,
-	MATRIX4X4 const matrix, const v3 light,
-	v3List **tangentSpaceLight);
-
+	void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, MATRIX4X4 const matrix, const v3 light,	v3List **tangentSpaceLight);
 	void drawNormals(DrawElement &e);
-
 
 };
 

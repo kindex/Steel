@@ -50,7 +50,7 @@ struct color_f
 */
 
 class GraphInterface;
-typedef vector<GraphInterface*> GraphInterfaceList;
+typedef std::vector<GraphInterface*> GraphInterfaceList;
 
 class GraphInterface: public Interface
 {

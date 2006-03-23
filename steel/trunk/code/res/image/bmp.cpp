@@ -107,7 +107,7 @@ bool BMP::init(const std::string name, ResCollection &res)
 		throw;
 	}
 //	int tty2 = sizeof(ih);
-	std::string file = "../res/" + name + ".bmp";
+	std::string file = "../res/image/" + name + ".bmp";
 	rstream f(file);
 
 	if(!f.good()) 

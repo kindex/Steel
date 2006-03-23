@@ -28,7 +28,10 @@
 
 
 bool SetUpARB_multitexture();
-bool GenerateNormalisationCubeMap();
+
+GLuint GenerateNormalisationCubeMap();
+GLuint GenerateLightCubeMap();
+GLuint generateDistanceLinearMap();
 
 
 extern bool ARB_multitexture_supported;

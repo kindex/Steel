@@ -1,4 +1,3 @@
-
 #include "_cpp.h"
 
 #ifdef OPENGL_SDL	

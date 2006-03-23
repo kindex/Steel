@@ -1,7 +1,7 @@
 #include "extensions.h"
 #include "../../math/vector3d.h"
 
-bool ARB_multitexture_supported=false;
+bool ARB_multitexture_supported = false;
 
 bool SetUpARB_multitexture()
 {
@@ -151,15 +151,20 @@ PFNGLMULTITEXCOORD4SVARBPROC			glMultiTexCoord4svARB			=NULL;
 
 
 
-bool GenerateNormalisationCubeMap()
+GLuint GenerateNormalisationCubeMap()
 {
+	GLuint t;
+
+	glGenTextures(1, &t);
+	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, t);
+
+
 	//some useful variables
 	int size=128;
 	float offset=0.5f;
 	float halfSize=(float)size*0.5f;
 	v3 tempVector;
 	unsigned char * bytePtr;
-
 
 	unsigned char * data=new unsigned char[size*size*3];
     int j;
@@ -315,5 +320,214 @@ bool GenerateNormalisationCubeMap()
 
 	delete [] data;
 
-	return true;
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return t;
+}
+
+unsigned char lightInt(v3 a)
+{
+	float r = a.dotProduct(v3(1.0, 0.0, 0.0));
+	if(r<0) r = 0;
+	return (unsigned char)(r*255);
+}
+
+GLuint generateDistanceLinearMap()
+{
+	GLuint t;
+
+	glGenTextures(1, &t);
+	glBindTexture(GL_TEXTURE_2D, t);
+
+	int size = 256;
+	unsigned char *p, * data = new unsigned char[size*3];
+
+	p = data;
+	for(int i=0; i<size; i++)
+	{
+		p[0] = p[1] = p[2] = (unsigned char)(256*(float)i/size);
+		p += 3;
+	}
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //{ all of the above can be used }
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+	glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, size, 1, 0,
+		GL_RGB,  GL_UNSIGNED_BYTE, data);
+
+
+	delete data;
+	return t;
+}
+
+
+GLuint  GenerateLightCubeMap()
+{
+	GLuint t;
+
+	glGenTextures(1, &t);
+	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, t);
+
+	//some useful variables
+	int size=128;
+	float offset=0.5f;
+	float halfSize=(float)size*0.5f;
+	v3 tempVector;
+	unsigned char * bytePtr;
+
+	unsigned char * data=new unsigned char[size*size*3];
+    int j;
+	if(!data)
+	{
+		printf("Unable to allocate memory for texture data for cube map\n");
+		return false;
+	}
+
+	//positive x
+	bytePtr = data;
+
+	for(int j=0; j<size; j++)
+	{
+		for(int i=0; i<size; i++)
+		{
+			tempVector.SetX(halfSize);
+			tempVector.SetY(-(j+offset-halfSize));
+			tempVector.SetZ(-(i+offset-halfSize));
+
+			tempVector.Normalize();
+			tempVector.PackTo01();
+
+			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
+			bytePtr+=3;
+		}
+	}
+	glTexImage2D(	GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB,
+					0, GL_RGBA8, size, size, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	//negative x
+	bytePtr=data;
+
+	for(j=0; j<size; j++)
+	{
+		for(int i=0; i<size; i++)
+		{
+			tempVector.SetX(-halfSize);
+			tempVector.SetY(-(j+offset-halfSize));
+			tempVector.SetZ((i+offset-halfSize));
+
+			tempVector.Normalize();
+			tempVector.PackTo01();
+
+			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
+
+			bytePtr+=3;
+		}
+	}
+	glTexImage2D(	GL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB,
+					0, GL_RGBA8, size, size, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	//positive y
+	bytePtr=data;
+
+	for(j=0; j<size; j++)
+	{
+		for(int i=0; i<size; i++)
+		{
+			tempVector.SetX(i+offset-halfSize);
+			tempVector.SetY(halfSize);
+			tempVector.SetZ((j+offset-halfSize));
+
+			tempVector.Normalize();
+			tempVector.PackTo01();
+
+			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
+
+			bytePtr+=3;
+		}
+	}
+	glTexImage2D(	GL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB,
+					0, GL_RGBA8, size, size, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	//negative y
+	bytePtr=data;
+
+	for(j=0; j<size; j++)
+	{
+		for(int i=0; i<size; i++)
+		{
+			tempVector.SetX(i+offset-halfSize);
+			tempVector.SetY(-halfSize);
+			tempVector.SetZ(-(j+offset-halfSize));
+
+			tempVector.Normalize();
+			tempVector.PackTo01();
+
+			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
+
+			bytePtr+=3;
+		}
+	}
+	glTexImage2D(	GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB,
+					0, GL_RGBA8, size, size, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	//positive z
+	bytePtr=data;
+
+	for(j=0; j<size; j++)
+	{
+		for(int i=0; i<size; i++)
+		{
+			tempVector.SetX(i+offset-halfSize);
+			tempVector.SetY(-(j+offset-halfSize));
+			tempVector.SetZ(halfSize);
+
+			tempVector.Normalize();
+			tempVector.PackTo01();
+
+			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
+
+			bytePtr+=3;
+		}
+	}
+	glTexImage2D(	GL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB,
+					0, GL_RGBA8, size, size, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	//negative z
+	bytePtr=data;
+
+	for(j=0; j<size; j++)                          
+	{
+		for(int i=0; i<size; i++)
+		{
+			tempVector.SetX(-(i+offset-halfSize));
+			tempVector.SetY(-(j+offset-halfSize));
+			tempVector.SetZ(-halfSize);
+
+			tempVector.Normalize();
+			tempVector.PackTo01();
+
+			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
+
+			bytePtr+=3;
+		}
+	}
+	glTexImage2D(	GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB,
+					0, GL_RGBA8, size, size, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	delete [] data;
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return t;
 }

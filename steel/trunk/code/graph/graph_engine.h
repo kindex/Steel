@@ -19,7 +19,7 @@ class GraphEngine;
 
 struct WindowSettings
 {
-    string caption, title; // if not fullscreen
+    std::string caption, title; // if not fullscreen
     int left, top, width, height, bpp;
 	
 	bool fullscreen;
@@ -64,8 +64,8 @@ protected:
 	};
 
 	// data, to store collected information
-	vector<DrawElement> elements;
-	vector<GraphInterface*> objects;
+	std::vector<DrawElement> elements;
+	std::vector<GraphInterface*> objects;
 	Lights light;
 
 	ResCollection *res;

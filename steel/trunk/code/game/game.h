@@ -13,7 +13,7 @@ class GameObj: public res_model
 {
 public:
 	GameObj *parent;
-	vector<GameObj*> children;
+	std::vector<GameObj*> children;
 public:
 	MATRIX4X4 pos;
 	
@@ -35,7 +35,7 @@ public:
 	GraphInterfaceList getChildrens()
 	{
 		GraphInterfaceList a;
-		for(vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
+		for(std::vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
 			a.push_back(*it);
 		return a;
 	}
@@ -69,7 +69,7 @@ private:
 	void processKeyboard();
 
 // World
-	vector<GameObj*> obj;
+	std::vector<GameObj*> obj;
 // Camera
 	v3	eye, direction, angle;
 

@@ -1,8 +1,5 @@
 #include "model.h"
-
-
-
-
+using namespace std;
 
 /*void Model:: updateMaterial()
 {
