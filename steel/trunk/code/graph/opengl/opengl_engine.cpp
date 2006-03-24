@@ -270,8 +270,6 @@ void OpenGL_Engine::drawDistColor(DrawElement &e, MATRIX4X4 const matrix, v3 con
 		if(c>1) c = 1;
 		coords[i] = c;
 		i++;
-
-		alog.out("%f", c);
 	}
 
 	glBindTexture(GL_TEXTURE_2D, distMap);
