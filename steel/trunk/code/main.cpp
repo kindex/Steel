@@ -38,6 +38,7 @@ Res* createBMP() {return new BMP; }
 Res* create3DS() {return new _3DS; }
 Res* createMaterialConf() {return new MaterialConf; }
 Res* createNormalMap() {return new NormalMap; }
+Res* createHeightMap() {return new HeightMap; }
 
 int main(int argc, char *argv[])
 {
@@ -53,6 +54,7 @@ int main(int argc, char *argv[])
 	res.registerClass(create3DS,	Res::model);
 	res.registerClass(createMaterialConf,	Res::material);
 	res.registerClass(createNormalMap, Res::normalMap);
+	res.registerClass(createHeightMap, Res::normalMap);
 
 #ifdef OPENGL_SDL	
 	OpenGL_SDL_Engine graph;

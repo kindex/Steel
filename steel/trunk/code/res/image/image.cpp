@@ -132,7 +132,7 @@ bool NormalMap::copyImage(const std::string name, ResCollection &res)
 	// дополнение nm к расширению сообщает о том, что это NormalMap (карта нормалей)
 
     if(!res.add(Res::image, name)) return false;
-	Image *i = (Image*)res.get(Res::image, name+".nm");
+	Image *i = (Image*)res.get(Res::image, name);
 	if(!i) return false;
 
 	// После чего мы просто копируем это изображение
