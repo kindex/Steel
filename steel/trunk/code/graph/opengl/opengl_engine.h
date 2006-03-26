@@ -33,7 +33,7 @@
 class OpenGL_Engine: public GraphEngine
 {
 protected:
-	std::map<std::string, GLuint> registredTextures;
+	std::map<std::string, GLuint> registredTextures, registedCubeMaps;
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap;
 
@@ -63,13 +63,17 @@ public:
 	void drawAABB(DrawElement &e);
 
 	void drawBump(DrawElement &e, GLuint normalMap, MATRIX4X4 const matrix, v3 const light);
+	void drawReflect(DrawElement &e, GLuint cubeMap, MATRIX4X4 const matrix, v3 const light);
 	void drawDiffuse(DrawElement &e, MATRIX4X4 const matrix, v3 const light);
 	void drawDistColor(DrawElement &e, MATRIX4X4 const matrix, v3 const light, float const distance);
 
 	void getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals const *normal, std::vector<v3> **sTangent, std::vector<v3> **tTangent);
+
 	void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, MATRIX4X4 const matrix, const v3 light,	v3List **tangentSpaceLight);
+	void genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, MATRIX4X4 const matrix, const v3 camera,	v3List **tangentSpaceLight);
 
 	GLuint getTexture(Res::res_kind kind, std::string imageName);
+	GLuint getCubeMap(std::string imageName);
 };
 
 

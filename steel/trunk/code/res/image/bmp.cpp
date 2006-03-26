@@ -195,7 +195,3 @@ int r;
    return true;
 }
 
-bool BMP::unload()
-{
-	return false;
-}

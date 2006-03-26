@@ -19,7 +19,6 @@ class BMP: public Image
 {
 public:
 	bool init(const std::string name, ResCollection &res);
-	bool unload();
 };
 
 #endif

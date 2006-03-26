@@ -84,14 +84,13 @@ class Res: public steelAbstract
 {
 public:
 // количестко типов ресурсов
-#define RES_KIND_COUNT 6
+#define RES_KIND_COUNT 5
 // типы ресурсов (типы хранени€)
 	typedef enum 
 	{
 			none,
 			image,
 			normalMap,
-			cubeMap,
 			model,
 			config
 	}	res_kind;
@@ -199,9 +198,9 @@ public:
 	}
 
 // ƒобавить ресурс по имени и типу
-	bool addForce(const Res::res_kind kind, const std::string& name);
+	Res* addForce(const Res::res_kind kind, const std::string& name);
 // ƒобавить ресурс по имени и типу, если ресурса еще нет в коллекции
-	bool add(const Res::res_kind kind, const std::string& name);
+	Res* add(const Res::res_kind kind, const std::string& name);
 // ƒобавить массив ресурсов
 	bool add(Res::ResLocatorArray &names);
 

@@ -122,6 +122,11 @@ int main(int argc, char *argv[])
 					break;
 			}
 		if(!alive)break;
+
+		if(speed>0.01 && timer.total()<2)
+		{
+			speed = 0.01;
+		}
 	
 		game.setspeed(speed, timer.total());
 	

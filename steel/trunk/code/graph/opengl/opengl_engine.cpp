@@ -42,7 +42,6 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		}
 
 		GLuint colorMap = 0;
-
 		if(m->var_s.find("color_map") != m->var_s.end())
 			colorMap = getTexture(Res::image, m->var_s["color_map"]);
 
@@ -54,6 +53,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		if(m->var_s.find("illuminate_map") != m->var_s.end())
 			illuminateMap = getTexture(Res::image, m->var_s["illuminate_map"]);
 
+		GLuint cubeMap = 0;
+		if(m->isset("reflect_map"))
+			cubeMap = getCubeMap(m->gets("reflect_map"));
 		
 		int tex = 0;
 
@@ -102,7 +104,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			tex++;
 		}
 
-		if(e.mapcoord) // Distabce from light
+		if(e.mapcoord && cubeMap==0) // Distance from light
 		{
 			if(tex>0)
 			{
@@ -139,11 +141,28 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		    glDisable(GL_TEXTURE_2D);
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 			
-if(tex>0)
+			if(tex>0)
 				glDisable(GL_BLEND);
 
 			tex++;
 		}
+
+		if(cubeMap>0)
+		{
+			if(tex>0)
+			{
+				glDepthFunc(GL_LEQUAL); // For blending
+				glBlendFunc(GL_SRC_COLOR, GL_ONE);
+				glEnable(GL_BLEND);
+			}
+			drawReflect(e, cubeMap, e.matrix, camera.eye);
+			if(tex>0)
+				glDisable(GL_BLEND);
+
+
+			tex++;
+		}
+
 		glDisableClientState(GL_VERTEX_ARRAY);
 
 		if(conf->geti("drawNormals", 0))
@@ -273,6 +292,41 @@ void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::v
     }
 }
 
+void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, MATRIX4X4 const matrix, const v3 camera,	v3List **tangentSpaceLight)
+{
+	MATRIX4X4 inverseModelMatrix;
+    inverseModelMatrix = matrix.GetInverse();
+
+	v3 objectLightPosition = inverseModelMatrix*camera;
+
+	*tangentSpaceLight = new v3List(vertex.size());
+	v3List &tl = **tangentSpaceLight;
+
+    // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
+    for (unsigned int i=0; i<vertex.size(); i++)
+    {
+		v3 c = camera - vertex[i];
+
+        c.Normalize();
+
+        v3 d = (matrix*(vertex[i]+normal[i]))- matrix*vertex[i];
+        d.Normalize(); // realnaja normal'
+
+        float pscale = c.dotProduct(d); // cos ugla mezhdu c i nermal
+
+        v3 p = d*pscale;
+//        VECTOR3D x = (p - c);
+
+//		tangentSpaceLight[i] = - p - p + c;
+		tl[i] = p + p - c;
+//        tangentSpaceLight[i] = -(tangentSpaceLight[i]+d);
+//		tangentSpaceLight[i] = x-c;
+//		tangentSpaceLight[i] = ModelMatrix*vertex[i];
+
+        tl[i].Normalize();
+    }
+}
+
 
 
 
@@ -399,6 +453,31 @@ void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, MATRIX4X4 const m
 }
 
 
+void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, MATRIX4X4 const matrix, v3 const light)
+{
+	v3List *sTangent, *tTangent, *tangentSpaceLight;
+
+	getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
+	
+	genTangentSpaceSphere(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
+
+
+	glEnable(GL_TEXTURE_3D);
+	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+	glBindTexture(GL_TEXTURE_3D, cubeMap);
+	glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    drawFaces(e);
+
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisable(GL_TEXTURE_3D);
+	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
+
+	delete tangentSpaceLight;
+}
+
+
 void OpenGL_Engine::drawFaces(DrawElement &e)
 {
 	glDrawElements(GL_TRIANGLES, e.triangle->size()*3, GL_UNSIGNED_INT, &(e.triangle->front()));
@@ -482,6 +561,63 @@ GLuint OpenGL_Engine::getTexture(Res::res_kind kind, std::string imageName)
 
 	return id;
 }
+
+GLuint OpenGL_Engine::getCubeMap(std::string imageName)
+{
+	if(registedCubeMaps.find(imageName) != registedCubeMaps.end())
+		return registedCubeMaps[imageName];
+
+
+	char *a[] = {"bk", "ft", "lf", "rt", "up", "dn"};
+	int b[6] = 
+	{
+GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB,
+GL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB,
+GL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB,
+GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB,
+GL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB,
+GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB
+	};
+
+
+
+	for(int i=0; i<6; i++)
+		if(a[i]==0)
+		{
+			alog.out("Cannot find cube map %s", imageName.c_str());
+			return 0;
+		}
+
+    glEnable(GL_TEXTURE_3D);
+    glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+
+	GLuint id;
+	glGenTextures(1, &id);
+	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, id);
+
+
+	for(int i=0; i<6; i++)
+	{
+		Image *m = (Image*)res->add(Res::image, imageName+a[i]);
+		glTexImage2D(b[i],	0, GL_RGBA8, m->getWidth(), m->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, m->getBitmap());
+	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    glDisable(GL_TEXTURE_3D);
+    glDisable(GL_TEXTURE_CUBE_MAP_ARB);
+
+
+	registedCubeMaps[imageName] = id;
+	alog.out("Bind cubemap %s", imageName.c_str());
+	return id;
+}
+
 
 bool OpenGL_Engine::process()
 {

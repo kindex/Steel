@@ -43,6 +43,7 @@ void Image::flipV()
     free(a);
 }
 
+
 void Image::flipH()
 {
   if (bitmap == NULL) return ;

@@ -40,6 +40,7 @@ public:
 
     void flipV(); // perevernut' Vertikalno |
     void flipH(); // perevernut' <->
+
     void putpixel		(float x, float y, float r, float g, float b);
     void putpixelalfa	(float x, float y, float r, float g, float b, float alfa);
     void putpixeladd	(float x, float y, float r, float g, float b);

@@ -45,8 +45,7 @@ bool ResCollection::add(Res::ResLocatorArray &names)
 	{
 		if(!find(it->name))
 		{
-			bool ret = addForce(it->kind, it->name);
-			if(!ret) return false;
+			if(!addForce(it->kind, it->name)) return false;
 		}
 	}
 	return true;
@@ -59,7 +58,7 @@ name - идентификатор ресурса. Обычно это имя файла без расширения,
 Пробуем загрузить всеми доступными загрузчиками по порядку.
 */
 
-bool ResCollection::addForce(const Res::res_kind kind, const std::string& name)
+Res* ResCollection::addForce(const Res::res_kind kind, const std::string& name)
 {
 	for(ResClassArray::iterator it = classes[kind].begin(); it != classes[kind].end(); it++)
 	{
@@ -81,20 +80,20 @@ bool ResCollection::addForce(const Res::res_kind kind, const std::string& name)
 		alog.out("Res: loaded %s", name.c_str());
 
 		freeindex++;
-		return true;
+		return data[freeindex-1];
 	}
 	alog.out("Res: failed %s", name.c_str());
-	return false;
+	return NULL;
 }
 
-bool ResCollection::add(const Res::res_kind kind, const std::string& name)
+Res* ResCollection::add(const Res::res_kind kind, const std::string& name)
 {
 	if(index.find(name) == index.end())
 	{
 		return addForce(kind, name);
 	}
 	else
-		return true;
+		return get(kind, name);
 }
 
 

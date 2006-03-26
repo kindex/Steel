@@ -19,6 +19,8 @@ public:
 	std::string gets(std::string key, std::string default = "");
 	float		getf(std::string key, float default = 0.0);
 	int			geti(std::string key, int	default = 0);
+
+	bool isset(std::string key) { return var_s.find(key) != var_s.end(); }
 };
 
 #endif
