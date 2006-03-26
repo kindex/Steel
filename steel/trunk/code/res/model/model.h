@@ -27,7 +27,7 @@ public:
     // links: http://www.ati.com/developer/sdk/RADEONSDK/Html/Tutorials/RADEONBumpMap.html
  
 //    mat_id mat;  
-	FaceMaterials *faceMaterial;
+	FaceMaterials faceMaterial;
 
     std::string name;
 
@@ -49,7 +49,6 @@ public:
 	void generateNormals();
 	bool unload()
 	{
-		delete faceMaterial;
 		return true;
 	}
 };

@@ -9,9 +9,9 @@ class Material: public Res
 {
 public:
 //string settings
-	std::map<std::string, std::string> *var_s;
+	std::map<std::string, std::string> var_s;
 // float-number settings
-	std::map<std::string, float> *var_f;
+	std::map<std::string, float> var_f;
 };
 
 #endif

@@ -3,16 +3,14 @@
 
 using namespace std;
 
-void ResCollection::registerClass(Res* Class, int size, const Res::res_kind kind)
+void ResCollection::registerClass(funcCreateResClass *_func, const Res::res_kind kind)
 {
-	classes[kind].push_back(ClassCopy(Class,size));
+	classes[kind].push_back(ClassCopy(_func));
 }
 
 Res* ResCollection::createClass(ClassCopy *aclass)
 {
-	Res *a = (Res*)malloc(aclass->size);
-	memcpy((void*)a, aclass->data, aclass->size);
-	return a;
+	return aclass->func();
 }
 
 string getext(string name)

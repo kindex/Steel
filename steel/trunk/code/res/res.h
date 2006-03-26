@@ -59,13 +59,15 @@ public:
 };
 
 
+typedef Res*(funcCreateResClass)();
 struct ClassCopy
 {
-	ClassCopy(Res* adata, int asize): data(adata), size(asize) {}
+	ClassCopy(funcCreateResClass* _func){ func = _func;}
 
-	Res* data;
-	int size;
+	funcCreateResClass* func;
 };
+
+
 
 class ResCollection
 {
@@ -165,7 +167,7 @@ Neaao?uea 2 ooieoee caiiieia?o eeann ii eiaie e nicaa?o yecaiiey? caiiiiaiiiai e
 Noaiaa?oiiai ?aoaiey ia iaoae, ii yoiio y i?inoi ?a?ac malloc+memcpy eiie?o? iauaeo
 e aucuaa? aai eiino?oeoi? aua ?ac.
 */
-	void registerClass(Res* Class, int size, const Res::res_kind kind);
+	void registerClass(funcCreateResClass *_func, const Res::res_kind kind);
 	Res* createClass(ClassCopy *aclass);
 };
 

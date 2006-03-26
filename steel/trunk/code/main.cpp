@@ -20,6 +20,11 @@
 
 #include <SDL.h>
 
+Res* createBMP() {return new BMP; }
+Res* create3DS() {return new _3DS; }
+Res* createMaterialConf() {return new MaterialConf; }
+Res* createNormalMap() {return new NormalMap; }
+
 int main(int argc, char *argv[])
 {
 	alog.open("steel.log");
@@ -30,10 +35,10 @@ int main(int argc, char *argv[])
 	double speed = 0.01; // 100 FPS
 
 	ResCollection res;
-	res.registerClass(new BMP,	sizeof(BMP),	Res::image);
-	res.registerClass(new _3DS, sizeof(_3DS),	Res::model);
-	res.registerClass(new MaterialConf, sizeof(MaterialConf),	Res::material);
-	res.registerClass(new NormalMap, sizeof(NormalMap),	Res::normalMap);
+	res.registerClass(createBMP,	Res::image);
+	res.registerClass(create3DS,	Res::model);
+	res.registerClass(createMaterialConf,	Res::material);
+	res.registerClass(createNormalMap, Res::normalMap);
 
 #ifdef OPENGL_SDL	
 	OpenGL_SDL_Engine graph;

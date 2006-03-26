@@ -28,16 +28,16 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 		GLuint colorMap = 0;
 
-		if(m->var_s->find("color_map") != m->var_s->end())
-			colorMap = getTexture(Res::image, m->var_s->operator []("color_map"));
+		if(m->var_s.find("color_map") != m->var_s.end())
+			colorMap = getTexture(Res::image, m->var_s["color_map"]);
 
 		GLuint normalMap = 0;
-		if(m->var_s->find("normal_map") != m->var_s->end())
-			normalMap = getTexture(Res::normalMap, m->var_s->operator []("normal_map"));
+		if(m->var_s.find("normal_map") != m->var_s.end())
+			normalMap = getTexture(Res::normalMap, m->var_s["normal_map"]);
 
 		GLuint illuminateMap = 0;
-		if(m->var_s->find("illuminate_map") != m->var_s->end())
-			illuminateMap = getTexture(Res::image, m->var_s->operator []("illuminate_map"));
+		if(m->var_s.find("illuminate_map") != m->var_s.end())
+			illuminateMap = getTexture(Res::image, m->var_s["illuminate_map"]);
 
 		
 		int tex = 0;

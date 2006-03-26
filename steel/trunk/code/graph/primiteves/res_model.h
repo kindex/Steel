@@ -62,7 +62,7 @@ public:
 	FaceMaterials* getFaceMaterials()
 	{
 		if(m)
-			return m->faceMaterial;
+			return &m->faceMaterial;
 		else
 			return NULL;
 	}
