@@ -369,7 +369,7 @@ bool _3DS::init(const std::string name, ResCollection &res)
 		for(map<string, vector<int> >::iterator it = faceMaterial.begin();
 					it != faceMaterial.end(); it++)
 		{
-			if(!res.add(material, it->first)) return false;
+			if(!res.add(config, "material/" + it->first)) return false;
 		}
 
 		return true;

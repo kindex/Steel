@@ -32,12 +32,15 @@ bool intersect(aabb const &first, aabb const &second)
         intersect(first.min.y, first.max.y, second.min.y, second.max.y);
 }
 
-void aabb::merge(v2 point)
+void aabb::merge(v3 point)
 {
     if (min.x > point.x) min.x = point.x;
     if (min.y > point.y) min.y = point.y;
+    if (min.z > point.z) min.z = point.z;
+
     if (max.x < point.x) max.x = point.x;
     if (max.y < point.y) max.y = point.y;
+    if (max.z < point.z) max.z = point.z;
 }
 
 aabb merge(aabb const &first, aabb const &second)

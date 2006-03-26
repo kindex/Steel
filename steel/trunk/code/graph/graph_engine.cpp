@@ -18,17 +18,6 @@
 
 using namespace std;
 
-WindowSettings::WindowSettings() 
-{ 
-	title	= "Steel Engine"; 
-	left	= 0;
-	top		= 0;
-	width	= 700; 
-	height	= width*3/4; 
-	bpp		= 32;
-
-	fullscreen = false;
-}
 
 bool GraphEngine::inject(GraphInterface *object, MATRIX4X4 matrix)
 {

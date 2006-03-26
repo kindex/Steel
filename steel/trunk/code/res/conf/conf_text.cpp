@@ -1,10 +1,11 @@
-#include "material_conf.h"
+
+#include "conf_text.h"
 #include "../../common/logger.h"
 #include <fstream>
 
-bool MaterialConf::init(const std::string name, ResCollection &res)
+bool ConfigText::init(const std::string name, ResCollection &res)
 {
-	std::string file = "../res/material/" + name + ".mat";
+	std::string file = "../res/" + name + ".conf";
 
 	rstream f(file, 0); // no binary acces, only text
 	if(!f.good()) 
@@ -27,7 +28,7 @@ bool MaterialConf::init(const std::string name, ResCollection &res)
 		std::string value = s.substr(d+1, s.size()-d-1);
 
 		var_s[key] = value;
-	//	var_f->insert(key, atof(value.c_str()));
+		var_f[key] = atof(value.c_str());
 	}
 
 	return true;

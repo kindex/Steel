@@ -93,7 +93,7 @@ public:
 			normalMap,
 			cubeMap,
 			model,
-			material
+			config
 	}	res_kind;
 // Структура для идентификации ресурса (тип, строка)
 	struct ResLocator

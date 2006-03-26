@@ -437,22 +437,22 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="material"
+					Name="conf"
 					>
 					<File
-						RelativePath=".\res\material\material.cpp"
+						RelativePath=".\res\conf\conf.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\res\material\material.h"
+						RelativePath=".\res\conf\conf.h"
 						>
 					</File>
 					<File
-						RelativePath=".\res\material\material_conf.cpp"
+						RelativePath=".\res\conf\conf_text.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\res\material\material_conf.h"
+						RelativePath=".\res\conf\conf_text.h"
 						>
 					</File>
 				</Filter>

@@ -64,7 +64,7 @@ bool OpenGL_WIN_Engine::createWindow()
 	
 	dwStyle = NULL;
 
-	if(window.fullscreen) 						// Check if we wanted full screen mode
+	if(conf->geti("fullscreen")) 						// Check if we wanted full screen mode
 	{													// Set the window properties for full screen mode
 		dwStyle = WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 //	   	ChangeToFullScreen(s,w);							// Go to full screen
@@ -81,8 +81,9 @@ bool OpenGL_WIN_Engine::createWindow()
 	//AdjustWindowRect( &rWindow, dwStyle, false);		// Adjust Window To True Requested Size
 
 														// Create the window
-	hWnd = CreateWindow("SteelWindow", window.caption.c_str(), dwStyle, window.left, window.top,
-						window.width, window.height,
+	hWnd = CreateWindow("SteelWindow", "Steel Engine", dwStyle, 
+		conf->geti("left"), conf->geti("top"),
+						conf->geti("width"), conf->geti("height"),
 						NULL, NULL, NULL, NULL);
 
 	if(!hWnd) return NULL;								// If we could get a handle, return NULL
@@ -115,8 +116,8 @@ bool OpenGL_WIN_Engine::createWindow()
 
     ppfd->dwLayerMask = PFD_MAIN_PLANE;
     ppfd->iPixelType = PFD_TYPE_RGBA;
-    ppfd->cColorBits = window.bpp;
-    ppfd->cDepthBits = window.bpp;
+    ppfd->cColorBits = conf->geti("depth");
+    ppfd->cDepthBits = conf->geti("depth");
 
     if ( (pixelformat = ChoosePixelFormat(DC, ppfd)) == 0 )    {        MessageBox(NULL, "ChoosePixelFormat failed", "Error", MB_OK);        return FALSE;    }
     if (SetPixelFormat(DC, pixelformat, ppfd) == FALSE)    {        MessageBox(NULL, "SetPixelFormat failed", "Error", MB_OK);        return FALSE;    }

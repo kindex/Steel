@@ -44,6 +44,10 @@ bool OpenGL_SDL_Engine::createWindow()
 		SDL_OPENGL | 
 		SDL_GL_DOUBLEBUFFER | 
 		SDL_HWPALETTE;
+
+	if(conf->geti("fullscreen"))
+	videoFlags |= SDL_FULLSCREEN;
+
 //	videoFlags |= SDL_OPENGLBLIT;
 //	videoFlags|=SDL_RESIZABLE;
 	
@@ -62,7 +66,7 @@ bool OpenGL_SDL_Engine::createWindow()
 	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
 
-	surface = SDL_SetVideoMode(window.width, window.height, window.bpp, videoFlags);
+	surface = SDL_SetVideoMode(conf->geti("width"), conf->geti("height"), conf->geti("depth"), videoFlags);
 	if ( !surface )
 	{
 		alog.out("Video mode set failed: %s\n",SDL_GetError());
@@ -83,7 +87,7 @@ bool OpenGL_SDL_Engine::createWindow()
 		"\tSoftware colourkey blits: %s\n" \
 		"\tSoftware alpha blits: %s\n" \
 		"\tAccelerated colour fills: %s\n", \
-		window.width, window.height, window.bpp, videoInfo->video_mem, \
+		conf->geti("width"), conf->geti("height"), conf->geti("depth"), videoInfo->video_mem, \
 		videoInfo->hw_available?"yes":"no", \
 		videoInfo->wm_available?"yes":"no", \
 		videoInfo->blit_hw?"yes":"no", \

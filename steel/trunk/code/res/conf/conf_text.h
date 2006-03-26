@@ -1,9 +1,9 @@
-#ifndef __RES__MATERIAL_CONF_H
-#define __RES__MATERIAL_CONF_H
+#ifndef __RES__CONF_TEXTFILE_H
+#define __RES__CONF_TEXTFILE_H
 
-#include "material.h"
+#include "conf.h"
 
-class MaterialConf:public Material
+class ConfigText:public Config
 {
 	bool init(const std::string name, ResCollection &res);
 	bool unload() { return true; }

@@ -17,24 +17,13 @@
 #ifndef __GRAPH_ENGINE_H
 #define __GRAPH_ENGINE_H
 
-#include "../res/res.h"
-#include "../res/material/material.h"
+#include "../res/conf/conf.h"
 
 /********************************* GRAPH **********************************************/
 
 #include "graph_interface.h"
 
 class GraphEngine;
-
-struct WindowSettings
-{
-    std::string caption, title; // if not fullscreen
-    int left, top, width, height, bpp;
-	
-	bool fullscreen;
-
-	WindowSettings();
-};
 
 class Camera
 {
@@ -77,13 +66,7 @@ protected:
 	std::vector<GraphInterface*> objects;
 	Lights light;
 
-	ResCollection *res;
-
-
-//	vertexes		vertex;
-	//vertexNumbers	triangle;
 public:
-	WindowSettings window;
 	Camera camera;
 	virtual void processCamera() = 0;
 	// Collect information about object: how to render it
@@ -92,8 +75,6 @@ public:
 	bool process() = 0; // Override OpenGL, D3D, ...\
 	// Clear collected information
 	bool clear();
-// TODO: убрать это. Не вписывает в идею движка
-	void bindResColelntion(ResCollection *_res) { res = _res; }
 };
 
 #endif

@@ -21,7 +21,9 @@
 #define ENGINE_H
 
 #include "steel.h"
-
+#include "res/res.h"
+#include "res/conf/conf.h"
+#include <string>
 /*
 protottype:
 */
@@ -30,13 +32,20 @@ class Interface{};
 
 class Engine: public steelAbstract
 {
+protected:
+	ResCollection	*res;
 public:
+	Config			*conf;
+
 	virtual ~Engine() {}
-	virtual bool init() = 0; // initialization
+	virtual bool init(std::string _conf) = 0; // initialization
 //	protottype: virtual bool inject(Interface *object) { return false; }; // add object to process by engine
 	virtual bool clear() = 0; 
 	virtual bool process() = 0; // add object to process by engine
 	virtual bool deinit() = 0;
+
+// TODO: убрать это. Не вписывает в идею движка
+	void bindResColelntion(ResCollection *_res) { res = _res; }
 };
 
 #endif

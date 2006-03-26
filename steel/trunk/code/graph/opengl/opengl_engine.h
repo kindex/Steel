@@ -48,7 +48,7 @@ protected:
 
 public:
 	void processCamera();
-	bool init();
+	bool init(std::string _conf);
 	bool process();
 	virtual bool deinit();
 
@@ -60,6 +60,7 @@ public:
 	
 	void drawFaces(DrawElement &e);
 	void drawNormals(DrawElement &e);
+	void drawAABB(DrawElement &e);
 
 	void drawBump(DrawElement &e, GLuint normalMap, MATRIX4X4 const matrix, v3 const light);
 	void drawDiffuse(DrawElement &e, MATRIX4X4 const matrix, v3 const light);

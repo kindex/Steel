@@ -34,7 +34,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &e.vertex->front());
 
-		Material *m = (Material*)res->get(Res::material, e.material);
+		Config *m = (Config*)res->get(Res::config, "material/" + e.material);
 		if(m == NULL)
 		{
 			alog.out("Cannot find material '%s'", e.material.c_str());
@@ -144,8 +144,13 @@ if(tex>0)
 
 			tex++;
 		}
-
 		glDisableClientState(GL_VERTEX_ARRAY);
+
+		if(conf->geti("drawNormals", 0))
+			drawNormals(e);
+		if(conf->geti("drawAABB", 0))
+			drawAABB(e);
+
 	}
 }
 
@@ -413,6 +418,34 @@ void OpenGL_Engine::drawNormals(DrawElement &e)
 		glEnd();
 }
 
+void OpenGL_Engine::drawAABB(DrawElement &e)
+{
+	aabb c;
+	
+	for(Vertexes::iterator it = e.vertex->begin(); it != e.vertex->end(); it++)
+		c.merge(*it);
+
+	glBegin(GL_LINES);
+	
+	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.min.z);
+	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.min.z);
+	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.min.y, c.max.z);
+
+	glVertex3f(c.min.x, c.max.y, c.max.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
+	glVertex3f(c.max.x, c.min.y, c.max.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
+	glVertex3f(c.max.x, c.max.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
+
+	glVertex3f(c.min.x, c.min.y, c.max.z);	glVertex3f(c.max.x, c.min.y, c.max.z);
+	glVertex3f(c.min.x, c.max.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.min.z);
+
+	glVertex3f(c.min.x, c.min.y, c.max.z);	glVertex3f(c.min.x, c.max.y, c.max.z);
+	glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.min.z);
+
+	glVertex3f(c.min.x, c.max.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.max.z);	
+	glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.max.z);	
+
+	glEnd();
+}
 
 
 GLuint OpenGL_Engine::getTexture(Res::res_kind kind, std::string imageName)
@@ -465,8 +498,24 @@ bool OpenGL_Engine::process()
 
 
 
-bool OpenGL_Engine::init()
+bool OpenGL_Engine::init(std::string _conf)
 {
+	if(!res->add(Res::config, _conf))
+	{
+		alog.msg("error graph conf res","Cannot find renderer config file "+_conf);
+		return false;
+	}
+
+	conf= (Config*)res->get(Res::config, _conf);
+
+	conf->setDefault("depth", "24");
+	conf->setDefault("left", "10");
+	conf->setDefault("top", "10");
+	conf->setDefault("width", "800");
+	conf->setDefault("height", "550");
+
+	conf->setDefault("fullscreen", "0");
+
 	if (!createWindow())
 	{
 		lastError = getError();

@@ -27,8 +27,18 @@
 
 struct aabb
 {
-    v2 min, max;
-    void merge(v2 point);
+    v3 min, max;
+    void merge(v3 point);
+
+	aabb() 
+	{ 
+		min.x = +INF; 
+		min.y = +INF; 
+		min.z = +INF; 
+		max.x = -INF; 
+		max.y = -INF;
+		max.z = -INF;
+	}
 };
 
 bool intersect(aabb const &first, aabb const &second);

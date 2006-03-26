@@ -24,7 +24,7 @@
 #include "res/res.h"
 #include "res/image/bmp.h"
 #include "res/model/_3ds.h"
-#include "res/material/material_conf.h"
+#include "res/conf/conf_text.h"
 #include "graph/primiteves/res_model.h"
 
 #include "common/logger.h"
@@ -36,7 +36,7 @@
 
 Res* createBMP() {return new BMP; }
 Res* create3DS() {return new _3DS; }
-Res* createMaterialConf() {return new MaterialConf; }
+Res* createConfig() {return new ConfigText; }
 Res* createNormalMap() {return new NormalMap; }
 Res* createHeightMap() {return new HeightMap; }
 
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 	ResCollection res;
 	res.registerClass(createBMP,	Res::image);
 	res.registerClass(create3DS,	Res::model);
-	res.registerClass(createMaterialConf,	Res::material);
+	res.registerClass(createConfig,	Res::config);
 	res.registerClass(createNormalMap, Res::normalMap);
 	res.registerClass(createHeightMap, Res::normalMap);
 
@@ -65,13 +65,13 @@ int main(int argc, char *argv[])
 
 	graph.bindResColelntion(&res);
 
-	if(!graph.init()) return 1;
+	if(!graph.init("renderer")) return 1;
 	
 	Game game(&res);
 	game.init();
 	
-	int cx = graph.window.width/2;
-	int cy = graph.window.height/2;
+	int cx = graph.conf->geti("width")/2;
+	int cy = graph.conf->geti("height")/2;
 	int sx = cx, sy = cy, mx, my;
 
 	SDL_WarpMouse(cx, cy);
@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 
 		timer.incframe();
 
-		graph.setCaption(graph.window.title + " FPS = " + timer.getfps_s());
+		graph.setCaption("Sleel engine FPS = " + timer.getfps_s());
 		speed = 1.0/timer.getfps();
 
 		if(first)
