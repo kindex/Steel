@@ -1,3 +1,17 @@
+/*id*********************************************************
+    Unit: game
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Этот юнит является дополнением к steel engine и служит
+		примером использования движка. В этом юните задаются правила игры
+		или графической демки.
+ ************************************************************/
+
 #include "game.h"
 #include "../common/logger.h"
 using namespace std;

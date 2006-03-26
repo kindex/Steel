@@ -1,3 +1,18 @@
+/*id*********************************************************
+    Unit: GraphEngine - OpenGL Engine
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kane [Anton]
+    Licence:
+        Только для Division
+    Description:
+		Графический движок реализлванный на фунциях OpenGL. 
+		Рисует трехмерный объект в виде 3d-mesh,
+		расчитывает динамическое освещение
+ ************************************************************/
+
 #ifndef __GRAPH_OPENGL_ENGINE_H
 #define __GRAPH_OPENGL_ENGINE_H
 
@@ -20,9 +35,6 @@ class OpenGL_Engine: public GraphEngine
 protected:
 	std::map<std::string, GLuint> registredTextures;
 
-    void create();
-    void repair();
-
 	GLuint normalisationCubeMap, lightCubeMap, distMap;
 
 	typedef
@@ -39,26 +51,24 @@ public:
 	bool init();
 	bool process();
 	virtual bool deinit();
-	
-	void drawElement(DrawElement &e);
-	void drawBump(DrawElement &e, GLuint normalMap, MATRIX4X4 const matrix, v3 const light);
-	void drawDiffuse(DrawElement &e, MATRIX4X4 const matrix, v3 const light);
-	void drawDistColor(DrawElement &e, MATRIX4X4 const matrix, v3 const light, float const distance);
-
-	void drawFaces(DrawElement &e);
-
-	GLuint getTexture(Res::res_kind kind, std::string imageName);
 
 	virtual void swapBuffers() = 0;
 	virtual bool createWindow() = 0;
 	virtual void setCaption(std::string caption) = 0;
-
-	void getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals const *normal,
-									std::vector<v3> **sTangent, std::vector<v3> **tTangent);
-
-	void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, MATRIX4X4 const matrix, const v3 light,	v3List **tangentSpaceLight);
+	
+	void drawElement(DrawElement &e);
+	
+	void drawFaces(DrawElement &e);
 	void drawNormals(DrawElement &e);
 
+	void drawBump(DrawElement &e, GLuint normalMap, MATRIX4X4 const matrix, v3 const light);
+	void drawDiffuse(DrawElement &e, MATRIX4X4 const matrix, v3 const light);
+	void drawDistColor(DrawElement &e, MATRIX4X4 const matrix, v3 const light, float const distance);
+
+	void getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals const *normal, std::vector<v3> **sTangent, std::vector<v3> **tTangent);
+	void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, MATRIX4X4 const matrix, const v3 light,	v3List **tangentSpaceLight);
+
+	GLuint getTexture(Res::res_kind kind, std::string imageName);
 };
 
 

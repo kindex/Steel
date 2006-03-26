@@ -1,4 +1,19 @@
+/*id*********************************************************
+    Unit: GraphEngine - OpenGL Engine WIN API
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Часть графического движока OpenGL, которая реализует
+		системно зависимые функции, такие как создание окна.
+ ************************************************************/
+
 #include "opengl_win_engine.h"
+
+HWND handle;
 
 
 void OpenGL_WIN_Engine::swapBuffers()
@@ -7,7 +22,6 @@ void OpenGL_WIN_Engine::swapBuffers()
 }
 
 
-HWND handle;
 
 LRESULT CALLBACK WinProc(HWND hWnd,UINT uMsg, WPARAM wParam, LPARAM lParam)
 {

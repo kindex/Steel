@@ -1,3 +1,17 @@
+/*id*********************************************************
+    Unit: core
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kane [Anton]
+    Licence:
+        “олько дл€ Division
+    Description:
+		main() создайт игровые классы, коллеццию ресурсов, загружет 
+		плагины, содержит главный цикл игры.
+ ************************************************************/
+
 #include "_cpp.h"
 
 #ifdef OPENGL_SDL	
@@ -108,7 +122,7 @@ int main(int argc, char *argv[])
 		if(!alive)break;
 	
 		game.setspeed(speed, timer.total());
-		
+	
 		game.process();
 
 		graph.clear();

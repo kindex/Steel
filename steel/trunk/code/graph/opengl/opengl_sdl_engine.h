@@ -1,3 +1,17 @@
+/*id*********************************************************
+    Unit: GraphEngine - OpenGL Engine SDL
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kane [Anton]
+    Licence:
+        Только для Division
+    Description:
+		Часть графического движока OpenGL, которая реализует
+		системно зависимые функции, такие как создание окна.
+ ************************************************************/
+
 #ifndef __GRAPH_OPENGL_SDL_ENGINE_H
 #define __GRAPH_OPENGL_SDL_ENGINE_H
 

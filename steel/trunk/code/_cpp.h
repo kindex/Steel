@@ -1,3 +1,17 @@
+/*id*********************************************************
+    Unit: core
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kane [Anton]
+    Licence:
+        Только для Division
+    Description:
+		Основные директивы и определения (includes) для всего проекта
+ ************************************************************/
+
+
 #ifndef _CPP_H
 #define _CPP_H
 

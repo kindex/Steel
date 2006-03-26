@@ -1,3 +1,15 @@
+/*id*********************************************************
+    Unit: GraphEngine
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Класс res_model является посредником между коллекцией графи
+ ************************************************************/
+
 #ifndef __GRAPH_RES_MODEL_H
 #define __GRAPH_RES_MODEL_H
 

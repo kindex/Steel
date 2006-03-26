@@ -1,13 +1,20 @@
-/*
- System dependant entry point
- */
+/*id*********************************************************
+    Unit: core
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		System dependant entry point for Visual Studio project.
+ ************************************************************/
 
-#include <windows.h>		// Header File For Windows
+#include <windows.h>
 #include <direct.h>
 #include <fstream>
 #include <string>
 
-using namespace std;
 #include "main.h"
 
 

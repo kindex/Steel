@@ -1,17 +1,18 @@
-//---------------------------------------------------------------------------
-
-#ifndef __linux
-#pragma hdrstop
-#endif
+/*id*********************************************************
+    Unit: Res-Image [Resources - Images - BMP (RGB bitmap)]
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Класс для загрузки BMP-файла в класс Image
+ ************************************************************/
 
 #include "bmp.h"
 #include "../../common/logger.h"
-
 #include <string> 
-
-
-//#pragma option -a1 // align on bytes !!!!!!!!!! 4tobi pravilno zagruzit' headeri, 
-// 4tobi nebilo viravnivanija
 
 typedef unsigned char byte; // 1 byte
 typedef unsigned short word; // 2 bytes
@@ -198,10 +199,3 @@ bool BMP::unload()
 {
 	return false;
 }
-
-
-//#pragma option -a.      // restore command-line option
-
-
-
-//#pragma package(smart_init)

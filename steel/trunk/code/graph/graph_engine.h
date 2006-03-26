@@ -1,13 +1,22 @@
+/*id*********************************************************
+    Unit: GraphEngine
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kane [Anton]
+    Licence:
+        Только для Division
+    Description:
+		Графический джижок. Получет трехмерный объект в виде 3d-mesh
+		и потомки графического движка (OpenGL_Engine) занимаются
+		отображением этого объекта на экране, расчётом динамического
+		освещения, инициализацией граф. режима.
+ ************************************************************/
+
 #ifndef __GRAPH_ENGINE_H
 #define __GRAPH_ENGINE_H
 
-#include "../engine.h"
-#include "../math/maths.h"
-#include "../math/vector3d.h"
-#include "../math/geometry.h"
-#include "../math/matrix4x4.h"
-
-// RES
 #include "../res/res.h"
 #include "../res/material/material.h"
 
@@ -83,7 +92,7 @@ public:
 	bool process() = 0; // Override OpenGL, D3D, ...\
 	// Clear collected information
 	bool clear();
-
+// TODO: убрать это. Не вписывает в идею движка
 	void bindResColelntion(ResCollection *_res) { res = _res; }
 };
 

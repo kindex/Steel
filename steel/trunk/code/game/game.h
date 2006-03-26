@@ -1,3 +1,16 @@
+/*id*********************************************************
+    Unit: game
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Этот юнит является дополнением к steel engine и служит
+		примером использования движка. В этом юните задаются правила игры
+		или графической демки.
+ ************************************************************/
 
 #ifndef GAME_H
 #define GAME_H
@@ -9,6 +22,9 @@
 #include <string>
 #include <map>
 
+/*
+Игровой объект, которым может рисоваться в игре
+*/
 class GameObj: public res_model
 {
 public:
@@ -55,7 +71,9 @@ public:
 	
 };
 
-
+/*
+Класс, задающий правила игры
+*/
 class Game: public steelAbstract
 {
 private:

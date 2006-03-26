@@ -59,6 +59,8 @@ void Logger::out( char *fmt, ... )
 	#endif
 	va_end(ap);
 	fprintf(f,"\n");
+
+	fflush(f);
 }
 
 void Logger::out( std::string str )

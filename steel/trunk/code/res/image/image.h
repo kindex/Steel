@@ -1,48 +1,31 @@
+/*id*********************************************************
+    Unit: Res-Image [Resources - Images (RGB bitmap)]
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Класс для хранения изображения в виде RGB (без загрузки)
+ ************************************************************/
+
 #ifndef __RES_IMAGE_H
 #define __RES_IMAGE_H
 
-/*
-  Image unit
-
-  Класс для хранения изобрадения (без загрузки)
-*/
-
 #include "../res.h"
 
-//typedef int tex;
-//extern tex imageNone,imageNotFound,imageOutOfMemory,imageWrongFormat,imageOutOfRange;
-
-
-/*
-The first element corresponds	to the lower left corner of
-the texture image.  Subsequent elements progress left-to-
-right	through	the remaining texels in	the lowest row of the
-texture image, and then in successively higher rows of the
-texture image.  The final element corresponds	to the upper
-right	corner of the texture image.
-
-24 bit !!
-*/
+class NormalMap;
+class HeightMap;
 
 class Image: public Res
 {
-
 protected:
-public:// todo
     unsigned char* bitmap;
     int width, height, bpp, bitmapSize;
-
 public:
-
     Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; }
     ~Image() { }
-
-//    virtual void loadraw(const string& name)=0;
-    void convertFromHeightMapToNormalMap();
-
-    void makeCubeMap(const std::string& name);
-
-//    void init(const string& name);
 
     bool unload() 
 	{
@@ -57,18 +40,34 @@ public:
 
     void flipV(); // perevernut' Vertikalno |
     void flipH(); // perevernut' <->
-    void putpixel(float x, float y, float r, float g, float b);
-    void putpixelalfa(float x, float y, float r, float g, float b, float alfa);
-    void putpixeladd(float x, float y, float r, float g, float b);
-    void clear(float r, float g, float b);
+    void putpixel		(float x, float y, float r, float g, float b);
+    void putpixelalfa	(float x, float y, float r, float g, float b, float alfa);
+    void putpixeladd	(float x, float y, float r, float g, float b);
+    void clear			(float r, float g, float b);
 
- //   void operator=(const Image &A) { memcpy(this, &A, sizeof(Image)); } 
+	int getWidth()	{ return width; }
+	int getHeight()	{ return height; }
+	unsigned char* getBitmap() { return bitmap; }
+
+	friend class NormalMap;
 };
 
 
 class NormalMap: public Image
 {
+protected:
+	bool copyImage(const std::string name, ResCollection &res);
+public:
 	bool init(const std::string name, ResCollection &res);
 };
+
+class HeightMap: public NormalMap
+{
+protected:
+	void convertFromHeightMapToNormalMap();
+public:
+	bool init(const std::string name, ResCollection &res);
+};
+
 
 #endif

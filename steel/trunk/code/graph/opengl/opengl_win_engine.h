@@ -1,3 +1,18 @@
+/*id*********************************************************
+    Unit: GraphEngine - OpenGL Engine WIN API
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Часть графического движока OpenGL, которая реализует
+		системно зависимые функции, такие как создание окна.
+ ************************************************************/
+
+// Undone - dirty
+
 #ifndef __GRAPH_OPENGL_WIN_ENGINE_H
 #define __GRAPH_OPENGL_WIN_ENGINE_H
 

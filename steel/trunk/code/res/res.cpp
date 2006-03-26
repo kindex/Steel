@@ -1,3 +1,16 @@
+/*id*********************************************************
+    Unit: Res [Resources]
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        “олько дл€ Division
+    Description:
+        ћолуль дл€ хранени€, загрузки игровых ресурсов и 
+		контрол€ над ними. 
+************************************************************/
+
 #include "res.h"
 #include "../common/logger.h"
 
@@ -58,7 +71,10 @@ bool ResCollection::addForce(const Res::res_kind kind, const std::string& name)
 	    data.resize(freeindex+1);
 	    names.resize(freeindex+1);
 	    resType.resize(freeindex+1);
-	    setname(freeindex, name);
+	    
+		index[name] = freeindex; 
+		names[freeindex] = name; 
+
 		data[freeindex] = loader;
 		resType[freeindex] = kind;
 	

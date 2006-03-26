@@ -1,9 +1,27 @@
+/*id*********************************************************
+    Unit: GraphEngine
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kane [Anton]
+		* Bond [Andrey Bondarenko]
+    Licence:
+        Только для Division
+    Description:
+		Графический джижок - интерфейс рисуемого объекта
+ ************************************************************/
+
 #ifndef __GRAPH_INTERFACE_H
 #define __GRAPH_INTERFACE_H
 
 #include "../engine.h"
 #include "../math/geometry.h"
 #include "../math/matrix4x4.h"
+
+#include "../engine.h"
+#include "../math/maths.h"
+#include "../math/vector3d.h"
 
 
 // One triangle, indexes of vertexes

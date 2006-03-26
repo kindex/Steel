@@ -1,3 +1,18 @@
+/*id*********************************************************
+    Unit: GraphEngine - OpenGL Engine
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kane [Anton]
+    Licence:
+        Только для Division
+    Description:
+		Графический джижок релизлванный на фунциях OpenGL. 
+		Рисует трехмерный объект в виде 3d-mesh,
+		расчитывает динамическое освещение
+ ************************************************************/
+
 #include "opengl_engine.h"
 
 #include <iostream>
@@ -426,8 +441,8 @@ GLuint OpenGL_Engine::getTexture(Res::res_kind kind, std::string imageName)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, a->width, a->height,0,
-		GL_RGB,  GL_UNSIGNED_BYTE , a->bitmap);
+	glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, a->getWidth(), a->getHeight(),0,
+		GL_RGB,  GL_UNSIGNED_BYTE , a->getBitmap());
 
 	registredTextures[imageName] = id;
 	alog.out("Bind texture %s", imageName.c_str());
