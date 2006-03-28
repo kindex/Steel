@@ -50,7 +50,7 @@ public:
 	void processCamera();
 	bool init(std::string _conf);
 	bool process();
-	virtual bool deinit();
+	bool deinit();
 
 	virtual void swapBuffers() = 0;
 	virtual bool createWindow() = 0;

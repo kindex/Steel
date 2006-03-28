@@ -187,7 +187,7 @@ public:
 // TODO: не красиво - оптимизация
 	Res* getModel(const std::string& name)
 	{
-		Res* m = get(Res::model, name);
+		Res* m = add(Res::model, name);
 		if(m != NULL)
 			return m;
 		else

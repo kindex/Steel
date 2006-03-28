@@ -304,14 +304,10 @@
 					RelativePath=".\graph\graph_interface.h"
 					>
 				</File>
-				<Filter
-					Name="primitives"
+				<File
+					RelativePath=".\graph\graph_primitives.h"
 					>
-					<File
-						RelativePath=".\graph\primiteves\res_model.h"
-						>
-					</File>
-				</Filter>
+				</File>
 				<Filter
 					Name="OpenGL"
 					>
@@ -506,6 +502,26 @@
 				</File>
 				<File
 					RelativePath=".\game\game.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="physic"
+				>
+				<File
+					RelativePath=".\physic\physic_engine.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\physic\physic_engine.h"
+					>
+				</File>
+				<File
+					RelativePath=".\physic\physic_interface.h"
+					>
+				</File>
+				<File
+					RelativePath=".\physic\physic_primitives.h"
 					>
 				</File>
 			</Filter>

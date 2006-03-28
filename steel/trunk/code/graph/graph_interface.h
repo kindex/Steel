@@ -18,17 +18,9 @@
 #include "../engine.h"
 #include "../math/geometry.h"
 #include "../math/matrix4x4.h"
-
-#include "../engine.h"
 #include "../math/maths.h"
 #include "../math/vector3d.h"
 
-
-// One triangle, indexes of vertexes
-struct Triangle // anti-clockwise direction (one side Triangle)
-{
-	unsigned int a[3];
-};
 
 struct Light
 {
@@ -36,9 +28,8 @@ struct Light
 	float intensivity, range;
 };
 
-typedef std::vector<v3>			Vertexes;
+
 typedef std::vector<v3>			Normals;
-typedef std::vector<Triangle>	Triangles;
 typedef std::vector<v2>			MapCoords;
 typedef std::vector<Light>		Lights;
 typedef std::map<std::string, std::vector<int> >  FaceMaterials;

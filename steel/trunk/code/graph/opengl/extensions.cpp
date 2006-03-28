@@ -350,7 +350,7 @@ GLuint generateDistanceLinearMap()
 	p = data;
 	for(int i=0; i<size; i++)
 	{
-		p[0] = p[1] = p[2] = (unsigned char)(256*(float)i/size);
+		p[0] = p[1] = p[2] = (unsigned char)(256*sqr((float)i/size));
 		p += 3;
 	}
 

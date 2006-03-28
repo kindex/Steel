@@ -14,6 +14,8 @@
 
 #include "_cpp.h"
 
+#include "physic/physic_engine.h"
+
 #ifdef OPENGL_SDL	
 	#include "graph/opengl/opengl_sdl_engine.h"
 #endif
@@ -25,7 +27,6 @@
 #include "res/image/bmp.h"
 #include "res/model/_3ds.h"
 #include "res/conf/conf_text.h"
-#include "graph/primiteves/res_model.h"
 
 #include "common/logger.h"
 #include "common/timer.h"
@@ -46,9 +47,10 @@ int main(int argc, char *argv[])
 
 	SDL_Init(SDL_INIT_TIMER);
 	Timer_SDL timer;
-	timer.start();
-	double speed = 0.01; // 100 FPS
+	timer.start();	timer.pause();
 
+	double speed = 0.01; // 100 FPS
+// ************* RES ****************
 	ResCollection res;
 	res.registerClass(createBMP,	Res::image);
 	res.registerClass(create3DS,	Res::model);
@@ -56,6 +58,7 @@ int main(int argc, char *argv[])
 	res.registerClass(createNormalMap, Res::normalMap);
 	res.registerClass(createHeightMap, Res::normalMap);
 
+// *************** GRAPH *******************
 #ifdef OPENGL_SDL	
 	OpenGL_SDL_Engine graph;
 #endif
@@ -77,7 +80,11 @@ int main(int argc, char *argv[])
 	SDL_WarpMouse(cx, cy);
 
 	int lastdx = 0, lastdy = 0;
+// ******************* PHYSIC **************************
 
+	PhysicEngine physic;
+	physic.bindResColelntion(&res);
+	if(!physic.init("physic")) return 1;
 
 // ******************* MAIN LOOP ************************
 	alog.msg("core", "Entering main loop");
@@ -123,13 +130,16 @@ int main(int argc, char *argv[])
 			}
 		if(!alive)break;
 
-		if(speed>0.01 && timer.total()<2)
+		if(speed < 0.0 || speed>0.01 && timer.total()<2)
 		{
 			speed = 0.01;
 		}
 	
 		game.setspeed(speed, timer.total());
 	
+		physic.clear();
+		game.processPhysic(&physic);
+
 		game.process();
 
 		graph.clear();
@@ -144,6 +154,7 @@ int main(int argc, char *argv[])
 		{
 			first = false;
 			alog.msg("core", "Main loop: first frame passed");
+			timer.resume();
 		}
 
 		SDL_Delay(1);

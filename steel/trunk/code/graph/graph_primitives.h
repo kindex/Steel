@@ -7,22 +7,45 @@
     Licence:
         Только для Division
     Description:
-		Класс res_model является посредником между коллекцией графи
+		Класс GModel является посредником между коллекцией ресурсов 
+		и графическим интерфейсом
  ************************************************************/
 
-#ifndef __GRAPH_RES_MODEL_H
-#define __GRAPH_RES_MODEL_H
+#ifndef GRAPH_PRIMITIVES_H
+#define GRAPH_PRIMITIVES_H
 
-#include "../graph_interface.h"
-#include "../../res/model/model.h"
+#include "graph_interface.h"
+#include "../res/model/model.h"
 
-class res_model: public GraphInterface
+class GDummy: public GraphInterface
 {
-private:
+public:
+	GraphInterfaceList getChildrens()
+	{
+		GraphInterfaceList a;
+		return a;
+	}
+	aabb getFrame()	{		aabb A;		return A;	}
+
+	bool cleanup()	{ return true; }
+
+	Vertexes*	getVertexes()	{		return NULL;	}
+	Triangles*	getTriangles()	{		return NULL;	}
+	MapCoords*	getMapCoords()	{		return NULL;	}
+	Normals*	getNormals()	{		return NULL;	}
+	FaceMaterials* getFaceMaterials()	{		return NULL;	}
+	MATRIX4X4 getMatrix()		{		return MATRIX4X4();	}
+	Lights* getLights()			{		return NULL;	}
+};
+
+
+class GModel: public GDummy
+{
+protected:
 	Model *m;
 public:
-
-	res_model() { m = NULL; }
+	GModel() { m = NULL; }
+	GModel(Model *M) { m = M;}
 
 	void assignModel(Model *M)
 	{
@@ -34,15 +57,11 @@ public:
 		GraphInterfaceList a;
 		return a;
 	}
-	aabb getFrame()
-	{
-		aabb A;
-		return A;
-	}
-	bool cleanup()
-	{
-		return true;
-	}
+	// TODO
+	aabb getFrame()	{		aabb A;		return A;	}
+
+	bool cleanup(){	return true;}
+
 	Vertexes*	getVertexes()
 	{
 		if(m)
@@ -57,6 +76,7 @@ public:
 		else
 			return NULL;
 	}
+
 	MapCoords*	getMapCoords()
 	{
 		if(m)
@@ -86,8 +106,9 @@ public:
 	{
 		return NULL;
 	}
-
-
 };
+
+
+
 
 #endif

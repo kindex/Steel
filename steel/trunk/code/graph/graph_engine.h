@@ -72,7 +72,7 @@ public:
 	// Collect information about object: how to render it
 	virtual bool inject(GraphInterface *object, MATRIX4X4 matrix = MATRIX4X4());
 	// Draw colelcted information. May be called few times without recollection information
-	bool process() = 0; // Override OpenGL, D3D, ...\
+	virtual bool process() = 0; // Override OpenGL, D3D, ...\
 	// Clear collected information
 	bool clear();
 };

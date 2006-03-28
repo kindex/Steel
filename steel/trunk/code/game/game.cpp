@@ -16,7 +16,7 @@
 #include "../common/logger.h"
 using namespace std;
 
-#define MOVE_SPEED (50.0f)
+#define MOVE_SPEED (10.0f)
 #define LOOK_SPEED (0.01f)
 
 void Game::processKeyboard()
@@ -45,50 +45,57 @@ void Game::handleMouse(double dx, double dy)
 	if(angle.y < -M_PI*0.45f) angle.y = -(float)M_PI*0.45f;
 }
 
-
-void Game::process()
+void Game::processPhysic(PhysicEngine *physic)
 {
-		processKeyboard();
-
-		for(int i=0; i<3; i++)
+/*		for(int i=0; i<3; i++)
 			obj[1]->pos.entries[i+i*4] = 0.20f;
 
 		obj[1]->pos.entries[12] = (float)cos(time)*50.0f;
 		obj[1]->pos.entries[13] = (float)sin(time)*50.0f;
 		obj[1]->pos.entries[14] = 20;
-
-/*		for(int i=0; i<3; i++)
+*/
+		/*		for(int i=0; i<3; i++)
 			obj[1]->children[0]->pos.entries[i+i*4] = 0.20f;
 
 		obj[1]->children[0]->pos.entries[12] = (float)cos(2*time)*60.0f;
 		obj[1]->children[0]->pos.entries[13] = (float)sin(2*time)*60.0f;
 		obj[1]->children[0]->pos.entries[14] = 20;
 */
-	    direction = 
-			v3(
+		for(vector<PhysicInterface*>::iterator it = pobj.begin(); it != pobj.end(); it++)
+			physic->inject((*it));
+
+		physic->process(speed);
+}
+
+void Game::process()
+{
+	processKeyboard();
+
+    direction = 
+		v3(
 			cos(angle.x) * cos(angle.y),
 			sin(angle.x) * cos(angle.y),
 			-sin(angle.y)
-			);
+		);
 
 }
 
 void Game::draw(GraphEngine *graph)
 {
-		graph->camera.setup(eye, direction);
+	graph->camera.setup(eye, direction);
 
-		graph->processCamera();
+	graph->processCamera();
 
-		for(vector<GameObj*>::iterator it = obj.begin(); it != obj.end(); it++)
-			graph->inject((*it));
+	for(vector<GraphInterface*>::iterator it = gobj.begin(); it != gobj.end(); it++)
+		graph->inject((*it));
 
-		graph->process();
+	graph->process();
 }
 
 
 bool Game::init()
 {
-	eye = v3(60, 50, 31);
+	eye = v3(10, 5, 3);
 	angle = v3(4.0, 0.0, 0.0);
 
 	direction = v3(-1.0f/eye.x, -1.0f/eye.y, -1.0f/eye.z);
@@ -97,24 +104,24 @@ bool Game::init()
 	res->add(Res::model, "metal_teapot");
 	res->add(Res::model, "room");
 
-	obj.resize(3);
-	obj[0] = new GameObj;
-	obj[0]->assignModel((Model*)res->getModel("metal_teapot"));
+	gobj.push_back(new GameLight);
 
-//	obj[1] = new GameObj;
-//	obj[1]->assignModel((Model*)res->getModel("metal_teapot"));
+	GameObj *g;
 
-//	obj[1]->addChildren(new GameObj((Model*)res->getModel("teapot")));
-	//obj[1]->addChildren(new GameLight());
+	g = new GameSolidObj((Model*)res->getModel("room"));
 
-	obj[1] = new GameLight;
+	gobj.push_back(g);
+	pobj.push_back(g);
 
-	obj[2] = new GameObj;
-	obj[2]->assignModel((Model*)res->getModel("room"));
+	for(int i=0; i<10; i++)
+	{
+		g = new GameObj((Model*)res->getModel("box1"));
+		g->setPosition(v3(float(rand()%7-3), float(rand()%7-3), float(rand()%6+1)));
 
+		gobj.push_back(g);
+		pobj.push_back(g);
+	}
 
-//	obj[2] = new GameLight;
-	
 	_alive = true;
 	return true;
 }

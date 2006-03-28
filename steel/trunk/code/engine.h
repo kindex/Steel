@@ -24,6 +24,20 @@
 #include "res/res.h"
 #include "res/conf/conf.h"
 #include <string>
+#include "math/vector3d.h"
+#include <vector>
+
+// Graph+Physic interface
+// One triangle, indexes of vertexes
+struct Triangle // anti-clockwise direction (one side Triangle)
+{
+	unsigned int a[3];
+};
+
+typedef std::vector<v3>			Vertexes;
+typedef std::vector<Triangle>	Triangles;
+
+
 /*
 protottype:
 */
@@ -41,7 +55,7 @@ public:
 	virtual bool init(std::string _conf) = 0; // initialization
 //	protottype: virtual bool inject(Interface *object) { return false; }; // add object to process by engine
 	virtual bool clear() = 0; 
-	virtual bool process() = 0; // add object to process by engine
+//	virtual bool process() = 0; // add object to process by engine
 	virtual bool deinit() = 0;
 
 // TODO: убрать это. Не вписывает в идею движка

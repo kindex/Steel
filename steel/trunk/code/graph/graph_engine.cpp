@@ -87,6 +87,9 @@ bool GraphEngine::clear()
 	for(vector<DrawElement>::iterator it = elements.begin(); it != elements.end(); it++)
 		delete it->triangle;
 
+	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
+		(*it)->cleanup();
+
 	objects.clear();
 	elements.clear();
 	light.clear();

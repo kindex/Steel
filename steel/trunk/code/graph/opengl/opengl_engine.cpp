@@ -113,7 +113,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				glEnable(GL_BLEND);
 			}
 
-			drawDistColor(e, e.matrix, light[0].pos, 300);
+			drawDistColor(e, e.matrix, light[0].pos, 500);
 
 			if(tex>0)
 	            glDisable(GL_BLEND);
@@ -642,7 +642,7 @@ bool OpenGL_Engine::init(std::string _conf)
 		return false;
 	}
 
-	conf= (Config*)res->get(Res::config, _conf);
+	conf = (Config*)res->get(Res::config, _conf);
 
 	conf->setDefault("depth", "24");
 	conf->setDefault("left", "10");
