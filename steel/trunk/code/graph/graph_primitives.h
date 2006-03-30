@@ -57,8 +57,11 @@ public:
 		GraphInterfaceList a;
 		return a;
 	}
-	// TODO
-	aabb getFrame()	{		aabb A;		return A;	}
+	aabb getFrame()	
+	{		
+		if(m)	return m->frame;
+		else	return aabb();
+	}
 
 	bool cleanup(){	return true;}
 

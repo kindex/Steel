@@ -58,13 +58,20 @@ protected:
 		MapCoords	*mapcoord;
 		Normals		*normal;
 		matrix4		matrix;
+		aabb		frame;
 //		std::vector<v3> sTangent, tTangent, tangentSpaceLight;
 	};
 
 	// data, to store collected information
-	std::vector<DrawElement> elements;
+	std::vector<DrawElement> element;
 	std::vector<GraphInterface*> objects;
 	Lights light;
+
+public:
+	struct TotalInfo
+	{
+		int vertex, triangle, object;
+	} total;
 
 public:
 	Camera camera;

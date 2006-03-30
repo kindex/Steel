@@ -21,7 +21,11 @@ using namespace std;
 
 bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 {
+	if(object == NULL) return false;
+	aabb frame = object->getFrame();
+
 	objects.push_back(object);
+	total.object++;
 	matrix4 cur_matrix, new_matrix;
 
 	cur_matrix = object->getMatrix();
@@ -40,6 +44,7 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 	Lights		*l = object->getLights();
 	Normals		*n = object->getNormals();
 
+
 	if(l != NULL)
 	{
 		for(Lights::iterator it = l->begin(); it != l->end(); it++)
@@ -49,30 +54,34 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 		}
 	}
 
+	if(v != NULL)
+		total.vertex += v->size();
 
 	if(t != NULL)
 	for(FaceMaterials::iterator it = m->begin(); it != m->end(); it++)
 	{
-		int c = elements.size();
-		elements.resize(c+1);
+		int c = element.size();
+		element.resize(c+1);
 
-		elements[c].material = it->first;
+		element[c].material = it->first;
 
 // TODO	it->secondm olny tringles from this material
 
-		elements[c].triangle = new Triangles;
+		element[c].triangle = new Triangles;
 
 		int s = it->second.size();
-		elements[c].triangle->clear();
+		element[c].triangle->clear();
 
 		for(int i=0; i<s; i++)
-			elements[c].triangle->push_back(t->operator [](it->second[i]));
+			element[c].triangle->push_back(t->operator [](it->second[i]));
 
-		elements[c].vertex = v;
-		elements[c].mapcoord = object->getMapCoords();
-		elements[c].matrix = new_matrix;
-		elements[c].normal = n;
+		element[c].vertex = v;
+		element[c].mapcoord = object->getMapCoords();
+		element[c].matrix = new_matrix;
+		element[c].normal = n;
+		element[c].frame = frame;
 
+		total.triangle += s;
 	}
 
 //		v3 pos = o.getPos();
@@ -84,15 +93,20 @@ bool GraphEngine::clear()
 //	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		//it->
 
-	for(vector<DrawElement>::iterator it = elements.begin(); it != elements.end(); it++)
+	for(vector<DrawElement>::iterator it = element.begin(); it != element.end(); it++)
 		delete it->triangle;
 
 	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		(*it)->cleanup();
 
 	objects.clear();
-	elements.clear();
+	element.clear();
 	light.clear();
+
+	total.vertex = 0;
+	total.triangle = 0;
+	total.object = 0;
+
 
 	return true;
 }

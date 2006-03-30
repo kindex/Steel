@@ -136,3 +136,10 @@ void Model::generateNormals()
     for (unsigned int i=0; i<vertex.size(); i++)
         normal[i].Normalize();
 }
+
+void Model::updateAABB()
+{
+	frame.clear();
+	for(std::vector<v3>::iterator it = vertex.begin(); it != vertex.end(); it++)
+		frame.merge(*it);
+}

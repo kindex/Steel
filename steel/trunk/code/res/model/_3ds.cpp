@@ -365,6 +365,7 @@ bool _3DS::init(const std::string name, ResCollection &res)
 
 		// Следует сгенерировать нормали, так как в 3DS файле нет нормалей
 		generateNormals();
+		updateAABB();
 
 		for(map<string, vector<int> >::iterator it = faceMaterial.begin();
 					it != faceMaterial.end(); it++)

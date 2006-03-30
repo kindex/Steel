@@ -50,7 +50,11 @@ public:
 		return a;
 	}
 
-	aabb getPFrame()	{		aabb A;		return A;	}
+	aabb getPFrame()	
+	{		
+		if(m)	return m->frame;
+		else	return aabb();
+	}
 	bool cleanupP(){	return true;}
 	Vertexes*	getPVertexes()
 	{

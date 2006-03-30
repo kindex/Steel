@@ -118,6 +118,13 @@ bool Game::init()
 		g = new GameObj((Model*)res->getModel("box1"));
 		g->setPosition(v3(float(rand()%7-3), float(rand()%7-3), float(rand()%6+1)));
 
+		matrix4 m = g->getPMatrix();
+		
+		m.entries[1] = 0.5;
+		m.entries[4] = 0.5;
+
+		g->setPMatrix(m);
+
 		gobj.push_back(g);
 		pobj.push_back(g);
 	}

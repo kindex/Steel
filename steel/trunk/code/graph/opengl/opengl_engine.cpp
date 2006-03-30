@@ -168,7 +168,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		if(conf->geti("drawNormals", 0))
 			drawNormals(e);
 		if(conf->geti("drawAABB", 0))
-			drawAABB(e);
+			drawAABB(e, e.matrix);
 
 	}
 }
@@ -497,15 +497,19 @@ void OpenGL_Engine::drawNormals(DrawElement &e)
 		glEnd();
 }
 
-void OpenGL_Engine::drawAABB(DrawElement &e)
+void OpenGL_Engine::drawAABB(DrawElement &e, matrix4 matrix)
 {
+	vector<v3> v = e.frame.getVertexes();
 	aabb c;
-	
-	for(Vertexes::iterator it = e.vertex->begin(); it != e.vertex->end(); it++)
-		c.merge(*it);
 
-	glBegin(GL_LINES);
+	for(int i=0; i<8; i++)
+		c.merge(matrix*v[i]);
 	
+
+	glPushMatrix();
+	glLoadIdentity();
+	glBegin(GL_LINES);
+
 	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.min.z);
 	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.min.z);
 	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.min.y, c.max.z);
@@ -524,6 +528,8 @@ void OpenGL_Engine::drawAABB(DrawElement &e)
 	glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.max.z);	
 
 	glEnd();
+
+	glPopMatrix();
 }
 
 
@@ -623,7 +629,7 @@ bool OpenGL_Engine::process()
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	for(vector<DrawElement>::iterator it = elements.begin(); it != elements.end(); it++)
+	for(vector<DrawElement>::iterator it = element.begin(); it != element.end(); it++)
 		drawElement((*it));
 
 	glFlush();

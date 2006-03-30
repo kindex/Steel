@@ -27,7 +27,7 @@ struct aabb
     v3 min, max;
     void merge(v3 point);
 
-	aabb() 
+	void clear()
 	{ 
 		min.x = +INF; 
 		min.y = +INF; 
@@ -36,6 +36,9 @@ struct aabb
 		max.y = -INF;
 		max.z = -INF;
 	}
+
+	aabb() { clear(); }
+	std::vector<v3> getVertexes();
 };
 
 bool intersect(aabb const &first, aabb const &second);

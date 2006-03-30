@@ -32,6 +32,7 @@
 #include "common/timer.h"
 
 #include "game/game.h"
+#include "utils.h"
 
 #include <SDL.h>
 
@@ -87,6 +88,7 @@ int main(int argc, char *argv[])
 	if(!physic.init("physic")) return 1;
 
 // ******************* MAIN LOOP ************************
+	time captionUdateTime = -1;
 	alog.msg("core", "Entering main loop");
 	bool first = true, firstMouse = true, alive = true;
 	while(alive && game.alive())
@@ -147,8 +149,18 @@ int main(int argc, char *argv[])
 
 		timer.incframe();
 
-		graph.setCaption("Sleel engine FPS = " + timer.getfps_s());
-		speed = 1.0/timer.getfps();
+		if(captionUdateTime+1<timer.total())
+		{
+			graph.setCaption(std::string("Sleel engine")
+				+ " FPS = " + timer.getfps_s()
+				+ " Obj: " + IntToStr(graph.total.object)
+				+ " Trg: " + IntToStr(graph.total.triangle)
+				
+				);
+			speed = 1.0/timer.getfps();
+
+			captionUdateTime = timer.total();
+		}
 
 		if(first)
 		{

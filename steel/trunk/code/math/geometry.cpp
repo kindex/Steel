@@ -434,3 +434,21 @@ bool intersect(/*triang*/v3 A, v3 B, v3 C, v3 e/*point*/, v3 c/*direction*/, coo
     }
 }
 */
+
+std::vector<v3> aabb::getVertexes()
+{
+	std::vector<v3> r;
+	v3 &a = min; 
+	v3 &b = max;
+	
+	r.push_back(v3(a.x, a.y, a.z));
+	r.push_back(v3(a.x, a.y, b.z));
+	r.push_back(v3(a.x, b.y, a.z));
+	r.push_back(v3(a.x, b.y, b.z));
+	r.push_back(v3(b.x, a.y, a.z));
+	r.push_back(v3(b.x, a.y, b.z));
+	r.push_back(v3(b.x, b.y, a.z));
+	r.push_back(v3(b.x, b.y, b.z));
+
+	return r;
+}

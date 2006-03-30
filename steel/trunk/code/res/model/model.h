@@ -12,13 +12,13 @@
 class Model: public Res
 {
 public:
-    std::vector<v3> vertex;    // Vertexes
+	aabb				frame;
+    std::vector<v3>		vertex;    // Vertexes
     std::vector<Triangle> triangle;        // Triangles
-//    vector <Faces> face;        // Triangles
-    
-    std::vector<v2> mapcoord; // Texture coordinates
+    std::vector<v2>		mapcoord; // Texture coordinates
+    std::vector<v3>		normal;    // Vertex normals
+	FaceMaterials		faceMaterial;
 
-    std::vector<v3> normal;    // Vertex normals
     // sTangent - vektor v storonu uveli4enija S teksturnoj koordinati (vpravo)
     // tangentSpaceLight - vektor ot ver6uni do to4ki osveshenija v TBN (Tangent, Binormal, Normal) prostrastve (sTangent, tTangent, normal) - tangent space http://www.paulsprojects.net/tutorials/tutorials.html
     //( Sx Sy Sz )
@@ -27,13 +27,13 @@ public:
     // links: http://www.ati.com/developer/sdk/RADEONSDK/Html/Tutorials/RADEONBumpMap.html
  
 //    mat_id mat;  
-	FaceMaterials faceMaterial;
 
     std::string name;
 
     Model(): name() { }
     void updateMaterial();
     void updateNormals();
+	void updateAABB();
     void updateTangentSpace();
     void update()
     {

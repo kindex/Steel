@@ -60,7 +60,7 @@ public:
 	
 	void drawFaces(DrawElement &e);
 	void drawNormals(DrawElement &e);
-	void drawAABB(DrawElement &e);
+	void drawAABB(DrawElement &e, matrix4 matrix);
 
 	void drawBump(DrawElement &e, GLuint normalMap, matrix4 const matrix, v3 const light);
 	void drawReflect(DrawElement &e, GLuint cubeMap, matrix4 const matrix, v3 const light);
