@@ -34,8 +34,8 @@ public:
 	MapCoords*	getMapCoords()	{		return NULL;	}
 	Normals*	getNormals()	{		return NULL;	}
 	FaceMaterials* getFaceMaterials()	{		return NULL;	}
-	MATRIX4X4 getMatrix()		{		return MATRIX4X4();	}
-	Lights* getLights()			{		return NULL;	}
+	matrix4		 getMatrix()		{	return matrix4();	}
+	Lights*		getLights()			{	return NULL;	}
 };
 
 
@@ -98,9 +98,9 @@ public:
 		else
 			return NULL;
 	}
-	MATRIX4X4 getMatrix()
+	matrix4 getMatrix()
 	{
-		return MATRIX4X4();
+		return matrix4();
 	}
 	Lights* getLights()
 	{

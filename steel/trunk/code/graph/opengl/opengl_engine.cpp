@@ -185,7 +185,7 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 
 //    return B.rotate(N, sina, cosa);
 
-    MATRIX4X4 M;
+    matrix4 M;
     M.SetRotationAxis(sina, cosa, v3(N.x, N.y, N.z)); // povernut' na ang v ploskoti perpedukularnoj N
 
     v4 V(B.x, B.y, B.z, 1.0), R;
@@ -271,9 +271,9 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *map
 	*tTangent = S;	tangentSpaceCacheT[(int)vertex] = T;
 };
 
-void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	MATRIX4X4 const matrix, const v3 light,	v3List **tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix4 const matrix, const v3 light,	v3List **tangentSpaceLight)
 {
-	MATRIX4X4 inverseModelMatrix;
+	matrix4 inverseModelMatrix;
     inverseModelMatrix = matrix.GetInverse();
 
 	v3 objectLightPosition = inverseModelMatrix*light;
@@ -292,9 +292,9 @@ void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::v
     }
 }
 
-void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, MATRIX4X4 const matrix, const v3 camera,	v3List **tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix4 const matrix, const v3 camera,	v3List **tangentSpaceLight)
 {
-	MATRIX4X4 inverseModelMatrix;
+	matrix4 inverseModelMatrix;
     inverseModelMatrix = matrix.GetInverse();
 
 	v3 objectLightPosition = inverseModelMatrix*camera;
@@ -331,7 +331,7 @@ void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::
 
 
 
-void OpenGL_Engine::drawDistColor(DrawElement &e, MATRIX4X4 const matrix, v3 const light, float const distance)
+void OpenGL_Engine::drawDistColor(DrawElement &e, matrix4 const matrix, v3 const light, float const distance)
 {
 	float *coords = new float[e.vertex->size()];
 
@@ -361,7 +361,7 @@ void OpenGL_Engine::drawDistColor(DrawElement &e, MATRIX4X4 const matrix, v3 con
 }
 
 
-void OpenGL_Engine::drawDiffuse(DrawElement &e, MATRIX4X4 const matrix, v3 const light)
+void OpenGL_Engine::drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const light)
 {
 	v3List *sTangent, *tTangent, *tangentSpaceLight;
 
@@ -389,7 +389,7 @@ void OpenGL_Engine::drawDiffuse(DrawElement &e, MATRIX4X4 const matrix, v3 const
 }
 
 
-void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, MATRIX4X4 const matrix, v3 const light)
+void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix4 const matrix, v3 const light)
 {
 	v3List *sTangent, *tTangent, *tangentSpaceLight;
 
@@ -453,7 +453,7 @@ void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, MATRIX4X4 const m
 }
 
 
-void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, MATRIX4X4 const matrix, v3 const light)
+void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix4 const matrix, v3 const light)
 {
 	v3List *sTangent, *tTangent, *tangentSpaceLight;
 

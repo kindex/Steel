@@ -27,14 +27,16 @@ public:
 	Vertexes*	getPVertexes()	{			return NULL;	}
 	Triangles*	getPTriangles()	{			return NULL;	}
 
-	v3		getPosition() {return v3(); }
-	bool	setPosition(v3 const &v) { return false; }
+	v3		getVelocity() { return v3(); }
+	void	setVelocity(v3 const &v) {}
 
-	// скорость
-	v3		getVelocity() {return v3(0.0 ,0.0 ,0.0); }
-	bool	setVelocity(v3 const &v){ return false; }
 	// масса
-	virtual	coord	getMass() {return 0; }
+	coord	getMass() {return 0; }
+	bool	isMovable() { return false; }
+	bool	isRotatable(){ return false; }
+
+	matrix4	getPMatrix() { return matrix4(); }
+	void	setPMatrix(matrix4 const &m) {}
 
 };
 

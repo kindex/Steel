@@ -35,11 +35,11 @@
 
 #include <SDL.h>
 
-Res* createBMP() {return new BMP; }
-Res* create3DS() {return new _3DS; }
-Res* createConfig() {return new ConfigText; }
-Res* createNormalMap() {return new NormalMap; }
-Res* createHeightMap() {return new HeightMap; }
+Res* createBMP()		{return new BMP; }
+Res* create3DS()		{return new _3DS; }
+Res* createConfig()		{return new ConfigText; }
+Res* createNormalMap()	{return new NormalMap; }
+Res* createHeightMap()	{return new HeightMap; }
 
 int main(int argc, char *argv[])
 {

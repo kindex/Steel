@@ -12,7 +12,7 @@ bool SetUpARB_multitexture()
 	char * endOfString;									//store pointer to end of string
 	unsigned int distanceToSpace;						//distance to next space
 
-	endOfString=extensionString+strlen(extensionString);
+	endOfString = extensionString+strlen(extensionString);
 
 	//loop through string
 	while(extensionString<endOfString)
@@ -37,8 +37,14 @@ bool SetUpARB_multitexture()
 		return false;
 	}
 
-	alog.msg("graph opengl", "ARB_multitexture supported!");
+//	alog.msg("graph opengl", "ARB_multitexture supported!");
 
+/*	if(!wglGetProcAddress)
+	{
+		alog.msg("error graph opengl", "wglGetProcAddress is NULL");
+		return false;
+	}
+*/
 	//get function pointers
 	glActiveTextureARB			=	(PFNGLACTIVETEXTUREARBPROC)wglGetProcAddress("glActiveTextureARB");
 

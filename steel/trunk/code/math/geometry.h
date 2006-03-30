@@ -10,10 +10,7 @@
 
 #ifndef __GEOMETRY_H
 #define __GEOMETRY_H
-
-
 //#define _DEBUG
-
 
 #include <vector>
 #include <assert.h>

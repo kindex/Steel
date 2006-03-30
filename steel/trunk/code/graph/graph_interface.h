@@ -99,8 +99,10 @@ Video textures (avi, camera)
 	virtual FaceMaterials* getFaceMaterials() = 0;
 	virtual Lights* getLights() = 0;
 
-/*?? Ћюба€ точка внутри объекта. ќтносительно этой точки рисуетс€ оьъект (координатывершин)*/
-	virtual MATRIX4X4 getMatrix() = 0;
+/*матрица трансформации объекта относительно его родител€. 
+¬ключает в себ€ повотор, сдвиг и масштаб.
+getPVertexes возвращ€ет координаты точек в системе координат getPMatrix*/
+	virtual matrix4 getMatrix() = 0;
 };
 
 #endif

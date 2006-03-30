@@ -257,15 +257,15 @@
 					>
 				</File>
 				<File
-					RelativePath=".\math\MATRIX4X4.cpp"
+					RelativePath=".\math\matrix4x4.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\math\MATRIX4X4.h"
+					RelativePath=".\math\matrix4x4.h"
 					>
 				</File>
 				<File
-					RelativePath=".\math\VECTOR2D.cpp"
+					RelativePath=".\math\vector2d.cpp"
 					>
 				</File>
 				<File
@@ -273,19 +273,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\math\VECTOR3D.cpp"
+					RelativePath=".\math\vector3d.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\math\VECTOR3D.h"
+					RelativePath=".\math\vector3d.h"
 					>
 				</File>
 				<File
-					RelativePath=".\math\VECTOR4D.cpp"
+					RelativePath=".\math\vector4d.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\math\VECTOR4D.h"
+					RelativePath=".\math\vector4d.h"
 					>
 				</File>
 			</Filter>

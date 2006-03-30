@@ -38,19 +38,23 @@ public:
 	// массив индексов вершин, которые образуют треугольники (грани)
 	virtual Triangles*	getPTriangles() = 0; 
 
-/*?? Ћюба€ точка внутри объекта. ќтносительно этой точки рисуетс€ оьъект (координатывершин)*/
-/*	virtual MATRIX4X4	getMatrix() = 0;
-	virtual void		setMatrix(MATRIX4X4 const &m) = 0;
-*/
-	// положение (лучше заменить матрицей, котора€ включаеи в себ€ положение, масштаб и поворот тела)
-	virtual v3		getPosition() = 0;
-	// возвращает true, если можно изменить положение
-	virtual bool	setPosition(v3 const &v) = 0;
+/*матрица трансформации объекта относительно его родител€. 
+¬ключает в себ€ повотор, сдвиг и масштаб.
+getPVertexes возвращ€ет координаты точек в системе координат getPMatrix*/
 
-	// скорость
+	virtual matrix4		getPMatrix() = 0;
+	virtual void		setPMatrix(matrix4 const &m) = 0;
+
+	// положение (лучше заменить матрицей, котора€ включаеи в себ€ положение, масштаб и поворот тела)
+//	virtual v3		getPosition() = 0;
+	// возвращает true, если можно изменить положение
+//	virtual bool	setPosition(v3 const &v) = 0;
+
+	virtual bool	isMovable() = 0;
+	virtual bool	isRotatable() = 0;
+	// скорость в глобальных коодринатах
 	virtual v3		getVelocity() = 0;
-	// возвращает true, если можно изменить скорость
-	virtual bool	setVelocity(v3 const &v) = 0;
+	virtual void	setVelocity(v3 const &v) = 0;
 	// масса
 	virtual	coord	getMass() = 0;
 

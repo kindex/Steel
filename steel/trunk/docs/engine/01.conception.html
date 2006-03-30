@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1251">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Win32)">
+	<META NAME="CREATED" CONTENT="20060330;18245315">
+	<META NAME="CHANGED" CONTENT="20060330;18251987">
+</HEAD>
+<BODY LANG="ru-RU" DIR="LTR">
+<P ALIGN=LEFT STYLE="margin-top: 0.42cm; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=5>Концепция
+Steel Engine</FONT></FONT></P>
+<P STYLE="margin-top: 0.42cm; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=4>Аудитория</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; page-break-before: auto">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Документ
+предназначен для использования командой разработчиков Steel Engine,
+игр на основе этого движка, а также для руководства T-NAME.</FONT></FONT></P>
+<P STYLE="margin-top: 0.42cm; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=4>Идея
+проекта</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; page-break-before: auto">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Gerda Engine
+является продуктом, предназначенным для создания компьютерных игр
+имеющих вид сбоку. Основными частями Gerda Engine являются
+непосредственно сам движок игры, обеспечивающий общение между миром
+игры и игроком, а также редактор, с помощью которого геймдизайнеры
+создают игровое пространство.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; page-break-before: auto">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Как уже было сказано
+выше, движок Gerda Engine являтся программным продуктом, организующим
+общение между миром игры и игроком. Он<SPAN STYLE="background: transparent">
+использует игровые ресурсы, созданные геймдизайнерами для
+моделирования игрового пространства и состоит из двух частей &ndash;
+базы (base) и дополнительной части.</SPAN></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; page-break-before: auto">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Base является
+системой основных модулей и отвечает за графику, звук, управление,
+организацию хранения ресурсов и сеть. Base должна быть достаточно
+гибкая, так как в последствии предполагается её эволюционное
+развитие. Также она при минимальных изменениях (или даже без таковых)
+может служить основой для создания других движков, графических
+демонс<SPAN STYLE="background: transparent">траций и программ
+моделирования </SPAN>различных процессов, например таких, как
+прослеживание пути рентгеновских лучей.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; page-break-before: auto">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Дополнительная часть
+движка не может существовать без базовой. При использовании Gerda
+Engine в различных проектах, эта часть может подвергаться достаточно
+сильным изменениям или же может быть полностью переписана. По
+умолчанию она соответствует игровому проекту Gerda &amp; Kay. В этой
+части движка присутствует физическая модель игрового пространства,
+представляющая из себя хранение и обработку всех объектов в этом
+пространстве (юниты, пули, стены, погодные эффекты, визуальные
+системы частиц). В основе физического моделирования Gerda Engine
+лежит многослойная двумерная реалистичная физическая модель. Кроме
+этого, в дополнительной части содержится AI <SPAN STYLE="background: transparent">(Artificial
+Intelligence, искуственный интеллект). AI &ndash; это способность
+живых, или любых других мыслящих объектов (юнитов) реалистично (по
+правилам игры) дост</SPAN>игать своей цели, реагировать на
+обстоятельства и действия игрока с целью помешать или помочь ему
+что-то сделать, или же просто выжить. Также в этой части присутствуют
+и другие модули, например такие как модуль позволяющий создать
+пользовательский игровой интерфейс.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; page-break-before: auto">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="background: transparent">Редактор
+Gerda Engine предназначен для создания и редактирования некоторых
+ресурсов игры, а также непосредственно для сборки готовой игры. Для
+создания распространённых типов ресурсов (звуки, текстуры, некоторые
+3D модели) необходимо будет воспользоваться готовыми редакторами
+(например Adobe PhotoShop, 3DS Max), в свою очередь такие специфичные
+типы ресурсов, как уровень игры, будет создаваться в самом редакторе.
+Редактор должен иметь возможность изменять большинство параметров,
+<SPAN STYLE="background: #ffffff">поддерживаемых движком и позволять
+геймдизайнерам создавать игру не вдаваясь в его реализацию.</SPAN></SPAN></FONT></FONT></P>
+<P STYLE="margin-top: 0.42cm; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=4><B>Составители</B>
+</FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm">Андрей Иванов (KindeX)</P>
+<P STYLE="margin-bottom: 0cm">Александр Папышев (Def)</P>
+<P STYLE="margin-bottom: 0cm">Дмитрий Федоров (fdf)</P>
+</BODY>
+</HTML>

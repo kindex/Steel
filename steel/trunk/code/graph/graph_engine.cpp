@@ -19,10 +19,10 @@
 using namespace std;
 
 
-bool GraphEngine::inject(GraphInterface *object, MATRIX4X4 matrix)
+bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 {
 	objects.push_back(object);
-	MATRIX4X4 cur_matrix, new_matrix;
+	matrix4 cur_matrix, new_matrix;
 
 	cur_matrix = object->getMatrix();
 	new_matrix = matrix*cur_matrix;

@@ -33,14 +33,15 @@ public:
 	std::vector<GameObj*> children;
 	v3 position, velocity;
 	coord mass;
-	MATRIX4X4 matrix;
+	matrix4 matrix;
 public:
 	GameObj() {}
 	GameObj(Model *M) { assignModel(M);}
-	MATRIX4X4 getMatrix()
-	{
-		return matrix;
-	}
+	matrix4 getMatrix()	{		return matrix;	}
+	matrix4 getPMatrix()	{		return matrix;	}
+	void	setPMatrix(matrix4 const &m) { matrix = m; } 
+
+
 	void attach(GameObj *obj) 
 	{ 
 		parent = obj; 
@@ -77,9 +78,13 @@ public:
 
 	// скорость
 	v3		getVelocity() { return velocity; }
-	bool	setVelocity(v3 const &v) {velocity = v; return true; }
+	void	setVelocity(v3 const &v) {velocity = v; }
 	// масса
 	coord	getMass(){return mass;}
+
+	bool	isMovable() { return true; }
+	bool	isRotatable(){ return true; }
+
 };
 
 class GameSolidObj: public GameObj
@@ -87,8 +92,9 @@ class GameSolidObj: public GameObj
 public:
 	GameSolidObj() {}
 	GameSolidObj(Model *M) { assignModel(M);}
-	bool	setVelocity(v3 const &v) {return false; }
-	bool	setPosition(v3 const &v) {return false; }
+
+	bool	isMovable() { return false; }
+	bool	isRotatable(){ return false; }
 };
 
 class GameLight: public PDummy, public GDummy

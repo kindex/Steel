@@ -42,16 +42,16 @@ bool PhysicEngine::inject(PhysicInterface *object)
 
 bool PhysicEngine::process(time speed)
 {
-	v3 acc = g*speed;
+	v3 acc = g*(float)speed;
 	for(std::vector<PhysicInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 	{
 		v3 v = (*it)->getVelocity();
 		v += acc;
 		(*it)->setVelocity(v);
 
-		v3 p = (*it)->getPosition();
+/*		matrix4 m = (*it)->getMatrix();
 		p += v*speed;
-		(*it)->setPosition(p);
+		(*it)->setPosition(p);*/
 	}
 
 	return true;

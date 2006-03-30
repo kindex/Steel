@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////////////
-//	MATRIX4X4.cpp
+//	matrix4.cpp
 //	function definitions for 4x4 matrix class
 //	You may use this code however you wish, but if you do, please credit me and
 //	provide a link to my website in a readme file or similar
@@ -15,10 +15,10 @@
 //										with OpenGL. Should have been done a long time ago...
 //////////////////////////////////////////////////////////////////////////////////////////	
 #include <memory.h>
-#include "Maths.h"
+#include "maths.h"
 #include "matrix4x4.h"
 
-MATRIX4X4::MATRIX4X4(float e0, float e1, float e2, float e3,
+matrix4::matrix4(float e0, float e1, float e2, float e3,
 					float e4, float e5, float e6, float e7,
 					float e8, float e9, float e10, float e11,
 					float e12, float e13, float e14, float e15)
@@ -41,23 +41,23 @@ MATRIX4X4::MATRIX4X4(float e0, float e1, float e2, float e3,
 	entries[15]=e15;
 }
 
-MATRIX4X4::MATRIX4X4(const MATRIX4X4 & rhs)
+matrix4::matrix4(const matrix4 & rhs)
 {
 	memcpy(entries, rhs.entries, 16*sizeof(float));
 }
 
-MATRIX4X4::MATRIX4X4(const float * rhs)
+matrix4::matrix4(const float * rhs)
 {
 	memcpy(entries, rhs, 16*sizeof(float));
 }
 
-void MATRIX4X4::SetEntry(int position, float value)
+void matrix4::SetEntry(int position, float value)
 {
 	if(position>=0 && position<=15)
 		entries[position]=value;
 }
 	
-float MATRIX4X4::GetEntry(int position) const
+float matrix4::GetEntry(int position) const
 {
 	if(position>=0 && position<=15)
 		return entries[position];
@@ -65,7 +65,7 @@ float MATRIX4X4::GetEntry(int position) const
 	return 0.0f;
 }
 
-v4 MATRIX4X4::GetRow(int position) const
+v4 matrix4::GetRow(int position) const
 {
 	if(position==0)
 		return v4(entries[0], entries[4], entries[8], entries[12]);
@@ -82,7 +82,7 @@ v4 MATRIX4X4::GetRow(int position) const
 	return v4(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-v4 MATRIX4X4::GetColumn(int position) const
+v4 matrix4::GetColumn(int position) const
 {
 	if(position==0)
 		return v4(entries[0], entries[1], entries[2], entries[3]);
@@ -99,7 +99,7 @@ v4 MATRIX4X4::GetColumn(int position) const
 	return v4(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-void MATRIX4X4::LoadIdentity(void)
+void matrix4::LoadIdentity(void)
 {
 	memset(entries, 0, 16*sizeof(float));
 	entries[0]	= 1.0f;
@@ -108,14 +108,14 @@ void MATRIX4X4::LoadIdentity(void)
 	entries[15]	= 1.0f;
 }
 
-void MATRIX4X4::LoadZero(void)
+void matrix4::LoadZero(void)
 {
 	memset(entries, 0, 16*sizeof(float));
 }
 
-MATRIX4X4 MATRIX4X4::operator+(const MATRIX4X4 & rhs) const		//overloaded operators
+matrix4 matrix4::operator+(const matrix4 & rhs) const		//overloaded operators
 {
-	return MATRIX4X4(	entries[0]+rhs.entries[0],
+	return matrix4(	entries[0]+rhs.entries[0],
 						entries[1]+rhs.entries[1],
 						entries[2]+rhs.entries[2],
 						entries[3]+rhs.entries[3],
@@ -133,9 +133,9 @@ MATRIX4X4 MATRIX4X4::operator+(const MATRIX4X4 & rhs) const		//overloaded operat
 						entries[15]+rhs.entries[15]);
 }
 
-MATRIX4X4 MATRIX4X4::operator-(const MATRIX4X4 & rhs) const		//overloaded operators
+matrix4 matrix4::operator-(const matrix4 & rhs) const		//overloaded operators
 {
-	return MATRIX4X4(	entries[0]-rhs.entries[0],
+	return matrix4(	entries[0]-rhs.entries[0],
 						entries[1]-rhs.entries[1],
 						entries[2]-rhs.entries[2],
 						entries[3]-rhs.entries[3],
@@ -153,14 +153,14 @@ MATRIX4X4 MATRIX4X4::operator-(const MATRIX4X4 & rhs) const		//overloaded operat
 						entries[15]-rhs.entries[15]);
 }
 
-MATRIX4X4 MATRIX4X4::operator*(const MATRIX4X4 & rhs) const
+matrix4 matrix4::operator*(const matrix4 & rhs) const
 {
 	//Optimise for matrices in which bottom row is (0, 0, 0, 1) in both matrices
 	if(	entries[3]==0.0f && entries[7]==0.0f && entries[11]==0.0f && entries[15]==1.0f	&&
 		rhs.entries[3]==0.0f && rhs.entries[7]==0.0f &&
 		rhs.entries[11]==0.0f && rhs.entries[15]==1.0f)
 	{
-		return MATRIX4X4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2],
+		return matrix4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2],
 							entries[1]*rhs.entries[0]+entries[5]*rhs.entries[1]+entries[9]*rhs.entries[2],
 							entries[2]*rhs.entries[0]+entries[6]*rhs.entries[1]+entries[10]*rhs.entries[2],
 							0.0f,
@@ -181,7 +181,7 @@ MATRIX4X4 MATRIX4X4::operator*(const MATRIX4X4 & rhs) const
 	//Optimise for when bottom row of 1st matrix is (0, 0, 0, 1)
 	if(	entries[3]==0.0f && entries[7]==0.0f && entries[11]==0.0f && entries[15]==1.0f)
 	{
-		return MATRIX4X4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2]+entries[12]*rhs.entries[3],
+		return matrix4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2]+entries[12]*rhs.entries[3],
 							entries[1]*rhs.entries[0]+entries[5]*rhs.entries[1]+entries[9]*rhs.entries[2]+entries[13]*rhs.entries[3],
 							entries[2]*rhs.entries[0]+entries[6]*rhs.entries[1]+entries[10]*rhs.entries[2]+entries[14]*rhs.entries[3],
 							rhs.entries[3],
@@ -203,7 +203,7 @@ MATRIX4X4 MATRIX4X4::operator*(const MATRIX4X4 & rhs) const
 	if(	rhs.entries[3]==0.0f && rhs.entries[7]==0.0f &&
 		rhs.entries[11]==0.0f && rhs.entries[15]==1.0f)
 	{
-		return MATRIX4X4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2],
+		return matrix4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2],
 							entries[1]*rhs.entries[0]+entries[5]*rhs.entries[1]+entries[9]*rhs.entries[2],
 							entries[2]*rhs.entries[0]+entries[6]*rhs.entries[1]+entries[10]*rhs.entries[2],
 							entries[3]*rhs.entries[0]+entries[7]*rhs.entries[1]+entries[11]*rhs.entries[2],
@@ -221,7 +221,7 @@ MATRIX4X4 MATRIX4X4::operator*(const MATRIX4X4 & rhs) const
 							entries[3]*rhs.entries[12]+entries[7]*rhs.entries[13]+entries[11]*rhs.entries[14]+entries[15]);
 	}	
 	
-	return MATRIX4X4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2]+entries[12]*rhs.entries[3],
+	return matrix4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2]+entries[12]*rhs.entries[3],
 						entries[1]*rhs.entries[0]+entries[5]*rhs.entries[1]+entries[9]*rhs.entries[2]+entries[13]*rhs.entries[3],
 						entries[2]*rhs.entries[0]+entries[6]*rhs.entries[1]+entries[10]*rhs.entries[2]+entries[14]*rhs.entries[3],
 						entries[3]*rhs.entries[0]+entries[7]*rhs.entries[1]+entries[11]*rhs.entries[2]+entries[15]*rhs.entries[3],
@@ -239,9 +239,9 @@ MATRIX4X4 MATRIX4X4::operator*(const MATRIX4X4 & rhs) const
 						entries[3]*rhs.entries[12]+entries[7]*rhs.entries[13]+entries[11]*rhs.entries[14]+entries[15]*rhs.entries[15]);
 }
 
-MATRIX4X4 MATRIX4X4::operator*(const float rhs) const
+matrix4 matrix4::operator*(const float rhs) const
 {
-	return MATRIX4X4(	entries[0]*rhs,
+	return matrix4(	entries[0]*rhs,
 						entries[1]*rhs,
 						entries[2]*rhs,
 						entries[3]*rhs,
@@ -259,7 +259,7 @@ MATRIX4X4 MATRIX4X4::operator*(const float rhs) const
 						entries[15]*rhs);
 }
 
-MATRIX4X4 MATRIX4X4::operator/(const float rhs) const
+matrix4 matrix4::operator/(const float rhs) const
 {
 	if (rhs==0.0f || rhs==1.0f)
 		return (*this);
@@ -269,12 +269,12 @@ MATRIX4X4 MATRIX4X4::operator/(const float rhs) const
 	return (*this)*temp;
 }
 
-MATRIX4X4 operator*(float scaleFactor, const MATRIX4X4 & rhs)
+matrix4 operator*(float scaleFactor, const matrix4 & rhs)
 {
 	return rhs*scaleFactor;
 }
 
-bool MATRIX4X4::operator==(const MATRIX4X4 & rhs) const
+bool matrix4::operator==(const matrix4 & rhs) const
 {
 	for(int i=0; i<16; i++)
 	{
@@ -284,39 +284,39 @@ bool MATRIX4X4::operator==(const MATRIX4X4 & rhs) const
 	return true;
 }
 
-bool MATRIX4X4::operator!=(const MATRIX4X4 & rhs) const
+bool matrix4::operator!=(const matrix4 & rhs) const
 {
 	return !((*this)==rhs);
 }
 
-void MATRIX4X4::operator+=(const MATRIX4X4 & rhs)
+void matrix4::operator+=(const matrix4 & rhs)
 {
 	(*this)=(*this)+rhs;
 }
 
-void MATRIX4X4::operator-=(const MATRIX4X4 & rhs)
+void matrix4::operator-=(const matrix4 & rhs)
 {
 	(*this)=(*this)-rhs;
 }
 
-void MATRIX4X4::operator*=(const MATRIX4X4 & rhs)
+void matrix4::operator*=(const matrix4 & rhs)
 {
 	(*this)=(*this)*rhs;
 }
 
-void MATRIX4X4::operator*=(const float rhs)
+void matrix4::operator*=(const float rhs)
 {
 	(*this)=(*this)*rhs;
 }
 
-void MATRIX4X4::operator/=(const float rhs)
+void matrix4::operator/=(const float rhs)
 {
 	(*this)=(*this)/rhs;
 }
 
-MATRIX4X4 MATRIX4X4::operator-(void) const
+matrix4 matrix4::operator-(void) const
 {
-	MATRIX4X4 result(*this);
+	matrix4 result(*this);
 
 	for(int i=0; i<16; i++)
 		result.entries[i]=-result.entries[i];
@@ -324,7 +324,7 @@ MATRIX4X4 MATRIX4X4::operator-(void) const
 	return result;
 }
 
-v4 MATRIX4X4::operator*(const v4 rhs) const
+v4 matrix4::operator*(const v4 rhs) const
 {
 	//Optimise for matrices in which bottom row is (0, 0, 0, 1)
 	if(entries[3]==0.0f && entries[7]==0.0f && entries[11]==0.0f && entries[15]==1.0f)
@@ -368,14 +368,14 @@ v4 MATRIX4X4::operator*(const v4 rhs) const
 					+	entries[15]*rhs.w);
 }
 
-v3 MATRIX4X4::GetRotatedv3(const v3 & rhs) const
+v3 matrix4::GetRotatedv3(const v3 & rhs) const
 {
 	return v3(entries[0]*rhs.x + entries[4]*rhs.y + entries[8]*rhs.z,
 					entries[1]*rhs.x + entries[5]*rhs.y + entries[9]*rhs.z,
 					entries[2]*rhs.x + entries[6]*rhs.y + entries[10]*rhs.z);
 }
 
-v3 MATRIX4X4::GetInverseRotatedv3(const v3 & rhs) const
+v3 matrix4::GetInverseRotatedv3(const v3 & rhs) const
 {
 	//rotate by transpose:
 	return v3(entries[0]*rhs.x + entries[1]*rhs.y + entries[2]*rhs.z,
@@ -383,24 +383,24 @@ v3 MATRIX4X4::GetInverseRotatedv3(const v3 & rhs) const
 					entries[8]*rhs.x + entries[9]*rhs.y + entries[10]*rhs.z);
 }
 
-v3 MATRIX4X4::GetTranslatedv3(const v3 & rhs) const
+v3 matrix4::GetTranslatedv3(const v3 & rhs) const
 {
 	return v3(rhs.x+entries[12], rhs.y+entries[13], rhs.z+entries[14]);
 }
 
-v3 MATRIX4X4::GetInverseTranslatedv3(const v3 & rhs) const
+v3 matrix4::GetInverseTranslatedv3(const v3 & rhs) const
 {
 	return v3(rhs.x-entries[12], rhs.y-entries[13], rhs.z-entries[14]);
 }
 
-void MATRIX4X4::Invert(void)
+void matrix4::Invert(void)
 {
 	*this=GetInverse();
 }
 
-MATRIX4X4 MATRIX4X4::GetInverse(void) const
+matrix4 matrix4::GetInverse(void) const
 {
-	MATRIX4X4 result=GetInverseTranspose();
+	matrix4 result=GetInverseTranspose();
 
 	result.Transpose();
 
@@ -408,27 +408,27 @@ MATRIX4X4 MATRIX4X4::GetInverse(void) const
 }
 
 
-void MATRIX4X4::Transpose(void)
+void matrix4::Transpose(void)
 {
 	*this=GetTranspose();
 }
 
-MATRIX4X4 MATRIX4X4::GetTranspose(void) const
+matrix4 matrix4::GetTranspose(void) const
 {
-	return MATRIX4X4(	entries[ 0], entries[ 4], entries[ 8], entries[12],
+	return matrix4(	entries[ 0], entries[ 4], entries[ 8], entries[12],
 						entries[ 1], entries[ 5], entries[ 9], entries[13],
 						entries[ 2], entries[ 6], entries[10], entries[14],
 						entries[ 3], entries[ 7], entries[11], entries[15]);
 }
 
-void MATRIX4X4::InvertTranspose(void)
+void matrix4::InvertTranspose(void)
 {
 	*this=GetInverseTranspose();
 }
 
-MATRIX4X4 MATRIX4X4::GetInverseTranspose(void) const
+matrix4 matrix4::GetInverseTranspose(void) const
 {
-	MATRIX4X4 result;
+	matrix4 result;
 
 	float tmp[12];												//temporary pair storage
 	float det;													//determinant
@@ -519,7 +519,7 @@ MATRIX4X4 MATRIX4X4::GetInverseTranspose(void) const
 
 	if(det==0.0f)
 	{
-		MATRIX4X4 id;
+		matrix4 id;
 		return id;
 	}
 	
@@ -529,16 +529,16 @@ MATRIX4X4 MATRIX4X4::GetInverseTranspose(void) const
 }
 
 //Invert if only composed of rotations & translations
-void MATRIX4X4::AffineInvert(void)
+void matrix4::AffineInvert(void)
 {
 	(*this)=GetAffineInverse();
 }
 
-MATRIX4X4 MATRIX4X4::GetAffineInverse(void) const
+matrix4 matrix4::GetAffineInverse(void) const
 {
 	//return the transpose of the rotation part
 	//and the negative of the inverse rotated translation part
-	return MATRIX4X4(	entries[0],
+	return matrix4(	entries[0],
 						entries[4],
 						entries[8],
 						0.0f,
@@ -556,17 +556,17 @@ MATRIX4X4 MATRIX4X4::GetAffineInverse(void) const
 						1.0f);
 }
 
-void MATRIX4X4::AffineInvertTranspose(void)
+void matrix4::AffineInvertTranspose(void)
 {
 	(*this)=GetAffineInverseTranspose();
 }
 
-MATRIX4X4 MATRIX4X4::GetAffineInverseTranspose(void) const
+matrix4 matrix4::GetAffineInverseTranspose(void) const
 {
 	//return the transpose of the rotation part
 	//and the negative of the inverse rotated translation part
 	//transposed
-	return MATRIX4X4(	entries[0],
+	return matrix4(	entries[0],
 						entries[1],
 						entries[2],
 						-(entries[0]*entries[12]+entries[1]*entries[13]+entries[2]*entries[14]),
@@ -581,14 +581,14 @@ MATRIX4X4 MATRIX4X4::GetAffineInverseTranspose(void) const
 						0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void MATRIX4X4::SetTranslation(const v3 & translation)
+void matrix4::SetTranslation(const v3 & translation)
 {
 	LoadIdentity();
 
 	SetTranslationPart(translation);
 }
 
-void MATRIX4X4::SetScale(const v3 & scaleFactor)
+void matrix4::SetScale(const v3 & scaleFactor)
 {
 	LoadIdentity();
 
@@ -597,14 +597,14 @@ void MATRIX4X4::SetScale(const v3 & scaleFactor)
 	entries[10]=scaleFactor.z;
 }
 
-void MATRIX4X4::SetUniformScale(const float scaleFactor)
+void matrix4::SetUniformScale(const float scaleFactor)
 {
 	LoadIdentity();
 
 	entries[0]=entries[5]=entries[10]=scaleFactor;
 }
 
-void MATRIX4X4::SetRotationAxis(const double angle, const v3 & axis)
+void matrix4::SetRotationAxis(const double angle, const v3 & axis)
 {
 	v3 u=axis.GetNormalized();
 
@@ -627,7 +627,7 @@ void MATRIX4X4::SetRotationAxis(const double angle, const v3 & axis)
 	entries[10]=(u.z)*(u.z) + cosAngle*(1-(u.z)*(u.z));
 }
 
-void MATRIX4X4::SetRotationAxis(const coord sinAngle, const coord cosAngle,const v3 & axis)
+void matrix4::SetRotationAxis(const coord sinAngle, const coord cosAngle,const v3 & axis)
 {
 	v3 u=axis.GetNormalized();
 
@@ -650,7 +650,7 @@ void MATRIX4X4::SetRotationAxis(const coord sinAngle, const coord cosAngle,const
 }
 
 
-void MATRIX4X4::SetRotationX(const double angle)
+void matrix4::SetRotationX(const double angle)
 {
 	LoadIdentity();
 
@@ -661,7 +661,7 @@ void MATRIX4X4::SetRotationX(const double angle)
 	entries[10]=entries[5];
 }
 
-void MATRIX4X4::SetRotationY(const double angle)
+void matrix4::SetRotationY(const double angle)
 {
 	LoadIdentity();
 
@@ -672,7 +672,7 @@ void MATRIX4X4::SetRotationY(const double angle)
 	entries[10]=entries[0];
 }
 
-void MATRIX4X4::SetRotationZ(const double angle)
+void matrix4::SetRotationZ(const double angle)
 {
 	LoadIdentity();
 
@@ -683,14 +683,14 @@ void MATRIX4X4::SetRotationZ(const double angle)
 	entries[5]=entries[0];
 }
 
-void MATRIX4X4::SetRotationEuler(const double angleX, const double angleY, const double angleZ)
+void matrix4::SetRotationEuler(const double angleX, const double angleY, const double angleZ)
 {
 	LoadIdentity();
 
 	SetRotationPartEuler(angleX, angleY, angleZ);
 }
 
-void MATRIX4X4::SetPerspective(	float left, float right, float bottom,
+void matrix4::SetPerspective(	float left, float right, float bottom,
 								float top, float n, float f)
 {
 	float nudge=0.999f;		//prevent artifacts with infinite far plane
@@ -729,7 +729,7 @@ void MATRIX4X4::SetPerspective(	float left, float right, float bottom,
 	}
 }
 
-void MATRIX4X4::SetPerspective(float fovy, float aspect, float n, float f)
+void matrix4::SetPerspective(float fovy, float aspect, float n, float f)
 {
 	float left, right, top, bottom;
 
@@ -745,7 +745,7 @@ void MATRIX4X4::SetPerspective(float fovy, float aspect, float n, float f)
 	SetPerspective(left, right, bottom, top, n, f);
 }
 
-void MATRIX4X4::SetOrtho(	float left, float right, float bottom,
+void matrix4::SetOrtho(	float left, float right, float bottom,
 							float top, float n, float f)
 {
 	LoadIdentity();
@@ -761,14 +761,14 @@ void MATRIX4X4::SetOrtho(	float left, float right, float bottom,
 	entries[14]=-(f+n)/(f-n);
 }
 
-void MATRIX4X4::SetTranslationPart(const v3 & translation)
+void matrix4::SetTranslationPart(const v3 & translation)
 {
 	entries[12]=translation.x;
 	entries[13]=translation.y;
 	entries[14]=translation.z;
 }
 
-void MATRIX4X4::SetRotationPartEuler(const double angleX, const double angleY, const double angleZ)
+void matrix4::SetRotationPartEuler(const double angleX, const double angleY, const double angleZ)
 {
 	double cr = cos( M_PI*angleX/180 );
 	double sr = sin( M_PI*angleX/180 );
