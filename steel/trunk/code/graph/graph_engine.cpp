@@ -31,6 +31,10 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 	cur_matrix = object->getMatrix();
 	new_matrix = matrix*cur_matrix;
 
+/* TODO: сюда надо поставить проверку, находится ли frame
+внутри пирамиды, которую образует угол обзора камеры.
+Если не попадает, то откидываем этот объект и всех его потомков
+*/
 	GraphInterface &o = *(GraphInterface*)object;
 	GraphInterfaceList children = o.getChildrens();
 	for(GraphInterfaceList::iterator it=children.begin();

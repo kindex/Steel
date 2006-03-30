@@ -43,15 +43,15 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 		GLuint colorMap = 0;
 		if(m->var_s.find("color_map") != m->var_s.end())
-			colorMap = getTexture(Res::image, m->var_s["color_map"]);
+			colorMap = getTexture(m->var_s["color_map"]);
 
 		GLuint normalMap = 0;
 		if(m->var_s.find("normal_map") != m->var_s.end())
-			normalMap = getTexture(Res::normalMap, m->var_s["normal_map"]);
+			normalMap = getNormalMap(m->var_s["normal_map"]);
 
 		GLuint illuminateMap = 0;
 		if(m->var_s.find("illuminate_map") != m->var_s.end())
-			illuminateMap = getTexture(Res::image, m->var_s["illuminate_map"]);
+			illuminateMap = getTexture(m->var_s["illuminate_map"]);
 
 		GLuint cubeMap = 0;
 		if(m->isset("reflect_map"))
@@ -113,7 +113,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				glEnable(GL_BLEND);
 			}
 
-			drawDistColor(e, e.matrix, light[0].pos, 500);
+			drawDistColor(e, e.matrix, light[0].pos, light[0].range);
 
 			if(tex>0)
 	            glDisable(GL_BLEND);
@@ -533,14 +533,14 @@ void OpenGL_Engine::drawAABB(DrawElement &e, matrix4 matrix)
 }
 
 
-GLuint OpenGL_Engine::getTexture(Res::res_kind kind, std::string imageName)
+GLuint OpenGL_Engine::getTexture(std::string imageName)
 {
 	if(registredTextures.find(imageName) != registredTextures.end())
 		return registredTextures[imageName];
 
-	res->add(kind, imageName);
+	res->add(Res::image, imageName);
 
-	Image *a = (Image*)res->get(kind, imageName);
+	Image *a = (Image*)res->get(Res::image, imageName);
 
 	if(a == NULL)
 	{
@@ -567,6 +567,43 @@ GLuint OpenGL_Engine::getTexture(Res::res_kind kind, std::string imageName)
 
 	return id;
 }
+
+GLuint OpenGL_Engine::getNormalMap(std::string imageName)
+{
+	string nName = imageName + ".nm";
+	if(registredTextures.find(nName) != registredTextures.end())
+		return registredTextures[nName];
+
+	Image *a = (Image*)res->add(Res::image, nName);
+
+	if(a == NULL)
+	{
+		a = (Image*)res->add(Res::image, imageName + ".hm");
+		if(a == NULL)
+		{
+			alog.out("Cannot find normal map %s", imageName.c_str());
+			return 0;
+		}
+		a->convertFromHeightMapToNormalMap();
+	}
+
+	GLuint id;
+	glGenTextures(1, &id);
+	glBindTexture(GL_TEXTURE_2D, id);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //{ all of the above can be used }
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, a->getWidth(), a->getHeight(),0,
+		GL_RGB,  GL_UNSIGNED_BYTE , a->getBitmap());
+
+	registredTextures[nName] = id;
+	alog.out("Bind normal map %s", imageName.c_str());
+
+	return id;
+}
+
 
 GLuint OpenGL_Engine::getCubeMap(std::string imageName)
 {

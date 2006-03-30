@@ -100,14 +100,25 @@ public:
 class GameLight: public PDummy, public GDummy
 {
 public:
+	v3 position;
+public:
 	Lights* getLights()
 	{
 		Lights *a = new Lights(1);
 		a->operator [](0).intensivity = 1.0f;
 		a->operator [](0).range = 1000;
-
 		return a;
 	}
+
+	matrix4 getMatrix()
+	{
+		matrix4 m;
+		m.entries[12] = position.x;
+		m.entries[13] = position.y;
+		m.entries[14] = position.z;
+		return m;
+	}
+
 	
 };
 
@@ -131,6 +142,8 @@ private:
 	std::vector<PhysicInterface*> pobj;
 // Camera
 	v3	eye, direction, angle;
+
+	GameLight *light;
 
 public:
 	Game(ResCollection *_res) { res = _res;  } 

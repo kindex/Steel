@@ -127,41 +127,7 @@ void Image::clear(float r, float g, float b)
         }
 }
 
-bool NormalMap::copyImage(const std::string name, ResCollection &res)
-{
-	// «агружаем как обычное изображение
-	// дополнение nm к расширению сообщает о том, что это NormalMap (карта нормалей)
-
-    if(!res.add(Res::image, name)) return false;
-	Image *i = (Image*)res.get(Res::image, name);
-	if(!i) return false;
-
-	// ѕосле чего мы просто копируем это изображение
-	bitmap = new unsigned char[i->bitmapSize];
-
-	memcpy(bitmap, i->bitmap, i->bitmapSize);
-	width = i->width;
-	height = i->height;
-	bpp = i->bpp;
-	bitmapSize = i->bitmapSize;
-
-	return true;
-}
-
-bool NormalMap::init(const std::string name, ResCollection &res)
-{
-	return copyImage(name+".nm", res);
-}
-
-bool HeightMap::init(const std::string name, ResCollection &res)
-{
-	if(!NormalMap::copyImage(name+".hm", res)) return false;
-	convertFromHeightMapToNormalMap();
-	return true;
-}
-
-
-void HeightMap::convertFromHeightMapToNormalMap()
+void Image::convertFromHeightMapToNormalMap()
 {
     int bpl = width*3;
     unsigned char *a = (unsigned char*)malloc(bpl); // RGB

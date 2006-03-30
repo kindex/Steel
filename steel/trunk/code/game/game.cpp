@@ -49,11 +49,14 @@ void Game::processPhysic(PhysicEngine *physic)
 {
 /*		for(int i=0; i<3; i++)
 			obj[1]->pos.entries[i+i*4] = 0.20f;
-
-		obj[1]->pos.entries[12] = (float)cos(time)*50.0f;
-		obj[1]->pos.entries[13] = (float)sin(time)*50.0f;
-		obj[1]->pos.entries[14] = 20;
 */
+
+		light->position.x = (float)cos(time)*10.0f;
+		light->position.y = (float)sin(time)*10.0f;
+		light->position.z = 5.0f;
+
+//		gobj[1]->pos.entries[14] = 20;
+
 		/*		for(int i=0; i<3; i++)
 			obj[1]->children[0]->pos.entries[i+i*4] = 0.20f;
 
@@ -101,10 +104,11 @@ bool Game::init()
 	direction = v3(-1.0f/eye.x, -1.0f/eye.y, -1.0f/eye.z);
 	direction.Normalize();
 
+	light = new GameLight;
+	gobj.push_back(light);
+
 	res->add(Res::model, "metal_teapot");
 	res->add(Res::model, "room");
-
-	gobj.push_back(new GameLight);
 
 	GameObj *g;
 
@@ -119,9 +123,6 @@ bool Game::init()
 		g->setPosition(v3(float(rand()%7-3), float(rand()%7-3), float(rand()%6+1)));
 
 		matrix4 m = g->getPMatrix();
-		
-		m.entries[1] = 0.5;
-		m.entries[4] = 0.5;
 
 		g->setPMatrix(m);
 

@@ -90,7 +90,6 @@ public:
 	{
 			none,
 			image,
-			normalMap,
 			model,
 			config
 	}	res_kind;

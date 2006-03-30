@@ -72,7 +72,8 @@ public:
 	void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix4 const matrix, const v3 light,	v3List **tangentSpaceLight);
 	void genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix4 const matrix, const v3 camera,	v3List **tangentSpaceLight);
 
-	GLuint getTexture(Res::res_kind kind, std::string imageName);
+	GLuint getTexture(std::string imageName);
+	GLuint getNormalMap(std::string imageName);
 	GLuint getCubeMap(std::string imageName);
 };
 

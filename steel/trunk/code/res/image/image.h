@@ -50,25 +50,7 @@ public:
 	int getHeight()	{ return height; }
 	unsigned char* getBitmap() { return bitmap; }
 
-	friend class NormalMap;
-};
-
-
-class NormalMap: public Image
-{
-protected:
-	bool copyImage(const std::string name, ResCollection &res);
-public:
-	bool init(const std::string name, ResCollection &res);
-};
-
-class HeightMap: public NormalMap
-{
-protected:
 	void convertFromHeightMapToNormalMap();
-public:
-	bool init(const std::string name, ResCollection &res);
 };
-
 
 #endif

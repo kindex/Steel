@@ -39,8 +39,6 @@
 Res* createBMP()		{return new BMP; }
 Res* create3DS()		{return new _3DS; }
 Res* createConfig()		{return new ConfigText; }
-Res* createNormalMap()	{return new NormalMap; }
-Res* createHeightMap()	{return new HeightMap; }
 
 int main(int argc, char *argv[])
 {
@@ -56,8 +54,6 @@ int main(int argc, char *argv[])
 	res.registerClass(createBMP,	Res::image);
 	res.registerClass(create3DS,	Res::model);
 	res.registerClass(createConfig,	Res::config);
-	res.registerClass(createNormalMap, Res::normalMap);
-	res.registerClass(createHeightMap, Res::normalMap);
 
 // *************** GRAPH *******************
 #ifdef OPENGL_SDL	
