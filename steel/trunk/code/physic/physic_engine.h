@@ -39,7 +39,7 @@ public:
 	// Collect information about object: object shape + velocity
 	virtual bool inject(PhysicInterface *object);
 	// Move objects
-	bool process(time speed); 
+	bool process(steel::time speed); 
 	// Clear collected information
 	bool clear();
 

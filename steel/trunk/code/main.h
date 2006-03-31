@@ -15,6 +15,12 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
+#include "_cpp.h"
+
+#ifdef COMPILER_DEVCPP
+int main1(int argc, char *argv[]);
+#else
 int main(int argc, char *argv[]);
+#endif
 
 #endif

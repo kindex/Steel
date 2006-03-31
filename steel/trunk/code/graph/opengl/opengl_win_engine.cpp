@@ -62,7 +62,7 @@ bool OpenGL_WIN_Engine::createWindow()
 
 	RegisterClass(&wndclass);							// Register the class
 	
-	dwStyle = NULL;
+	dwStyle = 0;
 
 	if(conf->geti("fullscreen")) 						// Check if we wanted full screen mode
 	{													// Set the window properties for full screen mode
@@ -86,7 +86,7 @@ bool OpenGL_WIN_Engine::createWindow()
 						conf->geti("width"), conf->geti("height"),
 						NULL, NULL, NULL, NULL);
 
-	if(!hWnd) return NULL;								// If we could get a handle, return NULL
+	if(!hWnd) return false;								// If we could get a handle, return NULL
 	::handle = hWnd;
 	handle = hWnd;
 

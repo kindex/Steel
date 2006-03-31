@@ -16,21 +16,25 @@
 #include <string>
 
 #include "main.h"
+#include "_cpp.h"
 
 
 //#define OPENGL_WIN
 
-HINSTANCE hInstance;
 
 /*extern int mainCRTStartup(void);
+*/
 
-/*int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
+#ifdef COMPILER_DEVCPP
+HINSTANCE hInstance;
+
+int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 					HINSTANCE	hPrevInstance,		// Previous Instance
 					LPSTR		lpCmdLine,			// Command Line Parameters
 					int			nCmdShow)			// Window Show State
 {
 	::hInstance = hInstance;
 
-	return main(0, NULL);							// Exit The Program
+	return main1(0, NULL);							// Exit The Program
 }
-*/
+#endif

@@ -146,11 +146,11 @@ bool intersection_LineSegment_polygon(LineSegment &Line, polygon &P)
     v2 point;
     //bool intersect(v2 &a, v2 &b,v2 &c, v2 &d, v2 &point)
     // to4ka perese4enija otrezkov (a; a+b) i (c;c+d) v to4ke point
-    for (unsigned int i=0; i<P.p.size(); i++)
+/*    for (unsigned int i=0; i<P.p.size(); i++)
         if (intersect(
             Line.a, Line.b-Line.a,
             P.p[i], P.p[(i+1)%P.p.size()]-P.p[i], point)) return true;
-
+*/
     return false;
 }
 

@@ -40,7 +40,11 @@ Res* createBMP()		{return new BMP; }
 Res* create3DS()		{return new _3DS; }
 Res* createConfig()		{return new ConfigText; }
 
+#ifdef COMPILER_DEVCPP
+int main1(int argc, char *argv[])
+#else
 int main(int argc, char *argv[])
+#endif
 {
 	alog.open("steel.log");
 
@@ -84,7 +88,7 @@ int main(int argc, char *argv[])
 	if(!physic.init("physic")) return 1;
 
 // ******************* MAIN LOOP ************************
-	time captionUdateTime = -1;
+	steel::time captionUdateTime = -1;
 	alog.msg("core", "Entering main loop");
 	bool first = true, firstMouse = true, alive = true;
 	while(alive && game.alive())

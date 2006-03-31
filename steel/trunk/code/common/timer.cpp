@@ -17,10 +17,10 @@ void Timer::incframe()
 }
 
 
-time Timer::getfps()
+steel::time Timer::getfps()
 {
-	time ts = total();
-	time cur = ts - curIntervalStartTime;
+	steel::time ts = total();
+	steel::time cur = ts - curIntervalStartTime;
 	if(cur >= UPDATE_FPS_TIME)
 	{
 		lastIntervalTime = cur;
@@ -42,7 +42,7 @@ std::string Timer::getfps_s()
 
 
 
-time Timer_SDL::timestamp()
+steel::time Timer_SDL::timestamp()
 {
 	return SDL_GetTicks()*0.001;
 }

@@ -9,18 +9,18 @@
 class Timer
 {
 	bool active;
-    time startTime, skip, pausedTime, lastIntervalTime, curIntervalStartTime, fps;
+    steel::time startTime, skip, pausedTime, lastIntervalTime, curIntervalStartTime, fps;
 	int frameCnt, lastIntervalFrameCnt, curIntervalFrameCnt, totalFrames;
 
 public:
 // Время в секундах от момента clear, исключая промежутки между pause и resume
-	time total() 
+	steel::time total() 
 	{ 
 		return (timestamp() - startTime) - skip; 
 	}
 
 // Абсолютное время
-	virtual time timestamp() = 0; 
+	virtual steel::time timestamp() = 0; 
 // Обнулить таймер
 	virtual void start()
 	{
@@ -51,7 +51,7 @@ public:
 // Сообщение таймеру о том, что кадр был обработан и следует обновить FPS
 	virtual void incframe();
 // Вернуть текушее количество кадров в секунду (FPS)
-	virtual time getfps();
+	virtual steel::time getfps();
 	virtual std::string getfps_s();
 
 };
@@ -59,7 +59,7 @@ public:
 class Timer_SDL: public Timer
 {
 public:
-	time timestamp();
+	steel::time timestamp();
 
 };
 

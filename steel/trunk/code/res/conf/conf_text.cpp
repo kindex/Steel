@@ -7,7 +7,7 @@ bool ConfigText::init(const std::string name, ResCollection &res)
 {
 	std::string file = "../res/" + name + ".conf";
 
-	rstream f(file, 0); // no binary acces, only text
+	rstream f(file); // no binary acces, only text
 	if(!f.good()) 
 	{
 		alog.out("Res/Material/Conf: cannot open file %s", file.c_str());
@@ -19,6 +19,8 @@ bool ConfigText::init(const std::string name, ResCollection &res)
 		char buf[1024];
 		f.getline(buf, 1023);
 		std::string s = buf;
+		if(s.length()<=2) continue;
+		if(s[s.length()-1] == 0x0D) s.resize(s.length()-1);
 
 		if(s.substr(0,2) == "//" || s[0] == ';' || s[0] == '#') continue;
 

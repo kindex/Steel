@@ -485,11 +485,14 @@ void OpenGL_Engine::drawFaces(DrawElement &e)
 
 void OpenGL_Engine::drawNormals(DrawElement &e)
 {
+	aabb &f = e.frame;
+	float diag = (f.max-f.min).GetLength()*0.05f;
+
 		glBegin(GL_LINES);
 		for(unsigned int i=0; i < e.vertex->size(); i++)
 		{
 			v3 s = e.vertex->operator [](i);
-			v3 d = e.vertex->operator [](i) + e.normal->operator [](i)*5;
+			v3 d = e.vertex->operator [](i) + e.normal->operator [](i)*diag;
 
 			glVertex3f(s.x, s.y, s.z);
 			glVertex3f(d.x, d.y, d.z);

@@ -102,11 +102,13 @@ bool BMP::init(const std::string name, ResCollection &res)
 	bmpBITMAPFILEHEADER fh; // file header
 	bmpBITMAPINFOHEADER ih;
 
-	if(sizeof(fh)!= 14) 
+/*	if(sizeof(fh)!= 14) 
 	{	
 		alog.out("Res/Image/BMP: head struct size 14 != %d", sizeof(fh));
 		throw;
 	}
+*/
+
 //	int tty2 = sizeof(ih);
 	std::string file = "../res/image/" + name + ".bmp";
 	rstream f(file);
@@ -117,13 +119,17 @@ bool BMP::init(const std::string name, ResCollection &res)
 		return false;
 	}
 
-	f.read((char*)&fh,sizeof(fh));
+	f.read(&fh.bfType[0], 2);
+    f.read(&fh.bfSize, 4);
+	f.read(&fh.bfReserved1, 2);
+	f.read(&fh.bfReserved2, 2);
+    f.read(&fh.bfOffbits, 4);
 
 	f.read((char*)&ih.biSize, sizeof(ih.biSize));
 
 	int siz = ih.biSize-sizeof(ih.biSize);
 
-	f.read((char*)&ih.biWidth,siz);
+	f.read((char*)&ih.biWidth, siz);
 
 	if (ih.biSizeImage == 0)
 		ih.biSizeImage = ih.biHeight * ih.biWidth * (ih.biBitCount /8);

@@ -40,7 +40,7 @@ bool PhysicEngine::inject(PhysicInterface *object)
 	return true;
 }
 
-bool PhysicEngine::process(time speed)
+bool PhysicEngine::process(steel::time speed)
 {
 	v3 acc = g*(float)speed;
 	for(std::vector<PhysicInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
