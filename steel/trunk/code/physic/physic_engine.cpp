@@ -12,7 +12,7 @@ bool PhysicEngine::init(std::string _conf)
 
 	conf = (Config*)res->get(Res::config, _conf);
 
-	g.z = -conf->getf("g", 0.0);
+	g.z = -(float)conf->getf("g", 0.0);
 	g.x = 0.0f;
 	g.y = 0.0f;
 	

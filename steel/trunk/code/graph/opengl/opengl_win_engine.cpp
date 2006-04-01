@@ -13,14 +13,20 @@
 
 #include "opengl_win_engine.h"
 
+extern HINSTANCE hInstance;
 HWND handle;
-
 
 void OpenGL_WIN_Engine::swapBuffers()
 {
     if (DC) SwapBuffers(DC);
 }
 
+void RedrawWindow(HWND hWnd)
+{
+    PAINTSTRUCT    ps;
+    BeginPaint(hWnd, &ps);							// Init the paint struct
+	EndPaint(hWnd, &ps);							// EndPaint, Clean up
+}
 
 
 LRESULT CALLBACK WinProc(HWND hWnd,UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -29,7 +35,11 @@ LRESULT CALLBACK WinProc(HWND hWnd,UINT uMsg, WPARAM wParam, LPARAM lParam)
     if (hWnd == handle)
     switch (uMsg)
 	{
- 
+     case WM_SIZE:										// If the window is resized
+ 	case WM_PAINT:										// If we need to repaint the scene
+        RedrawWindow(hWnd);
+		break;
+
     case WM_CLOSE:										// If the window is being closes
         PostQuitMessage(0);								// Send a QUIT Message to the window
         break;
@@ -53,16 +63,21 @@ bool OpenGL_WIN_Engine::createWindow()
 	wndclass.style = 0;
   //  CS_HREDRAW   | CS_VREDRAW	// Regular drawing capabilities
 	wndclass.lpfnWndProc = WinProc;						// Pass our function pointer as the window procedure
-	wndclass.hInstance = NULL;						// Assign our hInstance
+	wndclass.hInstance = hInstance;						// Assign our hInstance
 	wndclass.hIcon = LoadIcon(NULL, IDI_QUESTION );	// General icon
 	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);		// An arrow for the cursor
 //	wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW+1);	// A white window
 //    u nas black :)
 	wndclass.lpszClassName = "SteelWindow";			// Assign the class name
 
-	RegisterClass(&wndclass);							// Register the class
+	if(!RegisterClass(&wndclass)) 
+	{
+		alog.msg("error graph opengl", std::string("Cannot register class ") + wndclass.lpszClassName);
+		return false;							// Register the class
+	}
 	
-	dwStyle = 0;
+	dwStyle =  WS_OVERLAPPEDWINDOW |
+        WS_CLIPSIBLINGS  |        WS_CLIPCHILDREN;
 
 	if(conf->geti("fullscreen")) 						// Check if we wanted full screen mode
 	{													// Set the window properties for full screen mode
@@ -84,7 +99,7 @@ bool OpenGL_WIN_Engine::createWindow()
 	hWnd = CreateWindow("SteelWindow", "Steel Engine", dwStyle, 
 		conf->geti("left"), conf->geti("top"),
 						conf->geti("width"), conf->geti("height"),
-						NULL, NULL, NULL, NULL);
+						NULL, NULL, hInstance, NULL);
 
 	if(!hWnd) return false;								// If we could get a handle, return NULL
 	::handle = hWnd;
@@ -124,6 +139,12 @@ bool OpenGL_WIN_Engine::createWindow()
 
     RC = wglCreateContext(DC);
     wglMakeCurrent(DC, RC);
+
+	alog.out("Video mode has been set!\n" \
+		"\tResolution: %dx%dx%d\n" ,
+		conf->geti("width"), conf->geti("height"), conf->geti("depth") );
+
+
 
 	return true;
 }

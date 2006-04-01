@@ -13,6 +13,8 @@
 
 Logger alog;
 
+#define _CRT_SECURE_NO_DEPRECATE 
+
 bool Logger::open( char *filename )
 {
 	f = fopen(filename, "wt");

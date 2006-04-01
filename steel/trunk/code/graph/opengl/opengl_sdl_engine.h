@@ -15,6 +15,10 @@
 #ifndef __GRAPH_OPENGL_SDL_ENGINE_H
 #define __GRAPH_OPENGL_SDL_ENGINE_H
 
+#include "../../_cpp.h"
+
+#ifdef OPENGL_SDL
+
 #include "opengl_engine.h"
 #include "../../common/logger.h"
 #include <SDL.h>			// Header File For SDL
@@ -33,5 +37,5 @@ public:
 	bool deinit();
 	void setCaption(std::string caption);
 };
-
+#endif
 #endif

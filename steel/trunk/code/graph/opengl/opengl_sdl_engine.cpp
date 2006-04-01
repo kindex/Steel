@@ -11,6 +11,11 @@
 		Часть графического движока OpenGL, которая реализует
 		системно зависимые функции, такие как создание окна.
  ************************************************************/
+
+#include "../../_cpp.h"
+
+#ifdef OPENGL_SDL
+
 #include "opengl_sdl_engine.h"
 
 void OpenGL_SDL_Engine::swapBuffers()
@@ -75,28 +80,28 @@ bool OpenGL_SDL_Engine::createWindow()
 		return false;
 	}
 	
-	alog.out("Video mode has been set!\n" \
-		"\tResolution: %dx%dx%d\n" \
-		"\tVideo memory: %dK\n" \
-		"\tHardware surface: %s\n" \
-		"\tWindow manager: %s\n" \
-		"\tHardware blits: %s\n" \
-		"\tHardware colourkey blits: %s\n" \
-		"\tHardware alpha blits: %s\n" \
-		"\tSoftware blits: %s\n" \
-		"\tSoftware colourkey blits: %s\n" \
-		"\tSoftware alpha blits: %s\n" \
-		"\tAccelerated colour fills: %s\n", \
-		conf->geti("width"), conf->geti("height"), conf->geti("depth"), videoInfo->video_mem, \
-		videoInfo->hw_available?"yes":"no", \
-		videoInfo->wm_available?"yes":"no", \
-		videoInfo->blit_hw?"yes":"no", \
-		videoInfo->blit_hw_CC?"yes":"no", \
-		videoInfo->blit_hw_A?"yes":"no", \
-		videoInfo->blit_sw?"yes":"no", \
-		videoInfo->blit_sw_CC?"yes":"no", \
-		videoInfo->blit_sw_A?"yes":"no", \
-		videoInfo->blit_fill?"yes":"no");
+    	alog.out("Video mode has been set!\n" \
+    		"\tResolution: %dx%dx%d\n" \
+    		"\tVideo memory: %dK\n" \
+    		"\tHardware surface: %s\n" \
+    		"\tWindow manager: %s\n" \
+    		"\tHardware blits: %s\n" \
+    		"\tHardware colourkey blits: %s\n" \
+    		"\tHardware alpha blits: %s\n" \
+    		"\tSoftware blits: %s\n" \
+    		"\tSoftware colourkey blits: %s\n" \
+    		"\tSoftware alpha blits: %s\n" \
+    		"\tAccelerated colour fills: %s\n", \
+    		conf->geti("width"), conf->geti("height"), conf->geti("depth"), videoInfo->video_mem, \
+    		videoInfo->hw_available?"yes":"no", \
+    		videoInfo->wm_available?"yes":"no", \
+    		videoInfo->blit_hw?"yes":"no", \
+    		videoInfo->blit_hw_CC?"yes":"no", \
+    		videoInfo->blit_hw_A?"yes":"no", \
+    		videoInfo->blit_sw?"yes":"no", \
+    		videoInfo->blit_sw_CC?"yes":"no", \
+    		videoInfo->blit_sw_A?"yes":"no", \
+    		videoInfo->blit_fill?"yes":"no");
 	
 	return true;
 }
@@ -111,3 +116,5 @@ void OpenGL_SDL_Engine::setCaption(std::string caption)
 {
 	SDL_WM_SetCaption(caption.c_str(),"test");
 }
+
+#endif

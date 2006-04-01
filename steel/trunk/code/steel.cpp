@@ -38,3 +38,19 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 	return main1(0, NULL);							// Exit The Program
 }
 #endif
+
+#ifdef COMPILER_VS8
+#ifdef OPENGL_WIN
+HINSTANCE hInstance;
+
+int APIENTRY WinMain(HINSTANCE hInstance,
+                     HINSTANCE hPrevInstance,
+                     LPTSTR    lpCmdLine,
+                     int       nCmdShow)
+{
+	::hInstance = hInstance;
+
+	return main(0, NULL);
+}
+#endif
+#endif

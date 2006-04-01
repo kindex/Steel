@@ -44,5 +44,6 @@ std::string Timer::getfps_s()
 
 steel::time Timer_SDL::timestamp()
 {
-	return SDL_GetTicks()*0.001;
+//	return SDL_GetTicks()*0.001;
+	return 0;
 }

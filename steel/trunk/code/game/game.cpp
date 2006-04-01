@@ -147,6 +147,7 @@ void Game::handleEventKeyUp(std::string key)
 	keyPressed[key] = false;
 }
 
+
 bool Game::isPressed(std::string key)
 {
 	return keyPressed.find(key) != keyPressed.end() && keyPressed[key];

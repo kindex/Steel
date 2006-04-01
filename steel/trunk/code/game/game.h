@@ -131,10 +131,10 @@ private:
 	double speed, time;
 	bool _alive;
 //  Input-Output 
-	ResCollection *res;
-
+	ResCollection	*res;
 	std::map<std::string, bool> keyPressed;
-	bool isPressed(std::string key);
+
+
 	void processKeyboard();
 
 // World
@@ -146,15 +146,19 @@ private:
 	GameLight *light;
 
 public:
-	Game(ResCollection *_res) { res = _res;  } 
+	Game(ResCollection *_res) { res = _res; } 
 	bool init();
 	void process();
 	void processPhysic(PhysicEngine *physic);
 	void draw(GraphEngine *graph);
+
+	bool isPressed(std::string key);
+	
 	void handleEventKeyDown(std::string key);
 	void handleEventKeyUp(std::string key);
+
 	void handleMouse(double dx, double dy);
-	bool alive() {return _alive;} 
+	bool isAlive() {return _alive;} 
 	void setspeed(double _speed, double _time) {speed = _speed; time = _time; } 
 };
 

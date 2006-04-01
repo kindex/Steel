@@ -11,7 +11,7 @@ string Config::gets(string key, string _default)
 		return _default;
 }
 
-float Config::getf(string key, float _default)
+double Config::getf(string key, double _default)
 {
 	if(var_f.find(key) != var_f.end())
 		return var_f[key];

@@ -24,6 +24,8 @@ public:
 // Обнулить таймер
 	virtual void start()
 	{
+//		SDL_Init(SDL_INIT_TIMER);
+
 		startTime	= timestamp();
 		skip	= 0.0;
 		active	= true;
