@@ -8,6 +8,9 @@
 #include "input.h"
 #include <windows.h>
 
+std::string decodeKey(WPARAM p);
+
+
 class InputWIN: public Input
 {
 protected:

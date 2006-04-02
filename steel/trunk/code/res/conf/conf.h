@@ -15,6 +15,7 @@ protected:
 
 public:
 	void setup(std::string key, std::string value);
+	void setup(std::string key, double value);
 	void setDefault(std::string key, std::string value);
 
 	std::string gets(std::string key, std::string _default = "");

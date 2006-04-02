@@ -39,7 +39,7 @@ bool OpenGL_WIN_Engine::init(std::string _conf, InputWIN *_input)
 
 void OpenGL_WIN_Engine::repair() // repair window on resize
 {
-	glViewport( 0, 0, conf->geti("width"), conf->geti("height"));
+	glViewport( 0, 0, conf->geti("window.width"), conf->geti("window.height"));
 }
 
 void OpenGL_WIN_Engine::swapBuffers()
@@ -77,6 +77,14 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		    PostQuitMessage(0);								// Send a QUIT Message to the window
 			break;
 
+		case WM_KEYDOWN:
+			if(wParam == VK_RETURN)
+			{
+				it->engine->fullScpeenToggle();
+			}
+
+			lRet = it->input->processMessage(hWnd, uMsg, wParam, lParam);
+			break;
 		default:											// Return by default
 			lRet = it->input->processMessage(hWnd, uMsg, wParam, lParam);
 		    break;
@@ -92,11 +100,159 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void OpenGL_WIN_Engine::resize(int w, int h)
 {
-	conf->setup("width", IntToStr(w));
-	conf->setup("height", IntToStr(h));
+	conf->setup("window.width", IntToStr(w));
+	conf->setup("window.height", IntToStr(h));
 	repair();
 }
 
+void OpenGL_WIN_Engine::fullScpeenToggle()
+{
+	if(conf->geti("fullscreen"))
+	{
+		if(changeToWindow()) conf->setup("fullscreen", 0);
+	}
+	else
+	{
+		if(changeToFullScpeen()) conf->setup("fullscreen", 1);
+	}
+
+
+}
+
+bool OpenGL_WIN_Engine::changeToWindow()
+{
+	bool ok = false;
+	DEVMODE dmSettings;									// Device Mode variable
+
+	memset(&dmSettings,0,sizeof(dmSettings));			// Makes Sure Memory's Cleared
+
+	// Get current settings -- This function fills our the settings
+	// This makes sure NT and Win98 machines change correctly
+	if(!EnumDisplaySettings(NULL,ENUM_CURRENT_SETTINGS, &dmSettings))
+	{
+		// Display error message if we couldn't get display settings
+		MessageBox(NULL, "Could Not Enum Display Settings", "Error", MB_OK);
+		return false;
+	}
+
+	if(dmSettings.dmPelsWidth != conf->geti("save.width") || 
+		dmSettings.dmPelsHeight	!= conf->geti("save.height") || 
+		dmSettings.dmBitsPerPel != conf->geti("save.depth"))
+	{
+		dmSettings.dmBitsPerPel = conf->geti("save.depth");
+		dmSettings.dmPelsWidth	= conf->geti("save.width");				// Selected Screen Width
+		dmSettings.dmPelsHeight	= conf->geti("save.height");			// Selected Screen Height
+
+		dmSettings.dmFields     = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
+
+		// This function actually changes the screen to full screen
+		// CDS_FULLSCREEN Gets Rid Of Start Bar.
+		// We always want to get a result from this function to check if we failed
+		int result = ChangeDisplaySettings(&dmSettings,CDS_FULLSCREEN);
+
+		// Check if we didn't recieved a good return message From the function
+		if(result != DISP_CHANGE_SUCCESSFUL)
+		{
+		// Display the error message and quit the program
+			MessageBox(NULL, "Display Mode Not Compatible", "Error", MB_OK);
+			ok = false;
+	//		PostQuitMessage(0);
+		}
+		else ok = true;
+	}
+	else 
+		ok = true;
+
+	if(ok)
+	{
+		WINDOWPLACEMENT wp;
+		GetWindowPlacement(handle, &wp);
+		// Adjust width and height to required
+
+		wp.rcNormalPosition.left	=	conf->geti("window.left");
+		wp.rcNormalPosition.top		=	conf->geti("window.top");
+		wp.rcNormalPosition.right	=	conf->geti("window.left") + conf->geti("savewindow.width");
+		wp.rcNormalPosition.bottom	=	conf->geti("window.top") + conf->geti("savewindow.height");
+		
+		SetWindowPlacement(handle, &wp);
+
+		SetWindowPos(handle, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+
+//		SetWindowLong(handle, GWL_STYLE, WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
+	}
+	return ok;
+
+}
+
+bool OpenGL_WIN_Engine::changeToFullScpeen()
+{
+	bool ok = false;
+	DEVMODE dmSettings;									// Device Mode variable
+
+	memset(&dmSettings,0,sizeof(dmSettings));			// Makes Sure Memory's Cleared
+
+	// Get current settings -- This function fills our the settings
+	// This makes sure NT and Win98 machines change correctly
+	if(!EnumDisplaySettings(NULL,ENUM_CURRENT_SETTINGS, &dmSettings))
+	{
+		// Display error message if we couldn't get display settings
+		MessageBox(NULL, "Could Not Enum Display Settings", "Error", MB_OK);
+		return false;
+	}
+
+	conf->setup("save.depth", dmSettings.dmBitsPerPel);
+	conf->setup("save.width", dmSettings.dmPelsWidth);
+	conf->setup("save.height", dmSettings.dmPelsHeight);
+
+	if(dmSettings.dmPelsWidth != conf->geti("screen.width") || 
+		dmSettings.dmPelsHeight	!= conf->geti("screen.height") || 
+		dmSettings.dmBitsPerPel != conf->geti("screen.depth"))
+	{
+		dmSettings.dmBitsPerPel = conf->geti("screen.depth");
+		dmSettings.dmPelsWidth	= conf->geti("screen.width");				// Selected Screen Width
+		dmSettings.dmPelsHeight	= conf->geti("screen.height");			// Selected Screen Height
+
+		dmSettings.dmFields     = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
+
+		// This function actually changes the screen to full screen
+		// CDS_FULLSCREEN Gets Rid Of Start Bar.
+		// We always want to get a result from this function to check if we failed
+		int result = ChangeDisplaySettings(&dmSettings,CDS_FULLSCREEN);
+
+		// Check if we didn't recieved a good return message From the function
+		if(result != DISP_CHANGE_SUCCESSFUL)
+		{
+		// Display the error message and quit the program
+			MessageBox(NULL, "Display Mode Not Compatible", "Error", MB_OK);
+			ok = false;
+	//		PostQuitMessage(0);
+		}
+		else ok = true;
+	}
+	else 
+		ok = true;
+
+	if(ok)
+	{
+		WINDOWPLACEMENT wp;
+		GetWindowPlacement(handle, &wp);
+		// Adjust width and height to required
+		conf->setup("savewindow.width", conf->geti("window.width"));
+		conf->setup("savewindow.height", conf->geti("window.height"));
+
+		wp.rcNormalPosition.left	=	0;
+		wp.rcNormalPosition.top		=	0;
+		wp.rcNormalPosition.right	=	conf->geti("screen.width");
+		wp.rcNormalPosition.bottom	=	conf->geti("screen.height");
+		
+		SetWindowPlacement(handle, &wp);
+
+		SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+
+//		SetWindowLong(handle, GWL_STYLE, WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
+	}
+	return ok;
+}
 
 bool OpenGL_WIN_Engine::createWindow()
 {
@@ -141,8 +297,8 @@ bool OpenGL_WIN_Engine::createWindow()
 
 														// Create the window
 	hWnd = CreateWindow("SteelWindow", "Steel Engine", dwStyle, 
-		conf->geti("left"), conf->geti("top"),
-						conf->geti("width"), conf->geti("height"),
+		conf->geti("window.left"), conf->geti("window.top"),
+						conf->geti("window.width"), conf->geti("window.height"),
 						NULL, NULL, hInstance, NULL);
 
 	if(!hWnd) return false;								// If we could get a handle, return NULL
@@ -153,7 +309,7 @@ bool OpenGL_WIN_Engine::createWindow()
 	window[window.size() - 1].input		= input;
 	window[window.size() - 1].engine	= this;
 
-	input->setMouseCenter(conf->geti("width")/2, conf->geti("height")/2);
+	input->setMouseCenter(conf->geti("window.width")/2, conf->geti("window.height")/2);
 
 	handle = hWnd;
 
@@ -183,8 +339,8 @@ bool OpenGL_WIN_Engine::createWindow()
 
     ppfd->dwLayerMask = PFD_MAIN_PLANE;
     ppfd->iPixelType = PFD_TYPE_RGBA;
-    ppfd->cColorBits = conf->geti("depth");
-    ppfd->cDepthBits = conf->geti("depth");
+    ppfd->cColorBits = conf->geti("screen.depth");
+    ppfd->cDepthBits = conf->geti("screen.depth");
 
     if ( (pixelformat = ChoosePixelFormat(DC, ppfd)) == 0 )    {        MessageBox(NULL, "ChoosePixelFormat failed", "Error", MB_OK);        return FALSE;    }
     if (SetPixelFormat(DC, pixelformat, ppfd) == FALSE)    {        MessageBox(NULL, "SetPixelFormat failed", "Error", MB_OK);        return FALSE;    }
@@ -193,8 +349,8 @@ bool OpenGL_WIN_Engine::createWindow()
     wglMakeCurrent(DC, RC);
 
 	alog.out("Video mode has been set!\n" \
-		"\tResolution: %dx%dx%d\n" ,
-		conf->geti("width"), conf->geti("height"), conf->geti("depth") );
+		"\tWindow size: %dx%dx%d\n" ,
+		conf->geti("window.width"), conf->geti("window.height"), conf->geti("screen.depth") );
 
 
 

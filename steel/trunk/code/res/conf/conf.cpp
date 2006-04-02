@@ -1,5 +1,6 @@
 
 #include "conf.h"
+#include "../../utils.h"
 
 using namespace std;
 
@@ -41,6 +42,13 @@ void Config::setup(std::string key, std::string value)
 	var_s[key] = value;
 	var_f[key] = atof(value.c_str());
 }
+
+void Config::setup(std::string key, double value)
+{
+	var_s[key] = FloatToStr(value);
+	var_f[key] = value;
+}
+
 void Config::setDefault(std::string key, std::string value)
 {
 	if(var_s.find(key) == var_s.end())

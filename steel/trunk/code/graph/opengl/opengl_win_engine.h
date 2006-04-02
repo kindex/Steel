@@ -41,6 +41,9 @@ public:
 	void setCaption(std::string caption);
 	void resize(int w, int h);
 	void repair(); // repair window on resize
+	void fullScpeenToggle();
+	bool changeToFullScpeen();
+	bool changeToWindow();
 };
 
 #endif

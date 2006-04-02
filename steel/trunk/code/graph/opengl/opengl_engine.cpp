@@ -690,11 +690,15 @@ bool OpenGL_Engine::init(std::string _conf)
 
 	conf = (Config*)res->get(Res::config, _conf);
 
-	conf->setDefault("depth", "24");
-	conf->setDefault("left", "10");
-	conf->setDefault("top", "10");
-	conf->setDefault("width", "800");
-	conf->setDefault("height", "550");
+	conf->setDefault("window.left", "10");
+	conf->setDefault("window.top", "10");
+
+	conf->setDefault("window.width", "800");
+	conf->setDefault("window.height", "600");
+
+	conf->setDefault("screen.depth", "32");
+	conf->setDefault("screen.width", "800");
+	conf->setDefault("screen.height", "600");
 
 	conf->setDefault("fullscreen", "0");
 
