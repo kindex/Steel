@@ -58,15 +58,16 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			cubeMap = getCubeMap(m->gets("reflect_map"));
 		
 		int tex = 0;
+		bool bumped = false;
 
-
-		if(normalMap>0)
+		if(normalMap>0 && conf->geti("drawBump"))
 		{
 			drawBump(e, normalMap, e.matrix, light[0].pos);
+			bumped = true;
 			tex++;
 		}
 
-		if(e.mapcoord && colorMap>0) // Color map
+		if(e.mapcoord && colorMap>0  && conf->geti("drawTexture")) // Color map
 		{
 			if(tex>0)
 			{
@@ -88,7 +89,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			tex++;
 		}
 
-		if(e.mapcoord && colorMap>0 && normalMap ==0) // Color map (Diffuse)
+		if(e.mapcoord && colorMap>0 && !bumped && conf->geti("drawLight") ) // Color map (Diffuse)
 		{
 			if(tex>0)
 			{
@@ -104,7 +105,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			tex++;
 		}
 
-		if(e.mapcoord && cubeMap==0) // Distance from light
+		if(e.mapcoord && cubeMap==0 && conf->geti("drawLigthDist")) // Distance from light
 		{
 			if(tex>0)
 			{
@@ -122,7 +123,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		}
 
 
-		if(e.mapcoord && illuminateMap>0)
+		if(e.mapcoord && illuminateMap>0 && conf->geti("drawIlluminate"))
 		{
 			if(tex>0)
 			{
@@ -147,7 +148,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			tex++;
 		}
 
-		if(cubeMap>0)
+		if(cubeMap>0 && conf->geti("drawReflect"))
 		{
 			if(tex>0)
 			{
@@ -161,6 +162,17 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 
 			tex++;
+		}
+
+		if(conf->geti("drawWire"))
+		{
+			glPolygonMode(GL_FRONT, GL_LINE);  		// Draw Polygons As Wireframes
+			glPolygonMode(GL_BACK, GL_LINE); 
+			glDepthFunc(GL_LEQUAL); // For blending
+	
+			drawFaces(e);
+
+			glPolygonMode(GL_FRONT, GL_FILL);    	// Reset Back-Facing Polygon Drawing Mode
 		}
 
 		glDisableClientState(GL_VERTEX_ARRAY);
@@ -444,7 +456,9 @@ void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix4 const mat
 	glClientActiveTextureARB(GL_TEXTURE1_ARB);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glClientActiveTextureARB(GL_TEXTURE0_ARB);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 
 //Return to standard modulate texenv
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);

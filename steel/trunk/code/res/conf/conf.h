@@ -14,6 +14,9 @@ protected:
 	std::map<std::string, double> var_f;
 
 public:
+	// change 1->0, 0->1
+	void toggle(std::string key) { setup(key, !geti(key)); }
+
 	void setup(std::string key, std::string value);
 	void setup(std::string key, double value);
 	void setDefault(std::string key, std::string value);
