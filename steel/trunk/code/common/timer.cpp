@@ -43,7 +43,7 @@ std::string Timer::getfps_s()
 
 
 
-steel::time Timer_SDL::timestamp()
+steel::time Timer::timestamp()
 {
 	 struct _timeb a;
 	_ftime(&a);
@@ -53,14 +53,14 @@ steel::time Timer_SDL::timestamp()
 
 void Timer::start()
 {
-	startTime	= timestamp();
+	startTime = timestamp();
 	skip	= 0.0;
 	active	= true;
 	frameCnt = 0;
 	fps		= -1.0;
 	lastIntervalTime		= 0.0;
-	curIntervalStartTime	= startTime;
+	curIntervalStartTime	= 0;
 	lastIntervalFrameCnt	= 0;
 	curIntervalFrameCnt		= 0;
-	totalFrames	= 0;
+	totalFrames				= 0;
 }

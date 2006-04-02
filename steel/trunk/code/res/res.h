@@ -91,7 +91,8 @@ public:
 			none,
 			image,
 			model,
-			config
+			config,
+			script
 	}	res_kind;
 // Структура для идентификации ресурса (тип, строка)
 	struct ResLocator

@@ -17,34 +17,27 @@
 
 #include "physic_interface.h"
 
+struct PhysicElement
+{
+	PhysicInterface* obj;
+	matrix4			matrix, parentMatrix; // abloslute
+};
+
 class PhysicEngine: public Engine
 {
 protected:
-/*	struct Element
-	{
-		Vertexes	*vertex;
-		Triangles	*triangle;
-		coord		mass;
-		v3			velocity;
-//		MATRIX4X4	matrix;
-		v3			position;
-	};
-*/
-	// data, to store collected information
-//	std::vector<Element> elements;
-	std::vector<PhysicInterface*> objects;
-	v3 g;
+	std::vector<PhysicElement> objects;
 
 public:
 	// Collect information about object: object shape + velocity
-	virtual bool inject(PhysicInterface *object);
+	virtual bool inject(PhysicInterface *object, matrix4 matrix = matrix4());
 	// Move objects
-	bool process(steel::time speed); 
+	virtual bool process(steel::time speed) = 0; 
 	// Clear collected information
-	bool clear();
+	virtual bool clear();
 
-	bool init(std::string _conf);
-	bool deinit() { return clear();}
+	virtual bool init(std::string _conf);
+	virtual bool deinit() { return clear();}
 };
 
 #endif

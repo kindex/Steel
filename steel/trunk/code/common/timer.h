@@ -22,7 +22,7 @@ public:
 	}
 
 // Абсолютное время
-	virtual steel::time timestamp() = 0; 
+	virtual steel::time timestamp(); 
 // Обнулить таймер
 	virtual void start();
 	virtual void pause()
@@ -46,12 +46,6 @@ public:
 
 };
 
-class Timer_SDL: public Timer
-{
-public:
-	steel::time timestamp();
-
-};
 
 //---------------------------------------------------------------------------
 #endif

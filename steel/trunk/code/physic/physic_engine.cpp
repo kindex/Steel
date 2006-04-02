@@ -12,16 +12,15 @@ bool PhysicEngine::init(std::string _conf)
 
 	conf = (Config*)res->get(Res::config, _conf);
 
-	g.z = -(float)conf->getf("g", 0.0);
-	g.x = 0.0f;
-	g.y = 0.0f;
-	
 	return true;
 }
 
-bool PhysicEngine::inject(PhysicInterface *object)
+bool PhysicEngine::inject(PhysicInterface *object, matrix4 matrix)
 {
-	objects.push_back(object);
+	PhysicElement el;
+	el.obj = object;
+
+	objects.push_back(el);
 /*	MATRIX4X4 cur_matrix, new_matrix;
 
 	cur_matrix = object->getMatrix();
@@ -40,27 +39,11 @@ bool PhysicEngine::inject(PhysicInterface *object)
 	return true;
 }
 
-bool PhysicEngine::process(steel::time speed)
-{
-	v3 acc = g*(float)speed;
-	for(std::vector<PhysicInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
-	{
-		v3 v = (*it)->getVelocity();
-		v += acc;
-		(*it)->setVelocity(v);
-
-/*		matrix4 m = (*it)->getMatrix();
-		p += v*speed;
-		(*it)->setPosition(p);*/
-	}
-
-	return true;
-}
 
 bool PhysicEngine::clear()
 {
-	for(std::vector<PhysicInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
-		(*it)->cleanupP();
+	for(std::vector<PhysicElement>::iterator it = objects.begin(); it != objects.end(); it++)
+		it->obj->cleanupP();
 
 	objects.clear();
 	return true;

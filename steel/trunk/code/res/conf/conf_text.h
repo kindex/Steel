@@ -6,7 +6,6 @@
 class ConfigText:public Config
 {
 	bool init(const std::string name, ResCollection &res);
-	bool unload() { return true; }
 };
 
 #endif

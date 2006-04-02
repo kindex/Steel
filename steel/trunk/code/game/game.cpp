@@ -14,6 +14,9 @@
 
 #include "game.h"
 #include "../common/logger.h"
+
+#include "../res/script/script.h"
+
 using namespace std;
 
 #define MOVE_SPEED (10.0f)
@@ -51,9 +54,10 @@ void Game::processPhysic(PhysicEngine *physic)
 			obj[1]->pos.entries[i+i*4] = 0.20f;
 */
 
-		light->position.x = (float)cos(time)*10.0f;
+/*		light->position.x = (float)cos(time)*10.0f;
 		light->position.y = (float)sin(time)*10.0f;
 		light->position.z = 5.0f;
+*/
 
 //		gobj[1]->pos.entries[14] = 20;
 
@@ -96,38 +100,117 @@ void Game::draw(GraphEngine *graph)
 }
 
 
-bool Game::init()
+bool Game::init(ResCollection *_res, string _conf)
 {
-	eye = v3(10, 5, 3);
-	angle = v3(4.0, 0.0, 0.0);
+	res = _res;	
+	conf = (Config*)res->add(Res::config, _conf);
+	if(!conf)
+	{
+		alog.msg("error game res", string("Cannot load game config ") + _conf);
+		return false;
+	}
+
+	eye = v3(conf->getf("camera.eye.x"), conf->getf("camera.eye.y"), conf->getf("camera.eye.z"));
+	angle = v3(conf->getf("camera.angle.x"), conf->getf("camera.angle.y"), conf->getf("camera.angle.z"));
 
 	direction = v3(-1.0f/eye.x, -1.0f/eye.y, -1.0f/eye.z);
 	direction.Normalize();
 
-	light = new GameLight;
-	gobj.push_back(light);
 
-	res->add(Res::model, "metal_teapot");
-	res->add(Res::model, "room");
 
-	GameObj *g;
-
-	g = new GameSolidObj((Model*)res->getModel("room"));
-
-	gobj.push_back(g);
-	pobj.push_back(g);
-
-	for(int i=0; i<10; i++)
+	if(!conf->isset("script"))
 	{
-		g = new GameObj((Model*)res->getModel("box1"));
-		g->setPosition(v3(float(rand()%7-3), float(rand()%7-3), float(rand()%6+1)));
+		alog.msg("error game res", "Cannot find script to init scene");
+		return false;
+	}
+	string script = conf->gets("script");
+	Script *s = (Script*)res->add(Res::script, script);
+	if(!s)
+	{
+		alog.msg("error game res", "Cannot load script");
+		return false;
+	}
 
-		matrix4 m = g->getPMatrix();
+	for(int i=0; i<s->count(); i++)
+	{
+		GameObj *obj;
 
-		g->setPMatrix(m);
+		string kind		= s->gets(i, 0);
+		string parent	= s->gets(i, 1);
+		string id		= s->gets(i, 2);
+		string model	= s->gets(i, 3);
 
-		gobj.push_back(g);
-		pobj.push_back(g);
+		bool gameobj = false, g = false, p = false;
+
+		if(kind == "light")
+		{
+			obj = new GameLight;
+			
+			gameobj = true;
+			g = true;
+		}
+
+		if(kind == "g" || kind == "solid" || kind == "f")
+		{
+			if(!res->add(Res::model, model)) return false;
+
+			obj = new GameObjModel((Model*)res->getModel(model));
+
+			obj->setMovable(kind != "solid");
+			obj->setRotatable(kind != "solid");
+
+			g = true;
+			if(kind == "f" || kind == "solid")
+				p = true;
+
+			gameobj = true;
+		}
+		if(kind == "tag")
+		{
+			obj = new GameObjDummy();
+			g = true;
+			p = true;
+			gameobj = true;
+		}
+
+		if(kind == "path")
+		{
+			obj = new GamePath();
+			
+			((GamePath*)obj)->setSpeed(s->getf(i, 3));
+
+			for(int j=4; j<s->count(i); j++)
+				((GamePath*)obj)->addTarget(s->gets(i, j));
+
+			g = true;
+			p = true;
+		}
+
+		if(id != "" && obj)
+		{
+			tag[id] = obj;
+			obj->setName(id);
+		}
+
+		if(gameobj)	
+			obj->setPosition(v3( s->getf(i, 4), s->getf(i, 5), s->getf(i, 6)));
+
+		if(parent == "")
+		{
+			if(g)	gobj.push_back(obj);
+			if(p)	pobj.push_back(obj);
+			alog.msg("game script", string("Added object '") + kind + ":" + id + "' to global space");
+		}
+		else
+		{
+			if(tag.find(parent) == tag.end())
+			{
+				alog.msg("error game script", string("Object with id '") + parent + "' not found");
+				return false;
+			}
+			tag[parent]->addChildren(obj);
+			alog.msg("game script", string("Added object '") + kind + ":" + id + "' to '" + parent + "'");
+		}
 	}
 
 	_alive = true;

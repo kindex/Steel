@@ -562,6 +562,26 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="script"
+					>
+					<File
+						RelativePath=".\res\script\script.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\script\script.h"
+						>
+					</File>
+					<File
+						RelativePath=".\res\script\script_text.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\script\script_text.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audio"
@@ -614,6 +634,14 @@
 					RelativePath=".\game\game.h"
 					>
 				</File>
+				<File
+					RelativePath=".\game\game_obj.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\game\game_obj.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="physic"
@@ -624,6 +652,14 @@
 				</File>
 				<File
 					RelativePath=".\physic\physic_engine.h"
+					>
+				</File>
+				<File
+					RelativePath=".\physic\physic_engine_3d.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\physic\physic_engine_3d.h"
 					>
 				</File>
 				<File

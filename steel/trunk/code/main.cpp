@@ -14,7 +14,7 @@
 
 #include "_cpp.h"
 
-#include "physic/physic_engine.h"
+#include "physic/physic_engine_3d.h"
 
 #ifdef OPENGL_SDL	
 	#include "graph/opengl/opengl_sdl_engine.h"
@@ -29,6 +29,7 @@
 #include "res/image/bmp.h"
 #include "res/model/_3ds.h"
 #include "res/conf/conf_text.h"
+#include "res/script/script_text.h"
 
 #include "common/logger.h"
 #include "common/timer.h"
@@ -41,6 +42,7 @@
 Res* createBMP()		{return new BMP; }
 Res* create3DS()		{return new _3DS; }
 Res* createConfig()		{return new ConfigText; }
+Res* createScript()		{return new ScriptText; }
 
 #ifdef COMPILER_DEVCPP
 int main1(int argc, char *argv[])
@@ -50,7 +52,7 @@ int main(int argc, char *argv[])
 {
 	alog.open("steel.log");
 
-	Timer_SDL timer;
+	Timer timer;
 	timer.start();	timer.pause();
 
 	double speed = 0.01; // 100 FPS
@@ -59,6 +61,7 @@ int main(int argc, char *argv[])
 	res.registerClass(createBMP,	Res::image);
 	res.registerClass(create3DS,	Res::model);
 	res.registerClass(createConfig,	Res::config);
+	res.registerClass(createScript,	Res::script);
 
 // *************** GRAPH *****************
 #ifdef OPENGL_SDL	
@@ -73,8 +76,8 @@ int main(int argc, char *argv[])
 	if(!graph.init("renderer")) return 1;
 	
 // ************ GAME **************
-	Game game(&res);
-	game.init();
+	Game game;
+	if(!game.init(&res, "game")) return 1;
 
 // ************ INPUT ************
 #ifdef OPENGL_SDL	
@@ -89,13 +92,13 @@ int main(int argc, char *argv[])
 
 // ******************* PHYSIC **************************
 
-	PhysicEngine physic;
+	PhysicEngine3D physic;
 	physic.bindResColelntion(&res);
 	if(!physic.init("physic")) return 1;
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
-	alog.msg("core", "Entering main loop");
+	alog.msg("core", "\n\t\tEntering main loop");
 	bool first = true;
 	while(input.isAlive() && game.isAlive())
 	{
@@ -138,13 +141,13 @@ int main(int argc, char *argv[])
 		if(first)
 		{
 			first = false;
-			alog.msg("core", "Main loop: first frame passed");
+			alog.msg("core", "\n\t\tMain loop: first frame passed");
 			timer.resume();
 		}
 
 //		SDL_Delay(1);
 	}
-	alog.msg("core", "Exit from main loop");
+	alog.msg("core", "\n\t\tExit from main loop");
 // ******************* MAIN LOOP ************************
 
 	graph.deinit();
