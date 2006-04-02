@@ -615,11 +615,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\utils.cpp"
+					RelativePath=".\common\utils.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\utils.h"
+					RelativePath=".\common\utils.h"
 					>
 				</File>
 			</Filter>

@@ -6,7 +6,7 @@
 #include <time.h>
 
 
-#include "../utils.h"
+#include "../common/utils.h"
 
 #define NORMAL_FPS		(100.0)
 #define UPDATE_FPS_TIME (0.25)

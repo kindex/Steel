@@ -35,7 +35,7 @@
 #include "common/timer.h"
 
 #include "game/game.h"
-#include "utils.h"
+#include "common/utils.h"
 
 //#include <SDL.h>
 
