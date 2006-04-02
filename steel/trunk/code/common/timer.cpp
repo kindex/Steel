@@ -1,14 +1,15 @@
-//---------------------------------------------------------------------------
 
-#ifndef __linux
-#pragma hdrstop
-#endif
 #include "timer.h"
-#include <SDL.h>
+#include "../_cpp.h"
+
+#include <sys/timeb.h>
+#include <time.h>
+
+
 #include "../utils.h"
 
 #define NORMAL_FPS		(100.0)
-#define UPDATE_FPS_TIME (1.0)
+#define UPDATE_FPS_TIME (0.25)
 
 void Timer::incframe()
 {
@@ -44,6 +45,22 @@ std::string Timer::getfps_s()
 
 steel::time Timer_SDL::timestamp()
 {
-//	return SDL_GetTicks()*0.001;
-	return 0;
+	 struct _timeb a;
+	_ftime(&a);
+
+	return a.millitm*0.001 + a.time;
+}
+
+void Timer::start()
+{
+	startTime	= timestamp();
+	skip	= 0.0;
+	active	= true;
+	frameCnt = 0;
+	fps		= -1.0;
+	lastIntervalTime		= 0.0;
+	curIntervalStartTime	= startTime;
+	lastIntervalFrameCnt	= 0;
+	curIntervalFrameCnt		= 0;
+	totalFrames	= 0;
 }

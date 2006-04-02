@@ -3,6 +3,8 @@
 #ifndef timeH
 #define timeH
 
+#include "../_cpp.h"
+
 #include "../common/types.h"
 #include <string>
 
@@ -22,21 +24,7 @@ public:
 // Абсолютное время
 	virtual steel::time timestamp() = 0; 
 // Обнулить таймер
-	virtual void start()
-	{
-//		SDL_Init(SDL_INIT_TIMER);
-
-		startTime	= timestamp();
-		skip	= 0.0;
-		active	= true;
-		frameCnt = 0;
-		fps		= -1.0;
-		lastIntervalTime		= 0.0;
-		curIntervalStartTime	= startTime;
-		lastIntervalFrameCnt	= 0;
-		curIntervalFrameCnt		= 0;
-		totalFrames	= 0;
-	}
+	virtual void start();
 	virtual void pause()
 	{
 		active		= false;

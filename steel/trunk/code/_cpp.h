@@ -18,8 +18,8 @@
 // OS
 #define STEEL_WIN32
 
-#define OPENGL_SDL
-//#define OPENGL_WIN
+//#define OPENGL_SDL
+#define OPENGL_WIN
 
 //#define Linux
 
@@ -30,6 +30,9 @@
 #ifndef COMPILER_VS8
 #define COMPILER_DEVCPP
 #endif
+
+#undef _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 0
 
 #include "common/logger.h"
 
