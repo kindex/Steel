@@ -8,16 +8,21 @@ typedef POINT Point;									// This is a window structure that holds an X and Y
 
 using namespace std;
 
-void InputWIN::captureMouse(int _cx, int _cy)
+void InputWIN::captureMouse()
 {
 	mouseCaptured = true;
 
-	cx = _cx;
-	cy = _cy;
 	lastdx = 0;
 	lastdy = 0;
 
 	SetCursorPos(cx, cy);
+	ShowCursor(false);										// Hide Mouse Pointer
+}
+
+void InputWIN::freeMouse()
+{
+	ShowCursor(true);										// Hide Mouse Pointer
+	mouseCaptured = false;
 }
 
 string decodeKey(WPARAM p)
@@ -26,6 +31,7 @@ string decodeKey(WPARAM p)
 	switch(p)
 	{
 		case VK_ESCAPE: key = "escape"; break;
+		case VK_SPACE: key = "space"; break;
 		default:
 			if(p>='A' && p<='Z')
 			{
@@ -35,6 +41,30 @@ string decodeKey(WPARAM p)
 			break;
 	}
 	return key;
+}
+
+
+LRESULT CALLBACK InputWIN::processMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (uMsg)
+	{
+	case WM_KILLFOCUS:
+		focused = false;
+		break;
+	case WM_SETFOCUS:
+		focused = true;
+		if(mouseCaptured)
+		{
+			lastdx = 0;
+			lastdy = 0;
+			SetCursorPos(cx, cy);
+		}
+		break;
+	
+	default:
+		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+	}
+	return 0;
 }
 
 void InputWIN::process()
@@ -53,35 +83,46 @@ void InputWIN::process()
 			key = decodeKey(msg.wParam);
 			if(key != "")
 				game->handleEventKeyDown(key);
+
+			if(key == "space")
+			{
+				if(mouseCaptured) 
+					freeMouse();
+				else
+					captureMouse();
+			}
+
 			break;
 
 		case WM_KEYUP:
 			key = decodeKey(msg.wParam);
 			if(key != "")
 				game->handleEventKeyUp(key);
-
+			break;
+		case WM_SETFOCUS:
+			focused = true;
 			break;
 		}
 		TranslateMessage(&msg);						// Find out what the message does
 		DispatchMessage(&msg);						// Execute the message
 	}
-
-	Point n;
-	GetCursorPos(&n);
-	SetCursorPos(cx, cy);
-	
-	lastdx += cx - n.x;
-	lastdy += cy - n.y;
-	if(lastdx != 0)
+	if(mouseCaptured && focused)
 	{
-		lastdx = lastdx +1;
+		Point n;
+		GetCursorPos(&n);
+		SetCursorPos(cx, cy);
+	
+		lastdx += cx - n.x;
+		lastdy += cy - n.y;
 	}
 }
 
-void InputWIN::getMouseDelta(int &dx, int &dy)
+#define MOUSE_SENS (0.001)
+
+void InputWIN::getMouseDelta(double &dx, double &dy)
 {
-	dx = lastdx; lastdx = 0;
-	dy = lastdy; lastdy = 0;
+	dx = lastdx*sensetivity*MOUSE_SENS; lastdx = 0;
+	dy = lastdy*sensetivity*MOUSE_SENS; lastdy = 0;
 }
 
 #endif

@@ -46,6 +46,8 @@ protected:
 
 	 tangentCache tangentSpaceCacheS, tangentSpaceCacheT;
 
+	 bool focused;
+
 public:
 	void processCamera();
 	bool init(std::string _conf);
@@ -55,6 +57,7 @@ public:
 	virtual void swapBuffers() = 0;
 	virtual bool createWindow() = 0;
 	virtual void setCaption(std::string caption) = 0;
+	virtual bool isFocused() { return focused; }
 	
 	void drawElement(DrawElement &e);
 	

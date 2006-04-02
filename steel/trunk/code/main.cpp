@@ -66,29 +66,27 @@ int main(int argc, char *argv[])
 // *************** GRAPH *****************
 #ifdef OPENGL_SDL	
 	OpenGL_SDL_Engine graph;
+	InputSDL input;
+	graph.bindResColelntion(&res);
+	if(!graph.init("renderer")) return 1;
 #endif
 #ifdef OPENGL_WIN
 	OpenGL_WIN_Engine graph;
+	InputWIN input;
+	graph.bindResColelntion(&res);
+	if(!graph.init("renderer", &input)) return 1;
 #endif
 
-	graph.bindResColelntion(&res);
 
-	if(!graph.init("renderer")) return 1;
 	
 // ************ GAME **************
 	Game game;
 	if(!game.init(&res, "game")) return 1;
 
 // ************ INPUT ************
-#ifdef OPENGL_SDL	
-	InputSDL input;
-#endif
-#ifdef OPENGL_WIN
-	InputWIN input;
-#endif
 
-	if(!input.init("", &game)) return 1;
-	input.captureMouse(graph.conf->geti("width")/2, graph.conf->geti("height")/2);
+	if(!input.init(&res, "input", &game)) return 1;
+//	input.captureMouse();
 
 // ******************* PHYSIC **************************
 
@@ -103,7 +101,7 @@ int main(int argc, char *argv[])
 	while(input.isAlive() && game.isAlive())
 	{
 		input.process();
-		int dx = 0, dy = 0;
+		double dx = 0, dy = 0;
 		input.getMouseDelta(dx, dy);
 		
 		game.handleMouse(dx, -dy);
@@ -149,6 +147,7 @@ int main(int argc, char *argv[])
 	}
 	alog.msg("core", "\n\t\tExit from main loop");
 // ******************* MAIN LOOP ************************
+	input.freeMouse();
 
 	graph.deinit();
 	alog.close();

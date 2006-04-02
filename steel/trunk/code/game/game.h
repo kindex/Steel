@@ -32,7 +32,7 @@
 class Game: public steelAbstract
 {
 private:
-	double speed, time;
+	double speed, time, moveSpeed;
 	bool _alive;
 //  Input-Output 
 	ResCollection	*res;

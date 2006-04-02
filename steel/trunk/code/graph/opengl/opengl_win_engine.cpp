@@ -12,9 +12,35 @@
  ************************************************************/
 
 #include "opengl_win_engine.h"
+#include "../../input/input_win.h"
+#include "../../utils.h"
+
+#include <vector>
+
+using namespace std;
 
 extern HINSTANCE hInstance;
-HWND handle;
+
+struct Window
+{
+	HWND handle;
+	bool focused;
+	InputWIN *input;
+	OpenGL_WIN_Engine *engine;
+};
+
+vector<Window> window;
+
+bool OpenGL_WIN_Engine::init(std::string _conf, InputWIN *_input)
+{
+	input = _input;
+	return OpenGL_Engine::init(_conf);
+}
+
+void OpenGL_WIN_Engine::repair() // repair window on resize
+{
+	glViewport( 0, 0, conf->geti("width"), conf->geti("height"));
+}
 
 void OpenGL_WIN_Engine::swapBuffers()
 {
@@ -29,30 +55,48 @@ void RedrawWindow(HWND hWnd)
 }
 
 
-LRESULT CALLBACK WinProc(HWND hWnd,UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     LONG    lRet = 0;
-    if (hWnd == handle)
-    switch (uMsg)
+	for(vector<Window>::iterator it = window.begin(); it != window.end(); it++)
+    if (hWnd == it->handle)
 	{
-     case WM_SIZE:										// If the window is resized
- 	case WM_PAINT:										// If we need to repaint the scene
+
+		switch (uMsg)
+		{
+/* 	case WM_PAINT:										// If we need to repaint the scene
         RedrawWindow(hWnd);
-		break;
+		break;*/
 
-    case WM_CLOSE:										// If the window is being closes
-        PostQuitMessage(0);								// Send a QUIT Message to the window
-        break;
+//	case WM_KILLFOCUS:
+		case WM_SIZE:
+			it->engine->resize(LOWORD(lParam),HIWORD(lParam));
+			break;
 
-    default:											// Return by default
-        lRet = DefWindowProc (hWnd, uMsg, wParam, lParam);
-        break;
+	    case WM_CLOSE:										// If the window is being closes
+		    PostQuitMessage(0);								// Send a QUIT Message to the window
+			break;
+
+		default:											// Return by default
+			lRet = it->input->processMessage(hWnd, uMsg, wParam, lParam);
+		    break;
+		}
+		return lRet;
     }
-    else // ne nashe okno
-        lRet = DefWindowProc (hWnd, uMsg, wParam, lParam);
+
+    // ne nashe okno
+    lRet = DefWindowProc (hWnd, uMsg, wParam, lParam);
 
     return lRet;										// Return by default
 }
+
+void OpenGL_WIN_Engine::resize(int w, int h)
+{
+	conf->setup("width", IntToStr(w));
+	conf->setup("height", IntToStr(h));
+	repair();
+}
+
 
 bool OpenGL_WIN_Engine::createWindow()
 {
@@ -102,7 +146,15 @@ bool OpenGL_WIN_Engine::createWindow()
 						NULL, NULL, hInstance, NULL);
 
 	if(!hWnd) return false;								// If we could get a handle, return NULL
-	::handle = hWnd;
+
+	window.resize(window.size() + 1);
+	window[window.size() - 1].handle	= hWnd;
+	window[window.size() - 1].focused	= false;
+	window[window.size() - 1].input		= input;
+	window[window.size() - 1].engine	= this;
+
+	input->setMouseCenter(conf->geti("width")/2, conf->geti("height")/2);
+
 	handle = hWnd;
 
 	ShowWindow(hWnd, SW_SHOWNORMAL);					// Show the window

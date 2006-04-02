@@ -19,31 +19,31 @@
 
 using namespace std;
 
-#define MOVE_SPEED (10.0f)
-#define LOOK_SPEED (0.01f)
+//#define MOVE_SPEED (10.0f)
+//#define LOOK_SPEED (0.01f)
 
 void Game::processKeyboard()
 {
-	if(isPressed("w")) eye += (float)MOVE_SPEED*(float)speed*direction;
-	if(isPressed("s")) eye -= (float)MOVE_SPEED*(float)speed*direction;
+	if(isPressed("w")) eye += (float)moveSpeed*(float)speed*direction;
+	if(isPressed("s")) eye -= (float)moveSpeed*(float)speed*direction;
 	if(isPressed("a"))
 	{
         v3 d(direction.y, -direction.x, 0);
         d.Normalize();
-        eye -= (float)MOVE_SPEED*(float)speed*d;
+        eye -= (float)moveSpeed*(float)speed*d;
 	}
 	if(isPressed("d"))
 	{
         v3 d(direction.y, -direction.x, 0);
         d.Normalize();
-        eye += (float)MOVE_SPEED*(float)speed*d;
+        eye += (float)moveSpeed*(float)speed*d;
 	}
 }
 
 void Game::handleMouse(double dx, double dy)
 {
-	angle.x += (float)dx*LOOK_SPEED;
-	angle.y += (float)dy*LOOK_SPEED;
+	angle.x += (float)dx;
+	angle.y += (float)dy;
 	if(angle.y >  M_PI*0.45f) angle.y =  (float)M_PI*0.45f;
 	if(angle.y < -M_PI*0.45f) angle.y = -(float)M_PI*0.45f;
 }
@@ -116,7 +116,7 @@ bool Game::init(ResCollection *_res, string _conf)
 	direction = v3(-1.0f/eye.x, -1.0f/eye.y, -1.0f/eye.z);
 	direction.Normalize();
 
-
+	moveSpeed = conf->getd("camera.speed", 1);
 
 	if(!conf->isset("script"))
 	{
