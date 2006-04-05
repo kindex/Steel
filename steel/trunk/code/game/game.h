@@ -68,6 +68,8 @@ public:
 	void handleMouse(double dx, double dy);
 	bool isAlive() {return _alive;} 
 	void setspeed(double _speed, double _time) {speed = _speed; time = _time; } 
+
+	v3	getGlobalPosition(std::string obj);
 };
 
 #endif

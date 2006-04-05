@@ -122,7 +122,7 @@ void InputWIN::process()
 	}
 }
 
-#define MOUSE_SENS (0.001)
+#define MOUSE_SENS (0.02)
 
 void InputWIN::getMouseDelta(double &dx, double &dy)
 {

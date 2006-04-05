@@ -45,6 +45,7 @@ public:
 	{
 		movable = false;
 		rotatable = false;
+		parent = false;
 	}
 	std::string getName() { return name; }
 	void setName(std::string _name) { name = _name;}
@@ -84,6 +85,7 @@ public:
 			a.push_back(*it);
 		return a;
 	}
+	GameObj *getParent() { return parent; }
 
 	v3		getPosition() {return position;}
 	bool	setPosition(v3 const &v)

@@ -46,32 +46,23 @@ void Game::processKeyboard()
 
 void Game::handleMouse(double dx, double dy)
 {
-	angle.x += (float)dx;
+	direction.RotateZ((float)dx);
+
+	if(dy<0 && direction.dotProduct(v3(0,0, 1))<0.9 || 
+		dy>0 && direction.dotProduct(v3(0,0, -1))<0.9 )
+
+		direction.RotateAxis((float)dy, v3( -direction.y, direction.x, 0));
+
+	
+
+/*	angle.x += (float)dx;
 	angle.y += (float)dy;
 	if(angle.y >  M_PI*0.45f) angle.y =  (float)M_PI*0.45f;
-	if(angle.y < -M_PI*0.45f) angle.y = -(float)M_PI*0.45f;
+	if(angle.y < -M_PI*0.45f) angle.y = -(float)M_PI*0.45f;*/
 }
 
 void Game::processPhysic(PhysicEngine *physic)
 {
-/*		for(int i=0; i<3; i++)
-			obj[1]->pos.entries[i+i*4] = 0.20f;
-*/
-
-/*		light->position.x = (float)cos(time)*10.0f;
-		light->position.y = (float)sin(time)*10.0f;
-		light->position.z = 5.0f;
-*/
-
-//		gobj[1]->pos.entries[14] = 20;
-
-		/*		for(int i=0; i<3; i++)
-			obj[1]->children[0]->pos.entries[i+i*4] = 0.20f;
-
-		obj[1]->children[0]->pos.entries[12] = (float)cos(2*time)*60.0f;
-		obj[1]->children[0]->pos.entries[13] = (float)sin(2*time)*60.0f;
-		obj[1]->children[0]->pos.entries[14] = 20;
-*/
 		for(vector<PhysicInterface*>::iterator it = pobj.begin(); it != pobj.end(); it++)
 			physic->inject((*it));
 
@@ -81,18 +72,45 @@ void Game::processPhysic(PhysicEngine *physic)
 void Game::process()
 {
 	processKeyboard();
+}
 
-    direction = 
+v3	Game::getGlobalPosition(std::string obj)
+{
+	matrix4 global;
+	GameObj *g = tag[obj];
+	while(g)
+	{
+		matrix4 local = g->getPMatrix();
+		global = local*global;
+		g = g->getParent();
+	}
+	return global*v3();
+}
+
+
+void Game::draw(GraphEngine *graph)
+{
+/*	direction = 
 		v3(
 			cos(angle.x) * cos(angle.y),
 			sin(angle.x) * cos(angle.y),
 			-sin(angle.y)
-		);
+		);*/
 
-}
+	
+	if(!input->isMouseCaptured())
+	{
+		if(tag.find("camera.eye") != tag.end())
+			eye = getGlobalPosition("camera.eye");
+		if(tag.find("camera.target") != tag.end())
+		{
+			v4 target = getGlobalPosition("camera.target");
+			direction = target - eye;
+		}
+	}
+	direction.Normalize();
+	
 
-void Game::draw(GraphEngine *graph)
-{
 	graph->camera.setup(eye, direction);
 
 	graph->processCamera();

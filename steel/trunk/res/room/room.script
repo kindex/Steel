@@ -15,14 +15,19 @@ solid			wall	0	0	10
 solid			wall	0	20	-1
 solid			wall	0	-20	-1
 
+solid		teapot1	teapot	3	3	0
+solid		teapot2	metal_teapot	-5	-5	0
+
+
 //f		1	box1	1.0	1.0	0.0
 //f		2	box1	1.0	1.0	2.0
-tag		tag2		8	0	2
+tag		tag2		8	-2	2
 tag		tag3		8	8	2
 tag		tag4		0	8	2
-tag		tag5		0	0	2
+tag		tag5		-5	3	2
+tag		tag6		-1	-1	2
 
-path		path1	1	tag2	tag3	tag4	tag5
+path		path1	5	tag2	tag3	tag4	tag5	tag6
 
 tag	path1	tag22		1	-1	-1
 tag	path1	tag23		1	1	-1
@@ -31,13 +36,17 @@ tag	path1	tag25		-1	1	1
 tag	path1	tag26		-1	-1	1
 tag	path1	tag27		1	-1	1
 
-path	path1	path3	2	tag23	tag24	tag25	tag26	tag27	tag22
+path	path1	path3	2	tag27	tag26	tag25	tag24	tag23	tag22
 
 solid	path1	1	box1	0.0	0.0	0.0
 solid	path3	2	box1	0.0	0.0	0.0
 
-light	path1	light1	-	0.0	0.0	0.0
-light	path3	light2	-	0.0	0.0	0.0
+light	path1	light1	-	0.0	0.0	4.0
+//light	path3	light2	-	0.0	0.0	0.0
+
+tag	path3	camera.eye	-	0.0	0.0	2.0
+tag	teapot1	camera.target	-	0.0	0.0	0.0
+
 
 //path		path2	30	tag12	tag13	tag14	tag15
 
@@ -46,6 +55,4 @@ light	path3	light2	-	0.0	0.0	0.0
                  
 //light	path2	light1	-	0	0	3
 
-solid		teapot1	teapot	4	4	0
-solid		teapot2	metal_teapot	-4	-4	0
 
