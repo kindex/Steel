@@ -52,13 +52,6 @@ void Game::handleMouse(double dx, double dy)
 		dy>0 && direction.dotProduct(v3(0,0, -1))<0.9 )
 
 		direction.RotateAxis((float)dy, v3( -direction.y, direction.x, 0));
-
-	
-
-/*	angle.x += (float)dx;
-	angle.y += (float)dy;
-	if(angle.y >  M_PI*0.45f) angle.y =  (float)M_PI*0.45f;
-	if(angle.y < -M_PI*0.45f) angle.y = -(float)M_PI*0.45f;*/
 }
 
 void Game::processPhysic(PhysicEngine *physic)
@@ -135,9 +128,10 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 	}
 
 	eye = v3(conf->getf("camera.eye.x"), conf->getf("camera.eye.y"), conf->getf("camera.eye.z"));
-	angle = v3(conf->getf("camera.angle.x"), conf->getf("camera.angle.y"), conf->getf("camera.angle.z"));
 
-	direction = v3(-1.0f/eye.x, -1.0f/eye.y, -1.0f/eye.z);
+	v3 target = v3(conf->getf("camera.target.x"), conf->getf("camera.target.y"), conf->getf("camera.target.z"));
+
+	direction = target-eye;
 	direction.Normalize();
 
 	moveSpeed = conf->getd("camera.speed", 1);

@@ -292,7 +292,6 @@ bool OpenGL_WIN_Engine::createWindow()
 	if(conf->geti("fullscreen")) 						// Check if we wanted full screen mode
 	{													// Set the window properties for full screen mode
 		dwStyle = WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
-//	   	ChangeToFullScreen(s,w);							// Go to full screen
 //		ShowCursor(FALSE);								// Hide the cursor
 	}
 	else if(dwStyle)									// Assign styles to the window depending on the choice
@@ -358,10 +357,12 @@ bool OpenGL_WIN_Engine::createWindow()
     RC = wglCreateContext(DC);
     wglMakeCurrent(DC, RC);
 
+	if(conf->geti("fullscreen"))
+			   	changeToFullScpeen();							// Go to full screen
+
 	alog.out("Video mode has been set!\n" \
 		"\tWindow size: %dx%dx%d\n" ,
 		conf->geti("window.width"), conf->geti("window.height"), conf->geti("screen.depth") );
-
 
 	return_pressed = false;
 

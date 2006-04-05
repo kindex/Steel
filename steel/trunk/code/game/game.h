@@ -52,7 +52,7 @@ private:
 	std::map<std::string, GameObj*>	tag;
 
 // Camera
-	v3	eye, direction, angle;
+	v3	eye, direction;
 
 
 public:
