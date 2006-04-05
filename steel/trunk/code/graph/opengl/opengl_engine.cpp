@@ -60,18 +60,49 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		int tex = 0;
 		bool bumped = false;
 
+		glDepthFunc(GL_LEQUAL); 
+
 		if(normalMap>0 && conf->geti("drawBump"))
 		{
-			drawBump(e, normalMap, e.matrix, light[0].pos);
-			bumped = true;
-			tex++;
+			for(Lights::iterator it = light.begin(); it != light.end(); it++)
+			{
+				if(tex>0) // For blending - additive
+				{
+					glBlendFunc(GL_ONE, GL_ONE);
+					glEnable(GL_BLEND);
+				}
+				drawBump(e, normalMap, e.matrix, it->pos);
+				if(tex>0)
+		            glDisable(GL_BLEND);
+
+				bumped = true;
+				tex++;
+			}
 		}
+
+		if(e.mapcoord && colorMap>0 && !bumped && conf->geti("drawLight") ) // Light map (Diffuse)
+		{
+			for(Lights::iterator it = light.begin(); it != light.end(); it++)
+			{
+				if(tex>0)
+				{
+					glBlendFunc(GL_ONE, GL_ONE);
+					glEnable(GL_BLEND);
+				}
+
+				drawDiffuse(e, e.matrix, it->pos);
+
+				if(tex>0)
+		            glDisable(GL_BLEND);
+				tex++;
+			}
+		}
+
 
 		if(e.mapcoord && colorMap>0  && conf->geti("drawTexture")) // Color map
 		{
-			if(tex>0)
+			if(tex>0) // blend - mult
 			{
-				glDepthFunc(GL_LEQUAL); // For blending
 				glBlendFunc(GL_DST_COLOR, GL_ZERO);
 				glEnable(GL_BLEND);
 			}
@@ -89,23 +120,8 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			tex++;
 		}
 
-		if(e.mapcoord && colorMap>0 && !bumped && conf->geti("drawLight") ) // Color map (Diffuse)
-		{
-			if(tex>0)
-			{
-				glDepthFunc(GL_LEQUAL); // For blending
-				glBlendFunc(GL_DST_COLOR, GL_ZERO);
-				glEnable(GL_BLEND);
-			}
 
-			drawDiffuse(e, e.matrix, light[0].pos);
-
-			if(tex>0)
-	            glDisable(GL_BLEND);
-			tex++;
-		}
-
-		if(e.mapcoord && cubeMap==0 && conf->geti("drawLigthDist")) // Distance from light
+/*		if(e.mapcoord && cubeMap==0 && conf->geti("drawLigthDist")) // Distance from light
 		{
 			if(tex>0)
 			{
@@ -121,11 +137,11 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 			tex++;
 		}
-
+*/
 
 		if(e.mapcoord && illuminateMap>0 && conf->geti("drawIlluminate"))
 		{
-			if(tex>0)
+			if(tex>0) // blend - additive
 			{
 				glDepthFunc(GL_LEQUAL); // For blending
 				glBlendFunc(GL_ONE, GL_DST_COLOR);
@@ -296,20 +312,20 @@ void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::v
     // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
     for (unsigned int i=0; i<vertex.size(); i++)
     {
-		v3 lightVector =  light - vertex[i];
+		v3 lightVector =  objectLightPosition - vertex[i];
 
-		tl[i].x = sTangent[i] * lightVector; // scalar product
-		tl[i].y = tTangent[i] * lightVector;
-		tl[i].z =   normal[i] * lightVector;
+		tl[i].x = sTangent[i].dotProduct(lightVector); // scalar product
+		tl[i].y = tTangent[i].dotProduct(lightVector);
+		tl[i].z =   normal[i].dotProduct(lightVector);
     }
 }
 
-void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix4 const matrix, const v3 camera,	v3List **tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix4 const matrix, const v3 _camera,	v3List **tangentSpaceLight)
 {
 	matrix4 inverseModelMatrix;
     inverseModelMatrix = matrix.GetInverse();
 
-	v3 objectLightPosition = inverseModelMatrix*camera;
+	v3 camera = inverseModelMatrix*_camera;
 
 	*tangentSpaceLight = new v3List(vertex.size());
 	v3List &tl = **tangentSpaceLight;
@@ -406,7 +422,6 @@ void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix4 const mat
 	v3List *sTangent, *tTangent, *tangentSpaceLight;
 
 	getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
-	
 	genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
 
 	glBindTexture(GL_TEXTURE_2D, normalMap);
@@ -761,7 +776,9 @@ void OpenGL_Engine::processCamera()
     
 //	gluPerspective( camera.fov, (float)window.width/window.height, front, back );
 
-	gluPerspective(80.0, 1.0, 0.01, 1.0e+6);
+	conf->setup("camera.aspect", conf->getd("window.width") / conf->getd("window.height"));
+
+	gluPerspective(conf->getd("camera.fov"), conf->getd("camera.aspect"), conf->getd("camera.min_dist"), conf->getd("camera.max_dist"));
 
     gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, 
 			camera.center.x, camera.center.y, camera.center.z, 

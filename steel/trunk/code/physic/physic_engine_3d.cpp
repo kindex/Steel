@@ -12,6 +12,7 @@ bool PhysicEngine3D::process(steel::time speed)
 		PhysicElement &el = *it;
 		PhysicInterface &o = *el.obj;
 		v3 pos = el.matrix * v3(); // absolute
+		v3 local_pos = o.getPMatrix() * v3(); // local (в системе координат родителя)
 
 		v3 v = o.getVelocity();
 		if(o.isMovable()) v += acc;// gravitation
@@ -20,8 +21,9 @@ bool PhysicEngine3D::process(steel::time speed)
 		v3 targetPoint;
 		string targetObj;
 		coord moveSpeed;
+		// если объект хочет двигаться к другому объекту
 		if(o.getTarget(targetPoint, targetObj, moveSpeed))
-		{
+		{ // если он указал имя объекта
 			if(!targetObj.empty())
 			{
 				if(tag.find(targetObj) == tag.end())
@@ -30,32 +32,33 @@ bool PhysicEngine3D::process(steel::time speed)
 					return false;
 				}
 				int idx = tag[targetObj];
-				matrix4 matrix = objects[idx].matrix;
+				matrix4 matrix =  objects[idx].matrix;
 				v3 one;
-				targetPoint = matrix*one;
+				targetPoint = el.parentMatrix.GetInverse()*matrix*one;
 			}
-			v3 dir = (targetPoint - pos).GetNormalized();
-			coord len = moveSpeed*speed;
+			// если не указал имя, то берём координаты (локальные)
+			v3 dir = (targetPoint - local_pos).GetNormalized(); // направление движения
+			
+//			o.setVelocity(dir*moveSpeed);
+			coord len = (float)(moveSpeed*speed); // пройденное расстояние
 
-			if(len>(targetPoint - pos).GetLength())
+			if(len>(targetPoint - local_pos).GetLength())
 			{
-				pos = targetPoint;
+				local_pos = targetPoint;
 				o.setTargetReached();
 			}
 			else
-				pos += dir * len;
+				local_pos += dir * len;
 			
-			matrix4 inv = el.parentMatrix.GetInverse();
+//			matrix4 inv = el.parentMatrix.GetInverse();
 
-			v3 local_pos =  inv* pos;
+//			v3 local_pos =  inv* pos;
 
 			matrix4 localM = o.getPMatrix();
 			localM.entries[12] = local_pos.x;
 			localM.entries[13] = local_pos.y;
 			localM.entries[14] = local_pos.z;
-
 			o.setPMatrix(localM);
-			
 		}
 
 /*		matrix4 m = (*it)->getMatrix();
@@ -66,10 +69,11 @@ bool PhysicEngine3D::process(steel::time speed)
 	return true;
 }
 
-bool PhysicEngine3D::inject(PhysicInterface *object, matrix4 matrix)
+bool PhysicEngine3D::inject(PhysicInterface *object, matrix4 matrix, PhysicInterface *parent)
 {
 	PhysicElement el;
 	el.obj = object;
+	el.parent = parent;
 
 	string name = object->getName();
 	if(!name.empty())

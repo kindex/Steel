@@ -32,6 +32,8 @@ protected:
 	HGLRC	RC; // Rendering Context - for OpenGL
 	DWORD	dwStyle;
 	InputWIN *input;
+public:
+	bool return_pressed;
 
 public:
 	bool init(std::string _conf, InputWIN *_input);

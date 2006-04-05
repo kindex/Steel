@@ -14,6 +14,7 @@
 
 #include "game.h"
 #include "../common/logger.h"
+#include "../common/utils.h"
 
 #include "../res/script/script.h"
 
@@ -24,19 +25,22 @@ using namespace std;
 
 void Game::processKeyboard()
 {
-	if(isPressed("w")) eye += (float)moveSpeed*(float)speed*direction;
-	if(isPressed("s")) eye -= (float)moveSpeed*(float)speed*direction;
-	if(isPressed("a"))
+	if(input->isMouseCaptured())
 	{
-        v3 d(direction.y, -direction.x, 0);
-        d.Normalize();
-        eye -= (float)moveSpeed*(float)speed*d;
-	}
-	if(isPressed("d"))
-	{
-        v3 d(direction.y, -direction.x, 0);
-        d.Normalize();
-        eye += (float)moveSpeed*(float)speed*d;
+		if(input->isPressed("w")) eye += (float)moveSpeed*(float)speed*direction;
+		if(input->isPressed("s")) eye -= (float)moveSpeed*(float)speed*direction;
+		if(input->isPressed("a"))
+		{
+			v3 d(direction.y, -direction.x, 0);
+			d.Normalize();
+			eye -= (float)moveSpeed*(float)speed*d;
+		}
+		if(input->isPressed("d"))
+		{
+			v3 d(direction.y, -direction.x, 0);
+			d.Normalize();
+			eye += (float)moveSpeed*(float)speed*d;
+		}
 	}
 }
 
@@ -100,9 +104,11 @@ void Game::draw(GraphEngine *graph)
 }
 
 
-bool Game::init(ResCollection *_res, string _conf)
+bool Game::init(ResCollection *_res, string _conf, Input *_input)
 {
 	res = _res;	
+	input = _input; 
+	input->setGame(this);
 	conf = (Config*)res->add(Res::config, _conf);
 	if(!conf)
 	{
@@ -130,11 +136,12 @@ bool Game::init(ResCollection *_res, string _conf)
 		alog.msg("error game res", "Cannot load script");
 		return false;
 	}
-
+	alog.msg("game script", IntToStr(s->count()) + " Lines");
 	for(int i=0; i<s->count(); i++)
 	{
 		GameObj *obj;
 
+		if(s->count(i)<4) continue;
 		string kind		= s->gets(i, 0);
 		string parent	= s->gets(i, 1);
 		string id		= s->gets(i, 2);
@@ -179,6 +186,8 @@ bool Game::init(ResCollection *_res, string _conf)
 			
 			((GamePath*)obj)->setSpeed(s->getf(i, 3));
 
+			obj->setPosition(tag[s->gets(i, 4)]->getPosition());
+
 			for(int j=4; j<s->count(i); j++)
 				((GamePath*)obj)->addTarget(s->gets(i, j));
 
@@ -221,17 +230,9 @@ bool Game::init(ResCollection *_res, string _conf)
 void Game::handleEventKeyDown(std::string key)
 {
 	if(key == "escape") _alive = false;
-	
-	keyPressed[key] = true;
 }
 
 void Game::handleEventKeyUp(std::string key)
 {
-	keyPressed[key] = false;
 }
 
-
-bool Game::isPressed(std::string key)
-{
-	return keyPressed.find(key) != keyPressed.end() && keyPressed[key];
-}

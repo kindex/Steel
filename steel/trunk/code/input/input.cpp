@@ -5,12 +5,11 @@ bool Input::isPressed(std::string key)
 	return keyPressed.find(key) != keyPressed.end() && keyPressed[key];
 }
 
-bool Input::init(ResCollection *_res, std::string _conf, Game *_game) 
+bool Input::init(ResCollection *_res, std::string _conf) 
 { 
 	res = _res;
 	alive = true; 
 	mouseCaptured = false; 
-	game = _game;
 
 	conf = (Config*)res->add(Res::config, _conf);
 	if(!conf)

@@ -21,7 +21,7 @@ void InputWIN::captureMouse()
 
 void InputWIN::freeMouse()
 {
-	ShowCursor(true);										// Hide Mouse Pointer
+	ShowCursor(true);			// show Mouse Pointer
 	mouseCaptured = false;
 }
 
@@ -30,6 +30,7 @@ string decodeKey(WPARAM p)
 	string key;
 	switch(p)
 	{
+		case VK_RETURN: key = "return"; break;
 		case VK_ESCAPE: key = "escape"; break;
 		case VK_SPACE: key = "space"; break;
 		default:
@@ -91,6 +92,8 @@ void InputWIN::process()
 				else
 					captureMouse();
 			}
+			
+			keyPressed[key] = true;
 
 			break;
 
@@ -98,7 +101,9 @@ void InputWIN::process()
 			key = decodeKey(msg.wParam);
 			if(key != "")
 				game->handleEventKeyUp(key);
+			keyPressed[key] = false;
 			break;
+
 		case WM_SETFOCUS:
 			focused = true;
 			break;

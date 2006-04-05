@@ -8,26 +8,44 @@
 // path		id	speed	{tags}
 
 //Type	Parent	Id	Model	X	Y	Z
-light		light	-	0	0	5
-solid		room	room	0	0	0
+solid			wall	20	0	-1
+solid			wall	-20	0	-1
+solid			wall	0	0	-21
+solid			wall	0	0	10
+solid			wall	0	20	-1
+solid			wall	0	-20	-1
+
 //f		1	box1	1.0	1.0	0.0
 //f		2	box1	1.0	1.0	2.0
-tag		tag2		7	0	1
-tag		tag3		7	7	1
-tag		tag4		0	7	1
-tag		tag5		0	0	3
+tag		tag2		8	0	2
+tag		tag3		8	8	2
+tag		tag4		0	8	2
+tag		tag5		0	0	2
 
-path		path1	2	tag2	tag3	tag4	tag5
+path		path1	1	tag2	tag3	tag4	tag5
 
-solid	path1	1	box1	0.0	0.0	1.0
+tag	path1	tag22		1	-1	-1
+tag	path1	tag23		1	1	-1
+tag	path1	tag24		-1	1	-1
+tag	path1	tag25		-1	1	1
+tag	path1	tag26		-1	-1	1
+tag	path1	tag27		1	-1	1
 
-tag	1	tag12		1.5	-1.5	0
-tag	1	tag13		1.5	1.5	0
-tag	1	tag14		-1.5	1.5	0
-tag	1	tag15		-1.5	-1.5	0
+path	path1	path3	2	tag23	tag24	tag25	tag26	tag27	tag22
 
-path		path2	10	tag12	tag13	tag14	tag15
+solid	path1	1	box1	0.0	0.0	0.0
+solid	path3	2	box1	0.0	0.0	0.0
 
-solid	path2	2	box1	0.0	0.0	0.0
+light	path1	light1	-	0.0	0.0	0.0
+light	path3	light2	-	0.0	0.0	0.0
 
+//path		path2	30	tag12	tag13	tag14	tag15
+
+//solid	path2	2	box1	0.0	0.0	0.0
+
+                 
+//light	path2	light1	-	0	0	3
+
+solid		teapot1	teapot	4	4	0
+solid		teapot2	metal_teapot	-4	-4	0
 

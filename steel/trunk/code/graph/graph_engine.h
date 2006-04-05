@@ -29,6 +29,7 @@ class Camera
 {
 public:
     v3 eye, center, up;
+
 public:
     void seteye(const v3 &EYE) { eye = EYE; }
     void setcenter(const v3 &CENTER) { center = CENTER; }

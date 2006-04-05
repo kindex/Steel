@@ -19,7 +19,7 @@
 
 struct PhysicElement
 {
-	PhysicInterface* obj;
+	PhysicInterface* obj, *parent;
 	matrix4			matrix, parentMatrix; // abloslute
 };
 
@@ -30,7 +30,7 @@ protected:
 
 public:
 	// Collect information about object: object shape + velocity
-	virtual bool inject(PhysicInterface *object, matrix4 matrix = matrix4());
+	virtual bool inject(PhysicInterface *object, matrix4 matrix = matrix4(), PhysicInterface *parent = NULL);
 	// Move objects
 	virtual bool process(steel::time speed) = 0; 
 	// Clear collected information

@@ -39,7 +39,9 @@ bool OpenGL_WIN_Engine::init(std::string _conf, InputWIN *_input)
 
 void OpenGL_WIN_Engine::repair() // repair window on resize
 {
+
 	glViewport( 0, 0, conf->geti("window.width"), conf->geti("window.height"));
+
 }
 
 void OpenGL_WIN_Engine::swapBuffers()
@@ -78,13 +80,21 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case WM_KEYDOWN:
-			if(wParam == VK_RETURN)
+			if(wParam == VK_RETURN && !it->engine->return_pressed)
 			{
 				it->engine->fullScpeenToggle();
+				it->engine->return_pressed = true;
 			}
 
 			lRet = it->input->processMessage(hWnd, uMsg, wParam, lParam);
 			break;
+		case WM_KEYUP:
+			if(wParam == VK_RETURN)
+				it->engine->return_pressed = false;
+
+			lRet = it->input->processMessage(hWnd, uMsg, wParam, lParam);
+			break;
+
 		default:											// Return by default
 			lRet = it->input->processMessage(hWnd, uMsg, wParam, lParam);
 		    break;
@@ -353,6 +363,7 @@ bool OpenGL_WIN_Engine::createWindow()
 		conf->geti("window.width"), conf->geti("window.height"), conf->geti("screen.depth") );
 
 
+	return_pressed = false;
 
 	return true;
 }

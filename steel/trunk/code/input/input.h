@@ -7,6 +7,7 @@
 
 #include "../res/conf/conf.h"
 
+class Input;  // forward declaration, cross-use
 #include "../game/game.h"
 
 #include <string>
@@ -23,7 +24,8 @@ protected:
 	Config	*conf;
 	ResCollection		*res;
 public:
-	bool init(ResCollection *_res, std::string _conf, Game *_game);
+	bool init(ResCollection *_res, std::string _conf);
+	void setGame(Game *_game) { game = _game; }
 
 	bool isPressed(std::string key);
 	bool isAlive() { return alive; }
@@ -32,6 +34,7 @@ public:
 	virtual void process() = 0;
 	virtual void getMouseDelta(double &dx, double &dy) = 0;
 	virtual void setMouseCenter(int _cx, int _cy) = 0;
+	bool isMouseCaptured() { return mouseCaptured; }
 };
 
 #endif

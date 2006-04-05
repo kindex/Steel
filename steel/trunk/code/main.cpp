@@ -79,14 +79,11 @@ int main(int argc, char *argv[])
 
 
 	
+// ************ INPUT ************
+	if(!input.init(&res, "input")) return 1;
 // ************ GAME **************
 	Game game;
-	if(!game.init(&res, "game")) return 1;
-
-// ************ INPUT ************
-
-	if(!input.init(&res, "input", &game)) return 1;
-//	input.captureMouse();
+	if(!game.init(&res, "game", &input)) return 1;
 
 // ******************* PHYSIC **************************
 

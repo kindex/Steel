@@ -23,6 +23,10 @@
 #include "../physic/physic_engine.h"
 #include "../graph/graph_engine.h"
 
+class Game; // forward declaration, cross-use
+
+#include "../input/input.h"
+
 #include <string>
 #include <map>
 
@@ -36,8 +40,8 @@ private:
 	bool _alive;
 //  Input-Output 
 	ResCollection	*res;
-	std::map<std::string, bool> keyPressed;
-
+	Input		*input;
+	Config		*conf;
 
 	void processKeyboard();
 
@@ -50,17 +54,14 @@ private:
 // Camera
 	v3	eye, direction, angle;
 
-	Config *conf;
 
 public:
 	Game() { } 
-	bool init(ResCollection *_res, std::string _conf);
+	bool init(ResCollection *_res, std::string _conf, Input *_input);
 	void process();
 	void processPhysic(PhysicEngine *physic);
 	void draw(GraphEngine *graph);
 
-	bool isPressed(std::string key);
-	
 	void handleEventKeyDown(std::string key);
 	void handleEventKeyUp(std::string key);
 

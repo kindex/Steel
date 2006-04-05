@@ -15,10 +15,11 @@ bool PhysicEngine::init(std::string _conf)
 	return true;
 }
 
-bool PhysicEngine::inject(PhysicInterface *object, matrix4 matrix)
+bool PhysicEngine::inject(PhysicInterface *object, matrix4 matrix, PhysicInterface *parent)
 {
 	PhysicElement el;
 	el.obj = object;
+	el.parent = parent;
 
 	objects.push_back(el);
 /*	MATRIX4X4 cur_matrix, new_matrix;
