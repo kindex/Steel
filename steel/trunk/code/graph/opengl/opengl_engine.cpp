@@ -98,7 +98,6 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			}
 		}
 
-
 		if(e.mapcoord && colorMap>0  && conf->geti("drawTexture")) // Color map
 		{
 			if(tex>0) // blend - mult
@@ -169,7 +168,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			if(tex>0)
 			{
 				glDepthFunc(GL_LEQUAL); // For blending
-				glBlendFunc(GL_SRC_COLOR, GL_ONE);
+				glBlendFunc(GL_SRC_COLOR, GL_DST_COLOR);
 				glEnable(GL_BLEND);
 			}
 			drawReflect(e, cubeMap, e.matrix, camera.eye);
@@ -397,15 +396,13 @@ void OpenGL_Engine::drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const l
 	
 	genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
 
-
 	//Bind normalisation cube map to texture unit 1
-	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, lightCubeMap);
-    glEnable(GL_TEXTURE_3D);
 	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+    glEnable(GL_TEXTURE_3D);
+	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, lightCubeMap);
 
 	glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
 
     drawFaces(e);
 
@@ -490,10 +487,9 @@ void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix4 const ma
 	
 	genTangentSpaceSphere(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
 
-
 	glEnable(GL_TEXTURE_3D);
 	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-	glBindTexture(GL_TEXTURE_3D, cubeMap);
+	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, cubeMap);
 	glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 

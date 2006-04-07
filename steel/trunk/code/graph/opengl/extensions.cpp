@@ -338,7 +338,7 @@ GLuint GenerateNormalisationCubeMap()
 
 unsigned char lightInt(v3 a)
 {
-	float r = a.dotProduct(v3(1.0, 0.0, 0.0));
+	float r = a.dotProduct(v3(0.0, 0.0, 1.0));
 	if(r<0) r = 0;
 	return (unsigned char)(r*255);
 }
@@ -408,7 +408,7 @@ GLuint  GenerateLightCubeMap()
 			tempVector.SetZ(-(i+offset-halfSize));
 
 			tempVector.Normalize();
-			tempVector.PackTo01();
+//			tempVector.PackTo01();
 
 			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
 			bytePtr+=3;
@@ -429,7 +429,7 @@ GLuint  GenerateLightCubeMap()
 			tempVector.SetZ((i+offset-halfSize));
 
 			tempVector.Normalize();
-			tempVector.PackTo01();
+	//		tempVector.PackTo01();
 
 			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
 
@@ -451,7 +451,7 @@ GLuint  GenerateLightCubeMap()
 			tempVector.SetZ((j+offset-halfSize));
 
 			tempVector.Normalize();
-			tempVector.PackTo01();
+	//		tempVector.PackTo01();
 
 			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
 
@@ -473,7 +473,7 @@ GLuint  GenerateLightCubeMap()
 			tempVector.SetZ(-(j+offset-halfSize));
 
 			tempVector.Normalize();
-			tempVector.PackTo01();
+		//	tempVector.PackTo01();
 
 			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
 
@@ -495,7 +495,7 @@ GLuint  GenerateLightCubeMap()
 			tempVector.SetZ(halfSize);
 
 			tempVector.Normalize();
-			tempVector.PackTo01();
+	//		tempVector.PackTo01();
 
 			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
 
@@ -517,7 +517,7 @@ GLuint  GenerateLightCubeMap()
 			tempVector.SetZ(-halfSize);
 
 			tempVector.Normalize();
-			tempVector.PackTo01();
+//			tempVector.PackTo01();
 
 			bytePtr[0] = bytePtr[1] = bytePtr[2] = lightInt(tempVector);
 
