@@ -56,10 +56,11 @@ void Game::handleMouse(double dx, double dy)
 
 void Game::processPhysic(PhysicEngine *physic)
 {
-		for(vector<PhysicInterface*>::iterator it = pobj.begin(); it != pobj.end(); it++)
-			physic->inject((*it));
+/*		for(vector<PhysicInterface*>::iterator it = pobj.begin(); it != pobj.end(); it++)
+			physic->inject((*it));*/
+	physic->inject(world);
 
-		physic->process(speed);
+	physic->process(speed);
 }
 
 void Game::process()
@@ -67,7 +68,7 @@ void Game::process()
 	processKeyboard();
 }
 
-v3	Game::getGlobalPosition(std::string obj)
+/*v3	Game::getGlobalPosition(std::string obj)
 {
 	matrix4 global;
 	GameObj *g = tag[obj];
@@ -79,7 +80,7 @@ v3	Game::getGlobalPosition(std::string obj)
 	}
 	return global*v3();
 }
-
+*/
 
 void Game::draw(GraphEngine *graph)
 {
@@ -91,7 +92,7 @@ void Game::draw(GraphEngine *graph)
 		);*/
 
 	
-	if(!input->isMouseCaptured())
+/*	if(!input->isMouseCaptured())
 	{
 		if(tag.find("camera.eye") != tag.end())
 			eye = getGlobalPosition("camera.eye");
@@ -101,6 +102,7 @@ void Game::draw(GraphEngine *graph)
 			direction = target - eye;
 		}
 	}
+*/
 	direction.Normalize();
 	
 
@@ -108,8 +110,9 @@ void Game::draw(GraphEngine *graph)
 
 	graph->processCamera();
 
-	for(vector<GraphInterface*>::iterator it = gobj.begin(); it != gobj.end(); it++)
-		graph->inject((*it));
+/*	for(vector<GraphInterface*>::iterator it = gobj.begin(); it != gobj.end(); it++)
+		graph->inject((*it));*/
+	graph->inject(world);
 
 	graph->process();
 }
@@ -141,98 +144,9 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 		alog.msg("error game res", "Cannot find script to init scene");
 		return false;
 	}
-	string script = conf->gets("script");
-	Script *s = (Script*)res->add(Res::script, script);
-	if(!s)
-	{
-		alog.msg("error game res", "Cannot load script");
-		return false;
-	}
-	alog.msg("game script", IntToStr(s->count()) + " Lines");
-	for(int i=0; i<s->count(); i++)
-	{
-		GameObj *obj;
 
-		if(s->count(i)<4) continue;
-		string kind		= s->gets(i, 0);
-		string parent	= s->gets(i, 1);
-		string id		= s->gets(i, 2);
-		string model	= s->gets(i, 3);
-
-		bool gameobj = false, g = false, p = false;
-
-		if(kind == "light")
-		{
-			obj = new GameLight;
-			
-			gameobj = true;
-			g = true;
-		}
-
-		if(kind == "g" || kind == "solid" || kind == "f")
-		{
-			if(!res->add(Res::model, model)) return false;
-
-			obj = new GameObjModel((Model*)res->getModel(model));
-
-			obj->setMovable(kind != "solid");
-			obj->setRotatable(kind != "solid");
-
-			g = true;
-			if(kind == "f" || kind == "solid")
-				p = true;
-
-			gameobj = true;
-		}
-		if(kind == "tag")
-		{
-			obj = new GameObjDummy();
-			g = true;
-			p = true;
-			gameobj = true;
-		}
-
-		if(kind == "path")
-		{
-			obj = new GamePath();
-			
-			((GamePath*)obj)->setSpeed(s->getf(i, 3));
-
-			obj->setPosition(tag[s->gets(i, 4)]->getPosition());
-
-			for(int j=4; j<s->count(i); j++)
-				((GamePath*)obj)->addTarget(s->gets(i, j));
-
-			g = true;
-			p = true;
-		}
-
-		if(id != "" && obj)
-		{
-			tag[id] = obj;
-			obj->setName(id);
-		}
-
-		if(gameobj)	
-			obj->setPosition(v3( s->getf(i, 4), s->getf(i, 5), s->getf(i, 6)));
-
-		if(parent == "")
-		{
-			if(g)	gobj.push_back(obj);
-			if(p)	pobj.push_back(obj);
-			alog.msg("game script", string("Added object '") + kind + ":" + id + "' to global space");
-		}
-		else
-		{
-			if(tag.find(parent) == tag.end())
-			{
-				alog.msg("error game script", string("Object with id '") + parent + "' not found");
-				return false;
-			}
-			tag[parent]->addChildren(obj);
-			alog.msg("game script", string("Added object '") + kind + ":" + id + "' to '" + parent + "'");
-		}
-	}
+	world = new GameGroup;
+	if(!world->load(conf->gets("script"), res)) return false;
 
 	_alive = true;
 	return true;

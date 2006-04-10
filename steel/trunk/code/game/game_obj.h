@@ -20,6 +20,7 @@
 #include "../graph/graph_interface.h"
 
 #include "../res/model/model.h"
+#include "../res/script/script.h"
 
 /*
 Игровой объект, который может:
@@ -29,16 +30,19 @@
 имень детей
 быть прикреплённым к родителю
 */
-class GameObj: public GraphInterface, public PhysicInterface
+class GameObj: public GraphInterface, public PhysicInterface // Abstract
 {
 public:
 	GameObj *parent;
 	std::vector<GameObj*> children;
-	v3 position, velocity;
+	v3 velocity;
 	coord mass;
 	matrix4 matrix;
 	bool movable, rotatable;
 	std::string name;
+
+protected:
+	std::map<std::string, GameObj*>	tag;
 
 public:
 	GameObj() 
@@ -66,11 +70,10 @@ public:
 	{ 
 		parent = obj; 
 	}
-	void addChildren(GameObj *obj)
-	{
-		children.push_back(obj);
-		obj->attach(this);
-	}
+	
+	void addChildren(GameObj *obj);
+	GameObj *getChildren(std::string name);
+
 	GraphInterfaceList getChildrens()
 	{
 		GraphInterfaceList a;
@@ -87,10 +90,9 @@ public:
 	}
 	GameObj *getParent() { return parent; }
 
-	v3		getPosition() {return position;}
+	v3		getPosition() {return v3(matrix.entries[12], matrix.entries[13], matrix.entries[14]);}
 	bool	setPosition(v3 const &v)
 	{ 
-		position = v; 
 		matrix.entries[12] = v.x;
 		matrix.entries[13] = v.y;
 		matrix.entries[14] = v.z;
@@ -106,10 +108,13 @@ public:
 	bool	isMovable() { return movable; }
 	bool	isRotatable(){ return rotatable; }
 
-	bool	getTarget(v3 &targetPoint, std::string &targetObj, coord &speed) {return false;}
+	bool	getTarget(v3 &targetPoint, coord &speed) {return false;}
 	void	setTargetReached() {}
 };
-
+/*
+Рисуемый объект, GraphMesh и PhysicMesh берутся из модели
+Может иметь детей.
+*/
 class GameObjModel: public GameObj
 {
 protected:
@@ -177,6 +182,9 @@ public:
 	}
 };
 
+/*
+Dummy. Обхект, который имеет положение и детей, но не имеет собственной формы.
+*/
 
 class GameObjDummy: public GameObj
 {
@@ -195,7 +203,17 @@ public:
 	FaceMaterials* getFaceMaterials()	{	return NULL;	}
 };
 
+/*
+Метка (tag). Служит точкой отсчёта для других объектов (своих детей)
+*/
+class GameTag: public GameObjDummy
+{
 
+};
+
+/*
+Path. Метка, которя движется по траектории от объекта к объекту.
+*/
 class GamePath: public GameObjDummy
 {
 	int currentTarget;
@@ -204,17 +222,7 @@ class GamePath: public GameObjDummy
 public:
 	GamePath() { currentTarget = 0; speed = 1.0; }
 	void addTarget(std::string _target) { target.push_back(_target); }
-	bool getTarget(v3 &targetPoint, std::string &targetObj, coord &_speed) 
-	{
-		if(!target.empty())
-		{
-			targetObj = target[currentTarget];
-			_speed = speed;
-			return true;
-		}
-		else
-			return false;
-	}
+	bool getTarget(v3 &targetPoint, coord &_speed);
 	void setTargetReached()
 	{
 		if(!target.empty())
@@ -223,6 +231,9 @@ public:
 	void setSpeed(coord	_speed) { speed = _speed; }
 };
 
+/*
+Источник освещения.
+*/
 class GameLight: public GameObjDummy
 {
 
@@ -236,6 +247,32 @@ public:
 	}
 };
 
+/*
+Контейнер для других объектов.
+Разделяет всё пространство на домены коллизий и
+отсекает невидимые объекты.
+*/
+
+class GameDomain: public GameObjDummy
+{
+
+};
+
+/*
+Контейнер для других объектов.
+К нему прикрепляются другие объекты и движутся как единое целое.
+Если на какого-нибудь из детей дествует сила, большая чем
+сила связи, то объект отделяется от группы и передаётся предку группы.
+
+Все имена (идентификаторы внутри группы уникальны, и не конфлинтуют с
+другими группами.
+*/
+
+class GameGroup: public GameObjDummy
+{
+public:
+	bool load(std::string script, ResCollection *res);
+};
 
 
 

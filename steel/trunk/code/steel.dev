@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=75
+UnitCount=77
 Type=0
 Ver=1
 ObjFiles=
@@ -798,9 +798,19 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit76]
-FileName=res\script\script_text.h
+FileName=game\game_obj.cpp
 CompileCpp=1
-Folder=res/script
+Folder=game
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit77]
+FileName=game\game_obj.h
+CompileCpp=1
+Folder=game
 Compile=1
 Link=1
 Priority=1000

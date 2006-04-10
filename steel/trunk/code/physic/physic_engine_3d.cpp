@@ -22,9 +22,9 @@ bool PhysicEngine3D::process(steel::time speed)
 		string targetObj;
 		coord moveSpeed;
 		// если объект хочет двигаться к другому объекту
-		if(o.getTarget(targetPoint, targetObj, moveSpeed))
+		if(o.getTarget(targetPoint, moveSpeed))
 		{ // если он указал имя объекта
-			if(!targetObj.empty())
+/*			if(!targetObj.empty())
 			{
 				if(tag.find(targetObj) == tag.end())
 				{
@@ -35,7 +35,7 @@ bool PhysicEngine3D::process(steel::time speed)
 				matrix4 matrix =  objects[idx].matrix;
 				v3 one;
 				targetPoint = el.parentMatrix.GetInverse()*matrix*one;
-			}
+			}*/
 			// если не указал имя, то берём координаты (локальные)
 			v3 dir = (targetPoint - local_pos).GetNormalized(); // направление движения
 			
@@ -75,7 +75,7 @@ bool PhysicEngine3D::inject(PhysicInterface *object, matrix4 matrix, PhysicInter
 	el.obj = object;
 	el.parent = parent;
 
-	string name = object->getName();
+/*	string name = object->getName();
 	if(!name.empty())
 	{
 		if(tag.find(name) != tag.end())
@@ -84,7 +84,7 @@ bool PhysicEngine3D::inject(PhysicInterface *object, matrix4 matrix, PhysicInter
 			return false;
 		}
 		tag[name] = objects.size();
-	}
+	}*/
 
 	matrix4 cur_matrix, new_matrix;
 
@@ -124,7 +124,7 @@ bool PhysicEngine3D::init(std::string _conf)
 bool PhysicEngine3D::clear()
 {
 	if(!PhysicEngine::clear()) return false;
-	tag.clear();
+//	tag.clear();
 	return true;
 }
 

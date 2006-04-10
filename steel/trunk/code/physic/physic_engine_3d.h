@@ -22,7 +22,7 @@ class PhysicEngine3D: public PhysicEngine
 {
 protected:
 	v3 g;
-	std::map<std::string, int> tag;
+//	std::map<std::string, int> tag;
 public:
 	bool process(steel::time speed);
 	bool init(std::string _conf);

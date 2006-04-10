@@ -35,7 +35,7 @@ class Game; // forward declaration, cross-use
 */
 class Game: public steelAbstract
 {
-private:
+protected:
 	double speed, time, moveSpeed;
 	bool _alive;
 //  Input-Output 
@@ -46,10 +46,9 @@ private:
 	void processKeyboard();
 
 // World
-	std::vector<GraphInterface*> gobj;
-	std::vector<PhysicInterface*> pobj;
-	
-	std::map<std::string, GameObj*>	tag;
+	GameGroup	*world;
+/*	std::vector<GraphInterface*> gobj;
+	std::vector<PhysicInterface*> pobj;*/
 
 // Camera
 	v3	eye, direction;

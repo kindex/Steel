@@ -16,10 +16,10 @@ solid			wall	0	20	-1
 solid			wall	0	-20	-1
 
 solid		teapot1	teapot	3	3	0
-solid		torus1	t	-5	5	3
-solid		torus2	torus	-5	-5	0
-solid		star1	t2	-2	0	7
-solid		star2	t3	+2	0	7
+//solid		torus1	t	-5	5	3
+//solid		torus2	torus	-5	-5	0
+//solid		star1	t2	-2	0	7
+//solid		star2	t3	+2	0	7
 
 //solid		teapot1	spaceman	3	3	0
 
@@ -34,19 +34,12 @@ tag		tag6		-1	-1	2
 
 path		path1	5	tag2	tag3	tag4	tag5	tag6
 
-tag	path1	tag22		1	-1	-1
-tag	path1	tag23		1	1	-1
-tag	path1	tag24		-1	1	-1
-tag	path1	tag25		-1	1	1
-tag	path1	tag26		-1	-1	1
-tag	path1	tag27		1	-1	1
 
-path	path1	path3	2	tag27	tag26	tag25	tag24	tag23	tag22
+include	path1	group1	room/cubes	0	0	0
 
-solid	path1	1	box1	0.0	0.0	0.0
-solid	path3	2	box1	0.0	0.0	0.0
+include		group2	room/cubes	-1	-1	1
 
-light	path1	light1	-	0.0	0.0	1.2
+
 //light	path3	light2	-	0.0	0.0	0.0
 
 //tag	path3	camera.eye	-	0.0	0.0	2.0
