@@ -27,6 +27,7 @@
 
 #include "res/res.h"
 #include "res/image/bmp.h"
+#include "res/image/tga.h"
 #include "res/model/_3ds.h"
 #include "res/conf/conf_text.h"
 #include "res/script/script_text.h"
@@ -53,8 +54,9 @@ int main(int argc, char *argv[])
 	double speed = 0.01; // 100 FPS
 // *************** RES *****************
 	ResCollection res;
-	res.registerClass(createBMP,	Res::image);
-	res.registerClass(create3DS,	Res::model);
+	res.registerClass(createBMP,		Res::image);
+	res.registerClass(createTGA,		Res::image);
+	res.registerClass(create3DS,		Res::model);
 	res.registerClass(createConfigText,	Res::config);
 	res.registerClass(createScriptText,	Res::script);
 

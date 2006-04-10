@@ -150,15 +150,12 @@ bool BMP::init(const std::string name)
 int r;
 
 //    image.init(ih.biWidth, ih.biHeight, 24);
-	width = ih.biWidth;
-	height = ih.biHeight;
-	bpp = 24;
 	switch (ih.biBitCount)
 	{
 	case 24:
   //   fseek(file,fh.bfOffbits, SEEK_SET );
 		bitmapSize = ih.biSizeImage;
-		bitmap = new unsigned char [ih.biSizeImage];
+		if(!Image::init(ih.biWidth, ih.biHeight, ih.biBitCount)) return false;
 
 /*     for (unsigned int i=0; i<ih.biHeight; i++)
      {

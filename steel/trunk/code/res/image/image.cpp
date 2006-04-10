@@ -16,10 +16,11 @@
 
 bool Image::init(int WIDTH, int HEIGHT, int BPP)
 {
+	if(BPP != 24 && BPP != 32) return false; // Only RGB or RGBA
     width = WIDTH;
     height = HEIGHT;
     bpp = BPP;
-    bitmap = (unsigned char*)malloc(bpp/8*width*height);
+    bitmap = new unsigned char[bpp/8*width*height];
 	bitmapSize = bpp/8*width*height;
     return bitmap != NULL;
 }

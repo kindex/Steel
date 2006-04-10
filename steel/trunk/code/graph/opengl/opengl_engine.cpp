@@ -58,52 +58,62 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			cubeMap = getCubeMap(m->gets("reflect_map"));
 		
 		int tex = 0;
-		bool bumped = false;
 
 		glDepthFunc(GL_LEQUAL); 
 
-		if(normalMap>0 && conf->geti("drawBump"))
+		glDisable(GL_BLEND);
+
+		if(m->gets("color_mode") != "alpha")
+		for(Lights::iterator it = light.begin(); it != light.end(); it++)
 		{
-			for(Lights::iterator it = light.begin(); it != light.end(); it++)
-			{
+				bool blend = false;
+				if(m->gets("color_mode") == "alpha") // TODO - alpha + lights
+				{
+					glBlendFunc(GL_ONE, GL_ONE);
+//					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glEnable(GL_BLEND);
+					blend = true;
+				}
+				else
+				if(tex>0) // blend - mult
+				{
+					glBlendFunc(GL_ONE, GL_ONE);
+					glEnable(GL_BLEND);
+					blend = true;
+				}
 				if(tex>0) // For blending - additive
 				{
-					glBlendFunc(GL_ONE, GL_ONE);
-					glEnable(GL_BLEND);
-				}
-				drawBump(e, normalMap, e.matrix, it->pos);
-				if(tex>0)
-		            glDisable(GL_BLEND);
-
-				bumped = true;
-				tex++;
-			}
-		}
-
-		if(e.mapcoord && colorMap>0 && !bumped && conf->geti("drawLight") ) // Light map (Diffuse)
-		{
-			for(Lights::iterator it = light.begin(); it != light.end(); it++)
-			{
-				if(tex>0)
-				{
-					glBlendFunc(GL_ONE, GL_ONE);
 					glEnable(GL_BLEND);
 				}
 
-				drawDiffuse(e, e.matrix, it->pos);
-
-				if(tex>0)
+				if(normalMap>0 && conf->geti("drawBump"))
+					drawBump(e, normalMap, e.matrix, it->pos);
+				else if(e.mapcoord && colorMap>0 && conf->geti("drawLight") ) // Light map (Diffuse)
+					drawDiffuse(e, e.matrix, it->pos);
+	
+				if(blend)
 		            glDisable(GL_BLEND);
+
 				tex++;
-			}
 		}
 
 		if(e.mapcoord && colorMap>0  && conf->geti("drawTexture")) // Color map
 		{
+			bool blend = false;
+			if(m->gets("color_mode") == "alpha")
+			{
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//				glBlendFunc(GL_ONE, GL_ONE);
+				glEnable(GL_BLEND);
+				blend = true;
+			}
+			else
 			if(tex>0) // blend - mult
 			{
 				glBlendFunc(GL_DST_COLOR, GL_ZERO);
 				glEnable(GL_BLEND);
+				blend = true;
 			}
 
 		    glEnable(GL_TEXTURE_2D);
@@ -114,7 +124,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		    glDisable(GL_TEXTURE_2D);
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-			if(tex>0)
+			if(blend)
 	            glDisable(GL_BLEND);
 			tex++;
 		}
@@ -575,7 +585,7 @@ GLuint OpenGL_Engine::getTexture(std::string imageName)
 		alog.out("Cannot find image %s", imageName.c_str());
 		return 0;
 	}
-
+	
 	GLuint id;
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
@@ -587,8 +597,15 @@ GLuint OpenGL_Engine::getTexture(std::string imageName)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	int kind;
+	if(a->getBpp() == 24) kind = GL_RGB;
+	else
+	if(a->getBpp() == 32) 
+		kind = GL_RGBA;
+	else return 0;
+
 	glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, a->getWidth(), a->getHeight(),0,
-		GL_RGB,  GL_UNSIGNED_BYTE , a->getBitmap());
+		kind,  GL_UNSIGNED_BYTE , a->getBitmap());
 
 	registredTextures[imageName] = id;
 	alog.out("Bind texture %s", imageName.c_str());

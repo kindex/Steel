@@ -37,7 +37,7 @@ path		path1	5	tag2	tag3	tag4	tag5	tag6
 
 include	path1	group1	room/cubes	0	0	0
 
-include		group2	room/cubes	-1	-1	1
+//include		group2	room/cubes	-1	-1	1
 
 
 //light	path3	light2	-	0.0	0.0	0.0

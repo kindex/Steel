@@ -509,6 +509,14 @@
 						RelativePath=".\res\image\image.h"
 						>
 					</File>
+					<File
+						RelativePath=".\res\image\tga.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\image\tga.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="model"

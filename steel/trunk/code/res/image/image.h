@@ -48,6 +48,7 @@ public:
 
 	int getWidth()	{ return width; }
 	int getHeight()	{ return height; }
+	int getBpp()	{ return bpp; }
 	unsigned char* getBitmap() { return bitmap; }
 
 	void convertFromHeightMapToNormalMap();
