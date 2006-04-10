@@ -34,9 +34,12 @@ tag		tag6		-1	-1	2
 
 path		path1	5	tag2	tag3	tag4	tag5	tag6
 
+//sprite	id	materialX	Y	Z	size
+sprite	path1	sprite1	target	0.1	-1	0	1
+sprite	path1	sprite2	target	1	-2.3	1.5	0.5
+sprite	path1	sprite3	target	-1	-2.3	1.5	0.5
 
 include	path1	group1	room/cubes	0	0	0
-
 //include		group2	room/cubes	-1	-1	1
 
 

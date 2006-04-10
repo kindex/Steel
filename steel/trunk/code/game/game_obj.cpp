@@ -18,7 +18,7 @@ bool GameGroup::load(string script, ResCollection *res)
 	alog.msg("game script", IntToStr(s->count()) + " Lines");
 	for(int i=0; i<s->count(); i++)
 	{
-		GameObj *obj;
+		GameObj *obj = NULL;
 
 		if(s->count(i)<4) continue;
 		string kind		= s->gets(i, 0);
@@ -85,15 +85,25 @@ bool GameGroup::load(string script, ResCollection *res)
 			gameobj = true;
 		}
 
+		if(kind == "sprite")
+		{
+			res->add(Res::config, "material/" + model);
+			obj = new GameSprite(s->getf(i, 7), model);
+			g = true;
+			gameobj = true;
+		}
+
+
 		if(id != "" && obj)
 		{
 			tag[id] = obj;
 			obj->setName(id);
 		}
 
-		if(gameobj)	
+		if(gameobj && obj)
 			obj->setPosition(v3( s->getf(i, 4), s->getf(i, 5), s->getf(i, 6)));
 
+		if(obj)
 		if(parent == "")
 		{
 			if(g || p)	addChildren(obj);
@@ -153,5 +163,18 @@ GameObj *GameObj::getChildren(std::string name)
 		return NULL;
 	}
 	return tag[name];
-
 }
+
+GameSprite::GameSprite(coord width, std::string material)
+{
+	sprites.resize(1);
+	sprites[0].pos		= v3(0, 0, 0);
+	sprites[0].width	= width;
+	sprites[0].material	= material;
+}
+
+Sprites*	GameSprite::getSprites()
+{
+	return &sprites;
+}
+

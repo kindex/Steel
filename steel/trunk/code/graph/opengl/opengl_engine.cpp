@@ -82,20 +82,21 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 					glEnable(GL_BLEND);
 					blend = true;
 				}
-				if(tex>0) // For blending - additive
-				{
-					glEnable(GL_BLEND);
-				}
 
 				if(normalMap>0 && conf->geti("drawBump"))
+				{
 					drawBump(e, normalMap, e.matrix, it->pos);
+					tex++;
+				}
 				else if(e.mapcoord && colorMap>0 && conf->geti("drawLight") ) // Light map (Diffuse)
+				{
 					drawDiffuse(e, e.matrix, it->pos);
+					tex++;
+				}
 	
 				if(blend)
 		            glDisable(GL_BLEND);
 
-				tex++;
 		}
 
 		if(e.mapcoord && colorMap>0  && conf->geti("drawTexture")) // Color map
@@ -148,12 +149,13 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		}
 */
 
+		glDisable(GL_BLEND);
 		if(e.mapcoord && illuminateMap>0 && conf->geti("drawIlluminate"))
 		{
 			if(tex>0) // blend - additive
 			{
 				glDepthFunc(GL_LEQUAL); // For blending
-				glBlendFunc(GL_ONE, GL_DST_COLOR);
+				glBlendFunc(GL_ONE, GL_ONE);
 				glEnable(GL_BLEND);
 			}
 
@@ -184,7 +186,6 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			drawReflect(e, cubeMap, e.matrix, camera.eye);
 			if(tex>0)
 				glDisable(GL_BLEND);
-
 
 			tex++;
 		}

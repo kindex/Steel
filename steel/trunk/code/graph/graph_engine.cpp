@@ -48,7 +48,6 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 	Lights		*l = object->getLights();
 	Normals		*n = object->getNormals();
 
-
 	if(l != NULL)
 	{
 		for(Lights::iterator it = l->begin(); it != l->end(); it++)
@@ -86,6 +85,57 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 		element[c].frame = frame;
 
 		total.triangle += s;
+	}
+
+	Sprites		*s = object->getSprites();
+	if(s != NULL)
+	for(Sprites::iterator it = s->begin(); it != s->end(); it++)
+	{
+		int c = element.size();
+		element.resize(c+1);
+
+		element[c].material = it->material;
+
+		element[c].triangle = new Triangles(2);
+		for(int i=0; i<3; i++)
+		{
+			element[c].triangle->operator[](0).a[i] = 3-i;
+			element[c].triangle->operator[](1).a[i] = 3-(i+2)%4;
+		}
+
+		v3 dir = camera.eye - new_matrix*v3();
+//		dir = v3(1,0,0);
+
+		dir.Normalize();
+		v3 per1(-dir.y, dir.x, 0); // перендикул€р к dir
+		per1.Normalize();
+		v3 per2 = dir.vectorProduct(per1);
+		per1 *= it->width;
+		per2 *= it->width;
+
+		element[c].vertex = new Vertexes(4);
+		element[c].vertex->operator [](0)  = per1 - per2;
+		element[c].vertex->operator [](1)  = -per1 - per2;
+		element[c].vertex->operator [](2)  = -per1 + per2;
+		element[c].vertex->operator [](3)  = per1 + per2;
+
+		coord size = it->width;
+
+		element[c].mapcoord = new MapCoords(4);
+		element[c].mapcoord->operator [](0) = v2(0, 0);
+		element[c].mapcoord->operator [](1) = v2(1, 0);
+		element[c].mapcoord->operator [](2) = v2(1, 1);
+		element[c].mapcoord->operator [](3) = v2(0, 1);
+
+		element[c].matrix = new_matrix;
+		element[c].normal = new Normals(4);
+		for(int i=0; i<4; i++)
+			element[c].normal->operator [](i) = dir;
+
+
+//		element[c].frame = frame;
+
+		total.triangle += 2;
 	}
 
 //		v3 pos = o.getPos();

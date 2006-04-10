@@ -28,10 +28,22 @@ struct Light
 	float intensivity, range;
 };
 
+/*
+Sprite, Billboard. Полигон, который всегда параллелен плоскости экрана.
+*/
+struct Sprite
+{
+	v3 pos;
+	coord width; // шигина задаётся, а высота рассчитывается автоматически с учётом сохранения коофициента
+	// сжатия оригинальной картинки
+	std::string material;
+};
+
 
 typedef std::vector<v3>			Normals;
 typedef std::vector<v2>			MapCoords;
 typedef std::vector<Light>		Lights;
+typedef std::vector<Sprite>		Sprites;
 typedef std::map<std::string, std::vector<int> >  FaceMaterials;
 
 struct color_24
@@ -98,6 +110,7 @@ Video textures (avi, camera)
 	virtual MapCoords*	getMapCoords() = 0; 
 	virtual FaceMaterials* getFaceMaterials() = 0;
 	virtual Lights* getLights() = 0;
+	virtual Sprites* getSprites() = 0;
 
 /*матрица трансформации объекта относительно его родителя. 
 Включает в себя повотор, сдвиг и масштаб.

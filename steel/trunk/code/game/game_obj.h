@@ -180,6 +180,7 @@ public:
 	{
 		return NULL;
 	}
+	Sprites* getSprites() { return NULL; }
 };
 
 /*
@@ -190,16 +191,17 @@ class GameObjDummy: public GameObj
 {
 public:
 	aabb		getPFrame()		{	return getFrame(); }
-	aabb		getFrame()		{	return aabb();}
-	bool		cleanup()		{	return true;		}
+	aabb		getFrame()		{	return aabb();	}
+	bool		cleanup()		{	return true;	}
 	bool		cleanupP()		{	return cleanup();	}
-	Vertexes*	getVertexes()	{	return NULL;}
+	Vertexes*	getVertexes()	{	return NULL;	}
 	Vertexes*	getPVertexes()	{	return getVertexes(); }
 	Triangles*	getTriangles()	{	return NULL;	}
 	Triangles*	getPTriangles() {	return getTriangles(); }
 	MapCoords*	getMapCoords()	{	return NULL;	}
 	Normals*	getNormals()	{	return NULL;	}
 	Lights*		getLights()		{	return NULL;	}
+	Sprites*	getSprites()	{	return NULL;	}
 	FaceMaterials* getFaceMaterials()	{	return NULL;	}
 };
 
@@ -274,6 +276,18 @@ public:
 	bool load(std::string script, ResCollection *res);
 };
 
+/*
+1 Sprite
+*/
+class GameSprite: public GameObjDummy
+{
+protected:
+	Sprites sprites;
+public:
+	GameSprite(coord width, std::string material);
+	Sprites*	getSprites();
+
+};
 
 
 #endif
