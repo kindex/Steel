@@ -14,6 +14,16 @@
 #include "../../common/logger.h"
 #include <string> 
 
+Res* createBMP(const std::string filename, ResCollection *res) 
+{
+	BMP *o = new BMP;
+	if(o->init(filename)) 
+		return o;
+	else
+		return NULL;
+}
+
+
 typedef unsigned char byte; // 1 byte
 typedef unsigned short word; // 2 bytes
 typedef unsigned long dword; // 4 bytes
@@ -96,7 +106,7 @@ typedef struct { // 14 bytes
     } bmpBITMAPINFO;
 
 
-bool BMP::init(const std::string name, ResCollection &res)
+bool BMP::init(const std::string name)
 {  
 	// TODO: load through CLASS (WADfile, disk,...)
 	bmpBITMAPFILEHEADER fh; // file header

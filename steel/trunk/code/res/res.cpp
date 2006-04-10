@@ -21,9 +21,9 @@ void ResCollection::registerClass(funcCreateResClass *_func, const Res::res_kind
 	classes[kind].push_back(ClassCopy(_func));
 }
 
-Res* ResCollection::createClass(ClassCopy *aclass)
+Res* ResCollection::createClass(ClassCopy *aclass, string name)
 {
-	return aclass->func();
+	return aclass->func(name, this);
 }
 
 string getext(string name)
@@ -62,9 +62,8 @@ Res* ResCollection::addForce(const Res::res_kind kind, const std::string& name)
 {
 	for(ResClassArray::iterator it = classes[kind].begin(); it != classes[kind].end(); it++)
 	{
-		Res *loader = createClass(&(*it));
-
-		if(!loader->init(name, *this)) continue;
+		Res *obj = createClass(&(*it), name);
+		if(obj == NULL) continue;
 		
 		index[name] = freeindex;
 	    data.resize(freeindex+1);
@@ -74,7 +73,7 @@ Res* ResCollection::addForce(const Res::res_kind kind, const std::string& name)
 		index[name] = freeindex; 
 		names[freeindex] = name; 
 
-		data[freeindex] = loader;
+		data[freeindex] = obj;
 		resType[freeindex] = kind;
 	
 		alog.out("Res: loaded %s", name.c_str());

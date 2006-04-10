@@ -6,7 +6,10 @@
 
 class ScriptText: public Script
 {
+public:
 	bool init(const std::string name, ResCollection &res);
 };
+
+Res* createScriptText(const std::string filename, ResCollection *res);
 
 #endif

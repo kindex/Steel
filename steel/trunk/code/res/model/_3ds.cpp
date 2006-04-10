@@ -20,6 +20,16 @@ http://kindex.times.lv
 
 using namespace std;
 
+Res* create3DS(const std::string filename, ResCollection *res)		
+{
+	_3DS *o = new _3DS;
+	if(o->init(filename, *res)) 
+		return o;
+	else
+		return NULL;
+}
+
+
 color_f string2color(string s)
 {
     int first  = s.find(":");
@@ -375,4 +385,3 @@ bool _3DS::init(const std::string name, ResCollection &res)
 
 		return true;
 }
-

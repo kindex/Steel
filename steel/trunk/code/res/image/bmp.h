@@ -18,7 +18,10 @@
 class BMP: public Image
 {
 public:
-	bool init(const std::string name, ResCollection &res);
+	bool init(const std::string name);
 };
+
+Res* createBMP(const std::string filename, ResCollection *res);
+
 
 #endif

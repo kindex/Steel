@@ -24,7 +24,7 @@
 		Res::res_kind определяет типы ресурсов.
 		Пример использования:
 
-Res* createBMP() {return new BMP; }
+Res* createBMP(string filename) {return new BMP(filename); }
 
 	ResCollection res;
 	res.registerClass(createBMP,	Res::image);
@@ -107,12 +107,12 @@ public:
 		std::vector<ResLocator>
 		ResLocatorArray;
 
-	virtual bool init(const std::string name, ResCollection &res) = 0;
+//	virtual bool init(const std::string name, ResCollection &res) = 0;
 	virtual bool unload() = 0;
 };
 
 // тип: функция для геренирования копии класса, унаследованного от Res
-typedef Res*(funcCreateResClass)();
+typedef Res*(funcCreateResClass)(const std::string filename, ResCollection *res); 
 // копия класса. Нужна для ассоциирования класса с типом ресурса.
 struct ClassCopy
 {
@@ -208,7 +208,7 @@ public:
 // _func - функция для создания класса для загрузки (унаследоманного от Res)
 	void registerClass(funcCreateResClass *_func, const Res::res_kind kind);
 // Вернуть копию класса
-	Res* createClass(ClassCopy *aclass);
+	Res* createClass(ClassCopy *aclass, std::string name);
 };
 
 #endif

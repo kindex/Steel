@@ -2,6 +2,16 @@
 
 using namespace std;
 
+Res* createScriptText(const std::string filename, ResCollection *res)
+{
+	ScriptText *o = new ScriptText;
+	if(o->init(filename, *res)) 
+		return o;
+	else
+		return NULL;
+}
+
+
 bool ScriptText::init(const string name, ResCollection &res)
 {
 	std::string file = "../res/" + name + ".script";

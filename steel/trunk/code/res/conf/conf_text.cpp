@@ -5,6 +5,16 @@
 
 using namespace std;
 
+Res* createConfigText(const std::string filename, ResCollection *res)
+{
+	ConfigText *o = new ConfigText;
+	if(o->init(filename, *res)) 
+		return o;
+	else
+		return NULL;
+}
+
+
 bool ConfigText::init(const std::string name, ResCollection &res)
 {
 	std::string file = "../res/" + name + ".conf";

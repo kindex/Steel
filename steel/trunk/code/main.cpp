@@ -39,11 +39,6 @@
 
 //#include <SDL.h>
 
-Res* createBMP()		{return new BMP; }
-Res* create3DS()		{return new _3DS; }
-Res* createConfig()		{return new ConfigText; }
-Res* createScript()		{return new ScriptText; }
-
 #ifdef COMPILER_DEVCPP
 int main1(int argc, char *argv[])
 #else
@@ -60,8 +55,8 @@ int main(int argc, char *argv[])
 	ResCollection res;
 	res.registerClass(createBMP,	Res::image);
 	res.registerClass(create3DS,	Res::model);
-	res.registerClass(createConfig,	Res::config);
-	res.registerClass(createScript,	Res::script);
+	res.registerClass(createConfigText,	Res::config);
+	res.registerClass(createScriptText,	Res::script);
 
 // *************** GRAPH *****************
 #ifdef OPENGL_SDL	
@@ -150,3 +145,4 @@ int main(int argc, char *argv[])
 	alog.close();
 	return 0;
 }
+

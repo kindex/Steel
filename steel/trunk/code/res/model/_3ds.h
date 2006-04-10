@@ -23,8 +23,11 @@ struct chainProcessor
 
 class _3DS: public Model
 {
+public:
 	bool init(const std::string name, ResCollection &res);
 };
+
+Res* create3DS(const std::string filename, ResCollection *res);
 
 
 //---------------------------------------------------------------------------

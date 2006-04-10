@@ -35,5 +35,4 @@ public:
 		return true; 
 	}
 };
-
 #endif
