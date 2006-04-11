@@ -52,7 +52,8 @@ class GraphEngine: public Engine
 protected:
 	struct DrawElement
 	{
-		std::string material;
+		std::string materialName;
+		Config*		material;
 
 		Vertexes	*vertex;
 		Triangles	*triangle;
@@ -60,7 +61,10 @@ protected:
 		Normals		*normal;
 		matrix4		matrix;
 		aabb		frame;
-//		std::vector<v3> sTangent, tTangent, tangentSpaceLight;
+		bool		alpha; // true if blending
+		coord		distance; // расстояние до камеры
+
+		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 	};
 
 	// data, to store collected information

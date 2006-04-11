@@ -15,58 +15,58 @@
 #include "vector4d.h"
 
 
-void v4::RotateX(double angle)
+void v4::rotateX(double angle)
 {
-	(*this)=GetRotatedX(angle);
+	(*this) = getRotatedX(angle);
 }
 
-v4 v4::GetRotatedX(double angle) const
+v4 v4::getRotatedX(double angle) const
 {
 	v3 v3d(x, y, z);
 
-	v3d.RotateX(angle);
+	v3d.rotateX(angle);
 
 	return v4(v3d.x, v3d.y, v3d.z, w);
 }
 
-void v4::RotateY(double angle)
+void v4::rotateY(double angle)
 {
-	(*this)=GetRotatedY(angle);
+	(*this) = getRotatedY(angle);
 }
 
-v4 v4::GetRotatedY(double angle) const
+v4 v4::getRotatedY(double angle) const
 {
 	v3 v3d(x, y, z);
 
-	v3d.RotateY(angle);
+	v3d.rotateY(angle);
 
 	return v4(v3d.x, v3d.y, v3d.z, w);
 }
 
-void v4::RotateZ(double angle)
+void v4::rotateZ(double angle)
 {
-	(*this)=GetRotatedZ(angle);
+	(*this) = getRotatedZ(angle);
 }
 
-v4 v4::GetRotatedZ(double angle) const
+v4 v4::getRotatedZ(double angle) const
 {
 	v3 v3d(x, y, z);
 
-	v3d.RotateZ(angle);
+	v3d.rotateZ(angle);
 
 	return v4(v3d.x, v3d.y, v3d.z, w);
 }
 
-void v4::RotateAxis(double angle, const v3 & axis)
+void v4::rotateAxis(double angle, const v3 & axis)
 {
-	(*this)=GetRotatedAxis(angle, axis);
+	(*this) = getRotatedAxis(angle, axis);
 }
 
-v4 v4::GetRotatedAxis(double angle, const v3 & axis) const
+v4 v4::getRotatedAxis(double angle, const v3 & axis) const
 {
 	v3 v3d(x, y, z);
 
-	v3d.RotateAxis(angle, axis);
+	v3d.rotateAxis(angle, axis);
 
 	return v4(v3d.x, v3d.y, v3d.z, w);
 }

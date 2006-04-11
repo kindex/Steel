@@ -23,23 +23,26 @@
 #include "../../res/image/image.h"
 #include "extensions.h"
 
+#include <algorithm>
+
 using namespace std;
 
 
 void OpenGL_Engine::drawElement(DrawElement &e)
 {
-	glLoadMatrixf(e.matrix.entries);
+	glLoadMatrixf(e.matrix.a);
 	if(e.triangle && e.vertex)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &e.vertex->front());
 
-		Config *m = (Config*)res->get(Res::config, "material/" + e.material);
+		Config *m = e.material;
 		if(m == NULL)
 		{
-			alog.out("Cannot find material '%s'", e.material.c_str());
+			alog.out("Cannot find material '%s'", e.materialName.c_str());
 			return;
 		}
+		bool alpha = conf->geti("drawAlpha") == 2 && m->gets("color_mode") == "alpha";
 
 		GLuint colorMap = 0;
 		if(m->isset("color_map"))
@@ -63,11 +66,11 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 		glDisable(GL_BLEND);
 
-		if(m->gets("color_mode") != "alpha")
+		if(!alpha)
 		for(Lights::iterator it = light.begin(); it != light.end(); it++)
 		{
 				bool blend = false;
-				if(m->gets("color_mode") == "alpha") // TODO - alpha + lights
+				if(alpha) // TODO - alpha + lights
 				{
 					glBlendFunc(GL_ONE, GL_ONE);
 //					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -102,7 +105,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		if(e.mapcoord && colorMap>0  && conf->geti("drawTexture")) // Color map
 		{
 			bool blend = false;
-			if(m->gets("color_mode") == "alpha")
+			if(alpha)
 			{
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //				glBlendFunc(GL_ONE, GL_ONE);
@@ -214,7 +217,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 {
-    A.Normalize();
+    A.normalize();
 //    Vector2 S(1.0, 0.0); // Os teksturnih koordinat OX
     float sina = A.pseudoscalarProduct(S); // Vect mull
     float cosa = A.dotProduct(S); // skalarnoe
@@ -224,12 +227,12 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 //    return B.rotate(N, sina, cosa);
 
     matrix4 M;
-    M.SetRotationAxis(sina, cosa, v3(N.x, N.y, N.z)); // povernut' na ang v ploskoti perpedukularnoj N
+    M.setRotationAxis(sina, cosa, v3(N.x, N.y, N.z)); // povernut' na ang v ploskoti perpedukularnoj N
 
     v4 V(B.x, B.y, B.z, 1.0), R;
     R = M*V;
     v3 Res(R.x, R.y, R.z);
-    Res.Normalize();
+    Res.normalize();
     return Res;
 
 }
@@ -259,8 +262,8 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *map
 	
     for (unsigned int i=0; i<size; i++)
     {
-        s[i].LoadZero();
-        t[i].LoadZero();
+        s[i].loadZero();
+        t[i].loadZero();
     }
 
     for (unsigned int i=0; i<triangle->size(); i++)
@@ -302,8 +305,8 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *map
     }
     for (unsigned int i=0; i<size; i++)
     {
-        s[i].Normalize();
-        t[i].Normalize();
+        s[i].normalize();
+        t[i].normalize();
     }
 	*sTangent = S;	tangentSpaceCacheS[(int)vertex] = S;
 	*tTangent = S;	tangentSpaceCacheT[(int)vertex] = T;
@@ -312,7 +315,7 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *map
 void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix4 const matrix, const v3 light,	v3List **tangentSpaceLight)
 {
 	matrix4 inverseModelMatrix;
-    inverseModelMatrix = matrix.GetInverse();
+    inverseModelMatrix = matrix.getInverse();
 
 	v3 objectLightPosition = inverseModelMatrix*light;
 
@@ -333,7 +336,7 @@ void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::v
 void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix4 const matrix, const v3 _camera,	v3List **tangentSpaceLight)
 {
 	matrix4 inverseModelMatrix;
-    inverseModelMatrix = matrix.GetInverse();
+    inverseModelMatrix = matrix.getInverse();
 
 	v3 camera = inverseModelMatrix*_camera;
 
@@ -345,10 +348,10 @@ void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::
     {
 		v3 c = camera - vertex[i];
 
-        c.Normalize();
+        c.normalize();
 
         v3 d = (matrix*(vertex[i]+normal[i]))- matrix*vertex[i];
-        d.Normalize(); // realnaja normal'
+        d.normalize(); // realnaja normal'
 
         float pscale = c.dotProduct(d); // cos ugla mezhdu c i nermal
 
@@ -361,7 +364,7 @@ void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::
 //		tangentSpaceLight[i] = x-c;
 //		tangentSpaceLight[i] = ModelMatrix*vertex[i];
 
-        tl[i].Normalize();
+        tl[i].normalize();
     }
 }
 
@@ -376,7 +379,7 @@ void OpenGL_Engine::drawDistColor(DrawElement &e, matrix4 const matrix, v3 const
 	int i = 0;
 	for(Vertexes::iterator it = e.vertex->begin(); it != e.vertex->end(); it++)
 	{
-		float d = (light-(*it)).GetLength();
+		float d = (light-(*it)).getLength();
 		float c = 1 - d/distance;
 		if(c<0) c = 0;
 		if(c>1) c = 1;
@@ -522,7 +525,7 @@ void OpenGL_Engine::drawFaces(DrawElement &e)
 void OpenGL_Engine::drawNormals(DrawElement &e)
 {
 	aabb &f = e.frame;
-	float diag = (f.max-f.min).GetLength()*0.05f;
+	float diag = (f.max-f.min).getLength()*0.05f;
 
 		glBegin(GL_LINES);
 		for(unsigned int i=0; i < e.vertex->size(); i++)
@@ -712,8 +715,29 @@ bool OpenGL_Engine::process()
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+	std::vector<DrawElement> elementAlpha;
+
+// В начале выводим только непрозрачные объекты
 	for(vector<DrawElement>::iterator it = element.begin(); it != element.end(); it++)
-		drawElement((*it));
+		if(!it->alpha)
+			drawElement((*it));
+		else
+		{
+			it->distance = (camera.eye - it->matrix*v3()).getLength();
+			elementAlpha.push_back(*it);
+		}
+
+// Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
+
+	if(conf->geti("drawAlpha")>0)
+	{
+		sort(elementAlpha.begin(), elementAlpha.end());
+
+		for(vector<DrawElement>::iterator it = elementAlpha.begin(); it != elementAlpha.end(); it++)
+			drawElement((*it));
+	}
+
+	elementAlpha.clear();
 
 	glFlush();
 	swapBuffers();

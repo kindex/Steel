@@ -53,7 +53,7 @@ void Model::generateNormals()
 
     for (unsigned int i=0; i<vertex.size(); i++)
     {
-        normal[i].LoadZero();
+        normal[i].loadZero();
     }
     // Pods4et normalej poligonov
     for (unsigned int i=0; i<triangle.size(); i++)
@@ -66,13 +66,13 @@ void Model::generateNormals()
         v3 q = vertex[c] - vertex[a];
         facenormal[i] = vectmul(p,q);
         if (facenormal[i] == v3(0,0,0)) facenormal[i] = v3(0,1,0); // TEMP TODO - Up
-        facenormal[i].Normalize();
+        facenormal[i].normalize();
         normal[a] += facenormal[i];
         normal[b] += facenormal[i];
         normal[c] += facenormal[i];
     }
     for (unsigned int i=0; i<vertex.size(); i++)
-        normal[i].Normalize();
+        normal[i].normalize();
 
 // TODO - speed up
 
@@ -122,7 +122,7 @@ void Model::generateNormals()
 //    normal.resize(vertex.size());
 
     for (unsigned int i=0; i<vertex.size(); i++)
-        normal[i].LoadZero();
+        normal[i].loadZero();
 
     for (unsigned int i=0; i<triangle.size(); i++)
     {
@@ -134,7 +134,7 @@ void Model::generateNormals()
         normal[c] += facenormal[i];
     }
     for (unsigned int i=0; i<vertex.size(); i++)
-        normal[i].Normalize();
+        normal[i].normalize();
 }
 
 void Model::updateAABB()

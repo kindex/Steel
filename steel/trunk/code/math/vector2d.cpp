@@ -15,25 +15,23 @@
 #include "Maths.h"
 #include "vector2d.h"
 
-void v2::Normalize()
+void v2::normalize()
 {
 	coord length;
-	coord scalefactor;
-	length=GetLength();
+	length = getLength();
 
-	if(length==1 || length==0)			//return if length is 1 or 0
+	if(length == 0)			//return if length is 1 or 0
 		return;
 
-	scalefactor = 1.0f/length;
-	x *= scalefactor;
-	y *= scalefactor;
+	x /= length;
+	y /= length;
 }
 
-v2 v2::GetNormalized() const
+v2 v2::getNormalized() const
 {
 	v2 result(*this);
 
-	result.Normalize();
+	result.normalize();
 
 	return result;
 }

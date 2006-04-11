@@ -39,44 +39,44 @@ public:
 
 	~v4() {}	//empty
 
-	void Set(float newX, float newY, float newZ, float newW)
+	void set(float newX, float newY, float newZ, float newW)
 	{	x=newX;	y=newY;	z=newZ; w=newW;	}
 	
 	//accessors kept for compatability
-	void SetX(float newX) {x = newX;}
-	void SetY(float newY) {y = newY;}
-	void SetZ(float newZ) {z = newZ;}
-	void SetW(float newW) {w = newW;}
+	void setX(float newX) {x = newX;}
+	void setY(float newY) {y = newY;}
+	void setZ(float newZ) {z = newZ;}
+	void setW(float newW) {w = newW;}
 	
-	float GetX() const {return x;}	//public accessor functions
-	float GetY() const {return y;}	//inline, const
-	float GetZ() const {return z;}
-	float GetW() const {return w;}
+	float getX() const {return x;}	//public accessor functions
+	float getY() const {return y;}	//inline, const
+	float getZ() const {return z;}
+	float getW() const {return w;}
 
-	void LoadZero(void)
+	void loadZero(void)
 	{	x=0.0f; y=0.0f; z=0.0f; w=0.0f;	}
 
-	void LoadOne(void)
+	void loadOne(void)
 	{	x=1.0f; y=1.0f; z=1.0f; w=1.0f;	}
 
 	//vector algebra
-	float DotProduct(const v4 & rhs)
+	float dotProduct(const v4 & rhs)
 	{	return x*rhs.x + y*rhs.y + z*rhs.z + w*rhs.w;	}
 
 	//rotations
-	void RotateX(double angle);
-	v4 GetRotatedX(double angle) const;
-	void RotateY(double angle);
-	v4 GetRotatedY(double angle) const;
-	void RotateZ(double angle);
-	v4 GetRotatedZ(double angle) const;
-	void RotateAxis(double angle, const v3 & axis);
-	v4 GetRotatedAxis(double angle, const v3 & axis) const;
+	void rotateX(double angle);
+	v4 getRotatedX(double angle) const;
+	void rotateY(double angle);
+	v4 getRotatedY(double angle) const;
+	void rotateZ(double angle);
+	v4 getRotatedZ(double angle) const;
+	void rotateAxis(double angle, const v3 & axis);
+	v4 getRotatedAxis(double angle, const v3 & axis) const;
 	
 	v4 lerp(const v4 & v2, float factor) const
 	{	return (*this)*(1.0f-factor)+v2*factor;	}
 
-	v4 QuadraticInterpolate(const v4 & v2, const v4 & v3, float factor) const
+	v4 quadraticInterpolate(const v4 & v2, const v4 & v3, float factor) const
 	{	return (*this)*(1.0f-factor)*(1.0f-factor) + 2*v2*factor*(1.0f-factor) + v3*factor*factor;}
 
 	//binary operators

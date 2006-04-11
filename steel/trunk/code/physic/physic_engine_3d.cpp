@@ -37,12 +37,12 @@ bool PhysicEngine3D::process(steel::time speed)
 				targetPoint = el.parentMatrix.GetInverse()*matrix*one;
 			}*/
 			// если не указал имя, то берём координаты (локальные)
-			v3 dir = (targetPoint - local_pos).GetNormalized(); // направление движения
+			v3 dir = (targetPoint - local_pos).getNormalized(); // направление движения
 			
 //			o.setVelocity(dir*moveSpeed);
 			coord len = (float)(moveSpeed*speed); // пройденное расстояние
 
-			if(len>(targetPoint - local_pos).GetLength())
+			if(len>(targetPoint - local_pos).getLength())
 			{
 				local_pos = targetPoint;
 				o.setTargetReached();
@@ -55,9 +55,9 @@ bool PhysicEngine3D::process(steel::time speed)
 //			v3 local_pos =  inv* pos;
 
 			matrix4 localM = o.getPMatrix();
-			localM.entries[12] = local_pos.x;
-			localM.entries[13] = local_pos.y;
-			localM.entries[14] = local_pos.z;
+			localM.a[12] = local_pos.x;
+			localM.a[13] = local_pos.y;
+			localM.a[14] = local_pos.z;
 			o.setPMatrix(localM);
 		}
 

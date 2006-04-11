@@ -90,12 +90,12 @@ public:
 	}
 	GameObj *getParent() { return parent; }
 
-	v3		getPosition() {return v3(matrix.entries[12], matrix.entries[13], matrix.entries[14]);}
+	v3		getPosition() {return v3(matrix.a[12], matrix.a[13], matrix.a[14]);}
 	bool	setPosition(v3 const &v)
 	{ 
-		matrix.entries[12] = v.x;
-		matrix.entries[13] = v.y;
-		matrix.entries[14] = v.z;
+		matrix.a[12] = v.x;
+		matrix.a[13] = v.y;
+		matrix.a[14] = v.z;
 		return true;
 	}
 

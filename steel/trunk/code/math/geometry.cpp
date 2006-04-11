@@ -79,7 +79,7 @@ bool intersect(v2   &a, v2   &b,v2   &c, v2   &d, v2 &point)  // to4ka perese4en
         coord s = (a-c).pseudoscalarProduct(b)/db;
         if (s<-EPSILON || s>1+EPSILON) return false;
         coord t = (c-a+d*s).dotProduct(b)/*/b.GetSquaredLength()*/;
-        if (t<-EPSILON || t>b.GetSquaredLength()+EPSILON) return false;
+        if (t<-EPSILON || t>b.getSquaredLength()+EPSILON) return false;
         point = c+d*s;
         return true;
     }
@@ -207,9 +207,9 @@ bool polygon::isIn2(const v2 A) // nahoditsja li to4ka vnutri 4etirehugolnika s 
 coord distance(Line &line, v2 &point)
 {
     v2 diag = point - line.a;
-    v2 LineDirection = line.b.GetNormalized();
-    coord proj = LineDirection.dotProduct(diag);
-    coord s = sqr(diag.GetLength())-sqr(proj);
+    v2 lineDirection = line.b.getNormalized();
+    coord proj = lineDirection.dotProduct(diag);
+	coord s = diag.getSquaredLength() - sqr(proj);
     if (s<0 && s>-EPSILON)
       s = 0;
     //if (s<0)      assert(s >= 0);
@@ -220,7 +220,7 @@ coord distance(Line &line, v2 &point)
 coord lineSecment_PointDistance(LineSegment line, v2 p)
 {
 // libo proekcija, libo konec otrezka
-    v2 linedirection = (line.b-line.a).GetNormalized();
+    v2 linedirection = (line.b-line.a).getNormalized();
     Line l;
     l.a = line.a;
     l.b = linedirection;
@@ -230,8 +230,8 @@ coord lineSecment_PointDistance(LineSegment line, v2 p)
         return distance(l, p);
     else
     {
-        coord d1 = (line.a-p).GetLength();
-        coord d2 = (line.b-p).GetLength();
+        coord d1 = (line.a-p).getLength();
+        coord d2 = (line.b-p).getLength();
         if (d1<d2) return d1; else return d2;
     }
 }
@@ -267,7 +267,7 @@ bool intersect(Plane plane, v3 e/*point*/, v3 c/*direction*/, coord &p /*result*
     v3 exa = e.vectorProduct(a);
     v3 cxaxbxa = cxa.vectorProduct(bxa);
 //    float p !;
-    coord len = cxaxbxa.GetSquaredLength();
+    coord len = cxaxbxa.getSquaredLength();
     if (len < EPSILON) return false;
     p = -(exa.vectorProduct(bxa).dotProduct(cxaxbxa)/len);
     return true;
@@ -282,11 +282,11 @@ bool intersect(/*triang*/v3 A, v3 B, v3 C, v3 e/*point*/, v3 c/*direction*/, coo
     plane.b = C-A;
     if (!intersect(plane, e, c, p)) return false;
     v3 point = e + c*p;
-    coord S1 = fabs(plane.a.vectorProduct(plane.b).GetLength());
+    coord S1 = fabs(plane.a.vectorProduct(plane.b).getLength());
     coord S2 =
-        fabs((A-point).vectorProduct(B-point).GetLength())+
-        fabs((B-point).vectorProduct(C-point).GetLength())+
-        fabs((C-point).vectorProduct(A-point).GetLength());
+        fabs((A-point).vectorProduct(B-point).getLength())+
+        fabs((B-point).vectorProduct(C-point).getLength())+
+        fabs((C-point).vectorProduct(A-point).getLength());
     return fabs(S2-S1)<EPSILON;
 }
 

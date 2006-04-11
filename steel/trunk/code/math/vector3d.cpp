@@ -14,9 +14,9 @@
 #include "Maths.h"
 #include "vector3d.h"
 
-void v3::Normalize()
+void v3::normalize()
 {
-	float length=GetLength();
+	float length=getLength();
 
 	if(length==1 || length==0)			//return if length is 1 or 0
 		return;
@@ -27,16 +27,16 @@ void v3::Normalize()
 	z *= scalefactor;
 }
 
-v3 v3::GetNormalized() const
+v3 v3::getNormalized() const
 {
 	v3 result(*this);
 
-	result.Normalize();
+	result.normalize();
 
 	return result;
 }
 
-v3 v3::GetRotatedX(double angle) const
+v3 v3::getRotatedX(double angle) const
 {
 	if(angle==0.0)
 		return (*this);
@@ -49,12 +49,12 @@ v3 v3::GetRotatedX(double angle) const
 						y*sinAngle + z*cosAngle);
 }
 
-void v3::RotateX(double angle)
+void v3::rotateX(double angle)
 {
-	(*this)=GetRotatedX(angle);
+	(*this)=getRotatedX(angle);
 }
 
-v3 v3::GetRotatedY(double angle) const
+v3 v3::getRotatedY(double angle) const
 {
 	if(angle==0.0)
 		return (*this);
@@ -67,12 +67,12 @@ v3 v3::GetRotatedY(double angle) const
 						-x*sinAngle + z*cosAngle);
 }
 
-void v3::RotateY(double angle)
+void v3::rotateY(double angle)
 {
-	(*this)=GetRotatedY(angle);
+	(*this) = getRotatedY(angle);
 }
 
-v3 v3::GetRotatedZ(double angle) const
+v3 v3::getRotatedZ(double angle) const
 {
 	if(angle==0.0)
 		return (*this);
@@ -85,17 +85,17 @@ v3 v3::GetRotatedZ(double angle) const
 					z);
 }
 
-void v3::RotateZ(double angle)
+void v3::rotateZ(double angle)
 {
-	(*this)=GetRotatedZ(angle);
+	(*this) = getRotatedZ(angle);
 }
 
-v3 v3::GetRotatedAxis(double angle, const v3 & axis) const
+v3 v3::getRotatedAxis(double angle, const v3 & axis) const
 {
-	if(angle==0.0)
+	if(angle == 0.0)
 		return (*this);
 
-	v3 u=axis.GetNormalized();
+	v3 u=axis.getNormalized();
 
 	v3 rotMatrixRow0, rotMatrixRow1, rotMatrixRow2;
 
@@ -120,24 +120,24 @@ v3 v3::GetRotatedAxis(double angle, const v3 & axis) const
 						this->dotProduct(rotMatrixRow2));
 }
 
-void v3::RotateAxis(double angle, const v3 & axis)
+void v3::rotateAxis(double angle, const v3 & axis)
 {
-	(*this)=GetRotatedAxis(angle, axis);
+	(*this) = getRotatedAxis(angle, axis);
 }
 
 
-void v3::PackTo01()
+void v3::packTo01()
 {
-	(*this)=GetPackedTo01();	
+	(*this)=getPackedTo01();	
 }
 
-v3 v3::GetPackedTo01() const
+v3 v3::getPackedTo01() const
 {
 	v3 temp(*this);
 
-	temp.Normalize();
+	temp.normalize();
 
-	temp=temp*0.5f+v3(0.5f, 0.5f, 0.5f);
+	temp = temp*0.5f+v3(0.5f, 0.5f, 0.5f);
 	
 	return temp;
 }

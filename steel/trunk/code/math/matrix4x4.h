@@ -25,7 +25,7 @@ class matrix4
 {
 public:
 	matrix4()
-	{	LoadIdentity();	}
+	{	loadIdentity();	}
 	matrix4(	float e0, float e1, float e2, float e3,
 				float e4, float e5, float e6, float e7,
 				float e8, float e9, float e10, float e11,
@@ -34,14 +34,14 @@ public:
 	matrix4(const matrix4 & rhs);
 	~matrix4() {}	//empty
 
-	void SetEntry(int position, float value);
-	float GetEntry(int position) const;
-	v4 GetRow(int position) const;
-	v4 GetColumn(int position) const;
-	v3 getCoords() { return v3(entries[12], entries[13], entries[14]); }
+	void  setEntry(int position, float value);
+	float getEntry(int position) const;
+	v4 getRow(int position) const;
+	v4 getColumn(int position) const;
+	v3 getCoords() { return v3(a[12], a[13], a[14]); }
 	
-	void LoadIdentity(void);
-	void LoadZero(void);
+	void loadIdentity(void);
+	void loadZero(void);
 	
 	//binary operators
 	matrix4 operator+(const matrix4 & rhs) const;
@@ -69,59 +69,59 @@ public:
 	v4 operator*(const v4 rhs) const;
 
 	//rotate a 3d vector by rotation part
-	void Rotatev3(v3 & rhs) const
-	{rhs=GetRotatedv3(rhs);}
+	void rotatev3(v3 & rhs) const
+	{rhs = getRotatedv3(rhs);}
 
-	void InverseRotatev3(v3 & rhs) const
-	{rhs=GetInverseRotatedv3(rhs);}
+	void inverseRotatev3(v3 & rhs) const
+	{rhs = getInverseRotatedv3(rhs);}
 
-	v3 GetRotatedv3(const v3 & rhs) const;
-	v3 GetInverseRotatedv3(const v3 & rhs) const;
+	v3 getRotatedv3(const v3 & rhs) const;
+	v3 getInverseRotatedv3(const v3 & rhs) const;
 
 	//translate a 3d vector by translation part
-	void Translatev3(v3 & rhs) const
-	{rhs=GetTranslatedv3(rhs);}
+	void translatev3(v3 & rhs) const
+	{rhs = getTranslatedv3(rhs);}
 
-	void InverseTranslatev3(v3 & rhs) const
-	{rhs=GetInverseTranslatedv3(rhs);}
+	void inverseTranslatev3(v3 & rhs) const
+	{rhs=getInverseTranslatedv3(rhs);}
 	
-	v3 GetTranslatedv3(const v3 & rhs) const;
-	v3 GetInverseTranslatedv3(const v3 & rhs) const;
+	v3 getTranslatedv3(const v3 & rhs) const;
+	v3 getInverseTranslatedv3(const v3 & rhs) const;
 
 	//Other methods
-	void Invert(void);
-	matrix4 GetInverse(void) const;
-	void Transpose(void);
-	matrix4 GetTranspose(void) const;
-	void InvertTranspose(void);
-	matrix4 GetInverseTranspose(void) const;
+	void invert(void);
+	matrix4 getInverse(void) const;
+	void transpose(void);
+	matrix4 getTranspose(void) const;
+	void invertTranspose(void);
+	matrix4 getInverseTranspose(void) const;
 
 	//Inverse of a rotation/translation only matrix
-	void AffineInvert(void);
-	matrix4 GetAffineInverse(void) const;
-	void AffineInvertTranspose(void);
-	matrix4 GetAffineInverseTranspose(void) const;
+	void affineInvert(void);
+	matrix4 getAffineInverse(void) const;
+	void affineInvertTranspose(void);
+	matrix4 getAffineInverseTranspose(void) const;
 
 	//set to perform an operation on space - removes other entries
-	void SetTranslation(const v3 & translation);
-	void SetScale(const v3 & scaleFactor);
-	void SetUniformScale(const float scaleFactor);
-    void SetRotationAxis(const coord sinAngle, const coord cosAngle,const v3 & axis);
-	void SetRotationAxis(const double angle, const v3 & axis);
-	void SetRotationX(const double angle);
-	void SetRotationY(const double angle);
-	void SetRotationZ(const double angle);
-	void SetRotationEuler(const double angleX, const double angleY, const double angleZ);
-	void SetPerspective(float left, float right, float bottom, float top, float n, float f);
-	void SetPerspective(float fovy, float aspect, float n, float f);
-	void SetOrtho(float left, float right, float bottom, float top, float n, float f);
+	void setTranslation(const v3 & translation);
+	void setScale(const v3 & scaleFactor);
+	void setUniformScale(const float scaleFactor);
+    void setRotationAxis(const coord sinAngle, const coord cosAngle,const v3 & axis);
+	void setRotationAxis(const double angle, const v3 & axis);
+	void setRotationX(const double angle);
+	void setRotationY(const double angle);
+	void setRotationZ(const double angle);
+	void setRotationEuler(const double angleX, const double angleY, const double angleZ);
+	void setPerspective(float left, float right, float bottom, float top, float n, float f);
+	void setPerspective(float fovy, float aspect, float n, float f);
+	void setOrtho(float left, float right, float bottom, float top, float n, float f);
 
 	//set parts of the matrix
-	void SetTranslationPart(const v3 & translation);
-	void SetRotationPartEuler(const double angleX, const double angleY, const double angleZ);
-	void SetRotationPartEuler(const v3 & rotations)
+	void setTranslationPart(const v3 & translation);
+	void setRotationPartEuler(const double angleX, const double angleY, const double angleZ);
+	void setRotationPartEuler(const v3 & rotations)
 	{
-		SetRotationPartEuler((double)rotations.x, (double)rotations.y, (double)rotations.z);
+		setRotationPartEuler((double)rotations.x, (double)rotations.y, (double)rotations.z);
 	}
 
 	//cast to pointer to a (float *) for glGetFloatv etc
@@ -129,7 +129,7 @@ public:
 	operator const float* () const {return (const float*) this;}
 	
 	//member variables
-	coord entries[16];
+	coord a[16];
 };
 
 #endif	//matrix4_H

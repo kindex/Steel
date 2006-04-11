@@ -33,25 +33,25 @@ public:
 
 	~v2() {}	//empty
 
-	void Set(coord newX, coord newY){	x=newX;	y=newY;	}
+	void set(coord newX, coord newY){	x=newX;	y=newY;	}
 
 	//Accessors kept for compatibility
-	void SetX(coord newX) {x = newX;}
-	void SetY(coord newY) {y = newY;}
+	void setX(coord newX) {x = newX;}
+	void setY(coord newY) {y = newY;}
 
-	coord GetX() const {return x;}	//public accessor functions
-	coord GetY() const {return y;}	//inline, const
+	coord getX() const {return x;}	//public accessor functions
+	coord getY() const {return y;}	//inline, const
 
-	void LoadZero(void) { x=0.0; y=0.0; }
-	void LoadOne(void);					//fill with (1, 1)
+	void loadZero(void) { x=0.0; y=0.0; }
+	void loadOne(void);					//fill with (1, 1)
 
-	void Normalize(); // set length to 1
-	v2 GetNormalized() const;
+	void normalize(); // set length to 1
+	v2 getNormalized() const;
 
-	coord GetLength() const
+	coord getLength() const
 	{	return (coord)sqrt((x*x)+(y*y));	}
 
-	coord GetSquaredLength() const
+	coord getSquaredLength() const
 	{	return (x*x)+(y*y);	}
 
 	//linear interpolate

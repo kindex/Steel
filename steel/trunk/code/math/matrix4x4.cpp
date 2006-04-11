@@ -23,240 +23,240 @@ matrix4::matrix4(float e0, float e1, float e2, float e3,
 					float e8, float e9, float e10, float e11,
 					float e12, float e13, float e14, float e15)
 {
-	entries[0]=e0;
-	entries[1]=e1;
-	entries[2]=e2;
-	entries[3]=e3;
-	entries[4]=e4;
-	entries[5]=e5;
-	entries[6]=e6;
-	entries[7]=e7;
-	entries[8]=e8;
-	entries[9]=e9;
-	entries[10]=e10;
-	entries[11]=e11;
-	entries[12]=e12;
-	entries[13]=e13;
-	entries[14]=e14;
-	entries[15]=e15;
+	a[0]=e0;
+	a[1]=e1;
+	a[2]=e2;
+	a[3]=e3;
+	a[4]=e4;
+	a[5]=e5;
+	a[6]=e6;
+	a[7]=e7;
+	a[8]=e8;
+	a[9]=e9;
+	a[10]=e10;
+	a[11]=e11;
+	a[12]=e12;
+	a[13]=e13;
+	a[14]=e14;
+	a[15]=e15;
 }
 
 matrix4::matrix4(const matrix4 & rhs)
 {
-	memcpy(entries, rhs.entries, 16*sizeof(float));
+	memcpy(a, rhs.a, 16*sizeof(float));
 }
 
 matrix4::matrix4(const float * rhs)
 {
-	memcpy(entries, rhs, 16*sizeof(float));
+	memcpy(a, rhs, 16*sizeof(float));
 }
 
-void matrix4::SetEntry(int position, float value)
+void matrix4::setEntry(int position, float value)
 {
 	if(position>=0 && position<=15)
-		entries[position]=value;
+		a[position]=value;
 }
 	
-float matrix4::GetEntry(int position) const
+float matrix4::getEntry(int position) const
 {
 	if(position>=0 && position<=15)
-		return entries[position];
+		return a[position];
 
 	return 0.0f;
 }
 
-v4 matrix4::GetRow(int position) const
+v4 matrix4::getRow(int position) const
 {
 	if(position==0)
-		return v4(entries[0], entries[4], entries[8], entries[12]);
+		return v4(a[0], a[4], a[8], a[12]);
 	
 	if(position==1)
-		return v4(entries[1], entries[5], entries[9], entries[13]);
+		return v4(a[1], a[5], a[9], a[13]);
 	
 	if(position==2)
-		return v4(entries[2], entries[6], entries[10], entries[14]);
+		return v4(a[2], a[6], a[10], a[14]);
 	
 	if(position==3)
-		return v4(entries[3], entries[7], entries[11], entries[15]);
+		return v4(a[3], a[7], a[11], a[15]);
 
 	return v4(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-v4 matrix4::GetColumn(int position) const
+v4 matrix4::getColumn(int position) const
 {
 	if(position==0)
-		return v4(entries[0], entries[1], entries[2], entries[3]);
+		return v4(a[0], a[1], a[2], a[3]);
 	
 	if(position==1)
-		return v4(entries[4], entries[5], entries[6], entries[7]);
+		return v4(a[4], a[5], a[6], a[7]);
 	
 	if(position==2)
-		return v4(entries[8], entries[9], entries[10], entries[11]);
+		return v4(a[8], a[9], a[10], a[11]);
 	
 	if(position==3)
-		return v4(entries[12], entries[13], entries[14], entries[15]);
+		return v4(a[12], a[13], a[14], a[15]);
 
 	return v4(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-void matrix4::LoadIdentity(void)
+void matrix4::loadIdentity(void)
 {
-	memset(entries, 0, 16*sizeof(float));
-	entries[0]	= 1.0f;
-	entries[5]	= 1.0f;
-	entries[10]	= 1.0f;
-	entries[15]	= 1.0f;
+	memset(a, 0, 16*sizeof(float));
+	a[0]	= 1.0f;
+	a[5]	= 1.0f;
+	a[10]	= 1.0f;
+	a[15]	= 1.0f;
 }
 
-void matrix4::LoadZero(void)
+void matrix4::loadZero(void)
 {
-	memset(entries, 0, 16*sizeof(float));
+	memset(a, 0, 16*sizeof(float));
 }
 
 matrix4 matrix4::operator+(const matrix4 & rhs) const		//overloaded operators
 {
-	return matrix4(	entries[0]+rhs.entries[0],
-						entries[1]+rhs.entries[1],
-						entries[2]+rhs.entries[2],
-						entries[3]+rhs.entries[3],
-						entries[4]+rhs.entries[4],
-						entries[5]+rhs.entries[5],
-						entries[6]+rhs.entries[6],
-						entries[7]+rhs.entries[7],
-						entries[8]+rhs.entries[8],
-						entries[9]+rhs.entries[9],
-						entries[10]+rhs.entries[10],
-						entries[11]+rhs.entries[11],
-						entries[12]+rhs.entries[12],
-						entries[13]+rhs.entries[13],
-						entries[14]+rhs.entries[14],
-						entries[15]+rhs.entries[15]);
+	return matrix4(	a[0]+rhs.a[0],
+						a[1]+rhs.a[1],
+						a[2]+rhs.a[2],
+						a[3]+rhs.a[3],
+						a[4]+rhs.a[4],
+						a[5]+rhs.a[5],
+						a[6]+rhs.a[6],
+						a[7]+rhs.a[7],
+						a[8]+rhs.a[8],
+						a[9]+rhs.a[9],
+						a[10]+rhs.a[10],
+						a[11]+rhs.a[11],
+						a[12]+rhs.a[12],
+						a[13]+rhs.a[13],
+						a[14]+rhs.a[14],
+						a[15]+rhs.a[15]);
 }
 
 matrix4 matrix4::operator-(const matrix4 & rhs) const		//overloaded operators
 {
-	return matrix4(	entries[0]-rhs.entries[0],
-						entries[1]-rhs.entries[1],
-						entries[2]-rhs.entries[2],
-						entries[3]-rhs.entries[3],
-						entries[4]-rhs.entries[4],
-						entries[5]-rhs.entries[5],
-						entries[6]-rhs.entries[6],
-						entries[7]-rhs.entries[7],
-						entries[8]-rhs.entries[8],
-						entries[9]-rhs.entries[9],
-						entries[10]-rhs.entries[10],
-						entries[11]-rhs.entries[11],
-						entries[12]-rhs.entries[12],
-						entries[13]-rhs.entries[13],
-						entries[14]-rhs.entries[14],
-						entries[15]-rhs.entries[15]);
+	return matrix4(	a[0]-rhs.a[0],
+						a[1]-rhs.a[1],
+						a[2]-rhs.a[2],
+						a[3]-rhs.a[3],
+						a[4]-rhs.a[4],
+						a[5]-rhs.a[5],
+						a[6]-rhs.a[6],
+						a[7]-rhs.a[7],
+						a[8]-rhs.a[8],
+						a[9]-rhs.a[9],
+						a[10]-rhs.a[10],
+						a[11]-rhs.a[11],
+						a[12]-rhs.a[12],
+						a[13]-rhs.a[13],
+						a[14]-rhs.a[14],
+						a[15]-rhs.a[15]);
 }
 
 matrix4 matrix4::operator*(const matrix4 & rhs) const
 {
 	//Optimise for matrices in which bottom row is (0, 0, 0, 1) in both matrices
-	if(	entries[3]==0.0f && entries[7]==0.0f && entries[11]==0.0f && entries[15]==1.0f	&&
-		rhs.entries[3]==0.0f && rhs.entries[7]==0.0f &&
-		rhs.entries[11]==0.0f && rhs.entries[15]==1.0f)
+	if(	a[3]==0.0f && a[7]==0.0f && a[11]==0.0f && a[15]==1.0f	&&
+		rhs.a[3]==0.0f && rhs.a[7]==0.0f &&
+		rhs.a[11]==0.0f && rhs.a[15]==1.0f)
 	{
-		return matrix4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2],
-							entries[1]*rhs.entries[0]+entries[5]*rhs.entries[1]+entries[9]*rhs.entries[2],
-							entries[2]*rhs.entries[0]+entries[6]*rhs.entries[1]+entries[10]*rhs.entries[2],
+		return matrix4(	a[0]*rhs.a[0]+a[4]*rhs.a[1]+a[8]*rhs.a[2],
+							a[1]*rhs.a[0]+a[5]*rhs.a[1]+a[9]*rhs.a[2],
+							a[2]*rhs.a[0]+a[6]*rhs.a[1]+a[10]*rhs.a[2],
 							0.0f,
-							entries[0]*rhs.entries[4]+entries[4]*rhs.entries[5]+entries[8]*rhs.entries[6],
-							entries[1]*rhs.entries[4]+entries[5]*rhs.entries[5]+entries[9]*rhs.entries[6],
-							entries[2]*rhs.entries[4]+entries[6]*rhs.entries[5]+entries[10]*rhs.entries[6],
+							a[0]*rhs.a[4]+a[4]*rhs.a[5]+a[8]*rhs.a[6],
+							a[1]*rhs.a[4]+a[5]*rhs.a[5]+a[9]*rhs.a[6],
+							a[2]*rhs.a[4]+a[6]*rhs.a[5]+a[10]*rhs.a[6],
 							0.0f,
-							entries[0]*rhs.entries[8]+entries[4]*rhs.entries[9]+entries[8]*rhs.entries[10],
-							entries[1]*rhs.entries[8]+entries[5]*rhs.entries[9]+entries[9]*rhs.entries[10],
-							entries[2]*rhs.entries[8]+entries[6]*rhs.entries[9]+entries[10]*rhs.entries[10],
+							a[0]*rhs.a[8]+a[4]*rhs.a[9]+a[8]*rhs.a[10],
+							a[1]*rhs.a[8]+a[5]*rhs.a[9]+a[9]*rhs.a[10],
+							a[2]*rhs.a[8]+a[6]*rhs.a[9]+a[10]*rhs.a[10],
 							0.0f,
-							entries[0]*rhs.entries[12]+entries[4]*rhs.entries[13]+entries[8]*rhs.entries[14]+entries[12],
-							entries[1]*rhs.entries[12]+entries[5]*rhs.entries[13]+entries[9]*rhs.entries[14]+entries[13],
-							entries[2]*rhs.entries[12]+entries[6]*rhs.entries[13]+entries[10]*rhs.entries[14]+entries[14],
+							a[0]*rhs.a[12]+a[4]*rhs.a[13]+a[8]*rhs.a[14]+a[12],
+							a[1]*rhs.a[12]+a[5]*rhs.a[13]+a[9]*rhs.a[14]+a[13],
+							a[2]*rhs.a[12]+a[6]*rhs.a[13]+a[10]*rhs.a[14]+a[14],
 							1.0f);
 	}
 
 	//Optimise for when bottom row of 1st matrix is (0, 0, 0, 1)
-	if(	entries[3]==0.0f && entries[7]==0.0f && entries[11]==0.0f && entries[15]==1.0f)
+	if(	a[3]==0.0f && a[7]==0.0f && a[11]==0.0f && a[15]==1.0f)
 	{
-		return matrix4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2]+entries[12]*rhs.entries[3],
-							entries[1]*rhs.entries[0]+entries[5]*rhs.entries[1]+entries[9]*rhs.entries[2]+entries[13]*rhs.entries[3],
-							entries[2]*rhs.entries[0]+entries[6]*rhs.entries[1]+entries[10]*rhs.entries[2]+entries[14]*rhs.entries[3],
-							rhs.entries[3],
-							entries[0]*rhs.entries[4]+entries[4]*rhs.entries[5]+entries[8]*rhs.entries[6]+entries[12]*rhs.entries[7],
-							entries[1]*rhs.entries[4]+entries[5]*rhs.entries[5]+entries[9]*rhs.entries[6]+entries[13]*rhs.entries[7],
-							entries[2]*rhs.entries[4]+entries[6]*rhs.entries[5]+entries[10]*rhs.entries[6]+entries[14]*rhs.entries[7],
-							rhs.entries[7],
-							entries[0]*rhs.entries[8]+entries[4]*rhs.entries[9]+entries[8]*rhs.entries[10]+entries[12]*rhs.entries[11],
-							entries[1]*rhs.entries[8]+entries[5]*rhs.entries[9]+entries[9]*rhs.entries[10]+entries[13]*rhs.entries[11],
-							entries[2]*rhs.entries[8]+entries[6]*rhs.entries[9]+entries[10]*rhs.entries[10]+entries[14]*rhs.entries[11],
-							rhs.entries[11],
-							entries[0]*rhs.entries[12]+entries[4]*rhs.entries[13]+entries[8]*rhs.entries[14]+entries[12]*rhs.entries[15],
-							entries[1]*rhs.entries[12]+entries[5]*rhs.entries[13]+entries[9]*rhs.entries[14]+entries[13]*rhs.entries[15],
-							entries[2]*rhs.entries[12]+entries[6]*rhs.entries[13]+entries[10]*rhs.entries[14]+entries[14]*rhs.entries[15],
-							rhs.entries[15]);
+		return matrix4(	a[0]*rhs.a[0]+a[4]*rhs.a[1]+a[8]*rhs.a[2]+a[12]*rhs.a[3],
+							a[1]*rhs.a[0]+a[5]*rhs.a[1]+a[9]*rhs.a[2]+a[13]*rhs.a[3],
+							a[2]*rhs.a[0]+a[6]*rhs.a[1]+a[10]*rhs.a[2]+a[14]*rhs.a[3],
+							rhs.a[3],
+							a[0]*rhs.a[4]+a[4]*rhs.a[5]+a[8]*rhs.a[6]+a[12]*rhs.a[7],
+							a[1]*rhs.a[4]+a[5]*rhs.a[5]+a[9]*rhs.a[6]+a[13]*rhs.a[7],
+							a[2]*rhs.a[4]+a[6]*rhs.a[5]+a[10]*rhs.a[6]+a[14]*rhs.a[7],
+							rhs.a[7],
+							a[0]*rhs.a[8]+a[4]*rhs.a[9]+a[8]*rhs.a[10]+a[12]*rhs.a[11],
+							a[1]*rhs.a[8]+a[5]*rhs.a[9]+a[9]*rhs.a[10]+a[13]*rhs.a[11],
+							a[2]*rhs.a[8]+a[6]*rhs.a[9]+a[10]*rhs.a[10]+a[14]*rhs.a[11],
+							rhs.a[11],
+							a[0]*rhs.a[12]+a[4]*rhs.a[13]+a[8]*rhs.a[14]+a[12]*rhs.a[15],
+							a[1]*rhs.a[12]+a[5]*rhs.a[13]+a[9]*rhs.a[14]+a[13]*rhs.a[15],
+							a[2]*rhs.a[12]+a[6]*rhs.a[13]+a[10]*rhs.a[14]+a[14]*rhs.a[15],
+							rhs.a[15]);
 	}
 
 	//Optimise for when bottom row of 2nd matrix is (0, 0, 0, 1)
-	if(	rhs.entries[3]==0.0f && rhs.entries[7]==0.0f &&
-		rhs.entries[11]==0.0f && rhs.entries[15]==1.0f)
+	if(	rhs.a[3]==0.0f && rhs.a[7]==0.0f &&
+		rhs.a[11]==0.0f && rhs.a[15]==1.0f)
 	{
-		return matrix4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2],
-							entries[1]*rhs.entries[0]+entries[5]*rhs.entries[1]+entries[9]*rhs.entries[2],
-							entries[2]*rhs.entries[0]+entries[6]*rhs.entries[1]+entries[10]*rhs.entries[2],
-							entries[3]*rhs.entries[0]+entries[7]*rhs.entries[1]+entries[11]*rhs.entries[2],
-							entries[0]*rhs.entries[4]+entries[4]*rhs.entries[5]+entries[8]*rhs.entries[6],
-							entries[1]*rhs.entries[4]+entries[5]*rhs.entries[5]+entries[9]*rhs.entries[6],
-							entries[2]*rhs.entries[4]+entries[6]*rhs.entries[5]+entries[10]*rhs.entries[6],
-							entries[3]*rhs.entries[4]+entries[7]*rhs.entries[5]+entries[11]*rhs.entries[6],
-							entries[0]*rhs.entries[8]+entries[4]*rhs.entries[9]+entries[8]*rhs.entries[10],
-							entries[1]*rhs.entries[8]+entries[5]*rhs.entries[9]+entries[9]*rhs.entries[10],
-							entries[2]*rhs.entries[8]+entries[6]*rhs.entries[9]+entries[10]*rhs.entries[10],
-							entries[3]*rhs.entries[8]+entries[7]*rhs.entries[9]+entries[11]*rhs.entries[10],
-							entries[0]*rhs.entries[12]+entries[4]*rhs.entries[13]+entries[8]*rhs.entries[14]+entries[12],
-							entries[1]*rhs.entries[12]+entries[5]*rhs.entries[13]+entries[9]*rhs.entries[14]+entries[13],
-							entries[2]*rhs.entries[12]+entries[6]*rhs.entries[13]+entries[10]*rhs.entries[14]+entries[14],
-							entries[3]*rhs.entries[12]+entries[7]*rhs.entries[13]+entries[11]*rhs.entries[14]+entries[15]);
+		return matrix4(	a[0]*rhs.a[0]+a[4]*rhs.a[1]+a[8]*rhs.a[2],
+							a[1]*rhs.a[0]+a[5]*rhs.a[1]+a[9]*rhs.a[2],
+							a[2]*rhs.a[0]+a[6]*rhs.a[1]+a[10]*rhs.a[2],
+							a[3]*rhs.a[0]+a[7]*rhs.a[1]+a[11]*rhs.a[2],
+							a[0]*rhs.a[4]+a[4]*rhs.a[5]+a[8]*rhs.a[6],
+							a[1]*rhs.a[4]+a[5]*rhs.a[5]+a[9]*rhs.a[6],
+							a[2]*rhs.a[4]+a[6]*rhs.a[5]+a[10]*rhs.a[6],
+							a[3]*rhs.a[4]+a[7]*rhs.a[5]+a[11]*rhs.a[6],
+							a[0]*rhs.a[8]+a[4]*rhs.a[9]+a[8]*rhs.a[10],
+							a[1]*rhs.a[8]+a[5]*rhs.a[9]+a[9]*rhs.a[10],
+							a[2]*rhs.a[8]+a[6]*rhs.a[9]+a[10]*rhs.a[10],
+							a[3]*rhs.a[8]+a[7]*rhs.a[9]+a[11]*rhs.a[10],
+							a[0]*rhs.a[12]+a[4]*rhs.a[13]+a[8]*rhs.a[14]+a[12],
+							a[1]*rhs.a[12]+a[5]*rhs.a[13]+a[9]*rhs.a[14]+a[13],
+							a[2]*rhs.a[12]+a[6]*rhs.a[13]+a[10]*rhs.a[14]+a[14],
+							a[3]*rhs.a[12]+a[7]*rhs.a[13]+a[11]*rhs.a[14]+a[15]);
 	}	
 	
-	return matrix4(	entries[0]*rhs.entries[0]+entries[4]*rhs.entries[1]+entries[8]*rhs.entries[2]+entries[12]*rhs.entries[3],
-						entries[1]*rhs.entries[0]+entries[5]*rhs.entries[1]+entries[9]*rhs.entries[2]+entries[13]*rhs.entries[3],
-						entries[2]*rhs.entries[0]+entries[6]*rhs.entries[1]+entries[10]*rhs.entries[2]+entries[14]*rhs.entries[3],
-						entries[3]*rhs.entries[0]+entries[7]*rhs.entries[1]+entries[11]*rhs.entries[2]+entries[15]*rhs.entries[3],
-						entries[0]*rhs.entries[4]+entries[4]*rhs.entries[5]+entries[8]*rhs.entries[6]+entries[12]*rhs.entries[7],
-						entries[1]*rhs.entries[4]+entries[5]*rhs.entries[5]+entries[9]*rhs.entries[6]+entries[13]*rhs.entries[7],
-						entries[2]*rhs.entries[4]+entries[6]*rhs.entries[5]+entries[10]*rhs.entries[6]+entries[14]*rhs.entries[7],
-						entries[3]*rhs.entries[4]+entries[7]*rhs.entries[5]+entries[11]*rhs.entries[6]+entries[15]*rhs.entries[7],
-						entries[0]*rhs.entries[8]+entries[4]*rhs.entries[9]+entries[8]*rhs.entries[10]+entries[12]*rhs.entries[11],
-						entries[1]*rhs.entries[8]+entries[5]*rhs.entries[9]+entries[9]*rhs.entries[10]+entries[13]*rhs.entries[11],
-						entries[2]*rhs.entries[8]+entries[6]*rhs.entries[9]+entries[10]*rhs.entries[10]+entries[14]*rhs.entries[11],
-						entries[3]*rhs.entries[8]+entries[7]*rhs.entries[9]+entries[11]*rhs.entries[10]+entries[15]*rhs.entries[11],
-						entries[0]*rhs.entries[12]+entries[4]*rhs.entries[13]+entries[8]*rhs.entries[14]+entries[12]*rhs.entries[15],
-						entries[1]*rhs.entries[12]+entries[5]*rhs.entries[13]+entries[9]*rhs.entries[14]+entries[13]*rhs.entries[15],
-						entries[2]*rhs.entries[12]+entries[6]*rhs.entries[13]+entries[10]*rhs.entries[14]+entries[14]*rhs.entries[15],
-						entries[3]*rhs.entries[12]+entries[7]*rhs.entries[13]+entries[11]*rhs.entries[14]+entries[15]*rhs.entries[15]);
+	return matrix4(	a[0]*rhs.a[0]+a[4]*rhs.a[1]+a[8]*rhs.a[2]+a[12]*rhs.a[3],
+						a[1]*rhs.a[0]+a[5]*rhs.a[1]+a[9]*rhs.a[2]+a[13]*rhs.a[3],
+						a[2]*rhs.a[0]+a[6]*rhs.a[1]+a[10]*rhs.a[2]+a[14]*rhs.a[3],
+						a[3]*rhs.a[0]+a[7]*rhs.a[1]+a[11]*rhs.a[2]+a[15]*rhs.a[3],
+						a[0]*rhs.a[4]+a[4]*rhs.a[5]+a[8]*rhs.a[6]+a[12]*rhs.a[7],
+						a[1]*rhs.a[4]+a[5]*rhs.a[5]+a[9]*rhs.a[6]+a[13]*rhs.a[7],
+						a[2]*rhs.a[4]+a[6]*rhs.a[5]+a[10]*rhs.a[6]+a[14]*rhs.a[7],
+						a[3]*rhs.a[4]+a[7]*rhs.a[5]+a[11]*rhs.a[6]+a[15]*rhs.a[7],
+						a[0]*rhs.a[8]+a[4]*rhs.a[9]+a[8]*rhs.a[10]+a[12]*rhs.a[11],
+						a[1]*rhs.a[8]+a[5]*rhs.a[9]+a[9]*rhs.a[10]+a[13]*rhs.a[11],
+						a[2]*rhs.a[8]+a[6]*rhs.a[9]+a[10]*rhs.a[10]+a[14]*rhs.a[11],
+						a[3]*rhs.a[8]+a[7]*rhs.a[9]+a[11]*rhs.a[10]+a[15]*rhs.a[11],
+						a[0]*rhs.a[12]+a[4]*rhs.a[13]+a[8]*rhs.a[14]+a[12]*rhs.a[15],
+						a[1]*rhs.a[12]+a[5]*rhs.a[13]+a[9]*rhs.a[14]+a[13]*rhs.a[15],
+						a[2]*rhs.a[12]+a[6]*rhs.a[13]+a[10]*rhs.a[14]+a[14]*rhs.a[15],
+						a[3]*rhs.a[12]+a[7]*rhs.a[13]+a[11]*rhs.a[14]+a[15]*rhs.a[15]);
 }
 
 matrix4 matrix4::operator*(const float rhs) const
 {
-	return matrix4(	entries[0]*rhs,
-						entries[1]*rhs,
-						entries[2]*rhs,
-						entries[3]*rhs,
-						entries[4]*rhs,
-						entries[5]*rhs,
-						entries[6]*rhs,
-						entries[7]*rhs,
-						entries[8]*rhs,
-						entries[9]*rhs,
-						entries[10]*rhs,
-						entries[11]*rhs,
-						entries[12]*rhs,
-						entries[13]*rhs,
-						entries[14]*rhs,
-						entries[15]*rhs);
+	return matrix4(	a[0]*rhs,
+						a[1]*rhs,
+						a[2]*rhs,
+						a[3]*rhs,
+						a[4]*rhs,
+						a[5]*rhs,
+						a[6]*rhs,
+						a[7]*rhs,
+						a[8]*rhs,
+						a[9]*rhs,
+						a[10]*rhs,
+						a[11]*rhs,
+						a[12]*rhs,
+						a[13]*rhs,
+						a[14]*rhs,
+						a[15]*rhs);
 }
 
 matrix4 matrix4::operator/(const float rhs) const
@@ -278,7 +278,7 @@ bool matrix4::operator==(const matrix4 & rhs) const
 {
 	for(int i=0; i<16; i++)
 	{
-		if(entries[i]!=rhs.entries[i])
+		if(a[i]!=rhs.a[i])
 			return false;
 	}
 	return true;
@@ -319,7 +319,7 @@ matrix4 matrix4::operator-(void) const
 	matrix4 result(*this);
 
 	for(int i=0; i<16; i++)
-		result.entries[i]=-result.entries[i];
+		result.a[i]=-result.a[i];
 
 	return result;
 }
@@ -327,106 +327,106 @@ matrix4 matrix4::operator-(void) const
 v4 matrix4::operator*(const v4 rhs) const
 {
 	//Optimise for matrices in which bottom row is (0, 0, 0, 1)
-	if(entries[3]==0.0f && entries[7]==0.0f && entries[11]==0.0f && entries[15]==1.0f)
+	if(a[3]==0.0f && a[7]==0.0f && a[11]==0.0f && a[15]==1.0f)
 	{
-		return v4(entries[0]*rhs.x
-					+	entries[4]*rhs.y
-					+	entries[8]*rhs.z
-					+	entries[12]*rhs.w,
+		return v4(a[0]*rhs.x
+					+	a[4]*rhs.y
+					+	a[8]*rhs.z
+					+	a[12]*rhs.w,
 
-						entries[1]*rhs.x
-					+	entries[5]*rhs.y
-					+	entries[9]*rhs.z
-					+	entries[13]*rhs.w,
+						a[1]*rhs.x
+					+	a[5]*rhs.y
+					+	a[9]*rhs.z
+					+	a[13]*rhs.w,
 
-						entries[2]*rhs.x
-					+	entries[6]*rhs.y
-					+	entries[10]*rhs.z
-					+	entries[14]*rhs.w,
+						a[2]*rhs.x
+					+	a[6]*rhs.y
+					+	a[10]*rhs.z
+					+	a[14]*rhs.w,
 
 						rhs.w);
 	}
 	
-	return v4(	entries[0]*rhs.x
-					+	entries[4]*rhs.y
-					+	entries[8]*rhs.z
-					+	entries[12]*rhs.w,
+	return v4(	a[0]*rhs.x
+					+	a[4]*rhs.y
+					+	a[8]*rhs.z
+					+	a[12]*rhs.w,
 
-						entries[1]*rhs.x
-					+	entries[5]*rhs.y
-					+	entries[9]*rhs.z
-					+	entries[13]*rhs.w,
+						a[1]*rhs.x
+					+	a[5]*rhs.y
+					+	a[9]*rhs.z
+					+	a[13]*rhs.w,
 
-						entries[2]*rhs.x
-					+	entries[6]*rhs.y
-					+	entries[10]*rhs.z
-					+	entries[14]*rhs.w,
+						a[2]*rhs.x
+					+	a[6]*rhs.y
+					+	a[10]*rhs.z
+					+	a[14]*rhs.w,
 
-						entries[3]*rhs.x
-					+	entries[7]*rhs.y
-					+	entries[11]*rhs.z
-					+	entries[15]*rhs.w);
+						a[3]*rhs.x
+					+	a[7]*rhs.y
+					+	a[11]*rhs.z
+					+	a[15]*rhs.w);
 }
 
-v3 matrix4::GetRotatedv3(const v3 & rhs) const
+v3 matrix4::getRotatedv3(const v3 & rhs) const
 {
-	return v3(entries[0]*rhs.x + entries[4]*rhs.y + entries[8]*rhs.z,
-					entries[1]*rhs.x + entries[5]*rhs.y + entries[9]*rhs.z,
-					entries[2]*rhs.x + entries[6]*rhs.y + entries[10]*rhs.z);
+	return v3(a[0]*rhs.x + a[4]*rhs.y + a[8]*rhs.z,
+					a[1]*rhs.x + a[5]*rhs.y + a[9]*rhs.z,
+					a[2]*rhs.x + a[6]*rhs.y + a[10]*rhs.z);
 }
 
-v3 matrix4::GetInverseRotatedv3(const v3 & rhs) const
+v3 matrix4::getInverseRotatedv3(const v3 & rhs) const
 {
 	//rotate by transpose:
-	return v3(entries[0]*rhs.x + entries[1]*rhs.y + entries[2]*rhs.z,
-					entries[4]*rhs.x + entries[5]*rhs.y + entries[6]*rhs.z,
-					entries[8]*rhs.x + entries[9]*rhs.y + entries[10]*rhs.z);
+	return v3(a[0]*rhs.x + a[1]*rhs.y + a[2]*rhs.z,
+					a[4]*rhs.x + a[5]*rhs.y + a[6]*rhs.z,
+					a[8]*rhs.x + a[9]*rhs.y + a[10]*rhs.z);
 }
 
-v3 matrix4::GetTranslatedv3(const v3 & rhs) const
+v3 matrix4::getTranslatedv3(const v3 & rhs) const
 {
-	return v3(rhs.x+entries[12], rhs.y+entries[13], rhs.z+entries[14]);
+	return v3(rhs.x+a[12], rhs.y+a[13], rhs.z+a[14]);
 }
 
-v3 matrix4::GetInverseTranslatedv3(const v3 & rhs) const
+v3 matrix4::getInverseTranslatedv3(const v3 & rhs) const
 {
-	return v3(rhs.x-entries[12], rhs.y-entries[13], rhs.z-entries[14]);
+	return v3(rhs.x-a[12], rhs.y-a[13], rhs.z-a[14]);
 }
 
-void matrix4::Invert(void)
+void matrix4::invert(void)
 {
-	*this=GetInverse();
+	*this = getInverse();
 }
 
-matrix4 matrix4::GetInverse(void) const
+matrix4 matrix4::getInverse(void) const
 {
-	matrix4 result=GetInverseTranspose();
+	matrix4 result=getInverseTranspose();
 
-	result.Transpose();
+	result.transpose();
 
 	return result;
 }
 
 
-void matrix4::Transpose(void)
+void matrix4::transpose(void)
 {
-	*this=GetTranspose();
+	*this=getTranspose();
 }
 
-matrix4 matrix4::GetTranspose(void) const
+matrix4 matrix4::getTranspose(void) const
 {
-	return matrix4(	entries[ 0], entries[ 4], entries[ 8], entries[12],
-						entries[ 1], entries[ 5], entries[ 9], entries[13],
-						entries[ 2], entries[ 6], entries[10], entries[14],
-						entries[ 3], entries[ 7], entries[11], entries[15]);
+	return matrix4(	a[ 0], a[ 4], a[ 8], a[12],
+						a[ 1], a[ 5], a[ 9], a[13],
+						a[ 2], a[ 6], a[10], a[14],
+						a[ 3], a[ 7], a[11], a[15]);
 }
 
-void matrix4::InvertTranspose(void)
+void matrix4::invertTranspose(void)
 {
-	*this=GetInverseTranspose();
+	*this = getInverseTranspose();
 }
 
-matrix4 matrix4::GetInverseTranspose(void) const
+matrix4 matrix4::getInverseTranspose(void) const
 {
 	matrix4 result;
 
@@ -434,88 +434,88 @@ matrix4 matrix4::GetInverseTranspose(void) const
 	float det;													//determinant
 
 	//calculate pairs for first 8 elements (cofactors)
-	tmp[0] = entries[10] * entries[15];
-	tmp[1] = entries[11] * entries[14];
-	tmp[2] = entries[9] * entries[15];
-	tmp[3] = entries[11] * entries[13];
-	tmp[4] = entries[9] * entries[14];
-	tmp[5] = entries[10] * entries[13];
-	tmp[6] = entries[8] * entries[15];
-	tmp[7] = entries[11] * entries[12];
-	tmp[8] = entries[8] * entries[14];
-	tmp[9] = entries[10] * entries[12];
-	tmp[10] = entries[8] * entries[13];
-	tmp[11] = entries[9] * entries[12];
+	tmp[0] = a[10] * a[15];
+	tmp[1] = a[11] * a[14];
+	tmp[2] = a[9] * a[15];
+	tmp[3] = a[11] * a[13];
+	tmp[4] = a[9] * a[14];
+	tmp[5] = a[10] * a[13];
+	tmp[6] = a[8] * a[15];
+	tmp[7] = a[11] * a[12];
+	tmp[8] = a[8] * a[14];
+	tmp[9] = a[10] * a[12];
+	tmp[10] = a[8] * a[13];
+	tmp[11] = a[9] * a[12];
 
 	//calculate first 8 elements (cofactors)
-	result.SetEntry(0,		tmp[0]*entries[5] + tmp[3]*entries[6] + tmp[4]*entries[7]
-					-	tmp[1]*entries[5] - tmp[2]*entries[6] - tmp[5]*entries[7]);
+	result.setEntry(0,		tmp[0]*a[5] + tmp[3]*a[6] + tmp[4]*a[7]
+					-	tmp[1]*a[5] - tmp[2]*a[6] - tmp[5]*a[7]);
 
-	result.SetEntry(1,		tmp[1]*entries[4] + tmp[6]*entries[6] + tmp[9]*entries[7]
-					-	tmp[0]*entries[4] - tmp[7]*entries[6] - tmp[8]*entries[7]);
+	result.setEntry(1,		tmp[1]*a[4] + tmp[6]*a[6] + tmp[9]*a[7]
+					-	tmp[0]*a[4] - tmp[7]*a[6] - tmp[8]*a[7]);
 
-	result.SetEntry(2,		tmp[2]*entries[4] + tmp[7]*entries[5] + tmp[10]*entries[7]
-					-	tmp[3]*entries[4] - tmp[6]*entries[5] - tmp[11]*entries[7]);
+	result.setEntry(2,		tmp[2]*a[4] + tmp[7]*a[5] + tmp[10]*a[7]
+					-	tmp[3]*a[4] - tmp[6]*a[5] - tmp[11]*a[7]);
 
-	result.SetEntry(3,		tmp[5]*entries[4] + tmp[8]*entries[5] + tmp[11]*entries[6]
-					-	tmp[4]*entries[4] - tmp[9]*entries[5] - tmp[10]*entries[6]);
+	result.setEntry(3,		tmp[5]*a[4] + tmp[8]*a[5] + tmp[11]*a[6]
+					-	tmp[4]*a[4] - tmp[9]*a[5] - tmp[10]*a[6]);
 
-	result.SetEntry(4,		tmp[1]*entries[1] + tmp[2]*entries[2] + tmp[5]*entries[3]
-					-	tmp[0]*entries[1] - tmp[3]*entries[2] - tmp[4]*entries[3]);
+	result.setEntry(4,		tmp[1]*a[1] + tmp[2]*a[2] + tmp[5]*a[3]
+					-	tmp[0]*a[1] - tmp[3]*a[2] - tmp[4]*a[3]);
 
-	result.SetEntry(5,		tmp[0]*entries[0] + tmp[7]*entries[2] + tmp[8]*entries[3]
-					-	tmp[1]*entries[0] - tmp[6]*entries[2] - tmp[9]*entries[3]);
+	result.setEntry(5,		tmp[0]*a[0] + tmp[7]*a[2] + tmp[8]*a[3]
+					-	tmp[1]*a[0] - tmp[6]*a[2] - tmp[9]*a[3]);
 
-	result.SetEntry(6,		tmp[3]*entries[0] + tmp[6]*entries[1] + tmp[11]*entries[3]
-					-	tmp[2]*entries[0] - tmp[7]*entries[1] - tmp[10]*entries[3]);
+	result.setEntry(6,		tmp[3]*a[0] + tmp[6]*a[1] + tmp[11]*a[3]
+					-	tmp[2]*a[0] - tmp[7]*a[1] - tmp[10]*a[3]);
 
-	result.SetEntry(7,		tmp[4]*entries[0] + tmp[9]*entries[1] + tmp[10]*entries[2]
-					-	tmp[5]*entries[0] - tmp[8]*entries[1] - tmp[11]*entries[2]);
+	result.setEntry(7,		tmp[4]*a[0] + tmp[9]*a[1] + tmp[10]*a[2]
+					-	tmp[5]*a[0] - tmp[8]*a[1] - tmp[11]*a[2]);
 
 	//calculate pairs for second 8 elements (cofactors)
-	tmp[0] = entries[2]*entries[7];
-	tmp[1] = entries[3]*entries[6];
-	tmp[2] = entries[1]*entries[7];
-	tmp[3] = entries[3]*entries[5];
-	tmp[4] = entries[1]*entries[6];
-	tmp[5] = entries[2]*entries[5];
-	tmp[6] = entries[0]*entries[7];
-	tmp[7] = entries[3]*entries[4];
-	tmp[8] = entries[0]*entries[6];
-	tmp[9] = entries[2]*entries[4];
-	tmp[10] = entries[0]*entries[5];
-	tmp[11] = entries[1]*entries[4];
+	tmp[0] = a[2]*a[7];
+	tmp[1] = a[3]*a[6];
+	tmp[2] = a[1]*a[7];
+	tmp[3] = a[3]*a[5];
+	tmp[4] = a[1]*a[6];
+	tmp[5] = a[2]*a[5];
+	tmp[6] = a[0]*a[7];
+	tmp[7] = a[3]*a[4];
+	tmp[8] = a[0]*a[6];
+	tmp[9] = a[2]*a[4];
+	tmp[10] = a[0]*a[5];
+	tmp[11] = a[1]*a[4];
 
 	//calculate second 8 elements (cofactors)
-	result.SetEntry(8,		tmp[0]*entries[13] + tmp[3]*entries[14] + tmp[4]*entries[15]
-					-	tmp[1]*entries[13] - tmp[2]*entries[14] - tmp[5]*entries[15]);
+	result.setEntry(8,		tmp[0]*a[13] + tmp[3]*a[14] + tmp[4]*a[15]
+					-	tmp[1]*a[13] - tmp[2]*a[14] - tmp[5]*a[15]);
 
-	result.SetEntry(9,		tmp[1]*entries[12] + tmp[6]*entries[14] + tmp[9]*entries[15]
-					-	tmp[0]*entries[12] - tmp[7]*entries[14] - tmp[8]*entries[15]);
+	result.setEntry(9,		tmp[1]*a[12] + tmp[6]*a[14] + tmp[9]*a[15]
+					-	tmp[0]*a[12] - tmp[7]*a[14] - tmp[8]*a[15]);
 
-	result.SetEntry(10,		tmp[2]*entries[12] + tmp[7]*entries[13] + tmp[10]*entries[15]
-					-	tmp[3]*entries[12] - tmp[6]*entries[13] - tmp[11]*entries[15]);
+	result.setEntry(10,		tmp[2]*a[12] + tmp[7]*a[13] + tmp[10]*a[15]
+					-	tmp[3]*a[12] - tmp[6]*a[13] - tmp[11]*a[15]);
 
-	result.SetEntry(11,		tmp[5]*entries[12] + tmp[8]*entries[13] + tmp[11]*entries[14]
-					-	tmp[4]*entries[12] - tmp[9]*entries[13] - tmp[10]*entries[14]);
+	result.setEntry(11,		tmp[5]*a[12] + tmp[8]*a[13] + tmp[11]*a[14]
+					-	tmp[4]*a[12] - tmp[9]*a[13] - tmp[10]*a[14]);
 
-	result.SetEntry(12,		tmp[2]*entries[10] + tmp[5]*entries[11] + tmp[1]*entries[9]
-					-	tmp[4]*entries[11] - tmp[0]*entries[9] - tmp[3]*entries[10]);
+	result.setEntry(12,		tmp[2]*a[10] + tmp[5]*a[11] + tmp[1]*a[9]
+					-	tmp[4]*a[11] - tmp[0]*a[9] - tmp[3]*a[10]);
 
-	result.SetEntry(13,		tmp[8]*entries[11] + tmp[0]*entries[8] + tmp[7]*entries[10]
-					-	tmp[6]*entries[10] - tmp[9]*entries[11] - tmp[1]*entries[8]);
+	result.setEntry(13,		tmp[8]*a[11] + tmp[0]*a[8] + tmp[7]*a[10]
+					-	tmp[6]*a[10] - tmp[9]*a[11] - tmp[1]*a[8]);
 
-	result.SetEntry(14,		tmp[6]*entries[9] + tmp[11]*entries[11] + tmp[3]*entries[8]
-					-	tmp[10]*entries[11] - tmp[2]*entries[8] - tmp[7]*entries[9]);
+	result.setEntry(14,		tmp[6]*a[9] + tmp[11]*a[11] + tmp[3]*a[8]
+					-	tmp[10]*a[11] - tmp[2]*a[8] - tmp[7]*a[9]);
 
-	result.SetEntry(15,		tmp[10]*entries[10] + tmp[4]*entries[8] + tmp[9]*entries[9]
-					-	tmp[8]*entries[9] - tmp[11]*entries[10] - tmp[5]*entries[8]);
+	result.setEntry(15,		tmp[10]*a[10] + tmp[4]*a[8] + tmp[9]*a[9]
+					-	tmp[8]*a[9] - tmp[11]*a[10] - tmp[5]*a[8]);
 
 	// calculate determinant
-	det	=	 entries[0]*result.GetEntry(0)
-			+entries[1]*result.GetEntry(1)
-			+entries[2]*result.GetEntry(2)
-			+entries[3]*result.GetEntry(3);
+	det	=	 a[0]*result.getEntry(0)
+			+a[1]*result.getEntry(1)
+			+a[2]*result.getEntry(2)
+			+a[3]*result.getEntry(3);
 
 	if(det==0.0f)
 	{
@@ -529,207 +529,207 @@ matrix4 matrix4::GetInverseTranspose(void) const
 }
 
 //Invert if only composed of rotations & translations
-void matrix4::AffineInvert(void)
+void matrix4::affineInvert(void)
 {
-	(*this)=GetAffineInverse();
+	(*this) = getAffineInverse();
 }
 
-matrix4 matrix4::GetAffineInverse(void) const
+matrix4 matrix4::getAffineInverse(void) const
 {
 	//return the transpose of the rotation part
 	//and the negative of the inverse rotated translation part
-	return matrix4(	entries[0],
-						entries[4],
-						entries[8],
+	return matrix4(	a[0],
+						a[4],
+						a[8],
 						0.0f,
-						entries[1],
-						entries[5],
-						entries[9],
+						a[1],
+						a[5],
+						a[9],
 						0.0f,
-						entries[2],
-						entries[6],
-						entries[10],
+						a[2],
+						a[6],
+						a[10],
 						0.0f,
-						-(entries[0]*entries[12]+entries[1]*entries[13]+entries[2]*entries[14]),
-						-(entries[4]*entries[12]+entries[5]*entries[13]+entries[6]*entries[14]),
-						-(entries[8]*entries[12]+entries[9]*entries[13]+entries[10]*entries[14]),
+						-(a[0]*a[12]+a[1]*a[13]+a[2]*a[14]),
+						-(a[4]*a[12]+a[5]*a[13]+a[6]*a[14]),
+						-(a[8]*a[12]+a[9]*a[13]+a[10]*a[14]),
 						1.0f);
 }
 
-void matrix4::AffineInvertTranspose(void)
+void matrix4::affineInvertTranspose(void)
 {
-	(*this)=GetAffineInverseTranspose();
+	(*this) = getAffineInverseTranspose();
 }
 
-matrix4 matrix4::GetAffineInverseTranspose(void) const
+matrix4 matrix4::getAffineInverseTranspose(void) const
 {
 	//return the transpose of the rotation part
 	//and the negative of the inverse rotated translation part
 	//transposed
-	return matrix4(	entries[0],
-						entries[1],
-						entries[2],
-						-(entries[0]*entries[12]+entries[1]*entries[13]+entries[2]*entries[14]),
-						entries[4],
-						entries[5],
-						entries[6],
-						-(entries[4]*entries[12]+entries[5]*entries[13]+entries[6]*entries[14]),
-						entries[8],
-						entries[9],
-						entries[10],
-						-(entries[8]*entries[12]+entries[9]*entries[13]+entries[10]*entries[14]),
+	return matrix4(	a[0],
+						a[1],
+						a[2],
+						-(a[0]*a[12]+a[1]*a[13]+a[2]*a[14]),
+						a[4],
+						a[5],
+						a[6],
+						-(a[4]*a[12]+a[5]*a[13]+a[6]*a[14]),
+						a[8],
+						a[9],
+						a[10],
+						-(a[8]*a[12]+a[9]*a[13]+a[10]*a[14]),
 						0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void matrix4::SetTranslation(const v3 & translation)
+void matrix4::setTranslation(const v3 & translation)
 {
-	LoadIdentity();
+	loadIdentity();
 
-	SetTranslationPart(translation);
+	setTranslationPart(translation);
 }
 
-void matrix4::SetScale(const v3 & scaleFactor)
+void matrix4::setScale(const v3 & scaleFactor)
 {
-	LoadIdentity();
+	loadIdentity();
 
-	entries[0]=scaleFactor.x;
-	entries[5]=scaleFactor.y;
-	entries[10]=scaleFactor.z;
+	a[0] = scaleFactor.x;
+	a[5] = scaleFactor.y;
+	a[10]= scaleFactor.z;
 }
 
-void matrix4::SetUniformScale(const float scaleFactor)
+void matrix4::setUniformScale(const float scaleFactor)
 {
-	LoadIdentity();
+	loadIdentity();
 
-	entries[0]=entries[5]=entries[10]=scaleFactor;
+	a[0] = a[5] = a[10] = scaleFactor;
 }
 
-void matrix4::SetRotationAxis(const double angle, const v3 & axis)
+void matrix4::setRotationAxis(const double angle, const v3 & axis)
 {
-	v3 u=axis.GetNormalized();
+	v3 u = axis.getNormalized();
 
 	float sinAngle=(float)sin(M_PI*angle/180);
 	float cosAngle=(float)cos(M_PI*angle/180);
 	float oneMinusCosAngle=1.0f-cosAngle;
 
-	LoadIdentity();
+	loadIdentity();
 
-	entries[0]=(u.x)*(u.x) + cosAngle*(1-(u.x)*(u.x));
-	entries[4]=(u.x)*(u.y)*(oneMinusCosAngle) - sinAngle*u.z;
-	entries[8]=(u.x)*(u.z)*(oneMinusCosAngle) + sinAngle*u.y;
+	a[0]=(u.x)*(u.x) + cosAngle*(1-(u.x)*(u.x));
+	a[4]=(u.x)*(u.y)*(oneMinusCosAngle) - sinAngle*u.z;
+	a[8]=(u.x)*(u.z)*(oneMinusCosAngle) + sinAngle*u.y;
 
-	entries[1]=(u.x)*(u.y)*(oneMinusCosAngle) + sinAngle*u.z;
-	entries[5]=(u.y)*(u.y) + cosAngle*(1-(u.y)*(u.y));
-	entries[9]=(u.y)*(u.z)*(oneMinusCosAngle) - sinAngle*u.x;
+	a[1]=(u.x)*(u.y)*(oneMinusCosAngle) + sinAngle*u.z;
+	a[5]=(u.y)*(u.y) + cosAngle*(1-(u.y)*(u.y));
+	a[9]=(u.y)*(u.z)*(oneMinusCosAngle) - sinAngle*u.x;
 	
-	entries[2]=(u.x)*(u.z)*(oneMinusCosAngle) - sinAngle*u.y;
-	entries[6]=(u.y)*(u.z)*(oneMinusCosAngle) + sinAngle*u.x;
-	entries[10]=(u.z)*(u.z) + cosAngle*(1-(u.z)*(u.z));
+	a[2]=(u.x)*(u.z)*(oneMinusCosAngle) - sinAngle*u.y;
+	a[6]=(u.y)*(u.z)*(oneMinusCosAngle) + sinAngle*u.x;
+	a[10]=(u.z)*(u.z) + cosAngle*(1-(u.z)*(u.z));
 }
 
-void matrix4::SetRotationAxis(const coord sinAngle, const coord cosAngle,const v3 & axis)
+void matrix4::setRotationAxis(const coord sinAngle, const coord cosAngle,const v3 & axis)
 {
-	v3 u=axis.GetNormalized();
+	v3 u=axis.getNormalized();
 
 	coord one = 1.0;
 	coord oneMinusCosAngle=one-cosAngle;
 
-	LoadIdentity();
+	loadIdentity();
 
-	entries[0]=(u.x)*(u.x) + cosAngle*(1-(u.x)*(u.x));
-	entries[4]=(u.x)*(u.y)*(oneMinusCosAngle) - sinAngle*u.z;
-	entries[8]=(u.x)*(u.z)*(oneMinusCosAngle) + sinAngle*u.y;
+	a[0]=(u.x)*(u.x) + cosAngle*(1-(u.x)*(u.x));
+	a[4]=(u.x)*(u.y)*(oneMinusCosAngle) - sinAngle*u.z;
+	a[8]=(u.x)*(u.z)*(oneMinusCosAngle) + sinAngle*u.y;
 
-	entries[1]=(u.x)*(u.y)*(oneMinusCosAngle) + sinAngle*u.z;
-	entries[5]=(u.y)*(u.y) + cosAngle*(1-(u.y)*(u.y));
-	entries[9]=(u.y)*(u.z)*(oneMinusCosAngle) - sinAngle*u.x;
+	a[1]=(u.x)*(u.y)*(oneMinusCosAngle) + sinAngle*u.z;
+	a[5]=(u.y)*(u.y) + cosAngle*(1-(u.y)*(u.y));
+	a[9]=(u.y)*(u.z)*(oneMinusCosAngle) - sinAngle*u.x;
 	
-	entries[2]=(u.x)*(u.z)*(oneMinusCosAngle) - sinAngle*u.y;
-	entries[6]=(u.y)*(u.z)*(oneMinusCosAngle) + sinAngle*u.x;
-	entries[10]=(u.z)*(u.z) + cosAngle*(1-(u.z)*(u.z));
+	a[2]=(u.x)*(u.z)*(oneMinusCosAngle) - sinAngle*u.y;
+	a[6]=(u.y)*(u.z)*(oneMinusCosAngle) + sinAngle*u.x;
+	a[10]=(u.z)*(u.z) + cosAngle*(1-(u.z)*(u.z));
 }
 
 
-void matrix4::SetRotationX(const double angle)
+void matrix4::setRotationX(const double angle)
 {
-	LoadIdentity();
+	loadIdentity();
 
-	entries[5]=(float)cos(M_PI*angle/180);
-	entries[6]=(float)sin(M_PI*angle/180);
+	a[5]=(float)cos(M_PI*angle/180);
+	a[6]=(float)sin(M_PI*angle/180);
 
-	entries[9]=-entries[6];
-	entries[10]=entries[5];
+	a[9]=-a[6];
+	a[10]=a[5];
 }
 
-void matrix4::SetRotationY(const double angle)
+void matrix4::setRotationY(const double angle)
 {
-	LoadIdentity();
+	loadIdentity();
 
-	entries[0]=(float)cos(M_PI*angle/180);
-	entries[2]=-(float)sin(M_PI*angle/180);
+	a[0] =  (float)cos(M_PI*angle/180);
+	a[2] = -(float)sin(M_PI*angle/180);
 
-	entries[8]=-entries[2];
-	entries[10]=entries[0];
+	a[8] = -a[2];
+	a[10]=  a[0];
 }
 
-void matrix4::SetRotationZ(const double angle)
+void matrix4::setRotationZ(const double angle)
 {
-	LoadIdentity();
+	loadIdentity();
 
-	entries[0]=(float)cos(M_PI*angle/180);
-	entries[1]=(float)sin(M_PI*angle/180);
+	a[0] = (float)cos(M_PI*angle/180);
+	a[1] = (float)sin(M_PI*angle/180);
 
-	entries[4]=-entries[1];
-	entries[5]=entries[0];
+	a[4] = -a[1];
+	a[5] =  a[0];
 }
 
-void matrix4::SetRotationEuler(const double angleX, const double angleY, const double angleZ)
+void matrix4::setRotationEuler(const double angleX, const double angleY, const double angleZ)
 {
-	LoadIdentity();
+	loadIdentity();
 
-	SetRotationPartEuler(angleX, angleY, angleZ);
+	setRotationPartEuler(angleX, angleY, angleZ);
 }
 
-void matrix4::SetPerspective(	float left, float right, float bottom,
+void matrix4::setPerspective(	float left, float right, float bottom,
 								float top, float n, float f)
 {
 	float nudge=0.999f;		//prevent artifacts with infinite far plane
 
-	LoadZero();
+	loadZero();
 
 	//check for division by 0
 	if(left==right || top==bottom || n==f)
 		return;
 
-	entries[0]=(2*n)/(right-left);
+	a[0]=(2*n)/(right-left);
 
-	entries[5]=(2*n)/(top-bottom);
+	a[5]=(2*n)/(top-bottom);
 
-	entries[8]=(right+left)/(right-left);
-	entries[9]=(top+bottom)/(top-bottom);
-
-	if(f!=-1)
-	{
-		entries[10]=-(f+n)/(f-n);
-	}
-	else		//if f==-1, use an infinite far plane
-	{
-		entries[10]=-nudge;
-	}
-
-	entries[11]=-1;
+	a[8]=(right+left)/(right-left);
+	a[9]=(top+bottom)/(top-bottom);
 
 	if(f!=-1)
 	{
-		entries[14]=-(2*f*n)/(f-n);
+		a[10]=-(f+n)/(f-n);
 	}
 	else		//if f==-1, use an infinite far plane
 	{
-		entries[14]=-2*n*nudge;
+		a[10]=-nudge;
+	}
+
+	a[11]=-1;
+
+	if(f!=-1)
+	{
+		a[14]=-(2*f*n)/(f-n);
+	}
+	else		//if f==-1, use an infinite far plane
+	{
+		a[14]=-2*n*nudge;
 	}
 }
 
-void matrix4::SetPerspective(float fovy, float aspect, float n, float f)
+void matrix4::setPerspective(float fovy, float aspect, float n, float f)
 {
 	float left, right, top, bottom;
 
@@ -742,33 +742,33 @@ void matrix4::SetPerspective(float fovy, float aspect, float n, float f)
 	left=aspect*bottom;
 	right=aspect*top;
 
-	SetPerspective(left, right, bottom, top, n, f);
+	setPerspective(left, right, bottom, top, n, f);
 }
 
-void matrix4::SetOrtho(	float left, float right, float bottom,
+void matrix4::setOrtho(	float left, float right, float bottom,
 							float top, float n, float f)
 {
-	LoadIdentity();
+	loadIdentity();
 
-	entries[0]=2.0f/(right-left);
+	a[0]=2.0f/(right-left);
 
-	entries[5]=2.0f/(top-bottom);
+	a[5]=2.0f/(top-bottom);
 
-	entries[10]=-2.0f/(f-n);
+	a[10]=-2.0f/(f-n);
 
-	entries[12]=-(right+left)/(right-left);
-	entries[13]=-(top+bottom)/(top-bottom);
-	entries[14]=-(f+n)/(f-n);
+	a[12]=-(right+left)/(right-left);
+	a[13]=-(top+bottom)/(top-bottom);
+	a[14]=-(f+n)/(f-n);
 }
 
-void matrix4::SetTranslationPart(const v3 & translation)
+void matrix4::setTranslationPart(const v3 & translation)
 {
-	entries[12]=translation.x;
-	entries[13]=translation.y;
-	entries[14]=translation.z;
+	a[12] = translation.x;
+	a[13] = translation.y;
+	a[14] = translation.z;
 }
 
-void matrix4::SetRotationPartEuler(const double angleX, const double angleY, const double angleZ)
+void matrix4::setRotationPartEuler(const double angleX, const double angleY, const double angleZ)
 {
 	double cr = cos( M_PI*angleX/180 );
 	double sr = sin( M_PI*angleX/180 );
@@ -777,18 +777,18 @@ void matrix4::SetRotationPartEuler(const double angleX, const double angleY, con
 	double cy = cos( M_PI*angleZ/180 );
 	double sy = sin( M_PI*angleZ/180 );
 
-	entries[0] = ( float )( cp*cy );
-	entries[1] = ( float )( cp*sy );
-	entries[2] = ( float )( -sp );
+	a[0] = ( float )( cp*cy );
+	a[1] = ( float )( cp*sy );
+	a[2] = ( float )( -sp );
 
 	double srsp = sr*sp;
 	double crsp = cr*sp;
 
-	entries[4] = ( float )( srsp*cy-cr*sy );
-	entries[5] = ( float )( srsp*sy+cr*cy );
-	entries[6] = ( float )( sr*cp );
+	a[4] = ( float )( srsp*cy-cr*sy );
+	a[5] = ( float )( srsp*sy+cr*cy );
+	a[6] = ( float )( sr*cp );
 
-	entries[8] = ( float )( crsp*cy+sr*sy );
-	entries[9] = ( float )( crsp*sy-sr*cy );
-	entries[10] = ( float )( cr*cp );
+	a[8] = ( float )( crsp*cy+sr*sy );
+	a[9] = ( float )( crsp*sy-sr*cy );
+	a[10] = ( float )( cr*cp );
 }

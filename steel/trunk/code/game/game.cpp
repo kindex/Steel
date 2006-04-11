@@ -32,13 +32,13 @@ void Game::processKeyboard()
 		if(input->isPressed("a"))
 		{
 			v3 d(direction.y, -direction.x, 0);
-			d.Normalize();
+			d.normalize();
 			eye -= (float)moveSpeed*(float)speed*d;
 		}
 		if(input->isPressed("d"))
 		{
 			v3 d(direction.y, -direction.x, 0);
-			d.Normalize();
+			d.normalize();
 			eye += (float)moveSpeed*(float)speed*d;
 		}
 	}
@@ -46,12 +46,12 @@ void Game::processKeyboard()
 
 void Game::handleMouse(double dx, double dy)
 {
-	direction.RotateZ((float)dx);
+	direction.rotateZ((float)dx);
 
 	if(dy<0 && direction.dotProduct(v3(0,0, 1))<0.9 || 
 		dy>0 && direction.dotProduct(v3(0,0, -1))<0.9 )
 
-		direction.RotateAxis((float)dy, v3( -direction.y, direction.x, 0));
+		direction.rotateAxis((float)dy, v3( -direction.y, direction.x, 0));
 }
 
 void Game::processPhysic(PhysicEngine *physic)
@@ -103,7 +103,7 @@ void Game::draw(GraphEngine *graph)
 		}
 	}
 */
-	direction.Normalize();
+	direction.normalize();
 	
 
 	graph->camera.setup(eye, direction);
@@ -135,7 +135,7 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 	v3 target = v3(conf->getf("camera.target.x"), conf->getf("camera.target.y"), conf->getf("camera.target.z"));
 
 	direction = target-eye;
-	direction.Normalize();
+	direction.normalize();
 
 	moveSpeed = conf->getd("camera.speed", 1);
 

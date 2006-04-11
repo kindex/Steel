@@ -66,9 +66,14 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 		int c = element.size();
 		element.resize(c+1);
 
-		element[c].material = it->first;
-
-// TODO	it->secondm olny tringles from this material
+		element[c].materialName = it->first;
+		element[c].material = (Config*)res->get(Res::config, string("material/") + element[c].materialName);
+		if(element[c].material == NULL)
+		{
+			alog.msg("error renderer res material", string("Material not found ")+ element[c].materialName);
+			return false;
+		}
+		element[c].alpha = element[c].material->gets("color_mode") == "alpha";
 
 		element[c].triangle = new Triangles;
 
@@ -94,7 +99,14 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 		int c = element.size();
 		element.resize(c+1);
 
-		element[c].material = it->material;
+		element[c].materialName = it->material;
+		element[c].material = (Config*)res->get(Res::config, string("material/") + element[c].materialName);
+		if(element[c].material == NULL)
+		{
+			alog.msg("error renderer res material", string("Material not found ")+ element[c].materialName);
+			return false;
+		}
+		element[c].alpha = element[c].material->gets("color_mode") == "alpha";
 
 		element[c].triangle = new Triangles(2);
 		for(int i=0; i<3; i++)
@@ -106,9 +118,9 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 		v3 dir = camera.eye - new_matrix*v3();
 //		dir = v3(1,0,0);
 
-		dir.Normalize();
+		dir.normalize();
 		v3 per1(-dir.y, dir.x, 0); // перендикул€р к dir
-		per1.Normalize();
+		per1.normalize();
 		v3 per2 = dir.vectorProduct(per1);
 		per1 *= it->width;
 		per2 *= it->width;
