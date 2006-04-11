@@ -99,6 +99,12 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 		int c = element.size();
 		element.resize(c+1);
 
+		matrix4 matrix = new_matrix;
+
+		matrix.a[12] += it->pos.x;
+		matrix.a[13] += it->pos.y;
+		matrix.a[14] += it->pos.z;
+
 		element[c].materialName = it->material;
 		element[c].material = (Config*)res->get(Res::config, string("material/") + element[c].materialName);
 		if(element[c].material == NULL)
@@ -115,7 +121,7 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 			element[c].triangle->operator[](1).a[i] = 3-(i+2)%4;
 		}
 
-		v3 dir = camera.eye - new_matrix*v3();
+		v3 dir = camera.eye - matrix*v3();
 //		dir = v3(1,0,0);
 
 		dir.normalize();
@@ -139,18 +145,14 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 		element[c].mapcoord->operator [](2) = v2(1, 1);
 		element[c].mapcoord->operator [](3) = v2(0, 1);
 
-		element[c].matrix = new_matrix;
+		element[c].matrix = matrix;
+
 		element[c].normal = new Normals(4);
 		for(int i=0; i<4; i++)
 			element[c].normal->operator [](i) = dir;
 
-
-//		element[c].frame = frame;
-
 		total.triangle += 2;
 	}
-
-//		v3 pos = o.getPos();
 	return true;
 }
 

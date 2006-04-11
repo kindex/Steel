@@ -70,6 +70,7 @@ getPVertexes возвращ€ет координаты точек в системе координат getPMatrix*/
 // уникальный идентификатор объекта или пуста€ строка
 	virtual std::string getName() = 0;
 	
+	virtual	void	process(steel::time speed) = 0;
 //	virtual std::string getMaterial() = 0;
 };
 

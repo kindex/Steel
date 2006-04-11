@@ -73,8 +73,6 @@ int main(int argc, char *argv[])
 	graph.bindResColelntion(&res);
 	if(!graph.init("renderer", &input)) return 1;
 #endif
-
-
 	
 // ************ INPUT ************
 	if(!input.init(&res, "input")) return 1;

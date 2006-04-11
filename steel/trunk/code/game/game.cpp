@@ -84,14 +84,6 @@ void Game::process()
 
 void Game::draw(GraphEngine *graph)
 {
-/*	direction = 
-		v3(
-			cos(angle.x) * cos(angle.y),
-			sin(angle.x) * cos(angle.y),
-			-sin(angle.y)
-		);*/
-
-	
 /*	if(!input->isMouseCaptured())
 	{
 		if(tag.find("camera.eye") != tag.end())
@@ -104,14 +96,10 @@ void Game::draw(GraphEngine *graph)
 	}
 */
 	direction.normalize();
-	
 
 	graph->camera.setup(eye, direction);
-
 	graph->processCamera();
 
-/*	for(vector<GraphInterface*>::iterator it = gobj.begin(); it != gobj.end(); it++)
-		graph->inject((*it));*/
 	graph->inject(world);
 
 	graph->process();

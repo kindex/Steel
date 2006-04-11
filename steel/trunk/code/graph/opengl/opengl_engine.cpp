@@ -73,8 +73,6 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				if(alpha) // TODO - alpha + lights
 				{
 					glBlendFunc(GL_ONE, GL_ONE);
-//					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 					glEnable(GL_BLEND);
 					blend = true;
 				}
@@ -183,7 +181,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			if(tex>0)
 			{
 				glDepthFunc(GL_LEQUAL); // For blending
-				glBlendFunc(GL_SRC_COLOR, GL_DST_COLOR);
+				glBlendFunc(GL_ONE, GL_ONE);
 				glEnable(GL_BLEND);
 			}
 			drawReflect(e, cubeMap, e.matrix, camera.eye);
@@ -722,7 +720,7 @@ bool OpenGL_Engine::process()
 	if(!ARB_multitexture_supported) 
 		conf->setup("drawBump", 0);
 
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	std::vector<DrawElement> elementAlpha;
 

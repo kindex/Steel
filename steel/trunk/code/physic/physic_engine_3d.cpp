@@ -11,6 +11,8 @@ bool PhysicEngine3D::process(steel::time speed)
 	{
 		PhysicElement &el = *it;
 		PhysicInterface &o = *el.obj;
+		o.process(speed);
+
 		v3 pos = el.matrix * v3(); // absolute
 		v3 local_pos = o.getPMatrix() * v3(); // local (в системе координат родителя)
 

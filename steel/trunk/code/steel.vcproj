@@ -650,6 +650,14 @@
 					RelativePath=".\game\game_obj.h"
 					>
 				</File>
+				<File
+					RelativePath=".\game\particle_system.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\game\particle_system.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="physic"

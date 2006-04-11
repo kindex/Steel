@@ -110,6 +110,8 @@ public:
 
 	bool	getTarget(v3 &targetPoint, coord &speed) {return false;}
 	void	setTargetReached() {}
+
+	void	process(steel::time speed) {}
 };
 /*
 Рисуемый объект, GraphMesh и PhysicMesh берутся из модели

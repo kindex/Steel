@@ -15,7 +15,7 @@ solid			wall	0	0	10
 solid			wall	0	20	-1
 solid			wall	0	-20	-1
 
-//solid		teapot1	teapot	3	3	0
+solid		teapot1	teapot	3	3	0
 //solid		torus1	t	-5	5	3
 //solid		torus2	torus	-5	-5	0
 //solid		star1	t2	-2	0	7
@@ -35,9 +35,14 @@ tag		tag6		-1	-1	2
 path		path1	5	tag2	tag3	tag4	tag5	tag6
 
 //sprite	id	materialX	Y	Z	size
-sprite	path1	sprite1	target	0.1	-1	0	1
-sprite	path1	sprite2	target	1	-2.3	1.5	0.5
-sprite	path1	sprite3	target	-1	-2.3	1.5	0.5
+
+//sprite		sprite1	metal_torus	0.1	-1	0	1
+
+//sprite	path1	sprite2	target	1	-2.3	1.5	0.5
+//sprite	path1	sprite3	target	-1	-2.3	1.5	0.5
+
+ps	path1	ps1	ps	0	0	0
+
 
 include	path1	group1	room/cubes	0	0	0
 //include		group2	room/cubes	-1	-1	1

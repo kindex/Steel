@@ -33,8 +33,8 @@ Sprite, Billboard. Полигон, который всегда параллелен плоскости экрана.
 */
 struct Sprite
 {
-	v3 pos;
-	coord width; // шигина задаётся, а высота рассчитывается автоматически с учётом сохранения коофициента
+	v3		pos;
+	coord	width; // ширина задаётся, а высота рассчитывается автоматически с учётом сохранения коофициента
 	// сжатия оригинальной картинки
 	std::string material;
 };
@@ -88,7 +88,6 @@ public:
  В зависимости от расстояния и производительности машины.
 
 
-Sprites ?
 NURBS ?
 Decals ?
 
@@ -109,13 +108,13 @@ Video textures (avi, camera)
 
 	virtual MapCoords*	getMapCoords() = 0; 
 	virtual FaceMaterials* getFaceMaterials() = 0;
-	virtual Lights* getLights() = 0;
-	virtual Sprites* getSprites() = 0;
+	virtual Lights*		getLights() = 0;
+	virtual Sprites*	getSprites() = 0;
 
 /*матрица трансформации объекта относительно его родителя. 
 Включает в себя повотор, сдвиг и масштаб.
 getPVertexes возвращяет координаты точек в системе координат getPMatrix*/
-	virtual matrix4 getMatrix() = 0;
+	virtual matrix4		getMatrix() = 0;
 };
 
 #endif

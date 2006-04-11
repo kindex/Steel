@@ -2,6 +2,7 @@
 #include "../common/logger.h"
 #include "../common/utils.h"
 #include "game_obj.h"
+#include "particle_system.h"
 
 using namespace std;
 
@@ -13,7 +14,6 @@ bool GameGroup::load(string script, ResCollection *res)
 		alog.msg("error game res", "Cannot load script");
 		return false;
 	}
-
 
 	alog.msg("game script", IntToStr(s->count()) + " Lines");
 	for(int i=0; i<s->count(); i++)
@@ -93,6 +93,18 @@ bool GameGroup::load(string script, ResCollection *res)
 			gameobj = true;
 		}
 
+		if(kind == "ps")
+		{
+			Config *c = (Config*)res->add(Res::config, "particle_system/" + model);
+			if(!c)
+			{
+				alog.msg("error game res", "Cannot load particle system config");
+				return false;
+			}
+			obj = new GameParticleSystem(c, res);
+			g = true;
+			gameobj = true;
+		}
 
 		if(id != "" && obj)
 		{
