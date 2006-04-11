@@ -67,7 +67,7 @@ public:
 
 	void drawBump(DrawElement &e, GLuint normalMap, matrix4 const matrix, v3 const light);
 	void drawReflect(DrawElement &e, GLuint cubeMap, matrix4 const matrix, v3 const light);
-	void drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const light);
+	bool drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const light);
 	void drawDistColor(DrawElement &e, matrix4 const matrix, v3 const light, float const distance);
 
 	void getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals const *normal, std::vector<v3> **sTangent, std::vector<v3> **tTangent);

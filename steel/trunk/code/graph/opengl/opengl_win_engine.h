@@ -16,6 +16,10 @@
 #ifndef __GRAPH_OPENGL_WIN_ENGINE_H
 #define __GRAPH_OPENGL_WIN_ENGINE_H
 
+#include "../../_cpp.h"
+
+#ifdef OPENGL_WIN
+
 #include "opengl_engine.h"
 #include "../../common/logger.h"
 #include "../../input/input_win.h"
@@ -48,4 +52,5 @@ public:
 	bool changeToWindow();
 };
 
+#endif
 #endif

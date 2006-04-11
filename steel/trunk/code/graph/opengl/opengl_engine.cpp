@@ -93,8 +93,8 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				}
 				else if(e.mapcoord && colorMap>0 && conf->geti("drawLight") ) // Light map (Diffuse)
 				{
-					drawDiffuse(e, e.matrix, it->pos);
-					tex++;
+					if(drawDiffuse(e, e.matrix, it->pos))
+						tex++;
 				}
 	
 				if(blend)
@@ -402,29 +402,35 @@ void OpenGL_Engine::drawDistColor(DrawElement &e, matrix4 const matrix, v3 const
 }
 
 
-void OpenGL_Engine::drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const light)
+bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const light)
 {
-	v3List *sTangent, *tTangent, *tangentSpaceLight;
+	if(GL_TEXTURE_CUBE_MAP_ARB_supported)
+	{
+		v3List *sTangent, *tTangent, *tangentSpaceLight;
 
-	getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
-	
-	genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
+		getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
+		genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
 
 	//Bind normalisation cube map to texture unit 1
-	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-    glEnable(GL_TEXTURE_3D);
-	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, lightCubeMap);
+		glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 
-	glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	    glEnable(GL_TEXTURE_3D);
+		glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, lightCubeMap);
 
-    drawFaces(e);
+		glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-    glDisable(GL_TEXTURE_3D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		drawFaces(e);
 
-	delete tangentSpaceLight;
+		glDisable(GL_TEXTURE_CUBE_MAP_ARB);
+		glDisable(GL_TEXTURE_3D);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		delete tangentSpaceLight;
+		return true;
+	}
+	else
+		return false;
 }
 
 
@@ -713,6 +719,9 @@ GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB
 
 bool OpenGL_Engine::process()
 {
+	if(!ARB_multitexture_supported) 
+		conf->setup("drawBump", 0);
+
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	std::vector<DrawElement> elementAlpha;
@@ -825,6 +834,4 @@ void OpenGL_Engine::processCamera()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
-
-
 

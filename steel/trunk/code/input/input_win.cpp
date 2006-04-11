@@ -122,13 +122,6 @@ void InputWIN::process()
 	}
 }
 
-#define MOUSE_SENS (0.02)
-
-void InputWIN::getMouseDelta(double &dx, double &dy)
-{
-	dx = lastdx*sensetivity*MOUSE_SENS; lastdx = 0;
-	dy = lastdy*sensetivity*MOUSE_SENS; lastdy = 0;
-}
 
 #endif
 

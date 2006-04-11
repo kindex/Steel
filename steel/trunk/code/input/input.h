@@ -23,6 +23,9 @@ protected:
 	Game	*game;
 	Config	*conf;
 	ResCollection		*res;
+
+	int cx, cy, lastdx, lastdy;
+
 public:
 	bool init(ResCollection *_res, std::string _conf);
 	void setGame(Game *_game) { game = _game; }
@@ -32,8 +35,8 @@ public:
 	virtual void captureMouse() = 0;
 	virtual void freeMouse() = 0;
 	virtual void process() = 0;
-	virtual void getMouseDelta(double &dx, double &dy) = 0;
-	virtual void setMouseCenter(int _cx, int _cy) = 0;
+	virtual void getMouseDelta(double &dx, double &dy);
+	virtual void setMouseCenter(int _cx, int _cy) { cx = _cx; cy = _cy; }
 	bool isMouseCaptured() { return mouseCaptured; }
 };
 

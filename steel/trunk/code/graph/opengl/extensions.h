@@ -34,7 +34,7 @@ GLuint GenerateLightCubeMap();
 GLuint generateDistanceLinearMap();
 
 
-extern bool ARB_multitexture_supported;
+extern bool ARB_multitexture_supported, GL_TEXTURE_CUBE_MAP_ARB_supported;
 
 extern PFNGLACTIVETEXTUREARBPROC				glActiveTextureARB;
 extern PFNGLCLIENTACTIVETEXTUREARBPROC			glClientActiveTextureARB;

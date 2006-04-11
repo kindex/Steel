@@ -10,16 +10,16 @@
 class InputSDL: public Input
 {
 protected:
-	int sx, sy, cx, cy, mx, my, lastdx, lastdy;
+	int sx, sy, mx, my;
 	bool firstMouse;
 public:
 	void process();
-	void captureMouse(int _cx, int _cy);
-	void getMouseDelta(int &dx, int &dy);
+	void captureMouse();
+	void freeMouse();
 
-	bool init(std::string _conf, Game *_game) 
+	bool init(ResCollection *_res, std::string _conf)
 	{ 
-		if(!Input::init(_conf, _game)) return false;
+		if(!Input::init(_res, _conf)) return false;
 		firstMouse = true;
 		lastdx = 0;
 		lastdy = 0;

@@ -54,24 +54,28 @@ void InputSDL::process()
 					break;
 	
 			}
+	if(mouseCaptured && focused)
+	{
+		SDL_WarpMouse(cx, cy);
+	}
 }
 
-void InputSDL::getMouseDelta(int &dx, int &dy)
-{
 
-}
-
-
-void InputSDL::captureMouse(int _cx, int _cy)
+void InputSDL::captureMouse()
 {
 	mouseCaptured = true;
 
-	cx = _cx;
-	cy = _cy;
-	sx = cx;
-	sy = cy;
+	lastdx = 0;
+	lastdy = 0;
 
 	SDL_WarpMouse(cx, cy);
 }
+
+void InputSDL::freeMouse()
+{
+//	ShowCursor(true);			// show Mouse Pointer
+	mouseCaptured = false;
+}
+
 
 #endif

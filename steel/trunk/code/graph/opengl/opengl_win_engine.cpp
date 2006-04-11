@@ -11,6 +11,10 @@
 		системно зависимые функции, такие как создание окна.
  ************************************************************/
 
+#include "../../_cpp.h"
+
+#ifdef OPENGL_WIN
+
 #include "opengl_win_engine.h"
 #include "../../input/input_win.h"
 #include "../../common/utils.h"
@@ -39,9 +43,7 @@ bool OpenGL_WIN_Engine::init(std::string _conf, InputWIN *_input)
 
 void OpenGL_WIN_Engine::repair() // repair window on resize
 {
-
 	glViewport( 0, 0, conf->geti("window.width"), conf->geti("window.height"));
-
 }
 
 void OpenGL_WIN_Engine::swapBuffers()
@@ -378,3 +380,5 @@ void OpenGL_WIN_Engine::setCaption(std::string caption)
 {
 	SetWindowText(handle, caption.c_str() );
 }
+
+#endif

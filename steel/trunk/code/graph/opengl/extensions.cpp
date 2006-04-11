@@ -1,24 +1,29 @@
 #include "extensions.h"
 #include "../../math/vector3d.h"
 
-bool ARB_multitexture_supported = false;
+using namespace std;
+
+bool ARB_multitexture_supported = false, GL_TEXTURE_CUBE_MAP_ARB_supported = false;
 
 bool SetUpARB_multitexture()
 {
 	//Check for support
-	char * extensionString=(char *)glGetString(GL_EXTENSIONS);
-	char * extensionName="GL_ARB_multitexture";
+	char *extensionString = (char *)glGetString(GL_EXTENSIONS);
+	
+	alog.msg("opengl", string("Supported extensions: ") + extensionString);
 
-	char * endOfString;									//store pointer to end of string
+	char *extensionName="GL_ARB_multitexture";
+
+	char *endOfString;									//store pointer to end of string
 	unsigned int distanceToSpace;						//distance to next space
 
-	endOfString = extensionString+strlen(extensionString);
+	endOfString = extensionString + strlen(extensionString);
 
 	//loop through string
 	while(extensionString<endOfString)
 	{
 		//find distance to next space
-		distanceToSpace=strcspn(extensionString, " ");
+		distanceToSpace = strcspn(extensionString, " ");
 
 		//see if we have found extensionName
 		if((strlen(extensionName)==distanceToSpace) &&
@@ -36,6 +41,21 @@ bool SetUpARB_multitexture()
 		alog.msg("error graph opengl", "WARNING: ARB_multitexture unsupported!");
 		return false;
 	}
+
+	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+	if(!glIsEnabled(GL_TEXTURE_CUBE_MAP_ARB))
+	{
+		alog.msg("error graph opengl", "WARNING: GL_TEXTURE_CUBE_MAP_ARB unsupported!");
+		GL_TEXTURE_CUBE_MAP_ARB_supported = false;
+		return false;
+	}
+	else
+	{
+		glDisable(GL_TEXTURE_CUBE_MAP_ARB);
+		GL_TEXTURE_CUBE_MAP_ARB_supported = true;
+	}
+
+
 
 //	alog.msg("graph opengl", "ARB_multitexture supported!");
 

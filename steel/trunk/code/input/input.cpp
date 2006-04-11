@@ -25,3 +25,13 @@ bool Input::init(ResCollection *_res, std::string _conf)
 
 	return true; 
 }
+
+
+#define MOUSE_SENS (0.02)
+
+void Input::getMouseDelta(double &dx, double &dy)
+{
+	dx = lastdx*sensetivity*MOUSE_SENS; lastdx = 0;
+	dy = lastdy*sensetivity*MOUSE_SENS; lastdy = 0;
+}
+
