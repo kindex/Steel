@@ -63,17 +63,17 @@ public:
 	
 	void drawFaces(DrawElement &e);
 	void drawNormals(DrawElement &e);
-	void drawAABB(DrawElement &e, matrix4 matrix);
+	void drawAABB(DrawElement &e, matrix44 matrix);
 
-	void drawBump(DrawElement &e, GLuint normalMap, matrix4 const matrix, v3 const light);
-	void drawReflect(DrawElement &e, GLuint cubeMap, matrix4 const matrix, v3 const light);
-	bool drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const light);
-	void drawDistColor(DrawElement &e, matrix4 const matrix, v3 const light, float const distance);
+	void drawBump(DrawElement &e, GLuint normalMap, matrix44 const matrix, v3 const light);
+	void drawReflect(DrawElement &e, GLuint cubeMap, matrix44 const matrix, v3 const light);
+	bool drawDiffuse(DrawElement &e, matrix44 const matrix, v3 const light);
+	void drawDistColor(DrawElement &e, matrix44 const matrix, v3 const light, float const distance);
 
 	void getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals const *normal, std::vector<v3> **sTangent, std::vector<v3> **tTangent);
 
-	void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix4 const matrix, const v3 light,	v3List **tangentSpaceLight);
-	void genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix4 const matrix, const v3 camera,	v3List **tangentSpaceLight);
+	void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 light,	v3List **tangentSpaceLight);
+	void genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 camera,	v3List **tangentSpaceLight);
 
 	GLuint getTexture(std::string imageName);
 	GLuint getNormalMap(std::string imageName);

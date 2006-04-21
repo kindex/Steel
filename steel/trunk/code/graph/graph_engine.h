@@ -59,7 +59,7 @@ protected:
 		Triangles	*triangle;
 		MapCoords	*mapcoord;
 		Normals		*normal;
-		matrix4		matrix;
+		matrix44	matrix;
 		aabb		frame;
 		bool		alpha; // true if blending
 		coord		distance; // расстояние до камеры
@@ -82,7 +82,7 @@ public:
 	Camera camera;
 	virtual void processCamera() = 0;
 	// Collect information about object: how to render it
-	virtual bool inject(GraphInterface *object, matrix4 matrix = matrix4());
+	virtual bool inject(GraphInterface *object, matrix44 matrix = matrix44::getIdentity());
 	// Draw colelcted information. May be called few times without recollection information
 	virtual bool process() = 0; // Override OpenGL, D3D, ...\
 	// Clear collected information

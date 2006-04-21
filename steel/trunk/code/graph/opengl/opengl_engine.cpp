@@ -224,7 +224,7 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 
 //    return B.rotate(N, sina, cosa);
 
-    matrix4 M;
+    matrix44 M;
     M.setRotationAxis(sina, cosa, v3(N.x, N.y, N.z)); // povernut' na ang v ploskoti perpedukularnoj N
 
     v4 V(B.x, B.y, B.z, 1.0), R;
@@ -310,9 +310,9 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *map
 	*tTangent = S;	tangentSpaceCacheT[(int)vertex] = T;
 };
 
-void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix4 const matrix, const v3 light,	v3List **tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix44 const matrix, const v3 light,	v3List **tangentSpaceLight)
 {
-	matrix4 inverseModelMatrix;
+	matrix44 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
 
 	v3 objectLightPosition = inverseModelMatrix*light;
@@ -331,9 +331,9 @@ void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::v
     }
 }
 
-void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix4 const matrix, const v3 _camera,	v3List **tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 _camera,	v3List **tangentSpaceLight)
 {
-	matrix4 inverseModelMatrix;
+	matrix44 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
 
 	v3 camera = inverseModelMatrix*_camera;
@@ -370,7 +370,7 @@ void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::
 
 
 
-void OpenGL_Engine::drawDistColor(DrawElement &e, matrix4 const matrix, v3 const light, float const distance)
+void OpenGL_Engine::drawDistColor(DrawElement &e, matrix44 const matrix, v3 const light, float const distance)
 {
 	float *coords = new float[e.vertex->size()];
 
@@ -400,7 +400,7 @@ void OpenGL_Engine::drawDistColor(DrawElement &e, matrix4 const matrix, v3 const
 }
 
 
-bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const light)
+bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix44 const matrix, v3 const light)
 {
 	if(GL_TEXTURE_CUBE_MAP_ARB_supported)
 	{
@@ -412,7 +412,6 @@ bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const l
 	//Bind normalisation cube map to texture unit 1
 		glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 
-	    glEnable(GL_TEXTURE_3D);
 		glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, lightCubeMap);
 
 		glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
@@ -421,7 +420,6 @@ bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const l
 		drawFaces(e);
 
 		glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-		glDisable(GL_TEXTURE_3D);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 		delete tangentSpaceLight;
@@ -432,7 +430,7 @@ bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix4 const matrix, v3 const l
 }
 
 
-void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix4 const matrix, v3 const light)
+void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix44 const matrix, v3 const light)
 {
 	v3List *sTangent, *tTangent, *tangentSpaceLight;
 
@@ -446,7 +444,6 @@ void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix4 const mat
 	//Bind normalisation cube map to texture unit 1
 	glActiveTextureARB(GL_TEXTURE1_ARB);
 	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, normalisationCubeMap);
-    glEnable(GL_TEXTURE_3D);
 	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 	glActiveTextureARB(GL_TEXTURE0_ARB);
 
@@ -478,7 +475,6 @@ void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix4 const mat
 
 	glActiveTextureARB(GL_TEXTURE1_ARB);
 	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-    glDisable(GL_TEXTURE_3D);
 	glActiveTextureARB(GL_TEXTURE0_ARB);
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -497,7 +493,7 @@ void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix4 const mat
 }
 
 
-void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix4 const matrix, v3 const light)
+void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix44 const matrix, v3 const light)
 {
 	v3List *sTangent, *tTangent, *tangentSpaceLight;
 
@@ -505,7 +501,6 @@ void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix4 const ma
 	
 	genTangentSpaceSphere(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
 
-	glEnable(GL_TEXTURE_3D);
 	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, cubeMap);
 	glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
@@ -514,7 +509,6 @@ void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix4 const ma
     drawFaces(e);
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisable(GL_TEXTURE_3D);
 	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 
 	delete tangentSpaceLight;
@@ -543,7 +537,7 @@ void OpenGL_Engine::drawNormals(DrawElement &e)
 		glEnd();
 }
 
-void OpenGL_Engine::drawAABB(DrawElement &e, matrix4 matrix)
+void OpenGL_Engine::drawAABB(DrawElement &e, matrix44 matrix)
 {
 	vector<v3> v = e.frame.getVertexes();
 	aabb c;
@@ -684,7 +678,6 @@ GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB
 			return 0;
 		}
 
-    glEnable(GL_TEXTURE_3D);
     glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 
 	GLuint id;
@@ -705,7 +698,6 @@ GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB
 	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-    glDisable(GL_TEXTURE_3D);
     glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 
 

@@ -37,7 +37,7 @@ public:
 	std::vector<GameObj*> children;
 	v3 velocity;
 	coord mass;
-	matrix4 matrix;
+	matrix44 matrix;
 	bool movable, rotatable;
 	std::string name;
 
@@ -62,9 +62,9 @@ public:
 	{
 		rotatable = _rotatable;
 	}
-	matrix4 getMatrix()	{		return matrix;	}
-	matrix4 getPMatrix()	{		return matrix;	}
-	void	setPMatrix(matrix4 const &m) { matrix = m; } 
+	matrix44 getMatrix()	{		return matrix;	}
+	matrix44 getPMatrix()	{		return matrix;	}
+	void	setPMatrix(matrix44 const &m) { matrix = m; } 
 
 	void attach(GameObj *obj) 
 	{ 

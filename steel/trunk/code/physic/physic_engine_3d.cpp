@@ -56,7 +56,7 @@ bool PhysicEngine3D::process(steel::time speed)
 
 //			v3 local_pos =  inv* pos;
 
-			matrix4 localM = o.getPMatrix();
+			matrix44 localM = o.getPMatrix();
 			localM.a[12] = local_pos.x;
 			localM.a[13] = local_pos.y;
 			localM.a[14] = local_pos.z;
@@ -71,7 +71,7 @@ bool PhysicEngine3D::process(steel::time speed)
 	return true;
 }
 
-bool PhysicEngine3D::inject(PhysicInterface *object, matrix4 matrix, PhysicInterface *parent)
+bool PhysicEngine3D::inject(PhysicInterface *object, matrix44 matrix, PhysicInterface *parent)
 {
 	PhysicElement el;
 	el.obj = object;
@@ -88,7 +88,7 @@ bool PhysicEngine3D::inject(PhysicInterface *object, matrix4 matrix, PhysicInter
 		tag[name] = objects.size();
 	}*/
 
-	matrix4 cur_matrix, new_matrix;
+	matrix44 cur_matrix, new_matrix;
 
 	cur_matrix = object->getPMatrix();
 	new_matrix = matrix*cur_matrix;

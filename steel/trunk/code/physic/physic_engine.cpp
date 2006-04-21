@@ -15,7 +15,7 @@ bool PhysicEngine::init(std::string _conf)
 	return true;
 }
 
-bool PhysicEngine::inject(PhysicInterface *object, matrix4 matrix, PhysicInterface *parent)
+bool PhysicEngine::inject(PhysicInterface *object, matrix44 matrix, PhysicInterface *parent)
 {
 	PhysicElement el;
 	el.obj = object;

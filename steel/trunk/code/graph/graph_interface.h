@@ -114,7 +114,7 @@ Video textures (avi, camera)
 /*матрица трансформации объекта относительно его родител€. 
 ¬ключает в себ€ повотор, сдвиг и масштаб.
 getPVertexes возвращ€ет координаты точек в системе координат getPMatrix*/
-	virtual matrix4		getMatrix() = 0;
+	virtual matrix44		getMatrix() = 0;
 };
 
 #endif

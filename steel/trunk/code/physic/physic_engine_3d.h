@@ -26,7 +26,7 @@ protected:
 public:
 	bool process(steel::time speed);
 	bool init(std::string _conf);
-	bool inject(PhysicInterface *object, matrix4 matrix = matrix4(), PhysicInterface *parent = NULL);
+	bool inject(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);
 	bool clear();
 };
 

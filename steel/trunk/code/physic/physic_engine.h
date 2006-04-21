@@ -14,13 +14,14 @@
 #define PHYSIC_ENGINE_H
 
 #include "../res/conf/conf.h"
+#include "../math/matrix4x4.h"
 
 #include "physic_interface.h"
 
 struct PhysicElement
 {
 	PhysicInterface* obj, *parent;
-	matrix4			matrix, parentMatrix; // abloslute
+	matrix44			matrix, parentMatrix; // abloslute
 };
 
 class PhysicEngine: public Engine
@@ -30,7 +31,7 @@ protected:
 
 public:
 	// Collect information about object: object shape + velocity
-	virtual bool inject(PhysicInterface *object, matrix4 matrix = matrix4(), PhysicInterface *parent = NULL);
+	virtual bool inject(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);
 	// Move objects
 	virtual bool process(steel::time speed) = 0; 
 	// Clear collected information

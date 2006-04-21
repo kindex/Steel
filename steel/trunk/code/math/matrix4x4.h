@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////////////
-//	matrix4.h
+//	matrix44.h
 //	Class declaration for a 4x4 matrix
 //	You may use this code however you wish, but if you do, please credit me and
 //	provide a link to my website in a readme file or similar
@@ -18,21 +18,21 @@
 #include "vector4d.h"
 #include "../common/types.h"
                 
-#ifndef matrix4_H
-#define matrix4_H
+#ifndef __MATRIX4x4_H
+#define __MATRIX4x4_H
 
-class matrix4
+class matrix44
 {
 public:
-	matrix4()
+	matrix44()
 	{	loadIdentity();	}
-	matrix4(	float e0, float e1, float e2, float e3,
+	matrix44(	float e0, float e1, float e2, float e3,
 				float e4, float e5, float e6, float e7,
 				float e8, float e9, float e10, float e11,
 				float e12, float e13, float e14, float e15);
-	matrix4(const float * rhs);
-	matrix4(const matrix4 & rhs);
-	~matrix4() {}	//empty
+	matrix44(const float * rhs);
+	matrix44(const matrix44 & rhs);
+	~matrix44() {}	//empty
 
 	void  setEntry(int position, float value);
 	float getEntry(int position) const;
@@ -41,29 +41,30 @@ public:
 	v3 getCoords() { return v3(a[12], a[13], a[14]); }
 	
 	void loadIdentity(void);
+	static matrix44	getIdentity() { return matrix44(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1); }
 	void loadZero(void);
 	
 	//binary operators
-	matrix4 operator+(const matrix4 & rhs) const;
-	matrix4 operator-(const matrix4 & rhs) const;
-	matrix4 operator*(const matrix4 & rhs) const;
-	matrix4 operator*(const float rhs) const;
-	matrix4 operator/(const float rhs) const;
-	friend matrix4 operator*(float scaleFactor, const matrix4 & rhs);
+	matrix44 operator+(const matrix44 & rhs) const;
+	matrix44 operator-(const matrix44 & rhs) const;
+	matrix44 operator*(const matrix44 & rhs) const;
+	matrix44 operator*(const float rhs) const;
+	matrix44 operator/(const float rhs) const;
+	friend matrix44 operator*(float scaleFactor, const matrix44 & rhs);
 
-	bool operator==(const matrix4 & rhs) const;
-	bool operator!=(const matrix4 & rhs) const;
+	bool operator==(const matrix44 & rhs) const;
+	bool operator!=(const matrix44 & rhs) const;
 
 	//self-add etc
-	void operator+=(const matrix4 & rhs);
-	void operator-=(const matrix4 & rhs);
-	void operator*=(const matrix4 & rhs);
+	void operator+=(const matrix44 & rhs);
+	void operator-=(const matrix44 & rhs);
+	void operator*=(const matrix44 & rhs);
 	void operator*=(const float rhs);
 	void operator/=(const float rhs);
 
 	//unary operators
-	matrix4 operator-(void) const;
-	matrix4 operator+(void) const {return (*this);}
+	matrix44 operator-(void) const;
+	matrix44 operator+(void) const {return (*this);}
 	
 	//multiply a vector by this matrix
 	v4 operator*(const v4 rhs) const;
@@ -90,17 +91,17 @@ public:
 
 	//Other methods
 	void invert(void);
-	matrix4 getInverse(void) const;
+	matrix44 getInverse(void) const;
 	void transpose(void);
-	matrix4 getTranspose(void) const;
+	matrix44 getTranspose(void) const;
 	void invertTranspose(void);
-	matrix4 getInverseTranspose(void) const;
+	matrix44 getInverseTranspose(void) const;
 
 	//Inverse of a rotation/translation only matrix
 	void affineInvert(void);
-	matrix4 getAffineInverse(void) const;
+	matrix44 getAffineInverse(void) const;
 	void affineInvertTranspose(void);
-	matrix4 getAffineInverseTranspose(void) const;
+	matrix44 getAffineInverseTranspose(void) const;
 
 	//set to perform an operation on space - removes other entries
 	void setTranslation(const v3 & translation);
@@ -132,4 +133,4 @@ public:
 	coord a[16];
 };
 
-#endif	//matrix4_H
+#endif	//matrix44_H

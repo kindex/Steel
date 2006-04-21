@@ -19,14 +19,14 @@
 using namespace std;
 
 
-bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
+bool GraphEngine::inject(GraphInterface *object, matrix44 matrix)
 {
 	if(object == NULL) return false;
 	aabb frame = object->getFrame();
 
 	objects.push_back(object);
 	total.object++;
-	matrix4 cur_matrix, new_matrix;
+	matrix44 cur_matrix, new_matrix;
 
 	cur_matrix = object->getMatrix();
 	new_matrix = matrix*cur_matrix;
@@ -99,7 +99,7 @@ bool GraphEngine::inject(GraphInterface *object, matrix4 matrix)
 		int c = element.size();
 		element.resize(c+1);
 
-		matrix4 matrix = new_matrix;
+		matrix44 matrix = new_matrix;
 
 		matrix.a[12] += it->pos.x;
 		matrix.a[13] += it->pos.y;

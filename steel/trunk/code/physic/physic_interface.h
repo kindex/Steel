@@ -44,8 +44,8 @@ public:
 ¬ключает в себ€ повотор, сдвиг и масштаб.
 getPVertexes возвращ€ет координаты точек в системе координат getPMatrix*/
 
-	virtual matrix4		getPMatrix() = 0;
-	virtual void		setPMatrix(matrix4 const &m) = 0;
+	virtual matrix44		getPMatrix() = 0;
+	virtual void		setPMatrix(matrix44 const &m) = 0;
 
 	// положение (лучше заменить матрицей, котора€ включаеи в себ€ положение, масштаб и поворот тела)
 //	virtual v3		getPosition() = 0;
