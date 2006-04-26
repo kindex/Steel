@@ -57,8 +57,10 @@ int main(int argc, char *argv[])
 	res.registerClass(createBMP,		Res::image);
 	res.registerClass(createTGA,		Res::image);
 	res.registerClass(create3DS,		Res::model);
+	res.registerClass(createMaterial,	Res::material);
 	res.registerClass(createConfigText,	Res::config);
 	res.registerClass(createScriptText,	Res::script);
+
 
 // *************** GRAPH *****************
 #ifdef OPENGL_SDL	
@@ -79,6 +81,8 @@ int main(int argc, char *argv[])
 // ************ GAME **************
 	Game game;
 	if(!game.init(&res, "game", &input)) return 1;
+
+	game.bind(&graph);
 
 // ******************* PHYSIC **************************
 
@@ -110,7 +114,6 @@ int main(int argc, char *argv[])
 
 		game.process();
 
-		graph.clear();
 		game.draw(&graph);
 
 		timer.incframe();

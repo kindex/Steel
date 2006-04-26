@@ -133,3 +133,17 @@ void rstream::read(void *dest, int size)
 {
 	ifstream::read((char*)dest, size);
 }
+
+bool rstream::open(std::string s, std::string ext, ios_base::openmode _Mode) 
+{ 
+	string r = std::string("../res/") + s + (ext == ""?"":"." + ext);
+
+	std::ifstream::open(r.c_str(), _Mode | std::ios::in);
+	if(fail())
+	{
+		std::ifstream::open((std::string("../res/") + s).c_str(), _Mode | std::ios::in);
+		if(fail())
+			return false;
+	}
+	return true;
+}

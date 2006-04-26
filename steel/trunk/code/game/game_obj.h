@@ -128,6 +128,7 @@ public:
 		m = M;
 	}
 	GameObjModel(Model *M) { assignModel(M);}
+	uid		getId() { return m->getId(); }
 	aabb getFrame()	
 	{		
 		if(m)	return m->frame;
@@ -157,13 +158,6 @@ public:
 	}
 	Triangles*	getPTriangles() {	return getTriangles(); }
 
-	MapCoords*	getMapCoords()
-	{
-		if(m)
-			return &m->mapcoord;
-		else
-			return NULL;
-	}
 	Normals* getNormals()
 	{
 		if(m)
@@ -183,6 +177,12 @@ public:
 		return NULL;
 	}
 	Sprites* getSprites() { return NULL; }
+
+	MapCoords*	getMapCoords()
+	{
+		return m->getMapCoords();
+	}
+
 };
 
 /*
@@ -192,6 +192,7 @@ Dummy. Обхект, который имеет положение и детей, но не имеет собственной формы.
 class GameObjDummy: public GameObj
 {
 public:
+	uid			getId()			{	return 0;		}
 	aabb		getPFrame()		{	return getFrame(); }
 	aabb		getFrame()		{	return aabb();	}
 	bool		cleanup()		{	return true;	}
@@ -200,11 +201,11 @@ public:
 	Vertexes*	getPVertexes()	{	return getVertexes(); }
 	Triangles*	getTriangles()	{	return NULL;	}
 	Triangles*	getPTriangles() {	return getTriangles(); }
-	MapCoords*	getMapCoords()	{	return NULL;	}
 	Normals*	getNormals()	{	return NULL;	}
 	Lights*		getLights()		{	return NULL;	}
 	Sprites*	getSprites()	{	return NULL;	}
 	FaceMaterials* getFaceMaterials()	{	return NULL;	}
+	MapCoords*	getMapCoords()	{	return NULL;	}
 };
 
 /*

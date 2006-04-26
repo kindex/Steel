@@ -17,8 +17,11 @@
 Res* createBMP(const std::string filename, ResCollection *res) 
 {
 	BMP *o = new BMP;
-	if(o->init(filename)) 
+	if(o->init(filename))
+	{
+		o->setId(res->genUid());
 		return o;
+	}
 	else
 		return NULL;
 }
@@ -120,10 +123,10 @@ bool BMP::init(const std::string name)
 */
 
 //	int tty2 = sizeof(ih);
-	std::string file = "../res/image/" + name + ".bmp";
-	rstream f(file);
+	std::string file = name;
+	rstream f;
 
-	if(!f.good()) 
+	if(!f.open(file, "bmp")) 
 	{
 		alog.out("Res/Image/BMP: cannot open file %s", file.c_str());
 		return false;

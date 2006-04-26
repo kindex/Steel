@@ -48,6 +48,9 @@ Res* createBMP(string filename) {return new BMP(filename); }
 #include "../steel.h"
 #include "../_cpp.h"
 
+// уникальный идентификатор модели
+typedef int	uid;
+
 /*
 Resourse input file stream
 ¬се рагрузки ресурсов из файловой системы должны использовать этот класс дл€ чтени€ из файлов
@@ -56,10 +59,14 @@ Resourse input file stream
 class rstream: public std::ifstream
 {
 public:
-	rstream(std::string s, ios_base::openmode _Mode = std::ios::binary) 
+	rstream() {}
+	rstream(std::string s, std::string ext = "", ios_base::openmode _Mode = std::ios::binary) 
 	{ 
-		open(s.c_str(), _Mode | std::ios::in); 
+		open(s, ext, _Mode);
 	}
+
+	bool open(std::string s, std::string ext = "", ios_base::openmode _Mode = std::ios::binary);
+
 	void read(void *dest, int size);
 	void skip(int n);// skip n byten in input stream
 };
@@ -82,9 +89,11 @@ init загружает ресурс или генерирует по строковому идентификатору.
 */
 class Res: public steelAbstract
 {
+protected:
+	uid			id;
 public:
 // количестко типов ресурсов
-#define RES_KIND_COUNT 5
+#define RES_KIND_COUNT 6
 // типы ресурсов (типы хранени€)
 	typedef enum 
 	{
@@ -92,7 +101,9 @@ public:
 			image,
 			model,
 			config,
-			script
+			script,
+			material
+
 	}	res_kind;
 // —труктура дл€ идентификации ресурса (тип, строка)
 	struct ResLocator
@@ -109,6 +120,9 @@ public:
 
 //	virtual bool init(const std::string name, ResCollection &res) = 0;
 	virtual bool unload() = 0;
+
+	virtual	void	setId(uid _id)	{ id = _id;		}
+	virtual	uid		getId()			{ return id;	}
 };
 
 // тип: функци€ дл€ геренировани€ копии класса, унаследованного от Res
@@ -141,6 +155,7 @@ class ResCollection
 // ѕо имени возврашает индекс в массивах data и resType
 	std::map<const std::string,int> index; 
 	std::vector<std::string> names;
+	uid	freeUid;
 
 	typedef 
 		std::vector<ClassCopy> 
@@ -150,7 +165,7 @@ class ResCollection
 //  оличество рагруженных ресурсов (в начале 0)
 	int freeindex;
 public:
-	ResCollection(): freeindex(0) {}
+	ResCollection(): freeindex(0), freeUid(1) {}
 // ¬ернуть ресурс по номеру
 	Res* operator [] (const int n)        { return data[n]; }
 // ѕроверить, существует ли ресурс с указанным именем
@@ -209,6 +224,9 @@ public:
 	void registerClass(funcCreateResClass *_func, const Res::res_kind kind);
 // ¬ернуть копию класса
 	Res* createClass(ClassCopy *aclass, std::string name);
+
+	uid	genUid() { return freeUid++; }
 };
+
 
 #endif

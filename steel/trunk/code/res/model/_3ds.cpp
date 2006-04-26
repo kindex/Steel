@@ -17,6 +17,7 @@ http://kindex.times.lv
 
 **********************************************************************/
 #include "_3ds.h"
+#include "../../common/utils.h"
 
 using namespace std;
 
@@ -112,106 +113,6 @@ int loadpercentage(ifstream &f, float &p)
     return reads;
 }
 
-
-/*int _3DS::loadfacelist(istream &f)
-{
-	return 0;
-    unsigned short _id;
-    unsigned int _len, reads = 0;
-    short a,b,c,faceinfo, cnt;
-
-    f.read ((char*)&cnt, 2);  reads += 2;
-    face.resize(cnt);
-    index.resize(cnt*3);
-    for (int i=0; i<cnt; i++)
-    {
-        fread (&a, 2, 1, file);
-        fread (&b, 2, 1, file);
-        fread (&c, 2, 1, file);
-        fread (&faceinfo, 2, 1, file);
-        m.index[i*3+0] = a;
-        m.index[i*3+1] = b;
-        m.index[i*3+2] = c;
-        m.face[i].flags = faceinfo;
-    }
-    reads += cnt*2*4;
-
-    while (reads<len)
-    {
-        if (fread (&_id, 2, 1, file)!=1) return reads; //Read the chunk header
-        if (fread (&_len, 4, 1, file)!=1) return reads; //Read the lenght of the chunk
-        reads += 6;
-        switch (_id)
-        {
-        case TRI_MATERIAL:*/
-      /*
-MSH_MAT_GROUP mesh_material_group
-cstr material_name;
-short nfaces;
-short facenum[nfaces];
-      */
-  /*          reads += readstring(file, m.MatName);
-
-            fread (&cnt, 2, 1, file);  reads += 2;
-            m.face.resize(cnt);
-            for (int i=0; i<cnt; i++)
-            {
-                fread (&a, 2, 1, file);
-                m.face[i].material = a;
-            }
-            reads += cnt*1*2;
-            break;
-        default: fseek(file, _len-6, SEEK_CUR); reads += _len - 6;  break;
-        }
-    }
-    if (reads != len)
-        throw;
-    return reads;
-}
-*/
-
-/*
-int _3DS::loadmodel(rstream &f, int size)  // example: Box01
-{
-	unsigned short subChainId;
-	int subChainSize, reads = 0;
-
-	while (reads<size)
-	{
-		f.read((char*)&subChainId, 2);	if(!f.good())return reads; //Read the chunk header
-		f.read((char*)&subChainSize, 4);if(!f.good())return reads; //Read the lenght of the chunk
-		streampos sp = f.tellg();
-		reads += 6;
-
-		switch (subChainId)
-        {
-            case TRI_VERTEXL:
-				unsigned short cnt;
-                f.read ((char*)&cnt, 2);  reads += 2;
-                vertex.resize(cnt);
-                for (int i=0; i<cnt; i++)
-                {
-					float x,y,z;
-                    f.read((char*)&x, 4);
-                    f.read((char*)&y, 4);
-                    f.read((char*)&z, 4);
-                    vertex[i].x = y;
-                    vertex[i].y = z;
-                    vertex[i].z = x;
-                }
-                reads += cnt*4*3;
-                break;
-
-        }
-		f.seekg(sp, ios::beg);
-		f.seekg(subChainSize - 6, ios::cur); 
-		reads += subChainSize - 6; 
-    }
-
-    return reads;
-}
-*/
-
 // ************************ SCENE
 int parsechain(_3DS &m, rstream &f, std::vector<chainProcessor> tags, int size = 0)
 {
@@ -251,7 +152,13 @@ int chain_model_material(_3DS &m, rstream &f, int size) // model material info
 	unsigned short count;
 	f.read(&count, 2); // face count
 	r += 2;
-	vector<int> &a = m.faceMaterial[materialName];
+
+	int s = m.faceMaterial.size();
+	m.faceMaterial.resize(s+1);
+	m.faceMaterial[s].name = materialName;
+
+	vector<int> &a = m.faceMaterial[s].faceList;
+
 	for(int i=0; i<count; i++)
 	{
 		unsigned short tmp;
@@ -305,8 +212,8 @@ int chain_vertexes(_3DS &m, rstream &f, int size)
 	f.read(&count, 2);	
 	if(count*12 +2!= size)
 			throw;
-	m.vertex.resize(count);
-	f.read(&m.vertex[0], count*4*3); // count*3*float (x, y, z)
+	m.vertex.vertex.resize(count);
+	f.read(&m.vertex.vertex[0], count*4*3); // count*3*float (x, y, z)
 
 	return 2+count*3*4;
 }
@@ -316,9 +223,10 @@ int chain_map_coords(_3DS &m, rstream &f, int size)
 	unsigned short count;
 
 	f.read(&count, 2);	
-	m.mapcoord.resize(count);
 
-	f.read(&m.mapcoord[0], count*4*2); // float+float (u, v)
+	m.mapCoords.mapCoords2f = new vector<v2>(count);
+
+	f.read(&m.mapCoords.mapCoords2f->at(0), count*4*2); // float+float (u, v)
 
 	return 2+count*3*4;
 }
@@ -363,10 +271,12 @@ int chain_4d4d(_3DS &m, rstream &f, int size)
 	return parsechain(m, f, t, size);
 }
 
-
 bool _3DS::init(const std::string name, ResCollection &res)
 {
-		rstream f("../res/model/" + name + ".3ds");
+		rstream f;
+		
+		if(!f.open(name, "3ds"))
+				return false;
 
 		std::vector<chainProcessor> t;
 		t.push_back(chainProcessor(0x4D4D, chain_4d4d));
@@ -377,11 +287,27 @@ bool _3DS::init(const std::string name, ResCollection &res)
 		generateNormals();
 		updateAABB();
 
-		for(map<string, vector<int> >::iterator it = faceMaterial.begin();
+		vector<string> path = explode('/', name);
+		string filename = path.back();
+		path.pop_back();
+		string dir = implode('/', path);
+
+		vertex.id = res.genUid();
+		mapCoords.id = res.genUid();
+
+		for(std::vector<FaceMaterial>::iterator it = faceMaterial.begin();
 					it != faceMaterial.end(); it++)
 		{
-			if(!res.add(config, "material/" + it->first)) return false;
+			string mat = it->name;
+			
+			it->material = (Material*)res.add(material, dir + "/" + mat);
+			if(!it->material)
+				it->material = (Material*)res.add(material, mat);
+
+			if(!it->material) return false;
 		}
+
+		setId(res.genUid());
 
 		return true;
 }

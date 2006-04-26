@@ -10,7 +10,13 @@ using namespace std;
 }
 */
 
-int Model::duplicateVertex(int src, v3 newnormal)
+MapCoords	*Model::getMapCoords()
+{
+	return &mapCoords;
+}
+
+
+/*int Model::duplicateVertex(int src, v3 newnormal)
 {
     int newsize = vertex.size()+1;
 
@@ -23,7 +29,7 @@ int Model::duplicateVertex(int src, v3 newnormal)
     mapcoord.resize(newsize);
     mapcoord[newsize-1] = mapcoord[src];
     return newsize-1;
-}
+}*/
 
 void Model::generateNormals()
 {
@@ -49,9 +55,9 @@ void Model::generateNormals()
     vector<v3> facenormal;
     facenormal.resize(triangle.size());
 
-    normal.resize(vertex.size());
+    normal.resize(vertex.vertex.size());
 
-    for (unsigned int i=0; i<vertex.size(); i++)
+    for (unsigned int i=0; i<normal.size(); i++)
     {
         normal[i].loadZero();
     }
@@ -62,8 +68,8 @@ void Model::generateNormals()
         int b = triangle[i].a[1];
         int c = triangle[i].a[2];
 
-        v3 p = vertex[b] - vertex[a];
-        v3 q = vertex[c] - vertex[a];
+        v3 p = vertex.vertex[b] - vertex.vertex[a];
+        v3 q = vertex.vertex[c] - vertex.vertex[a];
         facenormal[i] = vectmul(p,q);
         if (facenormal[i] == v3(0,0,0)) facenormal[i] = v3(0,1,0); // TEMP TODO - Up
         facenormal[i].normalize();
@@ -71,7 +77,7 @@ void Model::generateNormals()
         normal[b] += facenormal[i];
         normal[c] += facenormal[i];
     }
-    for (unsigned int i=0; i<vertex.size(); i++)
+    for (unsigned int i=0; i<normal.size(); i++)
         normal[i].normalize();
 
 // TODO - speed up
@@ -121,7 +127,7 @@ void Model::generateNormals()
 */
 //    normal.resize(vertex.size());
 
-    for (unsigned int i=0; i<vertex.size(); i++)
+    for (unsigned int i=0; i<normal.size(); i++)
         normal[i].loadZero();
 
     for (unsigned int i=0; i<triangle.size(); i++)
@@ -133,13 +139,13 @@ void Model::generateNormals()
         normal[b] += facenormal[i];
         normal[c] += facenormal[i];
     }
-    for (unsigned int i=0; i<vertex.size(); i++)
+    for (unsigned int i=0; i<normal.size(); i++)
         normal[i].normalize();
 }
 
 void Model::updateAABB()
 {
 	frame.clear();
-	for(std::vector<v3>::iterator it = vertex.begin(); it != vertex.end(); it++)
+	for(std::vector<v3>::iterator it = vertex.vertex.begin(); it != vertex.vertex.end(); it++)
 		frame.merge(*it);
 }

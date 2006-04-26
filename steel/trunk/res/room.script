@@ -7,15 +7,15 @@
 // tag	- object with coordinates, but no graph and physic
 // path		id	speed	{tags}
 
-//Type	Parent	Id	Model	X	Y	Z
-solid			wall	20	0	-1
-solid			wall	-20	0	-1
-solid			wall	0	0	-21
-solid			wall	0	0	10
-solid			wall	0	20	-1
-solid			wall	0	-20	-1
+//Type	Parent	Id	Model		X	Y	Z
+solid			wall/wall1	20	0	-1
+solid			wall/wall1	-20	0	-1
+solid			wall/wall1	0	0	-21
+solid			wall/wall1	0	0	10
+solid			wall/wall1	0	20	-1
+solid			wall/wall1	0	-20	-1
 
-solid		teapot1	teapot	3	3	0
+//solid		teapot1	teapot	3	3	0
 //solid		torus1	t	-5	5	3
 //solid		torus2	torus	-5	-5	0
 //solid		star1	t2	-2	0	7
@@ -41,10 +41,10 @@ path		path1	5	tag2	tag3	tag4	tag5	tag6
 //sprite	path1	sprite2	target	1	-2.3	1.5	0.5
 //sprite	path1	sprite3	target	-1	-2.3	1.5	0.5
 
-ps	path1	ps1	ps	0	0	0
+//ps	path1	ps1	ps	0	0	0
 
 
-include	path1	group1	room/cubes	0	0	0
+//include	path1	group1	room/cubes	0	0	0
 //include		group2	room/cubes	-1	-1	1
 
 

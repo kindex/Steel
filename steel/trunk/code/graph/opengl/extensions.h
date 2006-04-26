@@ -19,7 +19,7 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 
-
+//#define GL_GLEXT_PROTOTYPES
 #include "gl/glext.h"
 
 #ifdef STEEL_WIN32
@@ -70,5 +70,6 @@ extern PFNGLMULTITEXCOORD4IARBPROC				glMultiTexCoord4iARB;
 extern PFNGLMULTITEXCOORD4IVARBPROC				glMultiTexCoord4ivARB;
 extern PFNGLMULTITEXCOORD4SARBPROC				glMultiTexCoord4sARB;
 extern PFNGLMULTITEXCOORD4SVARBPROC				glMultiTexCoord4svARB;
+
 
 #endif

@@ -21,28 +21,178 @@
 #include "../../common/logger.h"
 
 #include "../../res/image/image.h"
-#include "extensions.h"
+#include "gl/libext.h"
+//#include "extensions.h"
 
 #include <algorithm>
 
 using namespace std;
 
+bool OpenGL_Engine::bindTexture(Image *image)
+{
+	if(image == NULL) return false;
+
+	uid	id = image->getId();
+	// TODO id 0, id -1
+	GLuint glid;
+	if(registredTextures.find(id) != registredTextures.end())
+	{
+		glid = registredTextures[id];
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, glid);
+	}
+	else
+	{
+		glGenTextures(1, &glid);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, glid);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		int kind;
+		if(image->getBpp() == 24) kind = GL_RGB;
+		else
+		if(image->getBpp() == 32) 
+			kind = GL_RGBA;
+		else return 0;
+
+		glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
+			kind,  GL_UNSIGNED_BYTE , image->getBitmap());
+
+		registredTextures[id] = glid;
+	}
+	return true;
+}
+
+bool OpenGL_Engine::bindVertexes(Vertexes *v)
+{
+	if(v == NULL) return false;
+
+	uid	id = v->getId();
+	// TODO id 0, id -1
+	GLuint glid;
+	if(buffers.find(id) != buffers.end())
+	{
+		glid = buffers[id];
+
+		glBindBufferARB(GL_ARRAY_BUFFER_ARB, glid);
+	    glEnableClientState ( GL_VERTEX_ARRAY );
+	    glVertexPointer     ( 3, GL_FLOAT, 0, 0 );
+	}
+	else
+	{
+		glGenBuffersARB(1, &glid);
+
+	    glEnableClientState ( GL_VERTEX_ARRAY );
+		glBindBufferARB(GL_ARRAY_BUFFER_ARB, glid);
+		glBufferDataARB(GL_ARRAY_BUFFER_ARB, 3*sizeof(float)*v->vertex.size(), &v->vertex.front(), GL_STATIC_DRAW);
+
+	    glVertexPointer     ( 3, GL_FLOAT, 0, 0 );
+
+		buffers[id] = glid;
+	}
+
+	return true;
+
+}
+
+bool OpenGL_Engine::bindTexCoords(MapCoord *coord)
+{
+	if(coord == NULL) return false;
+
+	uid	id = coord->getId();
+	// TODO id 0, id -1
+	GLuint glid;
+	if(buffers.find(id) != buffers.end())
+	{
+		glid = buffers[id];
+
+		glBindBufferARB(GL_ARRAY_BUFFER_ARB, glid);
+	    glTexCoordPointer ( 2, GL_FLOAT, 0, 0);
+	    glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
+
+//		glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, 2*sizeof(float)*coord->mapCoords2f->size(), &coord->mapCoords2f->front());
+//		glBufferDataARB(GL_ARRAY_BUFFER_ARB, 2*sizeof(float)*coord->mapCoords2f->size(), &coord->mapCoords2f->front(), GL_STATIC_DRAW);
+		//glPushClientAttrib  ( GL_CLIENT_VERTEX_ARRAY_BIT );
+
+	}
+	else
+	{
+		glGenBuffersARB(1, &glid);
+
+		glBindBufferARB(GL_ARRAY_BUFFER_ARB, glid);
+
+		glBufferDataARB(GL_ARRAY_BUFFER_ARB, 2*sizeof(float)*coord->mapCoords2f->size(), &coord->mapCoords2f->front(), GL_STATIC_DRAW);
+
+//		glTexCoordPointer(2, GL_FLOAT, 
+
+//		glPushClientAttrib  ( GL_CLIENT_VERTEX_ARRAY_BIT );
+		glTexCoordPointer ( 2, GL_FLOAT, 0, 0);
+	    glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
+
+		buffers[id] = glid;
+	}
+
+	return true;
+}
 
 void OpenGL_Engine::drawElement(DrawElement &e)
 {
 	glLoadMatrixf(e.matrix.a);
 	if(e.triangle && e.vertex)
 	{
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &e.vertex->front());
-
-		Config *m = e.material;
+		Material *m = e.material;
 		if(m == NULL)
 		{
-			alog.out("Cannot find material '%s'", e.materialName.c_str());
+//			alog.out("Cannot find material '%s'", e.materialName.c_str());
 			return;
 		}
-		bool alpha = conf->geti("drawAlpha") == 2 && m->gets("color_mode") == "alpha";
+
+//		glPushClientAttrib  ( GL_CLIENT_VERTEX_ARRAY_BIT );
+
+
+		bindVertexes(e.vertex);
+//		glEnableClientState(GL_VERTEX_ARRAY);
+//		glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &e.vertex->front());
+
+		int texCount = m->map.size();
+
+//	    glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
+		
+		for(int i=0; i<texCount; i++)
+		{
+			Map map = m->map[i];
+
+			glActiveTextureARB(GL_TEXTURE0_ARB + i);
+
+			bindTexture(map.texture); // 1,2,3D, Cube (auto detect from Image)
+
+//			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+			glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
+			bindTexCoords(e.mapCoords);
+
+//			glTexCoordPointer(2, GL_FLOAT, 8, &(e.mapCoords->mapCoords2f->front()));
+
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+		}
+
+
+		glDrawElements(GL_TRIANGLES, e.triangle->size()*3, GL_UNSIGNED_INT, &(e.triangle->front()));
+		glDisableClientState(GL_VERTEX_ARRAY);
+
+		for(int i=0; i<texCount; i++)
+		{
+			glActiveTextureARB(GL_TEXTURE0_ARB + i);
+			glDisable(GL_TEXTURE_2D);// TODO
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		}
+//	glPopClientAttrib ();
+		glActiveTextureARB(GL_TEXTURE0_ARB);
+
+
+/*		bool alpha = conf->geti("drawAlpha") == 2 && m->gets("color_mode") == "alpha";
 
 		GLuint colorMap = 0;
 		if(m->isset("color_map"))
@@ -150,7 +300,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		}
 */
 
-		glDisable(GL_BLEND);
+/*		glDisable(GL_BLEND);
 		if(e.mapcoord && illuminateMap>0 && conf->geti("drawIlluminate"))
 		{
 			if(tex>0) // blend - additive
@@ -190,9 +340,10 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 			tex++;
 		}
-
+*/
 		if(conf->geti("drawWire"))
 		{
+			glEnableClientState(GL_VERTEX_ARRAY);
 			glPolygonMode(GL_FRONT, GL_LINE);  		// Draw Polygons As Wireframes
 			glPolygonMode(GL_BACK, GL_LINE); 
 			glDepthFunc(GL_LEQUAL); // For blending
@@ -200,9 +351,8 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			drawFaces(e);
 
 			glPolygonMode(GL_FRONT, GL_FILL);    	// Reset Back-Facing Polygon Drawing Mode
+			glDisableClientState(GL_VERTEX_ARRAY);
 		}
-
-		glDisableClientState(GL_VERTEX_ARRAY);
 
 		if(conf->geti("drawNormals", 0))
 			drawNormals(e);
@@ -237,7 +387,7 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 
 
 
-void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals	const *normal,	std::vector<v3> **sTangent, std::vector<v3> **tTangent)
+/*void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals	const *normal,	std::vector<v3> **sTangent, std::vector<v3> **tTangent)
 {
 	// TODO: hash
 	if(tangentSpaceCacheS.find((int)vertex) != tangentSpaceCacheS.end())
@@ -309,8 +459,9 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *map
 	*sTangent = S;	tangentSpaceCacheS[(int)vertex] = S;
 	*tTangent = S;	tangentSpaceCacheT[(int)vertex] = T;
 };
+*/
 
-void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix44 const matrix, const v3 light,	v3List **tangentSpaceLight)
+/*void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix44 const matrix, const v3 light,	v3List **tangentSpaceLight)
 {
 	matrix44 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
@@ -398,16 +549,16 @@ void OpenGL_Engine::drawDistColor(DrawElement &e, matrix44 const matrix, v3 cons
 
 	delete coords;
 }
+*/
 
-
-bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix44 const matrix, v3 const light)
+/*bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix44 const matrix, v3 const light)
 {
-	if(GL_TEXTURE_CUBE_MAP_ARB_supported)
+//	if(GL_TEXTURE_CUBE_MAP_ARB_supported)
 	{
 		v3List *sTangent, *tTangent, *tangentSpaceLight;
 
-		getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
-		genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
+//		getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
+//		genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
 
 	//Bind normalisation cube map to texture unit 1
 		glEnable(GL_TEXTURE_CUBE_MAP_ARB);
@@ -425,16 +576,17 @@ bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix44 const matrix, v3 const 
 		delete tangentSpaceLight;
 		return true;
 	}
-	else
-		return false;
+//	else
+//		return false;
 }
+*/
 
-
+/*
 void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix44 const matrix, v3 const light)
 {
 	v3List *sTangent, *tTangent, *tangentSpaceLight;
 
-	getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
+//	getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
 	genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
 
 	glBindTexture(GL_TEXTURE_2D, normalMap);
@@ -448,7 +600,7 @@ void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix44 const ma
 	glActiveTextureARB(GL_TEXTURE0_ARB);
 
  	//Send texture coords for normal map to unit 0
-    glTexCoordPointer(2, GL_FLOAT, 8, &e.mapcoord->front());
+//    glTexCoordPointer(2, GL_FLOAT, 8, &e.mapcoord->front());
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	//Send tangent space light vectors for normalisation to unit 1
@@ -490,14 +642,14 @@ void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix44 const ma
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	delete tangentSpaceLight;
-}
+}*/
 
-
+/*
 void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix44 const matrix, v3 const light)
 {
 	v3List *sTangent, *tTangent, *tangentSpaceLight;
 
-	getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
+//	getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
 	
 	genTangentSpaceSphere(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
 
@@ -513,7 +665,7 @@ void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix44 const m
 
 	delete tangentSpaceLight;
 }
-
+*/
 
 void OpenGL_Engine::drawFaces(DrawElement &e)
 {
@@ -526,10 +678,10 @@ void OpenGL_Engine::drawNormals(DrawElement &e)
 	float diag = (f.max-f.min).getLength()*0.05f;
 
 		glBegin(GL_LINES);
-		for(unsigned int i=0; i < e.vertex->size(); i++)
+		for(unsigned int i=0; i < e.vertex->vertex.size(); i++)
 		{
-			v3 s = e.vertex->operator [](i);
-			v3 d = e.vertex->operator [](i) + e.normal->operator [](i)*diag;
+			v3 s = e.vertex->vertex[i];
+			v3 d = e.vertex->vertex[i] + e.normal->operator [](i)*diag;
 
 			glVertex3f(s.x, s.y, s.z);
 			glVertex3f(d.x, d.y, d.z);
@@ -573,24 +725,18 @@ void OpenGL_Engine::drawAABB(DrawElement &e, matrix44 matrix)
 }
 
 
-GLuint OpenGL_Engine::getTexture(std::string imageName)
+GLuint OpenGL_Engine::getTexture(Image *image)
 {
-	if(registredTextures.find(imageName) != registredTextures.end())
-		return registredTextures[imageName];
+	if(image == NULL) return 0;
+	uid id = image->getId();
+	if(id == 0) return 0;
 
-	res->add(Res::image, imageName);
+	if(registredTextures.find(id) != registredTextures.end())
+		return registredTextures[id];
 
-	Image *a = (Image*)res->get(Res::image, imageName);
-
-	if(a == NULL)
-	{
-		alog.out("Cannot find image %s", imageName.c_str());
-		return 0;
-	}
-	
-	GLuint id;
-	glGenTextures(1, &id);
-	glBindTexture(GL_TEXTURE_2D, id);
+	GLuint glid;
+	glGenTextures(1, &glid);
+	glBindTexture(GL_TEXTURE_2D, glid);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //{ all of the above can be used }
 
@@ -600,58 +746,23 @@ GLuint OpenGL_Engine::getTexture(std::string imageName)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	int kind;
-	if(a->getBpp() == 24) kind = GL_RGB;
+	if(image->getBpp() == 24) kind = GL_RGB;
 	else
-	if(a->getBpp() == 32) 
+	if(image->getBpp() == 32) 
 		kind = GL_RGBA;
 	else return 0;
 
-	glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, a->getWidth(), a->getHeight(),0,
-		kind,  GL_UNSIGNED_BYTE , a->getBitmap());
+	glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
+		kind,  GL_UNSIGNED_BYTE , image->getBitmap());
 
-	registredTextures[imageName] = id;
-	alog.out("Bind texture %s", imageName.c_str());
-
-	return id;
-}
-
-GLuint OpenGL_Engine::getNormalMap(std::string imageName)
-{
-	string nName = imageName + ".nm";
-	if(registredTextures.find(nName) != registredTextures.end())
-		return registredTextures[nName];
-
-	Image *a = (Image*)res->add(Res::image, nName);
-
-	if(a == NULL)
-	{
-		a = (Image*)res->add(Res::image, imageName + ".hm");
-		if(a == NULL)
-		{
-			alog.out("Cannot find normal map %s", imageName.c_str());
-			return 0;
-		}
-		a->convertFromHeightMapToNormalMap();
-	}
-
-	GLuint id;
-	glGenTextures(1, &id);
-	glBindTexture(GL_TEXTURE_2D, id);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //{ all of the above can be used }
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, a->getWidth(), a->getHeight(),0,
-		GL_RGB,  GL_UNSIGNED_BYTE , a->getBitmap());
-
-	registredTextures[nName] = id;
-	alog.out("Bind normal map %s", imageName.c_str());
+	registredTextures[id] = glid;
+//	alog.out("Bind texture %s", id);
 
 	return id;
 }
 
 
+/*
 GLuint OpenGL_Engine::getCubeMap(std::string imageName)
 {
 	if(registedCubeMaps.find(imageName) != registedCubeMaps.end())
@@ -705,12 +816,27 @@ GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB
 	alog.out("Bind cubemap %s", imageName.c_str());
 	return id;
 }
-
+*/
 
 bool OpenGL_Engine::process()
 {
-	if(!ARB_multitexture_supported) 
-		conf->setup("drawBump", 0);
+	// TODO repair DC 
+	for(vector<DrawElement>::iterator it = element.begin(); it != element.end(); it++)
+		delete it->triangle;
+
+	element.clear();
+
+	light.clear();
+	total.vertex = 0;
+	total.triangle = 0;
+	total.object = 0;
+
+	for(std::vector<GraphInterface*>::iterator it = objects.begin(); 
+			it != objects.end(); it++)
+		prepare((*it));
+
+//	if(!ARB_multitexture_supported) 
+//		conf->setup("drawBump", 0);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -786,11 +912,13 @@ bool OpenGL_Engine::init(std::string _conf)
 	
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-	SetUpARB_multitexture();
+	initExtensions();
+
+//	SetUpARB_multitexture();
 	
-	normalisationCubeMap	= GenerateNormalisationCubeMap();
-	lightCubeMap			= GenerateLightCubeMap();
-	distMap					= generateDistanceLinearMap();
+//	normalisationCubeMap	= GenerateNormalisationCubeMap();
+	//lightCubeMap			= GenerateLightCubeMap();
+	//distMap					= generateDistanceLinearMap();
 
 	alog.out("OpenGL engine has been initialized!\n");
 

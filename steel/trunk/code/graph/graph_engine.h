@@ -50,15 +50,15 @@ public:
 class GraphEngine: public Engine
 {
 protected:
-	struct DrawElement
+	struct DrawElement // множество треугольников одного материала
 	{
-		std::string materialName;
-		Config*		material;
-
 		Vertexes	*vertex;
 		Triangles	*triangle;
-		MapCoords	*mapcoord;
+		MapCoords	*mapCoords;
 		Normals		*normal;
+
+		Material*	material;
+
 		matrix44	matrix;
 		aabb		frame;
 		bool		alpha; // true if blending
@@ -75,14 +75,17 @@ protected:
 public:
 	struct TotalInfo
 	{
-		int vertex, triangle, object;
+		int vertex, triangle, object, global;
 	} total;
 
 public:
 	Camera camera;
 	virtual void processCamera() = 0;
 	// Collect information about object: how to render it
-	virtual bool inject(GraphInterface *object, matrix44 matrix = matrix44::getIdentity());
+	virtual bool inject(GraphInterface *object);
+	
+	virtual bool prepare(GraphInterface *object, matrix44 matrix = matrix44::getIdentity());
+
 	// Draw colelcted information. May be called few times without recollection information
 	virtual bool process() = 0; // Override OpenGL, D3D, ...\
 	// Clear collected information

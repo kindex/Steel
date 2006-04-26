@@ -33,7 +33,9 @@
 class OpenGL_Engine: public GraphEngine
 {
 protected:
-	std::map<std::string, GLuint> registredTextures, registedCubeMaps;
+	std::map<uid, GLuint> registredTextures, buffers;
+
+		//, registedCubeMaps;
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap;
 
@@ -70,14 +72,17 @@ public:
 	bool drawDiffuse(DrawElement &e, matrix44 const matrix, v3 const light);
 	void drawDistColor(DrawElement &e, matrix44 const matrix, v3 const light, float const distance);
 
-	void getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals const *normal, std::vector<v3> **sTangent, std::vector<v3> **tTangent);
+//	void getTangentSpace(Vertexes const *vertex, MapCoords2f const *mapcoord, Triangles const *triangle, Normals const *normal, std::vector<v3> **sTangent, std::vector<v3> **tTangent);
 
-	void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 light,	v3List **tangentSpaceLight);
-	void genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 camera,	v3List **tangentSpaceLight);
+	//void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 light,	v3List **tangentSpaceLight);
+	//void genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 camera,	v3List **tangentSpaceLight);
 
-	GLuint getTexture(std::string imageName);
-	GLuint getNormalMap(std::string imageName);
-	GLuint getCubeMap(std::string imageName);
+	GLuint getTexture(Image *image);
+//	GLuint getCubeMap(std::string imageName);
+
+	bool bindTexture(Image *image);
+	bool bindTexCoords(MapCoord *coord);
+	bool bindVertexes(Vertexes *v);
 };
 
 

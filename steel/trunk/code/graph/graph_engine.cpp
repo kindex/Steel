@@ -19,13 +19,22 @@
 using namespace std;
 
 
-bool GraphEngine::inject(GraphInterface *object, matrix44 matrix)
+bool GraphEngine::inject(GraphInterface *object)
 {
 	if(object == NULL) return false;
-	aabb frame = object->getFrame();
 
 	objects.push_back(object);
+	total.global++;
+	return true;
+}
+
+bool GraphEngine::prepare(GraphInterface *object, matrix44 matrix)
+{
+	if(object == NULL) return false;
 	total.object++;
+
+	aabb frame = object->getFrame();
+
 	matrix44 cur_matrix, new_matrix;
 
 	cur_matrix = object->getMatrix();
@@ -40,13 +49,14 @@ bool GraphEngine::inject(GraphInterface *object, matrix44 matrix)
 	for(GraphInterfaceList::iterator it=children.begin();
 		it != children.end();
 		it++)
-		if(!inject(*it, new_matrix)) return false;
+		if(!prepare(*it, new_matrix)) return false;
 
 	FaceMaterials* m = object->getFaceMaterials();
 	Vertexes	*v = object->getVertexes();
 	Triangles	*t = object->getTriangles();
 	Lights		*l = object->getLights();
 	Normals		*n = object->getNormals();
+	MapCoords	*coords = object->getMapCoords();
 
 	if(l != NULL)
 	{
@@ -58,33 +68,46 @@ bool GraphEngine::inject(GraphInterface *object, matrix44 matrix)
 	}
 
 	if(v != NULL)
-		total.vertex += v->size();
+		total.vertex += v->vertex.size();
 
 	if(t != NULL)
-	for(FaceMaterials::iterator it = m->begin(); it != m->end(); it++)
+	{
+		vector<bool>	usedTriangle(t->size(), false);
+		int totalUsed = 0;
+
+	if(m != NULL)
+	for(FaceMaterials::iterator it = (*m).begin(); it != (*m).end(); it++)
 	{
 		int c = element.size();
 		element.resize(c+1);
 
-		element[c].materialName = it->first;
-		element[c].material = (Config*)res->get(Res::config, string("material/") + element[c].materialName);
+		element[c].material = (*it).material;
+//		element[c].material = (*it).material;
+/*			(Config*)res->get(Res::config, string("material/") + element[c].materialName);
+
 		if(element[c].material == NULL)
 		{
 			alog.msg("error renderer res material", string("Material not found ")+ element[c].materialName);
 			return false;
-		}
-		element[c].alpha = element[c].material->gets("color_mode") == "alpha";
+		}*/
+
+//		element[c].alpha = element[c].material->gets("color_mode") == "alpha";
 
 		element[c].triangle = new Triangles;
 
-		int s = it->second.size();
+		int s = it->faceList.size();
 		element[c].triangle->clear();
 
 		for(int i=0; i<s; i++)
-			element[c].triangle->push_back(t->operator [](it->second[i]));
-
+		{
+			int j = it->faceList[i];
+			usedTriangle[j] = true;
+			element[c].triangle->push_back(t->operator [](j));
+		}
+		totalUsed += s;
+ 
 		element[c].vertex = v;
-		element[c].mapcoord = object->getMapCoords();
+		element[c].mapCoords = coords;
 		element[c].matrix = new_matrix;
 		element[c].normal = n;
 		element[c].frame = frame;
@@ -92,7 +115,18 @@ bool GraphEngine::inject(GraphInterface *object, matrix44 matrix)
 		total.triangle += s;
 	}
 
-	Sprites		*s = object->getSprites();
+		if(totalUsed == 0)
+		{
+			for(vector<bool>::iterator it = usedTriangle.begin(); it != usedTriangle.end(); it++)
+			if(!*it)
+			{
+				
+			}
+		}
+
+	}
+
+/*	Sprites		*s = object->getSprites();
 	if(s != NULL)
 	for(Sprites::iterator it = s->begin(); it != s->end(); it++)
 	{
@@ -152,7 +186,7 @@ bool GraphEngine::inject(GraphInterface *object, matrix44 matrix)
 			element[c].normal->operator [](i) = dir;
 
 		total.triangle += 2;
-	}
+	}*/
 	return true;
 }
 
@@ -161,20 +195,12 @@ bool GraphEngine::clear()
 //	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		//it->
 
-	for(vector<DrawElement>::iterator it = element.begin(); it != element.end(); it++)
-		delete it->triangle;
-
 	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		(*it)->cleanup();
 
 	objects.clear();
-	element.clear();
-	light.clear();
 
-	total.vertex = 0;
-	total.triangle = 0;
-	total.object = 0;
-
+	total.global = 0;
 
 	return true;
 }

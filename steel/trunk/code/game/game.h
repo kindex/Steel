@@ -59,6 +59,8 @@ public:
 	bool init(ResCollection *_res, std::string _conf, Input *_input);
 	void process();
 	void processPhysic(PhysicEngine *physic);
+
+	void bind(GraphEngine *graph);
 	void draw(GraphEngine *graph);
 
 	void handleEventKeyDown(std::string key);

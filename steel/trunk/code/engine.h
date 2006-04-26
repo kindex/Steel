@@ -34,7 +34,14 @@ struct Triangle // anti-clockwise direction (one side Triangle)
 	unsigned int a[3];
 };
 
-typedef std::vector<v3>			Vertexes;
+//typedef std::vector<v3>			Vertexes;
+struct Vertexes
+{
+	std::vector<v3> vertex;
+	uid		id;
+	uid getId() { return id; }
+};
+
 typedef std::vector<Triangle>	Triangles;
 
 
@@ -53,12 +60,14 @@ public:
 
 	virtual ~Engine() {}
 	virtual bool init(std::string _conf) = 0; // initialization
-//	protottype: virtual bool inject(Interface *object) { return false; }; // add object to process by engine
+
 	virtual bool clear() = 0; 
+//	protottype: virtual bool inject(Interface *object) { return false; }; // add object to process by engine
+//	virtual	bool remove(Interface *object);
 //	virtual bool process() = 0; // add object to process by engine
 	virtual bool deinit() = 0;
 
-// TODO: убрать это. Не вписывает в идею движка
+	// TODO: убрать это. Не вписывает в идею движка
 	void bindResColelntion(ResCollection *_res) { res = _res; }
 };
 

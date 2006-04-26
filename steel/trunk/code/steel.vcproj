@@ -414,11 +414,15 @@
 					Name="OpenGL"
 					>
 					<File
-						RelativePath=".\graph\opengl\extensions.cpp"
+						RelativePath=".\graph\opengl\extensions.h"
 						>
 					</File>
 					<File
-						RelativePath=".\graph\opengl\extensions.h"
+						RelativePath=".\graph\opengl\gl\libExt.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\graph\opengl\gl\libExt.h"
 						>
 					</File>
 					<File
@@ -590,6 +594,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="material"
+					>
+					<File
+						RelativePath=".\res\material\material.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\material\material.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audio"
@@ -658,6 +674,10 @@
 					RelativePath=".\game\particle_system.h"
 					>
 				</File>
+				<Filter
+					Name="objects"
+					>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="physic"

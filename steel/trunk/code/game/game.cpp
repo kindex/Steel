@@ -82,6 +82,12 @@ void Game::process()
 }
 */
 
+
+void Game::bind(GraphEngine *graph)
+{
+	graph->inject(world);
+}
+
 void Game::draw(GraphEngine *graph)
 {
 /*	if(!input->isMouseCaptured())
@@ -99,8 +105,6 @@ void Game::draw(GraphEngine *graph)
 
 	graph->camera.setup(eye, direction);
 	graph->processCamera();
-
-	graph->inject(world);
 
 	graph->process();
 }

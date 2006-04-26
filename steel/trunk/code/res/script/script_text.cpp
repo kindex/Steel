@@ -14,13 +14,19 @@ Res* createScriptText(const std::string filename, ResCollection *res)
 
 bool ScriptText::init(const string name, ResCollection &res)
 {
-	std::string file = "../res/" + name + ".script";
+	std::string file = name;
 
-	rstream f(file); // no binary acces, only text
-	if(!f.good()) 
+	rstream f; // no binary acces, only text
+
+	if(!f.open(file)) 
 	{
-		alog.msg("error res script", string("Res/Material/Script: cannot open file ") + file.c_str());
-		return false;
+		f.close();
+		file = name + ".script";
+		if(!f.open(file)) 
+		{
+			alog.msg("error res script", string("Res/Material/Script: cannot open file ") + file.c_str());
+			return false;
+		}
 	}
 
 	while(f.good())

@@ -13,9 +13,9 @@ class Model: public Res
 {
 public:
 	aabb				frame;
-    std::vector<v3>		vertex;    // Vertexes
+    Vertexes		vertex;    // Vertexes
     std::vector<Triangle> triangle;        // Triangles
-    std::vector<v2>		mapcoord; // Texture coordinates
+    MapCoords			mapCoords; // Texture coordinates
     std::vector<v3>		normal;    // Vertex normals
 	FaceMaterials		faceMaterial;
 
@@ -51,6 +51,7 @@ public:
 	{
 		return true;
 	}
+	MapCoords	*getMapCoords();
 };
 
 

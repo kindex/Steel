@@ -21,6 +21,7 @@
 #include "../math/maths.h"
 #include "../math/vector3d.h"
 
+#include "../res/material/material.h"
 
 struct Light
 {
@@ -41,10 +42,10 @@ struct Sprite
 
 
 typedef std::vector<v3>			Normals;
-typedef std::vector<v2>			MapCoords;
+
 typedef std::vector<Light>		Lights;
 typedef std::vector<Sprite>		Sprites;
-typedef std::map<std::string, std::vector<int> >  FaceMaterials;
+
 
 struct color_24
 {
@@ -57,6 +58,34 @@ struct color_f
     color_f() {}
     color_f(float R, float G, float B): r(R), g(G), b(B) {}
 };
+
+
+
+class MapCoord
+{
+public:
+	uid		id;
+	std::vector<float>	*mapCoords1f;
+	std::vector<v2>		*mapCoords2f;
+	std::vector<v3>		*mapCoords3f;
+
+	uid	getId() { return id; }
+//	kind : 1d, 2d, 3d
+};
+
+typedef MapCoord MapCoords;
+//typedef std::vector<v2> MapCoords;
+
+
+// материал + треугольники, к которым он относитс€
+struct FaceMaterial
+{
+	Material		*material;
+	std::vector<int> faceList;
+	std::string		name;
+};
+
+typedef std::vector<FaceMaterial>	FaceMaterials;
 
 
 /*
@@ -106,15 +135,18 @@ Video textures (avi, camera)
 	// массив индексов вершин, которые образуют треугольники (грани)
 	virtual Triangles*	getTriangles() = 0; 
 
-	virtual MapCoords*	getMapCoords() = 0; 
 	virtual FaceMaterials* getFaceMaterials() = 0;
+	virtual MapCoords*	getMapCoords() = 0;
+
 	virtual Lights*		getLights() = 0;
 	virtual Sprites*	getSprites() = 0;
 
 /*матрица трансформации объекта относительно его родител€. 
 ¬ключает в себ€ повотор, сдвиг и масштаб.
 getPVertexes возвращ€ет координаты точек в системе координат getPMatrix*/
-	virtual matrix44		getMatrix() = 0;
+	virtual matrix44	getMatrix() = 0;
+
+	virtual	uid			getId() = 0;
 };
 
 #endif

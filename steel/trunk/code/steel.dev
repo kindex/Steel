@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=81
+UnitCount=83
 Type=0
 Ver=1
 ObjFiles=
@@ -20,7 +20,7 @@ ObjectOutput=..\temp
 OverrideOutput=0
 OverrideOutputName=steel.exe
 HostApplication=
-Folders=common,game,graph,graph/opengl,graph/opengl/gl,input,math,physic,res,res/conf,res/image,res/model,res/script
+Folders=common,game,graph,graph/opengl,graph/opengl/gl,input,math,physic,res,res/conf,res/image,res/material,res/model,res/script
 CommandLine=
 UseCustomMakefile=0
 CustomMakefile=
@@ -227,37 +227,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit19]
-FileName=graph\opengl\extensions.cpp
-CompileCpp=1
-Folder=graph/opengl
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit20]
-FileName=graph\opengl\extensions.h
-CompileCpp=1
-Folder=graph/opengl
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit21]
-FileName=graph\opengl\opengl_engine.cpp
-CompileCpp=1
-Folder=graph/opengl
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit22]
 FileName=graph\opengl\opengl_engine.h
 CompileCpp=1
 Folder=graph/opengl
@@ -267,7 +237,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit23]
+[Unit21]
 FileName=graph\opengl\opengl_sdl_engine.cpp
 CompileCpp=1
 Folder=graph/opengl
@@ -277,7 +247,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit24]
+[Unit22]
 FileName=graph\opengl\opengl_sdl_engine.h
 CompileCpp=1
 Folder=graph/opengl
@@ -287,7 +257,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit25]
+[Unit23]
 FileName=graph\opengl\opengl_win_engine.cpp
 CompileCpp=1
 Folder=graph/opengl
@@ -297,7 +267,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit26]
+[Unit24]
 FileName=graph\opengl\opengl_win_engine.h
 CompileCpp=1
 Folder=graph/opengl
@@ -307,7 +277,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit27]
+[Unit25]
 FileName=graph\opengl\gl\glext.h
 CompileCpp=1
 Folder=graph/opengl/gl
@@ -317,7 +287,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit28]
+[Unit26]
 FileName=graph\opengl\gl\glxext.h
 CompileCpp=1
 Folder=graph/opengl/gl
@@ -327,7 +297,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit29]
+[Unit27]
 FileName=graph\opengl\gl\wglext.h
 CompileCpp=1
 Folder=graph/opengl/gl
@@ -337,7 +307,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit30]
+[Unit28]
 FileName=math\geometry.cpp
 CompileCpp=1
 Folder=math
@@ -347,7 +317,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit31]
+[Unit29]
 FileName=math\geometry.h
 CompileCpp=1
 Folder=math
@@ -357,7 +327,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit32]
+[Unit30]
 FileName=math\maths.cpp
 CompileCpp=1
 Folder=math
@@ -367,7 +337,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit33]
+[Unit31]
 FileName=math\maths.h
 CompileCpp=1
 Folder=math
@@ -377,7 +347,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit34]
+[Unit32]
 FileName=math\matrix4x4.cpp
 CompileCpp=1
 Folder=math
@@ -387,7 +357,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit35]
+[Unit33]
 FileName=math\matrix4x4.h
 CompileCpp=1
 Folder=math
@@ -397,7 +367,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit36]
+[Unit34]
 FileName=math\vector2d.cpp
 CompileCpp=1
 Folder=math
@@ -407,7 +377,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit37]
+[Unit35]
 FileName=math\vector2d.h
 CompileCpp=1
 Folder=math
@@ -417,7 +387,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit38]
+[Unit36]
 FileName=math\vector3d.cpp
 CompileCpp=1
 Folder=math
@@ -427,7 +397,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit39]
+[Unit37]
 FileName=math\vector3d.h
 CompileCpp=1
 Folder=math
@@ -437,7 +407,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit40]
+[Unit38]
 FileName=math\vector4d.cpp
 CompileCpp=1
 Folder=math
@@ -447,7 +417,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit41]
+[Unit39]
 FileName=math\vector4d.h
 CompileCpp=1
 Folder=math
@@ -457,7 +427,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit42]
+[Unit40]
 FileName=physic\physic_engine.cpp
 CompileCpp=1
 Folder=physic
@@ -467,7 +437,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit43]
+[Unit41]
 FileName=physic\physic_engine.h
 CompileCpp=1
 Folder=physic
@@ -477,7 +447,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit44]
+[Unit42]
 FileName=physic\physic_interface.h
 CompileCpp=1
 Folder=physic
@@ -487,7 +457,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit45]
+[Unit43]
 FileName=physic\physic_primitives.h
 CompileCpp=1
 Folder=physic
@@ -497,7 +467,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit46]
+[Unit44]
 FileName=res\res.cpp
 CompileCpp=1
 Folder=res
@@ -507,7 +477,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit47]
+[Unit45]
 FileName=res\res.h
 CompileCpp=1
 Folder=res
@@ -517,7 +487,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit48]
+[Unit46]
 FileName=res\conf\conf.cpp
 CompileCpp=1
 Folder=res/conf
@@ -527,7 +497,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit49]
+[Unit47]
 FileName=res\conf\conf.h
 CompileCpp=1
 Folder=res/conf
@@ -537,7 +507,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit50]
+[Unit48]
 FileName=res\conf\conf_text.cpp
 CompileCpp=1
 Folder=res/conf
@@ -547,7 +517,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit51]
+[Unit49]
 FileName=res\conf\conf_text.h
 CompileCpp=1
 Folder=res/conf
@@ -557,7 +527,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit52]
+[Unit50]
 FileName=res\image\bmp.cpp
 CompileCpp=1
 Folder=res/image
@@ -567,7 +537,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit53]
+[Unit51]
 FileName=res\image\bmp.h
 CompileCpp=1
 Folder=res/image
@@ -577,7 +547,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit54]
+[Unit52]
 FileName=res\image\image.cpp
 CompileCpp=1
 Folder=res/image
@@ -587,7 +557,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit55]
+[Unit53]
 FileName=res\image\image.h
 CompileCpp=1
 Folder=res/image
@@ -597,7 +567,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit56]
+[Unit54]
 FileName=res\model\_3ds.cpp
 CompileCpp=1
 Folder=res/model
@@ -607,7 +577,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit57]
+[Unit55]
 FileName=res\model\_3ds.h
 CompileCpp=1
 Folder=res/model
@@ -617,7 +587,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit58]
+[Unit56]
 FileName=res\model\bones.cpp
 CompileCpp=1
 Folder=res/model
@@ -627,7 +597,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit59]
+[Unit57]
 FileName=res\model\bones.h
 CompileCpp=1
 Folder=res/model
@@ -637,7 +607,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit60]
+[Unit58]
 FileName=res\model\lightwave.cpp
 CompileCpp=1
 Folder=res/model
@@ -647,7 +617,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit61]
+[Unit59]
 FileName=res\model\lightwave.h
 CompileCpp=1
 Folder=res/model
@@ -657,7 +627,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit62]
+[Unit60]
 FileName=res\model\model.cpp
 CompileCpp=1
 Folder=res/model
@@ -667,7 +637,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit63]
+[Unit61]
 FileName=res\model\model.h
 CompileCpp=1
 Folder=res/model
@@ -677,7 +647,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit64]
+[Unit62]
 FileName=input\input.h
 CompileCpp=1
 Folder=input
@@ -687,7 +657,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit65]
+[Unit63]
 FileName=input\input_win.cpp
 CompileCpp=1
 Folder=input
@@ -697,7 +667,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit66]
+[Unit64]
 FileName=input\input_win.h
 CompileCpp=1
 Folder=input
@@ -707,7 +677,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit67]
+[Unit65]
 FileName=input\input.cpp
 CompileCpp=1
 Folder=input
@@ -717,7 +687,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit68]
+[Unit66]
 FileName=physic\physic_engine_3d.cpp
 CompileCpp=1
 Folder=physic
@@ -727,7 +697,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit69]
+[Unit67]
 FileName=physic\physic_engine_3d.h
 CompileCpp=1
 Folder=physic
@@ -737,7 +707,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit70]
+[Unit68]
 FileName=res\script\script.cpp
 CompileCpp=1
 Folder=res/script
@@ -747,7 +717,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit71]
+[Unit69]
 FileName=res\script\script.h
 CompileCpp=1
 Folder=res/script
@@ -757,7 +727,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit72]
+[Unit70]
 FileName=res\script\script_text.cpp
 CompileCpp=1
 Folder=res/script
@@ -767,7 +737,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit73]
+[Unit71]
 FileName=res\script\script_text.h
 CompileCpp=1
 Folder=res/script
@@ -777,7 +747,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit74]
+[Unit72]
 FileName=common\utils.cpp
 CompileCpp=1
 Folder=common
@@ -787,7 +757,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit75]
+[Unit73]
 FileName=common\utils.h
 CompileCpp=1
 Folder=common
@@ -797,7 +767,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit76]
+[Unit74]
 FileName=game\game_obj.cpp
 CompileCpp=1
 Folder=game
@@ -807,7 +777,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit77]
+[Unit75]
 FileName=game\game_obj.h
 CompileCpp=1
 Folder=game
@@ -817,7 +787,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit78]
+[Unit76]
 FileName=res\image\tga.cpp
 CompileCpp=1
 Folder=res/image
@@ -827,7 +797,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit79]
+[Unit77]
 FileName=res\image\tga.h
 CompileCpp=1
 Folder=res/image
@@ -837,7 +807,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit80]
+[Unit78]
 FileName=game\particle_system.cpp
 CompileCpp=1
 Folder=game
@@ -847,10 +817,60 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit81]
+[Unit79]
 FileName=game\particle_system.h
 CompileCpp=1
 Folder=game
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit80]
+FileName=res\material\material.cpp
+CompileCpp=1
+Folder=res/material
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit81]
+FileName=res\material\material.h
+CompileCpp=1
+Folder=res/material
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit82]
+FileName=graph\opengl\gl\libExt.cpp
+CompileCpp=1
+Folder=graph/opengl/gl
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit83]
+FileName=graph\opengl\gl\libExt.h
+CompileCpp=1
+Folder=graph/opengl/gl
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit19]
+FileName=graph\opengl\opengl_engine.cpp
+CompileCpp=1
+Folder=graph/opengl
 Compile=1
 Link=1
 Priority=1000

@@ -20,7 +20,10 @@ Res* createTGA(const std::string filename, ResCollection *res)
 {
 	TGA *o = new TGA;
 	if(o->init(filename)) 
+	{
+		o->setId(res->genUid());
 		return o;
+	}
 	else
 		return NULL;
 }

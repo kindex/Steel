@@ -17,7 +17,7 @@ Res* createConfigText(const std::string filename, ResCollection *res)
 
 bool ConfigText::init(const std::string name, ResCollection &res)
 {
-	std::string file = "../res/" + name + ".conf";
+	std::string file = name + ".conf";
 
 	rstream f(file); // no binary acces, only text
 	if(!f.good()) 
