@@ -58,6 +58,18 @@ bool Material::init(string name, ResCollection *res)
 				map.push_back(m);
 			}
 		}
+		if(kind == "env")
+		{
+			m.texture = (Image*)res->add(Res::image, file);
+			if(!m.texture)
+				m.texture = (Image*)res->add(Res::image, dir + "/" + file);
+
+			if(m.texture)
+			{
+				m.kind = MapKind::env;
+				map.push_back(m);
+			}
+		}
 		if(kind == "color")
 		{
 			m.texture = NULL;

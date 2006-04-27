@@ -25,6 +25,7 @@ namespace MapKind
 		none,
 		color_map,
 		color,
+		env,
 		normal_map,
 		diffuse_lights // procedure texture
 	} tex_kind;

@@ -18,7 +18,7 @@ public:
     Triangles			triangleAll;        // Triangles
 
     MapCoords			mapCoords; // Texture coordinates
-    std::vector<v3>		normal;    // Vertex normals
+    Normals				normal;    // Vertex normals
 	FaceMaterials		faceMaterial;
 
     // sTangent - vektor v storonu uveli4enija S teksturnoj koordinati (vpravo)

@@ -297,6 +297,7 @@ bool _3DS::init(const std::string name, ResCollection &res)
 		string dir = implode('/', path);
 
 		vertex.setId(res.genUid());
+		normal.setId(res.genUid());
 		triangleAll.setId(res.genUid());
 		mapCoords.setId(res.genUid());
 

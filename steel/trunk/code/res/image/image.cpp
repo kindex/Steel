@@ -168,4 +168,6 @@ void Image::convertFromHeightMapToNormalMap()
     }
     free(a);
     free(b);
+
+	format = ImageFormat::normal;
 }

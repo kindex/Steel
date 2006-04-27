@@ -15,5 +15,5 @@
 #mode	texkind		
 #	color_map	texture	
 #	color	R	G	B	A
-;	color	1	0	0	0.5
-	color_map	image/env/tsccity_bk
+#	color	1	0	0	0.5
+*	env	image/env/tsccity

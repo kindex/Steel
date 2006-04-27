@@ -96,9 +96,9 @@ public:
 	typedef enum 
 	{
 			none,
-			image,
-			model,
-			config,
+			image, // class Image: 2D, 3D, Cubemap (1x6 maps in one)
+			model, // class Model
+			config, // class Config
 			script,
 			material
 

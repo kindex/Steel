@@ -41,7 +41,6 @@ struct Sprite
 };
 
 
-typedef std::vector<v3>			Normals;
 
 typedef std::vector<Light>		Lights;
 typedef std::vector<Sprite>		Sprites;
@@ -67,6 +66,9 @@ public:
 
 //	kind : 1d, 2d, 3d
 };
+
+typedef Vertexes	Normals;
+
 
 typedef MapCoord MapCoords;
 //typedef std::vector<v2> MapCoords;

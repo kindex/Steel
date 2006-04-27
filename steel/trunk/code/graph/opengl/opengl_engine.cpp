@@ -28,6 +28,44 @@
 
 using namespace std;
 
+/*
+GLuint OpenGL_Engine::getCubeMap(std::string imageName)
+{
+	if(registedCubeMaps.find(imageName) != registedCubeMaps.end())
+		return registedCubeMaps[imageName];
+
+
+	char *a[] = {"bk", "ft", "lf", "rt", "up", "dn"};
+	int b[6] = 
+	{
+GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB,
+GL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB,
+GL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB,
+GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB,
+GL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB,
+GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB
+	};
+
+
+
+	for(int i=0; i<6; i++)
+		if(a[i]==0)
+		{
+			alog.out("Cannot find cube map %s", imageName.c_str());
+			return 0;
+		}
+
+
+    glDisable(GL_TEXTURE_CUBE_MAP_ARB);
+
+
+	registedCubeMaps[imageName] = id;
+	alog.out("Bind cubemap %s", imageName.c_str());
+	return id;
+}
+*/
+
+
 bool OpenGL_Engine::bindTexture(Image *image)
 {
 	if(image == NULL) return false;
@@ -42,8 +80,17 @@ bool OpenGL_Engine::bindTexture(Image *image)
 
 	if(loaded)
 	{
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, buf.glid);
+		switch(image->getKind())
+		{
+			case ImageKind::image2d:
+				glEnable(GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, buf.glid);
+				break;
+			case ImageKind::cube:
+				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
+				break;
+		}
 
 		buf.lastUsedTime = time;
 		buf.usedCnt++;
@@ -51,21 +98,51 @@ bool OpenGL_Engine::bindTexture(Image *image)
 	else
 	{
 		glGenTextures(1, &buf.glid);
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, buf.glid);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		int format;
+		if(image->getFormat() == ImageFormat::rgb) format = GL_RGB; 
+		else if(image->getFormat() == ImageFormat::rgba) format = GL_RGBA;
+		else return false;
 
-		int kind;
-		if(image->getBpp() == 24) kind = GL_RGB;
-		else
-		if(image->getBpp() == 32) 
-			kind = GL_RGBA;
-		else return 0;
+		switch(image->getKind())
+		{
+			case ImageKind::image2d:
+				glEnable(GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, buf.glid);
 
-		glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
-			kind,  GL_UNSIGNED_BYTE , image->getBitmap());
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+				glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
+					format,  GL_UNSIGNED_BYTE , image->getBitmap());
+				break;
+			case ImageKind::cube:
+				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
+
+				int w = image->getWidth();
+				int h = image->getHeight();
+				int bpp = image->getBpp()/8;
+
+				if(w*6 != h) return false; // 6 images in one
+
+				for(int i=0; i<6; i++)
+				{
+					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i,	0, 
+						GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image->getBitmap() + w*w*bpp*i);
+				}
+
+
+				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+				break;
+		}
 
 		buf.loaded = true;
 		buf.loadCnt++;
@@ -146,26 +223,37 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			Map map = m->map[i];
 
 			glActiveTextureARB(GL_TEXTURE0_ARB + i);
+			glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
 
 			if(map.kind == MapKind::color_map)
+			{
 				bindTexture(map.texture); // 1,2,3D, Cube (auto detect from Image)
+				bind(e.mapCoords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2);
+				glTexCoordPointer(2, GL_FLOAT, 0,0);
+	//			glTexCoordPointer(2, GL_FLOAT, 8, &(e.mapCoords->mapCoords2f->front()));
+			}
+			if(map.kind == MapKind::env)
+			{
+				bindTexture(map.texture); // 1,2,3D, Cube (auto detect from Image)
+			    glEnable  ( GL_TEXTURE_GEN_S );
+			    glEnable  ( GL_TEXTURE_GEN_T );
+				glEnable  ( GL_TEXTURE_GEN_R );
+
+				glTexGeni ( GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+			    glTexGeni ( GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+				glTexGeni ( GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+			}
 			if(map.kind == MapKind::color)
 				glColor4f(map.color.x, map.color.y, map.color.z, map.color.w);
-
-
-//			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-			glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
-			bind(e.mapCoords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2);
-			glTexCoordPointer(2, GL_FLOAT, 0,0);
-
-//			glTexCoordPointer(2, GL_FLOAT, 8, &(e.mapCoords->mapCoords2f->front()));
 
 			GLint mode = GL_REPLACE;
 			if(map.mode == MapMode::mul) mode = GL_BLEND;
 
 			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 		}
+
+		bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3);
+		glNormalPointer(GL_FLOAT, 0, 0);
 
 
 		bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3); 
@@ -177,12 +265,19 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 		for(int i=0; i<texCount; i++)
 		{
+			glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
 			glActiveTextureARB(GL_TEXTURE0_ARB + i);
 			glDisable(GL_TEXTURE_2D);// TODO
+			glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+			glDisable( GL_TEXTURE_GEN_S );
+		    glDisable( GL_TEXTURE_GEN_T );
+			glDisable( GL_TEXTURE_GEN_R );
 		}
 //	glPopClientAttrib ();
 		glActiveTextureARB(GL_TEXTURE0_ARB);
+		glClientActiveTextureARB(GL_TEXTURE0_ARB);
 		}
 
 /*		bool alpha = conf->geti("drawAlpha") == 2 && m->gets("color_mode") == "alpha";
@@ -674,7 +769,7 @@ void OpenGL_Engine::drawNormals(DrawElement &e)
 		for(unsigned int i=0; i < e.vertex->data.size(); i++)
 		{
 			v3 s = e.vertex->data[i];
-			v3 d = e.vertex->data[i] + e.normal->operator [](i)*diag;
+			v3 d = e.vertex->data[i] + e.normal->data[i]*diag;
 
 			glVertex3f(s.x, s.y, s.z);
 			glVertex3f(d.x, d.y, d.z);
@@ -718,61 +813,6 @@ void OpenGL_Engine::drawAABB(DrawElement &e, matrix44 matrix)
 }
 
 
-/*
-GLuint OpenGL_Engine::getCubeMap(std::string imageName)
-{
-	if(registedCubeMaps.find(imageName) != registedCubeMaps.end())
-		return registedCubeMaps[imageName];
-
-
-	char *a[] = {"bk", "ft", "lf", "rt", "up", "dn"};
-	int b[6] = 
-	{
-GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB,
-GL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB,
-GL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB,
-GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB,
-GL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB,
-GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB
-	};
-
-
-
-	for(int i=0; i<6; i++)
-		if(a[i]==0)
-		{
-			alog.out("Cannot find cube map %s", imageName.c_str());
-			return 0;
-		}
-
-    glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-
-	GLuint id;
-	glGenTextures(1, &id);
-	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, id);
-
-
-	for(int i=0; i<6; i++)
-	{
-		Image *m = (Image*)res->add(Res::image, imageName+a[i]);
-		glTexImage2D(b[i],	0, GL_RGBA8, m->getWidth(), m->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, m->getBitmap());
-	}
-
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-    glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-
-
-	registedCubeMaps[imageName] = id;
-	alog.out("Bind cubemap %s", imageName.c_str());
-	return id;
-}
-*/
 
 bool OpenGL_Engine::process()
 {
@@ -792,6 +832,13 @@ bool OpenGL_Engine::process()
 //		conf->setup("drawBump", 0);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+
+	glLightfv( GL_LIGHT0, GL_POSITION, v4( camera.center ));
+
 
 	std::vector<DrawElement> elementAlpha;
 

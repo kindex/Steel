@@ -14,7 +14,7 @@
 #include "../../common/logger.h"
 #include <string> 
 
-Res* createBMP(const std::string filename, ResCollection *res) 
+Res* createBMP(const std::string filename, ResCollection *res)
 {
 	BMP *o = new BMP;
 	if(o->init(filename))
@@ -25,7 +25,6 @@ Res* createBMP(const std::string filename, ResCollection *res)
 	else
 		return NULL;
 }
-
 
 typedef unsigned char byte; // 1 byte
 typedef unsigned short word; // 2 bytes
@@ -179,7 +178,8 @@ int r;
           bitmap[i*bpl + j*3 + 2] = r ;
         }
      }
-
+		kind	= ImageKind::image2d;
+		format	= ImageFormat::rgb;
 
      break;
 //   case 8:

@@ -15,8 +15,28 @@
 
 #include "../res.h"
 
-class NormalMap;
-class HeightMap;
+namespace ImageKind
+{
+	typedef enum 
+	{
+		none,
+		image1d,
+		image2d,
+		image3d,
+		cube // 6 images in one (+X, -X, +Y, -Y, +Z, -Z)
+	} ImageKind;
+}
+
+namespace ImageFormat
+{
+	typedef enum
+	{
+		none,
+		rgb,   // 24
+		rgba,  // 32
+		normal // rgb = xyz
+	} ImageFormat;
+}
 
 class Image: public Res
 {
@@ -24,7 +44,13 @@ protected:
     unsigned char* bitmap;
     int width, height, bpp, bitmapSize;
 public:
-    Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; }
+
+protected:
+	ImageKind::ImageKind		kind;
+	ImageFormat::ImageFormat	format;
+public:
+
+	Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; kind = ImageKind::none; format =ImageFormat::none; }
     ~Image() { }
 
     bool unload() 
@@ -52,6 +78,11 @@ public:
 	unsigned char* getBitmap() { return bitmap; }
 
 	void convertFromHeightMapToNormalMap();
+
+	ImageKind::ImageKind	getKind() { return kind; }
+	void setKind(ImageKind::ImageKind _kind) { kind = _kind; }
+	ImageFormat::ImageFormat	getFormat() { return format; }
+	void setFormat(ImageFormat::ImageFormat _format) { format = _format; }
 };
 
 #endif

@@ -55,11 +55,11 @@ void Model::generateNormals()
     vector<v3> facenormal;
     facenormal.resize(triangleAll.data.size());
 
-    normal.resize(vertex.data.size());
+    normal.data.resize(vertex.data.size());
 
-    for (unsigned int i=0; i<normal.size(); i++)
+    for (unsigned int i=0; i<normal.data.size(); i++)
     {
-        normal[i].loadZero();
+        normal.data[i].loadZero();
     }
     // Pods4et normalej poligonov
     for (unsigned int i=0; i<triangleAll.data.size(); i++)
@@ -73,12 +73,12 @@ void Model::generateNormals()
         facenormal[i] = vectmul(p,q);
         if (facenormal[i] == v3(0,0,0)) facenormal[i] = v3(0,1,0); // TEMP TODO - Up
         facenormal[i].normalize();
-        normal[a] += facenormal[i];
-        normal[b] += facenormal[i];
-        normal[c] += facenormal[i];
+        normal.data[a] += facenormal[i];
+        normal.data[b] += facenormal[i];
+        normal.data[c] += facenormal[i];
     }
-    for (unsigned int i=0; i<normal.size(); i++)
-        normal[i].normalize();
+    for (unsigned int i=0; i<normal.data.size(); i++)
+        normal.data[i].normalize();
 
 // TODO - speed up
 
@@ -127,20 +127,20 @@ void Model::generateNormals()
 */
 //    normal.resize(vertex.size());
 
-    for (unsigned int i=0; i<normal.size(); i++)
-        normal[i].loadZero();
+    for (unsigned int i=0; i<normal.data.size(); i++)
+        normal.data[i].loadZero();
 
     for (unsigned int i=0; i<triangleAll.data.size(); i++)
     {
         int a = triangleAll.data[i].a[0];
         int b = triangleAll.data[i].a[1];
         int c = triangleAll.data[i].a[2];
-        normal[a] += facenormal[i];
-        normal[b] += facenormal[i];
-        normal[c] += facenormal[i];
+        normal.data[a] += facenormal[i];
+        normal.data[b] += facenormal[i];
+        normal.data[c] += facenormal[i];
     }
-    for (unsigned int i=0; i<normal.size(); i++)
-        normal[i].normalize();
+    for (unsigned int i=0; i<normal.data.size(); i++)
+        normal.data[i].normalize();
 }
 
 void Model::updateAABB()
