@@ -60,16 +60,11 @@ struct color_f
 };
 
 
-
-class MapCoord
+class MapCoord: public BufferedElement
 {
 public:
-	uid		id;
-	std::vector<float>	*mapCoords1f;
-	std::vector<v2>		*mapCoords2f;
-	std::vector<v3>		*mapCoords3f;
+	std::vector<v2>	data;
 
-	uid	getId() { return id; }
 //	kind : 1d, 2d, 3d
 };
 
@@ -81,7 +76,7 @@ typedef MapCoord MapCoords;
 struct FaceMaterial
 {
 	Material		*material;
-	std::vector<int> faceList;
+	Triangles		triangles;
 	std::string		name;
 };
 
@@ -133,7 +128,7 @@ Video textures (avi, camera)
 	virtual Normals*	getNormals() = 0; // список нормалей в вершинам
 
 	// массив индексов вершин, которые образуют треугольники (грани)
-	virtual Triangles*	getTriangles() = 0; 
+//	virtual Triangles*	getTriangles() = 0; 
 
 	virtual FaceMaterials* getFaceMaterials() = 0;
 	virtual MapCoords*	getMapCoords() = 0;

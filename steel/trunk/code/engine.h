@@ -23,32 +23,12 @@
 #include "steel.h"
 #include "res/res.h"
 #include "res/conf/conf.h"
-#include <string>
 #include "math/vector3d.h"
+#include "interface.h"
+
+#include <string>
 #include <vector>
 
-// Graph+Physic interface
-// One triangle, indexes of vertexes
-struct Triangle // anti-clockwise direction (one side Triangle)
-{
-	unsigned int a[3];
-};
-
-//typedef std::vector<v3>			Vertexes;
-struct Vertexes
-{
-	std::vector<v3> vertex;
-	uid		id;
-	uid getId() { return id; }
-};
-
-typedef std::vector<Triangle>	Triangles;
-
-
-/*
-protottype:
-*/
-class Interface{};
 
 
 class Engine: public steelAbstract

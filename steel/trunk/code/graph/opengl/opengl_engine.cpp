@@ -65,7 +65,9 @@ bool OpenGL_Engine::bindTexture(Image *image)
 	return true;
 }
 
-bool OpenGL_Engine::bindVertexes(Vertexes *v)
+
+
+template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, int elCnt)
 {
 	if(v == NULL) return false;
 
@@ -76,66 +78,23 @@ bool OpenGL_Engine::bindVertexes(Vertexes *v)
 	{
 		glid = buffers[id];
 
-		glBindBufferARB(GL_ARRAY_BUFFER_ARB, glid);
-	    glEnableClientState ( GL_VERTEX_ARRAY );
-	    glVertexPointer     ( 3, GL_FLOAT, 0, 0 );
+		glBindBufferARB(mode2, glid);
+	    if(mode)glEnableClientState ( mode );
 	}
 	else
 	{
 		glGenBuffersARB(1, &glid);
 
-	    glEnableClientState ( GL_VERTEX_ARRAY );
-		glBindBufferARB(GL_ARRAY_BUFFER_ARB, glid);
-		glBufferDataARB(GL_ARRAY_BUFFER_ARB, 3*sizeof(float)*v->vertex.size(), &v->vertex.front(), GL_STATIC_DRAW);
-
-	    glVertexPointer     ( 3, GL_FLOAT, 0, 0 );
+	    if(mode) glEnableClientState ( mode );
+		glBindBufferARB(mode2, glid);
+		glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), GL_STATIC_DRAW);
 
 		buffers[id] = glid;
 	}
-
-	return true;
-
-}
-
-bool OpenGL_Engine::bindTexCoords(MapCoord *coord)
-{
-	if(coord == NULL) return false;
-
-	uid	id = coord->getId();
-	// TODO id 0, id -1
-	GLuint glid;
-	if(buffers.find(id) != buffers.end())
-	{
-		glid = buffers[id];
-
-		glBindBufferARB(GL_ARRAY_BUFFER_ARB, glid);
-	    glTexCoordPointer ( 2, GL_FLOAT, 0, 0);
-	    glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
-
-//		glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, 2*sizeof(float)*coord->mapCoords2f->size(), &coord->mapCoords2f->front());
-//		glBufferDataARB(GL_ARRAY_BUFFER_ARB, 2*sizeof(float)*coord->mapCoords2f->size(), &coord->mapCoords2f->front(), GL_STATIC_DRAW);
-		//glPushClientAttrib  ( GL_CLIENT_VERTEX_ARRAY_BIT );
-
-	}
-	else
-	{
-		glGenBuffersARB(1, &glid);
-
-		glBindBufferARB(GL_ARRAY_BUFFER_ARB, glid);
-
-		glBufferDataARB(GL_ARRAY_BUFFER_ARB, 2*sizeof(float)*coord->mapCoords2f->size(), &coord->mapCoords2f->front(), GL_STATIC_DRAW);
-
-//		glTexCoordPointer(2, GL_FLOAT, 
-
-//		glPushClientAttrib  ( GL_CLIENT_VERTEX_ARRAY_BIT );
-		glTexCoordPointer ( 2, GL_FLOAT, 0, 0);
-	    glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
-
-		buffers[id] = glid;
-	}
-
 	return true;
 }
+
+
 
 void OpenGL_Engine::drawElement(DrawElement &e)
 {
@@ -152,7 +111,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 //		glPushClientAttrib  ( GL_CLIENT_VERTEX_ARRAY_BIT );
 
 
-		bindVertexes(e.vertex);
+		bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3);
+		glVertexPointer(3, GL_FLOAT, 0, 0);
+
 //		glEnableClientState(GL_VERTEX_ARRAY);
 //		glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &e.vertex->front());
 
@@ -171,15 +132,21 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 //			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 			glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
-			bindTexCoords(e.mapCoords);
+			bind(e.mapCoords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2);
+			glTexCoordPointer(2, GL_FLOAT, 0,0);
 
 //			glTexCoordPointer(2, GL_FLOAT, 8, &(e.mapCoords->mapCoords2f->front()));
 
-			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
 		}
 
 
-		glDrawElements(GL_TRIANGLES, e.triangle->size()*3, GL_UNSIGNED_INT, &(e.triangle->front()));
+		bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3); 
+		glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+
+//		glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &(e.triangle->data.front()));
+
+
 		glDisableClientState(GL_VERTEX_ARRAY);
 
 		for(int i=0; i<texCount; i++)
@@ -348,7 +315,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			glPolygonMode(GL_BACK, GL_LINE); 
 			glDepthFunc(GL_LEQUAL); // For blending
 	
-			drawFaces(e);
+//			drawFaces(e);
 
 			glPolygonMode(GL_FRONT, GL_FILL);    	// Reset Back-Facing Polygon Drawing Mode
 			glDisableClientState(GL_VERTEX_ARRAY);
@@ -667,10 +634,10 @@ void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix44 const m
 }
 */
 
-void OpenGL_Engine::drawFaces(DrawElement &e)
+/*void OpenGL_Engine::drawFaces(DrawElement &e)
 {
 	glDrawElements(GL_TRIANGLES, e.triangle->size()*3, GL_UNSIGNED_INT, &(e.triangle->front()));
-}
+}*/
 
 void OpenGL_Engine::drawNormals(DrawElement &e)
 {
@@ -678,10 +645,10 @@ void OpenGL_Engine::drawNormals(DrawElement &e)
 	float diag = (f.max-f.min).getLength()*0.05f;
 
 		glBegin(GL_LINES);
-		for(unsigned int i=0; i < e.vertex->vertex.size(); i++)
+		for(unsigned int i=0; i < e.vertex->data.size(); i++)
 		{
-			v3 s = e.vertex->vertex[i];
-			v3 d = e.vertex->vertex[i] + e.normal->operator [](i)*diag;
+			v3 s = e.vertex->data[i];
+			v3 d = e.vertex->data[i] + e.normal->operator [](i)*diag;
 
 			glVertex3f(s.x, s.y, s.z);
 			glVertex3f(d.x, d.y, d.z);
@@ -821,9 +788,6 @@ GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB
 bool OpenGL_Engine::process()
 {
 	// TODO repair DC 
-	for(vector<DrawElement>::iterator it = element.begin(); it != element.end(); it++)
-		delete it->triangle;
-
 	element.clear();
 
 	light.clear();

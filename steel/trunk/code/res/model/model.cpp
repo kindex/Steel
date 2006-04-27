@@ -53,23 +53,23 @@ void Model::generateNormals()
 
 
     vector<v3> facenormal;
-    facenormal.resize(triangle.size());
+    facenormal.resize(triangleAll.data.size());
 
-    normal.resize(vertex.vertex.size());
+    normal.resize(vertex.data.size());
 
     for (unsigned int i=0; i<normal.size(); i++)
     {
         normal[i].loadZero();
     }
     // Pods4et normalej poligonov
-    for (unsigned int i=0; i<triangle.size(); i++)
+    for (unsigned int i=0; i<triangleAll.data.size(); i++)
     {
-		int a = triangle[i].a[0];
-        int b = triangle[i].a[1];
-        int c = triangle[i].a[2];
+		int a = triangleAll.data[i].a[0];
+        int b = triangleAll.data[i].a[1];
+        int c = triangleAll.data[i].a[2];
 
-        v3 p = vertex.vertex[b] - vertex.vertex[a];
-        v3 q = vertex.vertex[c] - vertex.vertex[a];
+        v3 p = vertex.data[b] - vertex.data[a];
+        v3 q = vertex.data[c] - vertex.data[a];
         facenormal[i] = vectmul(p,q);
         if (facenormal[i] == v3(0,0,0)) facenormal[i] = v3(0,1,0); // TEMP TODO - Up
         facenormal[i].normalize();
@@ -130,11 +130,11 @@ void Model::generateNormals()
     for (unsigned int i=0; i<normal.size(); i++)
         normal[i].loadZero();
 
-    for (unsigned int i=0; i<triangle.size(); i++)
+    for (unsigned int i=0; i<triangleAll.data.size(); i++)
     {
-        int a = triangle[i].a[0];
-        int b = triangle[i].a[1];
-        int c = triangle[i].a[2];
+        int a = triangleAll.data[i].a[0];
+        int b = triangleAll.data[i].a[1];
+        int c = triangleAll.data[i].a[2];
         normal[a] += facenormal[i];
         normal[b] += facenormal[i];
         normal[c] += facenormal[i];
@@ -146,6 +146,6 @@ void Model::generateNormals()
 void Model::updateAABB()
 {
 	frame.clear();
-	for(std::vector<v3>::iterator it = vertex.vertex.begin(); it != vertex.vertex.end(); it++)
+	for(std::vector<v3>::iterator it = vertex.data.begin(); it != vertex.data.end(); it++)
 		frame.merge(*it);
 }

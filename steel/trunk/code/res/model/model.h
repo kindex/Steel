@@ -13,8 +13,10 @@ class Model: public Res
 {
 public:
 	aabb				frame;
-    Vertexes		vertex;    // Vertexes
-    std::vector<Triangle> triangle;        // Triangles
+    Vertexes			vertex;    // Vertexes
+
+    Triangles			triangleAll;        // Triangles
+
     MapCoords			mapCoords; // Texture coordinates
     std::vector<v3>		normal;    // Vertex normals
 	FaceMaterials		faceMaterial;

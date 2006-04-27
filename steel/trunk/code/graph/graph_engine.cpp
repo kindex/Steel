@@ -53,7 +53,6 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 matrix)
 
 	FaceMaterials* m = object->getFaceMaterials();
 	Vertexes	*v = object->getVertexes();
-	Triangles	*t = object->getTriangles();
 	Lights		*l = object->getLights();
 	Normals		*n = object->getNormals();
 	MapCoords	*coords = object->getMapCoords();
@@ -68,12 +67,12 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 matrix)
 	}
 
 	if(v != NULL)
-		total.vertex += v->vertex.size();
+		total.vertex += v->data.size();
 
-	if(t != NULL)
+//	if(t != NULL)
 	{
-		vector<bool>	usedTriangle(t->size(), false);
-		int totalUsed = 0;
+//		vector<bool>	usedTriangle(t->data.size(), false);
+//		int totalUsed = 0;
 
 	if(m != NULL)
 	for(FaceMaterials::iterator it = (*m).begin(); it != (*m).end(); it++)
@@ -82,30 +81,9 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 matrix)
 		element.resize(c+1);
 
 		element[c].material = (*it).material;
-//		element[c].material = (*it).material;
-/*			(Config*)res->get(Res::config, string("material/") + element[c].materialName);
+		element[c].triangle = &it->triangles;
 
-		if(element[c].material == NULL)
-		{
-			alog.msg("error renderer res material", string("Material not found ")+ element[c].materialName);
-			return false;
-		}*/
-
-//		element[c].alpha = element[c].material->gets("color_mode") == "alpha";
-
-		element[c].triangle = new Triangles;
-
-		int s = it->faceList.size();
-		element[c].triangle->clear();
-
-		for(int i=0; i<s; i++)
-		{
-			int j = it->faceList[i];
-			usedTriangle[j] = true;
-			element[c].triangle->push_back(t->operator [](j));
-		}
-		totalUsed += s;
- 
+		int s = element[c].triangle->data.size();
 		element[c].vertex = v;
 		element[c].mapCoords = coords;
 		element[c].matrix = new_matrix;
@@ -114,15 +92,6 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 matrix)
 
 		total.triangle += s;
 	}
-
-		if(totalUsed == 0)
-		{
-			for(vector<bool>::iterator it = usedTriangle.begin(); it != usedTriangle.end(); it++)
-			if(!*it)
-			{
-				
-			}
-		}
 
 	}
 

@@ -63,7 +63,7 @@ public:
 	
 	void drawElement(DrawElement &e);
 	
-	void drawFaces(DrawElement &e);
+//	void drawFaces(DrawElement &e);
 	void drawNormals(DrawElement &e);
 	void drawAABB(DrawElement &e, matrix44 matrix);
 
@@ -81,8 +81,10 @@ public:
 //	GLuint getCubeMap(std::string imageName);
 
 	bool bindTexture(Image *image);
-	bool bindTexCoords(MapCoord *coord);
-	bool bindVertexes(Vertexes *v);
+
+	template<class Vertexes> bool bind(Vertexes *v, int mode, int mode2, int elCnt);
+/*	bool bindTexCoords(MapCoord *coord);
+	bool bindVertexes(Vertexes *v);*/
 };
 
 

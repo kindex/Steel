@@ -152,11 +152,10 @@ public:
 	Triangles*	getTriangles()
 	{
 		if(m)
-			return &m->triangle;
+			return &m->triangleAll;
 		else
 			return NULL;
 	}
-	Triangles*	getPTriangles() {	return getTriangles(); }
 
 	Normals* getNormals()
 	{
@@ -200,7 +199,6 @@ public:
 	Vertexes*	getVertexes()	{	return NULL;	}
 	Vertexes*	getPVertexes()	{	return getVertexes(); }
 	Triangles*	getTriangles()	{	return NULL;	}
-	Triangles*	getPTriangles() {	return getTriangles(); }
 	Normals*	getNormals()	{	return NULL;	}
 	Lights*		getLights()		{	return NULL;	}
 	Sprites*	getSprites()	{	return NULL;	}

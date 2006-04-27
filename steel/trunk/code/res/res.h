@@ -44,12 +44,12 @@ Res* createBMP(string filename) {return new BMP(filename); }
 #include <string>
 #include <fstream>
 
+#include "../interface.h"
+
 #include "../common/types.h"
 #include "../steel.h"
 #include "../_cpp.h"
 
-// уникальный идентификатор модели
-typedef int	uid;
 
 /*
 Resourse input file stream
@@ -89,8 +89,6 @@ init загружает ресурс или генерирует по строковому идентификатору.
 */
 class Res: public steelAbstract
 {
-protected:
-	uid			id;
 public:
 // количестко типов ресурсов
 #define RES_KIND_COUNT 6
@@ -121,8 +119,9 @@ public:
 //	virtual bool init(const std::string name, ResCollection &res) = 0;
 	virtual bool unload() = 0;
 
-	virtual	void	setId(uid _id)	{ id = _id;		}
-	virtual	uid		getId()			{ return id;	}
+	uid id;
+	uid	getId() { return id; }
+	void setId(uid _id) { id = _id; }
 };
 
 // тип: функция для геренирования копии класса, унаследованного от Res

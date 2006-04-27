@@ -157,13 +157,17 @@ int chain_model_material(_3DS &m, rstream &f, int size) // model material info
 	m.faceMaterial.resize(s+1);
 	m.faceMaterial[s].name = materialName;
 
-	vector<int> &a = m.faceMaterial[s].faceList;
+	Triangles &a = m.faceMaterial[s].triangles;
+
+	a.data.resize(count);
 
 	for(int i=0; i<count; i++)
 	{
 		unsigned short tmp;
 		f.read(&tmp, 2);
-		a.push_back(tmp);
+
+		a.data[i] = m.triangleAll.data[tmp];
+
 		r += 2;
 	}
 	return r;
@@ -176,9 +180,9 @@ int chain_triangles(_3DS &m, rstream &f, int size)
 
 	f.read((char*)&count, 2); r += 2;
 
-	int x = sizeof(m.triangle[0]);
+	int x = sizeof(m.triangleAll.data[0]);
 
-    m.triangle.resize(count);
+    m.triangleAll.data.resize(count);
 	for(int i=0; i<count; i++)
 	{
 		unsigned short a,b,c;
@@ -186,9 +190,9 @@ int chain_triangles(_3DS &m, rstream &f, int size)
 		f.read(&b, 2); // short
 		f.read(&c, 2); // short
 
-		m.triangle[i].a[0] = a;
-		m.triangle[i].a[1] = b;
-		m.triangle[i].a[2] = c;
+		m.triangleAll.data[i].a[0] = a;
+		m.triangleAll.data[i].a[1] = b;
+		m.triangleAll.data[i].a[2] = c;
 
 		short face_flags;
 		f.read(&face_flags, 2);
@@ -212,8 +216,8 @@ int chain_vertexes(_3DS &m, rstream &f, int size)
 	f.read(&count, 2);	
 	if(count*12 +2!= size)
 			throw;
-	m.vertex.vertex.resize(count);
-	f.read(&m.vertex.vertex[0], count*4*3); // count*3*float (x, y, z)
+	m.vertex.data.resize(count);
+	f.read(&m.vertex.data[0], count*4*3); // count*3*float (x, y, z)
 
 	return 2+count*3*4;
 }
@@ -224,9 +228,9 @@ int chain_map_coords(_3DS &m, rstream &f, int size)
 
 	f.read(&count, 2);	
 
-	m.mapCoords.mapCoords2f = new vector<v2>(count);
+	m.mapCoords.data.resize(count);
 
-	f.read(&m.mapCoords.mapCoords2f->at(0), count*4*2); // float+float (u, v)
+	f.read(&m.mapCoords.data[0], count*4*2); // float+float (u, v)
 
 	return 2+count*3*4;
 }
@@ -292,12 +296,15 @@ bool _3DS::init(const std::string name, ResCollection &res)
 		path.pop_back();
 		string dir = implode('/', path);
 
-		vertex.id = res.genUid();
-		mapCoords.id = res.genUid();
+		vertex.setId(res.genUid());
+		triangleAll.setId(res.genUid());
+		mapCoords.setId(res.genUid());
 
 		for(std::vector<FaceMaterial>::iterator it = faceMaterial.begin();
 					it != faceMaterial.end(); it++)
 		{
+			it->triangles.setId(res.genUid());
+
 			string mat = it->name;
 			
 			it->material = (Material*)res.add(material, dir + "/" + mat);
@@ -306,8 +313,6 @@ bool _3DS::init(const std::string name, ResCollection &res)
 
 			if(!it->material) return false;
 		}
-
-		setId(res.genUid());
 
 		return true;
 }
