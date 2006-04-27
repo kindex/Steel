@@ -1,0 +1,39 @@
+// Types:
+
+// g - graph. Only rendering
+// f - physic + graph object. 
+// solid. Unmovable physic object
+// light 
+// tag	- object with coordinates, but no graph and physic
+// path		id	speed	{tags}
+
+//Type	Parent	Id	Model	X	Y	Z
+
+solid		1	box/box1	0.0	0.0	0.0
+
+tag		tag22		1	-1	-1
+tag		tag23		1	1	-1
+tag		tag24		-1	1	-1
+tag		tag25		-1	1	1
+tag		tag26		-1	-1	1
+tag		tag27		1	-1	1
+
+path		path3	2	tag27	tag26	tag25	tag24	tag23	tag22
+
+solid	path3	2	box/box1	0.0	0.0	0.0
+
+light		light1	-	0.0	0.0	1.2
+//light	path3	light2	-	0.0	0.0	0.0
+
+//tag	path3	camera.eye	-	0.0	0.0	2.0
+//tag	teapot1	camera.target	-	0.0	0.0	0.0
+
+
+//path		path2	30	tag12	tag13	tag14	tag15
+
+//solid	path2	2	box1	0.0	0.0	0.0
+
+                 
+//light	path2	light1	-	0	0	3
+
+

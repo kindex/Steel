@@ -18,9 +18,10 @@ struct Triangle // anti-clockwise direction (one side Triangle)
 typedef int	uid;
 
 
-struct BufferedElement
+class BufferedElement
 {
-//protected:
+public:
+	//protected:
 	// true, если этот массив был изменён с прошлого раза
 	bool	changed;
 	// уникальный идентификатор для массива данных

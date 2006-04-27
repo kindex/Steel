@@ -1,6 +1,8 @@
 #ifndef __UTILS_H
 #define __UTILS_H
 
+#include "../_cpp.h"
+
 #include <string>
 #include <vector>
 

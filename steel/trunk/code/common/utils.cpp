@@ -2,10 +2,10 @@
 
 using namespace std;
 
+
 string FloatToStr(double a)
 {
     char s[32];
-
     sprintf(s,"%2.1f", a);
     return string(s);
 }

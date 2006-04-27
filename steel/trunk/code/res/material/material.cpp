@@ -38,10 +38,10 @@ bool Material::init(string name, ResCollection *res)
 	{
 		string sMode = conf->gets(i, 0);
 		Map m;
-		m.mode = Map::none;
-		if(sMode == "")	m.mode = Map::replace;
-		if(sMode == "+")m.mode = Map::add;
-		if(sMode == "*")m.mode = Map::mul;
+		m.mode = MapMode::none;
+		if(sMode == "")	m.mode = MapMode::replace;
+		if(sMode == "+")m.mode = MapMode::add;
+		if(sMode == "*")m.mode = MapMode::mul;
 
 		string kind = conf->gets(i, 1);
 		string file = conf->gets(i, 2);
@@ -54,11 +54,18 @@ bool Material::init(string name, ResCollection *res)
 
 			if(m.texture)
 			{
-				m.kind = Map::color_map;
+				m.kind = MapKind::color_map;
 				map.push_back(m);
 			}
-
 		}
+		if(kind == "color")
+		{
+			m.texture = NULL;
+			m.kind = MapKind::color;
+			m.color = v4(conf->getf(i, 2, 0.0f), conf->getf(i, 3, 0.0f), conf->getf(i, 4, 0.0f), conf->getf(i, 5, 1.0f));
+			map.push_back(m);
+		}
+
 	}
 	return true;
 }

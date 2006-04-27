@@ -4,6 +4,8 @@
 // Author: Alex V. Boreskoff <alexboreskoff@mtu-net.ru>, <steps3d@narod.ru>
 //
 
+#include "../../../_cpp.h"
+
 #ifdef  _WIN32
     #include    <windows.h>
 #endif

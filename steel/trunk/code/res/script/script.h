@@ -12,9 +12,17 @@ protected:
 	std::vector<std::string> el_s; // element string
 	std::vector<double> el_d; // element double
 public:
-	std::string gets(int n) { return el_s[n];}
-	double getd(int n) { return el_d[n];}
-	float getf(int n) { return (float)el_d[n];}
+	std::string gets(unsigned int n) { return el_s[n];}
+	double getd(unsigned int n) { return el_d[n];}
+	
+	float getf(unsigned int n, float defaults = 0.0f) 
+	{ 
+		if(n<el_d.size())
+			return (float)el_d[n];
+		else
+			return defaults;
+	}
+
 	std::string getstr() { return str; }
 
 	int count() { return el_s.size(); }
@@ -34,11 +42,11 @@ protected:
 	std::vector<ScriptLine> line;
 public:
 	int count() { return line.size(); }
-	int count(int n) { return line[n].count(); }
+	int count(unsigned int n) { return line[n].count(); }
 
-	std::string gets(int n, int m) { return line[n].gets(m); } 
-	double	getd(int n, int m) { return line[n].getd(m); } 
-	float	getf(int n, int m) { return line[n].getf(m); } 
+	std::string gets(unsigned int n, unsigned int m) { return line[n].gets(m); } 
+	double	getd(unsigned int n, unsigned int m) { return line[n].getd(m); } 
+	float	getf(unsigned int n, unsigned int m, float defaults = 0.0f) { return line[n].getf(m, defaults); } 
 
 	bool unload() { return true; } 
 };

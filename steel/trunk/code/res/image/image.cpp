@@ -14,15 +14,15 @@
 #include "../../math/geometry.h"
 #include "../../math/maths.h"
 
-bool Image::init(int WIDTH, int HEIGHT, int BPP)
+bool Image::createImage(int WIDTH, int HEIGHT, int BPP)
 {
 	if(BPP != 24 && BPP != 32) return false; // Only RGB or RGBA
-    width = WIDTH;
-    height = HEIGHT;
-    bpp = BPP;
-    bitmap = new unsigned char[bpp/8*width*height];
-	bitmapSize = bpp/8*width*height;
-    return bitmap != NULL;
+    this->width = WIDTH;
+    this->height = HEIGHT;
+    this->bpp = BPP;
+	this->bitmapSize = this->bpp/8*this->width*this->height;
+    this->bitmap = new unsigned char[this->bitmapSize];
+    return this->bitmap != NULL;
 }
 
 void Image::flipV()

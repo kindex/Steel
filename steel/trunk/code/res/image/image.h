@@ -36,7 +36,7 @@ public:
 		return true;
      }
 
-    bool init(int WIDTH, int HEIGHT, int BPP);
+    bool createImage(int WIDTH, int HEIGHT, int BPP);
 
     void flipV(); // perevernut' Vertikalno |
     void flipH(); // perevernut' <->

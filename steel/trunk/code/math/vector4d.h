@@ -128,10 +128,7 @@ public:
 	operator v3();							//convert v4d to v3d
 
 	//member variables
-	float x;
-	float y;
-	float z;
-	float w;
+	float x, y, z, w;
 };
 
 #endif	//v3_H

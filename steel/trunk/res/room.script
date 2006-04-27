@@ -15,13 +15,14 @@ solid			wall/wall1	0	0	10
 solid			wall/wall1	0	20	-1
 solid			wall/wall1	0	-20	-1
 
-//solid		teapot1	teapot	3	3	0
+solid		teapot1	teapot/teapot	3	3	0
+solid		teapot1	spaceman/spaceman	4	-5	0
+
 //solid		torus1	t	-5	5	3
 //solid		torus2	torus	-5	-5	0
 //solid		star1	t2	-2	0	7
 //solid		star2	t3	+2	0	7
 
-solid		teapot1	spaceman/spaceman	3	3	0
 
 
 //f		1	box1	1.0	1.0	0.0
@@ -44,7 +45,7 @@ path		path1	5	tag2	tag3	tag4	tag5	tag6
 //ps	path1	ps1	ps	0	0	0
 
 
-//include	path1	group1	room/cubes	0	0	0
+include	path1	group1	group/cubes.scene	0	0	0
 //include		group2	room/cubes	-1	-1	1
 
 

@@ -49,7 +49,7 @@ bool TGA::init(const std::string name)
 
 	f.read(header, 6);// If So Read Next 6 Header Bytes
 
-	if(!Image::init(header[1] * 256 + header[0], header[3] * 256 + header[2], header[4])) return false;
+	if(!createImage(header[1] * 256 + header[0], header[3] * 256 + header[2], header[4])) return false;
 
 	f.read(bitmap, bitmapSize);	// Does The Image Size Match The Memory Reserved?
 	int ByPP = bpp/8;

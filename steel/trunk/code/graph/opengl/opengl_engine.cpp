@@ -33,19 +33,26 @@ bool OpenGL_Engine::bindTexture(Image *image)
 	if(image == NULL) return false;
 
 	uid	id = image->getId();
-	// TODO id 0, id -1
-	GLuint glid;
-	if(registredTextures.find(id) != registredTextures.end())
+
+	bool loaded = false;
+	if(buffer.find(id) != buffer.end())
+		loaded = buffer[id].loaded;
+
+	OpenGLBuffer &buf = buffer[id];
+
+	if(loaded)
 	{
-		glid = registredTextures[id];
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, glid);
+		glBindTexture(GL_TEXTURE_2D, buf.glid);
+
+		buf.lastUsedTime = time;
+		buf.usedCnt++;
 	}
 	else
 	{
-		glGenTextures(1, &glid);
+		glGenTextures(1, &buf.glid);
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, glid);
+		glBindTexture(GL_TEXTURE_2D, buf.glid);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -60,7 +67,11 @@ bool OpenGL_Engine::bindTexture(Image *image)
 		glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
 			kind,  GL_UNSIGNED_BYTE , image->getBitmap());
 
-		registredTextures[id] = glid;
+		buf.loaded = true;
+		buf.loadCnt++;
+		buf.kind = OpenGLBuffer::image;
+		buf.lastUsedTime = time;
+		buf.usedCnt++;
 	}
 	return true;
 }
@@ -72,28 +83,41 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 	if(v == NULL) return false;
 
 	uid	id = v->getId();
-	// TODO id 0, id -1
-	GLuint glid;
-	if(buffers.find(id) != buffers.end())
-	{
-		glid = buffers[id];
 
-		glBindBufferARB(mode2, glid);
-	    if(mode)glEnableClientState ( mode );
+	bool loaded = false;
+	if(buffer.find(id) != buffer.end())
+		loaded = buffer[id].loaded;
+
+	OpenGLBuffer &buf = buffer[id];
+
+	if(loaded)
+	{
+		glBindBufferARB(mode2, buf.glid);
+	    if(mode)glEnableClientState(mode);
+
+		buf.lastUsedTime = time;
+		buf.usedCnt++;
 	}
 	else
 	{
-		glGenBuffersARB(1, &glid);
+		glGenBuffersARB(1, &buf.glid);
 
 	    if(mode) glEnableClientState ( mode );
-		glBindBufferARB(mode2, glid);
+		glBindBufferARB(mode2, buf.glid);
 		glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), GL_STATIC_DRAW);
 
-		buffers[id] = glid;
+		buf.loaded = true;
+		buf.loadCnt++;
+		if(mode2 == GL_ARRAY_BUFFER_ARB)
+			buf.kind = OpenGLBuffer::array;
+		if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
+			buf.kind = OpenGLBuffer::index;
+
+		buf.lastUsedTime = time;
+		buf.usedCnt++;
 	}
 	return true;
 }
-
 
 
 void OpenGL_Engine::drawElement(DrawElement &e)
@@ -102,14 +126,10 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 	if(e.triangle && e.vertex)
 	{
 		Material *m = e.material;
-		if(m == NULL)
+		if(m != NULL)
 		{
-//			alog.out("Cannot find material '%s'", e.materialName.c_str());
-			return;
-		}
 
 //		glPushClientAttrib  ( GL_CLIENT_VERTEX_ARRAY_BIT );
-
 
 		bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3);
 		glVertexPointer(3, GL_FLOAT, 0, 0);
@@ -127,7 +147,11 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 			glActiveTextureARB(GL_TEXTURE0_ARB + i);
 
-			bindTexture(map.texture); // 1,2,3D, Cube (auto detect from Image)
+			if(map.kind == MapKind::color_map)
+				bindTexture(map.texture); // 1,2,3D, Cube (auto detect from Image)
+			if(map.kind == MapKind::color)
+				glColor4f(map.color.x, map.color.y, map.color.z, map.color.w);
+
 
 //			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -137,7 +161,10 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 //			glTexCoordPointer(2, GL_FLOAT, 8, &(e.mapCoords->mapCoords2f->front()));
 
-			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND);
+			GLint mode = GL_REPLACE;
+			if(map.mode == MapMode::mul) mode = GL_BLEND;
+
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 		}
 
 
@@ -145,7 +172,6 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
 
 //		glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &(e.triangle->data.front()));
-
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 
@@ -157,7 +183,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		}
 //	glPopClientAttrib ();
 		glActiveTextureARB(GL_TEXTURE0_ARB);
-
+		}
 
 /*		bool alpha = conf->geti("drawAlpha") == 2 && m->gets("color_mode") == "alpha";
 
@@ -689,43 +715,6 @@ void OpenGL_Engine::drawAABB(DrawElement &e, matrix44 matrix)
 	glEnd();
 
 	glPopMatrix();
-}
-
-
-GLuint OpenGL_Engine::getTexture(Image *image)
-{
-	if(image == NULL) return 0;
-	uid id = image->getId();
-	if(id == 0) return 0;
-
-	if(registredTextures.find(id) != registredTextures.end())
-		return registredTextures[id];
-
-	GLuint glid;
-	glGenTextures(1, &glid);
-	glBindTexture(GL_TEXTURE_2D, glid);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //{ all of the above can be used }
-
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST/*GL_LINEAR*/);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	int kind;
-	if(image->getBpp() == 24) kind = GL_RGB;
-	else
-	if(image->getBpp() == 32) 
-		kind = GL_RGBA;
-	else return 0;
-
-	glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
-		kind,  GL_UNSIGNED_BYTE , image->getBitmap());
-
-	registredTextures[id] = glid;
-//	alog.out("Bind texture %s", id);
-
-	return id;
 }
 
 

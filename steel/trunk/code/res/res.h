@@ -87,7 +87,7 @@ init загружает ресурс или генерирует по строковому идентификатору.
 Для загрузки каждой из этих текстур используется класс image, который может грузить из любого
 формата (bmp, jpg, png).
 */
-class Res: public steelAbstract
+class Res//: public virtual BufferedElement
 {
 public:
 // количестко типов ресурсов

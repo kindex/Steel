@@ -30,10 +30,27 @@
 #include <gl\glaux.h>		// Header File For The Glaux Library
 #endif
 
+struct OpenGLBuffer
+{
+	typedef enum 
+	{
+		none,
+		image,
+		array,
+		index
+	} buffer_kind;
+
+	GLuint	glid;
+	int		usedCnt, loadCnt;
+	steel::time lastUsedTime;
+	bool	loaded;
+	buffer_kind kind;
+};
+
 class OpenGL_Engine: public GraphEngine
 {
 protected:
-	std::map<uid, GLuint> registredTextures, buffers;
+	std::map<uid, OpenGLBuffer> buffer;
 
 		//, registedCubeMaps;
 
@@ -49,6 +66,7 @@ protected:
 	 tangentCache tangentSpaceCacheS, tangentSpaceCacheT;
 
 	 bool focused;
+	 steel::time time;
 
 public:
 	void processCamera();
@@ -77,7 +95,6 @@ public:
 	//void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 light,	v3List **tangentSpaceLight);
 	//void genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 camera,	v3List **tangentSpaceLight);
 
-	GLuint getTexture(Image *image);
 //	GLuint getCubeMap(std::string imageName);
 
 	bool bindTexture(Image *image);

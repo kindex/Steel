@@ -81,7 +81,7 @@ bool Bones::load( const std::string file )
 {
 	if ( (flags&BFL_LOADED)==BFL_LOADED )
 	{
-		lastError=SE_LOADED;
+//		lastError=SE_LOADED;
 		return false;
 	}
 	
@@ -98,7 +98,7 @@ bool Bones::unload( void )
 {
 	if ( (flags&BFL_LOADED)!=BFL_LOADED )
 	{
-		lastError=SE_NOT_LOADED;
+//		lastError=SE_NOT_LOADED;
 		return false;
 	}
 	free(bones_static);
@@ -111,7 +111,7 @@ bool Bones::resetAnimation( unsigned int animNum )
 {
 	if ( (flags&BFL_LOADED)!=BFL_LOADED )
 	{
-		lastError=SE_NOT_LOADED;
+//		lastError=SE_NOT_LOADED;
 		return false;
 	}
 	return true;
@@ -121,7 +121,7 @@ bool Bones::frame( steelTimeM_t ftime )
 {
 	if ( (flags&BFL_LOADED)!=BFL_LOADED )
 	{
-		lastError=SE_NOT_LOADED;
+//		lastError=SE_NOT_LOADED;
 		return false;
 	}
 	return true;

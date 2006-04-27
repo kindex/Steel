@@ -132,6 +132,8 @@ bool BMP::init(const std::string name)
 		return false;
 	}
 
+	if(!f.good()) return false;
+
 	f.read(&fh.bfType[0], 2);
     f.read(&fh.bfSize, 4);
 	f.read(&fh.bfReserved1, 2);
@@ -158,7 +160,7 @@ int r;
 	case 24:
   //   fseek(file,fh.bfOffbits, SEEK_SET );
 		bitmapSize = ih.biSizeImage;
-		if(!Image::init(ih.biWidth, ih.biHeight, ih.biBitCount)) return false;
+		if(!createImage(ih.biWidth, ih.biHeight, ih.biBitCount)) return false;
 
 /*     for (unsigned int i=0; i<ih.biHeight; i++)
      {
@@ -166,7 +168,7 @@ int r;
         if (rbpl>bpl)
           fseek(file,rbpl-bpl, SEEK_CUR );
      }*/
-		f.read((char*)bitmap, ih.biSizeImage);
+		f.read(this->bitmap, ih.biSizeImage);
      // SWAP BGR ->  RGB
 		for (unsigned int i=0; i<ih.biHeight; i++)
 		{

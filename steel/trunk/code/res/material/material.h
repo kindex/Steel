@@ -5,29 +5,40 @@
 #include "../conf/conf.h"
 #include "../script/script.h"
 
-class Map
+#include "../../math/vector4d.h"
+
+namespace MapMode
 {
-public:
-	Image *texture;
 	typedef	enum
 	{
 		none,
 		replace,
 		add,
 		mul
-
 	} map_mode;
+}
 
+namespace MapKind
+{
 	typedef	enum
 	{
-		_none,
+		none,
 		color_map,
+		color,
 		normal_map,
 		diffuse_lights // procedure texture
 	} tex_kind;
+}
 
-	map_mode	mode;
-	tex_kind	kind;
+class Map
+{
+public:
+	Image *texture;
+
+
+	MapMode::map_mode	mode;
+	MapKind::tex_kind	kind;
+	v4					color;
 	// color
 	// mode
 	// shader

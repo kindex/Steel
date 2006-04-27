@@ -52,8 +52,8 @@ void GameParticleSystem::process(steel::time speed)
 
 	for(int i=0; i<cnt; i++)
 	{
-		particle[i].position += particle[i].velocity * speed;
-		particle[i].lifetime -= speed;
+		particle[i].position += particle[i].velocity * (float)speed;
+		particle[i].lifetime -= (float)speed;
 		if(particle[i].lifetime < 0)
 			born(i);
 
@@ -66,7 +66,7 @@ void GameParticleSystem::born(int i)
 
 
 	particle[i].position = v3(0,0,0);
-	particle[i].velocity = v3(speed*(frand()-0.5), speed*(frand()-0.5), speed*(frand()-0.5));
+	particle[i].velocity = v3(speed*(frand()-0.5f), speed*(frand()-0.5f), speed*(frand()-0.5f));
 	particle[i].lifetime = frand()*life;
 }
 
