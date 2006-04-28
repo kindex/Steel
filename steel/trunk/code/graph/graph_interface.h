@@ -17,7 +17,6 @@
 
 #include "../engine.h"
 #include "../math/geometry.h"
-#include "../math/matrix4x4.h"
 #include "../math/maths.h"
 #include "../math/vector3d.h"
 
@@ -40,24 +39,8 @@ struct Sprite
 	std::string material;
 };
 
-
-
 typedef std::vector<Light>		Lights;
 typedef std::vector<Sprite>		Sprites;
-
-
-struct color_24
-{
-    unsigned char r,g,b;
-};
-
-struct color_f
-{
-    float r,g,b;
-    color_f() {}
-    color_f(float R, float G, float B): r(R), g(G), b(B) {}
-};
-
 
 class MapCoord: public BufferedElement
 {
@@ -138,10 +121,6 @@ Video textures (avi, camera)
 	virtual Lights*		getLights() = 0;
 	virtual Sprites*	getSprites() = 0;
 
-/*матрица трансформации объекта относительно его родител€. 
-¬ключает в себ€ повотор, сдвиг и масштаб.
-getPVertexes возвращ€ет координаты точек в системе координат getPMatrix*/
-	virtual matrix44	getMatrix() = 0;
 
 	virtual	uid			getId() = 0;
 };

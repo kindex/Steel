@@ -137,11 +137,14 @@ int main(int argc, char *argv[])
 	PhysicEngine3D physic;
 	physic.bindResColelntion(&res);
 	if(!physic.init("physic")) return 1;
+	game.bind(&physic);
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
 	alog.msg("core", "\n\t\tEntering main loop");
 	bool first = true;
+	steel::time	lastFrameTime = timer.total();
+
 	while(input.isAlive() && game.isAlive())
 	{
 		input.process();
@@ -157,10 +160,13 @@ int main(int argc, char *argv[])
 	
 		game.setspeed(speed, timer.total());
 	
-		physic.clear();
-		game.processPhysic(&physic);
-
-		game.process();
+		if(!first)
+		{
+			steel::time time = timer.total() - lastFrameTime;
+			if(time>0)
+				game.process(&physic, timer.total(), time);
+			lastFrameTime = timer.total();
+		}
 
 		game.draw(&graph);
 

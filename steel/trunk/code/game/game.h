@@ -57,11 +57,11 @@ protected:
 public:
 	Game() { } 
 	bool init(ResCollection *_res, std::string _conf, Input *_input);
-	void process();
-	void processPhysic(PhysicEngine *physic);
 
 	void bind(GraphEngine *graph);
+	void bind(PhysicEngine *physic);
 	void draw(GraphEngine *graph);
+	void process(PhysicEngine *physic, steel::time globalTime, steel::time time);
 
 	void handleEventKeyDown(std::string key);
 	void handleEventKeyUp(std::string key);

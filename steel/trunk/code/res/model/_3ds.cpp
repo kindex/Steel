@@ -31,7 +31,7 @@ Res* create3DS(const std::string filename, ResCollection *res)
 }
 
 
-color_f string2color(string s)
+/*color_f string2color(string s)
 {
     int first  = s.find(":");
     int second = s.find(":", first+1);
@@ -46,6 +46,7 @@ color_f string2color(string s)
     res.b = (float)(atoi(b.c_str())/255.0);
     return res;
 }
+*/
 
 int readstring(rstream &f, string &res)
 {
@@ -61,7 +62,7 @@ int readstring(rstream &f, string &res)
 	return reads;
 }
 
-int loadcolor(ifstream &f, color_f &color)
+/*int loadcolor(ifstream &f, color_f &color)
 {
     unsigned short _id;
     unsigned int _len, reads = 0;
@@ -72,11 +73,11 @@ int loadcolor(ifstream &f, color_f &color)
     reads = 6;
     switch (_id)
     {
-        case 0x0010 /*float red, grn, blu*/:
+        case 0x0010: //float red, grn, blu
             f.read((char*)&color, sizeof(color));
             reads += sizeof(color);
             break;
-        case 0x0011 /*char red, grn, blu; */:
+        case 0x0011" //char red, grn, blu; 
             f.read((char*)&rgb, sizeof(rgb));
             color.r = (float)(rgb.r / 255.0f);
             color.g = (float)(rgb.g / 255.0f);
@@ -87,7 +88,7 @@ int loadcolor(ifstream &f, color_f &color)
     }
     return reads;
 }
-
+*/
 int loadpercentage(ifstream &f, float &p)
 {
     unsigned short _id,p_s;

@@ -18,22 +18,24 @@
 
 #include "physic_interface.h"
 
-struct PhysicElement
-{
-	PhysicInterface* obj, *parent;
-	matrix44			matrix, parentMatrix; // abloslute
-};
-
 class PhysicEngine: public Engine
 {
 protected:
-	std::vector<PhysicElement> objects;
+	struct Element
+	{
+		PhysicInterface	*obj, *parent;
+		matrix44		matrix, parentMatrix; // abloslute
+	};
+
+	std::vector<Element> element;
+	std::vector<PhysicInterface*> object;
 
 public:
 	// Collect information about object: object shape + velocity
-	virtual bool inject(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);
+	virtual bool inject(PhysicInterface *object);
+	virtual bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL) = 0;
 	// Move objects
-	virtual bool process(steel::time speed) = 0; 
+	virtual bool process(steel::time globalTime, steel::time time) = 0; 
 	// Clear collected information
 	virtual bool clear();
 

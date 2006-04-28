@@ -54,18 +54,10 @@ void Game::handleMouse(double dx, double dy)
 		direction.rotateAxis((float)dy, v3( -direction.y, direction.x, 0));
 }
 
-void Game::processPhysic(PhysicEngine *physic)
-{
-/*		for(vector<PhysicInterface*>::iterator it = pobj.begin(); it != pobj.end(); it++)
-			physic->inject((*it));*/
-	physic->inject(world);
-
-	physic->process(speed);
-}
-
-void Game::process()
+void Game::process(PhysicEngine *physic, steel::time globalTime, steel::time time)
 {
 	processKeyboard();
+	physic->process(globalTime, time);
 }
 
 /*v3	Game::getGlobalPosition(std::string obj)
@@ -86,6 +78,11 @@ void Game::process()
 void Game::bind(GraphEngine *graph)
 {
 	graph->inject(world);
+}
+
+void Game::bind(PhysicEngine *physic)
+{
+	physic->inject(world);
 }
 
 void Game::draw(GraphEngine *graph)

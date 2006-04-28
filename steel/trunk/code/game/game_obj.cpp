@@ -65,7 +65,7 @@ bool GameGroup::load(string script, ResCollection *res)
 			
 			((GamePath*)obj)->setSpeed(s->getf(i, 3));
 
-			obj->setPosition(tag[s->gets(i, 4)]->getPosition());
+//			obj->setPosition(tag[s->gets(i, 4)]->getPosition());
 
 			for(int j=4; j<s->count(i); j++)
 				((GamePath*)obj)->addTarget(s->gets(i, j));
@@ -144,7 +144,7 @@ bool GamePath::getTarget(v3 &targetPoint, coord &_speed)
 		GameObj *o;
 		if(!(o = parent->getChildren(target[currentTarget]))) return false;
 
-		targetPoint = o->getPosition();
+//		targetPoint = o->getPosition();
 		_speed = speed;
 		return true;
 	}

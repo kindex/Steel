@@ -30,7 +30,7 @@
 имень детей
 быть прикреплённым к родителю
 */
-class GameObj: public GraphInterface, public PhysicInterface // Abstract
+class GameObj: public virtual GraphInterface, public virtual PhysicInterface // Abstract
 {
 public:
 	GameObj *parent;
@@ -40,6 +40,7 @@ public:
 	matrix44 matrix;
 	bool movable, rotatable;
 	std::string name;
+	ProcessKind kind;
 
 protected:
 	std::map<std::string, GameObj*>	tag;
@@ -49,8 +50,11 @@ public:
 	{
 		movable = false;
 		rotatable = false;
-		parent = false;
+		parent	= false;
+		kind	= PhysicInterface::none;
 	}
+	ProcessKind getKind() { return kind; }
+
 	std::string getName() { return name; }
 	void setName(std::string _name) { name = _name;}
 
@@ -62,9 +66,17 @@ public:
 	{
 		rotatable = _rotatable;
 	}
-	matrix44 getMatrix()	{		return matrix;	}
-	matrix44 getPMatrix()	{		return matrix;	}
-	void	setPMatrix(matrix44 const &m) { matrix = m; } 
+
+	matrix44 getMatrix()	
+	{		
+		return matrix;	
+	}
+	Position	getPosition()
+	{
+		return Interface::local;
+	}
+
+	void	setMatrix(matrix44 const &m) { matrix = m; } 
 
 	void attach(GameObj *obj) 
 	{ 
@@ -90,7 +102,7 @@ public:
 	}
 	GameObj *getParent() { return parent; }
 
-	v3		getPosition() {return v3(matrix.a[12], matrix.a[13], matrix.a[14]);}
+//	v3		getPosition() {return v3(matrix.a[12], matrix.a[13], matrix.a[14]);}
 	bool	setPosition(v3 const &v)
 	{ 
 		matrix.a[12] = v.x;
@@ -111,7 +123,7 @@ public:
 	bool	getTarget(v3 &targetPoint, coord &speed) {return false;}
 	void	setTargetReached() {}
 
-	void	process(steel::time speed) {}
+	void	process(steel::time curTime, steel::time frameLength) {}
 };
 /*
 Рисуемый объект, GraphMesh и PhysicMesh берутся из модели

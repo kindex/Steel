@@ -4,17 +4,21 @@
 using namespace std;
 
 
-bool PhysicEngine3D::process(steel::time speed)
+bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 {
-	v3 acc = g*(float)speed;
-	for(std::vector<PhysicElement>::iterator it = objects.begin(); it != objects.end(); it++)
+	element.clear();
+	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+		prepare(*it);
+
+	v3 acc = g*(float)time;
+	for(vector<Element>::iterator it = element.begin(); it != element.end(); it++)
 	{
-		PhysicElement &el = *it;
+		Element &el = *it;
 		PhysicInterface &o = *el.obj;
-		o.process(speed);
+		o.process(globalTime, time);
 
 		v3 pos = el.matrix * v3(); // absolute
-		v3 local_pos = o.getPMatrix() * v3(); // local (в системе координат родителя)
+		v3 local_pos = o.getMatrix() * v3(); // local (в системе координат родителя)
 
 		v3 v = o.getVelocity();
 		if(o.isMovable()) v += acc;// gravitation
@@ -42,7 +46,7 @@ bool PhysicEngine3D::process(steel::time speed)
 			v3 dir = (targetPoint - local_pos).getNormalized(); // направление движения
 			
 //			o.setVelocity(dir*moveSpeed);
-			coord len = (float)(moveSpeed*speed); // пройденное расстояние
+			coord len = (float)(moveSpeed*time); // пройденное расстояние
 
 			if(len>(targetPoint - local_pos).getLength())
 			{
@@ -56,11 +60,11 @@ bool PhysicEngine3D::process(steel::time speed)
 
 //			v3 local_pos =  inv* pos;
 
-			matrix44 localM = o.getPMatrix();
+			matrix44 localM = o.getMatrix();
 			localM.a[12] = local_pos.x;
 			localM.a[13] = local_pos.y;
 			localM.a[14] = local_pos.z;
-			o.setPMatrix(localM);
+			o.setMatrix(localM);
 		}
 
 /*		matrix4 m = (*it)->getMatrix();
@@ -71,38 +75,23 @@ bool PhysicEngine3D::process(steel::time speed)
 	return true;
 }
 
-bool PhysicEngine3D::inject(PhysicInterface *object, matrix44 matrix, PhysicInterface *parent)
+
+bool PhysicEngine3D::prepare(PhysicInterface *object, matrix44 matrix, PhysicInterface *parent)
 {
-	PhysicElement el;
+	Element el;
 	el.obj = object;
 	el.parent = parent;
 
-/*	string name = object->getName();
-	if(!name.empty())
-	{
-		if(tag.find(name) != tag.end())
-		{
-			alog.msg("error physic", string("Duplicated object id '") + name + "'");
-			return false;
-		}
-		tag[name] = objects.size();
-	}*/
+	element.push_back(el);
+/*	MATRIX4X4 cur_matrix, new_matrix;
 
-	matrix44 cur_matrix, new_matrix;
-
-	cur_matrix = object->getPMatrix();
+	cur_matrix = object->getMatrix();
 	new_matrix = matrix*cur_matrix;
-
-	el.matrix = new_matrix;
-	el.parentMatrix = matrix;
-
-	objects.push_back(el);
-
-
+*/
 	PhysicInterface &o = *(PhysicInterface*)object;
 	PhysicInterfaceList children = o.getPChildrens();
 	for(PhysicInterfaceList::iterator it=children.begin();	it != children.end(); it++)
-		if(!inject(*it, new_matrix)) return false;
+		if(!prepare(*it)) return false;
 
 /*	for(FaceMaterials::iterator it = m->begin(); it != m->end(); it++)
 	{
@@ -111,6 +100,8 @@ bool PhysicEngine3D::inject(PhysicInterface *object, matrix44 matrix, PhysicInte
 */
 	return true;
 }
+
+
 
 bool PhysicEngine3D::init(std::string _conf)
 {

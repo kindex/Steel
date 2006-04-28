@@ -28,17 +28,20 @@ bool GraphEngine::inject(GraphInterface *object)
 	return true;
 }
 
-bool GraphEngine::prepare(GraphInterface *object, matrix44 matrix)
+bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 {
 	if(object == NULL) return false;
 	total.object++;
 
 	aabb frame = object->getFrame();
 
-	matrix44 cur_matrix, new_matrix;
+	matrix44 object_matrix = object->getMatrix(); // global 
 
-	cur_matrix = object->getMatrix();
-	new_matrix = matrix*cur_matrix;
+	Interface::Position pos = object->getPosition();
+	if(pos == Interface::local)
+		object_matrix = parent_matrix*object_matrix;
+	else if(pos != Interface::global) 
+		return false;
 
 /* TODO: сюда надо поставить проверку, находится ли frame
 внутри пирамиды, которую образует угол обзора камеры.
@@ -49,7 +52,7 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 matrix)
 	for(GraphInterfaceList::iterator it=children.begin();
 		it != children.end();
 		it++)
-		if(!prepare(*it, new_matrix)) return false;
+		if(!prepare(*it, object_matrix)) return false;
 
 	FaceMaterials* m = object->getFaceMaterials();
 	Vertexes	*v = object->getVertexes();
@@ -62,7 +65,7 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 matrix)
 		for(Lights::iterator it = l->begin(); it != l->end(); it++)
 		{
 			light.push_back(*it);
-			light[light.size()-1].pos = new_matrix.getCoords();
+			light[light.size()-1].pos = object_matrix.getCoords();
 		}
 	}
 
@@ -86,7 +89,7 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 matrix)
 		int s = element[c].triangle->data.size();
 		element[c].vertex = v;
 		element[c].mapCoords = coords;
-		element[c].matrix = new_matrix;
+		element[c].matrix = object_matrix;
 		element[c].normal = n;
 		element[c].frame = frame;
 

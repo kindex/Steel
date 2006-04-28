@@ -29,6 +29,15 @@ typedef std::vector<PhysicInterface*> PhysicInterfaceList;
 class PhysicInterface: public Interface
 {
 public:
+	typedef enum
+	{
+		none,
+		custom, // сам объект определ€ет своЄ движение
+		uni // движетс€ по универсальным законам
+	} ProcessKind;
+
+	virtual ProcessKind getKind() = 0;
+
 	PhysicInterface() {}
 /*	список составных частей объекта (потомков). Ќапример, дл€ мира - это стены и монстры, а дл€ монстра это может быть частами тела.*/
 	virtual PhysicInterfaceList getPChildrens() = 0;
@@ -43,9 +52,6 @@ public:
 /*матрица трансформации объекта относительно его родител€. 
 ¬ключает в себ€ повотор, сдвиг и масштаб.
 getPVertexes возвращ€ет координаты точек в системе координат getPMatrix*/
-
-	virtual matrix44		getPMatrix() = 0;
-	virtual void		setPMatrix(matrix44 const &m) = 0;
 
 	// положение (лучше заменить матрицей, котора€ включаеи в себ€ положение, масштаб и поворот тела)
 //	virtual v3		getPosition() = 0;
@@ -70,7 +76,7 @@ getPVertexes возвращ€ет координаты точек в системе координат getPMatrix*/
 // уникальный идентификатор объекта или пуста€ строка
 	virtual std::string getName() = 0;
 	
-	virtual	void	process(steel::time speed) = 0;
+	virtual	void	process(steel::time curTime, steel::time frameLength) = 0;
 //	virtual std::string getMaterial() = 0;
 };
 

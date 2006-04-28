@@ -28,44 +28,6 @@
 
 using namespace std;
 
-/*
-GLuint OpenGL_Engine::getCubeMap(std::string imageName)
-{
-	if(registedCubeMaps.find(imageName) != registedCubeMaps.end())
-		return registedCubeMaps[imageName];
-
-
-	char *a[] = {"bk", "ft", "lf", "rt", "up", "dn"};
-	int b[6] = 
-	{
-GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB,
-GL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB,
-GL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB,
-GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB,
-GL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB,
-GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB
-	};
-
-
-
-	for(int i=0; i<6; i++)
-		if(a[i]==0)
-		{
-			alog.out("Cannot find cube map %s", imageName.c_str());
-			return 0;
-		}
-
-
-    glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-
-
-	registedCubeMaps[imageName] = id;
-	alog.out("Bind cubemap %s", imageName.c_str());
-	return id;
-}
-*/
-
-
 bool OpenGL_Engine::bindTexture(Image *image)
 {
 	if(image == NULL) return false;
@@ -199,7 +161,9 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 
 void OpenGL_Engine::drawElement(DrawElement &e)
 {
+	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glLoadMatrixf(e.matrix.a);
+
 	if(e.triangle && e.vertex)
 	{
 		Material *m = e.material;
@@ -235,14 +199,16 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			if(map.kind == MapKind::env)
 			{
 				bindTexture(map.texture); // 1,2,3D, Cube (auto detect from Image)
-			    glEnable  ( GL_TEXTURE_GEN_S );
-			    glEnable  ( GL_TEXTURE_GEN_T );
-				glEnable  ( GL_TEXTURE_GEN_R );
 
 				glTexGeni ( GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
 			    glTexGeni ( GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
 				glTexGeni ( GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+
+			    glEnable  ( GL_TEXTURE_GEN_S );
+			    glEnable  ( GL_TEXTURE_GEN_T );
+				glEnable  ( GL_TEXTURE_GEN_R );
 			}
+
 			if(map.kind == MapKind::color)
 				glColor4f(map.color.x, map.color.y, map.color.z, map.color.w);
 
@@ -274,6 +240,8 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			glDisable( GL_TEXTURE_GEN_S );
 		    glDisable( GL_TEXTURE_GEN_T );
 			glDisable( GL_TEXTURE_GEN_R );
+
+			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		}
 //	glPopClientAttrib ();
 		glActiveTextureARB(GL_TEXTURE0_ARB);
@@ -833,11 +801,11 @@ bool OpenGL_Engine::process()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+/*
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 
-	glLightfv( GL_LIGHT0, GL_POSITION, v4( camera.center ));
+	glLightfv( GL_LIGHT0, GL_POSITION, v4( camera.center ));*/
 
 
 	std::vector<DrawElement> elementAlpha;

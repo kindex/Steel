@@ -24,9 +24,9 @@ protected:
 	v3 g;
 //	std::map<std::string, int> tag;
 public:
-	bool process(steel::time speed);
+	bool process(steel::time globalTime, steel::time time);
 	bool init(std::string _conf);
-	bool inject(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);
+	bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);
 	bool clear();
 };
 

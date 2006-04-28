@@ -2,6 +2,7 @@
 #define INTERFACE_H
 
 #include "math/vector3d.h"
+#include "math/matrix4x4.h"
 
 #include <vector>
 
@@ -47,9 +48,34 @@ struct Triangles: public BufferedElement
 
 
 /*
-protottype:
+protottype: Interface
+От этого класса наследуются все объекты и интерфейсы в движке.
+
+Объект этого класса:
+* имеет положение (в голобадьных или локальных координатах). 
+Положение - матрица 4х4, в которой определяет сдвиг, поморот и масштабирование тела
+
 */
-class Interface{};
+
+
+class Interface
+{
+public:
+/*матрица трансформации объекта относительно его родителя. 
+Включает в себя повотор, сдвиг и масштаб.
+getPVertexes возвращяет координаты точек в системе координат getPMatrix*/
+	virtual	matrix44	getMatrix() = 0;
+	virtual	void		setMatrix(matrix44 const &m) = 0; 
+
+	typedef enum
+	{
+		none,
+		local,
+		global
+	} Position;
+
+	virtual Position	getPosition() = 0;
+};
 
 
 
