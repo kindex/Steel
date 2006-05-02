@@ -37,7 +37,7 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 
 	matrix44 object_matrix = object->getMatrix(); // global 
 
-	Interface::Position pos = object->getPosition();
+	Interface::PositionKind pos = object->getPositionKind();
 	if(pos == Interface::local)
 		object_matrix = parent_matrix*object_matrix;
 	else if(pos != Interface::global) 

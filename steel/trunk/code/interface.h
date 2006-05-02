@@ -72,9 +72,9 @@ getPVertexes возвращяет координаты точек в системе координат getPMatrix*/
 		none,
 		local,
 		global
-	} Position;
+	} PositionKind;
 
-	virtual Position	getPosition() = 0;
+	virtual PositionKind	getPositionKind() = 0;
 };
 
 

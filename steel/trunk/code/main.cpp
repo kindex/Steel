@@ -95,7 +95,7 @@ int main1(int argc, char *argv[])
 int main(int argc, char *argv[])
 #endif
 {
-	alog.open("steel.log");
+	alog.open("../steel.log");
 
 	Timer timer;
 	timer.start();	timer.pause();

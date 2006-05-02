@@ -26,6 +26,8 @@
 class PhysicInterface;
 typedef std::vector<PhysicInterface*> PhysicInterfaceList;
 
+class PhysicEngine;
+
 class PhysicInterface: public Interface
 {
 public:
@@ -36,7 +38,7 @@ public:
 		uni // движется по универсальным законам
 	} ProcessKind;
 
-	virtual ProcessKind getKind() = 0;
+	virtual ProcessKind getProcessKind() = 0;
 
 	PhysicInterface() {}
 /*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
@@ -76,7 +78,9 @@ getPVertexes возвращяет координаты точек в системе координат getPMatrix*/
 // уникальный идентификатор объекта или пустая строка
 	virtual std::string getName() = 0;
 	
-	virtual	void	process(steel::time curTime, steel::time frameLength) = 0;
+	virtual	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine) = 0;
+	virtual	v3		getPosition() = 0;
+	virtual	bool	setPosition(v3 const &v) = 0;
 //	virtual std::string getMaterial() = 0;
 };
 

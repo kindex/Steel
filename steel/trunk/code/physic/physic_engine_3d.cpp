@@ -15,22 +15,33 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 	{
 		Element &el = *it;
 		PhysicInterface &o = *el.obj;
-		o.process(globalTime, time);
+		o.process(globalTime, time, this);
 
-		v3 pos = el.matrix * v3(); // absolute
+		PhysicInterface::ProcessKind kind = o.getProcessKind();
+		if(kind == PhysicInterface::custom)
+		{
+			v3 p = o.getPosition();
+			p += o.getVelocity()*time;
+			o.setPosition(p);
+		}
+		if(kind == PhysicInterface::uni)
+		{
+			v3 v = o.getVelocity();
+			v += acc;	// gravitation
+			o.setVelocity(v);
+		}
+
+/*		v3 pos = el.matrix * v3(); // absolute
 		v3 local_pos = o.getMatrix() * v3(); // local (в системе координат родителя)
 
-		v3 v = o.getVelocity();
-		if(o.isMovable()) v += acc;// gravitation
-		o.setVelocity(v);
 
 		v3 targetPoint;
 		string targetObj;
 		coord moveSpeed;
 		// если объект хочет двигаться к другому объекту
-		if(o.getTarget(targetPoint, moveSpeed))
+		if(fasle && o.getTarget(targetPoint, moveSpeed))
 		{ // если он указал имя объекта
-/*			if(!targetObj.empty())
+			if(!targetObj.empty())
 			{
 				if(tag.find(targetObj) == tag.end())
 				{
@@ -41,7 +52,7 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 				matrix4 matrix =  objects[idx].matrix;
 				v3 one;
 				targetPoint = el.parentMatrix.GetInverse()*matrix*one;
-			}*/
+			}
 			// если не указал имя, то берём координаты (локальные)
 			v3 dir = (targetPoint - local_pos).getNormalized(); // направление движения
 			

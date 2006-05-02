@@ -40,7 +40,10 @@ bool GameGroup::load(string script, ResCollection *res)
 		{
 			if(!res->add(Res::model, model)) return false;
 
-			obj = new GameObjModel((Model*)res->getModel(model));
+			ProcessKind pkind = PhysicInterface::uni;
+			if(kind == "solid")pkind = PhysicInterface::none;
+
+			obj = new GameObjModel(local, pkind, (Model*)res->getModel(model));
 
 			obj->setMovable(kind != "solid");
 			obj->setRotatable(kind != "solid");
@@ -53,13 +56,13 @@ bool GameGroup::load(string script, ResCollection *res)
 		}
 		if(kind == "tag")
 		{
-			obj = new GameObjDummy();
+			obj = new GameTag(local, PhysicInterface::none);
 			g = true;
 			p = true;
 			gameobj = true;
 		}
 
-		if(kind == "path")
+/*		if(kind == "path")
 		{
 			obj = new GamePath();
 			
@@ -73,10 +76,26 @@ bool GameGroup::load(string script, ResCollection *res)
 			g = true;
 			p = true;
 		}
+*/
+		if(kind == "dynpath")
+		{
+			obj = new GameDynPath(local, custom);
+			
+//			((GamePath*)obj)->setSpeed(s->getf(i, 3));
+
+//			obj->setPosition(tag[s->gets(i, 4)]->getPosition());
+
+//			for(int j=4; j<s->count(i); j++)
+//				((GamePath*)obj)->addTarget(s->gets(i, j));
+
+			g = true;
+			p = true;
+		}
+
 
 		if(kind == "include")
 		{
-			obj = new GameGroup();
+			obj = new GameGroup(local, PhysicInterface::none);
 			
 			if(!((GameGroup*)obj)->load(model, res)) return false;
 
@@ -85,15 +104,15 @@ bool GameGroup::load(string script, ResCollection *res)
 			gameobj = true;
 		}
 
-		if(kind == "sprite")
+/*		if(kind == "sprite")
 		{
 			res->add(Res::config, "material/" + model);
 			obj = new GameSprite(s->getf(i, 7), model);
 			g = true;
 			gameobj = true;
 		}
-
-		if(kind == "ps")
+*/
+/*		if(kind == "ps")
 		{
 			Config *c = (Config*)res->add(Res::config, "particle_system/" + model);
 			if(!c)
@@ -105,7 +124,7 @@ bool GameGroup::load(string script, ResCollection *res)
 			g = true;
 			gameobj = true;
 		}
-
+*/
 		if(id != "" && obj)
 		{
 			tag[id] = obj;
@@ -136,7 +155,7 @@ bool GameGroup::load(string script, ResCollection *res)
 }
 
 
-bool GamePath::getTarget(v3 &targetPoint, coord &_speed) 
+/*bool GamePath::getTarget(v3 &targetPoint, coord &_speed) 
 {
 	if(!target.empty())
 	{
@@ -151,7 +170,7 @@ bool GamePath::getTarget(v3 &targetPoint, coord &_speed)
 	else
 		return false;
 }
-
+*/
 void GameObj::addChildren(GameObj *obj)
 {
 	children.push_back(obj);
@@ -177,7 +196,7 @@ GameObj *GameObj::getChildren(std::string name)
 	return tag[name];
 }
 
-GameSprite::GameSprite(coord width, std::string material)
+/*GameSprite::GameSprite(coord width, std::string material)
 {
 	sprites.resize(1);
 	sprites[0].pos		= v3(0, 0, 0);
@@ -189,4 +208,9 @@ Sprites*	GameSprite::getSprites()
 {
 	return &sprites;
 }
+*/
 
+void GameDynPath::process(steel::time curTime, steel::time frameLength, PhysicEngine *engine)
+{
+	velocity = v3(cos(curTime), sin(curTime), 0);
+}

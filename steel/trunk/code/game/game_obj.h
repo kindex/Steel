@@ -40,20 +40,22 @@ public:
 	matrix44 matrix;
 	bool movable, rotatable;
 	std::string name;
-	ProcessKind kind;
+	ProcessKind		processKind;
+	PositionKind	positionKind;
 
 protected:
 	std::map<std::string, GameObj*>	tag;
 
 public:
-	GameObj() 
+	GameObj(const PositionKind _pos, const ProcessKind _process)
 	{
 		movable = false;
 		rotatable = false;
 		parent	= false;
-		kind	= PhysicInterface::none;
+		processKind	= _process;
+		positionKind = _pos;
 	}
-	ProcessKind getKind() { return kind; }
+	ProcessKind getProcessKind() { return processKind; }
 
 	std::string getName() { return name; }
 	void setName(std::string _name) { name = _name;}
@@ -71,9 +73,9 @@ public:
 	{		
 		return matrix;	
 	}
-	Position	getPosition()
+	PositionKind	getPositionKind()
 	{
-		return Interface::local;
+		return positionKind;
 	}
 
 	void	setMatrix(matrix44 const &m) { matrix = m; } 
@@ -102,7 +104,7 @@ public:
 	}
 	GameObj *getParent() { return parent; }
 
-//	v3		getPosition() {return v3(matrix.a[12], matrix.a[13], matrix.a[14]);}
+	v3		getPosition() {return v3(matrix.a[12], matrix.a[13], matrix.a[14]);}
 	bool	setPosition(v3 const &v)
 	{ 
 		matrix.a[12] = v.x;
@@ -123,7 +125,7 @@ public:
 	bool	getTarget(v3 &targetPoint, coord &speed) {return false;}
 	void	setTargetReached() {}
 
-	void	process(steel::time curTime, steel::time frameLength) {}
+	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine) {}
 };
 /*
 Рисуемый объект, GraphMesh и PhysicMesh берутся из модели
@@ -139,7 +141,11 @@ public:
 	{
 		m = M;
 	}
-	GameObjModel(Model *M) { assignModel(M);}
+	GameObjModel(const PositionKind _pos, const ProcessKind _process, Model *M): 
+		GameObj(_pos, _process)
+	{ 
+		assignModel(M);
+	}
 	uid		getId() { return m->getId(); }
 	aabb getFrame()	
 	{		
@@ -203,6 +209,11 @@ Dummy. Обхект, который имеет положение и детей, но не имеет собственной формы.
 class GameObjDummy: public GameObj
 {
 public:
+	GameObjDummy(const PositionKind _pos, const ProcessKind _process): 
+		GameObj(_pos, _process)
+		{ }
+
+
 	uid			getId()			{	return 0;		}
 	aabb		getPFrame()		{	return getFrame(); }
 	aabb		getFrame()		{	return aabb();	}
@@ -223,19 +234,23 @@ public:
 */
 class GameTag: public GameObjDummy
 {
+public:
+	GameTag(const PositionKind _pos, const ProcessKind _process): 
+		GameObjDummy(_pos, _process)
+		{ }
 
 };
 
 /*
 Path. Метка, которя движется по траектории от объекта к объекту.
 */
-class GamePath: public GameObjDummy
+/*class GamePath: public GameObjDummy
 {
 	int currentTarget;
 	std::vector<std::string> target;
 	coord speed;
 public:
-	GamePath() { currentTarget = 0; speed = 1.0; }
+//	GamePath() { currentTarget = 0; speed = 1.0; }
 	void addTarget(std::string _target) { target.push_back(_target); }
 	bool getTarget(v3 &targetPoint, coord &_speed);
 	void setTargetReached()
@@ -244,15 +259,28 @@ public:
 			currentTarget = (currentTarget + 1)%target.size();
 	}
 	void setSpeed(coord	_speed) { speed = _speed; }
+};*/
+/*
+Path. Метка, скорость которой рассчитывает диффуром.
+*/
+
+class GameDynPath: public GameObjDummy
+{
+public:
+	GameDynPath(const PositionKind _pos, const ProcessKind _process): GameObjDummy(Interface::local, PhysicInterface::custom)	{}
+	
+	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine);
 };
+
 
 /*
 Источник освещения.
 */
 class GameLight: public GameObjDummy
 {
-
 public:
+	GameLight(): GameObjDummy(Interface::local, PhysicInterface::none){ }
+
 	Lights* getLights()
 	{
 		Lights *a = new Lights(1);
@@ -268,11 +296,11 @@ public:
 отсекает невидимые объекты.
 */
 
-class GameDomain: public GameObjDummy
+/*class GameDomain: public GameObjDummy
 {
 
 };
-
+*/
 /*
 Контейнер для других объектов.
 К нему прикрепляются другие объекты и движутся как единое целое.
@@ -286,21 +314,22 @@ class GameDomain: public GameObjDummy
 class GameGroup: public GameObjDummy
 {
 public:
+	GameGroup(const Interface::PositionKind _pos, const ProcessKind _process): GameObjDummy(_pos, _process) { }
+
 	bool load(std::string script, ResCollection *res);
 };
 
 /*
 1 Sprite
 */
-class GameSprite: public GameObjDummy
+/*class GameSprite: public GameObjDummy
 {
 protected:
 	Sprites sprites;
 public:
 	GameSprite(coord width, std::string material);
 	Sprites*	getSprites();
-
 };
-
+*/
 
 #endif

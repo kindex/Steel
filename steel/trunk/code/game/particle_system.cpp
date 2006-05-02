@@ -22,7 +22,7 @@ Sprites*	GameParticleSystem::getSprites()
 }
 
 
-GameParticleSystem::GameParticleSystem(Config* _conf, ResCollection	*res)
+/*GameParticleSystem::GameParticleSystem(Config* _conf, ResCollection	*res)
 {
 	conf = _conf;
 
@@ -70,3 +70,4 @@ void GameParticleSystem::born(int i)
 	particle[i].lifetime = frand()*life;
 }
 
+*/
