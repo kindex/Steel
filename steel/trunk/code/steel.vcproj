@@ -670,14 +670,6 @@
 					RelativePath=".\game\game_obj.h"
 					>
 				</File>
-				<File
-					RelativePath=".\game\particle_system.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\game\particle_system.h"
-					>
-				</File>
 				<Filter
 					Name="objects"
 					>
@@ -695,6 +687,14 @@
 					</File>
 					<File
 						RelativePath=".\game\objects\group.h"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\particle_system.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\particle_system.h"
 						>
 					</File>
 					<File

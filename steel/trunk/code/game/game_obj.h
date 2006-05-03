@@ -68,7 +68,6 @@ public:
 		if(tag.find(name) != tag.end()) return tag[name]; else return NULL;
 	}
 
-
 	std::string getName() { return name; }
 	void setName(std::string _name) { name = _name;}
 
@@ -85,6 +84,9 @@ public:
 	{		
 		return matrix;	
 	}
+	matrix44	getGlobalMatrix();
+	v3			getGlobalVelocity();
+
 
 	void	setMatrix(matrix44 const &m) { matrix = m; } 
 

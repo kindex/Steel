@@ -5,6 +5,7 @@
 #include "custom_path.h"
 #include "path.h"
 #include "sprites.h"
+#include "particle_system.h"
 
 using namespace std;
 
@@ -13,7 +14,6 @@ using namespace std;
 		obj	= new CLASS;						\
 		obj->setProcessKind(PROCESS_KIND);		\
 	}
-
 
 
 bool GameGroup::load(string script, ResCollection *res)
@@ -49,6 +49,9 @@ bool GameGroup::load(string script, ResCollection *res)
 
 
 		CHECK_KIND("sprite", Sprites, PhysicInterface::none);
+		
+		CHECK_KIND("ps", ParticleSystem, PhysicInterface::custom);
+
 
 		/*			gameobj = true;
 			g = true;

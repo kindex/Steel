@@ -2,9 +2,36 @@
 #include "../common/logger.h"
 #include "../common/utils.h"
 #include "game_obj.h"
-#include "particle_system.h"
 
 using namespace std;
+
+matrix44	GameObj::getGlobalMatrix()
+{
+	if(getProcessKind() == Interface::global)
+		return getMatrix();
+	else 
+	{
+		GameObj *p = getParent();
+		if(p)
+			return p->getGlobalMatrix() * getMatrix();
+		else
+			return getMatrix();
+	}
+}
+
+v3	GameObj::getGlobalVelocity()
+{
+	if(getProcessKind() == Interface::global)
+		return getVelocity();
+	else 
+	{
+		GameObj *p = getParent();
+		if(p)
+			return p->getGlobalMatrix() * getVelocity();
+		else
+			return getVelocity();
+	}
+}
 
 
 void GameObj::addChildren(GameObj *obj)

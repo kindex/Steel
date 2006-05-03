@@ -11,6 +11,9 @@ struct Sprite
 
 class Sprites: public GameObjDummy
 {
+protected:
+	ResCollection	*res;
+
 	std::vector<Sprite> sprite;
 	Material	*m;
 	Vertexes	vertex;
@@ -27,8 +30,10 @@ public:
 	MapCoords*	getMapCoords() { return &mapCoords; }
 
 	aabb getFrame();
+//	PositionKind	getPositionKind(){	return global;}
 
 	bool init(ScriptLine	&s, ResCollection &res);
+	void initSprites();
 //	bool cleanup()	{	return true;	}
 	void processGraph(v3	cameraEye);
 };

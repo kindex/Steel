@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+//Returns random value [0..1)
 float frand();
 
 std::string FloatToStr(double a);

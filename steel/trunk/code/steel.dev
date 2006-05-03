@@ -808,26 +808,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit78]
-FileName=game\particle_system.cpp
-CompileCpp=1
-Folder=game
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit79]
-FileName=game\particle_system.h
-CompileCpp=1
-Folder=game
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit80]
 FileName=res\material\material.cpp
 CompileCpp=1
 Folder=res/material
@@ -837,7 +817,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit81]
+[Unit79]
 FileName=res\material\material.h
 CompileCpp=1
 Folder=res/material
@@ -847,7 +827,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit82]
+[Unit80]
 FileName=graph\opengl\gl\libExt.cpp
 CompileCpp=1
 Folder=graph/opengl/gl
@@ -857,10 +837,30 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit83]
+[Unit81]
 FileName=graph\opengl\gl\libExt.h
 CompileCpp=1
 Folder=graph/opengl/gl
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit82]
+FileName=interface.h
+CompileCpp=1
+Folder=Steel
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit83]
+FileName=game\objects\custom_path.cpp
+CompileCpp=1
+Folder=game/objects
 Compile=1
 Link=1
 Priority=1000
@@ -878,26 +878,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit84]
-FileName=interface.h
-CompileCpp=1
-Folder=Steel
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit85]
-FileName=game\objects\custom_path.cpp
-CompileCpp=1
-Folder=game/objects
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit86]
 FileName=game\objects\custom_path.h
 CompileCpp=1
 Folder=game/objects
@@ -907,7 +887,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit87]
+[Unit85]
 FileName=game\objects\group.cpp
 CompileCpp=1
 Folder=game/objects
@@ -917,7 +897,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit88]
+[Unit86]
 FileName=game\objects\group.h
 CompileCpp=1
 Folder=game/objects
@@ -927,7 +907,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit89]
+[Unit87]
 FileName=game\objects\path.cpp
 CompileCpp=1
 Folder=game/objects
@@ -937,7 +917,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit90]
+[Unit88]
 FileName=game\objects\path.h
 CompileCpp=1
 Folder=game/objects
@@ -947,7 +927,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit91]
+[Unit89]
 FileName=game\objects\sprites.cpp
 CompileCpp=1
 Folder=game/objects
@@ -957,8 +937,28 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit92]
+[Unit90]
 FileName=game\objects\sprites.h
+CompileCpp=1
+Folder=game/objects
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit91]
+FileName=game\objects\particle_system.cpp
+CompileCpp=1
+Folder=game/objects
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit92]
+FileName=game\objects\particle_system.h
 CompileCpp=1
 Folder=game/objects
 Compile=1
