@@ -134,6 +134,7 @@ public:
 	void	setTargetReached() {}
 
 	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine) {}
+	void	processGraph(v3	cameraEye) {}
 };
 /*
 Рисуемый объект, GraphMesh и PhysicMesh берутся из модели
@@ -203,7 +204,6 @@ public:
 	{
 		return NULL;
 	}
-	Sprites* getSprites() { return NULL; }
 
 	MapCoords*	getMapCoords()
 	{
@@ -230,7 +230,6 @@ public:
 	Triangles*	getTriangles()	{	return NULL;	}
 	Normals*	getNormals()	{	return NULL;	}
 	Lights*		getLights()		{	return NULL;	}
-	Sprites*	getSprites()	{	return NULL;	}
 	FaceMaterials* getFaceMaterials()	{	return NULL;	}
 	MapCoords*	getMapCoords()	{	return NULL;	}
 };

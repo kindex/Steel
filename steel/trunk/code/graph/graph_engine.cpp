@@ -33,20 +33,31 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 	if(object == NULL) return false;
 	total.object++;
 
+
 	aabb frame = object->getFrame();
 
 	matrix44 object_matrix = object->getMatrix(); // global 
 
 	Interface::PositionKind pos = object->getPositionKind();
 	if(pos == Interface::local)
+	{
 		object_matrix = parent_matrix*object_matrix;
-	else if(pos != Interface::global) 
+
+		object->processGraph(parent_matrix.getInverse()*camera.eye);
+	}
+	else if(pos == Interface::global) 
+	{
+		object->processGraph(camera.eye);
+	}
+	else
 		return false;
 
 /* TODO: сюда надо поставить проверку, находится ли frame
 внутри пирамиды, которую образует угол обзора камеры.
 Если не попадает, то откидываем этот объект и всех его потомков
 */
+
+
 	GraphInterface &o = *(GraphInterface*)object;
 	GraphInterfaceList children = o.getChildrens();
 	for(GraphInterfaceList::iterator it=children.begin();
@@ -127,21 +138,6 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 			element[c].triangle->operator[](1).a[i] = 3-(i+2)%4;
 		}
 
-		v3 dir = camera.eye - matrix*v3();
-//		dir = v3(1,0,0);
-
-		dir.normalize();
-		v3 per1(-dir.y, dir.x, 0); // перендикуляр к dir
-		per1.normalize();
-		v3 per2 = dir.vectorProduct(per1);
-		per1 *= it->width;
-		per2 *= it->width;
-
-		element[c].vertex = new Vertexes(4);
-		element[c].vertex->operator [](0)  = per1 - per2;
-		element[c].vertex->operator [](1)  = -per1 - per2;
-		element[c].vertex->operator [](2)  = -per1 + per2;
-		element[c].vertex->operator [](3)  = per1 + per2;
 
 		coord size = it->width;
 

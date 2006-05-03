@@ -2,6 +2,11 @@
 
 using namespace std;
 
+float frand()
+{
+	return (float) rand() / (float) RAND_MAX;
+}
+
 
 string FloatToStr(double a)
 {

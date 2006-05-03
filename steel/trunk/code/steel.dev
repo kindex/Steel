@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=90
+UnitCount=92
 Type=0
 Ver=1
 ObjFiles=
@@ -939,6 +939,26 @@ BuildCmd=
 
 [Unit90]
 FileName=game\objects\path.h
+CompileCpp=1
+Folder=game/objects
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit91]
+FileName=game\objects\sprites.cpp
+CompileCpp=1
+Folder=game/objects
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit92]
+FileName=game\objects\sprites.h
 CompileCpp=1
 Folder=game/objects
 Compile=1

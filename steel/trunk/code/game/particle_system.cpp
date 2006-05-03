@@ -3,23 +3,7 @@
 using namespace std;
 
 //Returns random value [0..1)
-float frand()
-{
-	return (float) rand() / (float) RAND_MAX;
-}
 
-
-Sprites*	GameParticleSystem::getSprites()
-{
-	int cnt = sprites.size();
-
-	for(int i=0; i<cnt; i++)
-	{
-		sprites[i].pos = particle[i].position;
-	}
-
-	return &sprites;
-}
 
 
 /*GameParticleSystem::GameParticleSystem(Config* _conf, ResCollection	*res)

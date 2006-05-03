@@ -705,6 +705,14 @@
 						RelativePath=".\game\objects\path.h"
 						>
 					</File>
+					<File
+						RelativePath=".\game\objects\sprites.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\sprites.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

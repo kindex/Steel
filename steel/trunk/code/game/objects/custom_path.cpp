@@ -2,5 +2,6 @@
 
 void CustomPath::process(steel::time curTime, steel::time frameLength, PhysicEngine *engine)
 {
-	velocity = v3((float)cos(curTime), (float)sin(curTime), 0);
+	v3 pos = getPosition();
+	velocity = v3(-pos.y, pos.x, 0);
 }

@@ -4,6 +4,7 @@
 #include "group.h"
 #include "custom_path.h"
 #include "path.h"
+#include "sprites.h"
 
 using namespace std;
 
@@ -46,7 +47,10 @@ bool GameGroup::load(string script, ResCollection *res)
 		// метка в простнанстве, не рисуется
 		CHECK_KIND("tag", GameTag, PhysicInterface::none);
 
-/*			gameobj = true;
+
+		CHECK_KIND("sprite", Sprites, PhysicInterface::none);
+
+		/*			gameobj = true;
 			g = true;
 		}
 */

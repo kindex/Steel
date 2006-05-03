@@ -132,6 +132,9 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 	if(loaded)
 	{
 		glBindBufferARB(mode2, buf.glid);
+		if(v->changed)
+			glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->data.size(), &v->data.front());
+
 	    if(mode)glEnableClientState(mode);
 
 		buf.lastUsedTime = time;
@@ -409,13 +412,17 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			glPolygonMode(GL_FRONT, GL_FILL);    	// Reset Back-Facing Polygon Drawing Mode
 			glDisableClientState(GL_VERTEX_ARRAY);
 		}
-
-		if(conf->geti("drawNormals", 0))
-			drawNormals(e);
-		if(conf->geti("drawAABB", 0))
-			drawAABB(e, e.matrix);
-
 	}
+
+	if(conf->geti("drawNormals", 0))
+		drawNormals(e);
+	
+	if(conf->geti("drawVertexes", 0))
+		drawVertexes(e);
+
+	if(conf->geti("drawAABB", 0))
+		drawAABB(e, e.matrix);
+
 }
 
 
@@ -730,8 +737,12 @@ void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix44 const m
 
 void OpenGL_Engine::drawNormals(DrawElement &e)
 {
-	aabb &f = e.frame;
-	float diag = (f.max-f.min).getLength()*0.05f;
+	if(e.normal)
+	{
+		aabb &f = e.frame;
+		float diag = (f.max-f.min).getLength()*0.05f;
+		
+//		if(diag<EPSILON) diag = 0.01;
 
 		glBegin(GL_LINES);
 		for(unsigned int i=0; i < e.vertex->data.size(); i++)
@@ -743,7 +754,23 @@ void OpenGL_Engine::drawNormals(DrawElement &e)
 			glVertex3f(d.x, d.y, d.z);
 		}
 		glEnd();
+	}
 }
+
+void OpenGL_Engine::drawVertexes(DrawElement &e)
+{
+	glPointSize(5);
+
+	glBegin(GL_POINTS);
+	for(unsigned int i=0; i < e.vertex->data.size(); i++)
+	{
+		v3 &s = e.vertex->data[i];
+
+		glVertex3f(s.x, s.y, s.z);
+	}
+	glEnd();
+}
+
 
 void OpenGL_Engine::drawAABB(DrawElement &e, matrix44 matrix)
 {
@@ -753,7 +780,6 @@ void OpenGL_Engine::drawAABB(DrawElement &e, matrix44 matrix)
 	for(int i=0; i<8; i++)
 		c.merge(matrix*v[i]);
 	
-
 	glPushMatrix();
 	glLoadIdentity();
 	glBegin(GL_LINES);

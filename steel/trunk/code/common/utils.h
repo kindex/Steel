@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+float frand();
+
 std::string FloatToStr(double a);
 std::string IntToStr(int a);
 

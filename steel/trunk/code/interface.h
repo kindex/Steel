@@ -38,6 +38,7 @@ public:
 struct Vertexes: public BufferedElement
 {
 	std::vector<v3> data;
+	Vertexes(): data(0) {}
 };
 
 //typedef std::vector<Triangle>	Triangles;

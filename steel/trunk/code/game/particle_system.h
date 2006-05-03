@@ -4,6 +4,7 @@
 
 #include "game_obj.h"
 
+/*
 struct Particle
 {
 	v3		position, velocity;
@@ -23,6 +24,6 @@ public:
 	void	process(steel::time speed);
 	void born(int partice_number);
 };
-
+*/
 
 #endif

@@ -83,6 +83,7 @@ public:
 	
 //	void drawFaces(DrawElement &e);
 	void drawNormals(DrawElement &e);
+	void drawVertexes(DrawElement &e);
 	void drawAABB(DrawElement &e, matrix44 matrix);
 
 	void drawBump(DrawElement &e, GLuint normalMap, matrix44 const matrix, v3 const light);

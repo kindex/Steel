@@ -31,16 +31,8 @@ struct Light
 /*
 Sprite, Billboard. Полигон, который всегда параллелен плоскости экрана.
 */
-struct Sprite
-{
-	v3		pos;
-	coord	width; // ширина задаётся, а высота рассчитывается автоматически с учётом сохранения коофициента
-	// сжатия оригинальной картинки
-	std::string material;
-};
 
 typedef std::vector<Light>		Lights;
-typedef std::vector<Sprite>		Sprites;
 
 class MapCoord: public BufferedElement
 {
@@ -119,10 +111,9 @@ Video textures (avi, camera)
 	virtual MapCoords*	getMapCoords() = 0;
 
 	virtual Lights*		getLights() = 0;
-	virtual Sprites*	getSprites() = 0;
-
 
 	virtual	uid			getId() = 0;
+	virtual	void		processGraph(v3	cameraEye) = 0;
 };
 
 #endif
