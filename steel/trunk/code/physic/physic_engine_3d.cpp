@@ -15,72 +15,25 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 	{
 		Element &el = *it;
 		PhysicInterface &o = *el.obj;
-		o.process(globalTime, time, this);
 
-		PhysicInterface::ProcessKind kind = o.getProcessKind();
-		if(kind == PhysicInterface::custom)
+		ProcessKind::ProcessKind kind = o.getProcessKind();
+		if(kind == ProcessKind::none) continue;
+
+		if(kind == ProcessKind::custom)
 		{
-			v3 p = o.getPosition();
-			p += o.getVelocity()*(float)time;
-			o.setPosition(p);
+			o.process(globalTime, time, this);
 		}
-		if(kind == PhysicInterface::uni)
+		if(kind == ProcessKind::uni)
 		{
 			v3 v = o.getVelocity();
 			v += acc;	// gravitation
 			o.setVelocity(v);
 		}
 
-/*		v3 pos = el.matrix * v3(); // absolute
-		v3 local_pos = o.getMatrix() * v3(); // local (в системе координат родителя)
+		v3 p = o.getPosition();
+		p += o.getVelocity()*(float)time;
+		o.setPosition(p);
 
-
-		v3 targetPoint;
-		string targetObj;
-		coord moveSpeed;
-		// если объект хочет двигаться к другому объекту
-		if(fasle && o.getTarget(targetPoint, moveSpeed))
-		{ // если он указал имя объекта
-			if(!targetObj.empty())
-			{
-				if(tag.find(targetObj) == tag.end())
-				{
-					alog.msg("error physic", string("Cannot find object with id '") + targetObj + "'");
-					return false;
-				}
-				int idx = tag[targetObj];
-				matrix4 matrix =  objects[idx].matrix;
-				v3 one;
-				targetPoint = el.parentMatrix.GetInverse()*matrix*one;
-			}
-			// если не указал имя, то берём координаты (локальные)
-			v3 dir = (targetPoint - local_pos).getNormalized(); // направление движения
-			
-//			o.setVelocity(dir*moveSpeed);
-			coord len = (float)(moveSpeed*time); // пройденное расстояние
-
-			if(len>(targetPoint - local_pos).getLength())
-			{
-				local_pos = targetPoint;
-				o.setTargetReached();
-			}
-			else
-				local_pos += dir * len;
-			
-//			matrix4 inv = el.parentMatrix.GetInverse();
-
-//			v3 local_pos =  inv* pos;
-
-			matrix44 localM = o.getMatrix();
-			localM.a[12] = local_pos.x;
-			localM.a[13] = local_pos.y;
-			localM.a[14] = local_pos.z;
-			o.setMatrix(localM);
-		}
-
-/*		matrix4 m = (*it)->getMatrix();
-		p += v*speed;
-		(*it)->setPosition(p);*/
 	}
 
 	return true;

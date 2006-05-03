@@ -11,7 +11,7 @@ struct Particle
 	float	lifetime;
 };
 
-class ParticleSystem: public Sprites
+class ParticleSystem: public SpriteSystem
 {
 protected:
 	std::vector<Particle> particle;

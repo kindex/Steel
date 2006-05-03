@@ -40,7 +40,7 @@ public:
 	matrix44	matrix;
 	bool movable, rotatable;
 	std::string		name;
-	ProcessKind		processKind;
+	ProcessKind::ProcessKind		processKind;
 	PositionKind	positionKind;
 
 protected:
@@ -52,12 +52,12 @@ public:
 		movable = false;
 		rotatable = false;
 		parent	= false;
-		processKind	= PhysicInterface::none;
+		processKind	= ProcessKind::none;
 		positionKind = local;
 	}
 	PositionKind	getPositionKind(){	return positionKind;}
-	ProcessKind		getProcessKind() { return processKind; }
-	void			setProcessKind(const PhysicInterface::ProcessKind _kind) { processKind = _kind; }
+	ProcessKind::ProcessKind		getProcessKind() { return processKind; }
+	void			setProcessKind(const ProcessKind::ProcessKind _kind) { processKind = _kind; }
 	virtual	bool	init(ScriptLine	&s, ResCollection &res)
 	{
 		setPosition(v3(s.getf(4, 0.0f), s.getf(5, 0.0f), s.getf(6, 0.0f)));
@@ -79,6 +79,9 @@ public:
 	{
 		rotatable = _rotatable;
 	}
+
+	void	trigger(PhysicInterface *object) {}
+
 
 	matrix44 getMatrix()	
 	{		

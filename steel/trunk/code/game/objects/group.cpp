@@ -38,19 +38,18 @@ bool GameGroup::load(string script, ResCollection *res)
 //		CHECK_KIND("light", GameLight, PhysicInterface::none);
 
 		// Solid model object, cannot move
-		CHECK_KIND("solid", GameObjModel, PhysicInterface::none);
+		CHECK_KIND("solid", GameObjModel, ProcessKind::none);
 		// объект, который движется по своим законам
-		CHECK_KIND("custom", CustomPath, PhysicInterface::custom);
+		CHECK_KIND("custom", CustomPath, ProcessKind::custom);
 		// путь по контрольным точкам
-		CHECK_KIND("path", TagPath, PhysicInterface::custom);
+		CHECK_KIND("path", TagPath, ProcessKind::custom);
 
 		// метка в простнанстве, не рисуется
-		CHECK_KIND("tag", GameTag, PhysicInterface::none);
+		CHECK_KIND("tag", GameTag, ProcessKind::none);
 
-
-		CHECK_KIND("sprite", Sprites, PhysicInterface::none);
+		CHECK_KIND("sprite", Sprite, ProcessKind::none);
 		
-		CHECK_KIND("ps", ParticleSystem, PhysicInterface::custom);
+		CHECK_KIND("ps", ParticleSystem, ProcessKind::custom);
 
 
 		/*			gameobj = true;

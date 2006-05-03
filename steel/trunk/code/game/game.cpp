@@ -135,7 +135,7 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 	}
 
 	world = new GameGroup();
-	world->setProcessKind(PhysicInterface::none);
+	world->setProcessKind(ProcessKind::none);
 	
 //	Interface::global, 
 

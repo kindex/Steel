@@ -3,26 +3,27 @@
 
 #include "../game_obj.h"
 
-struct Sprite
+struct sprite_t
 {
 	v3		pos;
 	coord	size;
 };
 
-class Sprites: public GameObjDummy
+class SpriteSystem: public GameObjDummy
 {
 protected:
 	ResCollection	*res;
 
-	std::vector<Sprite> sprite;
+	std::vector<sprite_t> sprite;
 	Material	*m;
 	Vertexes	vertex;
 	FaceMaterials	face;
 	MapCoords	mapCoords;
 	Normals		normal;
 	v3			eye;
+	bool	zedAlign;
 public:
-	Sprites() {}
+	SpriteSystem() {}
 
 	Vertexes*	getVertexes() { return &vertex; }
 	FaceMaterials* getFaceMaterials() { return &face; }
@@ -32,10 +33,15 @@ public:
 	aabb getFrame();
 //	PositionKind	getPositionKind(){	return global;}
 
-	bool init(ScriptLine	&s, ResCollection &res);
 	void initSprites();
 //	bool cleanup()	{	return true;	}
 	void processGraph(v3	cameraEye);
+};
+
+class Sprite: public SpriteSystem
+{
+public:
+	bool init(ScriptLine	&s, ResCollection &res);
 };
 
 #endif

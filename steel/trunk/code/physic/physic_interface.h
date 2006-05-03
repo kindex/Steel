@@ -28,17 +28,40 @@ typedef std::vector<PhysicInterface*> PhysicInterfaceList;
 
 class PhysicEngine;
 
-class PhysicInterface: public Interface
+namespace ProcessKind
 {
-public:
 	typedef enum
 	{
 		none,
 		custom, // сам объект определяет своё движение
 		uni // движется по универсальным законам
 	} ProcessKind;
+};
 
-	virtual ProcessKind getProcessKind() = 0;
+namespace CollisionType
+{
+	typedef enum
+	{
+		none,
+		uni,
+		trigger
+	} CollisionType;
+};
+
+namespace ShapeType
+{
+	typedef enum
+	{
+		none,
+		poly,
+		sphere
+	} ShapeType;
+}
+
+class PhysicInterface: public Interface
+{
+public:
+	virtual ProcessKind::ProcessKind getProcessKind() = 0;
 
 	PhysicInterface() {}
 /*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
@@ -77,6 +100,9 @@ getPVertexes возвращяет координаты точек в системе координат getPMatrix*/
 	virtual	v3		getPosition() = 0;
 	virtual	bool	setPosition(v3 const &v) = 0;
 //	virtual std::string getMaterial() = 0;
+
+	// эта функция вызывается, еслу другой объект трогает этот
+	virtual void	trigger(PhysicInterface *object) = 0;
 };
 
 #endif

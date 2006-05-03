@@ -6,6 +6,8 @@ using namespace std;
 
 bool ParticleSystem::init(ScriptLine &s, ResCollection &_res)
 {
+	if(!GameObj::init(s, _res)) return false;
+
 	if(s.count()<3) return false;
 	res = &_res;
 	conf = (Config*)res->add(Res::config, s.gets(3));
@@ -25,6 +27,7 @@ bool ParticleSystem::init(ScriptLine &s, ResCollection &_res)
 		sprite[i].size = size;
 		born(i);
 	}
+	zedAlign = true;
 	initSprites();
 
 	return true;
@@ -41,7 +44,6 @@ void ParticleSystem::process(steel::time curTime, steel::time frameLength, Physi
 		particle[i].lifetime -= (float)frameLength;
 		if(particle[i].lifetime < 0)
 			born(i);
-
 	}
 }
 
@@ -64,6 +66,6 @@ void ParticleSystem::processGraph(v3	cameraEye)
 	for(int i=0; i<cnt; i++)
 		sprite[i].pos = particle[i].position;
 
-	Sprites::processGraph(cameraEye);
+	SpriteSystem::processGraph(cameraEye);
 }
 

@@ -3,13 +3,13 @@
 
 using namespace std;
 
-bool Sprites::init(ScriptLine &s, ResCollection &_res)
+bool Sprite::init(ScriptLine &s, ResCollection &_res)
 {
 	if(!GameObj::init(s, _res)) return false;
 
 	res = &_res;
 	
-	if(s.count()<3) return false;
+	if(s.count()<5) return false;
 	m = (Material*)res->add(Res::material, s.gets(3));
 	if(!m) return false;
 
@@ -17,14 +17,14 @@ bool Sprites::init(ScriptLine &s, ResCollection &_res)
 	for(unsigned int i=0; i<sprite.size(); i++)
 	{
 		sprite[i].pos = v3(0, 0, 0);
-		sprite[i].size = 0.15f;
+		sprite[i].size = s.getf(7, 1);
 	}
-
+	zedAlign = true;
 	initSprites();
 	return true;
 }
 
-void Sprites::initSprites()
+void SpriteSystem::initSprites()
 {
 	vertex.data.resize(sprite.size()*4);
 	vertex.changed = true;
@@ -63,7 +63,7 @@ void Sprites::initSprites()
 
 }
 
-void Sprites::processGraph(v3	cameraEye)
+void SpriteSystem::processGraph(v3	cameraEye)
 {
 	eye = cameraEye;
 
@@ -71,8 +71,10 @@ void Sprites::processGraph(v3	cameraEye)
 	for(int i=0; i<cnt; i++)
 	{
 		v3 &pos = sprite[i].pos;
-		v3 dir = eye - pos;
+		v3 dir = eye - getMatrix()*pos;
 //		dir = v3(1,0,0);
+
+		if(zedAlign)	dir.z = 0;
 
 		dir.normalize();
 		v3 per1(-dir.y, dir.x, 0); // перендикул€р к dir
@@ -91,7 +93,7 @@ void Sprites::processGraph(v3	cameraEye)
 	}
 }
 
-aabb Sprites::getFrame()
+aabb SpriteSystem::getFrame()
 {
 	aabb frame;
 	for(vector<v3>::iterator it = vertex.data.begin(); it != vertex.data.end(); it++)
