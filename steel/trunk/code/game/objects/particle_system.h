@@ -8,7 +8,8 @@
 struct Particle
 {
 	v3		position, velocity;
-	float	lifetime;
+	float	endTime, startTime, size;
+	bool	alive;
 };
 
 class ParticleSystem: public SpriteSystem
@@ -23,7 +24,7 @@ public:
 
 	void process(steel::time curTime, steel::time frameLength, PhysicEngine *engine);
 	void processGraph(v3	cameraEye);
-	void born(int partice_number);
+	void born(int partice_number, steel::time curTime, steel::time frameLength);
 	PositionKind	getPositionKind(){	return global;}
 };
 

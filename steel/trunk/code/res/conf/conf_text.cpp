@@ -1,6 +1,7 @@
 
 #include "conf_text.h"
 #include "../../common/logger.h"
+#include "../../common/utils.h"
 #include <fstream>
 
 using namespace std;
@@ -13,7 +14,6 @@ Res* createConfigText(const std::string filename, ResCollection *res)
 	else
 		return NULL;
 }
-
 
 bool ConfigText::init(const std::string name, ResCollection &res)
 {
@@ -44,6 +44,7 @@ bool ConfigText::init(const std::string name, ResCollection &res)
 
 		var_s[key] = value;
 		var_f[key] = atof(value.c_str());
+		var_v3[key] = stov3(value);
 	}
 
 	return true;

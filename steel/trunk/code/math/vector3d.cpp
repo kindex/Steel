@@ -41,8 +41,8 @@ v3 v3::getRotatedX(double angle) const
 	if(angle==0.0)
 		return (*this);
 
-	float sinAngle=(float)sin(M_PI*angle/180);
-	float cosAngle=(float)cos(M_PI*angle/180);
+	float sinAngle=(float)sin(angle);
+	float cosAngle=(float)cos(angle);
 
 	return v3(	x,
 						y*cosAngle - z*sinAngle,
@@ -59,8 +59,8 @@ v3 v3::getRotatedY(double angle) const
 	if(angle==0.0)
 		return (*this);
 
-	float sinAngle=(float)sin(M_PI*angle/180);
-	float cosAngle=(float)cos(M_PI*angle/180);
+	float sinAngle=(float)sin(angle);
+	float cosAngle=(float)cos(angle);
 
 	return v3(	x*cosAngle + z*sinAngle,
 						y,
@@ -77,8 +77,8 @@ v3 v3::getRotatedZ(double angle) const
 	if(angle==0.0)
 		return (*this);
 
-	float sinAngle=(float)sin(M_PI*angle/180);
-	float cosAngle=(float)cos(M_PI*angle/180);
+	float sinAngle=(float)sin(angle);
+	float cosAngle=(float)cos(angle);
 	
 	return v3(x*cosAngle - y*sinAngle,
 					x*sinAngle + y*cosAngle,
@@ -99,8 +99,8 @@ v3 v3::getRotatedAxis(double angle, const v3 & axis) const
 
 	v3 rotMatrixRow0, rotMatrixRow1, rotMatrixRow2;
 
-	float sinAngle=(float)sin(M_PI*angle/180);
-	float cosAngle=(float)cos(M_PI*angle/180);
+	float sinAngle=(float)sin(angle);
+	float cosAngle=(float)cos(angle);
 	float oneMinusCosAngle=1.0f-cosAngle;
 
 	rotMatrixRow0.x=(u.x)*(u.x) + cosAngle*(1-(u.x)*(u.x));

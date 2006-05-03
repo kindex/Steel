@@ -27,7 +27,7 @@ bool Input::init(ResCollection *_res, std::string _conf)
 }
 
 
-#define MOUSE_SENS (0.02)
+#define MOUSE_SENS (0.002)
 
 void Input::getMouseDelta(double &dx, double &dy)
 {

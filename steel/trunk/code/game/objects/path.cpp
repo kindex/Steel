@@ -57,7 +57,7 @@ void TagPath::process(steel::time curTime, steel::time frameLength, PhysicEngine
 	{
 		GameObj *n = parent->findChildren(target[(currentTarget + 1)%cnt].id);
 		if(!n) return;
-		coord k = (curTime - smoothStart) / smoothLen;
+		coord k = (float)((curTime - smoothStart) / smoothLen);
 
 		if(k>=1)
 		{

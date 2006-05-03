@@ -35,7 +35,9 @@ path		path1	tag1	5	2	tag2	3	0	tag3	10	3	tag4	5	0
 
 //custom		path1		4	4	0
 
-ps	path1	ps1	particle_system/ps	0	0	0
+ps		ps1	particle_system/ps	4	-7	1
+
+//sprite		sprite1	box/metal	0	0	4	2
 
 //solid	path1	teapot1	spaceman/spaceman	0	0	0
 

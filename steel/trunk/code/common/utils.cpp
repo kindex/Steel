@@ -7,6 +7,19 @@ float frand()
 	return (float) rand() / (float) RAND_MAX;
 }
 
+float prand()
+{
+	return (float) rand() / (float) RAND_MAX - 0.5f;
+}
+
+
+v3	stov3(string s)
+{
+	vector<string> v = explode(',', s);
+	v.resize(3);
+	v3 r((float)atof(v[0].c_str()), (float)atof(v[1].c_str()), (float)atof(v[2].c_str()));
+	return r;
+}
 
 string FloatToStr(double a)
 {

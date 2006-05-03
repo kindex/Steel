@@ -37,6 +37,14 @@ int Config::geti(string key, int _default)
 		return _default;
 }
 
+v3 Config::getv3(string key, v3 _default)
+{
+	if(var_v3.find(key) != var_v3.end())
+		return var_v3[key];
+	else
+		return _default;
+}
+
 void Config::setup(std::string key, std::string value)
 {
 	var_s[key] = value;
@@ -56,4 +64,12 @@ void Config::setDefault(std::string key, std::string value)
 
 	if(var_f.find(key) == var_f.end())
 		var_f[key] = atof(value.c_str());
+}
+
+bool Config::unload() 
+{ 
+	var_s.clear();
+	var_f.clear();
+	var_v3.clear();
+	return true; 
 }

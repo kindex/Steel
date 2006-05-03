@@ -36,7 +36,6 @@ class Map
 public:
 	Image *texture;
 
-
 	MapMode::map_mode	mode;
 	MapKind::tex_kind	kind;
 	v4					color;

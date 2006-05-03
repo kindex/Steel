@@ -7,7 +7,7 @@ using namespace std;
 
 matrix44	GameObj::getGlobalMatrix()
 {
-	if(getProcessKind() == Interface::global)
+	if(getPositionKind() == Interface::global)
 		return getMatrix();
 	else 
 	{
@@ -21,7 +21,7 @@ matrix44	GameObj::getGlobalMatrix()
 
 v3	GameObj::getGlobalVelocity()
 {
-	if(getProcessKind() == Interface::global)
+	if(getPositionKind() == Interface::global)
 		return getVelocity();
 	else 
 	{

@@ -74,7 +74,7 @@ void SpriteSystem::processGraph(v3	cameraEye)
 		v3 dir = eye - getMatrix()*pos;
 //		dir = v3(1,0,0);
 
-		if(zedAlign)	dir.z = 0;
+	//	if(zedAlign)	dir.z = 0;
 
 		dir.normalize();
 		v3 per1(-dir.y, dir.x, 0); // перендикул€р к dir

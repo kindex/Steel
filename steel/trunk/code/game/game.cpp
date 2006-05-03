@@ -23,24 +23,18 @@ using namespace std;
 //#define MOVE_SPEED (10.0f)
 //#define LOOK_SPEED (0.01f)
 
+#define ACC(moveSpeed) { moveSpeed += (float)speed*accSpeed;}
+#define BRAKE(moveSpeed) {	if(moveSpeed>0)		moveSpeed -= (float)speed*brakeSpeed;			else				moveSpeed = 0;}
+
 void Game::processKeyboard()
 {
 	if(input->isMouseCaptured())
 	{
-		if(input->isPressed("w")) eye += (float)moveSpeed*(float)speed*direction;
-		if(input->isPressed("s")) eye -= (float)moveSpeed*(float)speed*direction;
-		if(input->isPressed("a"))
-		{
-			v3 d(direction.y, -direction.x, 0);
-			d.normalize();
-			eye -= (float)moveSpeed*(float)speed*d;
-		}
-		if(input->isPressed("d"))
-		{
-			v3 d(direction.y, -direction.x, 0);
-			d.normalize();
-			eye += (float)moveSpeed*(float)speed*d;
-		}
+		if(input->isPressed("w")) ACC(moveSpeed.x)	else BRAKE(moveSpeed.x);
+
+		if(input->isPressed("s")) ACC(moveSpeed.y)	else BRAKE(moveSpeed.y);
+		if(input->isPressed("a")) ACC(moveSpeed.z)	else BRAKE(moveSpeed.z);
+		if(input->isPressed("d")) ACC(moveSpeed.w)	else BRAKE(moveSpeed.w);
 	}
 }
 
@@ -51,13 +45,22 @@ void Game::handleMouse(double dx, double dy)
 	if(dy<0 && direction.dotProduct(v3(0,0, 1))<0.9 || 
 		dy>0 && direction.dotProduct(v3(0,0, -1))<0.9 )
 
-		direction.rotateAxis((float)dy, v3( -direction.y, direction.x, 0));
+	direction.rotateAxis((float)dy, v3( -direction.y, direction.x, 0));
 }
 
 void Game::process(PhysicEngine *physic, steel::time globalTime, steel::time time)
 {
 	processKeyboard();
-	physic->process(globalTime, time);
+
+	eye += (float)(moveSpeed.x-moveSpeed.y)*(float)speed*direction;
+
+	v3 d(direction.y, -direction.x, 0);
+	d.normalize();
+	eye += (float)(moveSpeed.w-moveSpeed.z)*(float)speed*d;
+
+
+	if(!paused)
+		physic->process(globalTime, time);
 }
 
 /*v3	Game::getGlobalPosition(std::string obj)
@@ -126,7 +129,10 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 	direction = target-eye;
 	direction.normalize();
 
-	moveSpeed = conf->getd("camera.speed", 1);
+	accSpeed = conf->getf("camera.acc", 100);
+	brakeSpeed = conf->getf("camera.brakes", 200);
+
+	moveSpeed.loadZero();
 
 	if(!conf->isset("script"))
 	{
@@ -142,6 +148,7 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 	if(!world->load(conf->gets("script"), res)) return false;
 
 	_alive = true;
+	paused = false;
 	return true;
 }
 
@@ -149,6 +156,7 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 void Game::handleEventKeyDown(std::string key)
 {
 	if(key == "escape") _alive = false;
+	if(key == "p") paused = !paused;
 }
 
 void Game::handleEventKeyUp(std::string key)

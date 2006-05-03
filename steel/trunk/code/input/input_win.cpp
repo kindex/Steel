@@ -82,18 +82,18 @@ void InputWIN::process()
 			break;
 		case WM_KEYDOWN:
 			key = decodeKey(msg.wParam);
-			if(key != "")
-				game->handleEventKeyDown(key);
-
-			if(key == "space")
+			if(key != "" && !keyPressed[key])
 			{
-				if(mouseCaptured) 
-					freeMouse();
-				else
-					captureMouse();
+				game->handleEventKeyDown(key);
+				if(key == "space")
+				{
+					if(mouseCaptured) 
+						freeMouse();
+					else
+						captureMouse();
+				}
+				keyPressed[key] = true;
 			}
-			
-			keyPressed[key] = true;
 
 			break;
 

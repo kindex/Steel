@@ -12,6 +12,7 @@ protected:
 	std::map<std::string, std::string> var_s;
 // double-number settings
 	std::map<std::string, double> var_f;
+	std::map<std::string, v3> var_v3;
 
 public:
 	// change 1->0, 0->1
@@ -25,14 +26,9 @@ public:
 	float		getf(std::string key, float _default = 0.0);
 	double		getd(std::string key, double _default = 0.0);
 	int			geti(std::string key, int	_default = 0);
+	v3			getv3(std::string key, v3 _default = v3(0,0,0));
 
 	bool isset(std::string key) { return var_s.find(key) != var_s.end(); }
-
-	bool unload() 
-	{ 
-		var_s.clear();
-		var_f.clear();
-		return true; 
-	}
+	bool unload();
 };
 #endif

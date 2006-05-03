@@ -161,245 +161,97 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 	return true;
 }
 
+/*
+Сердце Графического движка.
+Отвечает за вывод графичесткого элемента.
+Графических элемент - это полигоны одного объекта, имеющие общий материал.
+*/
 
 void OpenGL_Engine::drawElement(DrawElement &e)
 {
+//  загружает матрицу преобразрвания для объекта (перенос, масштаб, поворот) в глобальых координатах
 	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glLoadMatrixf(e.matrix.a);
 
-	if(e.triangle && e.vertex)
+	if(e.triangle && e.vertex)// если есть полигоны и вершины
 	{
-		Material *m = e.material;
+		Material *m = e.material; // получаем материал
 		if(m != NULL)
 		{
+			// загружаем вершины объекта
+			bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3);
+			glVertexPointer(3, GL_FLOAT, 0, 0);
 
-//		glPushClientAttrib  ( GL_CLIENT_VERTEX_ARRAY_BIT );
+			// загружаем нормали объекта
+			bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3);
+			glNormalPointer(GL_FLOAT, 0, 0);
 
-		bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3);
-		glVertexPointer(3, GL_FLOAT, 0, 0);
+			int texCount = m->map.size();
 
-//		glEnableClientState(GL_VERTEX_ARRAY);
-//		glVertexPointer(3, GL_FLOAT, 12 /* sizeof(v3)*/ , &e.vertex->front());
-
-		int texCount = m->map.size();
-
-//	    glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
-		
-		for(int i=0; i<texCount; i++)
-		{
-			Map map = m->map[i];
-
-			glActiveTextureARB(GL_TEXTURE0_ARB + i);
-			glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
-
-			if(map.kind == MapKind::color_map)
+			// идём по всем картам
+			for(int i=0; i<texCount; i++)
 			{
-				bindTexture(map.texture); // 1,2,3D, Cube (auto detect from Image)
-				bind(e.mapCoords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2);
-				glTexCoordPointer(2, GL_FLOAT, 0,0);
-	//			glTexCoordPointer(2, GL_FLOAT, 8, &(e.mapCoords->mapCoords2f->front()));
-			}
-			if(map.kind == MapKind::env)
-			{
-				bindTexture(map.texture); // 1,2,3D, Cube (auto detect from Image)
+				Map map = m->map[i]; // текущая картв
 
-				glTexGeni ( GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
-			    glTexGeni ( GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
-				glTexGeni ( GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+				glActiveTextureARB(GL_TEXTURE0_ARB + i);
+				glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
 
-			    glEnable  ( GL_TEXTURE_GEN_S );
-			    glEnable  ( GL_TEXTURE_GEN_T );
-				glEnable  ( GL_TEXTURE_GEN_R );
-			}
-
-			if(map.kind == MapKind::color)
-				glColor4f(map.color.x, map.color.y, map.color.z, map.color.w);
-
-			GLint mode = GL_REPLACE;
-			if(map.mode == MapMode::mul) mode = GL_BLEND;
-
-			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-		}
-
-		bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3);
-		glNormalPointer(GL_FLOAT, 0, 0);
-
-
-		bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3); 
-		glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
-
-//		glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &(e.triangle->data.front()));
-
-		glDisableClientState(GL_VERTEX_ARRAY);
-
-		for(int i=0; i<texCount; i++)
-		{
-			glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
-			glActiveTextureARB(GL_TEXTURE0_ARB + i);
-			glDisable(GL_TEXTURE_2D);// TODO
-			glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-			glDisable( GL_TEXTURE_GEN_S );
-		    glDisable( GL_TEXTURE_GEN_T );
-			glDisable( GL_TEXTURE_GEN_R );
-
-			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		}
-//	glPopClientAttrib ();
-		glActiveTextureARB(GL_TEXTURE0_ARB);
-		glClientActiveTextureARB(GL_TEXTURE0_ARB);
-		}
-
-/*		bool alpha = conf->geti("drawAlpha") == 2 && m->gets("color_mode") == "alpha";
-
-		GLuint colorMap = 0;
-		if(m->isset("color_map"))
-			colorMap = getTexture(m->gets("color_map"));
-
-		GLuint normalMap = 0;
-		if(m->isset("normal_map"))
-			normalMap = getNormalMap(m->gets("normal_map"));
-
-		GLuint illuminateMap = 0;
-		if(m->isset("illuminate_map"))
-			illuminateMap = getTexture(m->gets("illuminate_map"));
-
-		GLuint cubeMap = 0;
-		if(m->isset("reflect_map"))
-			cubeMap = getCubeMap(m->gets("reflect_map"));
-		
-		int tex = 0;
-
-		glDepthFunc(GL_LEQUAL); 
-
-		glDisable(GL_BLEND);
-
-		if(!alpha)
-		for(Lights::iterator it = light.begin(); it != light.end(); it++)
-		{
-				bool blend = false;
-				if(alpha) // TODO - alpha + lights
-				{
-					glBlendFunc(GL_ONE, GL_ONE);
-					glEnable(GL_BLEND);
-					blend = true;
+				if(map.kind == MapKind::color_map) // обычная текстура
+				{	// загружем текстуру
+					bindTexture(map.texture); // 2D texture (auto detect from Image)
+					// загружаем тектурные координаты
+					bind(e.mapCoords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2);
+					glTexCoordPointer(2, GL_FLOAT, 0,0);
 				}
-				else
-				if(tex>0) // blend - mult
-				{
-					glBlendFunc(GL_ONE, GL_ONE);
-					glEnable(GL_BLEND);
-					blend = true;
+				if(map.kind == MapKind::env) // карта отражения
+				{ // загружаем текстуру
+					bindTexture(map.texture); // Cube texture (auto detect from Image)
+					// TODO: в этом месте тектурные координаты должны генерированться сами
+					//  шейдером или еще чем-либо
+					glTexGeni ( GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+				    glTexGeni ( GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+					glTexGeni ( GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+
+					glEnable  ( GL_TEXTURE_GEN_S );
+					glEnable  ( GL_TEXTURE_GEN_T );
+					glEnable  ( GL_TEXTURE_GEN_R );
 				}
 
-				if(normalMap>0 && conf->geti("drawBump"))
-				{
-					drawBump(e, normalMap, e.matrix, it->pos);
-					tex++;
-				}
-				else if(e.mapcoord && colorMap>0 && conf->geti("drawLight") ) // Light map (Diffuse)
-				{
-					if(drawDiffuse(e, e.matrix, it->pos))
-						tex++;
-				}
-	
-				if(blend)
-		            glDisable(GL_BLEND);
+				if(map.kind == MapKind::color) // цвет RGBA
+					glColor4f(map.color.x, map.color.y, map.color.z, map.color.w);
 
-		}
-
-		if(e.mapcoord && colorMap>0  && conf->geti("drawTexture")) // Color map
-		{
-			bool blend = false;
-			if(alpha)
-			{
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//				glBlendFunc(GL_ONE, GL_ONE);
-				glEnable(GL_BLEND);
-				blend = true;
-			}
-			else
-			if(tex>0) // blend - mult
-			{
-				glBlendFunc(GL_DST_COLOR, GL_ZERO);
-				glEnable(GL_BLEND);
-				blend = true;
+				// режим мультитекстурирования
+				GLint mode = GL_REPLACE;
+				if(map.mode == MapMode::mul) mode = GL_BLEND;
+				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 			}
 
-		    glEnable(GL_TEXTURE_2D);
-	        glBindTexture(GL_TEXTURE_2D, colorMap);
-			glTexCoordPointer(2, GL_FLOAT, 2*4, &e.mapcoord->front());
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			drawFaces(e);
-		    glDisable(GL_TEXTURE_2D);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+			// загружаем и ресуем треугольники
+			bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3); 
+			glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
 
-			if(blend)
-	            glDisable(GL_BLEND);
-			tex++;
-		}
+			// откат настроек
+			glDisableClientState(GL_VERTEX_ARRAY);
+			glDisableClientState(GL_NORMAL_ARRAY);
 
-
-/*		if(e.mapcoord && cubeMap==0 && conf->geti("drawLigthDist")) // Distance from light
-		{
-			if(tex>0)
+			for(int i=0; i<texCount; i++)
 			{
-				glDepthFunc(GL_LEQUAL); // For blending
-				glBlendFunc(GL_DST_COLOR, GL_ZERO);
-				glEnable(GL_BLEND);
+				glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
+				glActiveTextureARB(GL_TEXTURE0_ARB + i);
+				glDisable(GL_TEXTURE_2D);// TODO
+				glDisable(GL_TEXTURE_CUBE_MAP_ARB);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+				glDisable( GL_TEXTURE_GEN_S );
+				glDisable( GL_TEXTURE_GEN_T );
+				glDisable( GL_TEXTURE_GEN_R );
+
+				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			}
-
-			drawDistColor(e, e.matrix, light[0].pos, light[0].range);
-
-			if(tex>0)
-	            glDisable(GL_BLEND);
-
-			tex++;
-		}
-*/
-
-/*		glDisable(GL_BLEND);
-		if(e.mapcoord && illuminateMap>0 && conf->geti("drawIlluminate"))
-		{
-			if(tex>0) // blend - additive
-			{
-				glDepthFunc(GL_LEQUAL); // For blending
-				glBlendFunc(GL_ONE, GL_ONE);
-				glEnable(GL_BLEND);
-			}
-
-		    glEnable(GL_TEXTURE_2D);
-	        glBindTexture(GL_TEXTURE_2D, illuminateMap);
-			glTexCoordPointer(2, GL_FLOAT, 2*4, &e.mapcoord->front());
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-			drawFaces(e);
-
-		    glDisable(GL_TEXTURE_2D);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-			
-			if(tex>0)
-				glDisable(GL_BLEND);
-
-			tex++;
+			glActiveTextureARB(GL_TEXTURE0_ARB);
+			glClientActiveTextureARB(GL_TEXTURE0_ARB);
 		}
 
-		if(cubeMap>0 && conf->geti("drawReflect"))
-		{
-			if(tex>0)
-			{
-				glDepthFunc(GL_LEQUAL); // For blending
-				glBlendFunc(GL_ONE, GL_ONE);
-				glEnable(GL_BLEND);
-			}
-			drawReflect(e, cubeMap, e.matrix, camera.eye);
-			if(tex>0)
-				glDisable(GL_BLEND);
-
-			tex++;
-		}
-*/
 		if(conf->geti("drawWire"))
 		{
 			glEnableClientState(GL_VERTEX_ARRAY);
@@ -422,7 +274,6 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 	if(conf->geti("drawAABB", 0))
 		drawAABB(e, e.matrix);
-
 }
 
 

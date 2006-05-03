@@ -37,8 +37,13 @@ class Game; // forward declaration, cross-use
 class Game: public steelAbstract
 {
 protected:
-	double speed, time, moveSpeed;
-	bool _alive;
+// Camera
+	v3	eye, direction;
+	steel::time speed, time;
+	coord accSpeed, brakeSpeed;
+	v4 moveSpeed;
+
+	bool _alive, paused;
 //  Input-Output 
 	ResCollection	*res;
 	Input		*input;
@@ -51,8 +56,6 @@ protected:
 /*	std::vector<GraphInterface*> gobj;
 	std::vector<PhysicInterface*> pobj;*/
 
-// Camera
-	v3	eye, direction;
 
 
 public:

@@ -17,15 +17,12 @@ bool ParticleSystem::init(ScriptLine &s, ResCollection &_res)
 	m = (Material*)res->add(Res::material, conf->gets("material"));
 	if(!m) return false;
 
-	float size = conf->getf("size");
-
 	sprite.resize(cnt);
 	particle.resize(cnt);
 
 	for(int i=0; i<cnt; i++)
 	{
-		sprite[i].size = size;
-		born(i);
+		particle[i].alive = false;
 	}
 	zedAlign = true;
 	initSprites();
@@ -38,33 +35,55 @@ void ParticleSystem::process(steel::time curTime, steel::time frameLength, Physi
 {
 	int cnt = particle.size();
 
+	int limit = frameLength * (float)conf->geti("count")/((conf->getf("maxlifetime")+	conf->getf("minlifetime"))*0.5f) + 1;
+
 	for(int i=0; i<cnt; i++)
 	{
 		particle[i].position += particle[i].velocity * (float)frameLength;
-		particle[i].lifetime -= (float)frameLength;
-		if(particle[i].lifetime < 0)
-			born(i);
+		if(particle[i].endTime< curTime) particle[i].alive = false;
+
+		if(!particle[i].alive && limit>0)
+		{
+			born(i, curTime, frameLength);
+			limit--;
+		}
 	}
 }
 
 
-void ParticleSystem::born(int i)
+void ParticleSystem::born(int i, steel::time curTime, steel::time frameLength)
 {
-	coord speed = conf->getf("speed"),		life = conf->getf("lifetime");
+	v3	dir = conf->getv3("direction");
+
+	dir.rotateZ(conf->getf("angle1")*G_PI * prand());
+	dir.rotateAxis(conf->getf("angle2")*G_PI * prand(), v3( -dir.y, dir.x, 0));
+
+	v3	sp = dir*(conf->getf("minspeed") + frand()*(conf->getf("maxspeed") - conf->getf("minspeed")));
 
 	matrix44 global = getParent()->getGlobalMatrix();
 	v3 globalVelocity  = getParent()->getGlobalVelocity();
 
-	particle[i].position = global * v3(0,0,0);
-	particle[i].velocity = globalVelocity  + v3(speed*(frand()-0.5f), speed*(frand()-0.5f), speed*(frand()-0.5f));
-	particle[i].lifetime = frand()*life;
+	v3 initPosDelta = conf->getv3("initPosDelta");
+	particle[i].position = global * v3(prand()*initPosDelta.x, prand()*initPosDelta.y, prand()*initPosDelta.z);
+	
+	particle[i].velocity = globalVelocity * conf->getf("parentSpeedK")  + sp;
+
+	particle[i].startTime = (float)curTime;
+	particle[i].endTime = (float)curTime + conf->getf("minlifetime") + frand()*(conf->getf("maxlifetime") - conf->getf("minlifetime"));
+	particle[i].size = conf->getf("size");
+
+	particle[i].alive = true;
 }
 
 void ParticleSystem::processGraph(v3	cameraEye)
 {
 	int cnt = particle.size();
+
 	for(int i=0; i<cnt; i++)
+	{
 		sprite[i].pos = particle[i].position;
+		sprite[i].size = particle[i].alive?particle[i].size:0;
+	}
 
 	SpriteSystem::processGraph(cameraEye);
 }
