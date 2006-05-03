@@ -134,7 +134,11 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 		return false;
 	}
 
-	world = new GameGroup(Interface::global, PhysicInterface::none);
+	world = new GameGroup();
+	world->setProcessKind(PhysicInterface::none);
+	
+//	Interface::global, 
+
 	if(!world->load(conf->gets("script"), res)) return false;
 
 	_alive = true;

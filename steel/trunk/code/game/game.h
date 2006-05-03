@@ -19,6 +19,7 @@
 #include "../res/res.h"
 
 #include "game_obj.h"
+#include "objects/group.h"
 
 #include "../physic/physic_engine.h"
 #include "../graph/graph_engine.h"

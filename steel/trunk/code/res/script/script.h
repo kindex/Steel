@@ -23,7 +23,10 @@ public:
 			return defaults;
 	}
 
+	// вернуть всю строку
 	std::string getstr() { return str; }
+	// вернуть всю строку начиная с n-того элемента
+//	std::string getstr(int n) { return el_s.g; }
 
 	int count() { return el_s.size(); }
 
@@ -49,6 +52,7 @@ public:
 	float	getf(unsigned int n, unsigned int m, float defaults = 0.0f) { return line[n].getf(m, defaults); } 
 
 	bool unload() { return true; } 
+	ScriptLine &get(unsigned int n) { return line[n]; }
 };
 
 #endif

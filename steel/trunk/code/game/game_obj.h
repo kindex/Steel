@@ -33,13 +33,13 @@
 class GameObj: public virtual GraphInterface, public virtual PhysicInterface // Abstract
 {
 public:
-	GameObj *parent;
+	GameObj			*parent;
 	std::vector<GameObj*> children;
-	v3 velocity;
-	coord mass;
-	matrix44 matrix;
+	v3			velocity;
+	coord		mass;
+	matrix44	matrix;
 	bool movable, rotatable;
-	std::string name;
+	std::string		name;
 	ProcessKind		processKind;
 	PositionKind	positionKind;
 
@@ -47,15 +47,27 @@ protected:
 	std::map<std::string, GameObj*>	tag;
 
 public:
-	GameObj(const PositionKind _pos, const ProcessKind _process)
+	GameObj()
 	{
 		movable = false;
 		rotatable = false;
 		parent	= false;
-		processKind	= _process;
-		positionKind = _pos;
+		processKind	= PhysicInterface::none;
+		positionKind = local;
 	}
-	ProcessKind getProcessKind() { return processKind; }
+	PositionKind	getPositionKind(){	return positionKind;}
+	ProcessKind		getProcessKind() { return processKind; }
+	void			setProcessKind(const PhysicInterface::ProcessKind _kind) { processKind = _kind; }
+	virtual	bool	init(ScriptLine	&s, ResCollection &res)
+	{
+		setPosition(v3(s.getf(4, 0.0f), s.getf(5, 0.0f), s.getf(6, 0.0f)));
+		return true;
+	}
+	GameObj *findChildren(std::string name)
+	{
+		if(tag.find(name) != tag.end()) return tag[name]; else return NULL;
+	}
+
 
 	std::string getName() { return name; }
 	void setName(std::string _name) { name = _name;}
@@ -72,10 +84,6 @@ public:
 	matrix44 getMatrix()	
 	{		
 		return matrix;	
-	}
-	PositionKind	getPositionKind()
-	{
-		return positionKind;
 	}
 
 	void	setMatrix(matrix44 const &m) { matrix = m; } 
@@ -141,11 +149,13 @@ public:
 	{
 		m = M;
 	}
-	GameObjModel(const PositionKind _pos, const ProcessKind _process, Model *M): 
-		GameObj(_pos, _process)
+	GameObjModel()
 	{ 
-		assignModel(M);
+		m = NULL;
 	}
+	bool	init(ScriptLine	&s, ResCollection &res);
+
+
 	uid		getId() { return m->getId(); }
 	aabb getFrame()	
 	{		
@@ -199,6 +209,7 @@ public:
 	{
 		return m->getMapCoords();
 	}
+//	bool	init(ScriptLine	&line)
 
 };
 
@@ -209,11 +220,6 @@ Dummy. Обхект, который имеет положение и детей, но не имеет собственной формы.
 class GameObjDummy: public GameObj
 {
 public:
-	GameObjDummy(const PositionKind _pos, const ProcessKind _process): 
-		GameObj(_pos, _process)
-		{ }
-
-
 	uid			getId()			{	return 0;		}
 	aabb		getPFrame()		{	return getFrame(); }
 	aabb		getFrame()		{	return aabb();	}
@@ -235,51 +241,17 @@ public:
 class GameTag: public GameObjDummy
 {
 public:
-	GameTag(const PositionKind _pos, const ProcessKind _process): 
-		GameObjDummy(_pos, _process)
-		{ }
 
 };
 
-/*
-Path. Метка, которя движется по траектории от объекта к объекту.
-*/
-/*class GamePath: public GameObjDummy
-{
-	int currentTarget;
-	std::vector<std::string> target;
-	coord speed;
-public:
-//	GamePath() { currentTarget = 0; speed = 1.0; }
-	void addTarget(std::string _target) { target.push_back(_target); }
-	bool getTarget(v3 &targetPoint, coord &_speed);
-	void setTargetReached()
-	{
-		if(!target.empty())
-			currentTarget = (currentTarget + 1)%target.size();
-	}
-	void setSpeed(coord	_speed) { speed = _speed; }
-};*/
-/*
-Path. Метка, скорость которой рассчитывает диффуром.
-*/
-
-class GameDynPath: public GameObjDummy
-{
-public:
-	GameDynPath(const PositionKind _pos, const ProcessKind _process): GameObjDummy(Interface::local, PhysicInterface::custom)	{}
-	
-	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine);
-};
 
 
 /*
 Источник освещения.
 */
-class GameLight: public GameObjDummy
+/*class GameLight: public GameObjDummy
 {
 public:
-	GameLight(): GameObjDummy(Interface::local, PhysicInterface::none){ }
 
 	Lights* getLights()
 	{
@@ -288,7 +260,7 @@ public:
 		a->operator [](0).range = 1000;
 		return a;
 	}
-};
+};*/
 
 /*
 Контейнер для других объектов.
@@ -301,23 +273,7 @@ public:
 
 };
 */
-/*
-Контейнер для других объектов.
-К нему прикрепляются другие объекты и движутся как единое целое.
-Если на какого-нибудь из детей дествует сила, большая чем
-сила связи, то объект отделяется от группы и передаётся предку группы.
 
-Все имена (идентификаторы внутри группы уникальны, и не конфлинтуют с
-другими группами.
-*/
-
-class GameGroup: public GameObjDummy
-{
-public:
-	GameGroup(const Interface::PositionKind _pos, const ProcessKind _process): GameObjDummy(_pos, _process) { }
-
-	bool load(std::string script, ResCollection *res);
-};
 
 /*
 1 Sprite

@@ -681,6 +681,30 @@
 				<Filter
 					Name="objects"
 					>
+					<File
+						RelativePath=".\game\objects\custom_path.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\custom_path.h"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\group.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\group.h"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\path.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\path.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

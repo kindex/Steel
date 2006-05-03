@@ -21,7 +21,7 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 		if(kind == PhysicInterface::custom)
 		{
 			v3 p = o.getPosition();
-			p += o.getVelocity()*time;
+			p += o.getVelocity()*(float)time;
 			o.setPosition(p);
 		}
 		if(kind == PhysicInterface::uni)

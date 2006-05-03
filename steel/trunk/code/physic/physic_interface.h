@@ -70,11 +70,6 @@ getPVertexes возвращ€ет координаты точек в системе координат getPMatrix*/
 	// масса
 	virtual	coord	getMass() = 0;
 
-// если объект хочет двигатьс€ к другому объекту, то он возвращ€ет true 
-// и локальные координаты цели движени€
-	virtual bool	getTarget(v3 &targetPoint, coord &speed) = 0;
-// если цель достигнута, то вызываетс€ эта функци€
-	virtual void	setTargetReached() = 0;
 // уникальный идентификатор объекта или пуста€ строка
 	virtual std::string getName() = 0;
 	
