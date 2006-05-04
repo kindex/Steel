@@ -16,8 +16,8 @@
 class GameGroup: public GameObjDummy
 {
 public:
-
-	bool load(std::string script, ResCollection *res);
+	bool init(ScriptLine	&s,		ResCollection &res);
+	bool load(std::string script,	ResCollection *res);
 };
 
 #endif

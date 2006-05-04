@@ -9,6 +9,17 @@ struct sprite_t
 	coord	size;
 };
 
+namespace SpriteAlign
+{
+	typedef	enum
+	{
+		camera,
+		z,
+		screen,
+		custom
+	} SpriteAlign;
+}
+
 class SpriteSystem: public GameObjDummy
 {
 protected:
@@ -21,7 +32,8 @@ protected:
 	MapCoords	mapCoords;
 	Normals		normal;
 	v3			eye;
-	bool	zedAlign;
+	SpriteAlign::SpriteAlign	align;
+	v3			customAlign;
 public:
 	SpriteSystem() {}
 

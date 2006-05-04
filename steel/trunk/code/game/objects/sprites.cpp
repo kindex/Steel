@@ -13,13 +13,23 @@ bool Sprite::init(ScriptLine &s, ResCollection &_res)
 	m = (Material*)res->add(Res::material, s.gets(3));
 	if(!m) return false;
 
+	string salign = s.gets(7, "screen"); // align;
+	if(salign == "screen")	align = SpriteAlign::screen; else
+	if(salign == "z")		align = SpriteAlign::z; else
+	if(salign == "camera")	align = SpriteAlign::camera;
+	else 
+	{
+		customAlign = s.getv3(7);
+		if(customAlign.getSquaredLength()<EPSILON)	return false;
+		align = SpriteAlign::custom;
+	}
+
 	sprite.resize(1);
 	for(unsigned int i=0; i<sprite.size(); i++)
 	{
 		sprite[i].pos = v3(0, 0, 0);
-		sprite[i].size = s.getf(7, 1);
+		sprite[i].size = s.getf(8, 1);
 	}
-	zedAlign = true;
 	initSprites();
 	return true;
 }
@@ -72,7 +82,17 @@ void SpriteSystem::processGraph(v3	cameraEye, v3 cameraDirection)
 	{
 		int i4 = i*4;
 		v3 &pos = sprite[i].pos;
-		v3 dir = -cameraDirection;
+
+		v3 dir;
+
+		switch(align)
+		{
+			case SpriteAlign::screen: dir = -cameraDirection; break;
+			case SpriteAlign::camera: dir = cameraEye - pos; break;
+			case SpriteAlign::z: dir = cameraEye - pos; dir.z = 0; break;
+			case SpriteAlign::custom: dir = customAlign; break;
+		}
+
 
 		dir.normalize();
 		v3 per1(-dir.y, dir.x, 0); // перендикул€р к dir

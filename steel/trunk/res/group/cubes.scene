@@ -18,11 +18,15 @@ tag		tag25		-1	1	1
 tag		tag26		-1	-1	1
 tag		tag27		1	-1	1
 
-path		path3	2	tag27	tag26	tag25	tag24	tag23	tag22
+path		path3	tag27	3	0	tag26	3	0	tag25	3	0	tag24	3	0	tag23	3	0	tag22	3	0	
 
 solid	path3	2	box/box1	0.0	0.0	0.0
 
-light		light1	-	0.0	0.0	1.2
+ps	2	ps1	particle_system/ps_black	0	0	0
+ps	2	ps2	particle_system/ps	0	0	0
+
+
+//light		light1	-	0.0	0.0	1.2
 //light	path3	light2	-	0.0	0.0	0.0
 
 //tag	path3	camera.eye	-	0.0	0.0	2.0

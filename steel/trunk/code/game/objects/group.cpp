@@ -15,6 +15,12 @@ using namespace std;
 		obj->setProcessKind(PROCESS_KIND);		\
 	}
 
+bool GameGroup::init(ScriptLine	&s, ResCollection &res)
+{
+	if(s.count()<4) return false;
+	if(!GameObj::init(s, res)) return false;
+	return load(s.gets(3), &res);
+}
 
 bool GameGroup::load(string script, ResCollection *res)
 {
@@ -37,115 +43,40 @@ bool GameGroup::load(string script, ResCollection *res)
 
 //		CHECK_KIND("light", GameLight, PhysicInterface::none);
 
+		// —тандартна€ строка настройки
+		// KIND	parent	id	CONF	X	Y	Z	Z-Angle	Scale
+		// KIND = (solid|custom|path|sprite|ps|include|rag)
+		// CONF - файл с конфигом, дл€ solid это модель
+
 		// Solid model object, cannot move
 		CHECK_KIND("solid", GameObjModel, ProcessKind::none);
-		// объект, который движетс€ по своим законам
-		CHECK_KIND("custom", CustomPath, ProcessKind::custom);
-		// путь по контрольным точкам
-		CHECK_KIND("path", TagPath, ProcessKind::custom);
-
 		// метка в простнанстве, не рисуетс€
 		CHECK_KIND("tag", GameTag, ProcessKind::none);
-
+		//"ps"		parent	id	CONF	X	Y	Z	Angle	Scale
+		CHECK_KIND("ps", ParticleSystem, ProcessKind::custom);
+		//"include"	parent	id	CONF	X	Y	Z	Angle	Scale
+		CHECK_KIND("include", GameGroup, ProcessKind::none);
+		// "sprite"	parent	id	MATERIAL	X	Y	Z	ALIGN	Scale(Sprite Size)
+		// ALIGN =  (z|camera|screen|X,Y,Z), default screen
+		// z - спарйт выровнен вертикально (в локальной системе координат) и повЄрнут к камере
+		// camera - смотрит врегда в центр камеры
+		// screen - стороны выровнены по сторонам экрана
+		// X,Y,Z - вектор, указывающий направление спрайта (не зависит от положени€ камеры)
 		CHECK_KIND("sprite", Sprite, ProcessKind::none);
 		
-		CHECK_KIND("ps", ParticleSystem, ProcessKind::custom);
+		// объект, который движетс€ по своим законам
+		// TODO правила движени€ - дифур
+		CHECK_KIND("custom", CustomPath, ProcessKind::custom);
 
+		// путь по контрольным точкам
+		//"path"		id	{tag	speed	smooth}
+		// метка, котора€ движетс€ по зацикленной траектории по контрольным точкам
+		// {tag	speed	smooth} - така€ тройка указывает каждую контрольную точку и может повтор€тьс€ много раз в строке
+		// tag - id объекта
+		// speed - скорость движени€ к следующей метке. ≈сли траектори€ не должны быть зацикленной, то можно указать скорость 0 - тогда движение остановитс€
+		// smooth - радиус закруглени€ дл€ перехода к следующей метке, плано интерполируютс€ скорости
+		CHECK_KIND("path", TagPath, ProcessKind::custom);
 
-		/*			gameobj = true;
-			g = true;
-		}
-*/
-/*		if(kind == "g" || kind == "solid" || kind == "f")
-		{
-			if(!res->add(Res::model, model)) return false;
-
-			ProcessKind pkind = PhysicInterface::uni;
-			if(kind == "solid")pkind = PhysicInterface::none;
-
-			obj = new GameObjModel(local, pkind, (Model*)res->getModel(model));
-
-			obj->setMovable(kind != "solid");
-			obj->setRotatable(kind != "solid");
-
-			g = true;
-			if(kind == "f" || kind == "solid")
-				p = true;
-
-			gameobj = true;
-		}
-		if(kind == "tag")
-		{
-			obj = new GameTag(local, PhysicInterface::none);
-			g = true;
-			p = true;
-			gameobj = true;
-		}*/
-
-/*		if(kind == "path")
-		{
-			obj = new GamePath();
-			
-			((GamePath*)obj)->setSpeed(s->getf(i, 3));
-
-//			obj->setPosition(tag[s->gets(i, 4)]->getPosition());
-
-			for(int j=4; j<s->count(i); j++)
-				((GamePath*)obj)->addTarget(s->gets(i, j));
-
-			g = true;
-			p = true;
-		}
-*/
-/*		if(kind == "dynpath")
-		{
-			obj = new CustomPath();
-			
-//			((GamePath*)obj)->setSpeed(s->getf(i, 3));
-
-//			obj->setPosition(tag[s->gets(i, 4)]->getPosition());
-
-//			for(int j=4; j<s->count(i); j++)
-//				((GamePath*)obj)->addTarget(s->gets(i, j));
-
-			g = true;
-			p = true;
-		}
-*/
-
-/*		if(kind == "include")
-		{
-			obj = new GameGroup(local, PhysicInterface::none);
-			
-			if(!((GameGroup*)obj)->load(model, res)) return false;
-
-			g = true;
-			p = true;
-			gameobj = true;
-		}
-*/
-
-/*		if(kind == "sprite")
-		{
-			res->add(Res::config, "material/" + model);
-			obj = new GameSprite(s->getf(i, 7), model);
-			g = true;
-			gameobj = true;
-		}
-*/
-/*		if(kind == "ps")
-		{
-			Config *c = (Config*)res->add(Res::config, "particle_system/" + model);
-			if(!c)
-			{
-				alog.msg("error game res", "Cannot load particle system config");
-				return false;
-			}
-			obj = new GameParticleSystem(c, res);
-			g = true;
-			gameobj = true;
-		}
-*/
 
 		if(obj)
 		if(parent == "")

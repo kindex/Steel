@@ -5,6 +5,23 @@
 
 using namespace std;
 
+bool	GameObj::init(ScriptLine	&s, ResCollection &res)
+{
+	matrix.loadIdentity();
+
+	matrix.setTranslation(v3(s.getf(4, 0.0f), s.getf(5, 0.0f), s.getf(6, 0.0f)));
+	matrix.setRotationZ(s.getf(7, 0.0f));
+	float scale = s.getf(8, 1.0f);
+	if(scale<=0) scale = 1.0f;
+	
+	for(int i=0; i<3; i++)
+		for(int j=0; j<3; j++)
+			matrix.a[i+j*4] *= scale;
+
+	return true;
+}
+
+
 matrix44	GameObj::getGlobalMatrix()
 {
 	if(getPositionKind() == Interface::global)

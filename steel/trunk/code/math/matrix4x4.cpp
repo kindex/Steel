@@ -583,15 +583,11 @@ matrix44 matrix44::getAffineInverseTranspose(void) const
 
 void matrix44::setTranslation(const v3 & translation)
 {
-	loadIdentity();
-
 	setTranslationPart(translation);
 }
 
 void matrix44::setScale(const v3 & scaleFactor)
 {
-	loadIdentity();
-
 	a[0] = scaleFactor.x;
 	a[5] = scaleFactor.y;
 	a[10]= scaleFactor.z;
@@ -599,8 +595,6 @@ void matrix44::setScale(const v3 & scaleFactor)
 
 void matrix44::setUniformScale(const float scaleFactor)
 {
-	loadIdentity();
-
 	a[0] = a[5] = a[10] = scaleFactor;
 }
 
@@ -608,8 +602,8 @@ void matrix44::setRotationAxis(const double angle, const v3 & axis)
 {
 	v3 u = axis.getNormalized();
 
-	float sinAngle=(float)sin(M_PI*angle/180);
-	float cosAngle=(float)cos(M_PI*angle/180);
+	float sinAngle=(float)sin(angle);
+	float cosAngle=(float)cos(angle);
 	float oneMinusCosAngle=1.0f-cosAngle;
 
 	loadIdentity();
@@ -652,10 +646,8 @@ void matrix44::setRotationAxis(const coord sinAngle, const coord cosAngle,const 
 
 void matrix44::setRotationX(const double angle)
 {
-	loadIdentity();
-
-	a[5]=(float)cos(M_PI*angle/180);
-	a[6]=(float)sin(M_PI*angle/180);
+	a[5]=(float)cos(angle);
+	a[6]=(float)sin(angle);
 
 	a[9]=-a[6];
 	a[10]=a[5];
@@ -663,10 +655,8 @@ void matrix44::setRotationX(const double angle)
 
 void matrix44::setRotationY(const double angle)
 {
-	loadIdentity();
-
-	a[0] =  (float)cos(M_PI*angle/180);
-	a[2] = -(float)sin(M_PI*angle/180);
+	a[0] =  (float)cos(angle);
+	a[2] = -(float)sin(angle);
 
 	a[8] = -a[2];
 	a[10]=  a[0];
@@ -674,10 +664,8 @@ void matrix44::setRotationY(const double angle)
 
 void matrix44::setRotationZ(const double angle)
 {
-	loadIdentity();
-
-	a[0] = (float)cos(M_PI*angle/180);
-	a[1] = (float)sin(M_PI*angle/180);
+	a[0] = (float)cos(angle);
+	a[1] = (float)sin(angle);
 
 	a[4] = -a[1];
 	a[5] =  a[0];
@@ -685,8 +673,6 @@ void matrix44::setRotationZ(const double angle)
 
 void matrix44::setRotationEuler(const double angleX, const double angleY, const double angleZ)
 {
-	loadIdentity();
-
 	setRotationPartEuler(angleX, angleY, angleZ);
 }
 
@@ -734,7 +720,7 @@ void matrix44::setPerspective(float fovy, float aspect, float n, float f)
 	float left, right, top, bottom;
 
 	//convert fov from degrees to radians
-	fovy*=(float)M_PI/180;
+//	fovy*=(float)M_PI/180;
 
 	top=n*tan(fovy/2.0f);
 	bottom=-top;
@@ -770,12 +756,12 @@ void matrix44::setTranslationPart(const v3 & translation)
 
 void matrix44::setRotationPartEuler(const double angleX, const double angleY, const double angleZ)
 {
-	double cr = cos( M_PI*angleX/180 );
-	double sr = sin( M_PI*angleX/180 );
-	double cp = cos( M_PI*angleY/180 );
-	double sp = sin( M_PI*angleY/180 );
-	double cy = cos( M_PI*angleZ/180 );
-	double sy = sin( M_PI*angleZ/180 );
+	double cr = cos( angleX );
+	double sr = sin( angleX );
+	double cp = cos( angleY );
+	double sp = sin( angleY );
+	double cy = cos( angleZ );
+	double sy = sin( angleZ );
 
 	a[0] = ( float )( cp*cy );
 	a[1] = ( float )( cp*sy );

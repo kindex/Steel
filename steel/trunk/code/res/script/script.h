@@ -11,17 +11,12 @@ protected:
 	std::string str;
 	std::vector<std::string> el_s; // element string
 	std::vector<double> el_d; // element double
+	std::vector<v3> el_v3; // element v3
 public:
-	std::string gets(unsigned int n) { return el_s[n];}
-	double getd(unsigned int n) { return el_d[n];}
-	
-	float getf(unsigned int n, float defaults = 0.0f) 
-	{ 
-		if(n<el_d.size())
-			return (float)el_d[n];
-		else
-			return defaults;
-	}
+	std::string gets(unsigned int n, std::string defaults = "");
+	double	getd(unsigned int n) { return el_d[n];}
+	float	getf(unsigned int n, float defaults = 0.0f);
+	v3		getv3(unsigned int n, v3 defaults = v3(0.0f, 0.0f, 0.0f));
 
 	// вернуть всю строку
 	std::string getstr() { return str; }

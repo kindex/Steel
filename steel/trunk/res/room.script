@@ -24,54 +24,13 @@ solid			wall/wall1	0	-20	-1
 
 //f		1	box1	1.0	1.0	0.0
 //f		2	box1	1.0	1.0	2.0
-tag		tag1		4	4 	0
-tag		tag2		-4	4	0
-tag		tag3		-4	-4	0
-tag		tag4		4	-4	0
-tag		tag5		-1	-1	0
-
-//		id	Target	Speed	Smooth
-path		path1	tag1	5	2	tag2	3	0	tag3	10	3	tag4	5	0
 
 //custom		path1		4	4	0
 
-ps	path1	ps1	particle_system/ps_black	0	0	0
-ps	path1	ps2	particle_system/ps	0	0	0
+include			group/main.scene	0	0	0	0	0.2
+include			group/main.scene	0	0	0	0	1
+include			group/main.scene	0	0	4	3.14	1
 
-//sprite		sprite1	box/metal	0	0	4	2
-
-//solid	path1	teapot1	spaceman/spaceman	0	0	0
-
-//solid		teapot1	spaceman/spaceman	4	-5	0
-//solid	path1	box1	box/box1
-
-//path		path1	5	tag2	tag3	tag4	tag5	tag6
-
-//sprite	id	materialX	Y	Z	size
-
-//sprite		sprite1	metal_torus	0.1	-1	0	1
-
-//sprite	path1	sprite2	target	1	-2.3	1.5	0.5
-//sprite	path1	sprite3	target	-1	-2.3	1.5	0.5
-
-//ps	path1	ps1	ps	0	0	0
-
-
-//include	path1	group1	group/cubes.scene	0	0	0
-//include		group2	room/cubes	-1	-1	1
-
-
-//light	path3	light2	-	0.0	0.0	0.0
-
-//tag	path3	camera.eye	-	0.0	0.0	2.0
-//tag	teapot1	camera.target	-	0.0	0.0	0.0
-
-
-//path		path2	30	tag12	tag13	tag14	tag15
-
-//solid	path2	2	box1	0.0	0.0	0.0
-
-                 
-//light	path2	light1	-	0	0	3
-
+//kind	parent	id	CONF	X	Y	Z	Align	Size
+//sprite			box/metal	0	0	3	1,-1,0	2
 

@@ -24,7 +24,7 @@ bool ParticleSystem::init(ScriptLine &s, ResCollection &_res)
 	{
 		particle[i].alive = false;
 	}
-	zedAlign = true;
+	align = SpriteAlign::screen;
 	initSprites();
 
 	return true;
@@ -52,7 +52,7 @@ void ParticleSystem::process(steel::time curTime, steel::time frameLength, Physi
 
 void Particle::process(steel::time curTime, steel::time frameLength)
 {
-	velocity -= velocity*speedDown*frameLength;
+	velocity -= velocity*speedDown*(float)frameLength;
 
 /*	if(velDown>1) velDown = 1;
 	if(velDown<0) velDown = 0;
@@ -66,6 +66,8 @@ void Particle::process(steel::time curTime, steel::time frameLength)
 
 void Particle::born(steel::time curTime, steel::time frameLength, Config *conf, matrix44 global, v3 globalVelocity)
 {
+	float k = v3(global * v3(1, 0, 0) - global * v3(0, 0, 0)).getLength();
+
 	v3	dir = conf->getv3("direction");
 
 	dir.rotateZ(conf->getf("angle1")*G_PI * prand());
@@ -76,13 +78,14 @@ void Particle::born(steel::time curTime, steel::time frameLength, Config *conf, 
 	v3 initPosDelta = conf->getv3("initPosDelta");
 	position = global * v3(prand()*initPosDelta.x, prand()*initPosDelta.y, prand()*initPosDelta.z);
 	
-	velocity = globalVelocity * conf->getf("parentSpeedK")  + sp;
+	velocity = globalVelocity * conf->getf("parentSpeedK")  + sp*k;
 
 	startTime = (float)curTime;
 	endTime = (float)curTime + conf->getf("minlifetime") + frand()*(conf->getf("maxlifetime") - conf->getf("minlifetime"));
-	size = conf->getf("size");
 
-	acc = conf->getv3("acc");
+	size = conf->getf("size") * k;
+
+	acc = conf->getv3("acc")*k;
 	speedDown = conf->getf("speedDown");
 	alive = true;
 }

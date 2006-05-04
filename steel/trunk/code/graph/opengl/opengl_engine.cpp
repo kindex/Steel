@@ -175,9 +175,8 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 {
 //  загружает матрицу преобразрвания для объекта (перенос, масштаб, поворот) в глобальых координатах
 	glMatrixMode(GL_MODELVIEW_MATRIX);
+	glPushMatrix();
 	glLoadMatrixf(e.matrix.a);
-
-
 
 	if(e.triangle && e.vertex)// если есть полигоны и вершины
 	{
@@ -305,6 +304,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 	if(conf->geti("drawAABB", 0))
 		drawAABB(e, e.matrix);
+	glPopMatrix();
 }
 
 

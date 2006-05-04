@@ -58,11 +58,7 @@ public:
 	PositionKind	getPositionKind(){	return positionKind;}
 	ProcessKind::ProcessKind		getProcessKind() { return processKind; }
 	void			setProcessKind(const ProcessKind::ProcessKind _kind) { processKind = _kind; }
-	virtual	bool	init(ScriptLine	&s, ResCollection &res)
-	{
-		setPosition(v3(s.getf(4, 0.0f), s.getf(5, 0.0f), s.getf(6, 0.0f)));
-		return true;
-	}
+	virtual	bool	init(ScriptLine	&s, ResCollection &res);
 	GameObj *findChildren(std::string name)
 	{
 		if(tag.find(name) != tag.end()) return tag[name]; else return NULL;
