@@ -28,6 +28,8 @@ public:
 	bool init(std::string _conf);
 	bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);
 	bool clear();
+
+	bool collisionDetection(Element &el, v3 distance, PElement &second);
 };
 
 

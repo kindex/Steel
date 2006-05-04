@@ -18,6 +18,8 @@ bool	GameObj::init(ScriptLine	&s, ResCollection &res)
 		for(int j=0; j<3; j++)
 			matrix.a[i+j*4] *= scale;
 
+	setVelocity(v3(s.getf(9, 0.0f), s.getf(10, 0.0f), s.getf(11, 0.0f)));
+
 	return true;
 }
 

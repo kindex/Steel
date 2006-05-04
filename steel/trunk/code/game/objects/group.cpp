@@ -44,12 +44,19 @@ bool GameGroup::load(string script, ResCollection *res)
 //		CHECK_KIND("light", GameLight, PhysicInterface::none);
 
 		// Стандартная строка настройки
-		// KIND	parent	id	CONF	X	Y	Z	Z-Angle	Scale
+		// KIND	parent	id	CONF	X	Y	Z	Z-Angle	Scale	Vx	Vy	Vz
 		// KIND = (solid|custom|path|sprite|ps|include|rag)
 		// CONF - файл с конфигом, для solid это модель
+		// XYZ - смещение (default 0 0 0) 
+		// Z-Angle - поворот вокруг оси Z в радианах (default 0)
+		// Scale - масштабирование (default 1)
+		// Vxyz - скорость (default 0 0 0) 
 
 		// Solid model object, cannot move
 		CHECK_KIND("solid", GameObjModel, ProcessKind::none);
+		// Model object, move & collision detection
+		CHECK_KIND("uni", GameObjModel, ProcessKind::uni);
+
 		// метка в простнанстве, не рисуется
 		CHECK_KIND("tag", GameTag, ProcessKind::none);
 		//"ps"		parent	id	CONF	X	Y	Z	Angle	Scale

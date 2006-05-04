@@ -11,28 +11,43 @@
 #include "geometry.h"
 #include "maths.h"
 
-bool intersect(coord a1, coord a2, coord b1, coord b2)
+#include <vector>
+using namespace std;
+
+bool intersect(coord amin, coord amax, coord bmin, coord bmax)
 {
     return
-        (a1<=b1+EPSILON) && (b1<=a2+EPSILON)
+        (amin<=bmin+EPSILON) && (bmin<=amax+EPSILON)
     ||
-        (a1<=b2+EPSILON) && (b2<=a2+EPSILON)
+        (amin<=bmax+EPSILON) && (bmax<=amax+EPSILON)
     ||
-        (b1<=a1+EPSILON) && (a1<=b2+EPSILON)
+        (bmin<=amin+EPSILON) && (amin<=bmax+EPSILON)
     ||
-        (b1<=a2+EPSILON) && (a2<=b2+EPSILON)
+        (bmin<=amax+EPSILON) && (amax<=bmax+EPSILON)
         ;
 }
 
-bool intersect(aabb const &first, aabb const &second)
+bool aabb::intersect(aabb const &second)
 {
     return
-        intersect(first.min.x, first.max.x, second.min.x, second.max.x)
+		::intersect(min.x, max.x, second.min.x, second.max.x)
     &&
-        intersect(first.min.y, first.max.y, second.min.y, second.max.y);
+	::intersect(min.y, max.y, second.min.y, second.max.y)
+	&&
+	::intersect(min.z, max.z, second.min.z, second.max.z);
 }
 
-void aabb::merge(v3 point)
+void aabb::mul(const matrix44 &matrix)
+{
+	vector<v3> v = getVertexes();
+	
+	clear();
+	for(int i=0; i<8; i++)
+		merge(matrix*v[i]);
+}
+
+
+void aabb::merge(const v3 point)
 {
     if (min.x > point.x) min.x = point.x;
     if (min.y > point.y) min.y = point.y;
@@ -43,16 +58,17 @@ void aabb::merge(v3 point)
     if (max.z < point.z) max.z = point.z;
 }
 
-aabb merge(aabb const &first, aabb const &second)
+void aabb::merge(aabb const &second)
 {
-    aabb res;
-    res = first;
-    if (res.min.x < second.min.x) res.min.x = second.min.x;
-    if (res.min.y < second.min.y) res.min.y = second.min.y;
-    if (res.max.x > second.max.x) res.max.x = second.max.x;
-    if (res.max.y > second.max.y) res.max.y = second.max.y;
-    return res;
-}
+	if (min.x > second.min.x) min.x = second.min.x;
+	if (min.y > second.min.y) min.y = second.min.y;
+	if (min.z > second.min.z) min.z = second.min.z;
+
+	if (max.x < second.max.x) max.x = second.max.x;
+	if (max.y < second.max.y) max.y = second.max.y;
+	if (max.z < second.max.z) max.z = second.max.z;
+ }
+
 
 
 // prinadlezhit li to4ka c otrezku (a,a+b)

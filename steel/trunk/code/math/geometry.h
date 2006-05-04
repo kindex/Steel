@@ -18,6 +18,7 @@
 #include "maths.h"
 #include "vector2d.h"
 #include "vector3d.h"
+#include "matrix4x4.h"
 
 // cos(a+b) = cos(a)*cos(b) - sin(a)*sin(b)
 // sin(a+b) = sin(a)*cos(b) + cos(a)*sin(b)
@@ -25,7 +26,10 @@
 struct aabb
 {
     v3 min, max;
-    void merge(v3 point);
+    void merge(const v3 point);
+    void merge(const aabb &second);
+	bool intersect(aabb const &second);
+	void mul(const matrix44 &matrix);
 
 	void clear()
 	{ 
@@ -41,8 +45,6 @@ struct aabb
 	std::vector<v3> getVertexes();
 };
 
-bool intersect(aabb const &first, aabb const &second);
-aabb merge(aabb const &first, aabb const &second);
 
 // otrezok
 struct LineSegment

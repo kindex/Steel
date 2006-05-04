@@ -44,6 +44,7 @@ protected:
 	v4 moveSpeed;
 
 	bool _alive, paused;
+	int framesToPass;
 //  Input-Output 
 	ResCollection	*res;
 	Input		*input;
@@ -51,12 +52,8 @@ protected:
 
 	void processKeyboard();
 
-// World
+// World - all objects
 	GameGroup	*world;
-/*	std::vector<GraphInterface*> gobj;
-	std::vector<PhysicInterface*> pobj;*/
-
-
 
 public:
 	Game() { } 

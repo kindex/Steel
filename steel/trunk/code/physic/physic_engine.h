@@ -23,9 +23,14 @@ class PhysicEngine: public Engine
 protected:
 	struct Element
 	{
-		PhysicInterface	*obj, *parent;
+		PhysicInterface	*object, *parent;
 		matrix44		matrix, parentMatrix; // abloslute
+		Vertexes		*vertex;
+		Triangles		*triangle;
+		aabb			frame;
+		int				collisionCount;
 	};
+	typedef Element* PElement;
 
 	std::vector<Element> element;
 	std::vector<PhysicInterface*> object;

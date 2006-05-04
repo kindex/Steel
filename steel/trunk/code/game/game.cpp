@@ -59,8 +59,12 @@ void Game::process(PhysicEngine *physic, steel::time globalTime, steel::time tim
 	eye += (float)(moveSpeed.w-moveSpeed.z)*(float)speed*d;
 
 
-	if(!paused)
+	if(!paused || framesToPass>0)
+	{
 		physic->process(globalTime, time);
+		if(framesToPass>0) framesToPass--;
+		else framesToPass = 0;
+	}
 }
 
 /*v3	Game::getGlobalPosition(std::string obj)
@@ -149,6 +153,7 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 
 	_alive = true;
 	paused = false;
+	framesToPass = 0;
 	return true;
 }
 
@@ -157,6 +162,7 @@ void Game::handleEventKeyDown(std::string key)
 {
 	if(key == "escape") _alive = false;
 	if(key == "p") paused = !paused;
+	if(key == "n") framesToPass = 1;
 }
 
 void Game::handleEventKeyUp(std::string key)

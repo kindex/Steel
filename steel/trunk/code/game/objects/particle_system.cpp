@@ -66,7 +66,8 @@ void Particle::process(steel::time curTime, steel::time frameLength)
 
 void Particle::born(steel::time curTime, steel::time frameLength, Config *conf, matrix44 global, v3 globalVelocity)
 {
-	float k = v3(global * v3(1, 0, 0) - global * v3(0, 0, 0)).getLength();
+    v3  globalsize = global * v3(1, 0, 0) - global * v3(0, 0, 0);
+	float k = globalsize.getLength();
 
 	v3	dir = conf->getv3("direction");
 

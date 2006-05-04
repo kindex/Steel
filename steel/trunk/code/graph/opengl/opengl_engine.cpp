@@ -660,12 +660,8 @@ void OpenGL_Engine::drawVertexes(DrawElement &e)
 
 void OpenGL_Engine::drawAABB(DrawElement &e, matrix44 matrix)
 {
-	vector<v3> v = e.frame.getVertexes();
-	aabb c;
+	aabb &c = e.frame;
 
-	for(int i=0; i<8; i++)
-		c.merge(matrix*v[i]);
-	
 	glPushMatrix();
 	glLoadIdentity();
 	glBegin(GL_LINES);

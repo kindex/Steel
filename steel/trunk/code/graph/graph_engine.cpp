@@ -33,9 +33,6 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 	if(object == NULL) return false;
 	total.object++;
 
-
-	aabb frame = object->getFrame();
-
 	matrix44 object_matrix = object->getMatrix(); // global 
 
 	Interface::PositionKind pos = object->getPositionKind();
@@ -51,6 +48,10 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 	}
 	else
 		return false;
+
+	aabb frame = object->getFrame();
+	frame.mul(object_matrix);
+
 
 /* TODO: сюда надо поставить проверку, находится ли frame
 внутри пирамиды, которую образует угол обзора камеры.
