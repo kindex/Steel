@@ -35,23 +35,36 @@ void ParticleSystem::process(steel::time curTime, steel::time frameLength, Physi
 {
 	int cnt = particle.size();
 
-	int limit = frameLength * (float)conf->geti("count")/((conf->getf("maxlifetime")+	conf->getf("minlifetime"))*0.5f) + 1;
+	int limit = (int)(((float)frameLength * (float)conf->geti("count")/((conf->getf("maxlifetime")+	conf->getf("minlifetime"))*0.5f) + 1));
 
 	for(int i=0; i<cnt; i++)
 	{
-		particle[i].position += particle[i].velocity * (float)frameLength;
-		if(particle[i].endTime< curTime) particle[i].alive = false;
-
-		if(!particle[i].alive && limit>0)
-		{
-			born(i, curTime, frameLength);
-			limit--;
-		}
+		if(particle[i].alive)
+			particle[i].process(curTime, frameLength);
+		else
+			if(limit>0)
+			{
+				particle[i].born(curTime, frameLength, conf, getParent()->getGlobalMatrix(), getParent()->getGlobalVelocity());
+				limit--;
+			}
 	}
 }
 
+void Particle::process(steel::time curTime, steel::time frameLength)
+{
+	velocity -= velocity*speedDown*frameLength;
 
-void ParticleSystem::born(int i, steel::time curTime, steel::time frameLength)
+/*	if(velDown>1) velDown = 1;
+	if(velDown<0) velDown = 0;
+	velocity *= (1 - velDown);*/
+
+	velocity += acc*(float)frameLength;
+
+	position += velocity * (float)frameLength;
+	if(endTime< curTime) alive = false;
+}
+
+void Particle::born(steel::time curTime, steel::time frameLength, Config *conf, matrix44 global, v3 globalVelocity)
 {
 	v3	dir = conf->getv3("direction");
 
@@ -60,22 +73,21 @@ void ParticleSystem::born(int i, steel::time curTime, steel::time frameLength)
 
 	v3	sp = dir*(conf->getf("minspeed") + frand()*(conf->getf("maxspeed") - conf->getf("minspeed")));
 
-	matrix44 global = getParent()->getGlobalMatrix();
-	v3 globalVelocity  = getParent()->getGlobalVelocity();
-
 	v3 initPosDelta = conf->getv3("initPosDelta");
-	particle[i].position = global * v3(prand()*initPosDelta.x, prand()*initPosDelta.y, prand()*initPosDelta.z);
+	position = global * v3(prand()*initPosDelta.x, prand()*initPosDelta.y, prand()*initPosDelta.z);
 	
-	particle[i].velocity = globalVelocity * conf->getf("parentSpeedK")  + sp;
+	velocity = globalVelocity * conf->getf("parentSpeedK")  + sp;
 
-	particle[i].startTime = (float)curTime;
-	particle[i].endTime = (float)curTime + conf->getf("minlifetime") + frand()*(conf->getf("maxlifetime") - conf->getf("minlifetime"));
-	particle[i].size = conf->getf("size");
+	startTime = (float)curTime;
+	endTime = (float)curTime + conf->getf("minlifetime") + frand()*(conf->getf("maxlifetime") - conf->getf("minlifetime"));
+	size = conf->getf("size");
 
-	particle[i].alive = true;
+	acc = conf->getv3("acc");
+	speedDown = conf->getf("speedDown");
+	alive = true;
 }
 
-void ParticleSystem::processGraph(v3	cameraEye)
+void ParticleSystem::processGraph(v3	cameraEye, v3 cameraDirection)
 {
 	int cnt = particle.size();
 
@@ -85,6 +97,6 @@ void ParticleSystem::processGraph(v3	cameraEye)
 		sprite[i].size = particle[i].alive?particle[i].size:0;
 	}
 
-	SpriteSystem::processGraph(cameraEye);
+	SpriteSystem::processGraph(cameraEye, cameraDirection);
 }
 

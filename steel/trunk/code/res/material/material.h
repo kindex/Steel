@@ -49,6 +49,7 @@ class Material: public Res
 public:
 	Script			*conf;
 	std::vector<Map> map;
+	bool				blend;
 
 	bool init(std::string _conf, ResCollection *res);
 	virtual bool unload() {return true; };

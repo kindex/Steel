@@ -63,18 +63,16 @@ void SpriteSystem::initSprites()
 
 }
 
-void SpriteSystem::processGraph(v3	cameraEye)
+void SpriteSystem::processGraph(v3	cameraEye, v3 cameraDirection)
 {
 	eye = cameraEye;
 
 	int cnt = sprite.size();
 	for(int i=0; i<cnt; i++)
 	{
+		int i4 = i*4;
 		v3 &pos = sprite[i].pos;
-		v3 dir = eye - getMatrix()*pos;
-//		dir = v3(1,0,0);
-
-	//	if(zedAlign)	dir.z = 0;
+		v3 dir = -cameraDirection;
 
 		dir.normalize();
 		v3 per1(-dir.y, dir.x, 0); // перендикул€р к dir
@@ -83,13 +81,15 @@ void SpriteSystem::processGraph(v3	cameraEye)
 		per1 *= sprite[i].size;
 		per2 *= sprite[i].size;
 
-		vertex.data[i*4 + 0]  = pos + per1 - per2;
-		vertex.data[i*4 + 1]  = pos + -per1 - per2;
-		vertex.data[i*4 + 2]  = pos + -per1 + per2;
-		vertex.data[i*4 + 3]  = pos + per1 + per2;
+		vertex.data[i4 + 0]  = pos + per1 - per2;
+		vertex.data[i4 + 1]  = pos + -per1 - per2;
+		vertex.data[i4 + 2]  = pos + -per1 + per2;
+		vertex.data[i4 + 3]  = pos + per1 + per2;
 
-		for(int j=0; j<4; j++)
-			normal.data[i*4 + j] = dir;
+		normal.data[i4 + 0] = dir;
+		normal.data[i4 + 1] = dir;
+		normal.data[i4 + 2] = dir;
+		normal.data[i4 + 3] = dir;
 	}
 }
 

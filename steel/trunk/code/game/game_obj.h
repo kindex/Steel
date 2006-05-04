@@ -139,7 +139,7 @@ public:
 	void	setTargetReached() {}
 
 	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine) {}
-	void	processGraph(v3	cameraEye) {}
+	void	processGraph(v3	cameraEye, v3 cameraDirection) {}
 };
 /*
 Рисуемый объект, GraphMesh и PhysicMesh берутся из модели

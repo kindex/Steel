@@ -43,11 +43,11 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 	{
 		object_matrix = parent_matrix*object_matrix;
 
-		object->processGraph(parent_matrix.getInverse()*camera.eye);
+		object->processGraph(parent_matrix.getInverse()*camera.eye, parent_matrix.getInverse()*(camera.center-camera.eye));
 	}
 	else if(pos == Interface::global) 
 	{
-		object->processGraph(camera.eye);
+		object->processGraph(camera.eye, (camera.center-camera.eye));
 	}
 	else
 		return false;
@@ -103,6 +103,7 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 		element[c].matrix = object_matrix;
 		element[c].normal = n;
 		element[c].frame = frame;
+		element[c].blend = element[c].material->blend;
 
 		total.triangle += s;
 	}

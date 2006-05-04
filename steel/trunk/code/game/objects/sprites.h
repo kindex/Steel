@@ -35,7 +35,7 @@ public:
 
 	void initSprites();
 //	bool cleanup()	{	return true;	}
-	void processGraph(v3	cameraEye);
+	void processGraph(v3	cameraEye, v3 cameraDirection);
 };
 
 class Sprite: public SpriteSystem
@@ -45,3 +45,4 @@ public:
 };
 
 #endif
+

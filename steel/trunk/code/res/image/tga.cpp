@@ -30,12 +30,11 @@ Res* createTGA(const std::string filename, ResCollection *res)
 
 bool TGA::init(const std::string name)
 {  
-	string file = "../res/image/" + name + ".tga";
-	rstream f(file);
+	rstream f;
 
-	if(!f.good())
+	if(!f.open(name, "tga"))
 	{
-		alog.msg("warning res image tga", string("Res/Image/TGA: cannot open file ")+ file.c_str());
+		alog.msg("warning res image tga", string("Res/Image/TGA: cannot open file ")+ name.c_str());
 		return false;
 	}
 

@@ -146,7 +146,11 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 
 	    if(mode) glEnableClientState ( mode );
 		glBindBufferARB(mode2, buf.glid);
-		glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), GL_STATIC_DRAW);
+
+		GLenum usage = GL_STATIC_DRAW;
+		if(v->changed)
+			usage = GL_STREAM_DRAW;
+		glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
 
 		buf.loaded = true;
 		buf.loadCnt++;
@@ -172,6 +176,8 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 //  загружает матрицу преобразрвания для объекта (перенос, масштаб, поворот) в глобальых координатах
 	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glLoadMatrixf(e.matrix.a);
+
+
 
 	if(e.triangle && e.vertex)// если есть полигоны и вершины
 	{
@@ -222,15 +228,39 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 				// режим мультитекстурирования
 				GLint mode = GL_REPLACE;
-				if(map.mode == MapMode::mul) mode = GL_BLEND;
+				if(map.mode == MapMode::mul && i>0) mode = GL_BLEND;
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+			}
+
+			if(e.blend)
+			{
+				glEnable(GL_BLEND);
+				if(m->map[0].texture->getBpp() == 24) // RGB
+				{
+					if(m->map[0].mode == MapMode::add)	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
+					if(m->map[0].mode == MapMode::mul)	glBlendFunc(GL_DST_COLOR, GL_ZERO);
+				}
+				if(m->map[0].texture->getBpp() == 32) // Alpha
+				{
+					if(m->map[0].mode == MapMode::add)	glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_DST_ALPHA); // ?
+					if(m->map[0].mode == MapMode::mul)	glBlendFunc(GL_DST_ALPHA, GL_ZERO);
+				}
+
+//				glDepthFunc(GL_ALWAYS);
+				glDepthMask(0);
 			}
 
 			// загружаем и ресуем треугольники
 			bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3); 
 			glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
 
+			//---------------------------
+			glDepthMask(1);
+
+
 			// откат настроек
+			glDisable(GL_BLEND);
+			glDepthFunc(GL_LESS);
 			glDisableClientState(GL_VERTEX_ARRAY);
 			glDisableClientState(GL_NORMAL_ARRAY);
 
@@ -259,7 +289,8 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			glPolygonMode(GL_BACK, GL_LINE); 
 			glDepthFunc(GL_LEQUAL); // For blending
 	
-//			drawFaces(e);
+			bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3); 
+			glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
 
 			glPolygonMode(GL_FRONT, GL_FILL);    	// Reset Back-Facing Polygon Drawing Mode
 			glDisableClientState(GL_VERTEX_ARRAY);
@@ -689,7 +720,7 @@ bool OpenGL_Engine::process()
 
 // В начале выводим только непрозрачные объекты
 	for(vector<DrawElement>::iterator it = element.begin(); it != element.end(); it++)
-		if(!it->alpha)
+		if(!it->blend)
 			drawElement((*it));
 		else
 		{

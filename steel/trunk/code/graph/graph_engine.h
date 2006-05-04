@@ -61,7 +61,7 @@ protected:
 
 		matrix44	matrix;
 		aabb		frame;
-		bool		alpha; // true if blending
+		bool		blend; // true if blending
 		coord		distance; // расстояние до камеры
 
 		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }

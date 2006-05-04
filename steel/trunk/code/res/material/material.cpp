@@ -26,7 +26,8 @@ bool Material::init(string name, ResCollection *res)
 		return false;
 	} 
 	int lines = conf->count();
-	
+	if(lines == 0) return false;
+
 	map.clear();
 
 	vector<string> path = explode('/', name);
@@ -77,8 +78,8 @@ bool Material::init(string name, ResCollection *res)
 			m.color = v4(conf->getf(i, 2, 0.0f), conf->getf(i, 3, 0.0f), conf->getf(i, 4, 0.0f), conf->getf(i, 5, 1.0f));
 			map.push_back(m);
 		}
-
 	}
+	blend = map[0].mode != MapMode::replace;
 	return true;
 }
 

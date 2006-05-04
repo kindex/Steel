@@ -113,7 +113,7 @@ Video textures (avi, camera)
 	virtual Lights*		getLights() = 0;
 
 	virtual	uid			getId() = 0;
-	virtual	void		processGraph(v3	cameraEye) = 0;
+	virtual	void		processGraph(v3	cameraEye, v3 cameraDirection) = 0;
 };
 
 #endif
