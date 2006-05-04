@@ -40,7 +40,7 @@ public:
 	Vertexes*	getVertexes() { return &vertex; }
 	FaceMaterials* getFaceMaterials() { return &face; }
 	Normals*	getNormals() { return &normal; }
-	MapCoords*	getMapCoords() { return &mapCoords; }
+	MapCoords*	getMapCoords(int mapNumber) { return &mapCoords; }
 
 	aabb getFrame();
 //	PositionKind	getPositionKind(){	return global;}

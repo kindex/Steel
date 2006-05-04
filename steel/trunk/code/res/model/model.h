@@ -53,7 +53,7 @@ public:
 	{
 		return true;
 	}
-	MapCoords	*getMapCoords();
+	MapCoords	*getMapCoords(int mapNumber);
 };
 
 

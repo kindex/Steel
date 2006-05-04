@@ -10,7 +10,7 @@ using namespace std;
 }
 */
 
-MapCoords	*Model::getMapCoords()
+MapCoords	*Model::getMapCoords(int mapNumber)
 {
 	return &mapCoords;
 }

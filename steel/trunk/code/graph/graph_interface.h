@@ -108,7 +108,7 @@ Video textures (avi, camera)
 //	virtual Triangles*	getTriangles() = 0; 
 
 	virtual FaceMaterials* getFaceMaterials() = 0;
-	virtual MapCoords*	getMapCoords() = 0;
+	virtual MapCoords*	getMapCoords(int mapNumber) = 0;
 
 	virtual Lights*		getLights() = 0;
 

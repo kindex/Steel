@@ -410,10 +410,6 @@
 					RelativePath=".\graph\graph_interface.h"
 					>
 				</File>
-				<File
-					RelativePath=".\graph\graph_primitives.h"
-					>
-				</File>
 				<Filter
 					Name="OpenGL"
 					>

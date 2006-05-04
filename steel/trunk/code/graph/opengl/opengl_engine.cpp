@@ -205,8 +205,12 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				{	// загружем текстуру
 					bindTexture(map.texture); // 2D texture (auto detect from Image)
 					// загружаем тектурные координаты
-					bind(e.mapCoords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2);
-					glTexCoordPointer(2, GL_FLOAT, 0,0);
+					MapCoords *coords = e.object->getMapCoords(i);
+					if(coords)
+					{
+						bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2);
+						glTexCoordPointer(2, GL_FLOAT, 0,0);
+					}
 				}
 				if(map.kind == MapKind::env) // карта отражения
 				{ // загружаем текстуру

@@ -52,9 +52,9 @@ class GraphEngine: public Engine
 protected:
 	struct DrawElement // множество треугольников одного материала
 	{
+		GraphInterface *object;
 		Vertexes	*vertex;
 		Triangles	*triangle;
-		MapCoords	*mapCoords;
 		Normals		*normal;
 
 		Material*	material;

@@ -69,7 +69,6 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 	Vertexes	*v = object->getVertexes();
 	Lights		*l = object->getLights();
 	Normals		*n = object->getNormals();
-	MapCoords	*coords = object->getMapCoords();
 
 	if(l != NULL)
 	{
@@ -94,16 +93,19 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 		int c = element.size();
 		element.resize(c+1);
 
-		element[c].material = (*it).material;
-		element[c].triangle = &it->triangles;
+		DrawElement &e = element[c];
+
+		e.object = object;
+
+		e.material = (*it).material;
+		e.triangle = &it->triangles;
 
 		int s = element[c].triangle->data.size();
-		element[c].vertex = v;
-		element[c].mapCoords = coords;
-		element[c].matrix = object_matrix;
-		element[c].normal = n;
-		element[c].frame = frame;
-		element[c].blend = element[c].material->blend;
+		e.vertex = v;
+		e.matrix = object_matrix;
+		e.normal = n;
+		e.frame = frame;
+		e.blend = element[c].material->blend;
 
 		total.triangle += s;
 	}
