@@ -50,7 +50,7 @@ bool GameGroup::load(string script, ResCollection *res)
 		// XYZ - смещение (default 0 0 0) 
 		// Z-Angle - поворот вокруг оси Z в радианах (default 0)
 		// Scale - масштабирование (default 1)
-		// Vxyz - скорость (default 0 0 0) 
+		// Vxyz - скорость (default 0 0 0) - толька для uni
 
 		// Solid model object, cannot move
 		CHECK_KIND("solid", GameObjModel, ProcessKind::none);

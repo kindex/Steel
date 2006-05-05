@@ -121,48 +121,56 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 {
 	if(v == NULL) return false;
 
-	uid	id = v->getId();
-
-	bool loaded = false;
-	if(buffer.find(id) != buffer.end())
-		loaded = buffer[id].loaded;
-
-	OpenGLBuffer &buf = buffer[id];
-
-	if(loaded)
+	if(glGenBuffersARB) // Vertex Buffer Object supportd
 	{
-		glBindBufferARB(mode2, buf.glid);
-		if(v->changed)
-			glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->data.size(), &v->data.front());
+		uid	id = v->getId();
 
-	    if(mode)glEnableClientState(mode);
+		bool loaded = false;
+		if(buffer.find(id) != buffer.end())
+			loaded = buffer[id].loaded;
 
-		buf.lastUsedTime = time;
-		buf.usedCnt++;
-	}
+		OpenGLBuffer &buf = buffer[id];
+
+		if(loaded)
+		{
+			glBindBufferARB(mode2, buf.glid);
+			if(v->changed)
+			{
+				glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->data.size(), &v->data.front());
+				buf.loadCnt++;
+			}
+
+			if(mode)glEnableClientState(mode);
+
+			buf.lastUsedTime = time;
+			buf.usedCnt++;
+		}
+		else
+		{
+			glGenBuffersARB(1, &buf.glid);
+
+			if(mode) glEnableClientState ( mode );
+			glBindBufferARB(mode2, buf.glid);
+
+			GLenum usage = GL_STATIC_DRAW;
+			if(v->changed)
+				usage = GL_STREAM_DRAW;
+			glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
+
+			buf.loaded = true;
+			buf.loadCnt++;
+			if(mode2 == GL_ARRAY_BUFFER_ARB)
+				buf.kind = OpenGLBuffer::array;
+			if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
+				buf.kind = OpenGLBuffer::index;
+
+			buf.lastUsedTime = time;
+			buf.usedCnt++;
+		}
+		return true;
+	}  
 	else
-	{
-		glGenBuffersARB(1, &buf.glid);
-
-	    if(mode) glEnableClientState ( mode );
-		glBindBufferARB(mode2, buf.glid);
-
-		GLenum usage = GL_STATIC_DRAW;
-		if(v->changed)
-			usage = GL_STREAM_DRAW;
-		glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
-
-		buf.loaded = true;
-		buf.loadCnt++;
-		if(mode2 == GL_ARRAY_BUFFER_ARB)
-			buf.kind = OpenGLBuffer::array;
-		if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
-			buf.kind = OpenGLBuffer::index;
-
-		buf.lastUsedTime = time;
-		buf.usedCnt++;
-	}
-	return true;
+		return false;
 }
 
 /*
@@ -178,18 +186,30 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 	glPushMatrix();
 	glLoadMatrixf(e.matrix.a);
 
+	glPushAttrib(GL_ENABLE_BIT | GL_POINT_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	if(e.triangle && e.vertex)// если есть полигоны и вершины
 	{
 		Material *m = e.material; // получаем материал
 		if(m != NULL)
 		{
 			// загружаем вершины объекта
-			bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3);
-			glVertexPointer(3, GL_FLOAT, 0, 0);
+			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+				glVertexPointer(3, GL_FLOAT, 0, 0);
+			else
+			{
+				glEnable(GL_VERTEX_ARRAY);
+				glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data[0]);
+			}
 
 			// загружаем нормали объекта
-			bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3);
-			glNormalPointer(GL_FLOAT, 0, 0);
+			if(bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+				glNormalPointer(GL_FLOAT, 0, 0);
+			else
+			{
+				glEnable(GL_NORMAL_ARRAY);
+				glNormalPointer(GL_FLOAT, 0, &e.normal->data[0]);
+			}
 
 			int texCount = m->map.size();
 
@@ -198,8 +218,12 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			{
 				Map map = m->map[i]; // текущая картв
 
-				glActiveTextureARB(GL_TEXTURE0_ARB + i);
-				glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
+				if(glActiveTextureARB)
+				{
+					glActiveTextureARB(GL_TEXTURE0_ARB + i);
+					glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
+				}
+				else if(i>0) break;
 
 				if(map.kind == MapKind::color_map) // обычная текстура
 				{	// загружем текстуру
@@ -208,8 +232,13 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 					MapCoords *coords = e.object->getMapCoords(i);
 					if(coords)
 					{
-						bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2);
-						glTexCoordPointer(2, GL_FLOAT, 0,0);
+						if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+							glTexCoordPointer(2, GL_FLOAT, 0,0);
+						else
+						{
+							glEnable(GL_TEXTURE_COORD_ARRAY);
+							glTexCoordPointer(2, GL_FLOAT, 0, &coords->data[0]);
+						}
 					}
 				}
 				if(map.kind == MapKind::env) // карта отражения
@@ -232,7 +261,8 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				// режим мультитекстурирования
 				GLint mode = GL_REPLACE;
 				if(map.mode == MapMode::mul && i>0) mode = GL_BLEND;
-				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+				if(glActiveTextureARB)
+					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 			}
 
 			if(e.blend)
@@ -252,37 +282,17 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 //				glDepthFunc(GL_ALWAYS);
 				glDepthMask(0);
 			}
-
+// -------------------------------------------------------------------------------
 			// загружаем и ресуем треугольники
-			bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3); 
-			glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
+				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+			else
+				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data[0]);
 
-			//---------------------------
-			glDepthMask(1);
-
-
+// -------------------------------------------------------------------------------
 			// откат настроек
-			glDisable(GL_BLEND);
-			glDepthFunc(GL_LESS);
-			glDisableClientState(GL_VERTEX_ARRAY);
-			glDisableClientState(GL_NORMAL_ARRAY);
-
-			for(int i=0; i<texCount; i++)
-			{
-				glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
-				glActiveTextureARB(GL_TEXTURE0_ARB + i);
-				glDisable(GL_TEXTURE_2D);// TODO
-				glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-				glDisable( GL_TEXTURE_GEN_S );
-				glDisable( GL_TEXTURE_GEN_T );
-				glDisable( GL_TEXTURE_GEN_R );
-
-				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-			}
-			glActiveTextureARB(GL_TEXTURE0_ARB);
-			glClientActiveTextureARB(GL_TEXTURE0_ARB);
+			glPopAttrib ();
+			glDepthMask(1);
 		}
 
 		if(conf->geti("drawWire"))

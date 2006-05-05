@@ -27,6 +27,25 @@ bool intersect(coord amin, coord amax, coord bmin, coord bmax)
         ;
 }
 
+// ------------------- AABB -------------------------
+
+void aabb::clear()
+{ 
+	min.x = +INF; 
+	min.y = +INF; 
+	min.z = +INF; 
+	max.x = -INF; 
+	max.y = -INF;
+	max.z = -INF;
+}
+
+void aabb::add(v3 a)
+{
+	if(a.x>0) max.x += a.x; else min.x += a.x;
+	if(a.y>0) max.y += a.y; else min.y += a.y;
+	if(a.z>0) max.z += a.z; else min.z += a.z;
+}
+
 bool aabb::intersect(aabb const &second)
 {
     return

@@ -71,12 +71,7 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 bool PhysicEngine3D::collisionDetection(Element &a, v3 distance, PElement &second)
 {
 	aabb newframe1 = a.frame;
-	aabb newframe2 = a.frame;
-	
-	newframe2.min += distance;
-	newframe2.max += distance;
-
-	newframe1.merge(newframe2);
+	newframe1.add(distance);
 
 	for(vector<Element>::iterator it = element.begin(); it != element.end(); it++)
 		if(it->triangle && it->vertex && it->object != a.object)

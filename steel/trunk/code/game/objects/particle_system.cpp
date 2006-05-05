@@ -27,6 +27,9 @@ bool ParticleSystem::init(ScriptLine &s, ResCollection &_res)
 	align = SpriteAlign::screen;
 	initSprites();
 
+	mapCoords1D.changed = true;
+	mapCoords1D.id = res->genUid();
+	mapCoords1D.data.resize(sprite.size()*4);
 	return true;
 }
 
@@ -52,16 +55,21 @@ void ParticleSystem::process(steel::time curTime, steel::time frameLength, Physi
 
 void Particle::process(steel::time curTime, steel::time frameLength)
 {
-	velocity -= velocity*speedDown*(float)frameLength;
+	if(alive)
+	{
+		velocity -= velocity*speedDown*(float)frameLength;
 
-/*	if(velDown>1) velDown = 1;
-	if(velDown<0) velDown = 0;
-	velocity *= (1 - velDown);*/
+		velocity += acc*(float)frameLength;
 
-	velocity += acc*(float)frameLength;
+		position += velocity * (float)frameLength;
+		if(endTime< curTime) alive = false;
+// Start - 0
+// End - 1
+		lifeTime = (float)((curTime-startTime)/(endTime-startTime));
+		if(lifeTime+EPSILON>=1) lifeTime = 1;
+		size = (1-lifeTime)*startSize + lifeTime*endSize;
+	}
 
-	position += velocity * (float)frameLength;
-	if(endTime< curTime) alive = false;
 }
 
 void Particle::born(steel::time curTime, steel::time frameLength, Config *conf, matrix44 global, v3 globalVelocity)
@@ -81,10 +89,17 @@ void Particle::born(steel::time curTime, steel::time frameLength, Config *conf, 
 	
 	velocity = globalVelocity * conf->getf("parentSpeedK")  + sp*k;
 
+	//4itaem i rass4itivaem vremja smerti 4astici. (eto delaetsja tolko odin raz)
+	//minimal life time
+	//Maximal life time
+	//Random inbetween
+	//TODO : horo6o bi 4itatj es4e razbros
 	startTime = (float)curTime;
 	endTime = (float)curTime + conf->getf("minlifetime") + frand()*(conf->getf("maxlifetime") - conf->getf("minlifetime"));
 
-	size = conf->getf("size") * k;
+	size = conf->getf("startsize") * k;
+	startSize = conf->getf("startsize") * k;
+	endSize = conf->getf("endsize") * k;
 
 	acc = conf->getv3("acc")*k;
 	speedDown = conf->getf("speedDown");
@@ -104,3 +119,20 @@ void ParticleSystem::processGraph(v3	cameraEye, v3 cameraDirection)
 	SpriteSystem::processGraph(cameraEye, cameraDirection);
 }
 
+MapCoords*	ParticleSystem::getMapCoords(int mapNumber) 
+{ 
+	if(mapNumber==0) // generate tex coords in 1D texture
+	{
+		for(unsigned int i=0; i<sprite.size(); i++)
+		{
+			mapCoords1D.data[i*4 + 0] = 
+			mapCoords1D.data[i*4 + 1] = 
+			mapCoords1D.data[i*4 + 2] = 
+			mapCoords1D.data[i*4 + 3] = v2(particle[i].lifeTime, 1);
+		}
+		mapCoords1D.changed = true;
+		return &mapCoords1D;
+	}
+	else
+		return SpriteSystem::getMapCoords(mapNumber);
+}

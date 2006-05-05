@@ -11,38 +11,30 @@
 #ifndef __GEOMETRY_H
 #define __GEOMETRY_H
 //#define _DEBUG
-
-#include <vector>
 #include <assert.h>
 
 #include "maths.h"
 #include "vector2d.h"
 #include "vector3d.h"
 #include "matrix4x4.h"
+#include <vector>
 
 // cos(a+b) = cos(a)*cos(b) - sin(a)*sin(b)
 // sin(a+b) = sin(a)*cos(b) + cos(a)*sin(b)
 
 struct aabb
 {
-    v3 min, max;
+	v3 min, max;
+
+	aabb() { clear(); }
+	void clear();
+	std::vector<v3> getVertexes();
+
     void merge(const v3 point);
     void merge(const aabb &second);
 	bool intersect(aabb const &second);
 	void mul(const matrix44 &matrix);
-
-	void clear()
-	{ 
-		min.x = +INF; 
-		min.y = +INF; 
-		min.z = +INF; 
-		max.x = -INF; 
-		max.y = -INF;
-		max.z = -INF;
-	}
-
-	aabb() { clear(); }
-	std::vector<v3> getVertexes();
+	void add(v3 direction);
 };
 
 
