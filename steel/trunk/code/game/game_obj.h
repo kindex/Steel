@@ -206,9 +206,9 @@ public:
 		return NULL;
 	}
 
-	MapCoords*	getMapCoords(int mapNumber)
+	TexCoords*	getTexCoords(int mapNumber)
 	{
-		return m->getMapCoords(mapNumber);
+		return m->getTexCoords(mapNumber);
 	}
 //	bool	init(ScriptLine	&line)
 
@@ -232,7 +232,7 @@ public:
 	Normals*	getNormals()	{	return NULL;	}
 	Lights*		getLights()		{	return NULL;	}
 	FaceMaterials* getFaceMaterials()	{	return NULL;	}
-	MapCoords*	getMapCoords(int mapNumber)	{	return NULL;	}
+	TexCoords*	getTexCoords(int texNumber)	{	return NULL;	}
 };
 
 /*

@@ -35,7 +35,7 @@ Sprite, Billboard. Полигон, который всегда параллелен плоскости экрана.
 
 typedef std::vector<Light>		Lights;
 
-class MapCoord: public BufferedElement
+class TexCoord: public BufferedElement
 {
 public:
 	std::vector<v2>	data;
@@ -46,7 +46,7 @@ public:
 typedef Vertexes	Normals;
 
 
-typedef MapCoord MapCoords;
+typedef TexCoord TexCoords;
 //typedef std::vector<v2> MapCoords;
 
 
@@ -109,7 +109,7 @@ Video textures (avi, camera)
 //	virtual Triangles*	getTriangles() = 0; 
 
 	virtual FaceMaterials* getFaceMaterials() = 0;
-	virtual MapCoords*	getMapCoords(int mapNumber) = 0;
+	virtual TexCoords*	getTexCoords(int texNumber) = 0;
 
 	virtual Lights*		getLights() = 0;
 

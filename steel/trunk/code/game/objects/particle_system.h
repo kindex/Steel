@@ -21,7 +21,7 @@ struct Particle
 class ParticleSystem: public SpriteSystem
 {
 protected:
-	MapCoords	mapCoords1D; //dobavljaem teksturniju koordinatu dlja Alfa Kanala
+	TexCoords	texCoords1D; //dobavljaem teksturniju koordinatu dlja Alfa Kanala
 
 	std::vector<Particle> particle;
 	Config	*conf;
@@ -34,7 +34,7 @@ public:
 	void processGraph(v3	cameraEye, v3 cameraDirection);
 	PositionKind	getPositionKind(){	return global;}
 
-	MapCoords*	getMapCoords(int mapNumber);
+	TexCoords*	getTexCoords(int texNumber);
 };
 
 

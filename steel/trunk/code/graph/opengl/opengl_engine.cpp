@@ -229,7 +229,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				{	// загружем текстуру
 					bindTexture(map.texture); // 2D texture (auto detect from Image)
 					// загружаем тектурные координаты
-					MapCoords *coords = e.object->getMapCoords(i);
+					TexCoords *coords = e.object->getTexCoords(i);
 					if(coords)
 					{
 						if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))

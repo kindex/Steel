@@ -60,17 +60,16 @@ void SpriteSystem::initSprites()
 		}
 	}
 
-	mapCoords.changed = false;
-	mapCoords.id = res->genUid();
-	mapCoords.data.resize(sprite.size()*4);
+	texCoords.changed = false;
+	texCoords.id = res->genUid();
+	texCoords.data.resize(sprite.size()*4);
 	for(unsigned int i=0; i<sprite.size(); i++)
 	{
-		mapCoords.data[i*4 + 0] = v2(0, 0);
-		mapCoords.data[i*4 + 1] = v2(1, 0);
-		mapCoords.data[i*4 + 2] = v2(1, 1);
-		mapCoords.data[i*4 + 3] = v2(0, 1);
+		texCoords.data[i*4 + 0] = v2(0, 0);
+		texCoords.data[i*4 + 1] = v2(1, 0);
+		texCoords.data[i*4 + 2] = v2(1, 1);
+		texCoords.data[i*4 + 3] = v2(0, 1);
 	}
-
 }
 
 void SpriteSystem::processGraph(v3	cameraEye, v3 cameraDirection)

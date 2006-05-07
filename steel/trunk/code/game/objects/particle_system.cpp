@@ -27,9 +27,9 @@ bool ParticleSystem::init(ScriptLine &s, ResCollection &_res)
 	align = SpriteAlign::screen;
 	initSprites();
 
-	mapCoords1D.changed = true;
-	mapCoords1D.id = res->genUid();
-	mapCoords1D.data.resize(sprite.size()*4);
+	texCoords1D.changed = true;
+	texCoords1D.id = res->genUid();
+	texCoords1D.data.resize(sprite.size()*4);
 	return true;
 }
 
@@ -119,20 +119,20 @@ void ParticleSystem::processGraph(v3	cameraEye, v3 cameraDirection)
 	SpriteSystem::processGraph(cameraEye, cameraDirection);
 }
 
-MapCoords*	ParticleSystem::getMapCoords(int mapNumber) 
+TexCoords*	ParticleSystem::getTexCoords(int texNumber) 
 { 
-	if(mapNumber==0) // generate tex coords in 1D texture
+	if(texNumber==0) // generate tex coords in 1D texture
 	{
 		for(unsigned int i=0; i<sprite.size(); i++)
 		{
-			mapCoords1D.data[i*4 + 0] = 
-			mapCoords1D.data[i*4 + 1] = 
-			mapCoords1D.data[i*4 + 2] = 
-			mapCoords1D.data[i*4 + 3] = v2(particle[i].lifeTime, 1);
+			texCoords1D.data[i*4 + 0] = 
+			texCoords1D.data[i*4 + 1] = 
+			texCoords1D.data[i*4 + 2] = 
+			texCoords1D.data[i*4 + 3] = v2(particle[i].lifeTime, 1);
 		}
-		mapCoords1D.changed = true;
-		return &mapCoords1D;
+		texCoords1D.changed = true;
+		return &texCoords1D;
 	}
 	else
-		return SpriteSystem::getMapCoords(mapNumber);
+		return SpriteSystem::getTexCoords(texNumber);
 }

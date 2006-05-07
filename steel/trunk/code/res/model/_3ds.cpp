@@ -229,9 +229,9 @@ int chain_map_coords(_3DS &m, rstream &f, int size)
 
 	f.read(&count, 2);	
 
-	m.mapCoords.data.resize(count);
+	m.texCoords.data.resize(count);
 
-	f.read(&m.mapCoords.data[0], count*4*2); // float+float (u, v)
+	f.read(&m.texCoords.data[0], count*4*2); // float+float (u, v)
 
 	return 2+count*3*4;
 }
@@ -300,7 +300,7 @@ bool _3DS::init(const std::string name, ResCollection &res)
 		vertex.setId(res.genUid());
 		normal.setId(res.genUid());
 		triangleAll.setId(res.genUid());
-		mapCoords.setId(res.genUid());
+		texCoords.setId(res.genUid());
 
 		for(std::vector<FaceMaterial>::iterator it = faceMaterial.begin();
 					it != faceMaterial.end(); it++)

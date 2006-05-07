@@ -17,7 +17,7 @@ public:
 
     Triangles			triangleAll;        // Triangles
 
-    MapCoords			mapCoords; // Texture coordinates
+    TexCoords			texCoords; // Texture coordinates
     Normals				normal;    // Vertex normals
 	FaceMaterials		faceMaterial;
 
@@ -53,7 +53,7 @@ public:
 	{
 		return true;
 	}
-	MapCoords	*getMapCoords(int mapNumber);
+	TexCoords	*getTexCoords(int mapNumber);
 };
 
 

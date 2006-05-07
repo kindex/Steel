@@ -29,7 +29,7 @@ protected:
 	Material	*m;
 	Vertexes	vertex;
 	FaceMaterials	face;
-	MapCoords	mapCoords;
+	TexCoords	texCoords;
 	Normals		normal;
 	v3			eye;
 	SpriteAlign::SpriteAlign	align;
@@ -40,7 +40,7 @@ public:
 	Vertexes*	getVertexes() { return &vertex; }
 	FaceMaterials* getFaceMaterials() { return &face; }
 	Normals*	getNormals() { return &normal; }
-	MapCoords*	getMapCoords(int mapNumber) { return &mapCoords; }
+	TexCoords*	getTexCoords(int texNumber) { return &texCoords; }
 
 	aabb getFrame();
 //	PositionKind	getPositionKind(){	return global;}

@@ -10,9 +10,9 @@ using namespace std;
 }
 */
 
-MapCoords	*Model::getMapCoords(int mapNumber)
+TexCoords	*Model::getTexCoords(int texNumber)
 {
-	return &mapCoords;
+	return &texCoords;
 }
 
 
