@@ -16,9 +16,10 @@
 #define __GRAPH_INTERFACE_H
 
 #include "../engine.h"
-#include "../math/geometry.h"
+#include "../math/aabb.h"
 #include "../math/maths.h"
 #include "../math/vector3d.h"
+#include "../math/vector2d.h"
 
 #include "../res/material/material.h"
 

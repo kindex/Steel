@@ -16,9 +16,8 @@
 #define PHYSIC_INTERFACE_H
 
 #include "../engine.h"
-#include "../math/geometry.h"
+#include "../math/aabb.h"
 #include "../math/matrix4x4.h"
-#include "../math/maths.h"
 #include "../math/vector3d.h"
 
 #include <string>

@@ -16,26 +16,23 @@
 
 #include "maths.h"
 
-class v3
+struct v3
 {
-public:
+	//member variables
+	float x, y, z;
+
 	//constructors
-	v3(void)	:	x(0.0f), y(0.0f), z(0.0f)
-	{}
+	v3(void)	:	x(0.0f), y(0.0f), z(0.0f)	{}
 
-	v3(float newX, float newY, float newZ)	:	x(newX), y(newY), z(newZ)
-	{}
+	v3(float newX, float newY, float newZ)	:	x(newX), y(newY), z(newZ)	{}
 
-	v3(const float * rhs)	:	x(*rhs), y(*(rhs+1)), z(*(rhs+2))
-	{}
+	v3(const float * rhs)	:	x(*rhs), y(*(rhs+1)), z(*(rhs+2))	{}
 
-	v3(const v3 & rhs)	:	x(rhs.x), y(rhs.y), z(rhs.z)
-	{}
+	v3(const v3 & rhs)	:	x(rhs.x), y(rhs.y), z(rhs.z)	{}
 
 	~v3() {}	//empty
 
-	void set(float newX, float newY, float newZ)
-	{	x=newX;	y=newY;	z=newZ;	}
+	void set(float newX, float newY, float newZ) {	x=newX;	y=newY;	z=newZ;	}
 	
 	//Accessors kept for compatibility
 	void setX(float newX) {x = newX;}
@@ -46,19 +43,17 @@ public:
 	float getY() const {return y;}	//inline, const
 	float getZ() const {return z;}
 
-	void loadZero(void)
-	{	x=y=z=0.0f;	}
-	void loadOne(void)
-	{	x=y=z=1.0f;	}
+	void loadZero(void)	{	x=y=z=0.0f;	}
+	void loadOne(void)	{	x=y=z=1.0f;	}
 	
 	//vector algebra
-	v3 vectorProduct(const v3 & rhs) const
+	inline v3 vectorProduct(const v3 & rhs) const
 	{	return v3(y*rhs.z - z*rhs.y, z*rhs.x - x*rhs.z, x*rhs.y - y*rhs.x);	}
 
-	float dotProduct(const v3 & A) const
-	{	return x*A.x + y*A.y + z*A.z;	}
+	inline v3 operator*(const v3 rhs) const	{	return vectorProduct(rhs);	}
 
-	float operator*(const v3 & A) const {return dotProduct(A);}
+	inline float dotProduct(const v3 & A) const	{	return x*A.x + y*A.y + z*A.z;	}
+	inline float operator&(const v3 rhs) const		{	return dotProduct(rhs);	}
 
 	void normalize();
 	v3 getNormalized() const;
@@ -153,10 +148,6 @@ public:
 	operator float* () const {return (float*) this;}
 	operator const float* () const {return (const float*) this;}
 
-	//member variables
-	float x;
-	float y;
-	float z;
 };
 
 #endif	//v3_H

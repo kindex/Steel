@@ -88,6 +88,7 @@ Res *createImage(const std::string filename, ResCollection *res)
 	return NULL;
 }
 
+bool test();
 
 #ifdef COMPILER_DEVCPP
 int main1(int argc, char *argv[])
@@ -96,6 +97,12 @@ int main(int argc, char *argv[])
 #endif
 {
 	alog.open("../steel.log");
+
+	if(!test())
+	{
+		alog.close();
+		return 0;
+	}
 
 	Timer timer;
 	timer.start();	timer.pause();

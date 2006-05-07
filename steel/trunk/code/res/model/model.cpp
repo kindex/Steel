@@ -70,7 +70,7 @@ void Model::generateNormals()
 
         v3 p = vertex.data[b] - vertex.data[a];
         v3 q = vertex.data[c] - vertex.data[a];
-        facenormal[i] = vectmul(p,q);
+        facenormal[i] = p*q;
         if (facenormal[i] == v3(0,0,0)) facenormal[i] = v3(0,1,0); // TEMP TODO - Up
         facenormal[i].normalize();
         normal.data[a] += facenormal[i];

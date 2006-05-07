@@ -18,9 +18,19 @@
 #include <map>
 #include <string>
 
+
 class PhysicEngine3D: public PhysicEngine
 {
 protected:
+	struct Collision
+	{
+		v3	normal; // плоскость, в которой произошла коллизия
+		v3	point; // точка коллизии
+		float	time; // время (от начала карда) в процентах [0..1]
+		Element *b; // учатник коллизии
+	};
+
+
 	v3 g;
 //	std::map<std::string, int> tag;
 public:
@@ -30,6 +40,7 @@ public:
 	bool clear();
 
 	bool collisionDetection(Element &el, v3 distance, PElement &second);
+	bool checkCollision(Element &a, v3 distance, Element &b, Collision &collision);
 };
 
 

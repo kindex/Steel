@@ -67,6 +67,64 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 	return true;
 }
 
+struct MTriangle
+{
+// a - точка остчЄта (нижний угол)
+// b,c - напр€вл€ющие двух сторон
+// z - направление движени€ ("высота" призмы)
+	v3	a,b,c,z;
+};
+
+struct CTriangle
+{
+// a - точка остчЄта (нижний угол)
+// b,c - напр€вл€ющие двух сторон
+	v3 a,b,c;
+};
+
+/*bool checkCollisionMTrgTrg(MTriangle a, CTriangle b, Collision &collision)
+{
+	return false;
+}
+*/
+
+// провер€ет коллизию между движушимс€ телом а
+// и неподвижным телом b. “ело а движетс€ на рассто€ние distance
+// функци€ возвращает самую первую во ремени коллизию
+bool PhysicEngine3D::checkCollision(Element &a, v3 distance, Element &b, Collision &collision)
+{
+	// каждый треугольник движущегос€ тела при движении образует призму
+	// провер€ем пересечение этой призмы со всеми треугольниками второго тела
+
+	MTriangle at;
+	at.z = distance;
+
+	for(vector<Triangle>::iterator it = a.triangle->data.begin(); it != a.triangle->data.end(); it++)
+	{
+		at.a = a.vertex->data[it->a[0]];
+		at.b = a.vertex->data[it->a[1]] - at.a;
+		at.c = a.vertex->data[it->a[2]] - at.a;
+
+		if(at.b.vectorProduct(at.c).dotProduct(distance)>0) // треугольник движетс€ вперЄд
+		{
+			for(vector<Triangle>::iterator jt = b.triangle->data.begin(); jt != b.triangle->data.end(); jt++)
+			{
+				const v3 b1 = a.vertex->data[jt->a[0]];
+				const v3 b2 = a.vertex->data[jt->a[1]];
+				const v3 b3 = a.vertex->data[jt->a[2]];
+
+				
+
+			}
+
+		}
+
+	//a.vertex
+	}
+
+	return false;
+}
+
 // Check for collision
 bool PhysicEngine3D::collisionDetection(Element &a, v3 distance, PElement &second)
 {

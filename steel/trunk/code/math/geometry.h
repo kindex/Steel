@@ -22,24 +22,12 @@
 // cos(a+b) = cos(a)*cos(b) - sin(a)*sin(b)
 // sin(a+b) = sin(a)*cos(b) + cos(a)*sin(b)
 
-struct aabb
-{
-	v3 min, max;
+bool intersect(float amin, float amax, float bmin, float bmax);
 
-	aabb() { clear(); }
-	void clear();
-	std::vector<v3> getVertexes();
-
-    void merge(const v3 point);
-    void merge(const aabb &second);
-	bool intersect(aabb const &second);
-	void mul(const matrix44 &matrix);
-	void add(v3 direction);
-};
 
 
 // otrezok
-struct LineSegment
+/*struct LineSegment
 {
     v2 a,b; // a - koordinata odnogo konca, b - koordinata vtorogo
 
@@ -56,22 +44,22 @@ struct Line
     Line(v2  const &A, v2  const &B): a(A), b(B) {}
     Line(Line const &A) { a = A.a; b = A.b; }
 };
-
-struct DirectedLineSegment
+*/
+/*struct DirectedLineSegment
 {
     v2 s,t; // s - koordinata na4ala konca,
     // t - vektor napravlenija
-};
+};*/
 
 // to4ka perese4enija otrezkov (a; a+b) i (c;c+d) v to4ke point
 //bool cross(v2 &a, v2 &b,v2 &c, v2 &d, v2 &point)
 
 // to4ka perese4enija otrezkov (a; a+b) i (c;c+d) v to4ke point
-bool intersect(v2 &a, v2 &b,v2 &c, v2 &d, v2 &point);  // to4ka perese4enija otrezkov (a; a+b) i (c;c+d) v to4ke point
+//bool intersect(v2 &a, v2 &b,v2 &c, v2 &d, v2 &point);  // to4ka perese4enija otrezkov (a; a+b) i (c;c+d) v to4ke point
 
-v2 mirror(v2 &v, v2 &a);
-v3 vectmul(v3 &a, v3 &b);
-
+//v2 mirror(v2 &v, v2 &a);
+//v3 vectmul(v3 &a, v3 &b);
+/*
 struct polygon // Mnogougolnik
 { // koordinati vershin mnogougolnika
     std::vector<v2> p;
@@ -93,6 +81,7 @@ coord lineSecment_PointDistance(LineSegment line, v2 p);
 // lezhit li prjamaja po odnu storonu ot poligona
 // -1 - left, +1 Right, 0 - net razdelenija
 int oneside(Line line, polygon p);
+*/
 
 #endif
 

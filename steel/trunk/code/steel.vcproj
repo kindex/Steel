@@ -168,7 +168,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib  SDLmain.lib SDL.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib "
 				ShowProgress="0"
 				OutputFile="..\build.debug/steel.exe"
 				Version="1.0.0.1"
@@ -343,15 +343,39 @@
 				RelativePath=".\steel.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\test.cpp"
+				>
+			</File>
 			<Filter
 				Name="math"
 				>
+				<File
+					RelativePath=".\math\aabb.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\math\aabb.h"
+					>
+				</File>
 				<File
 					RelativePath=".\math\geometry.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\math\geometry.h"
+					>
+				</File>
+				<File
+					RelativePath=".\math\geometry2d.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\math\line.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\math\line.h"
 					>
 				</File>
 				<File
@@ -368,6 +392,14 @@
 				</File>
 				<File
 					RelativePath=".\math\matrix4x4.h"
+					>
+				</File>
+				<File
+					RelativePath=".\math\plane.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\math\plane.h"
 					>
 				</File>
 				<File
