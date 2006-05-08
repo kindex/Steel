@@ -20,7 +20,11 @@ struct Line3 // Line 3D
 };
 typedef Line3 Line;
 
+// пересечение двух линий
 bool isCross(const Line a, const Line b, float &t, float &s);
+// мы уверены, что прямые пересекаются. 
+bool isCrossFast(const Line a, const Line b, float &s);
+
 inline bool isCross(const Line a, const Line b);
 
 

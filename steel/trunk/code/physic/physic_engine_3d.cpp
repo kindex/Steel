@@ -5,6 +5,7 @@
 
 using namespace std;
 
+#define CONTACT_EPSILON (0.001f)
 
 bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 {
@@ -63,18 +64,19 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 			v3 secondVelocity = collision.b->object->getVelocity();
 			v3 firstVelocity = o.getVelocity();
 
-			collision.b->object->setVelocity(-secondVelocity*0.9);
-			o.setVelocity(-firstVelocity*0.9);
+			collision.b->object->setVelocity(-secondVelocity);
+			o.setVelocity(-firstVelocity);
 
-#define CONTACT_EPSILON (0.001f)
-
-			float len = path.getLength();
+			double len = path.getLengthd();
 			len *= collision.time;
 			len -= CONTACT_EPSILON;
 			if(len>0)
 			{
-				newPos = oldPos + path.getNormalized()*len;
+				path = path.getNormalized()*len;
+				newPos = oldPos + path;
 				o.setPosition(newPos);
+				el.frame.min += path;
+				el.frame.max += path;
 			}
 
 			total.collisionCount++;
@@ -82,10 +84,10 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 		else
 		{
 			o.setPosition(newPos);
+			el.frame.min += path;
+			el.frame.max += path;
 //			o.setPosition(p);
 		}
-		el.frame.min += path;
-		el.frame.max += path;
 	}
 	return true;
 }
@@ -102,7 +104,7 @@ bool PhysicEngine3D::collisionDetection(Element &a, v3 distance, Collision &coll
 		{
 			Element &b = *it;
 			
-//			if(newframe1.intersect(b.frame)) 
+			if(newframe1.intersect(b.frame)) 
 			{
 				Collision newCollision;
 				newCollision.time = INF;
@@ -165,8 +167,8 @@ void PhysicEngine3D::checkCollisionMLineLine(const Line a, const v3 direction, c
 	if(crossMLineLine(a, direction, b, k))
 	{
 		v3 point = b.point(k);
-		float kk, time;
-		bool c = isCross(a, Line(point, -direction), kk, time);
+		float time;
+		bool c = isCrossFast(a, Line(point, -direction), time);
 		assert(c, "checkCollisionMLineLine");
 		
 		if(collision.time > time)
@@ -207,7 +209,7 @@ bool PhysicEngine3D::checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Colli
 	checkCollisionMLineTrg(Line(a.base, a.a), direction, b, collision);
 	checkCollisionMLineTrg(Line(a.base, a.b), direction, b, collision);
 	checkCollisionMLineTrg(Line(a.base + a.a, a.b - a.a), direction, b, collision);
-
+	
 	return collision.time<=1;
 }
 
@@ -276,7 +278,10 @@ bool PhysicEngine3D::prepare(PhysicInterface *object, matrix44 parent_matrix, Ph
 	if(pos == Interface::local)
 		el.matrix = parent_matrix*el.matrix;
 
-	el.frame.mul(el.matrix);
+	el.frame.mul(el.matrix); // global
+
+	el.frame.min -= v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON);
+	el.frame.max += v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON);
 
 	element.push_back(el);
 	PhysicInterface &o = *(PhysicInterface*)object;

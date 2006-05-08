@@ -1,16 +1,13 @@
+#include "_cpp.h"
+#include "common/logger.h"
 
 #include "math/geometry.h"
 #include "math/line.h"
 #include "math/plane.h"
 
+//#include <assert.h>
 
-struct MTriangle
-{
-// base - точка остчЄта (нижний угол)
-// b,c - напр€вл€ющие двух сторон
-// z - направление движени€ ("высота" призмы)
-	v3	base, a,b,z;
-};
+//#define assert(_Expression) (void)( (!!(_Expression)) || (_wassert(_CRT_WIDE(#_Expression), _CRT_WIDE(__FILE__), __LINE__), 0) )
 
 
 bool test()

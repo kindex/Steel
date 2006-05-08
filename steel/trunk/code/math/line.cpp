@@ -20,6 +20,19 @@ bool isCross(const Line a, const Line b, float &t, float &s)
 
 	return true;
 }
+// мы уверены, что прямые пересекаются
+bool isCrossFast(const Line a, const Line b, float &s)
+{
+	// a.base + a.b*t = b.base + b.b*s
+	// s = ((a.base-b.base)*a.b*)&(b.b*a.b) / (b.b x a.b)^2
+	v3 bbxab = (b.a*a.a);
+	double len2 = bbxab.getSquaredLengthd();
+	
+	s = ((a.base - b.base)*a.a)&bbxab / len2;
+
+	return true;
+}
+
 
 inline bool isCross(const Line a, const Line b)
 {

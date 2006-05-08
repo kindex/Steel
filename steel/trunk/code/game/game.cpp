@@ -61,12 +61,12 @@ void Game::process(PhysicEngine *physic, steel::time globalTime, steel::time tim
 
 	if(!paused || framesToPass>0)
 	{
-/*		static steel::time totalPhysicTime = 0;
+		static steel::time totalPhysicTime = 0;
 		steel::time frame = 0.01;
  		physic->process(totalPhysicTime, frame);
-		totalPhysicTime += frame;*/
+		totalPhysicTime += frame;
 
-		physic->process(globalTime, time);
+//		physic->process(globalTime, time);
 
 		if(framesToPass>0) framesToPass--;
 		else framesToPass = 0;
