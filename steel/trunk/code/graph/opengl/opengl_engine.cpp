@@ -186,13 +186,13 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 	glPushMatrix();
 	glLoadMatrixf(e.matrix.a);
 
-	glPushAttrib(GL_ENABLE_BIT | GL_POINT_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if(e.triangle && e.vertex)// если есть полигоны и вершины
 	{
 		Material *m = e.material; // получаем материал
-		if(m != NULL)
+		if(m != NULL  && conf->geti("drawTexture", 1))
 		{
+			glPushAttrib(GL_ENABLE_BIT | GL_POINT_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			// загружаем вершины объекта
 			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 				glVertexPointer(3, GL_FLOAT, 0, 0);
@@ -203,12 +203,15 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			}
 
 			// загружаем нормали объекта
-			if(bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
-				glNormalPointer(GL_FLOAT, 0, 0);
-			else
+			if(e.normal)
 			{
-				glEnable(GL_NORMAL_ARRAY);
-				glNormalPointer(GL_FLOAT, 0, &e.normal->data[0]);
+				if(bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+					glNormalPointer(GL_FLOAT, 0, 0);
+				else
+				{
+					glEnable(GL_NORMAL_ARRAY);
+					glNormalPointer(GL_FLOAT, 0, &e.normal->data[0]);
+				}
 			}
 
 			int texCount = m->map.size();
@@ -291,13 +294,20 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 // -------------------------------------------------------------------------------
 			// откат настроек
-			glPopAttrib ();
-			glDepthMask(1);
+			glPopAttrib();
 		}
 
 		if(conf->geti("drawWire"))
 		{
-			glEnableClientState(GL_VERTEX_ARRAY);
+			glPushAttrib(GL_ENABLE_BIT | GL_POINT_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			// загружаем вершины объекта
+			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+				glVertexPointer(3, GL_FLOAT, 0, 0);
+			else
+			{
+				glEnable(GL_VERTEX_ARRAY);
+				glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data[0]);
+			}
 			glPolygonMode(GL_FRONT, GL_LINE);  		// Draw Polygons As Wireframes
 			glPolygonMode(GL_BACK, GL_LINE); 
 			glDepthFunc(GL_LEQUAL); // For blending
@@ -305,8 +315,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3); 
 			glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
 
-			glPolygonMode(GL_FRONT, GL_FILL);    	// Reset Back-Facing Polygon Drawing Mode
-			glDisableClientState(GL_VERTEX_ARRAY);
+			glPolygonMode(GL_FRONT, GL_FILL);  
+
+			glPopAttrib ();
 		}
 	}
 

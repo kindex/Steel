@@ -22,29 +22,27 @@ struct v3
 	float x, y, z;
 
 	//constructors
-	v3(void)	:	x(0.0f), y(0.0f), z(0.0f)	{}
+	inline v3(void)	:	x(0.0f), y(0.0f), z(0.0f)	{}
 
-	v3(float newX, float newY, float newZ)	:	x(newX), y(newY), z(newZ)	{}
+	inline v3(float newX, float newY, float newZ)	:	x(newX), y(newY), z(newZ)	{}
 
-	v3(const float * rhs)	:	x(*rhs), y(*(rhs+1)), z(*(rhs+2))	{}
+	inline v3(const float * rhs)	:	x(*rhs), y(*(rhs+1)), z(*(rhs+2))	{}
 
-	v3(const v3 & rhs)	:	x(rhs.x), y(rhs.y), z(rhs.z)	{}
-
-	~v3() {}	//empty
+	inline v3(const v3 & rhs)	:	x(rhs.x), y(rhs.y), z(rhs.z)	{}
 
 	void set(float newX, float newY, float newZ) {	x=newX;	y=newY;	z=newZ;	}
 	
 	//Accessors kept for compatibility
-	void setX(float newX) {x = newX;}
-	void setY(float newY) {y = newY;}
-	void setZ(float newZ) {z = newZ;}
+	inline void setX(float newX) {x = newX;}
+	inline void setY(float newY) {y = newY;}
+	inline void setZ(float newZ) {z = newZ;}
 
-	float getX() const {return x;}	//public accessor functions
-	float getY() const {return y;}	//inline, const
-	float getZ() const {return z;}
+	inline float getX() const {return x;}	//public accessor functions
+	inline float getY() const {return y;}	//inline, const
+	inline float getZ() const {return z;}
 
-	void loadZero(void)	{	x=y=z=0.0f;	}
-	void loadOne(void)	{	x=y=z=1.0f;	}
+	inline void loadZero(void)	{	x=y=z=0.0f;	}
+	inline void loadOne(void)	{	x=y=z=1.0f;	}
 	
 	//vector algebra
 	inline v3 vectorProduct(const v3 & rhs) const
@@ -58,11 +56,16 @@ struct v3
 	void normalize();
 	v3 getNormalized() const;
 	
-	float getLength() const
-	{	return (float)sqrt((x*x)+(y*y)+(z*z));	}
+	inline float getLength() const
+	{	return (float)sqrt(((double)x*(double)x)+((double)y*(double)y)+((double)z*(double)z));	}
+	inline double getLengthd() const
+	{	return sqrt((double)x*(double)x + (double)y*(double)y + (double)z*(double)z);	}
 	
-	float getSquaredLength() const
+	inline float getSquaredLength() const
 	{	return (x*x)+(y*y)+(z*z);	}
+
+	inline double getSquaredLengthd() const
+	{	return ((double)x*(double)x)+((double)y*(double)y)+((double)z*(double)z);	}
 
 	//rotations
 	void rotateX(double angle);
@@ -88,51 +91,58 @@ struct v3
 
 	//overloaded operators
 	//binary operators
-	v3 operator+(const v3 & rhs) const
+	inline v3 operator+(const v3 & rhs) const
 	{	return v3(x + rhs.x, y + rhs.y, z + rhs.z);	}
 	
-	v3 operator-(const v3 & rhs) const
+	inline v3 operator-(const v3 & rhs) const
 	{	return v3(x - rhs.x, y - rhs.y, z - rhs.z);	}
 
-	v3 operator*(const float rhs) const
+	inline v3 operator*(const float rhs) const
 	{	return v3(x*rhs, y*rhs, z*rhs);	}
 	
-	v3 operator/(const float rhs) const
+	inline v3 operator/(const float rhs) const
 	{	return (rhs==0.0f) ? v3(0.0f, 0.0f, 0.0f) : v3(x / rhs, y / rhs, z / rhs);	}
 
 	//multiply by a float, eg 3*v
-	friend v3 operator*(float scaleFactor, const v3 & rhs);
+	inline friend v3 operator*(float scaleFactor, const v3 & rhs)	{	return rhs*scaleFactor;	}
+
 
 	//Add, subtract etc, saving the construction of a temporary
-	void add(const v3 & v2, v3 & result)
+	inline void add(const v3 & v2, v3 & result)
 	{
 		result.x=x+v2.x;
 		result.y=y+v2.y;
 		result.z=z+v2.z;
 	}
 
-	void subtract(const v3 & v2, v3 & result)
+	inline void subtract(const v3 & v2, v3 & result)
 	{
 		result.x=x-v2.x;
 		result.y=y-v2.y;
 		result.z=z-v2.z;
 	}
 
-	bool operator==(const v3 & rhs) const;
-	bool operator!=(const v3 & rhs) const
-	{	return !((*this)==rhs);	}
+	inline bool operator==(const v3 & rhs) const
+	{
+		return(fabs(x-rhs.x)<EPSILON && fabs(y-rhs.y)<EPSILON && fabs(z-rhs.z)<EPSILON);
+	}
+
+	inline bool operator!=(const v3 & rhs) const
+	{
+		return(fabs(x-rhs.x)>EPSILON || fabs(y-rhs.y)>EPSILON || fabs(z-rhs.z)>EPSILON);
+	}
 
 	//self-add etc
-	void operator+=(const v3 & rhs)
+	inline void operator+=(const v3 & rhs)
 	{	x+=rhs.x;	y+=rhs.y;	z+=rhs.z;	}
 
-	void operator-=(const v3 & rhs)
+	inline void operator-=(const v3 & rhs)
 	{	x-=rhs.x;	y-=rhs.y;	z-=rhs.z;	}
 
-	void operator*=(const float rhs)
+	inline void operator*=(const float rhs)
 	{	x*=rhs;	y*=rhs;	z*=rhs;	}
 	
-	void operator/=(const float rhs)
+	inline void operator/=(const float rhs)
 	{	if(rhs==0.0f)
 			return;
 		else
@@ -141,12 +151,12 @@ struct v3
 
 
 	//unary operators
-	v3 operator-(void) const {return v3(-x, -y, -z);}
-	v3 operator+(void) const {return *this;}
+	inline v3 operator-(void) const {return v3(-x, -y, -z);}
+	inline v3 operator+(void) const {return *this;}
 
 	//cast to pointer to a (float *) for glVertex3fv etc
-	operator float* () const {return (float*) this;}
-	operator const float* () const {return (const float*) this;}
+	inline operator float* () const {return (float*) this;}
+	inline operator const float* () const {return (const float*) this;}
 
 };
 

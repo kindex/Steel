@@ -6,6 +6,7 @@
 #include "path.h"
 #include "sprites.h"
 #include "particle_system.h"
+#include "triangle.h"
 
 using namespace std;
 
@@ -24,6 +25,8 @@ bool GameGroup::init(ScriptLine	&s, ResCollection &res)
 
 bool GameGroup::load(string script, ResCollection *res)
 {
+	if(!parent) positionKind = global;
+
 	Script *s = (Script*)res->add(Res::script, script);
 	if(!s)
 	{
@@ -44,18 +47,22 @@ bool GameGroup::load(string script, ResCollection *res)
 //		CHECK_KIND("light", GameLight, PhysicInterface::none);
 
 		// —тандартна€ строка настройки
-		// KIND	parent	id	CONF	X	Y	Z	Z-Angle	Scale	Vx	Vy	Vz
+		// KIND	parent	id	CONF	X,Y,Z	AngleX,Y,Z	Scale	Vx,Vy,Vz
 		// KIND = (solid|custom|path|sprite|ps|include|rag)
 		// CONF - файл с конфигом, дл€ solid это модель
-		// XYZ - смещение (default 0 0 0) 
-		// Z-Angle - поворот вокруг оси Z в радианах (default 0)
+		// XYZ (вектор) - смещение (default 0 0 0) 
+		// Angle (вектор) - поворот вокруг осей X,Y,Z в радианах (default 0,0,0)
 		// Scale - масштабирование (default 1)
-		// Vxyz - скорость (default 0 0 0) - толька дл€ uni
+		// Vxyz (вектор) - скорость (default 0 0 0) - толька дл€ uni
 
 		// Solid model object, cannot move
 		CHECK_KIND("solid", GameObjModel, ProcessKind::none);
 		// Model object, move & collision detection
 		CHECK_KIND("uni", GameObjModel, ProcessKind::uni);
+
+		// Triangle
+		CHECK_KIND("solid_trg", GameTriangleObj, ProcessKind::none);
+		CHECK_KIND("uni_trg", GameTriangleObj, ProcessKind::uni);
 
 		// метка в простнанстве, не рисуетс€
 		CHECK_KIND("tag", GameTag, ProcessKind::none);

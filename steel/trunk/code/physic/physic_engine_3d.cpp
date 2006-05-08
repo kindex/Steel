@@ -1,6 +1,8 @@
 
 #include "physic_engine_3d.h"
 
+#include "../math/plane.h"
+
 using namespace std;
 
 
@@ -42,17 +44,40 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 		v3 oldPos = o.getPosition();
 		v3 newPos = oldPos + path;
 
-		Element *second = NULL;
+		Collision collision;
+		collision.time = INF; // no collision
 
-		if(collisionDetection(el, global*newPos-global*oldPos, second))
+		Interface::PositionKind pos = o.getPositionKind();
+		v3 dir;
+
+		if(pos == Interface::local)
+			dir = global*newPos-global*oldPos;
+		else
+			dir = newPos - oldPos;
+
+		if(collisionDetection(el, dir, collision))
 		{
-			second->collisionCount++;
+			collision.b->collisionCount++;
 			el.collisionCount++;
 
-			v3 secondVelocity = second->object->getVelocity();
+			v3 secondVelocity = collision.b->object->getVelocity();
 			v3 firstVelocity = o.getVelocity();
-			second->object->setVelocity(-secondVelocity);
-			o.setVelocity(-firstVelocity);
+
+			collision.b->object->setVelocity(-secondVelocity*0.9);
+			o.setVelocity(-firstVelocity*0.9);
+
+#define CONTACT_EPSILON (0.001f)
+
+			float len = path.getLength();
+			len *= collision.time;
+			len -= CONTACT_EPSILON;
+			if(len>0)
+			{
+				newPos = oldPos + path.getNormalized()*len;
+				o.setPosition(newPos);
+			}
+
+			total.collisionCount++;
 		}
 		else
 		{
@@ -61,72 +86,13 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 		}
 		el.frame.min += path;
 		el.frame.max += path;
-
 	}
-
 	return true;
 }
 
-struct MTriangle
-{
-// a - точка остчёта (нижний угол)
-// b,c - напрявляющие двух сторон
-// z - направление движения ("высота" призмы)
-	v3	a,b,c,z;
-};
-
-struct CTriangle
-{
-// a - точка остчёта (нижний угол)
-// b,c - напрявляющие двух сторон
-	v3 a,b,c;
-};
-
-/*bool checkCollisionMTrgTrg(MTriangle a, CTriangle b, Collision &collision)
-{
-	return false;
-}
-*/
-
-// проверяет коллизию между движушимся телом а
-// и неподвижным телом b. Тело а движется на расстояние distance
-// функция возвращает самую первую во ремени коллизию
-bool PhysicEngine3D::checkCollision(Element &a, v3 distance, Element &b, Collision &collision)
-{
-	// каждый треугольник движущегося тела при движении образует призму
-	// проверяем пересечение этой призмы со всеми треугольниками второго тела
-
-	MTriangle at;
-	at.z = distance;
-
-	for(vector<Triangle>::iterator it = a.triangle->data.begin(); it != a.triangle->data.end(); it++)
-	{
-		at.a = a.vertex->data[it->a[0]];
-		at.b = a.vertex->data[it->a[1]] - at.a;
-		at.c = a.vertex->data[it->a[2]] - at.a;
-
-		if(at.b.vectorProduct(at.c).dotProduct(distance)>0) // треугольник движется вперёд
-		{
-			for(vector<Triangle>::iterator jt = b.triangle->data.begin(); jt != b.triangle->data.end(); jt++)
-			{
-				const v3 b1 = a.vertex->data[jt->a[0]];
-				const v3 b2 = a.vertex->data[jt->a[1]];
-				const v3 b3 = a.vertex->data[jt->a[2]];
-
-				
-
-			}
-
-		}
-
-	//a.vertex
-	}
-
-	return false;
-}
 
 // Check for collision
-bool PhysicEngine3D::collisionDetection(Element &a, v3 distance, PElement &second)
+bool PhysicEngine3D::collisionDetection(Element &a, v3 distance, Collision &collision)
 {
 	aabb newframe1 = a.frame;
 	newframe1.add(distance);
@@ -136,21 +102,169 @@ bool PhysicEngine3D::collisionDetection(Element &a, v3 distance, PElement &secon
 		{
 			Element &b = *it;
 			
-			if(newframe1.intersect(b.frame)) 
+//			if(newframe1.intersect(b.frame)) 
 			{
-				second = &b;
-				return true;
+				Collision newCollision;
+				newCollision.time = INF;
+				if(checkCollision(a, distance, b, newCollision))
+				{
+					if(collision.time > newCollision.time)
+					{
+						collision = newCollision;
+						collision.b = &b;
+					}
+//					PElement &second
+				}
 			}
 //			a.matrix
 //			b.matrix
 		}
-		return false;
+	return collision.time<=1;
 }
+
+
+// пересечение отрезка (движущейся точки) и треугольника
+void PhysicEngine3D::checkCollisionMVertexTrg(const v3 point, const v3 direction, const Plane b, Collision &collision)
+{
+	float k;
+	if(isCrossTrgLine(b, Line(point, direction), k))
+		if(k>=-EPSILON && k<=1+EPSILON)
+			if(collision.time > k)
+			{
+				collision.time = k;
+				collision.point = point;
+				collision.normal = b.a*b.b; //нормаль к треугольнику
+			}
+}
+
+void PhysicEngine3D::checkCollisionMTrgVertex(const Plane a, const v3 direction, const v3 point, Collision &collision)
+{
+	if(pointInPrism(a, direction, point))
+	{
+		float newTime = 0.5;
+		
+		pointInPrism(a, direction, point);
+
+		bool cross = isCross(a, Line(point, -direction), newTime);
+		
+		assert(cross, "checkCollisionMTrgVertex");
+
+		if(collision.time > newTime)
+		{
+			collision.time = newTime;
+			collision.point = point;
+			collision.normal = a.a*a.b; //нормаль к треугольнику
+		}
+	}
+}
+
+
+void PhysicEngine3D::checkCollisionMLineLine(const Line a, const v3 direction, const Line b, Collision &collision)
+{
+	float k;
+	if(crossMLineLine(a, direction, b, k))
+	{
+		v3 point = b.point(k);
+		float kk, time;
+		bool c = isCross(a, Line(point, -direction), kk, time);
+		assert(c, "checkCollisionMLineLine");
+		
+		if(collision.time > time)
+		{
+			collision.time = time;
+			collision.point = point;
+//			collision.normal = a.a*a.b; // TODO
+		}
+	}
+}
+
+void PhysicEngine3D::checkCollisionMLineTrg(const Line a, const v3 direction, const Plane b, Collision &collision)
+{
+	checkCollisionMLineLine(a, direction, Line(b.base, b.a), collision);
+	checkCollisionMLineLine(a, direction, Line(b.base, b.b), collision);
+	checkCollisionMLineLine(a, direction, Line(b.base + b.a, b.b-b.a), collision);
+}
+
+
+// пересечение движущегося треугольника (призма) с треугольником
+// 1. вершина - грань
+// 2. грань - вершина
+// 3. грань - грань
+bool PhysicEngine3D::checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Collision &collision)
+{
+// 1. вершина - грань
+	checkCollisionMVertexTrg(a.base, direction, b, collision);
+	checkCollisionMVertexTrg(a.base + a.a, direction, b, collision);
+	checkCollisionMVertexTrg(a.base + a.b, direction, b, collision);
+
+// 2. грань - вершина
+// точки b.base, b.base + b.a, b.base + b.b
+	checkCollisionMTrgVertex(a, direction, b.base, collision);
+	checkCollisionMTrgVertex(a, direction, b.base + b.a, collision);
+	checkCollisionMTrgVertex(a, direction, b.base + b.b, collision);
+
+// 3. грань - грань
+	checkCollisionMLineTrg(Line(a.base, a.a), direction, b, collision);
+	checkCollisionMLineTrg(Line(a.base, a.b), direction, b, collision);
+	checkCollisionMLineTrg(Line(a.base + a.a, a.b - a.a), direction, b, collision);
+
+	return collision.time<=1;
+}
+
+
+// проверяет коллизию между движушимся телом а
+// и неподвижным телом b. Тело а движется на расстояние distance
+// функция возвращает самую первую во ремени коллизию
+bool PhysicEngine3D::checkCollision(Element &a, v3 direction, Element &b, Collision &collision)
+{
+	// каждый треугольник движущегося тела при движении образует призму
+	// проверяем пересечение этой призмы со всеми треугольниками второго тела
+
+	Plane at;
+
+	for(vector<Triangle>::iterator it = a.triangle->data.begin(); it != a.triangle->data.end(); it++)
+	{
+		at.base = a.matrix * a.vertex->data[it->a[0]];
+		at.a	= a.matrix * a.vertex->data[it->a[1]] - at.base;
+		at.b	= a.matrix * a.vertex->data[it->a[2]] - at.base;
+
+		if( ((at.a*at.b) & direction) > 0) // треугольник движется вперёд
+		{
+			for(vector<Triangle>::iterator jt = b.triangle->data.begin(); jt != b.triangle->data.end(); jt++)
+			{
+				Plane bt;
+				bt.base = b.matrix * b.vertex->data[jt->a[0]];
+				bt.a	= b.matrix * b.vertex->data[jt->a[1]] - bt.base;
+				bt.b	= b.matrix * b.vertex->data[jt->a[2]] - bt.base;
+
+				Collision newCollision;
+				newCollision.time = INF;
+				if(checkCollisionMTrgTrg(at, direction, bt, newCollision))
+				{
+					if(collision.time > newCollision.time)
+						collision = newCollision;
+				}
+			}
+		}
+	}
+
+	return collision.time<=1;
+}
+
 
 bool PhysicEngine3D::prepare(PhysicInterface *object, matrix44 parent_matrix, PhysicInterface *parent)
 {
 	if(!object) return false;
 	Element el;
+
+	Interface::PositionKind pos = object->getPositionKind();
+	ProcessKind::ProcessKind process = object->getProcessKind();
+	if(process == ProcessKind::uni && pos == Interface::local)
+	{
+		object->changePositionKind(Interface::global);
+		pos = object->getPositionKind();
+	}
+
 	el.object	= object;
 	el.parent	= parent;
 	el.vertex	= object->getPVertexes();
@@ -159,7 +273,6 @@ bool PhysicEngine3D::prepare(PhysicInterface *object, matrix44 parent_matrix, Ph
 	el.matrix   = object->getMatrix();
 	el.collisionCount = 0;
 
-	Interface::PositionKind pos = object->getPositionKind();
 	if(pos == Interface::local)
 		el.matrix = parent_matrix*el.matrix;
 

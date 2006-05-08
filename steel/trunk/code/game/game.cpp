@@ -61,7 +61,13 @@ void Game::process(PhysicEngine *physic, steel::time globalTime, steel::time tim
 
 	if(!paused || framesToPass>0)
 	{
+/*		static steel::time totalPhysicTime = 0;
+		steel::time frame = 0.01;
+ 		physic->process(totalPhysicTime, frame);
+		totalPhysicTime += frame;*/
+
 		physic->process(globalTime, time);
+
 		if(framesToPass>0) framesToPass--;
 		else framesToPass = 0;
 	}
@@ -152,7 +158,7 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 	if(!world->load(conf->gets("script"), res)) return false;
 
 	_alive = true;
-	paused = false;
+	paused = conf->geti("paused", 0) == 1;
 	framesToPass = 0;
 	return true;
 }

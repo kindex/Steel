@@ -741,6 +741,14 @@
 						RelativePath=".\game\objects\sprites.h"
 						>
 					</File>
+					<File
+						RelativePath=".\game\objects\triangle.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\triangle.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

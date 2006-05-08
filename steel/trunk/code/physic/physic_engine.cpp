@@ -12,6 +12,8 @@ bool PhysicEngine::init(std::string _conf)
 
 	conf = (Config*)res->get(Res::config, _conf);
 
+	total.collisionCount = 0;
+
 	return true;
 }
 

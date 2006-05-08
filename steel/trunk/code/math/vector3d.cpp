@@ -142,16 +142,3 @@ v3 v3::getPackedTo01() const
 	return temp;
 }
 
-v3 operator*(float scaleFactor, const v3 & rhs)
-{
-	return rhs*scaleFactor;
-}
-
-bool v3::operator==(const v3 & rhs) const
-{
-	if(x==rhs.x && y==rhs.y && z==rhs.z)
-		return true;
-
-	return false;
-}
-

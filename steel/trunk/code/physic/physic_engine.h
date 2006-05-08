@@ -36,6 +36,12 @@ protected:
 	std::vector<PhysicInterface*> object;
 
 public:
+	struct TotalInfo
+	{
+		int collisionCount;
+	} total;
+
+public:
 	// Collect information about object: object shape + velocity
 	virtual bool inject(PhysicInterface *object);
 	virtual bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL) = 0;

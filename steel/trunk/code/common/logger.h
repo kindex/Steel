@@ -12,6 +12,19 @@
 #include <string>
 #include <stdio.h>
 
+#undef assert
+
+#define assert(check, message)			\
+{										\
+	if(!(check))						\
+	{									\
+		alog.msg("assert", message);	\
+		throw;							\
+	}									\
+}
+
+
+
 class Logger
 {
 public:
@@ -37,5 +50,6 @@ private:
 };
 
 extern Logger alog;
+
 
 #endif

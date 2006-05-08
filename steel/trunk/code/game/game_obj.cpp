@@ -5,20 +5,44 @@
 
 using namespace std;
 
-bool	GameObj::init(ScriptLine	&s, ResCollection &res)
+void GameObj::changePositionKind(const PositionKind newKind)
+{
+	PositionKind oldKind = getPositionKind();
+	if(oldKind == newKind) return;
+	if(newKind == global && oldKind == local)
+	{
+		matrix = getGlobalMatrix();
+		velocity = getGlobalVelocity();
+		positionKind = global;
+	}
+	else
+	{} // TODO
+}
+
+
+bool GameObj::init(ScriptLine	&s, ResCollection &res)
 {
 	matrix.loadIdentity();
 
-	matrix.setTranslation(v3(s.getf(4, 0.0f), s.getf(5, 0.0f), s.getf(6, 0.0f)));
-	matrix.setRotationZ(s.getf(7, 0.0f));
-	float scale = s.getf(8, 1.0f);
+	matrix.setTranslation(s.getv3(4));
+
+
+	v3 rot = s.getv3(5);
+
+	matrix44 rx; rx.loadIdentity(); 	rx.setRotationX(rot.x);
+	matrix44 ry; ry.loadIdentity(); 	ry.setRotationY(rot.y);
+	matrix44 rz; rz.loadIdentity(); 	rz.setRotationZ(rot.z);
+
+	matrix = matrix*rx*ry*rz;
+
+	float scale = s.getf(6, 1.0f);
 	if(scale<=0) scale = 1.0f;
 	
 	for(int i=0; i<3; i++)
 		for(int j=0; j<3; j++)
 			matrix.a[i+j*4] *= scale;
 
-	setVelocity(v3(s.getf(9, 0.0f), s.getf(10, 0.0f), s.getf(11, 0.0f)));
+	setVelocity(s.getv3(7));
 
 	return true;
 }

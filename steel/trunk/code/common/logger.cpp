@@ -76,3 +76,4 @@ void Logger::msg(std::string keywords, std::string str)
 
 	out("%s [%s]", str.c_str(), keywords.c_str());
 }
+

@@ -20,7 +20,7 @@ bool Sprite::init(ScriptLine &s, ResCollection &_res)
 	else 
 	{
 		customAlign = s.getv3(7);
-		if(customAlign.getSquaredLength()<EPSILON)	return false;
+		if(customAlign.getSquaredLengthd()<EPSILON2)	return false;
 		align = SpriteAlign::custom;
 	}
 

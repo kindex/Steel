@@ -186,8 +186,10 @@ int main(int argc, char *argv[])
 				+ " Obj: " + IntToStr(graph.total.object)
 				+ " Trg: " + IntToStr(graph.total.triangle)
 				+ " Time: " + FloatToStr(timer.total())
+				+ " Col: " + FloatToStr(physic.total.collisionCount)
 				);
 			speed = 1.0/timer.getfps();
+			speed = 0.01; // TEMP TODO
 
 			captionUdateTime = timer.total();
 		}

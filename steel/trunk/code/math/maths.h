@@ -27,8 +27,13 @@
 #define EPSILON 1.0e-6f
 #endif
 
+#ifndef EPSILON2
+#define EPSILON2 1.0e-12
+#endif
+
+
 #ifndef INF
-#define INF 1.0e+20f
+#define INF 1.0e+12f
 #endif
 
 

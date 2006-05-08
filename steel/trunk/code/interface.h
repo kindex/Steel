@@ -75,7 +75,8 @@ getPVertexes возвращяет координаты точек в системе координат getPMatrix*/
 		global
 	} PositionKind;
 
-    	virtual PositionKind	getPositionKind() = 0;
+    virtual PositionKind	getPositionKind() = 0;
+	virtual void changePositionKind(const PositionKind newKind) = 0;
 };
 
 
