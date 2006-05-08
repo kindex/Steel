@@ -38,6 +38,7 @@ public:
 	bool process(steel::time globalTime, steel::time time);
 	bool init(std::string _conf);
 	bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);
+	bool update(Element &element);
 	bool clear();
 
 	bool collisionDetection(Element &el, v3 distance, Collision &collision);

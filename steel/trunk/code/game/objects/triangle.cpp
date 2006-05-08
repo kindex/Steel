@@ -11,6 +11,12 @@ bool GameTriangleObj::init(ScriptLine	&s, ResCollection &res)
 	vertex.data[1].set(1,0,0);
 	vertex.data[2].set(0,1,0);
 
+	frame.clear();
+	frame.merge(vertex.data[0]);
+	frame.merge(vertex.data[1]);
+	frame.merge(vertex.data[2]);
+
+
 	texCoords.changed = false;
 	texCoords.setId(res.genUid());
 	texCoords.data.resize(3);
@@ -20,7 +26,7 @@ bool GameTriangleObj::init(ScriptLine	&s, ResCollection &res)
 
 	triangle.changed = false;
 	triangle.setId(res.genUid());
-	triangle.data.resize(1);
+	triangle.data.resize(2);
 	triangle.data[0].a[0] = 0;
 	triangle.data[0].a[1] = 1;
 	triangle.data[0].a[2] = 2;

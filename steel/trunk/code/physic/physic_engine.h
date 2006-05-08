@@ -30,7 +30,6 @@ protected:
 		aabb			frame;
 		int				collisionCount;
 	};
-	typedef Element* PElement;
 
 	std::vector<Element> element;
 	std::vector<PhysicInterface*> object;
@@ -45,6 +44,8 @@ public:
 	// Collect information about object: object shape + velocity
 	virtual bool inject(PhysicInterface *object);
 	virtual bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL) = 0;
+	virtual bool update(Element &element) = 0;
+
 	// Move objects
 	virtual bool process(steel::time globalTime, steel::time time) = 0; 
 	// Clear collected information

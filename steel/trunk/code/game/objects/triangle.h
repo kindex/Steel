@@ -10,6 +10,7 @@ protected:
 	Triangles	triangle;
 	FaceMaterials	face;
 	TexCoords	texCoords;
+	aabb		frame;
 public:
 	bool init(ScriptLine	&s, ResCollection &res);
 
@@ -18,6 +19,8 @@ public:
 	Vertexes*	getPVertexes() { return getVertexes(); }
 	Triangles*	getTriangles() { return &triangle; }
 	FaceMaterials* getFaceMaterials() { return &face; }
+	aabb getFrame()		{	return frame; }
+	aabb getPFrame()	{	return frame; }
 };
 
 #endif

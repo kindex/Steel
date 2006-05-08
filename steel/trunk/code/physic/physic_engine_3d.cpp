@@ -75,8 +75,9 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 				path = path.getNormalized()*len;
 				newPos = oldPos + path;
 				o.setPosition(newPos);
-				el.frame.min += path;
-				el.frame.max += path;
+				update(el);
+				//el.frame.min += path;
+				//el.frame.max += path;
 			}
 
 			total.collisionCount++;
@@ -84,8 +85,10 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 		else
 		{
 			o.setPosition(newPos);
-			el.frame.min += path;
-			el.frame.max += path;
+
+			update(el);
+//			el.frame.min += path;
+//			el.frame.max += path;
 //			o.setPosition(p);
 		}
 	}
@@ -129,14 +132,21 @@ bool PhysicEngine3D::collisionDetection(Element &a, v3 distance, Collision &coll
 void PhysicEngine3D::checkCollisionMVertexTrg(const v3 point, const v3 direction, const Plane b, Collision &collision)
 {
 	float k;
-	if(isCrossTrgLine(b, Line(point, direction), k))
+
+	if(isCross(b, Line(point, direction), k))
+	{
 		if(k>=-EPSILON && k<=1+EPSILON)
-			if(collision.time > k)
+		{
+			v3 cpoint = point + direction*k;
+
+			if(b.isInTrg(cpoint) && collision.time > k)
 			{
 				collision.time = k;
-				collision.point = point;
+				collision.point = cpoint;
 				collision.normal = b.a*b.b; //нормаль к треугольнику
 			}
+		}
+	}
 }
 
 void PhysicEngine3D::checkCollisionMTrgVertex(const Plane a, const v3 direction, const v3 point, Collision &collision)
@@ -195,7 +205,7 @@ void PhysicEngine3D::checkCollisionMLineTrg(const Line a, const v3 direction, co
 bool PhysicEngine3D::checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Collision &collision)
 {
 // 1. вершина - грань
-	checkCollisionMVertexTrg(a.base, direction, b, collision);
+	checkCollisionMVertexTrg(a.base      , direction, b, collision);
 	checkCollisionMVertexTrg(a.base + a.a, direction, b, collision);
 	checkCollisionMVertexTrg(a.base + a.b, direction, b, collision);
 
@@ -209,7 +219,7 @@ bool PhysicEngine3D::checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Colli
 	checkCollisionMLineTrg(Line(a.base, a.a), direction, b, collision);
 	checkCollisionMLineTrg(Line(a.base, a.b), direction, b, collision);
 	checkCollisionMLineTrg(Line(a.base + a.a, a.b - a.a), direction, b, collision);
-	
+
 	return collision.time<=1;
 }
 
@@ -251,6 +261,23 @@ bool PhysicEngine3D::checkCollision(Element &a, v3 direction, Element &b, Collis
 	}
 
 	return collision.time<=1;
+}
+
+bool PhysicEngine3D::update(Element &el)
+{
+	Interface::PositionKind pos = el.object->getPositionKind();
+
+	el.matrix   = el.object->getMatrix();
+	el.frame	= el.object->getPFrame(); // local
+	if(pos == Interface::local)
+		el.matrix = el.parentMatrix*el.matrix; // TODO: update parent matrix
+	
+	el.frame.mul(el.matrix); // global
+
+	el.frame.min -= v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON);
+	el.frame.max += v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON);
+
+	return true;
 }
 
 
