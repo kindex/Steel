@@ -123,5 +123,7 @@ bool	GameObjModel::init(ScriptLine	&s, ResCollection &res)
 	if(s.count()<3) return false;
 	m = (Model*)res.add(Res::model, s.gets(3));
 
+	mass = 1;
+
 	return m != NULL;
 }

@@ -38,7 +38,8 @@
 
 
 template<typename T> T sqr(T x);
-template<typename T>int sgn(T A);
+int sgn(float A);
+//template<typename T>int sgn(T A);
 
 
 //#include "PLANE.h"

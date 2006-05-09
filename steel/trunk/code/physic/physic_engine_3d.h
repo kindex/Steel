@@ -42,6 +42,8 @@ public:
 	bool clear();
 
 	bool collisionDetection(Element &el, v3 distance, Collision &collision);
+	bool collisionReaction(const Collision collision);
+
 	bool checkCollision(Element &a, v3 distance, Element &b, Collision &collision);
 	bool checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Collision &collision);
 

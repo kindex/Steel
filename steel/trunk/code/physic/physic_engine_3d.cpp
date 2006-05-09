@@ -15,7 +15,7 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 
 	v3 acc = g*(float)time;
 	for(vector<Element>::iterator it = element.begin(); it != element.end(); it++)
-	if(it->collisionCount == 0)
+	if(it->collisionCount < 2)
 	{
 		Element &el = *it;
 		PhysicInterface &o = *el.object;
@@ -61,13 +61,7 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 			collision.b->collisionCount++;
 			el.collisionCount++;
 
-			v3 secondVelocity = collision.b->object->getVelocity();
-			v3 firstVelocity = o.getVelocity();
-
-			collision.b->object->setVelocity(-secondVelocity);
-			o.setVelocity(-firstVelocity);
-
-			double len = path.getLengthd();
+			float len = path.getLength();
 			len *= collision.time;
 			len -= CONTACT_EPSILON;
 			if(len>0)
@@ -79,6 +73,10 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 				//el.frame.min += path;
 				//el.frame.max += path;
 			}
+
+			collision.a = &el;
+
+			collisionReaction(collision);
 
 			total.collisionCount++;
 		}
@@ -92,6 +90,69 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 //			o.setPosition(p);
 		}
 	}
+	return true;
+}
+
+bool PhysicEngine3D::collisionReaction(const Collision collision)
+{ // Only global
+	float m1 = collision.a->object->getMass();
+	if(collision.a->object->getProcessKind() == ProcessKind::none) m1 = INF;
+	float m2 = collision.b->object->getMass();
+	if(collision.b->object->getProcessKind() == ProcessKind::none) m2 = INF;
+
+
+	v3 t = collision.normal.getNormalized();
+	v3 v1 = collision.a->object->getVelocity();
+	v3 v2 = collision.b->object->getVelocity();
+	float v1t = t&v1;
+	float v2t = t&v2;
+
+	float It = v1t*m1 + v2t*m2;
+
+	float E = m1*v1.getSquaredLength() + m2*v2.getSquaredLength();
+//	E *= 0.5;
+	float V1sr2 = v1.getSquaredLength() - v1t*v1t; if(V1sr2<EPSILON) V1sr2 = 0;
+	float V2sr2 = v2.getSquaredLength() - v2t*v2t; if(V2sr2<EPSILON) V2sr2 = 0;
+
+// квадратное уравнение (16)
+	float A = m2*m2/m1 + m2;
+	float B = -2*It*m2/m1;
+	float C = It*It/m1 + m1*V1sr2 + m2*V2sr2 - E;
+
+	float D = B*B - 4*A*C;
+	if (fabs(D)<EPSILON) D = 0;
+	if (D<EPSILON) D = 0;
+
+	assert(D>=0, "collisionReaction D>=0");
+
+	float u2ta = (-B + sqrt(D))/(2*A);
+	float u2tb = (-B - sqrt(D))/(2*A);
+    float u1ta = (It - m2*u2ta)/m1;
+    float u1tb = (It - m2*u2tb)/m1;
+
+	float u1t, u2t;
+
+	if(sgn(v1t - v2t) != sgn(u1ta - u2ta))
+	{
+		u1t = u1ta;
+		u2t = u2ta;
+	}
+	else
+	{
+		u1t = u1tb;
+		u2t = u2tb;
+	}
+
+	v3 v1sr = v1 - t*v1t;
+	v3 v2sr = v2 - t*v2t;
+	v3 u1 = v1sr + t*u1t;
+	v3 u2 = v2sr + t*u2t;
+
+//	v3 secondVelocity = collision.b->object->getVelocity();
+
+	collision.a->object->setVelocity(u1);
+	collision.b->object->setVelocity(u2);
+
 	return true;
 }
 
