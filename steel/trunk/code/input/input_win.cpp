@@ -1,6 +1,7 @@
 #include "../_cpp.h"
 #ifdef OPENGL_WIN
 #include "input_win.h"
+#include "../common/utils.h"
 
 #include <windows.h>		// Header File For Windows
 #include <winbase.h>
@@ -33,12 +34,28 @@ string decodeKey(WPARAM p)
 		case VK_RETURN: key = "return"; break;
 		case VK_ESCAPE: key = "escape"; break;
 		case VK_SPACE: key = "space"; break;
+		case VK_PAUSE: key = "pause"; break;
+		case VK_SNAPSHOT: key = "snapshot"; break;
+		case VK_OEM_1: key = ";"; break;
+		case VK_OEM_2: key = "/"; break;
+		case VK_OEM_7: key = "'"; break;
+
+//		case : key = ""; break;
+
 		default:
+			if(p>='0' && p<='9')
+			{
+				key.resize(1);
+				key[0] = p;
+			}
 			if(p>='A' && p<='Z')
 			{
 				key.resize(1);
 				key[0] = p + ('a'-'A');
 			}
+			if(p>=VK_F1 && p<=VK_F24)
+				key = "f" + IntToStr(p-VK_F1 + 1); break;
+
 			break;
 	}
 	return key;

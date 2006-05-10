@@ -20,21 +20,59 @@
 
 using namespace std;
 
-//#define MOVE_SPEED (10.0f)
-//#define LOOK_SPEED (0.01f)
+void Game::handleEventKeyDown(std::string key)
+{
+	if(key == "escape") _alive = false;
+	if(key == "pause") paused = !paused;
+	if(key == "n") framesToPass = 1;
+	if(key == "f2") graphEngine->conf->toggle("drawTexture");
+	if(key == "f3") graphEngine->conf->toggle("drawWire");
+	if(key == "f4") graphEngine->conf->toggle("drawAABB");
+	if(key == "f5") graphEngine->conf->toggle("drawVertexes");
 
-#define ACC(moveSpeed) { moveSpeed += (float)speed*accSpeed;}
-#define BRAKE(moveSpeed) {	if(moveSpeed>0)		moveSpeed -= (float)speed*brakeSpeed;			else				moveSpeed = 0;}
+	if(key == "1") speedup = 0.01;
+	if(key == "2") speedup = 0.05;
+	if(key == "3") speedup = 0.2;
+	if(key == "4") speedup = 0.5;
+	if(key == "5") speedup = 1;
+	if(key == "6") speedup = 2;
+	if(key == "7") speedup = 5;
+	if(key == "8") speedup = 20;
+	if(key == "9") speedup = 50;
+}
+
 
 void Game::processKeyboard()
 {
 	if(input->isMouseCaptured())
 	{
-		if(input->isPressed("w")) ACC(moveSpeed.x)	else BRAKE(moveSpeed.x);
+		v3 dir(0,0,0);
+		if(input->isPressed("w")) 
+			dir += v3(1,0,0);
+		if(input->isPressed("s")) 
+			dir += v3(-1,0,0);
+		if(input->isPressed("a")) 
+			dir += v3(0, +1, 0);
+		if(input->isPressed("d")) 
+			dir += v3(0, -1, 0);
+		if(input->isPressed("'")) 
+			dir += v3(0, 0, +1);
+		if(input->isPressed("/")) 
+			dir += v3(0, 0, -1);
 
-		if(input->isPressed("s")) ACC(moveSpeed.y)	else BRAKE(moveSpeed.y);
-		if(input->isPressed("a")) ACC(moveSpeed.z)	else BRAKE(moveSpeed.z);
-		if(input->isPressed("d")) ACC(moveSpeed.w)	else BRAKE(moveSpeed.w);
+		if(dir.getLength()>EPSILON)
+		{ 
+			moveSpeed += dir*accSpeed*(float)speed;
+		}
+		else
+		{
+			float d = brakeSpeed*(float)speed;
+			float len = moveSpeed.getLength();
+			len -= d;
+			if(len < 0) len = 0;
+			moveSpeed.normalize();
+			moveSpeed *= len; 
+		}
 	}
 }
 
@@ -52,17 +90,19 @@ void Game::process(PhysicEngine *physic, steel::time globalTime, steel::time tim
 {
 	processKeyboard();
 
-	eye += (float)(moveSpeed.x-moveSpeed.y)*(float)speed*direction;
-
+	eye += moveSpeed.x*direction*(float)speed;
+	eye += moveSpeed.y*v3(-direction.y, direction.x, 0).getNormalized()*(float)speed;
+	eye += moveSpeed.z*v3(0, 0, 1)*(float)speed;
+/*
 	v3 d(direction.y, -direction.x, 0);
 	d.normalize();
 	eye += (float)(moveSpeed.w-moveSpeed.z)*(float)speed*d;
-
+*/
 
 	if(!paused || framesToPass>0)
 	{
 		static steel::time totalPhysicTime = 0;
-		steel::time frame = 0.01;
+		steel::time frame = 0.01*speedup;
  		physic->process(totalPhysicTime, frame);
 		totalPhysicTime += frame;
 
@@ -90,6 +130,7 @@ void Game::process(PhysicEngine *physic, steel::time globalTime, steel::time tim
 
 void Game::bind(GraphEngine *graph)
 {
+	graphEngine = graph;
 	graph->inject(world);
 }
 
@@ -160,15 +201,9 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 	_alive = true;
 	paused = conf->geti("paused", 0) == 1;
 	framesToPass = 0;
+	speedup = 1;
+
 	return true;
-}
-
-
-void Game::handleEventKeyDown(std::string key)
-{
-	if(key == "escape") _alive = false;
-	if(key == "p") paused = !paused;
-	if(key == "n") framesToPass = 1;
 }
 
 void Game::handleEventKeyUp(std::string key)

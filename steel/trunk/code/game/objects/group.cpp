@@ -115,8 +115,9 @@ bool GameGroup::load(string script, ResCollection *res)
 		}
 		if(obj)
 		{
-			if(!obj->init(s->get(i), *res))			
-			{										
+			if(!obj->init(s->get(i), *res))
+			{							
+				obj->init(s->get(i), *res);
 				alog.msg("game script error", string("Cannot init object ") + kind + ":" + id);
 				return false;						
 			}										

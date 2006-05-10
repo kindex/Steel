@@ -39,9 +39,10 @@ class Game: public steelAbstract
 protected:
 // Camera
 	v3	eye, direction;
-	steel::time speed, time;
+	float speedup, speed;
+	steel::time time;
 	coord accSpeed, brakeSpeed;
-	v4 moveSpeed;
+	v3 moveSpeed;
 
 	bool _alive, paused;
 	int framesToPass;
@@ -49,6 +50,8 @@ protected:
 	ResCollection	*res;
 	Input		*input;
 	Config		*conf;
+
+	GraphEngine *graphEngine;
 
 	void processKeyboard();
 
@@ -59,9 +62,9 @@ public:
 	Game() { } 
 	bool init(ResCollection *_res, std::string _conf, Input *_input);
 
-	void bind(GraphEngine *graph);
-	void bind(PhysicEngine *physic);
-	void draw(GraphEngine *graph);
+	void bind(GraphEngine *engine);
+	void bind(PhysicEngine *engine);
+	void draw(GraphEngine *engine);
 	void process(PhysicEngine *physic, steel::time globalTime, steel::time time);
 
 	void handleEventKeyDown(std::string key);
@@ -69,7 +72,7 @@ public:
 
 	void handleMouse(double dx, double dy);
 	bool isAlive() {return _alive;} 
-	void setspeed(double _speed, double _time) {speed = _speed; time = _time; } 
+	void setspeed(float _speed, steel::time _time) {speed = _speed; time = _time; } 
 
 	v3	getGlobalPosition(std::string obj);
 };

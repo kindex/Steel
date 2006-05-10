@@ -345,8 +345,10 @@ bool OpenGL_WIN_Engine::createWindow()
       | PFD_SUPPORT_OPENGL
       | PFD_GENERIC_ACCELERATED
       | PFD_GENERIC_FORMAT
-      | PFD_DOUBLEBUFFER
-      ;
+	      ;
+
+	if(conf->geti("swapBuffers", 1))
+	    ppfd->dwFlags |= PFD_DOUBLEBUFFER;
 
     ppfd->dwLayerMask = PFD_MAIN_PLANE;
     ppfd->iPixelType = PFD_TYPE_RGBA;

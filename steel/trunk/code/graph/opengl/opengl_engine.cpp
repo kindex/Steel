@@ -271,12 +271,13 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			if(e.blend)
 			{
 				glEnable(GL_BLEND);
-				if(m->map[0].texture->getBpp() == 24) // RGB
+				
+				if(m->map[0].kind == MapKind::color_map && m->map[0].texture->getBpp() == 24) // RGB
 				{
 					if(m->map[0].mode == MapMode::add)	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
 					if(m->map[0].mode == MapMode::mul)	glBlendFunc(GL_DST_COLOR, GL_ZERO);
-				}
-				if(m->map[0].texture->getBpp() == 32) // Alpha
+				}else
+//				if(m->map[0].texture->getBpp() == 32) // Alpha
 				{
 					if(m->map[0].mode == MapMode::add)	glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_DST_ALPHA); // ?
 					if(m->map[0].mode == MapMode::mul)	glBlendFunc(GL_DST_ALPHA, GL_ZERO);
@@ -728,7 +729,11 @@ bool OpenGL_Engine::process()
 //	if(!ARB_multitexture_supported) 
 //		conf->setup("drawBump", 0);
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	GLbitfield clear = 0;
+	if(conf->geti("clearColor", 1))	clear |= GL_COLOR_BUFFER_BIT;
+	if(conf->geti("clearDepth", 1))	clear |= GL_DEPTH_BUFFER_BIT;
+	if(clear)
+		glClear(clear);
 
 /*
 	glEnable(GL_LIGHT0);
@@ -761,8 +766,11 @@ bool OpenGL_Engine::process()
 
 	elementAlpha.clear();
 
-	glFlush();
-	swapBuffers();
+	if(conf->geti("swapBuffers", 1))
+	{
+		glFlush(); // TODO: flush in thread
+		swapBuffers();
+	}
 
 	return true;
 }

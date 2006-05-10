@@ -15,7 +15,7 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 
 	v3 acc = g*(float)time;
 	for(vector<Element>::iterator it = element.begin(); it != element.end(); it++)
-	if(it->collisionCount < 2)
+	if(it->collisionCount == 0)
 	{
 		Element &el = *it;
 		PhysicInterface &o = *el.object;
@@ -58,9 +58,6 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 
 		if(collisionDetection(el, dir, collision))
 		{
-			collision.b->collisionCount++;
-			el.collisionCount++;
-
 			float len = path.getLength();
 			len *= collision.time;
 			len -= CONTACT_EPSILON;
@@ -76,7 +73,11 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 
 			collision.a = &el;
 
-			collisionReaction(collision);
+			if(collision.b->collisionCount==0)
+				collisionReaction(collision);
+
+			collision.b->collisionCount++;
+			el.collisionCount++;
 
 			total.collisionCount++;
 		}
@@ -120,6 +121,7 @@ bool PhysicEngine3D::collisionReaction(const Collision collision)
 	float C = It*It/m1 + m1*V1sr2 + m2*V2sr2 - E;
 
 	float D = B*B - 4*A*C;
+
 	if (fabs(D)<EPSILON) D = 0;
 	if (D<EPSILON) D = 0;
 
@@ -246,7 +248,7 @@ void PhysicEngine3D::checkCollisionMLineLine(const Line a, const v3 direction, c
 		{
 			collision.time = time;
 			collision.point = point;
-//			collision.normal = a.a*a.b; // TODO
+			collision.normal = a.a*b.a;
 		}
 	}
 }
@@ -294,7 +296,7 @@ bool PhysicEngine3D::checkCollision(Element &a, v3 direction, Element &b, Collis
 	// проверяем пересечение этой призмы со всеми треугольниками второго тела
 
 	Plane at;
-
+	if(a.triangle)
 	for(vector<Triangle>::iterator it = a.triangle->data.begin(); it != a.triangle->data.end(); it++)
 	{
 		at.base = a.matrix * a.vertex->data[it->a[0]];
