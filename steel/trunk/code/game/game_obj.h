@@ -23,6 +23,29 @@
 #include "../res/script/script.h"
 
 /*
+Dummy. Объект, который имеет положение и детей, но не имеет собственной формы.
+*/
+
+class GameObjDummy: public virtual GraphInterface, public virtual PhysicInterface
+{
+public:
+	uid			getId()			{	return 0;		}
+	aabb		getPFrame()		{	return getFrame(); }
+	aabb		getFrame()		{	return aabb();	}
+	bool		cleanup()		{	return true;	}
+	bool		cleanupP()		{	return cleanup();	}
+	Vertexes*	getVertexes()	{	return NULL;	}
+	Vertexes*	getPVertexes()	{	return getVertexes(); }
+	Triangles*	getTriangles()	{	return NULL;	}
+	Normals*	getNormals()	{	return NULL;	}
+	Lights*		getLights()		{	return NULL;	}
+	FaceMaterials* getFaceMaterials()	{	return NULL;	}
+	TexCoords*	getTexCoords(int texNumber)	{	return NULL;	}
+};
+
+
+
+/*
 Игровой объект, который может:
 имеет положение
 рисоваться в игре
@@ -30,7 +53,7 @@
 имень детей
 быть прикреплённым к родителю
 */
-class GameObj: public virtual GraphInterface, public virtual PhysicInterface // Abstract
+class GameObj: public GameObjDummy
 {
 public:
 	GameObj			*parent;
@@ -217,31 +240,11 @@ public:
 
 };
 
-/*
-Dummy. Обхект, который имеет положение и детей, но не имеет собственной формы.
-*/
-
-class GameObjDummy: public GameObj
-{
-public:
-	uid			getId()			{	return 0;		}
-	aabb		getPFrame()		{	return getFrame(); }
-	aabb		getFrame()		{	return aabb();	}
-	bool		cleanup()		{	return true;	}
-	bool		cleanupP()		{	return cleanup();	}
-	Vertexes*	getVertexes()	{	return NULL;	}
-	Vertexes*	getPVertexes()	{	return getVertexes(); }
-	Triangles*	getTriangles()	{	return NULL;	}
-	Normals*	getNormals()	{	return NULL;	}
-	Lights*		getLights()		{	return NULL;	}
-	FaceMaterials* getFaceMaterials()	{	return NULL;	}
-	TexCoords*	getTexCoords(int texNumber)	{	return NULL;	}
-};
 
 /*
 Метка (tag). Служит точкой отсчёта для других объектов (своих детей)
 */
-class GameTag: public GameObjDummy
+class GameTag: public GameObj
 {
 public:
 

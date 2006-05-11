@@ -12,7 +12,7 @@ struct PathTarget
 /*
 Path. Метка, которя движется по траектории от объекта к объекту.
 */
-class TagPath: public GameObjDummy
+class TagPath: public GameObj
 {
 	int currentTarget;
 	std::vector<PathTarget> target;

@@ -25,6 +25,7 @@
 #include "res/conf/conf.h"
 #include "math/vector3d.h"
 #include "interface.h"
+#include "helper.h"
 
 #include <string>
 #include <vector>
@@ -35,6 +36,7 @@ class Engine: public steelAbstract
 {
 protected:
 	ResCollection	*res;
+	EngineHelper	*helper;
 public:
 	Config			*conf;
 
@@ -46,9 +48,9 @@ public:
 //	virtual	bool remove(Interface *object);
 //	virtual bool process() = 0; // add object to process by engine
 	virtual bool deinit() = 0;
-
+	virtual void bindHelper(EngineHelper *_helper) { helper = _helper; } 
 	// TODO: убрать это. Не вписывает в идею движка
-	void bindResColelntion(ResCollection *_res) { res = _res; }
+	virtual void bindResColelntion(ResCollection *_res) { res = _res; }
 };
 
 #endif

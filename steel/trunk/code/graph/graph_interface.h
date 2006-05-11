@@ -29,10 +29,6 @@ struct Light
 	float intensivity, range;
 };
 
-/*
-Sprite, Billboard. Полигон, который всегда параллелен плоскости экрана.
-*/
-
 typedef std::vector<Light>		Lights;
 
 class TexCoord: public BufferedElement
@@ -40,11 +36,10 @@ class TexCoord: public BufferedElement
 public:
 	std::vector<v2>	data;
 
-//	kind : 1d, 2d, 3d
+//	kind : 2d only
 };
 
 typedef Vertexes	Normals;
-
 
 typedef TexCoord TexCoords;
 //typedef std::vector<v2> MapCoords;
@@ -59,7 +54,6 @@ struct FaceMaterial
 };
 
 typedef std::vector<FaceMaterial>	FaceMaterials;
-
 
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 

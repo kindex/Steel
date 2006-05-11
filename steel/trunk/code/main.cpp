@@ -25,12 +25,6 @@
 	#include "input/input_win.h"
 #endif
 
-#include "res/res.h"
-#include "res/image/bmp.h"
-#include "res/image/tga.h"
-#include "res/model/_3ds.h"
-#include "res/conf/conf_text.h"
-#include "res/script/script_text.h"
 
 #include "common/logger.h"
 #include "common/timer.h"
@@ -38,55 +32,8 @@
 #include "game/game.h"
 #include "common/utils.h"
 
-//#include <SDL.h>
+#include "res/main.h"
 
-
-// Image filename:
-// name[.cube][.normal|.height][.bmp|.tga]
-
-Res *createBitmap(const std::string filename, ResCollection *res)
-{
-	Res *r;
-	// try to load image2d
-	if(r = createBMP(filename, res)) return r;
-	if(r = createTGA(filename, res)) return r;
-	return NULL;
-}
-
-Res *createImageFormat(const std::string filename, ResCollection *res)
-{
-	Res *r;
-	// try to load image2d
-	if(r = createBitmap(filename, res))	return r;
-	if(r = createBitmap(filename + ".normal", res))	
-	{
-		((Image*)r)->setFormat(ImageFormat::normal);
-		return r;
-	}
-	if(r = createBitmap(filename + ".height", res))
-	{
-		((Image*)r)->convertFromHeightMapToNormalMap();
-		((Image*)r)->setFormat(ImageFormat::normal);
-		return r;
-	}
-
-	return NULL;
-}
-
-
-Res *createImage(const std::string filename, ResCollection *res)
-{
-	Res *r;
-	// try to load image2d
-	if(r = createImageFormat(filename, res)) return r;
-	// try to load cubemap
-	if(r = createImageFormat(filename + ".cube", res))
-	{
-		((Image*)r)->setKind(ImageKind::cube);
-		return r;
-	}
-	return NULL;
-}
 
 bool test();
 
@@ -107,15 +54,10 @@ int main(int argc, char *argv[])
 	Timer timer;
 	timer.start();	timer.pause();
 
-	double speed = 0.01; // 100 FPS
+	float speed = 0.01f; // 100 FPS
 // *************** RES *****************
 	ResCollection res;
-	res.registerClass(createImage,		Res::image);
-	res.registerClass(create3DS,		Res::model);
-	res.registerClass(createMaterial,	Res::material);
-	res.registerClass(createConfigText,	Res::config);
-	res.registerClass(createScriptText,	Res::script);
-
+	registerResources(res);
 
 // *************** GRAPH *****************
 #ifdef OPENGL_SDL	
@@ -162,7 +104,7 @@ int main(int argc, char *argv[])
 
 		if(speed < 0.0 || speed>0.01 && timer.total()<2)
 		{
-			speed = 0.01;
+			speed = 0.01f;
 		}
 	
 		game.setspeed(speed, timer.total());
@@ -188,8 +130,7 @@ int main(int argc, char *argv[])
 				+ " Time: " + FloatToStr(timer.total())
 				+ " Col: " + FloatToStr(physic.total.collisionCount)
 				);
-			speed = 1.0/timer.getfps();
-			speed = 0.01; // TEMP TODO
+			speed = 1.0f/timer.getfps();
 
 			captionUdateTime = timer.total();
 		}

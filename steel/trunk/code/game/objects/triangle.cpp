@@ -2,7 +2,7 @@
 
 bool GameTriangleObj::init(ScriptLine	&s, ResCollection &res)
 {
-	if(!GameObjDummy::init(s, res)) return false;
+	if(!GameObj::init(s, res)) return false;
 
 	vertex.changed = false;
 	vertex.setId(res.genUid());

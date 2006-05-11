@@ -3,7 +3,7 @@
 
 #include "../game_obj.h"
 
-class GameTriangleObj: public GameObjDummy
+class GameTriangleObj: public GameObj
 {
 protected:
 	Vertexes	vertex;

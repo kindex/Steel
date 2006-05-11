@@ -28,6 +28,19 @@ bool GraphEngine::inject(GraphInterface *object)
 	return true;
 }
 
+bool GraphEngine::remove(GraphInterface *object)
+{
+	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
+		if(*it == object)
+		{
+			object->cleanup();
+			objects.erase(it);
+			return true;
+		}
+	return false;
+}
+
+
 bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 {
 	if(object == NULL) return false;

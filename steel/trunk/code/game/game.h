@@ -23,6 +23,8 @@
 
 #include "../physic/physic_engine.h"
 #include "../graph/graph_engine.h"
+#include "../graph/graph_helper.h"
+
 
 class Game; // forward declaration, cross-use
 
@@ -57,6 +59,7 @@ protected:
 
 // World - all objects
 	GameGroup	*world;
+	GraphHelper	*physicHelper;
 
 public:
 	Game() { } 

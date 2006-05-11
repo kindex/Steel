@@ -35,6 +35,7 @@ protected:
 	v3 g;
 //	std::map<std::string, int> tag;
 public:
+	PhysicEngine3D() { helper = NULL; conf = NULL; }
 	bool process(steel::time globalTime, steel::time time);
 	bool init(std::string _conf);
 	bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);

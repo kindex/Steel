@@ -301,6 +301,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		if(conf->geti("drawWire"))
 		{
 			glPushAttrib(GL_ENABLE_BIT | GL_POINT_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glColor3f(1,1,1);
 			// загружаем вершины объекта
 			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 				glVertexPointer(3, GL_FLOAT, 0, 0);
@@ -647,6 +648,7 @@ void OpenGL_Engine::drawNormals(DrawElement &e)
 {
 	if(e.normal)
 	{
+		glColor3f(0,0,1);
 		aabb &f = e.frame;
 		float diag = (f.max-f.min).getLength()*0.05f;
 		
@@ -668,6 +670,7 @@ void OpenGL_Engine::drawNormals(DrawElement &e)
 void OpenGL_Engine::drawVertexes(DrawElement &e)
 {
 	glPointSize(5);
+	glColor3f(0.5,1,1);
 
 	glBegin(GL_POINTS);
 	for(unsigned int i=0; i < e.vertex->data.size(); i++)
@@ -683,6 +686,8 @@ void OpenGL_Engine::drawVertexes(DrawElement &e)
 void OpenGL_Engine::drawAABB(DrawElement &e, matrix44 matrix)
 {
 	aabb &c = e.frame;
+
+	glColor3f(1,0.8,0.8);
 
 	glPushMatrix();
 	glLoadIdentity();

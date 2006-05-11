@@ -11,18 +11,18 @@
 class Timer
 {
 	bool active;
-    steel::time startTime, skip, pausedTime, lastIntervalTime, curIntervalStartTime, fps;
+    double startTime, skip, pausedTime, lastIntervalTime, curIntervalStartTime, fps;
 	int frameCnt, lastIntervalFrameCnt, curIntervalFrameCnt, totalFrames;
 
 public:
 // Время в секундах от момента clear, исключая промежутки между pause и resume
 	steel::time total() 
 	{ 
-		return (timestamp() - startTime) - skip; 
+		return (steel::time)((timestamp() - startTime) - skip);
 	}
 
 // Абсолютное время
-	virtual steel::time timestamp(); 
+	virtual double timestamp(); 
 // Обнулить таймер
 	virtual void start();
 	virtual void pause()

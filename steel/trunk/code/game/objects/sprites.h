@@ -20,7 +20,7 @@ namespace SpriteAlign
 	} SpriteAlign;
 }
 
-class SpriteSystem: public GameObjDummy
+class SpriteSystem: public GameObj
 {
 protected:
 	ResCollection	*res;

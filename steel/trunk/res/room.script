@@ -16,6 +16,8 @@ solid			wall/wall1	0,20,-1
 solid			wall/wall1	0,-20,-1
 
 #solid			spaceman/spaceman	0,0,0
+#solid			spaceman/spaceman	1,0,0
+#solid			spaceman/spaceman	0,1,0
 
 //solid			box/box1	0	0	0	.76	2
 //solid			box/box1	3	0	0

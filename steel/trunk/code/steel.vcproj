@@ -332,6 +332,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\helper.h"
+				>
+			</File>
+			<File
 				RelativePath=".\interface.h"
 				>
 			</File>
@@ -439,6 +443,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\graph\graph_helper.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\graph\graph_helper.h"
+					>
+				</File>
+				<File
 					RelativePath=".\graph\graph_interface.h"
 					>
 				</File>
@@ -486,6 +498,41 @@
 			<Filter
 				Name="res"
 				>
+				<File
+					RelativePath=".\res\main.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="DebugWin|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\res\main.h"
+					>
+				</File>
 				<File
 					RelativePath=".\res\res.cpp"
 					>
@@ -809,9 +856,28 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+			Name="res"
 			>
+			<File
+				RelativePath="..\res\game.conf"
+				>
+			</File>
+			<File
+				RelativePath="..\res\input.conf"
+				>
+			</File>
+			<File
+				RelativePath="..\res\physic.conf"
+				>
+			</File>
+			<File
+				RelativePath="..\res\renderer.conf"
+				>
+			</File>
+			<File
+				RelativePath="..\res\room.script"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

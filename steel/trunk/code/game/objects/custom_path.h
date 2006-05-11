@@ -6,7 +6,7 @@
 /*
 Path. Метка, скорость которой рассчитывает диффуром.
 */
-class CustomPath: public GameObjDummy
+class CustomPath: public GameObj
 {
 public:
 	

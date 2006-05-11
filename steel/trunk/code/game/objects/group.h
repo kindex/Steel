@@ -13,7 +13,7 @@
 другими группами.
 */
 
-class GameGroup: public GameObjDummy
+class GameGroup: public GameObj
 {
 public:
 	bool init(ScriptLine	&s,		ResCollection &res);

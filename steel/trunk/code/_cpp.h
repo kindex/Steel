@@ -34,5 +34,8 @@
 #define _CRT_SECURE_NO_DEPRECATE 
 
 #include "common/logger.h"
+#include "common/types.h"
+
+using namespace steel;
 
 #endif

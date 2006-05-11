@@ -20,8 +20,8 @@ void Timer::incframe()
 
 steel::time Timer::getfps()
 {
-	steel::time ts = total();
-	steel::time cur = ts - curIntervalStartTime;
+	double ts = total();
+	double cur = ts - curIntervalStartTime;
 	if(cur >= UPDATE_FPS_TIME)
 	{
 		lastIntervalTime = cur;
@@ -33,7 +33,7 @@ steel::time Timer::getfps()
 	{
 		fps = lastIntervalFrameCnt/lastIntervalTime;
 	}
-	return fps;
+	return (steel::time)fps;
 }
 
 std::string Timer::getfps_s()
@@ -41,9 +41,7 @@ std::string Timer::getfps_s()
 	return FloatToStr(getfps());
 }
 
-
-
-steel::time Timer::timestamp()
+double Timer::timestamp()
 {
 	 struct _timeb a;
 	_ftime(&a);

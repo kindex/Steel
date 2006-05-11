@@ -83,6 +83,7 @@ public:
 	virtual void processCamera() = 0;
 	// Collect information about object: how to render it
 	virtual bool inject(GraphInterface *object);
+	virtual bool remove(GraphInterface *object);
 	
 	virtual bool prepare(GraphInterface *object, matrix44 matrix = matrix44::getIdentity());
 

@@ -25,15 +25,17 @@ void Game::handleEventKeyDown(std::string key)
 	if(key == "escape") _alive = false;
 	if(key == "pause") paused = !paused;
 	if(key == "n") framesToPass = 1;
+
+	if(key == "f1") conf->toggle("drawHelper");
 	if(key == "f2") graphEngine->conf->toggle("drawTexture");
 	if(key == "f3") graphEngine->conf->toggle("drawWire");
 	if(key == "f4") graphEngine->conf->toggle("drawAABB");
 	if(key == "f5") graphEngine->conf->toggle("drawVertexes");
 
-	if(key == "1") speedup = 0.01;
-	if(key == "2") speedup = 0.05;
-	if(key == "3") speedup = 0.2;
-	if(key == "4") speedup = 0.5;
+	if(key == "1") speedup = 0.01f;
+	if(key == "2") speedup = 0.05f;
+	if(key == "3") speedup = 0.2f;
+	if(key == "4") speedup = 0.5f;
 	if(key == "5") speedup = 1;
 	if(key == "6") speedup = 2;
 	if(key == "7") speedup = 5;
@@ -102,7 +104,7 @@ void Game::process(PhysicEngine *physic, steel::time globalTime, steel::time tim
 	if(!paused || framesToPass>0)
 	{
 		static steel::time totalPhysicTime = 0;
-		steel::time frame = 0.01*speedup;
+		steel::time frame = 0.01f*speedup;
  		physic->process(totalPhysicTime, frame);
 		totalPhysicTime += frame;
 
@@ -128,15 +130,17 @@ void Game::process(PhysicEngine *physic, steel::time globalTime, steel::time tim
 */
 
 
-void Game::bind(GraphEngine *graph)
+void Game::bind(GraphEngine *engine)
 {
-	graphEngine = graph;
-	graph->inject(world);
+	graphEngine = engine;
+	engine->inject(world);
 }
 
-void Game::bind(PhysicEngine *physic)
+void Game::bind(PhysicEngine *engine)
 {
-	physic->inject(world);
+	engine->inject(world);
+//	if(conf->geti("drawHelper"))
+	engine->bindHelper(physicHelper);
 }
 
 void Game::draw(GraphEngine *graph)
@@ -157,7 +161,17 @@ void Game::draw(GraphEngine *graph)
 	graph->camera.setup(eye, direction);
 	graph->processCamera();
 
+	if(conf->geti("drawHelper"))
+	{
+		graph->inject(physicHelper);
+	}
+
 	graph->process();
+
+	if(conf->geti("drawHelper"))
+	{
+		graph->remove(physicHelper);
+	}
 }
 
 
@@ -202,6 +216,8 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 	paused = conf->geti("paused", 0) == 1;
 	framesToPass = 0;
 	speedup = 1;
+
+	physicHelper  = new GraphHelper;
 
 	return true;
 }

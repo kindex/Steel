@@ -45,6 +45,9 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 		v3 oldPos = o.getPosition();
 		v3 newPos = oldPos + path;
 
+		if(helper) // draw velocity
+			helper->drawVector(Line(global*oldPos ,velocity), 0,0);
+
 		Collision collision;
 		collision.time = INF; // no collision
 

@@ -18,11 +18,11 @@
 */
 namespace steel
 {
-typedef double time;
+typedef float time; // time interval
 }
 
 typedef float coord;
-typedef coord steelLength_t;
+typedef float steelLength_t;
 
 /*
 	Промежуток времени (миллисекунды)
