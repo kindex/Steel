@@ -89,6 +89,9 @@ getPVertexes возвращяет координаты точек в системе координат getPMatrix*/
 	// скорость в глобальных коодринатах
 	virtual v3		getVelocity() = 0;
 	virtual void	setVelocity(v3 const &v) = 0;
+	virtual matrix44	getGlobalMatrix() = 0;
+	virtual v3			getGlobalVelocity() = 0;
+
 	// масса
 	virtual	coord	getMass() = 0;
 

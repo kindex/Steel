@@ -70,7 +70,7 @@ v3	GameObj::getGlobalVelocity()
 	{
 		GameObj *p = getParent();
 		if(p)
-			return p->getGlobalMatrix() * getVelocity();
+			return p->getGlobalVelocity() + p->getGlobalMatrix()*getVelocity();
 		else
 			return getVelocity();
 	}

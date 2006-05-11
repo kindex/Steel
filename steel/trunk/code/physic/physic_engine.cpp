@@ -20,6 +20,9 @@ bool PhysicEngine::init(std::string _conf)
 bool PhysicEngine::inject(PhysicInterface *obj)
 {
 	object.push_back(obj);
+
+	prepare(obj);
+
 	return true;
 }
 
