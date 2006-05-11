@@ -5,20 +5,40 @@
 
 using namespace std;
 
-#define CONTACT_EPSILON (0.001f)
+#define CONTACT_EPSILON (0.01f)
 
 bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 {
+	if(helper) // draw velocity
+		helper->setTime(globalTime);
+
 	element.clear();
 	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
 		prepare(*it);
 
 	v3 acc = g*(float)time;
+
+	static int pass = 0;
+
+	pass = 1 - pass;
+
 	for(vector<Element>::iterator it = element.begin(); it != element.end(); it++)
-	if(it->collisionCount == 0)
 	{
 		Element &el = *it;
 		PhysicInterface &o = *el.object;
+
+		if(helper && o.getProcessKind() != ProcessKind::none) // draw velocity
+		{
+			helper->drawVector(Line(
+				o.getPosition(),
+				o.getVelocity().getNormalized()
+				
+				), 0,0, v4(0,1,0,1));
+		}
+
+
+//	if(it->collisionCount < 2)
+	{
 
 		ProcessKind::ProcessKind kind = o.getProcessKind();
 		if(kind == ProcessKind::none) continue;
@@ -45,9 +65,6 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 		v3 oldPos = o.getPosition();
 		v3 newPos = oldPos + path;
 
-		if(helper) // draw velocity
-			helper->drawVector(Line(global*oldPos ,velocity), 0,0);
-
 		Collision collision;
 		collision.time = INF; // no collision
 
@@ -64,7 +81,7 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 			float len = path.getLength();
 			len *= collision.time;
 			len -= CONTACT_EPSILON;
-			if(len>0)
+			if(len>EPSILON)
 			{
 				path = path.getNormalized()*len;
 				newPos = oldPos + path;
@@ -76,7 +93,16 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 
 			collision.a = &el;
 
-			if(collision.b->collisionCount==0)
+			if(helper) // draw collision
+			{
+				helper->drawVector(Line(
+					collision.point,
+					collision.normal.getNormalized()*0.1
+					), 0,0, v4(1,0,0,1));
+			}
+
+
+//			if(collision.b->collisionCount==0)
 				collisionReaction(collision);
 
 			collision.b->collisionCount++;
@@ -94,6 +120,7 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 //			o.setPosition(p);
 		}
 	}
+	}
 	return true;
 }
 
@@ -104,12 +131,13 @@ bool PhysicEngine3D::collisionReaction(const Collision collision)
 	float m2 = collision.b->object->getMass();
 	if(collision.b->object->getProcessKind() == ProcessKind::none) m2 = INF;
 
-
 	v3 t = collision.normal.getNormalized();
 	v3 v1 = collision.a->object->getVelocity();
 	v3 v2 = collision.b->object->getVelocity();
 	float v1t = t&v1;
 	float v2t = t&v2;
+
+//	if(v1t*v2t>0) return false;
 
 	float It = v1t*m1 + v2t*m2;
 

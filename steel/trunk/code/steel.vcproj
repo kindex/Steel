@@ -499,46 +499,19 @@
 				Name="res"
 				>
 				<File
-					RelativePath=".\res\main.cpp"
-					>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="DebugWin|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\res\main.h"
-					>
-				</File>
-				<File
 					RelativePath=".\res\res.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\res\res.h"
+					>
+				</File>
+				<File
+					RelativePath=".\res\res_main.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\res\res_main.h"
 					>
 				</File>
 				<Filter

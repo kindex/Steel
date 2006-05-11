@@ -62,11 +62,11 @@ void aabb::merge(aabb const &second)
 	if (max.z < second.max.z) max.z = second.max.z;
  }
 
-std::vector<v3> aabb::getVertexes()
+std::vector<v3> aabb::getVertexes() const
 {
 	std::vector<v3> r;
-	v3 &a = min; 
-	v3 &b = max;
+	const v3 &a = min; 
+	const v3 &b = max;
 	
 	r.push_back(v3(a.x, a.y, a.z));
 	r.push_back(v3(a.x, a.y, b.z));

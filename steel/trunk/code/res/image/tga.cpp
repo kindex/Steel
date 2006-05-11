@@ -34,7 +34,7 @@ bool TGA::init(const std::string name)
 
 	if(!f.open(name, "tga"))
 	{
-		alog.msg("warning res image tga", string("Res/Image/TGA: cannot open file ")+ name.c_str());
+//		alog.msg("warning res image tga", string("Res/Image/TGA: cannot open file ")+ name.c_str());
 		return false;
 	}
 

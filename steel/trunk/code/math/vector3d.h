@@ -30,7 +30,8 @@ struct v3
 
 	inline v3(const v3 & rhs)	:	x(rhs.x), y(rhs.y), z(rhs.z)	{}
 
-	void set(float newX, float newY, float newZ) {	x=newX;	y=newY;	z=newZ;	}
+	inline void set(float newX, float newY, float newZ) {	x=newX;	y=newY;	z=newZ;	}
+	inline void set(const v3 _v) {	x=_v.x;	y=_v.y; z=_v.z;	}
 	
 	//Accessors kept for compatibility
 	inline void setX(float newX) {x = newX;}

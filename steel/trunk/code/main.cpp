@@ -32,7 +32,7 @@
 #include "game/game.h"
 #include "common/utils.h"
 
-#include "res/main.h"
+#include "res/res_main.h"
 
 
 bool test();

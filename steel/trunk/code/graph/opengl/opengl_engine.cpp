@@ -124,6 +124,11 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 	if(glGenBuffersARB) // Vertex Buffer Object supportd
 	{
 		uid	id = v->getId();
+		if(id == 0) 
+		{
+			glBindBufferARB(mode2, 0);
+			return false;
+		}
 
 		bool loaded = false;
 		if(buffer.find(id) != buffer.end())
@@ -186,24 +191,24 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 	glPushMatrix();
 	glLoadMatrixf(e.matrix.a);
 
-
-	if(e.triangle && e.vertex)// если есть полигоны и вершины
+	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
 	{
 		Material *m = e.material; // получаем материал
 		if(m != NULL  && conf->geti("drawTexture", 1))
 		{
-			glPushAttrib(GL_ENABLE_BIT | GL_POINT_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glPushAttrib(GL_ALL_ATTRIB_BITS);
 			// загружаем вершины объекта
+
 			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 				glVertexPointer(3, GL_FLOAT, 0, 0);
 			else
 			{
 				glEnable(GL_VERTEX_ARRAY);
-				glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data[0]);
+				glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());
 			}
 
 			// загружаем нормали объекта
-			if(e.normal)
+			if(e.normal && !e.normal->data.empty())
 			{
 				if(bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 					glNormalPointer(GL_FLOAT, 0, 0);
@@ -219,7 +224,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			// идём по всем картам
 			for(int i=0; i<texCount; i++)
 			{
-				Map map = m->map[i]; // текущая картв
+				Map map = m->map[i]; // текущая текстура
 
 				if(glActiveTextureARB)
 				{
@@ -233,7 +238,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 					bindTexture(map.texture); // 2D texture (auto detect from Image)
 					// загружаем тектурные координаты
 					TexCoords *coords = e.object->getTexCoords(i);
-					if(coords)
+					if(coords && !coords->data.empty())
 					{
 						if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
 							glTexCoordPointer(2, GL_FLOAT, 0,0);
@@ -291,7 +296,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
 				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
 			else
-				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data[0]);
+				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data.front());
 
 // -------------------------------------------------------------------------------
 			// откат настроек
@@ -300,8 +305,13 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 		if(conf->geti("drawWire"))
 		{
-			glPushAttrib(GL_ENABLE_BIT | GL_POINT_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			glColor3f(1,1,1);
+			glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+			if(e.material && !e.material->map.empty() &&e.material->map[0].kind == MapKind::color) // цвет RGBA
+					glColor4f(e.material->map[0].color.x, e.material->map[0].color.y, e.material->map[0].color.z, e.material->map[0].color.w);
+			else
+				glColor4f(1,1,1,1);
+
 			// загружаем вершины объекта
 			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 				glVertexPointer(3, GL_FLOAT, 0, 0);
@@ -313,9 +323,11 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			glPolygonMode(GL_FRONT, GL_LINE);  		// Draw Polygons As Wireframes
 			glPolygonMode(GL_BACK, GL_LINE); 
 			glDepthFunc(GL_LEQUAL); // For blending
-	
-			bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3); 
-			glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+
+			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
+				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+			else
+				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data[0]);
 
 			glPolygonMode(GL_FRONT, GL_FILL);  
 
@@ -687,7 +699,7 @@ void OpenGL_Engine::drawAABB(DrawElement &e, matrix44 matrix)
 {
 	aabb &c = e.frame;
 
-	glColor3f(1,0.8,0.8);
+	glColor3f(1.0f, 0.8f, 0.8f);
 
 	glPushMatrix();
 	glLoadIdentity();
@@ -833,6 +845,8 @@ bool OpenGL_Engine::init(std::string _conf)
 	alog.out("OpenGL engine has been initialized!\n");
 
 	setCaption("Steel Engine");
+
+	clear();
 
 	return true;
 }

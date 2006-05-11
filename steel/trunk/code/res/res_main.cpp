@@ -1,4 +1,4 @@
-#include "main.h"
+#include "res_main.h"
 
 #include "image/bmp.h"
 #include "image/tga.h"

@@ -33,6 +33,7 @@ bool GraphEngine::remove(GraphInterface *object)
 	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		if(*it == object)
 		{
+			total.global--;
 			object->cleanup();
 			objects.erase(it);
 			return true;
@@ -177,9 +178,6 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 
 bool GraphEngine::clear()
 {
-//	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
-		//it->
-
 	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		(*it)->cleanup();
 

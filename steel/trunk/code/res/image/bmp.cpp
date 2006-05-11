@@ -127,7 +127,7 @@ bool BMP::init(const std::string name)
 
 	if(!f.open(file, "bmp")) 
 	{
-		alog.out("Res/Image/BMP: cannot open file %s", file.c_str());
+// 		alog.out("Res/Image/BMP: cannot open file %s", file.c_str());
 		return false;
 	}
 

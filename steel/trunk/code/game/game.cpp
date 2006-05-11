@@ -158,14 +158,13 @@ void Game::draw(GraphEngine *graph)
 */
 	direction.normalize();
 
-	graph->camera.setup(eye, direction);
-	graph->processCamera();
-
 	if(conf->geti("drawHelper"))
 	{
 		graph->inject(physicHelper);
 	}
 
+	graph->camera.setup(eye, direction);
+	graph->processCamera();
 	graph->process();
 
 	if(conf->geti("drawHelper"))
