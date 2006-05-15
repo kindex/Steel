@@ -16,8 +16,10 @@
 class GameGroup: public GameObjSet
 {
 public:
+	std::string conf;
+
 	bool init(ScriptLine	&s,		ResCollection &res);
-	bool load(std::string script,	ResCollection *res);
+	bool load(ResCollection *res,	GameObj *global);
 };
 
 #endif

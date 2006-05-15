@@ -70,7 +70,7 @@ v3	GameObj::getGlobalVelocity()
 	{
 		GameObj *p = getParent();
 		if(p)
-			return p->getGlobalVelocity() + p->getGlobalMatrix()*getVelocity();
+			return p->getGlobalVelocity() + p->getGlobalMatrix()*getVelocity(); // TODO
 		else
 			return getVelocity();
 	}
@@ -116,7 +116,7 @@ Sprites*	GameSprite::getSprites()
 }
 */
 
-bool	GameObjModel::init(ScriptLine	&s, ResCollection &res)
+bool GameObjModel::init(ScriptLine	&s, ResCollection &res)
 {
 	if(!GameObj::init(s, res)) return false;
 	

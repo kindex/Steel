@@ -41,8 +41,12 @@ public:
 	} total;
 
 public:
-	// Collect information about object: object shape + velocity
+	// Inject добавляет объект для обработки
+	// Типы движений объектов: uni, custom, none
+	// У uni не может быть детей
+	// У custom и none не может быть детей с типом uni
 	virtual bool inject(PhysicInterface *object);
+
 	virtual bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL) = 0;
 	virtual bool update(Element &element) = 0;
 

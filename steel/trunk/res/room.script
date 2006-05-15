@@ -15,6 +15,26 @@ solid			wall/wall1	0,0,10
 solid			wall/wall1	0,20,-1
 solid			wall/wall1	0,-20,-1
 
+uni			sphere/sphere2	0,0,1
+uni			sphere/sphere2	0.1,0,4
+uni			sphere/sphere2	0.1,0,6
+uni			sphere/sphere2	0.1,0,8
+
+uni			sphere/sphere2	3,0,2
+uni			sphere/sphere2	3,0,4
+uni			sphere/sphere2	3,0,6
+uni			sphere/sphere2	3,0,8
+
+uni			sphere/sphere2	0,3,2
+uni			sphere/sphere2	0,3,4
+uni			sphere/sphere2	0,3,6
+uni			sphere/sphere2	0,3,8
+
+uni			sphere/sphere2	-3,-3,2
+uni			sphere/sphere2	-3,-3,4
+uni			sphere/sphere2	-3,-3,6
+uni			sphere/sphere2	-3,-3,8
+
 #solid			spaceman/spaceman	0,0,0
 #solid			spaceman/spaceman	1,0,0
 #solid			spaceman/spaceman	0,1,0

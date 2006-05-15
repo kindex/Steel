@@ -138,9 +138,9 @@ void Game::bind(GraphEngine *engine)
 
 void Game::bind(PhysicEngine *engine)
 {
-	engine->inject(world);
 //	if(conf->geti("drawHelper"))
 	engine->bindHelper(physicHelper);
+	engine->inject(world);
 }
 
 void Game::draw(GraphEngine *graph)
@@ -208,8 +208,8 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 	world->setProcessKind(ProcessKind::none);
 	
 //	Interface::global, 
-
-	if(!world->load(conf->gets("script"), res)) return false;
+	world->conf = conf->gets("script");
+	if(!world->load(res, world)) return false;
 
 	_alive = true;
 	paused = conf->geti("paused", 0) == 1;

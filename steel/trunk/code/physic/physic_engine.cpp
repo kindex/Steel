@@ -21,7 +21,7 @@ bool PhysicEngine::inject(PhysicInterface *obj)
 {
 	object.push_back(obj);
 
-	prepare(obj);
+//	prepare(obj);
 
 	return true;
 }

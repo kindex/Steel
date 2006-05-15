@@ -20,14 +20,15 @@ bool GameGroup::init(ScriptLine	&s, ResCollection &res)
 {
 	if(s.count()<4) return false;
 	if(!GameObj::init(s, res)) return false;
-	return load(s.gets(3), &res);
+	conf = s.gets(3);
+	return true;
 }
 
-bool GameGroup::load(string script, ResCollection *res)
+bool GameGroup::load(ResCollection *res, GameObj *global)
 {
-	if(!parent) positionKind = global;
+	if(!parent) positionKind = Interface::global;
 
-	Script *s = (Script*)res->add(Res::script, script);
+	Script *s = (Script*)res->add(Res::script, conf);
 	if(!s)
 	{
 		alog.msg("error game res", "Cannot load script");
@@ -93,21 +94,39 @@ bool GameGroup::load(string script, ResCollection *res)
 
 
 		if(obj)
-		if(parent == "")
 		{
-			addChildren(obj);
-			alog.msg("game script", string("Added object '") + kind + ":" + id + "' to group space");
-		}
-		else
-		{
-			if(tag.find(parent) == tag.end())
+			if(obj->getProcessKind() == ProcessKind::uni)
 			{
-				alog.msg("error game script", string("Object with id '") + parent + "' not found");
-				return false;
+				if(obj->getPositionKind() == Interface::local)
+				{
+					obj->positionKind = Interface::global;
+
+					matrix44 matrix = this->getGlobalMatrix();
+					obj->setMatrix(matrix * obj->getMatrix());
+
+					v3 vel = obj->getVelocity();
+
+					obj->setVelocity(this->getGlobalVelocity() + (matrix*vel - matrix*v3(0,0,0)));
+				}
+				global->addChildren(obj);
 			}
-			tag[parent]->addChildren(obj);
-			alog.msg("game script", string("Added object '") + kind + ":" + id + "' to '" + parent + "'");
+			else if(parent == "")
+			{
+				addChildren(obj);
+				alog.msg("game script", string("Added object '") + kind + ":" + id + "' to group space");
+			}
+			else
+			{
+				if(tag.find(parent) == tag.end())
+				{
+					alog.msg("error game script", string("Object with id '") + parent + "' not found");
+					return false;
+				}
+				tag[parent]->addChildren(obj);
+				alog.msg("game script", string("Added object '") + kind + ":" + id + "' to '" + parent + "'");
+			}
 		}
+
 		if(id != "" && obj)
 		{
 			tag[id] = obj;
@@ -118,9 +137,12 @@ bool GameGroup::load(string script, ResCollection *res)
 			if(!obj->init(s->get(i), *res))
 			{							
 				obj->init(s->get(i), *res);
+
 				alog.msg("game script error", string("Cannot init object ") + kind + ":" + id);
 				return false;						
 			}										
+			if(kind == "include")
+				if(!((GameGroup*)obj)->load(res, global)) return false;
 		}
 	}
 	return true;

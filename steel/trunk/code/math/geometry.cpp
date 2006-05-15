@@ -16,15 +16,11 @@ using namespace std;
 
 bool intersect(float amin, float amax, float bmin, float bmax)
 {
+	if(bmin > amin) amin = bmin;
+	if(bmax < amax) amax = bmax;
+
     return
-        (amin<=bmin+EPSILON) && (bmin<=amax+EPSILON)
-    ||
-        (amin<=bmax+EPSILON) && (bmax<=amax+EPSILON)
-    ||
-        (bmin<=amin+EPSILON) && (amin<=bmax+EPSILON)
-    ||
-        (bmin<=amax+EPSILON) && (amax<=bmax+EPSILON)
-        ;
+		amin  < amax+ EPSILON;
 }
 
 

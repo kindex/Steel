@@ -23,7 +23,7 @@ void aabb::add(v3 a)
 bool aabb::intersect(aabb const &second)
 {
     return
-		::intersect(min.x, max.x, second.min.x, second.max.x)
+	::intersect(min.x, max.x, second.min.x, second.max.x)
     &&
 	::intersect(min.y, max.y, second.min.y, second.max.y)
 	&&
@@ -78,4 +78,15 @@ std::vector<v3> aabb::getVertexes() const
 	r.push_back(v3(b.x, b.y, b.z));
 
 	return r;
+}
+
+void aabb::cross(const aabb3 b)
+{
+	if(b.min.x > min.x) min.x = b.min.x;
+	if(b.min.y > min.y) min.y = b.min.y;
+	if(b.min.z > min.z) min.z = b.min.z;
+
+	if(b.max.x < max.x) max.x = b.max.x;
+	if(b.max.y < max.y) max.y = b.max.y;
+	if(b.max.z < max.z) max.z = b.max.z;
 }

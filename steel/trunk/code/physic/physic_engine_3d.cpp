@@ -12,26 +12,6 @@ using namespace std;
 // обрабатывает движение одного объекта и его потомков
 bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::time time)
 {
-	if(helper && o.getProcessKind() != ProcessKind::none) // draw velocity
-	{
-		helper->drawVector(Line(
-			o.getGlobalMatrix()*v3(),
-			o.getGlobalVelocity().getNormalized()
-			), 0,0, v4(0,1,0,1));
-	}
-	if(helper) // draw AABB
-	{
-		aabb frame = o.getPFrame();
-		if(!frame.empty())
-		{
-			frame.mul(o.getGlobalMatrix());
-			v4 color;
-			
-			helper->drawBox(frame, 0,0, color);
-		}
-	}
-
-
 	ProcessKind::ProcessKind kind = o.getProcessKind();
 	if(kind != ProcessKind::none) 
 	{
@@ -117,6 +97,26 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 
 	for(PhysicInterfaceList::iterator it = c.begin(); it != c.end(); it++)
 		process(**it, globalTime, time);
+
+	if(helper && o.getProcessKind() != ProcessKind::none) // draw velocity
+	{
+		helper->drawVector(Line(
+			o.getGlobalMatrix()*v3(),
+			o.getGlobalVelocity().getNormalized()
+			), 0,0, v4(0,1,0,1));
+	}
+	if(helper) // draw AABB
+	{
+		aabb frame = o.getPFrame();
+		if(!frame.empty())
+		{
+			frame.mul(o.getGlobalMatrix());
+			v4 color;
+			
+			helper->drawBox(frame, 0,0, color);
+		}
+	}
+
 	return true;
 }
 
@@ -143,22 +143,51 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 	return true;
 }
 
-bool PhysicEngine3D::collisionReaction(const Collision collision)
+bool PhysicEngine3D::collisionReaction(Collision collision)
+{
+	ProcessKind::ProcessKind akind = collision.a->getProcessKind();
+	ProcessKind::ProcessKind bkind = collision.b->getProcessKind();
+	if(akind == ProcessKind::uni && bkind == ProcessKind::uni)
+		return collisionReactionUniUni(collision);
+
+	if(akind == ProcessKind::uni && (bkind == ProcessKind::none || bkind == ProcessKind::custom))
+		return collisionReactionUniNone(collision);
+
+	if(bkind == ProcessKind::uni && (akind == ProcessKind::none || akind == ProcessKind::custom))
+	{
+		PhysicInterface *swap = collision.a;
+		collision.a = collision.b; 
+		collision.b = swap;
+
+		return collisionReactionUniNone(collision);
+	}
+
+	return false;
+}
+
+bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
+{
+	v3 t = collision.normal.getNormalized();
+	v3 v1 = collision.a->getVelocity();
+	v3 v2 = collision.b->getGlobalVelocity();
+	float v1t = t&v1;
+	float v2t = t&v2;
+
+	float u1t = v2t-v1t;
+
+	v3 v1sr = v1 - t*v1t;
+	v3 u1 = v1sr + t*u1t;
+
+	collision.a->setVelocity(u1);
+
+	return true;
+}
+
+bool PhysicEngine3D::collisionReactionUniUni(const Collision collision)
 { // Only global
-#define MINF 1000
 	float m1, m2;
-	switch(collision.a->getProcessKind())
-	{
-		case ProcessKind::none: 
-		case ProcessKind::custom:	m1 = MINF; break;
-		case ProcessKind::uni:		m1 = collision.a->getMass(); break;
-	}
-	switch(collision.b->getProcessKind())
-	{
-		case ProcessKind::none: 
-		case ProcessKind::custom:	m2 = MINF; break;
-		case ProcessKind::uni:		m2 = collision.b->getMass(); break;
-	}
+	m1 = collision.a->getMass();
+	m2 = collision.b->getMass();
 
 	v3 t = collision.normal.getNormalized();
 	v3 v1 = collision.a->getVelocity();
@@ -174,7 +203,6 @@ bool PhysicEngine3D::collisionReaction(const Collision collision)
 //	E *= 0.5;
 	float V1sr2 = v1.getSquaredLength() - v1t*v1t; if(V1sr2<EPSILON) V1sr2 = 0;
 	float V2sr2 = v2.getSquaredLength() - v2t*v2t; if(V2sr2<EPSILON) V2sr2 = 0;
-
 // квадратное уравнение (16)
 	float A = m2*m2/m1 + m2;
 	float B = -2*It*m2/m1;
@@ -182,13 +210,8 @@ bool PhysicEngine3D::collisionReaction(const Collision collision)
 
 	float D = B*B - 4*A*C;
 
-//    alog.msg("debug", FloatToStr(m1) + " " + FloatToStr(m2));
-    //alog.msg("debug", FloatToStr(A) + " " + FloatToStr(B) + " "+ FloatToStr(C));
-    
 	if (fabs(D)<EPSILON) D = 0;
 	if (D<EPSILON) D = 0;
-
-    //alog.msg("debug", FloatToStr(D));
 
 	assert(D>=0, "collisionReaction D>=0");
 
@@ -215,8 +238,6 @@ bool PhysicEngine3D::collisionReaction(const Collision collision)
 	v3 u1 = v1sr + t*u1t;
 	v3 u2 = v2sr + t*u2t;
 
-//	v3 secondVelocity = collision.b->object->getVelocity();
-
 	collision.a->setVelocity(u1);
 	collision.b->setVelocity(u2);
 
@@ -228,14 +249,8 @@ bool PhysicEngine3D::collisionReaction(const Collision collision)
 void PhysicEngine3D::collisionDetection(PhysicInterface &a, PhysicInterface &b, v3 distance, Collision &collision, PhysicInterface *clip)
 {
 	if(&a == &b || &b == clip) return ;
-	aabb newframe1 = a.getPFrame();
-	newframe1.mul(a.getGlobalMatrix());
-	newframe1.add(distance);
-
-	aabb newframe2 = b.getPFrame();
-	newframe2.mul(b.getGlobalMatrix());
 			
-	if(b.getTriangles() && b.getPVertexes() && newframe1.intersect(newframe2)) 
+	if(b.getTriangles() && b.getPVertexes()) 
 	{	
 		Collision newCollision;
 		newCollision.time = INF;
@@ -321,7 +336,7 @@ void PhysicEngine3D::checkCollisionMLineLine(const Line a, const v3 direction, c
 		bool c = isCrossFast(a, Line(point, -direction), time);
 		assert(c, "checkCollisionMLineLine");
 		
-		if(collision.time > time)
+		if(collision.time > time+ 1.0e-4)
 		{
 			collision.time = time;
 			collision.point = point;
@@ -372,6 +387,21 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 	// каждый треугольник движущегося тела при движении образует призму
 	// проверяем пересечение этой призмы со всеми треугольниками второго тела
 
+	aabb newframe1 = a.getPFrame();
+	newframe1.mul(a.getGlobalMatrix());
+	newframe1.add(distance);
+
+	aabb newframe2 = b.getPFrame();
+	newframe2.mul(b.getGlobalMatrix());
+
+	newframe1.cross(newframe2);
+
+/*	newframe1.max += v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON);
+	newframe1.min -= v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON);
+*/
+	if(newframe1.empty()) return false;
+
+
 	Triangles *t = a.getTriangles();
 	Vertexes *v = a.getPVertexes();
 	matrix44 matrix = a.getGlobalMatrix();
@@ -380,6 +410,26 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 	Vertexes	*v2	= b.getPVertexes();
 	matrix44 matrix2 = b.getGlobalMatrix();
 
+
+	vector<Plane> bp;
+
+	for(vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
+	{
+		Plane bt;
+		bt.base = matrix2 * v2->data[jt->a[0]];
+		bt.a	= matrix2 * v2->data[jt->a[1]] - bt.base;
+		bt.b	= matrix2 * v2->data[jt->a[2]] - bt.base;
+		aabb aabb2;
+		aabb2.merge(bt.base);
+		aabb2.merge(bt.base + bt.a);
+		aabb2.merge(bt.base + bt.b);
+
+		if(newframe1.intersect(aabb2))
+		{
+			bp.push_back(bt);
+		}
+	}
+
 	Plane at;
 	if(t)
 	for(vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
@@ -387,22 +437,28 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 		at.base = matrix * v->data[it->a[0]];
 		at.a	= matrix * v->data[it->a[1]] - at.base;
 		at.b	= matrix * v->data[it->a[2]] - at.base;
-
 		if( ((at.a*at.b) & distance) > 0) // треугольник движется вперёд
 		{
-			for(vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
-			{
-				Plane bt;
-				bt.base = matrix2 * v2->data[jt->a[0]];
-				bt.a	= matrix2 * v2->data[jt->a[1]] - bt.base;
-				bt.b	= matrix2 * v2->data[jt->a[2]] - bt.base;
+			aabb aabb1(at.base, at.base);
+			aabb1.add(at.a);
+			aabb1.add(at.b);
+			aabb1.add(distance);
 
-				Collision newCollision;
-				newCollision.time = INF;
-				if(checkCollisionMTrgTrg(at, distance, bt, newCollision))
+			bool ok = false;
+			if(newframe1.intersect(aabb1))
+			{
+				for(vector<Plane>::iterator jt = bp.begin(); jt != bp.end(); jt++)
 				{
-					if(collision.time > newCollision.time)
-						collision = newCollision;
+					Plane bt = *jt;
+
+					Collision newCollision;
+					newCollision.time = INF;
+					if(checkCollisionMTrgTrg(at, distance, bt, newCollision))
+					{
+						if(collision.time > newCollision.time)
+							collision = newCollision;
+						ok = true;
+					}
 				}
 			}
 		}

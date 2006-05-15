@@ -14,7 +14,7 @@ struct aabb3 // AABB 3D
 
 	aabb3() { clear(); }
 	aabb3(const v3 _min, const v3 _max): min(_min), max(_max) {}
-	bool empty() const { return min.x>max.x || min.y>max.y || min.z>max.z;  }
+	bool empty() const { return min.x>max.x + EPSILON || min.y>max.y + EPSILON || min.z>max.z + EPSILON;  }
 	void clear();
 	std::vector<v3> getVertexes() const;
 
@@ -23,6 +23,7 @@ struct aabb3 // AABB 3D
 	bool intersect(aabb3 const &second);
 	void mul(const matrix44 &matrix);
 	void add(v3 direction);
+	void cross(const aabb3 second);
 };
 
 typedef aabb3 aabb;

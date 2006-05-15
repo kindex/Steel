@@ -44,7 +44,8 @@ public:
 	TexCoords*	getTexCoords(int texNumber)	{	return NULL;	}
 };
 
-
+class GameObj;
+typedef std::vector<GameObj*> GameObjList;
 
 /*
 Игровой объект, который может:
