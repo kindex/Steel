@@ -125,3 +125,16 @@ bool GameGroup::load(string script, ResCollection *res)
 	}
 	return true;
 }
+
+/*aabb GameGroup::getFrame()
+{
+	aabb box;
+	box.clear();
+
+	for(vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		box.merge( (*it)->getFrame());
+	}
+	return box;
+}*/
+

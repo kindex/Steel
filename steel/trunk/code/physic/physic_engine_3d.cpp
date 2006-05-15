@@ -8,6 +8,7 @@ using namespace std;
 
 #define CONTACT_EPSILON (0.01f)
 
+// Сердце физического движка
 // обрабатывает движение одного объекта и его потомков
 bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::time time)
 {
@@ -18,89 +19,100 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 			o.getGlobalVelocity().getNormalized()
 			), 0,0, v4(0,1,0,1));
 	}
+	if(helper) // draw AABB
+	{
+		aabb frame = o.getPFrame();
+		if(!frame.empty())
+		{
+			frame.mul(o.getGlobalMatrix());
+			v4 color;
+			
+			helper->drawBox(frame, 0,0, color);
+		}
+	}
+
 
 	ProcessKind::ProcessKind kind = o.getProcessKind();
-  if(kind != ProcessKind::none) 
-  {
-
-	if(kind == ProcessKind::custom)
+	if(kind != ProcessKind::none) 
 	{
-		o.process(globalTime, time, this);
-	}
-	if(kind == ProcessKind::uni)
-	{
-		v3 v = o.getVelocity();
-		v += g*(float)time;	// gravitation
-		o.setVelocity(v);
-	}
-
-	const matrix44 global = o.getGlobalMatrix();
-
-	v3 velocity = o.getVelocity();
-
-//		velocity = v3(0,0, -10);
-
-	v3 path = velocity*(float)time;
-
-	v3 oldPos = o.getPosition();
-	v3 newPos = oldPos + path;
-
-	Collision collision;
-	collision.time = INF; // no collision
-
-	Interface::PositionKind pos = o.getPositionKind();
-	v3 dir; // global
-
-	if(pos == Interface::local)
-		dir = global*newPos-global*oldPos;
-	else
-		dir = newPos - oldPos;
-
-	collisionDetection(o, dir, collision, &o);
-
-	if(collision.time<=1 + EPSILON)
-	{
-		float len = path.getLength();
-		len *= collision.time;
-		len -= CONTACT_EPSILON;
-		if(len>EPSILON)
+		if(kind == ProcessKind::custom)
 		{
-			path = path.getNormalized()*len;
-			newPos = oldPos + path;
+			o.process(globalTime, time, this);
+		}
+		if(kind == ProcessKind::uni)
+		{
+			v3 v = o.getVelocity();
+			v += g*(float)time;	// gravitation
+			o.setVelocity(v);
+		}
+
+		const matrix44 global = o.getGlobalMatrix();
+
+		v3 velocity = o.getVelocity();
+
+	//		velocity = v3(0,0, -10);
+
+		v3 path = velocity*(float)time;
+
+		v3 oldPos = o.getPosition();
+		v3 newPos = oldPos + path;
+
+		Collision collision;
+		collision.time = INF; // no collision
+
+		Interface::PositionKind pos = o.getPositionKind();
+		v3 dir; // global
+
+		if(pos == Interface::local)
+			dir = global*newPos-global*oldPos;
+		else
+			dir = newPos - oldPos;
+
+		collisionDetection(o, dir, collision, &o);
+
+		if(collision.time<=1 + EPSILON)
+		{
+			float len = path.getLength();
+			len *= collision.time;
+			len -= CONTACT_EPSILON;
+			if(len>EPSILON)
+			{
+				path = path.getNormalized()*len;
+				newPos = oldPos + path;
+				o.setPosition(newPos);
+	//			update(el);
+				//el.frame.min += path;
+				//el.frame.max += path;
+			}
+
+			collision.a = &o;
+
+			if(helper) // draw collision
+			{
+				helper->drawVector(Line(
+					collision.point,
+					collision.normal.getNormalized()*0.1f
+					), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
+			}
+
+	//			if(collision.b->collisionCount==0)
+				collisionReaction(collision);
+
+	//		collision.b->collisionCount++;
+	//		el.collisionCount++;
+
+			total.collisionCount++;
+		}
+		else
+		{
 			o.setPosition(newPos);
-//			update(el);
-			//el.frame.min += path;
-			//el.frame.max += path;
+
+	//		update(el);
+	//			el.frame.min += path;
+	//			el.frame.max += path;
+	//			o.setPosition(p);
 		}
-
-		collision.a = &o;
-
-		if(helper) // draw collision
-		{
-			helper->drawVector(Line(
-				collision.point,
-				collision.normal.getNormalized()*0.1f
-				), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
-		}
-
-//			if(collision.b->collisionCount==0)
-			collisionReaction(collision);
-
-//		collision.b->collisionCount++;
-//		el.collisionCount++;
-
-		total.collisionCount++;
 	}
-	else
-	{
-		o.setPosition(newPos);
-
-//		update(el);
-//			el.frame.min += path;
-//			el.frame.max += path;
-//			o.setPosition(p);
-	}
-  }
 	PhysicInterfaceList c = o.getPChildrens();
 
 	for(PhysicInterfaceList::iterator it = c.begin(); it != c.end(); it++)
@@ -420,7 +432,7 @@ bool PhysicEngine3D::update(Element &el)
 bool PhysicEngine3D::prepare(PhysicInterface *object, matrix44 parent_matrix, PhysicInterface *parent)
 {
 	if(!object) return false;
-	Element el;
+//	Element el;
 
 	Interface::PositionKind pos = object->getPositionKind();
 	ProcessKind::ProcessKind process = object->getProcessKind();
@@ -430,7 +442,7 @@ bool PhysicEngine3D::prepare(PhysicInterface *object, matrix44 parent_matrix, Ph
 		pos = object->getPositionKind();
 	}
 
-	el.object	= object;
+/*	el.object	= object;
 	el.parent	= parent;
 	el.vertex	= object->getPVertexes();
 	el.triangle = object->getTriangles();
@@ -451,7 +463,7 @@ bool PhysicEngine3D::prepare(PhysicInterface *object, matrix44 parent_matrix, Ph
 	PhysicInterfaceList children = o.getPChildrens();
 	for(PhysicInterfaceList::iterator it=children.begin();	it != children.end(); it++)
 		if(!prepare(*it, el.matrix, object)) return false;
-
+*/
 /*	for(FaceMaterials::iterator it = m->begin(); it != m->end(); it++)
 	{
 2D hashing

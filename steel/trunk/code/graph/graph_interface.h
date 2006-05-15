@@ -39,6 +39,16 @@ public:
 //	kind : 2d only
 };
 
+class GLine // al-a triangle
+{
+public:
+	int a[2]; // vertex indexes
+	v4 color; // line color
+	void set(const int A, const int B) { a[0] = A; a[1] = B; }
+};
+
+typedef std::vector<GLine> GLines;
+
 typedef Vertexes	Normals;
 
 typedef TexCoord TexCoords;
@@ -98,6 +108,8 @@ Video textures (avi, camera)
 	virtual bool cleanup() = 0; // при необходимости отчищает 
 	virtual Vertexes*	getVertexes() = 0; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
 	virtual Normals*	getNormals() = 0; // список нормалей в вершинам
+
+	virtual GLines*	getLines() = 0; // индексы вершин для линий и цвета линий (for debug)
 
 	// массив индексов вершин, которые образуют треугольники (грани)
 //	virtual Triangles*	getTriangles() = 0; 

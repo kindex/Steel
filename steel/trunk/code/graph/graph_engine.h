@@ -57,7 +57,8 @@ protected:
 		Triangles	*triangle;
 		Normals		*normal;
 
-		Material*	material;
+		Material	*material;
+		GLines		*lines;
 
 		matrix44	matrix;
 		aabb		frame;

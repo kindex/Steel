@@ -18,26 +18,30 @@ class GraphHelper: virtual public EngineHelper, virtual public GraphInterface
 	struct LineElement: public Element
 	{
 		Line line;
-
 		LineElement() {}
-		LineElement(const Line _line, const steel::time _start, const steel::time _fade, const steel::time _end, const v4 _color) 
-			:line(_line)
-		{ 
-			start = _start; fade = _fade; end = _end; 	
-			color = _color;
-		}
+		LineElement(const Line _line, const steel::time _start, const steel::time _fade, const steel::time _end, const v4 _color) 			:line(_line)		{ 			start = _start; fade = _fade; end = _end; 				color = _color;		}	
 	};
+	struct BoxElement: public Element
+	{
+		aabb box;
+		BoxElement() {}
+		BoxElement(const aabb _box, const steel::time _start, const steel::time _fade, const steel::time _end, const v4 _color) :box(_box)		{ 	start = _start; fade = _fade; end = _end; 	color = _color;	}
+	};
+
 	std::vector<LineElement> lines, vectors;
+	std::vector<BoxElement> boxes;
 
 	Vertexes	vertex;
 	FaceMaterials face;
+	GLines		glines;
 
 public:
 // Helper
 	void setTime(const steel::time _time);
 	void clean() {}
-	void drawLine(const Line line, const steel::time duration, const steel::time fade, const v4 color) {}
+	void drawLine(const Line line, const steel::time duration, const steel::time fade, const v4 color);
 	void drawVector(const Line line, const steel::time duration, const steel::time fade, const v4 color);
+	void drawBox(const aabb box, const steel::time duration, const steel::time fade, const v4 color);
 
 // Graph
 	void		processGraph(v3	cameraEye, v3 cameraDirection);
@@ -48,6 +52,7 @@ public:
 	void		changePositionKind(const PositionKind newKind) {}
 	GraphInterfaceList getChildrens() { return GraphInterfaceList(0);}
 
+	GLines*		getLines()		{	return &glines;	}
 	uid			getId()			{	return 0;		}
 	aabb		getFrame()		{	return aabb(v3(-INF, -INF, -INF), v3(INF, INF, INF));	}
 	bool		cleanup()		{	return true;	}

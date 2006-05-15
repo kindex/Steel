@@ -129,3 +129,26 @@ bool	GameObjModel::init(ScriptLine	&s, ResCollection &res)
 
 	return m != NULL;
 }
+
+aabb GameObjModel::getFrame()
+{		
+	if(m)	return m->frame;
+	else	return aabb();
+}
+
+aabb GameObjSet::getPFrame()
+{
+	aabb box;
+	box.clear();
+
+	for(vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		aabb loc = (*it)->getPFrame();
+		if(!loc.empty())
+		{
+			loc.mul((*it)->getMatrix());
+			box.merge(loc);
+		}
+	}
+	return box;
+}

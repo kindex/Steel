@@ -51,5 +51,6 @@ private:
 
 extern Logger alog;
 
+void debug(const std::string message);
 
 #endif

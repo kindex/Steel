@@ -41,6 +41,7 @@ struct v3
 	inline float getX() const {return x;}	//public accessor functions
 	inline float getY() const {return y;}	//inline, const
 	inline float getZ() const {return z;}
+	inline float* get3fv() const {return (float*)this;}
 
 	inline void loadZero(void)	{	x=y=z=0.0f;	}
 	inline void loadOne(void)	{	x=y=z=1.0f;	}

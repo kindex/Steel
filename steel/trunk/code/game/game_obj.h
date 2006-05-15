@@ -39,6 +39,7 @@ public:
 	Triangles*	getTriangles()	{	return NULL;	}
 	Normals*	getNormals()	{	return NULL;	}
 	Lights*		getLights()		{	return NULL;	}
+	GLines*		getLines()		{	return NULL;	}
 	FaceMaterials* getFaceMaterials()	{	return NULL;	}
 	TexCoords*	getTexCoords(int texNumber)	{	return NULL;	}
 };
@@ -112,7 +113,6 @@ public:
 	matrix44	getGlobalMatrix();
 	v3			getGlobalVelocity();
 
-
 	void	setMatrix(matrix44 const &m) { matrix = m; } 
 
 	void attach(GameObj *obj) 
@@ -185,16 +185,7 @@ public:
 
 
 	uid		getId() { return m->getId(); }
-	aabb getFrame()	
-	{		
-		if(m)	return m->frame;
-		else	return aabb();
-	}
-	aabb getPFrame()	
-	{		
-		if(m)	return m->frame;
-		else	return aabb();
-	}
+	aabb getFrame();
 	bool cleanup()	{	return true;		}
 	bool cleanupP()	{	return cleanup();	}
 	Vertexes*	getVertexes()
@@ -238,6 +229,12 @@ public:
 	}
 //	bool	init(ScriptLine	&line)
 
+};
+
+class GameObjSet: public GameObj
+{
+public:
+	aabb getPFrame();
 };
 
 

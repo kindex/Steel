@@ -84,6 +84,7 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 	Vertexes	*v = object->getVertexes();
 	Lights		*l = object->getLights();
 	Normals		*n = object->getNormals();
+	GLines		*glines = object->getLines();
 
 	if(l != NULL)
 	{
@@ -98,7 +99,6 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 		total.vertex += v->data.size();
 
 //	if(t != NULL)
-	{
 //		vector<bool>	usedTriangle(t->data.size(), false);
 //		int totalUsed = 0;
 
@@ -107,25 +107,41 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 	{
 		int c = element.size();
 		element.resize(c+1);
-
 		DrawElement &e = element[c];
 
 		e.object = object;
 
 		e.material = (*it).material;
 		e.triangle = &it->triangles;
-
-		int s = element[c].triangle->data.size();
 		e.vertex = v;
 		e.matrix = object_matrix;
 		e.normal = n;
 		e.frame = frame;
 		e.blend = element[c].material->blend;
+		e.lines = NULL;
 
-		total.triangle += s;
+		total.triangle += element[c].triangle->data.size();
 	}
 
+	if(glines)
+	{
+		int c = element.size();
+		element.resize(c+1);
+		DrawElement &e = element[c];
+
+		e.object = object;
+
+		e.material = NULL;
+		e.triangle = NULL;
+		e.vertex = v;
+		e.matrix = object_matrix;
+		e.normal = NULL;
+		e.frame = frame;
+		e.lines = glines;
+		e.blend = false;
 	}
+
+	
 
 /*	Sprites		*s = object->getSprites();
 	if(s != NULL)

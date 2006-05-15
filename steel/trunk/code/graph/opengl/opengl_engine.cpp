@@ -28,156 +28,6 @@
 
 using namespace std;
 
-bool OpenGL_Engine::bindTexture(Image *image)
-{
-	if(image == NULL) return false;
-
-	uid	id = image->getId();
-
-	bool loaded = false;
-	if(buffer.find(id) != buffer.end())
-		loaded = buffer[id].loaded;
-
-	OpenGLBuffer &buf = buffer[id];
-
-	if(loaded)
-	{
-		switch(image->getKind())
-		{
-			case ImageKind::image2d:
-				glEnable(GL_TEXTURE_2D);
-				glBindTexture(GL_TEXTURE_2D, buf.glid);
-				break;
-			case ImageKind::cube:
-				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
-				break;
-		}
-
-		buf.lastUsedTime = time;
-		buf.usedCnt++;
-	}
-	else
-	{
-		glGenTextures(1, &buf.glid);
-
-		int format;
-		if(image->getFormat() == ImageFormat::rgb) format = GL_RGB; 
-		else if(image->getFormat() == ImageFormat::rgba) format = GL_RGBA;
-		else return false;
-
-		switch(image->getKind())
-		{
-			case ImageKind::image2d:
-				glEnable(GL_TEXTURE_2D);
-				glBindTexture(GL_TEXTURE_2D, buf.glid);
-
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-
-				glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
-					format,  GL_UNSIGNED_BYTE , image->getBitmap());
-				break;
-			case ImageKind::cube:
-				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
-
-				int w = image->getWidth();
-				int h = image->getHeight();
-				int bpp = image->getBpp()/8;
-
-				if(w*6 != h) return false; // 6 images in one
-
-				for(int i=0; i<6; i++)
-				{
-					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i,	0, 
-						GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image->getBitmap() + w*w*bpp*i);
-				}
-
-
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-				break;
-		}
-
-		buf.loaded = true;
-		buf.loadCnt++;
-		buf.kind = OpenGLBuffer::image;
-		buf.lastUsedTime = time;
-		buf.usedCnt++;
-	}
-	return true;
-}
-
-
-
-template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, int elCnt)
-{
-	if(v == NULL) return false;
-
-	if(glGenBuffersARB) // Vertex Buffer Object supportd
-	{
-		uid	id = v->getId();
-		if(id == 0) 
-		{
-			glBindBufferARB(mode2, 0);
-			return false;
-		}
-
-		bool loaded = false;
-		if(buffer.find(id) != buffer.end())
-			loaded = buffer[id].loaded;
-
-		OpenGLBuffer &buf = buffer[id];
-
-		if(loaded)
-		{
-			glBindBufferARB(mode2, buf.glid);
-			if(v->changed)
-			{
-				glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->data.size(), &v->data.front());
-				buf.loadCnt++;
-			}
-
-			if(mode)glEnableClientState(mode);
-
-			buf.lastUsedTime = time;
-			buf.usedCnt++;
-		}
-		else
-		{
-			glGenBuffersARB(1, &buf.glid);
-
-			if(mode) glEnableClientState ( mode );
-			glBindBufferARB(mode2, buf.glid);
-
-			GLenum usage = GL_STATIC_DRAW;
-			if(v->changed)
-				usage = GL_STREAM_DRAW;
-			glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
-
-			buf.loaded = true;
-			buf.loadCnt++;
-			if(mode2 == GL_ARRAY_BUFFER_ARB)
-				buf.kind = OpenGLBuffer::array;
-			if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
-				buf.kind = OpenGLBuffer::index;
-
-			buf.lastUsedTime = time;
-			buf.usedCnt++;
-		}
-		return true;
-	}  
-	else
-		return false;
-}
-
 /*
 Сердце Графического движка.
 Отвечает за вывод графичесткого элемента.
@@ -335,6 +185,22 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		}
 	}
 
+	if(e.lines && e.vertex && !e.vertex->data.empty() && !e.lines->empty())
+	{
+		glColor4f(1,1,1,1);
+		glBegin(GL_LINES);
+
+		debug("base: " + IntToStr(e.lines->size()));
+		int i = 0;
+		for(GLines::iterator it = e.lines->begin(); it != e.lines->end(); it++)
+		{
+			debug(IntToStr(i++));
+			glVertex3fv(e.vertex->data[it->a[0]].get3fv());
+			glVertex3fv(e.vertex->data[it->a[1]].get3fv());
+		}
+		glEnd();
+	}
+
 	if(conf->geti("drawNormals", 0))
 		drawNormals(e);
 	
@@ -345,6 +211,159 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		drawAABB(e, e.matrix);
 	glPopMatrix();
 }
+
+
+
+bool OpenGL_Engine::bindTexture(Image *image)
+{
+	if(image == NULL) return false;
+
+	uid	id = image->getId();
+
+	bool loaded = false;
+	if(buffer.find(id) != buffer.end())
+		loaded = buffer[id].loaded;
+
+	OpenGLBuffer &buf = buffer[id];
+
+	if(loaded)
+	{
+		switch(image->getKind())
+		{
+			case ImageKind::image2d:
+				glEnable(GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, buf.glid);
+				break;
+			case ImageKind::cube:
+				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
+				break;
+		}
+
+		buf.lastUsedTime = time;
+		buf.usedCnt++;
+	}
+	else
+	{
+		glGenTextures(1, &buf.glid);
+
+		int format;
+		if(image->getFormat() == ImageFormat::rgb) format = GL_RGB; 
+		else if(image->getFormat() == ImageFormat::rgba) format = GL_RGBA;
+		else return false;
+
+		switch(image->getKind())
+		{
+			case ImageKind::image2d:
+				glEnable(GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, buf.glid);
+
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+				glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
+					format,  GL_UNSIGNED_BYTE , image->getBitmap());
+				break;
+			case ImageKind::cube:
+				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
+
+				int w = image->getWidth();
+				int h = image->getHeight();
+				int bpp = image->getBpp()/8;
+
+				if(w*6 != h) return false; // 6 images in one
+
+				for(int i=0; i<6; i++)
+				{
+					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i,	0, 
+						GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image->getBitmap() + w*w*bpp*i);
+				}
+
+
+				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+				break;
+		}
+
+		buf.loaded = true;
+		buf.loadCnt++;
+		buf.kind = OpenGLBuffer::image;
+		buf.lastUsedTime = time;
+		buf.usedCnt++;
+	}
+	return true;
+}
+
+
+
+template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, int elCnt)
+{
+	if(v == NULL) return false;
+
+	if(glGenBuffersARB) // Vertex Buffer Object supportd
+	{
+		uid	id = v->getId();
+		if(id == 0) 
+		{
+			glBindBufferARB(mode2, 0);
+			return false;
+		}
+
+		bool loaded = false;
+		if(buffer.find(id) != buffer.end())
+			loaded = buffer[id].loaded;
+
+		OpenGLBuffer &buf = buffer[id];
+
+		if(loaded)
+		{
+			glBindBufferARB(mode2, buf.glid);
+			if(v->changed)
+			{
+				glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->data.size(), &v->data.front());
+				buf.loadCnt++;
+			}
+
+			if(mode)glEnableClientState(mode);
+
+			buf.lastUsedTime = time;
+			buf.usedCnt++;
+		}
+		else
+		{
+			glGenBuffersARB(1, &buf.glid);
+
+			if(mode) glEnableClientState ( mode );
+			glBindBufferARB(mode2, buf.glid);
+
+			GLenum usage = GL_STATIC_DRAW;
+			if(v->changed)
+				usage = GL_STREAM_DRAW;
+			glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
+
+			buf.loaded = true;
+			buf.loadCnt++;
+			if(mode2 == GL_ARRAY_BUFFER_ARB)
+				buf.kind = OpenGLBuffer::array;
+			if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
+				buf.kind = OpenGLBuffer::index;
+
+			buf.lastUsedTime = time;
+			buf.usedCnt++;
+		}
+		return true;
+	}  
+	else
+		return false;
+}
+
 
 
 v3 getstangent(v2 A, v3 B, v3 N, v2 S)
@@ -693,7 +712,6 @@ void OpenGL_Engine::drawVertexes(DrawElement &e)
 	}
 	glEnd();
 }
-
 
 void OpenGL_Engine::drawAABB(DrawElement &e, matrix44 matrix)
 {
