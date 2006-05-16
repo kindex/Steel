@@ -57,8 +57,27 @@ namespace ShapeType
 	} ShapeType;
 }
 
+struct velocity
+{
+	v3 translation; // скорость поступательного движения
+	v3 rotationAxis;  // ось вращения
+	float rotationSpeed; // скорость вращения (радиан/сек)
+
+	inline velocity() {}
+	inline velocity(const v3 _translation, const v3 _axis, const float _rotSpeed) 
+	{
+		translation = _translation;
+		rotationAxis = _axis;
+		rotationSpeed = _rotSpeed;
+	}
+};
+
 class PhysicInterface: public Interface
 {
+	steel::time	currentTime; // время, в котором находиться объект
+	friend class PhysicEngine;
+	friend class PhysicEngine3D;
+
 public:
 	virtual ProcessKind::ProcessKind getProcessKind() = 0;
 
@@ -87,10 +106,10 @@ getPVertexes возвращяет координаты точек в системе координат getPMatrix*/
 	virtual bool	isRotatable() = 0;
 
 	// скорость в глобальных коодринатах
-	virtual v3		getVelocity() = 0;
-	virtual void	setVelocity(v3 const &v) = 0;
+	virtual velocity	getVelocity() = 0;
+	virtual void	setVelocity(const velocity &v) = 0;
 	virtual matrix44	getGlobalMatrix() = 0;
-	virtual v3			getGlobalVelocity() = 0;
+	virtual velocity	getGlobalVelocity() = 0;
 
 	// масса
 	virtual	coord	getMass() = 0;

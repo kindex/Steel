@@ -124,11 +124,10 @@ int main(int argc, char *argv[])
 		if(captionUdateTime + 0.25 < timer.total())
 		{
 			graph.setCaption(std::string("Sleel engine")
-				+ " FPS = " + timer.getfps_s()
 				+ " Obj: " + IntToStr(graph.total.object)
 				+ " Trg: " + IntToStr(graph.total.triangle)
-				+ " Time: " + FloatToStr(timer.total())
-				+ " Col: " + FloatToStr(physic.total.collisionCount)
+				+ " Col: " + IntToStr(physic.total.collisionCount)
+				+ " FPS " + timer.getfps_s()
 				);
 			speed = 1.0f/timer.getfps();
 

@@ -28,9 +28,16 @@ protected:
 		v3	normal; // плоскость, в которой произошла коллизия
 		v3	point; // точка коллизии
 		float	time; // время (от начала карда) в процентах [0..1]
+		steel::time globalTime;
 		PhysicInterface *a, *b; // учатники коллизии
+
+		bool operator<(const Collision second) const
+		{
+			return a<second.a || a == second.a && b < second.b;
+		}
 	};
 
+	std::map<Collision, int> allCollisions;
 
 	v3 g;
 //	std::map<std::string, int> tag;
@@ -39,6 +46,7 @@ public:
 	bool process(steel::time globalTime, steel::time time);
 
 	bool process(PhysicInterface &o, steel::time globalTime, steel::time time);
+	bool processTime(PhysicInterface &o, steel::time globalTime, steel::time time, float &processedTime);
 
 	bool init(std::string _conf);
 	bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);
@@ -59,6 +67,9 @@ public:
 	bool collisionReaction(Collision collision);
 	bool collisionReactionUniUni(const Collision collision);
 	bool collisionReactionUniNone(const Collision collision);
+
+	void incCollision(const Collision collision);
+	int findCollision(const Collision collision);
 };
 
 

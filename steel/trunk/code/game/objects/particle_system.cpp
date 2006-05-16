@@ -47,7 +47,7 @@ void ParticleSystem::process(steel::time curTime, steel::time frameLength, Physi
 		else
 			if(limit>0)
 			{
-				particle[i].born(curTime, frameLength, conf, getParent()->getGlobalMatrix(), getParent()->getGlobalVelocity());
+				particle[i].born(curTime, frameLength, conf, getParent()->getGlobalMatrix(), getParent()->getGlobalVelocity().translation);
 				limit--;
 			}
 	}

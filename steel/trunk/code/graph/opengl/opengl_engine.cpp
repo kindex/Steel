@@ -190,11 +190,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		glColor4f(1,1,1,1);
 		glBegin(GL_LINES);
 
-		debug("base: " + IntToStr(e.lines->size()));
 		int i = 0;
 		for(GLines::iterator it = e.lines->begin(); it != e.lines->end(); it++)
 		{
-			debug(IntToStr(i++));
 			glVertex3fv(e.vertex->data[it->a[0]].get3fv());
 			glVertex3fv(e.vertex->data[it->a[1]].get3fv());
 		}

@@ -60,7 +60,7 @@ class GameObj: public GameObjDummy
 public:
 	GameObj			*parent;
 	std::vector<GameObj*> children;
-	v3			velocity;
+	velocity	vel;
 	coord		mass;
 	matrix44	matrix;
 	bool movable, rotatable;
@@ -112,7 +112,7 @@ public:
 		return matrix;	
 	}
 	matrix44	getGlobalMatrix();
-	v3			getGlobalVelocity();
+	velocity	getGlobalVelocity();
 
 	void	setMatrix(matrix44 const &m) { matrix = m; } 
 
@@ -150,8 +150,8 @@ public:
 	}
 
 	// скорость
-	v3		getVelocity() { return velocity; }
-	void	setVelocity(v3 const &v) {velocity = v; }
+	velocity	getVelocity() { return vel; }
+	void	setVelocity(velocity const &v) {vel = v; }
 	// масса
 	coord	getMass(){return mass;}
 

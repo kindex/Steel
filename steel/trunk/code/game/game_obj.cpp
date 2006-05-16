@@ -12,7 +12,7 @@ void GameObj::changePositionKind(const PositionKind newKind)
 	if(newKind == global && oldKind == local)
 	{
 		matrix = getGlobalMatrix();
-		velocity = getGlobalVelocity();
+		vel = getGlobalVelocity();
 		positionKind = global;
 	}
 	else
@@ -42,7 +42,7 @@ bool GameObj::init(ScriptLine	&s, ResCollection &res)
 		for(int j=0; j<3; j++)
 			matrix.a[i+j*4] *= scale;
 
-	setVelocity(s.getv3(7));
+	setVelocity(velocity(s.getv3(7), v3(0,0,1), 0));
 
 	return true;
 }
@@ -62,7 +62,7 @@ matrix44	GameObj::getGlobalMatrix()
 	}
 }
 
-v3	GameObj::getGlobalVelocity()
+velocity GameObj::getGlobalVelocity()
 {
 	if(getPositionKind() == Interface::global)
 		return getVelocity();
@@ -70,7 +70,13 @@ v3	GameObj::getGlobalVelocity()
 	{
 		GameObj *p = getParent();
 		if(p)
-			return p->getGlobalVelocity() + p->getGlobalMatrix()*getVelocity(); // TODO
+		{
+			velocity v = getVelocity();
+			velocity g = p->getGlobalVelocity();
+			
+			v.translation = g.translation + p->getGlobalMatrix()*v.translation;
+			return v; // TODO
+		}
 		else
 			return getVelocity();
 	}

@@ -65,11 +65,11 @@ void TagPath::process(steel::time curTime, steel::time frameLength, PhysicEngine
 			currentTarget = (currentTarget + 1)%cnt;
 		}
 		else
-			velocity = (tp-curPos).getNormalized()* speed * (1-k) +
+			vel.translation = (tp-curPos).getNormalized()* speed * (1-k) +
 			(n->getPosition()-curPos).getNormalized()* target[(currentTarget + 1)%cnt].speed * k;
 	}
 	else
-		velocity = (tp-curPos).getNormalized()* speed;
+		vel.translation = (tp-curPos).getNormalized()* speed;
 
 
 }

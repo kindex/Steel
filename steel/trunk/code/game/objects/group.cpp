@@ -98,15 +98,15 @@ bool GameGroup::load(ResCollection *res, GameObj *global)
 			if(obj->getProcessKind() == ProcessKind::uni)
 			{
 				if(obj->getPositionKind() == Interface::local)
-				{
+				{ // TODO
 					obj->positionKind = Interface::global;
 
 					matrix44 matrix = this->getGlobalMatrix();
 					obj->setMatrix(matrix * obj->getMatrix());
 
-					v3 vel = obj->getVelocity();
-
-					obj->setVelocity(this->getGlobalVelocity() + (matrix*vel - matrix*v3(0,0,0)));
+					velocity vel = obj->getVelocity();
+					vel.translation = this->getGlobalVelocity().translation + (matrix*vel.translation - matrix*v3(0,0,0)); 
+					obj->setVelocity(vel);
 				}
 				global->addChildren(obj);
 			}

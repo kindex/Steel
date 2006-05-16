@@ -1,11 +1,8 @@
-// Types:
+// Main scene file
 
-// g - graph. Only rendering
-// f - physic + graph object. 
 // solid. Unmovable physic object
-// light 
+// uni  -universal physic object
 // tag	- object with coordinates, but no graph and physic
-// path		id	speed	{tags}
 
 //KIND	parent	id	CONF		X,Y,Z		Angle		Scale	Vx,Vy,Vz
 solid			wall/wall1	20,0,-1
@@ -17,25 +14,25 @@ solid			wall/wall1	0,-20,-1
 
 uni			sphere/sphere2	0,0,1
 uni			sphere/sphere2	0.1,0,4
-uni			sphere/sphere2	0.1,0,6
-uni			sphere/sphere2	0.1,0,8
+uni			sphere/sphere2	0.1,0,6.1
+uni			sphere/sphere2	0.1,0,8.2
 
 uni			sphere/sphere2	3,0,2
-uni			sphere/sphere2	3,0,4
-uni			sphere/sphere2	3,0,6
-uni			sphere/sphere2	3,0,8
+uni			sphere/sphere2	3,0,4.1
+uni			sphere/sphere2	3,0,6.2
+uni			sphere/sphere2	3,0,8.3
 
 uni			sphere/sphere2	0,3,2
-uni			sphere/sphere2	0,3,4
-uni			sphere/sphere2	0,3,6
-uni			sphere/sphere2	0,3,8
+uni			sphere/sphere2	0,3,4.1
+uni			sphere/sphere2	0,3,6.2
+uni			sphere/sphere2	0,3,8.3
 
 uni			sphere/sphere2	-3,-3,2
-uni			sphere/sphere2	-3,-3,4
-uni			sphere/sphere2	-3,-3,6
-uni			sphere/sphere2	-3,-3,8
+uni			sphere/sphere2	-3,-3,4.1
+uni			sphere/sphere2	-3,-3,6.2
+uni			sphere/sphere2	-3,-3,8.3
 
-#solid			spaceman/spaceman	0,0,0
+#solid			spaceman/spaceman	5,-5,0
 #solid			spaceman/spaceman	1,0,0
 #solid			spaceman/spaceman	0,1,0
 
@@ -90,7 +87,7 @@ uni			box/box1	3,-3,0	0,0,0	1	1,0,0
 //custom		path1		4	4	0
 
 #uni			box/box1	0,2.41,4
-include			group/main.scene	0,0,2
+#include			group/main.scene	0,0,2
 //include			group/main.scene	0	0	0	0	1
 //include			group/main.scene	0	0	4	3.14	1
 
