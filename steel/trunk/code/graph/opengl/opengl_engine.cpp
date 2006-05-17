@@ -210,6 +210,15 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 	glPopMatrix();
 }
 
+bool OpenGL_Engine::isVisible(aabb box)
+{
+/*	matrix44 proj; TODO
+	glGetFloatv(GL_PROJECTION_MATRIX, proj.a);
+	box.mul(proj);
+
+	return box.intersect(aabb(v3(-1.1,-1.1,0), v3(1.1,1.1,2)));*/
+	return true;
+}
 
 
 bool OpenGL_Engine::bindTexture(Image *image)

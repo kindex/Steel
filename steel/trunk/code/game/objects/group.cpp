@@ -7,6 +7,7 @@
 #include "sprites.h"
 #include "particle_system.h"
 #include "triangle.h"
+#include "model_obj.h"
 
 using namespace std;
 

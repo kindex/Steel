@@ -20,6 +20,7 @@ public:
     TexCoords			texCoords; // Texture coordinates
     Normals				normal;    // Vertex normals
 	FaceMaterials		faceMaterial;
+	float				volume;
 
     // sTangent - vektor v storonu uveli4enija S teksturnoj koordinati (vpravo)
     // tangentSpaceLight - vektor ot ver6uni do to4ki osveshenija v TBN (Tangent, Binormal, Normal) prostrastve (sTangent, tTangent, normal) - tangent space http://www.paulsprojects.net/tutorials/tutorials.html
@@ -32,7 +33,7 @@ public:
 
     std::string name;
 
-    Model(): name() { }
+    Model(): name(), volume(-1) { }
     void updateMaterial();
     void updateNormals();
 	void updateAABB();
@@ -54,6 +55,8 @@ public:
 		return true;
 	}
 	TexCoords	*getTexCoords(int mapNumber);
+	float calculateVolume(); // вычислить объём
+	float getVolume(); // вычислить объём
 };
 
 

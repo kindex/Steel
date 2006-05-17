@@ -1,5 +1,5 @@
-#ifndef __GAME_CUSTOM_PATH
-#define __GAME_CUSTOM_PATH
+#ifndef __GAME_CUSTOM_PATH_H
+#define __GAME_CUSTOM_PATH_H
 
 #include "../game_obj.h"
 

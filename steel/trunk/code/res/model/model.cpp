@@ -149,3 +149,26 @@ void Model::updateAABB()
 	for(std::vector<v3>::iterator it = vertex.data.begin(); it != vertex.data.end(); it++)
 		frame.merge(*it);
 }
+
+
+float Model::calculateVolume() // вычислить объём
+{
+	float volume = 0;
+	for(std::vector<Triangle>::iterator it = triangleAll.data.begin(); it != triangleAll.data.end(); it++)
+	{
+		v3 a(vertex.data[it->a[0]]);
+		v3 b(vertex.data[it->a[1]]);
+		v3 c(vertex.data[it->a[2]]);
+		volume += (a*b)&c/6.0;
+	}
+
+	return fabs(volume);
+}
+
+float Model::getVolume() // вычислить объём
+{
+	if(volume<-EPSILON)
+		return volume = calculateVolume();
+	else
+		return volume;
+}

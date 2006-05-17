@@ -738,6 +738,14 @@
 						>
 					</File>
 					<File
+						RelativePath=".\game\objects\model_obj.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\model_obj.h"
+						>
+					</File>
+					<File
 						RelativePath=".\game\objects\particle_system.cpp"
 						>
 					</File>

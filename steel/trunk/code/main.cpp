@@ -128,6 +128,7 @@ int main(int argc, char *argv[])
 				+ " Trg: " + IntToStr(graph.total.triangle)
 				+ " Col: " + IntToStr(physic.total.collisionCount)
 				+ " FPS " + timer.getfps_s()
+
 				);
 			speed = 1.0f/timer.getfps();
 

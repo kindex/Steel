@@ -206,7 +206,15 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 	velocity V2 = collision.b->getVelocity(); v3 v2 = V2.translation;
 
 	float v1t = t&v1; float v2t = t&v2;
+
 	v3 v1sr = v1 - t*v1t;
+	v3 v2sr = v2 - t*v2t;
+
+	v3 v12sr = v1sr - v2sr; // относительная скорость
+	
+	v12sr *= 0.9;
+
+	v1sr = v2sr + v12sr;
 
 	float u1t = v2t - v1t;
 

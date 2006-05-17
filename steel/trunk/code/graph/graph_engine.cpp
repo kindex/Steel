@@ -66,7 +66,8 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 	aabb frame = object->getFrame();
 	frame.mul(object_matrix);
 
-
+	if(!isVisible(frame)) return false;
+	
 /* TODO: сюда надо поставить проверку, находится ли frame
 внутри пирамиды, которую образует угол обзора камеры.
 Если не попадает, то откидываем этот объект и всех его потомков

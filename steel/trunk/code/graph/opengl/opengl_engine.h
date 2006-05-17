@@ -79,6 +79,8 @@ public:
 	virtual void setCaption(std::string caption) = 0;
 	virtual bool isFocused() { return focused; }
 	
+	bool isVisible(aabb box);
+
 	void drawElement(DrawElement &e);
 	
 //	void drawFaces(DrawElement &e);

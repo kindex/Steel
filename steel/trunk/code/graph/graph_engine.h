@@ -89,7 +89,8 @@ public:
 	virtual bool prepare(GraphInterface *object, matrix44 matrix = matrix44::getIdentity());
 
 	// Draw colelcted information. May be called few times without recollection information
-	virtual bool process() = 0; // Override OpenGL, D3D, ...\
+	virtual bool process() = 0; // Override OpenGL, D3D, ...
+	virtual bool isVisible(aabb box) = 0;
 	// Clear collected information
 	bool clear();
 };
