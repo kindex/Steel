@@ -14,6 +14,7 @@ struct aabb3 // AABB 3D
 
 	aabb3() { clear(); }
 	aabb3(const v3 _min, const v3 _max): min(_min), max(_max) {}
+	aabb3(const v3 point): min(point), max(point) {}
 	bool empty() const { return min.x>max.x + EPSILON || min.y>max.y + EPSILON || min.z>max.z + EPSILON;  }
 	void clear();
 	std::vector<v3> getVertexes() const;

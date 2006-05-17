@@ -11,103 +11,143 @@ using namespace std;
 // Сердце физического движка
 // обрабатывает движение одного объекта в указанный промежуток времени
 
-bool PhysicEngine3D::processTime(PhysicInterface &o, steel::time globalTime, steel::time time, float &processedTime)
+bool PhysicEngine3D::moveObject(PhysicInterface &o, v3 oldPos, v3 dir /*global*/, float &processedTime)
 {
-	ProcessKind::ProcessKind kind = o.getProcessKind();
-	if(kind != ProcessKind::none) 
+	Collision collision; collision.time = INF; // no collision
+
+	collisionDetection(o, dir, collision, &o);
+
+	if(collision.time<=1 + EPSILON)
 	{
-		if(kind == ProcessKind::custom)
+		float len = dir.getLength();
+		len *= collision.time;
+		len -= CONTACT_EPSILON;
+		if(len>EPSILON)
 		{
-			o.process(globalTime, time, this);
-		}
-		if(kind == ProcessKind::uni)
-		{
-			velocity v = o.getVelocity();
-			v.translation += g*(float)time;	// gravitation
-			o.setVelocity(v);
+			dir = dir.getNormalized()*len;
+			o.setPosition(oldPos + dir);
 		}
 
-		const matrix44 global = o.getGlobalMatrix();
+		collision.a = &o;
 
-		velocity v = o.getVelocity();
-
-	//		velocity = v3(0,0, -10);
-
-		v3 path = v.translation*(float)time;
-
-		v3 oldPos = o.getPosition();
-		v3 newPos = oldPos + path;
-
-		Collision collision;
-		collision.time = INF; // no collision
-
-		Interface::PositionKind pos = o.getPositionKind();
-		v3 dir; // global
-
-		if(pos == Interface::local)
-			dir = global*newPos-global*oldPos;
-		else
-			dir = newPos - oldPos;
-
-		collisionDetection(o, dir, collision, &o);
-
-		if(collision.time<=1 + EPSILON)
+		if(findCollision(collision) == 0)
 		{
-			float len = path.getLength();
-			len *= collision.time;
-			len -= CONTACT_EPSILON;
-			if(len>EPSILON)
-			{
-				path = path.getNormalized()*len;
-				newPos = oldPos + path;
-				o.setPosition(newPos);
-			}
+			if(helper) // draw collision
+				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
 
-			collision.a = &o;
-
-			if(findCollision(collision) == 0)
-			{
-				if(helper) // draw collision
-				{
-					helper->drawVector(Line(
-						collision.point,
-						collision.normal.getNormalized()*0.1f
-						), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
-				}
-
-				collisionReaction(collision);
-				incCollision(collision);
-
-				total.collisionCount++;
-				processedTime = collision.time;
-				return false;
-			}
-			else
-				return true; // движение закончено - объект столкнулся с дургим обхектом повторно
+			collisionReaction(collision);	incCollision(collision); total.collisionCount++;
+			processedTime = collision.time;
+			return false;
 		}
 		else
-		{
-			o.setPosition(newPos);
-		}
+			return true; // движение закончено - объект столкнулся с дургим обхектом повторно
+	}
+	else
+	{
+		o.setPosition(oldPos + dir);
 	}
 	return true;
+}
+
+bool PhysicEngine3D::rotateObject(PhysicInterface &o, matrix44 oldMatrix, v3 rotAxis /*local*/, float angle, float &processedTime)
+{
+	Collision collision; collision.time = INF; // no collision
+
+	matrix44 path;
+	path.setRotationAxis(angle, rotAxis);
+
+	collisionDetectionRotation(o, path, collision, &o);
+
+	if(collision.time<=1 + EPSILON)
+	{
+		processedTime = 0;
+		return true;
+
+/*		float len = dir.getLength();
+		len *= collision.time;
+		len -= CONTACT_EPSILON;
+		if(len>EPSILON)
+		{
+			dir = dir.getNormalized()*len;
+			o.setPosition(oldPos + dir);
+		}
+
+		collision.a = &o;
+
+		if(findCollision(collision) == 0)
+		{
+			if(helper) // draw collision
+				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
+
+			collisionReaction(collision);
+			incCollision(collision);
+
+			total.collisionCount++;
+			processedTime = collision.time;
+			return false;
+		}
+		else
+			return true; // движение закончено - объект столкнулся с дургим обхектом повторно
+		*/
+	}
+	else
+	{
+		o.setMatrix(o.getMatrix() * path);
+	}
+	return true;
+
 }
 
 // обрабатывает движение одного объекта и его потомков
 // если была коллизия, то двигает тело еще раз после коллизии (5 раз)
 bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::time time)
 {
-	float endProcessedTime = 0;
-	float totalProcessedTime = 0;
-	int collisionCount = 0;
-	bool ended;
-	do
+	ProcessKind::ProcessKind kind = o.getProcessKind();
+	if(kind != ProcessKind::none) 
 	{
-		ended = processTime(o, globalTime + totalProcessedTime*time, time*(1-totalProcessedTime), endProcessedTime);
-		totalProcessedTime += time*(1-totalProcessedTime)*endProcessedTime;
-		collisionCount++;
+		if(kind == ProcessKind::custom)
+			o.process(globalTime, time, this);
+
+		if(kind == ProcessKind::uni)
+		{
+			velocity v = o.getVelocity();
+			v.translation += g*(float)time;	// gravitation
+			o.setVelocity(v);
+		}
+		float endProcessedTime = 0; // %
+		float totalProcessedTime = 0; // %
+		int collisionCount = 0;
+		bool ended;
+		do
+		{
+			const matrix44 global = o.getGlobalMatrix();
+			velocity v = o.getVelocity();
+			v3 path = v.translation*(float)time;
+			v3 oldPos = o.getPosition();
+			v3 newPos = oldPos + path;
+
+			Interface::PositionKind pos = o.getPositionKind();
+			v3 dir; // global
+
+			if(pos == Interface::local)
+				dir = global*newPos-global*oldPos;
+			else
+				dir = newPos - oldPos;
+
+			ended = moveObject(o, oldPos, dir, endProcessedTime);
+			totalProcessedTime += (1-totalProcessedTime)*endProcessedTime;
+			collisionCount++;
+		}
+		while(!ended && collisionCount<1);
+		// Rotation
+
+		velocity v = o.getVelocity();
+		if(fabs(v.rotationSpeed)>EPSILON) // rotation
+		{
+			rotateObject(o, o.getMatrix(), v.rotationAxis, v.rotationSpeed*(float)time, endProcessedTime);
+		}
 	}
-	while(!ended && collisionCount<5);
+
 
 	PhysicInterfaceList c = o.getPChildrens();
 
@@ -115,21 +155,19 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 		process(**it, globalTime, time);
 
 	if(helper && o.getProcessKind() != ProcessKind::none) // draw velocity
-	{
-		helper->drawVector(Line(
-			o.getGlobalMatrix()*v3(),
-			o.getGlobalVelocity().translation.getNormalized()
-			), 0,0, v4(0,1,0,1));
-	}
+		helper->drawVector(
+					Line(o.getGlobalMatrix()*v3(0,0,0),	
+					o.getGlobalVelocity().translation*0.1f), 0.0f,0.0f, v4(0.0f,1.0f,0.0f,1.0f)
+					)
+					;
+
 	if(helper) // draw AABB
 	{
 		aabb frame = o.getPFrame();
 		if(!frame.empty())
 		{
 			frame.mul(o.getGlobalMatrix());
-			v4 color;
-			
-			helper->drawBox(frame, 0,0, color);
+			helper->drawBox(frame, 0,0, v4(1,1,1, 0.5f));
 		}
 	}
 
@@ -212,7 +250,7 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 
 	v3 v12sr = v1sr - v2sr; // относительная скорость
 	
-	v12sr *= 0.9;
+	v12sr *= 0.9f;
 
 	v1sr = v2sr + v12sr;
 
@@ -284,19 +322,30 @@ void PhysicEngine3D::collisionDetection(PhysicInterface &a, PhysicInterface &b, 
 	{	
 		Collision newCollision;
 		newCollision.time = INF;
-		if(checkCollision(a, distance, b, newCollision))
-		{
-			if(collision.time > newCollision.time)
-			{
-				collision = newCollision;
-				collision.b = &b;
-			}
-		}
+		if(checkCollision(a, distance, b, newCollision) && collision.time > newCollision.time)
+				collision = newCollision, collision.b = &b;
 	}
 
 	PhysicInterfaceList c = b.getPChildrens();
 	for(PhysicInterfaceList::iterator it = c.begin(); it != c.end(); it++)
 		collisionDetection(a, **it, distance, collision, clip);
+}
+
+void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &a, PhysicInterface &b, const matrix44 rotation, Collision &collision, PhysicInterface *clip)
+{
+	if(&a == &b || &b == clip) return ;
+			
+	if(b.getTriangles() && b.getPVertexes()) 
+	{	
+		Collision newCollision;
+		newCollision.time = INF;
+//		if(checkCollision(a, distance, b, newCollision) && collision.time > newCollision.time)
+//				collision = newCollision, collision.b = &b;
+	}
+
+	PhysicInterfaceList c = b.getPChildrens();
+	for(PhysicInterfaceList::iterator it = c.begin(); it != c.end(); it++)
+		collisionDetectionRotation(a, **it, rotation, collision, clip);
 }
 
 
@@ -310,6 +359,18 @@ void PhysicEngine3D::collisionDetection(PhysicInterface &o, v3 distance, Collisi
 	PhysicInterfaceList c = o.getPChildrens();
 	for(PhysicInterfaceList::iterator it = c.begin(); it != c.end(); it++)
 		collisionDetection(**it, distance, collision, clip);
+}
+
+// Check for collision между одним объектом и всеми
+void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &o, const matrix44 rotation, Collision &collision, PhysicInterface *clip)
+{
+	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+		if((*it) != &o)
+			collisionDetectionRotation(o, **it, rotation, collision, clip);
+
+	PhysicInterfaceList c = o.getPChildrens();
+	for(PhysicInterfaceList::iterator it = c.begin(); it != c.end(); it++)
+		collisionDetectionRotation(**it, rotation, collision, clip);
 }
 
 
@@ -417,48 +478,26 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 {
 	// каждый треугольник движущегося тела при движении образует призму
 	// проверяем пересечение этой призмы со всеми треугольниками второго тела
-
-	aabb newframe1 = a.getPFrame();
-	newframe1.mul(a.getGlobalMatrix());
-	newframe1.add(distance);
-
-	aabb newframe2 = b.getPFrame();
-	newframe2.mul(b.getGlobalMatrix());
+	aabb newframe1 = a.getPFrame();	newframe1.mul(a.getGlobalMatrix());	newframe1.add(distance);
+	aabb newframe2 = b.getPFrame();	newframe2.mul(b.getGlobalMatrix());
 
 	newframe1.cross(newframe2);
-
-/*	newframe1.max += v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON);
-	newframe1.min -= v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON);
-*/
 	if(newframe1.empty()) return false;
 
-
-	Triangles *t = a.getTriangles();
-	Vertexes *v = a.getPVertexes();
-	matrix44 matrix = a.getGlobalMatrix();
-
-	Triangles	*t2	= b.getTriangles();
-	Vertexes	*v2	= b.getPVertexes();
-	matrix44 matrix2 = b.getGlobalMatrix();
-
+	Triangles *t = a.getTriangles();	Vertexes *v = a.getPVertexes();		matrix44 matrix = a.getGlobalMatrix();
+	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix44 matrix2 = b.getGlobalMatrix();
 
 	vector<Plane> bp;
-
 	for(vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
 	{
 		Plane bt;
 		bt.base = matrix2 * v2->data[jt->a[0]];
 		bt.a	= matrix2 * v2->data[jt->a[1]] - bt.base;
 		bt.b	= matrix2 * v2->data[jt->a[2]] - bt.base;
-		aabb aabb2;
-		aabb2.merge(bt.base);
-		aabb2.merge(bt.base + bt.a);
-		aabb2.merge(bt.base + bt.b);
+		aabb aabb2(bt.base);		aabb2.merge(bt.base + bt.a);		aabb2.merge(bt.base + bt.b);
 
 		if(newframe1.intersect(aabb2))
-		{
 			bp.push_back(bt);
-		}
 	}
 
 	Plane at;
@@ -482,14 +521,9 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 				{
 					Plane bt = *jt;
 
-					Collision newCollision;
-					newCollision.time = INF;
-					if(checkCollisionMTrgTrg(at, distance, bt, newCollision))
-					{
-						if(collision.time > newCollision.time)
-							collision = newCollision;
-						ok = true;
-					}
+					Collision newCollision;	newCollision.time = INF;
+					if(checkCollisionMTrgTrg(at, distance, bt, newCollision) && collision.time > newCollision.time)
+							collision = newCollision, ok = true;
 				}
 			}
 		}

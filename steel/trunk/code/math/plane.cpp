@@ -19,7 +19,8 @@ bool isCross(const Plane a, const Line b, float &k)
 // nahodim k
 
 	v3 a_b = (a.base-b.base);
-	v3 abxaa = a.b*a.a; 
+	v3 abxaa = a.b*a.a;
+	if(abxaa.getSquaredLengthd()<EPSILON2) return false;
 	v3 baxaaxabxaa =  (b.a * a.a) * abxaa;
 	double len2 = baxaaxabxaa.getSquaredLengthd();
 	if(len2<EPSILON2) return false;

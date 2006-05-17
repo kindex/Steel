@@ -26,7 +26,6 @@ bool GameObj::init(ScriptLine	&s, ResCollection &res)
 
 	matrix.setTranslation(s.getv3(4));
 
-
 	v3 rot = s.getv3(5);
 
 	matrix44 rx; rx.loadIdentity(); 	rx.setRotationX(rot.x);
@@ -42,7 +41,7 @@ bool GameObj::init(ScriptLine	&s, ResCollection &res)
 		for(int j=0; j<3; j++)
 			matrix.a[i+j*4] *= scale;
 
-	setVelocity(velocity(s.getv3(7), v3(0,0,1), 0));
+	setVelocity(velocity(s.getv3(7), s.getv3(8), s.getf(9)));
 
 	return true;
 }
@@ -80,6 +79,14 @@ velocity GameObj::getGlobalVelocity()
 		else
 			return getVelocity();
 	}
+}
+
+float GameObj::getGlobalScale()
+{
+	matrix44 global = getGlobalMatrix();
+	v3 p;
+    p = global*v3(1,0,0) - global*v3(0,0,0);
+	return p.getLength();
 }
 
 

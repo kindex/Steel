@@ -113,6 +113,7 @@ public:
 	}
 	matrix44	getGlobalMatrix();
 	velocity	getGlobalVelocity();
+	float		getGlobalScale();
 
 	void	setMatrix(matrix44 const &m) { matrix = m; } 
 

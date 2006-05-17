@@ -159,10 +159,10 @@ float Model::calculateVolume() // вычислить объём
 		v3 a(vertex.data[it->a[0]]);
 		v3 b(vertex.data[it->a[1]]);
 		v3 c(vertex.data[it->a[2]]);
-		volume += (a*b)&c/6.0;
+		volume += (a*b)&c;
 	}
 
-	return fabs(volume);
+	return fabs(volume)/6.0;
 }
 
 float Model::getVolume() // вычислить объём

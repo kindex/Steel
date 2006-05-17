@@ -46,7 +46,8 @@ public:
 	bool process(steel::time globalTime, steel::time time);
 
 	bool process(PhysicInterface &o, steel::time globalTime, steel::time time);
-	bool processTime(PhysicInterface &o, steel::time globalTime, steel::time time, float &processedTime);
+	bool moveObject(PhysicInterface &o, v3 oldPos, v3 direction /*global*/, float &processedTime);
+	bool rotateObject(PhysicInterface &o, matrix44 oldMatrix, v3 rotAxis /*local*/, float angle, float &processedTime);
 
 	bool init(std::string _conf);
 	bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);
@@ -54,7 +55,9 @@ public:
 	bool clear();
 // CD
 	void collisionDetection(PhysicInterface &a, PhysicInterface &b, v3 distance, Collision &collision, PhysicInterface *clip);
+	void collisionDetectionRotation(PhysicInterface &a, PhysicInterface &b, const matrix44 rotation, Collision &collision, PhysicInterface *clip);
 	void collisionDetection(PhysicInterface &o, v3 distance, Collision &collision, PhysicInterface *clip);
+	void collisionDetectionRotation(PhysicInterface &o, const matrix44 rotation, Collision &collision, PhysicInterface *clip);
 
 	bool checkCollision(PhysicInterface &a, v3 distance, PhysicInterface &b, Collision &collision);
 	bool checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Collision &collision);

@@ -9,7 +9,8 @@ bool GameObjModel::init(ScriptLine	&s, ResCollection &res)
 	
 	if(!m) alog.msg("error res model", "Model not found: " + s.gets(3));
 
-	mass = m->getVolume();
+	float scale = getGlobalScale();
+	mass = m->getVolume()*scale*scale*scale;
 
 	return m != NULL;
 }
