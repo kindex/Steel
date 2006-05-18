@@ -32,14 +32,11 @@ bool GameObj::init(ScriptLine	&s, ResCollection &res)
 	matrix44 ry; ry.loadIdentity(); 	ry.setRotationY(rot.y);
 	matrix44 rz; rz.loadIdentity(); 	rz.setRotationZ(rot.z);
 
-	matrix = matrix*rx*ry*rz;
+	float scalef = s.getf(6, 1.0f);
+	if(scalef<=0) scalef = 1.0f;
+	matrix44 scale; scale.loadIdentity(); 	scale.setScale(v3(scalef, scalef, scalef));
 
-	float scale = s.getf(6, 1.0f);
-	if(scale<=0) scale = 1.0f;
-	
-	for(int i=0; i<3; i++)
-		for(int j=0; j<3; j++)
-			matrix.a[i+j*4] *= scale;
+	matrix = scale*matrix*rx*ry*rz; // TODO: order
 
 	setVelocity(velocity(s.getv3(7), s.getv3(8), s.getf(9)));
 

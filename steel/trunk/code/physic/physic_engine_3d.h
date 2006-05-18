@@ -60,12 +60,26 @@ public:
 	void collisionDetectionRotation(PhysicInterface &o, const matrix44 rotation, Collision &collision, PhysicInterface *clip);
 
 	bool checkCollision(PhysicInterface &a, v3 distance, PhysicInterface &b, Collision &collision);
+	bool checkCollisionRotation(PhysicInterface &a, const matrix44 rot, PhysicInterface &b, Collision &collision);
+
 	bool checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Collision &collision);
+	bool checkCollisionRTrgTrg(Plane a, v3 d1, v3 d2, v3 d3, Plane b, Collision &collision);
 
 	void checkCollisionMVertexTrg(const v3 point,	const v3 direction, const Plane b,	Collision &collision);
+
 	void checkCollisionMTrgVertex(const Plane a,	const v3 direction, const v3 point, Collision &collision);
+	void checkCollisionRTrgVertex1up(const Plane a, v3 d1, v3 d2, v3 d3, const v3 point, Collision &collision);
+	void checkCollisionRTrgVertex2up(const Plane a, v3 d1, v3 d2, v3 d3, const v3 point, Collision &collision);
+	void checkCollisionRTrgVertex3up(const Plane a, v3 d1, v3 d2, v3 d3, const v3 point, Collision &collision);
+
 	void checkCollisionMLineTrg  (const Line a,		const v3 direction, const Plane b,	Collision &collision);
+	void checkCollisionRLineTrg1up(const Line a,		v3 d1, v3 d2, const Plane b,	Collision &collision);
+	void checkCollisionRLineTrg2up(const Line a,		v3 d1, v3 d2, const Plane b,	Collision &collision);
+
 	void checkCollisionMLineLine (const Line a,		const v3 direction, const Line b,	Collision &collision);
+
+	void checkCollisionRLineLine1up(const Line a,	v3 d1, v3 d2, const Line b,	Collision &collision);
+	void checkCollisionRLineLine2up(const Line a,	v3 d1, v3 d2, const Line b,	Collision &collision);
 // CR
 	bool collisionReaction(Collision collision);
 	bool collisionReactionUniUni(const Collision collision);

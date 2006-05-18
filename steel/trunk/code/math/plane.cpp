@@ -47,6 +47,11 @@ bool Plane::isInTrg(v3 p) const
 	return isBetween(p, base, a, b) && isBetween(p, base + a, b - a, -a);
 }
 
+bool byRightSide(const v3 point, const Plane a)
+{
+	return ((a.a*a.b)&(point-a.base))>EPSILON;
+}
+
 bool pointInPrism(const Plane a, const v3 d, v3 p)
 {
 	p -= a.base;

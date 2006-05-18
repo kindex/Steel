@@ -58,9 +58,23 @@ bool PhysicEngine3D::rotateObject(PhysicInterface &o, matrix44 oldMatrix, v3 rot
 
 	collisionDetectionRotation(o, path, collision, &o);
 
+
 	if(collision.time<=1 + EPSILON)
 	{
-		processedTime = 0;
+		collision.a = &o;
+
+		if(findCollision(collision) == 0)
+		{
+			if(helper) // draw collision
+				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
+
+			collisionReaction(collision);	incCollision(collision); total.collisionCount++;
+			processedTime = 0;
+			return false;
+		}
+		else
+			return true; // движение закончено - объект столкнулся с дургим обхектом повторно
+
 		return true;
 
 /*		float len = dir.getLength();
@@ -289,6 +303,8 @@ bool PhysicEngine3D::collisionReactionUniUni(const Collision collision)
 
 	float D = B*B - 4*A*C;
 
+	D *= 0.5;
+
 	if (D<EPSILON) D = 0;//	assert(D>=0, "collisionReaction D>=0");
 
 	float u2ta = (-B + sqrt(D))/(2*A);	float u1ta = (It - m2*u2ta)/m1; 
@@ -339,8 +355,8 @@ void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &a, PhysicInterf
 	{	
 		Collision newCollision;
 		newCollision.time = INF;
-//		if(checkCollision(a, distance, b, newCollision) && collision.time > newCollision.time)
-//				collision = newCollision, collision.b = &b;
+		if(checkCollisionRotation(a, rotation, b, newCollision) && collision.time > newCollision.time)
+				collision = newCollision, collision.b = &b;
 	}
 
 	PhysicInterfaceList c = b.getPChildrens();
@@ -414,6 +430,54 @@ void PhysicEngine3D::checkCollisionMTrgVertex(const Plane a, const v3 direction,
 }
 
 
+void PhysicEngine3D::checkCollisionRTrgVertex1up(const Plane a, v3 d1, v3 d2, v3 d3, const v3 point, Collision &collision)
+{
+	if(
+		byRightSide(point, a)
+		&& byRightSide(point, Plane(a.base + d1, a.b + d3- d1, a.a + d2 - d1))
+		&& byRightSide(point, Plane(a.base, d1, a.a))
+		&& byRightSide(point, Plane(a.base, a.b, d1))
+		)
+	{
+			collision.time = 0;
+			collision.point = point;
+			collision.normal = a.a*a.b; // TODO
+	}
+}
+
+void PhysicEngine3D::checkCollisionRTrgVertex2up(const Plane a, v3 d1, v3 d2, v3 d3, const v3 point, Collision &collision)
+{
+	if(
+		   byRightSide(point, a)
+		&& byRightSide(point, Plane(a.base + d1, a.b + d3- d1, a.a + d2 - d1))
+		&& byRightSide(point, Plane(a.base, d1, a.a))
+		&& byRightSide(point, Plane(a.base, a.b, d1))
+		&& byRightSide(point, Plane(a.base + a.a, d2, a.b-a.a))
+		)
+	{
+			collision.time = 0;
+			collision.point = point;
+			collision.normal = a.a*a.b; // TODO
+	}
+}
+
+void PhysicEngine3D::checkCollisionRTrgVertex3up(const Plane a, v3 d1, v3 d2, v3 d3, const v3 point, Collision &collision)
+{
+	if(
+		   byRightSide(point, a)
+		&& byRightSide(point, Plane(a.base + d1, a.b + d3- d1, a.a + d2 - d1))
+		&& byRightSide(point, Plane(a.base, d1, a.a))
+		&& byRightSide(point, Plane(a.base, a.b, d1))
+		&& byRightSide(point, Plane(a.base + a.a, d2, a.b-a.a))
+		)
+	{
+			collision.time = 0;
+			collision.point = point;
+			collision.normal = a.a*a.b; // TODO
+	}
+}
+
+
 void PhysicEngine3D::checkCollisionMLineLine(const Line a, const v3 direction, const Line b, Collision &collision)
 {
 	float k;
@@ -433,6 +497,46 @@ void PhysicEngine3D::checkCollisionMLineLine(const Line a, const v3 direction, c
 	}
 }
 
+void PhysicEngine3D::checkCollisionRLineLine2up(const Line a,	v3 d1, v3 d2, const Line b,	Collision &collision)
+{
+	float k;
+
+	if(((a.base*a.a)&d1)<EPSILON) 
+		return;
+
+	if(!isCross(Plane(a.base, a.a, d1), b, k)) return ;
+	if(k<-EPSILON || k>1+ EPSILON) return ;
+
+	v3 point = b.point(k);
+
+	if(	isBetween(point, a.base, a.a, d1) &&	
+		isBetween(point, a.base + a.a + d2, d2 + a.a - d1,-d2))
+	{
+		collision.time = 0;
+		collision.point = point;
+		collision.normal = a.a*b.a;
+	}
+}
+
+void PhysicEngine3D::checkCollisionRLineLine1up(const Line a,	v3 d1, v3 d2, const Line b,	Collision &collision)
+{
+	float k;
+
+	if(!isCross(Plane(a.base, a.a, d1), b, k)) return ;
+	if(k<-EPSILON || k>1+ EPSILON) return ;
+
+	v3 point = b.point(k);
+
+	if(	isBetween(point, a.base, a.a, d1) &&	
+		isBetween(point, a.base + d1, a.a + d2 - d1, -d1))
+	{
+		collision.time = 0;
+		collision.point = point;
+		collision.normal = a.a*b.a;
+	}
+}
+
+
 void PhysicEngine3D::checkCollisionMLineTrg(const Line a, const v3 direction, const Plane b, Collision &collision)
 {
 	checkCollisionMLineLine(a, direction, Line(b.base, b.a), collision);
@@ -440,6 +544,19 @@ void PhysicEngine3D::checkCollisionMLineTrg(const Line a, const v3 direction, co
 	checkCollisionMLineLine(a, direction, Line(b.base + b.a, b.b-b.a), collision);
 }
 
+void PhysicEngine3D::checkCollisionRLineTrg1up(const Line a, v3 d1, v3 d2, const Plane b,	Collision &collision)
+{
+	checkCollisionRLineLine1up(a, d1, d2, Line(b.base, b.a), collision);
+	checkCollisionRLineLine1up(a, d1, d2, Line(b.base, b.b), collision);
+	checkCollisionRLineLine1up(a, d1, d2, Line(b.base + b.a, b.b-b.a), collision);
+}
+
+void PhysicEngine3D::checkCollisionRLineTrg2up(const Line a, v3 d1, v3 d2, const Plane b,	Collision &collision)
+{
+	checkCollisionRLineLine2up(a, d1, d2, Line(b.base, b.a), collision);
+	checkCollisionRLineLine2up(a, d1, d2, Line(b.base, b.b), collision);
+	checkCollisionRLineLine2up(a, d1, d2, Line(b.base + b.a, b.b-b.a), collision);
+}
 
 // пересечение движущегося треугольника (призма) с треугольником
 // 1. вершина - грань
@@ -466,6 +583,126 @@ bool PhysicEngine3D::checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Colli
 	checkCollisionMLineTrg(Line(a.base, a.a), direction, b, collision);
 	checkCollisionMLineTrg(Line(a.base, a.b), direction, b, collision);
 	checkCollisionMLineTrg(Line(a.base + a.a, a.b - a.a), direction, b, collision);
+
+	return collision.time<=1;
+}
+
+
+// пересечение врашающегося треугольника с треугольником
+// 1. вершина - грань
+// 2. грань - вершина
+// 3. ребро - ребро
+bool PhysicEngine3D::checkCollisionRTrgTrg(Plane a, v3 d1, v3 d2, v3 d3, Plane b, Collision &collision)
+{
+	v3 normal = a.a*a.b; int cnt = 0;
+	bool u1 = (normal&d1)>0; if(u1) cnt++;
+	bool u2 = (normal&d2)>0; if(u2) cnt++;
+	bool u3 = (normal&d3)>0; if(u3) cnt++;
+
+// 1. вершина - грань
+	if(u1) checkCollisionMVertexTrg(a.base      , d1, b, collision);
+	if(u2) checkCollisionMVertexTrg(a.base + a.a, d2, b, collision);
+	if(u3) checkCollisionMVertexTrg(a.base + a.b, d3, b, collision);
+
+	// 2. грань - вершина
+	Plane na;
+	v3 nd1, nd2, nd3;
+	if(cnt==1)
+	{
+		if(u1)	na = a, nd1 = d1, nd2 = d2, nd3 = d3;
+		if(u2) 
+		{
+			na.base = a.base + a.a;
+			na.a = a.b - a.a;
+			na.b = -a.a;
+			nd1 = d2; 
+			nd2 = d3;
+			nd3 = d1;
+		}
+		if(u3) 
+		{
+			na.base = a.base + a.b;
+			na.a = -a.b;
+			na.b = a.a - a.b;
+			nd1 = d3;
+			nd2 = d1;
+			nd3 = d2;
+		}
+		checkCollisionRTrgVertex1up(na, nd1, nd2, nd3, b.base, collision);
+		checkCollisionRTrgVertex1up(na, nd1, nd2, nd3, b.base + b.a, collision);
+		checkCollisionRTrgVertex1up(na, nd1, nd2, nd3, b.base + b.b, collision);
+	}
+
+	if(cnt==2)
+	{
+		if(!u3)	na = a, nd1 = d1, nd2 = d2, nd3 = d3;
+		if(!u2)
+		{
+			na.base = a.base + a.b;
+			na.a = -a.b;
+			na.b = a.a - a.b;
+			nd1 = d3;
+			nd2 = d1;
+			nd3 = d2;
+		}
+		if(u3) 
+		{
+			na.base = a.base + a.a;
+			na.a = a.b - a.a;
+			na.b = -a.a;
+			nd1 = d2; 
+			nd2 = d3;
+			nd3 = d1;
+		}
+		checkCollisionRTrgVertex2up(na, nd1, nd2, nd3, b.base, collision);
+		checkCollisionRTrgVertex2up(na, nd1, nd2, nd3, b.base + b.a, collision);
+		checkCollisionRTrgVertex2up(na, nd1, nd2, nd3, b.base + b.b, collision);
+	}
+
+	if(cnt==3)
+	{
+		checkCollisionRTrgVertex3up(a, d1, d2, d3, b.base, collision);
+		checkCollisionRTrgVertex3up(a, d1, d2, d3, b.base + b.a, collision);
+		checkCollisionRTrgVertex3up(a, d1, d2, d3, b.base + b.b, collision);
+	}
+
+	// 3. ребро - ребро
+/*	if(u1 && u2) checkCollisionRLineTrg2up(Line(a.base, a.a), d1, d2, b, collision);
+	if(u1 && !u2) checkCollisionRLineTrg1up(Line(a.base, a.a), d1, d2, b, collision);
+	if(!u1 && u2) checkCollisionRLineTrg1up(Line(a.base + a.a, -a.a), d2, d1, b, collision);
+
+	if(u1 && u3) checkCollisionRLineTrg2up(Line(a.base, a.b), d1, d3, b, collision);
+	if(u1 && !u3) checkCollisionRLineTrg1up(Line(a.base, a.b), d1, d3, b, collision);
+	if(!u1 && u3) checkCollisionRLineTrg1up(Line(a.base + a.b, -a.b), d3, d1, b, collision);
+
+	if(u2 && u3) checkCollisionRLineTrg2up(Line(a.base + a.a, a.b - a.a), d2, d3, b, collision);
+	if(u2 && !u3) checkCollisionRLineTrg1up(Line(a.base + a.a, a.b - a.a), d2, d3, b, collision);
+	if(!u2 && u3) checkCollisionRLineTrg1up(Line(a.base + a.b, -a.b + a.a), d3, d2, b, collision);
+*/
+
+	Plane up(a.base + d1, a.a + d2 - d1, a.b + d3 - d1);
+	checkCollisionMVertexTrg(b.base, b.a, up, collision);
+	checkCollisionMVertexTrg(b.base, b.b, up, collision);
+	checkCollisionMVertexTrg(b.base + b.a, b.b - b.a, up, collision);
+
+	if(collision.time < 2) collision.time = 0;
+
+//	checkCollisionRLineTrg2up(Line(a.base + a.a, a.b - a.a), d2, d3, b, collision);
+
+/*	aabb abox(a.base); abox.merge(a.base + a.a); abox.merge(a.base + a.b);
+	aabb anewbox(anew.base); anewbox.merge(anew.base + anew.a); anewbox.merge(anew.base + anew.b);
+	aabb bbox(b.base); bbox.merge(b.base + b.a); bbox.merge(b.base + b.b);
+
+	abox.merge(anewbox);
+
+//	if(abox.intersect(bbox))
+	{
+		helper->drawBox(abox, 0,0,v4());
+		helper->drawBox(bbox, 0,0,v4());
+
+//		collision.time = 0;
+//		return true;
+	}*/
 
 	return collision.time<=1;
 }
@@ -528,9 +765,88 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 			}
 		}
 	}
-
 	return collision.time<=1;
 }
+
+
+// проверяет коллизию между врашающимя телом а
+// и неподвижным телом b. 
+// функция возвращает самую первую во ремени коллизию
+bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix44 rot, PhysicInterface &b, Collision &collision)
+{
+	// каждый треугольник движущегося тела при движении образует призму
+	// проверяем пересечение этой призмы со всеми треугольниками второго тела
+	aabb newframe1(a.getPFrame());		newframe1.mul(a.getGlobalMatrix());
+	aabb newframe1b(newframe1);	newframe1.mul(rot);	
+	newframe1.merge(newframe1b);
+
+	aabb newframe2 = b.getPFrame();	newframe2.mul(b.getGlobalMatrix());
+
+	newframe1.cross(newframe2);
+	if(newframe1.empty()) return false;
+
+	Triangles *t = a.getTriangles();	Vertexes *v = a.getPVertexes();		matrix44 matrix = a.getGlobalMatrix();
+	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix44 matrix2 = b.getGlobalMatrix();
+
+	if(!t2 || !t) return false;
+	vector<Plane> bp;
+	for(vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
+	{
+		Plane bt;	bt.base = matrix2 * v2->data[jt->a[0]];		bt.a	= matrix2 * v2->data[jt->a[1]] - bt.base;		bt.b	= matrix2 * v2->data[jt->a[2]] - bt.base;
+		aabb aabb2(bt.base);		aabb2.merge(bt.base + bt.a);		aabb2.merge(bt.base + bt.b);
+		if(newframe1.intersect(aabb2))	
+			bp.push_back(bt);
+	}
+
+	Plane at, anew;
+	matrix44 newpos = matrix*rot;
+
+	for(vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
+	{
+		at.base = matrix * v->data[it->a[0]];
+		at.a	= matrix * v->data[it->a[1]] - at.base;
+		at.b	= matrix * v->data[it->a[2]] - at.base;
+
+		aabb old(at.base); old.merge(at.base + at.a); old.merge(at.base + at.b);
+
+		anew.base = newpos* v->data[it->a[0]];
+		anew.a	= newpos * v->data[it->a[1]] - anew.base;
+		anew.b	= newpos * v->data[it->a[2]] - anew.base;
+
+		v3 d1 = anew.base - at.base;
+		v3 d2 = anew.base + anew.a - (at.base + at.a);
+		v3 d3 = anew.base + anew.b - (at.base + at.b);
+
+		old.merge(anew.base);	old.merge(anew.base + anew.a); old.merge(anew.base + anew.b);
+
+		v3 normal = at.a*at.b;
+
+		if( 
+			(normal & d1) > 0 ||
+			(normal & d2) > 0 ||
+			(normal & d3) > 0
+		)
+			
+			// треугольник движется вперёд
+		{
+
+			bool ok = false;
+			if(newframe1.intersect(old))
+			{
+				for(vector<Plane>::iterator jt = bp.begin(); jt != bp.end(); jt++)
+				{
+					Plane bt = *jt;
+
+					Collision newCollision;	newCollision.time = INF;
+					if(checkCollisionRTrgTrg(at, d1, d2, d3, bt, newCollision) && collision.time > newCollision.time)
+							collision = newCollision, ok = true;
+				}
+			}
+		}
+	}
+	return collision.time<=1;
+}
+
 
 bool PhysicEngine3D::update(Element &el)
 {

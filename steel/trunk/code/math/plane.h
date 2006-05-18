@@ -22,6 +22,9 @@ bool pointInPrism(const Plane a, const v3 d, v3 p);
 // ѕересекает ли движуща€с€ лини€ (a:direction) отрезок (b.base + b.a*k)
 bool crossMLineLine(const Line a, const v3 direction, const Line b, float &k);
 
+// наход€тс€ ли точка по правую сторону от плоскости
+bool byRightSide(const v3 point, const Plane a);
+
 
 struct Plane // ѕлоскость: base + a*s + b*t
 {
