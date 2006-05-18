@@ -47,7 +47,7 @@ public:
 
 	bool process(PhysicInterface &o, steel::time globalTime, steel::time time);
 	bool moveObject(PhysicInterface &o, v3 oldPos, v3 direction /*global*/, float &processedTime);
-	bool rotateObject(PhysicInterface &o, matrix44 oldMatrix, v3 rotAxis /*local*/, float angle, float &processedTime);
+	bool rotateObject(PhysicInterface &o, matrix44 oldMatrix, v3 rotAxis /*local*/, float &processedTime);
 
 	bool init(std::string _conf);
 	bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);

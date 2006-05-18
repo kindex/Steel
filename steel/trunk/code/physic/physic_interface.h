@@ -60,15 +60,13 @@ namespace ShapeType
 struct velocity
 {
 	v3 translation; // скорость поступательного движения
-	v3 rotationAxis;  // ось вращения
-	float rotationSpeed; // скорость вращения (радиан/сек)
+	v3 rotationAxis;  // ось вращения*скорость вращения(радиан/сек)
 
 	inline velocity() {}
-	inline velocity(const v3 _translation, const v3 _axis, const float _rotSpeed) 
+	inline velocity(const v3 _translation, const v3 _axis) 
 	{
 		translation = _translation;
 		rotationAxis = _axis;
-		rotationSpeed = _rotSpeed;
 	}
 };
 

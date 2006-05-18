@@ -38,7 +38,7 @@ bool GameObj::init(ScriptLine	&s, ResCollection &res)
 
 	matrix = scale*matrix*rx*ry*rz; // TODO: order
 
-	setVelocity(velocity(s.getv3(7), s.getv3(8), s.getf(9)));
+	setVelocity(velocity(s.getv3(7), s.getv3(8).getNormalized()*s.getf(9)));
 
 	return true;
 }
