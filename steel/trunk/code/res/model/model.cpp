@@ -1,3 +1,13 @@
+    // sTangent - vektor v storonu uveli4enija S teksturnoj koordinati (vpravo)
+    // tangentSpaceLight - vektor ot ver6uni do to4ki osveshenija v TBN (Tangent, Binormal, Normal) prostrastve (sTangent, tTangent, normal) - tangent space http://www.paulsprojects.net/tutorials/tutorials.html
+    //( Sx Sy Sz )
+    //( Tx Ty Tz ) - matrix to convert from object space to tangent space
+    //( Nx Ny Nz )
+    // links: http://www.ati.com/developer/sdk/RADEONSDK/Html/Tutorials/RADEONBumpMap.html
+ 
+//    mat_id mat;  
+
+
 #include "model.h"
 using namespace std;
 

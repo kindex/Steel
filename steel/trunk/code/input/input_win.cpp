@@ -26,37 +26,51 @@ void InputWIN::freeMouse()
 	mouseCaptured = false;
 }
 
-string decodeKey(WPARAM p)
+string decodeKey(MSG p)
 {
 	string key;
-	switch(p)
+	switch(p.message)
 	{
-		case VK_RETURN: key = "return"; break;
-		case VK_ESCAPE: key = "escape"; break;
-		case VK_SPACE: key = "space"; break;
-		case VK_PAUSE: key = "pause"; break;
-		case VK_SNAPSHOT: key = "snapshot"; break;
-		case VK_OEM_1: key = ";"; break;
-		case VK_OEM_2: key = "/"; break;
-		case VK_OEM_7: key = "'"; break;
+		case WM_LBUTTONUP:
+		case WM_LBUTTONDOWN: key = "mouse1"; break;
+		case WM_RBUTTONUP:
+		case WM_RBUTTONDOWN: key = "mouse1"; break;
+		case WM_MBUTTONUP:
+		case WM_MBUTTONDOWN: key = "mouse1"; break;
 
-//		case : key = ""; break;
-
-		default:
-			if(p>='0' && p<='9')
+		case WM_KEYUP:
+		case WM_KEYDOWN:
+			switch(p.wParam)
 			{
-				key.resize(1);
-				key[0] = p;
-			}
-			if(p>='A' && p<='Z')
-			{
-				key.resize(1);
-				key[0] = p + ('a'-'A');
-			}
-			if(p>=VK_F1 && p<=VK_F24)
-				key = "f" + IntToStr(p-VK_F1 + 1); break;
 
-			break;
+				case VK_RETURN: key = "return"; break;
+				case VK_ESCAPE: key = "escape"; break;
+				case VK_SPACE: key = "space"; break;
+				case VK_PAUSE: key = "pause"; break;
+				case VK_SNAPSHOT: key = "snapshot"; break;
+				case VK_OEM_1: key = ";"; break;
+				case VK_OEM_2: key = "/"; break;
+				case VK_OEM_7: key = "'"; break;
+
+		//		case : key = ""; break;
+
+				default:
+					WPARAM c = p.wParam;
+					if(c>='0' && c<='9')
+					{
+						key.resize(1);
+						key[0] = c;
+					}
+					if(c>='A' && c<='Z')
+					{
+						key.resize(1);
+						key[0] = c + ('a'-'A');
+					}
+					if(c>=VK_F1 && c<=VK_F24)
+						key = "f" + IntToStr(c-VK_F1 + 1); break;
+
+					break;
+			}
 	}
 	return key;
 }
@@ -97,8 +111,13 @@ void InputWIN::process()
 		case WM_QUIT:
 			alive = false;
 			break;
+
+		case WM_LBUTTONDOWN:
+		case WM_RBUTTONDOWN:
+		case WM_MBUTTONDOWN:
 		case WM_KEYDOWN:
-			key = decodeKey(msg.wParam);
+			key = decodeKey(msg);
+
 			if(key != "" && !keyPressed[key])
 			{
 				game->handleEventKeyDown(key);
@@ -114,8 +133,11 @@ void InputWIN::process()
 
 			break;
 
+		case WM_LBUTTONUP:
+		case WM_RBUTTONUP:
+		case WM_MBUTTONUP:
 		case WM_KEYUP:
-			key = decodeKey(msg.wParam);
+			key = decodeKey(msg);
 			if(key != "")
 				game->handleEventKeyUp(key);
 			keyPressed[key] = false;

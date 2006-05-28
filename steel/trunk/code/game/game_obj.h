@@ -12,7 +12,6 @@
 		игровые объекты.
  ************************************************************/
 
-
 #ifndef GAME_OBJ_H
 #define GAME_OBJ_H
 
@@ -63,7 +62,6 @@ public:
 	velocity	vel;
 	coord		mass;
 	matrix44	matrix;
-	bool movable, rotatable;
 	std::string		name;
 	ProcessKind::ProcessKind		processKind;
 	PositionKind	positionKind;
@@ -74,8 +72,6 @@ protected:
 public:
 	GameObj()
 	{
-		movable = false;
-		rotatable = false;
 		parent	= false;
 		processKind	= ProcessKind::none;
 		positionKind = local;
@@ -95,17 +91,7 @@ public:
 	std::string getName() { return name; }
 	void setName(std::string _name) { name = _name;}
 
-	void setMovable(bool _movable)
-	{
-		movable = _movable;
-	}
-	void setRotatable(bool _rotatable)
-	{
-		rotatable = _rotatable;
-	}
-
 	void	trigger(PhysicInterface *object) {}
-
 
 	matrix44 getMatrix()	
 	{		
@@ -156,9 +142,6 @@ public:
 	// масса
 	coord	getMass(){return mass;}
 
-	bool	isMovable() { return movable; }
-	bool	isRotatable(){ return rotatable; }
-
 	bool	getTarget(v3 &targetPoint, coord &speed) {return false;}
 	void	setTargetReached() {}
 
@@ -183,7 +166,6 @@ public:
 };
 
 
-
 /*
 Источник освещения.
 */
@@ -205,24 +187,8 @@ public:
 Разделяет всё пространство на домены коллизий и
 отсекает невидимые объекты.
 */
-
 /*class GameDomain: public GameObjDummy
 {
-
-};
-*/
-
-
-/*
-1 Sprite
-*/
-/*class GameSprite: public GameObjDummy
-{
-protected:
-	Sprites sprites;
-public:
-	GameSprite(coord width, std::string material);
-	Sprites*	getSprites();
 };
 */
 

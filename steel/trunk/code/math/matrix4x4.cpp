@@ -1,19 +1,13 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-//	matrix44.cpp
-//	function definitions for 4x4 matrix class
-//	You may use this code however you wish, but if you do, please credit me and
-//	provide a link to my website in a readme file or similar
-//	Downloaded from: www.paulsprojects.net
-//	Created:	20th July 2002
-//	Updated:	19th August 2002	-	Corrected 2nd SetPerspective for n!=1.0f
-//				26th September 2002	-	Added nudge to prevent artifacts with infinite far plane
-//									-	Improved speed
-//				7th November 2002	-	Added Affine Inverse functions
-//									-	Changed constructors
-//									-	Added special cases for row3 = (0, 0, 0, 1)
-//				17th December 2002	-	Converted from radians to degrees for consistency
-//										with OpenGL. Should have been done a long time ago...
-//////////////////////////////////////////////////////////////////////////////////////////	
+/*id*********************************************************
+    Unit: math/matrix4x4
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Description:
+		Class declaration for a 4x4 matrix
+************************************************************/
+
 #include <memory.h>
 #include "maths.h"
 #include "matrix4x4.h"
@@ -671,6 +665,16 @@ void matrix44::setRotationZ(const double angle)
 	a[5] =  a[0];
 }
 
+void matrix44::setRotationZ(const double c, const double s)
+{
+	a[0] = (float)c;
+	a[1] = (float)s;
+
+	a[4] = -a[1];
+	a[5] =  a[0];
+}
+
+
 void matrix44::setRotationEuler(const double angleX, const double angleY, const double angleZ)
 {
 	setRotationPartEuler(angleX, angleY, angleZ);
@@ -778,3 +782,22 @@ void matrix44::setRotationPartEuler(const double angleX, const double angleY, co
 	a[9] = ( float )( crsp*sy-sr*cy );
 	a[10] = ( float )( cr*cp );
 }
+
+void matrix44::setRotationEuler(const double cr, const double sr, const double cp	,const double sp	,const double cy	,const double sy)
+{
+	a[0] = ( float )( cp*cy );
+	a[1] = ( float )( cp*sy );
+	a[2] = ( float )( -sp );
+
+	double srsp = sr*sp;
+	double crsp = cr*sp;
+
+	a[4] = ( float )( srsp*cy-cr*sy );
+	a[5] = ( float )( srsp*sy+cr*cy );
+	a[6] = ( float )( sr*cp );
+
+	a[8] = ( float )( crsp*cy+sr*sy );
+	a[9] = ( float )( crsp*sy-sr*cy );
+	a[10] = ( float )( cr*cp );
+}
+

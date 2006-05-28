@@ -31,12 +31,11 @@ struct Light
 
 typedef std::vector<Light>		Lights;
 
+//	kind : 2d only
 class TexCoord: public BufferedElement
 {
 public:
 	std::vector<v2>	data;
-
-//	kind : 2d only
 };
 
 class GLine // al-a triangle
@@ -52,8 +51,6 @@ typedef std::vector<GLine> GLines;
 typedef Vertexes	Normals;
 
 typedef TexCoord TexCoords;
-//typedef std::vector<v2> MapCoords;
-
 
 // материал + треугольники, к которым он относится
 struct FaceMaterial
@@ -87,20 +84,7 @@ public:
 
 /*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
 	virtual aabb getFrame() = 0; // AABB of object
-/*Форма объектя для рисования (без формы потомков)
- full shape for physics, graph (polygon, 3D mesh)
- quality = 0 - aabb
- quality = 1 - со всеми деталями
- В зависимости от расстояния и производительности машины.
 
-
-NURBS ?
-Decals ?
-
-Прогаммно сгенерированные текстуры? no
-Video textures (avi, camera)
-
-*/
 	// Интерфейс заточен под 3DS и OpenGL
 	// Следующие функции возврящяют ссылки на массивы данных (NULL if none), и должны 
 	// отвечать за хранние этих данных до следующего вызова этой функции
@@ -111,9 +95,7 @@ Video textures (avi, camera)
 
 	virtual GLines*	getLines() = 0; // индексы вершин для линий и цвета линий (for debug)
 
-	// массив индексов вершин, которые образуют треугольники (грани)
-//	virtual Triangles*	getTriangles() = 0; 
-
+	// массив индексов вершин, которые образуют треугольники (грани) + материалы
 	virtual FaceMaterials* getFaceMaterials() = 0;
 	virtual TexCoords*	getTexCoords(int texNumber) = 0;
 

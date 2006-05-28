@@ -21,10 +21,9 @@
 #include "game_obj.h"
 #include "objects/group.h"
 
-#include "../physic/physic_engine.h"
+#include "../physic/physic_engine_3d.h"
 #include "../graph/graph_engine.h"
 #include "../graph/graph_helper.h"
-
 
 class Game; // forward declaration, cross-use
 
@@ -41,6 +40,7 @@ class Game: public steelAbstract
 protected:
 // Camera
 	v3	eye, direction;
+	v3 g;
 	float speedup, speed;
 	steel::time time;
 	coord accSpeed, brakeSpeed;
@@ -54,10 +54,11 @@ protected:
 	Config		*conf;
 
 	GraphEngine *graphEngine;
+	PhysicEngine3D *physicEngine;
 
 	void processKeyboard();
 
-// World - all objects
+// World - custom objects
 	GameGroup	*world;
 	GraphHelper	*physicHelper;
 
@@ -66,9 +67,10 @@ public:
 	bool init(ResCollection *_res, std::string _conf, Input *_input);
 
 	void bind(GraphEngine *engine);
-	void bind(PhysicEngine *engine);
+	void bindPhysicEngine();
 	void draw(GraphEngine *engine);
-	void process(PhysicEngine *physic, steel::time globalTime, steel::time time);
+	void process(steel::time globalTime, steel::time time);
+	int getCollisionCount() { return physicEngine->total.collisionCount; }
 
 	void handleEventKeyDown(std::string key);
 	void handleEventKeyUp(std::string key);

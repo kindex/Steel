@@ -53,10 +53,8 @@ public:
 
 	bool init(std::string _conf, ResCollection *res);
 	virtual bool unload() {return true; };
-
 };
 
 Res* createMaterial(const std::string filename, ResCollection *res);
-
 
 #endif

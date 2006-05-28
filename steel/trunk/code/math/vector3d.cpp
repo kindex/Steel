@@ -1,17 +1,14 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-//	v3.cpp
-//	Function definitions for 3d vector class
-//	You may use this code however you wish, but if you do, please credit me and
-//	provide a link to my website in a readme file or similar
-//	Downloaded from: www.paulsprojects.net
-//	Created:	20th July 2002
-//	Modified:	8th November 2002	-	Changed Constructor layout
-//									-	Some speed Improvements
-//									-	Corrected Lerp
-//				17th December 2002	-	Converted from radians to degrees
-//////////////////////////////////////////////////////////////////////////////////////////	
+/*id*********************************************************
+    Unit: math/vector3d
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Description:
+		Class declaration for a 3d vector
+************************************************************/
 
-#include "Maths.h"
+#include "maths.h"
 #include "vector3d.h"
 
 void v3::normalize()

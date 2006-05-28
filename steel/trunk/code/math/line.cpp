@@ -1,3 +1,15 @@
+/*id*********************************************************
+    Unit: math/line
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	Licence:
+        Только для Division
+    Description:
+		Line, LineSement
+************************************************************/
+
 #include "line.h"
 
 bool isCross(const Line a, const Line b, float &t, float &s)

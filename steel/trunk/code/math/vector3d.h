@@ -1,18 +1,15 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-//	v3.h
-//	Class declaration for a 3d vector
-//	You may use this code however you wish, but if you do, please credit me and
-//	provide a link to my website in a readme file or similar
-//	Downloaded from: www.paulsprojects.net
-//	Created:	20th July 2002
-//	Modified:	8th November 2002	-	Changed Constructor layout
-//									-	Some speed Improvements
-//									-	Corrected Lerp
-//				7th January 2003	-	Added QuadraticInterpolate
-//////////////////////////////////////////////////////////////////////////////////////////	
+/*id*********************************************************
+    Unit: math/vector3d
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Description:
+		Class declaration for a 3d vector
+************************************************************/
 
-#ifndef v3_H
-#define v3_H
+#ifndef __MATH_VECTOR3D_H
+#define __MATH_VECTOR3D_H
 
 #include "maths.h"
 
@@ -24,19 +21,16 @@ struct v3
 	//constructors
 	inline v3(void)	:	x(0.0f), y(0.0f), z(0.0f)	{}
 
-	inline v3(float newX, float newY, float newZ)	:	x(newX), y(newY), z(newZ)	{}
+	inline v3(float X, float Y, float Z)	:	x(X), y(Y), z(Z)	{}
+	inline v3(const float *a)	:	x(*a), y(*(a+1)), z(*(a+2))	{}
+	inline v3(const v3 &a)	:	x(a.x), y(a.y), z(a.z)	{}
 
-	inline v3(const float * rhs)	:	x(*rhs), y(*(rhs+1)), z(*(rhs+2))	{}
-
-	inline v3(const v3 & rhs)	:	x(rhs.x), y(rhs.y), z(rhs.z)	{}
-
-	inline void set(float newX, float newY, float newZ) {	x=newX;	y=newY;	z=newZ;	}
+	inline void set(float X, float Y, float Z) {	x = X;	y = Y;	z = Z;	}
 	inline void set(const v3 _v) {	x=_v.x;	y=_v.y; z=_v.z;	}
 	
-	//Accessors kept for compatibility
-	inline void setX(float newX) {x = newX;}
-	inline void setY(float newY) {y = newY;}
-	inline void setZ(float newZ) {z = newZ;}
+	inline void setX(float X) {x = X;}
+	inline void setY(float Y) {y = Y;}
+	inline void setZ(float Z) {z = Z;}
 
 	inline float getX() const {return x;}	//public accessor functions
 	inline float getY() const {return y;}	//inline, const
@@ -47,13 +41,13 @@ struct v3
 	inline void loadOne(void)	{	x=y=z=1.0f;	}
 	
 	//vector algebra
-	inline v3 vectorProduct(const v3 & rhs) const
-	{	return v3(y*rhs.z - z*rhs.y, z*rhs.x - x*rhs.z, x*rhs.y - y*rhs.x);	}
+	inline v3 vectorProduct(const v3 & a) const
+	{	return v3(y*a.z - z*a.y, z*a.x - x*a.z, x*a.y - y*a.x);	}
 
-	inline v3 operator*(const v3 rhs) const	{	return vectorProduct(rhs);	}
+	inline v3 operator*(const v3 a) const	{	return vectorProduct(a);	}
 
 	inline float dotProduct(const v3 & A) const	{	return x*A.x + y*A.y + z*A.z;	}
-	inline float operator&(const v3 rhs) const		{	return dotProduct(rhs);	}
+	inline float operator&(const v3 a) const		{	return dotProduct(a);	}
 
 	void normalize();
 	v3 getNormalized() const;
@@ -90,24 +84,22 @@ struct v3
 	v3 quadraticInterpolate(const v3 & v2, const v3 & v3, float factor) const
 	{	return (*this)*(1.0f-factor)*(1.0f-factor) + 2*v2*factor*(1.0f-factor) + v3*factor*factor;}
 
-
 	//overloaded operators
 	//binary operators
-	inline v3 operator+(const v3 & rhs) const
-	{	return v3(x + rhs.x, y + rhs.y, z + rhs.z);	}
+	inline v3 operator+(const v3 & a) const
+	{	return v3(x + a.x, y + a.y, z + a.z);	}
 	
-	inline v3 operator-(const v3 & rhs) const
-	{	return v3(x - rhs.x, y - rhs.y, z - rhs.z);	}
+	inline v3 operator-(const v3 & a) const
+	{	return v3(x - a.x, y - a.y, z - a.z);	}
 
-	inline v3 operator*(const float rhs) const
-	{	return v3(x*rhs, y*rhs, z*rhs);	}
+	inline v3 operator*(const float a) const
+	{	return v3(x*a, y*a, z*a);	}
 	
-	inline v3 operator/(const float rhs) const
-	{	return (rhs==0.0f) ? v3(0.0f, 0.0f, 0.0f) : v3(x / rhs, y / rhs, z / rhs);	}
+	inline v3 operator/(const float a) const
+	{	return (a==0.0f) ? v3(0.0f, 0.0f, 0.0f) : v3(x / a, y / a, z / a);	}
 
 	//multiply by a float, eg 3*v
-	inline friend v3 operator*(float scaleFactor, const v3 & rhs)	{	return rhs*scaleFactor;	}
-
+	inline friend v3 operator*(float scaleFactor, const v3 & a)	{	return a*scaleFactor;	}
 
 	//Add, subtract etc, saving the construction of a temporary
 	inline void add(const v3 & v2, v3 & result)
@@ -124,33 +116,32 @@ struct v3
 		result.z=z-v2.z;
 	}
 
-	inline bool operator==(const v3 & rhs) const
+	inline bool operator==(const v3 & a) const
 	{
-		return(fabs(x-rhs.x)<EPSILON && fabs(y-rhs.y)<EPSILON && fabs(z-rhs.z)<EPSILON);
+		return(fabs(x-a.x)<EPSILON && fabs(y-a.y)<EPSILON && fabs(z-a.z)<EPSILON);
 	}
 
-	inline bool operator!=(const v3 & rhs) const
+	inline bool operator!=(const v3 & a) const
 	{
-		return(fabs(x-rhs.x)>EPSILON || fabs(y-rhs.y)>EPSILON || fabs(z-rhs.z)>EPSILON);
+		return(fabs(x-a.x)>EPSILON || fabs(y-a.y)>EPSILON || fabs(z-a.z)>EPSILON);
 	}
 
 	//self-add etc
-	inline void operator+=(const v3 & rhs)
-	{	x+=rhs.x;	y+=rhs.y;	z+=rhs.z;	}
+	inline void operator+=(const v3 & a)
+	{	x+=a.x;	y+=a.y;	z+=a.z;	}
 
-	inline void operator-=(const v3 & rhs)
-	{	x-=rhs.x;	y-=rhs.y;	z-=rhs.z;	}
+	inline void operator-=(const v3 & a)
+	{	x-=a.x;	y-=a.y;	z-=a.z;	}
 
-	inline void operator*=(const float rhs)
-	{	x*=rhs;	y*=rhs;	z*=rhs;	}
+	inline void operator*=(const float a)
+	{	x*=a;	y*=a;	z*=a;	}
 	
-	inline void operator/=(const float rhs)
-	{	if(rhs==0.0f)
+	inline void operator/=(const float a)
+	{	if(a==0.0f)
 			return;
 		else
-		{	x/=rhs; y/=rhs; z/=rhs;	}
+		{	x/=a; y/=a; z/=a;	}
 	}
-
 
 	//unary operators
 	inline v3 operator-(void) const {return v3(-x, -y, -z);}
@@ -159,7 +150,6 @@ struct v3
 	//cast to pointer to a (float *) for glVertex3fv etc
 	inline operator float* () const {return (float*) this;}
 	inline operator const float* () const {return (const float*) this;}
-
 };
 
-#endif	//v3_H
+#endif	// __MATH_VECTOR3D_H

@@ -5,7 +5,7 @@
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [Anton]
-    Licence:
+	Licence:
         Только для Division
     Description:
 		main() создайт игровые классы, коллеццию ресурсов, загружет 
@@ -13,7 +13,6 @@
  ************************************************************/
 
 #include "_cpp.h"
-
 #include "physic/physic_engine_3d.h"
 
 #ifdef OPENGL_SDL	
@@ -25,7 +24,6 @@
 	#include "input/input_win.h"
 #endif
 
-
 #include "common/logger.h"
 #include "common/timer.h"
 
@@ -33,7 +31,6 @@
 #include "common/utils.h"
 
 #include "res/res_main.h"
-
 
 bool test();
 
@@ -55,11 +52,11 @@ int main(int argc, char *argv[])
 	timer.start();	timer.pause();
 
 	float speed = 0.01f; // 100 FPS
-// *************** RES *****************
+// ******************** RES ************************
 	ResCollection res;
 	registerResources(res);
 
-// *************** GRAPH *****************
+// ******************* GRAPH ************************
 #ifdef OPENGL_SDL	
 	OpenGL_SDL_Engine graph;
 	InputSDL input;
@@ -73,20 +70,13 @@ int main(int argc, char *argv[])
 	if(!graph.init("renderer", &input)) return 1;
 #endif
 	
-// ************ INPUT ************
+// ******************* INPUT ************************
 	if(!input.init(&res, "input")) return 1;
-// ************ GAME **************
+// ******************* GAME *************************
 	Game game;
 	if(!game.init(&res, "game", &input)) return 1;
 
 	game.bind(&graph);
-
-// ******************* PHYSIC **************************
-
-	PhysicEngine3D physic;
-	physic.bindResColelntion(&res);
-	if(!physic.init("physic")) return 1;
-	game.bind(&physic);
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
@@ -113,7 +103,7 @@ int main(int argc, char *argv[])
 		{
 			steel::time time = timer.total() - lastFrameTime;
 			if(time>0)
-				game.process(&physic, timer.total(), time);
+				game.process(timer.total(), time);
 			lastFrameTime = timer.total();
 		}
 
@@ -126,7 +116,7 @@ int main(int argc, char *argv[])
 			graph.setCaption(std::string("Sleel engine")
 				+ " Obj: " + IntToStr(graph.total.object)
 				+ " Trg: " + IntToStr(graph.total.triangle)
-				+ " Col: " + IntToStr(physic.total.collisionCount)
+				+ " Col: " + IntToStr(game.getCollisionCount())
 				+ " FPS " + timer.getfps_s()
 
 				);
@@ -134,15 +124,12 @@ int main(int argc, char *argv[])
 
 			captionUdateTime = timer.total();
 		}
-
 		if(first)
 		{
 			first = false;
 			alog.msg("core", "\n\t\tMain loop: first frame passed");
 			timer.resume();
 		}
-
-//		SDL_Delay(1);
 	}
 	alog.msg("core", "\n\t\tExit from main loop");
 // ******************* MAIN LOOP ************************
@@ -152,4 +139,3 @@ int main(int argc, char *argv[])
 	alog.close();
 	return 0;
 }
-

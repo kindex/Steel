@@ -51,10 +51,7 @@ class OpenGL_Engine: public GraphEngine
 {
 protected:
 	std::map<uid, OpenGLBuffer> buffer;
-
-		//, registedCubeMaps;
-
-	GLuint normalisationCubeMap, lightCubeMap, distMap;
+	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 
 	typedef
 		std::vector<v3>

@@ -1,15 +1,13 @@
 /*id*********************************************************
-    Unit: GraphEngine
+    Unit: PhysicEngine
     Part of: Steel engine
     Version: 1.0
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-		* Kane [Anton]
-		* Bond [Andrey Bondarenko]
     Licence:
         Только для Division
     Description:
-		Графический джижок - интерфейс рисуемого объекта
+		Физический джижок - интерфейс двигающегося объекта
  ************************************************************/
 
 #ifndef PHYSIC_INTERFACE_H
@@ -90,26 +88,12 @@ public:
 	// массив индексов вершин, которые образуют треугольники (грани)
 	virtual Triangles*	getTriangles() = 0; 
 
-/*матрица трансформации объекта относительно его родителя. 
-Включает в себя повотор, сдвиг и масштаб.
-getPVertexes возвращяет координаты точек в системе координат getPMatrix*/
-
-	// положение (лучше заменить матрицей, которая включаеи в себя положение, масштаб и поворот тела)
-//	virtual v3		getPosition() = 0;
-	// возвращает true, если можно изменить положение
-//	virtual bool	setPosition(v3 const &v) = 0;
-
-// Может ли объект двигаться при коллизии и действуют ли на него внешние силы, вроде гравитации
-	virtual bool	isMovable() = 0;
-	virtual bool	isRotatable() = 0;
-
 	// скорость в глобальных коодринатах
 	virtual velocity	getVelocity() = 0;
 	virtual void	setVelocity(const velocity &v) = 0;
 	virtual matrix44	getGlobalMatrix() = 0;
 	virtual velocity	getGlobalVelocity() = 0;
 	virtual	float		getGlobalScale() = 0;
-
 
 	// масса
 	virtual	coord	getMass() = 0;

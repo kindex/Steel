@@ -802,10 +802,6 @@
 					RelativePath=".\physic\physic_interface.h"
 					>
 				</File>
-				<File
-					RelativePath=".\physic\physic_primitives.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="input"
@@ -859,6 +855,18 @@
 				RelativePath="..\res\room.script"
 				>
 			</File>
+			<Filter
+				Name="groups"
+				>
+				<File
+					RelativePath="..\res\group\cubes.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\res\group\main.scene"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

@@ -1,3 +1,15 @@
+/*id*********************************************************
+    Unit: math/plane
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	Licence:
+        Только для Division
+    Description:
+		Plane, Triangle
+************************************************************/
+
 #ifndef __MATH_PLANE_H
 #define __MATH_PLANE_H
 
@@ -25,17 +37,17 @@ bool crossMLineLine(const Line a, const v3 direction, const Line b, float &k);
 // находятся ли точка по правую сторону от плоскости
 bool byRightSide(const v3 point, const Plane a);
 
+/* Плоскость: base + a*s + b*t
+ base - точка остчёта (нижний угол)
+ a,b - напрявляющие двух векторов этой плоскости
 
-struct Plane // Плоскость: base + a*s + b*t
+ Для треугольника
+ 0<= t <=1
+ 0<= s <=1
+ 0<= t+s <=1
+*/
+struct Plane 
 {
-// base - точка остчёта (нижний угол)
-// a,b - напрявляющие двух векторов этой плоскости
-
-// Для треугольника
-// 0<= t <=1
-// 0<= s <=1
-// 0<= t+s <=1
-
 	v3 base, a, b;
 
 	Plane() {}

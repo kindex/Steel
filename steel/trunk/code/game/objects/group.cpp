@@ -1,3 +1,21 @@
+/*id*********************************************************
+    Unit: game/objects/group
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Контейнер для других объектов.
+		К нему прикрепляются другие объекты и движутся как единое целое.
+		Если на какого-нибудь из детей дествует сила, большая чем
+		сила связи, то объект отделяется от группы и передаётся предку группы.
+
+		Все имена (идентификаторы внутри группы уникальны, и не конфлинтуют с
+		другими группами.
+ ************************************************************/
+
 #include "../../common/logger.h"
 #include "../../common/utils.h"
 
@@ -148,16 +166,3 @@ bool GameGroup::load(ResCollection *res, GameObj *global)
 	}
 	return true;
 }
-
-/*aabb GameGroup::getFrame()
-{
-	aabb box;
-	box.clear();
-
-	for(vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
-	{
-		box.merge( (*it)->getFrame());
-	}
-	return box;
-}*/
-

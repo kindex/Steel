@@ -1,3 +1,15 @@
+/*id*********************************************************
+    Unit: math/plane
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	Licence:
+        Только для Division
+    Description:
+		Plane, Triangle
+************************************************************/
+
 #include "plane.h"
 
 /*

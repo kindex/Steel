@@ -7,8 +7,8 @@
     Licence:
         Только для Division
     Description:
-		TODO
- ************************************************************/
+		Kinematics, Collision Detection and Collision Reaction
+************************************************************/
 
 #ifndef PHYSIC_ENGINE_3D_H
 #define PHYSIC_ENGINE_3D_H
@@ -18,7 +18,6 @@
 
 #include <map>
 #include <string>
-
 
 class PhysicEngine3D: public PhysicEngine
 {
@@ -43,6 +42,8 @@ protected:
 //	std::map<std::string, int> tag;
 public:
 	PhysicEngine3D() { helper = NULL; conf = NULL; }
+	void setGravitation(const v3 force) { g = force; }
+
 	bool process(steel::time globalTime, steel::time time);
 
 	bool process(PhysicInterface &o, steel::time globalTime, steel::time time);
@@ -85,9 +86,10 @@ public:
 	bool collisionReactionUniUni(const Collision collision);
 	bool collisionReactionUniNone(const Collision collision);
 
+	void applyImpule(PhysicInterface &a, v3 point, v3 impulse);
+
 	void incCollision(const Collision collision);
 	int findCollision(const Collision collision);
 };
-
 
 #endif

@@ -1,5 +1,5 @@
 /*id*********************************************************
-    Unit: 3D PhysicEngine
+    Unit: PhysicEngine
     Part of: Steel engine
     Version: 1.0
     Authors:

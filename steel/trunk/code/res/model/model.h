@@ -1,3 +1,15 @@
+/*id*********************************************************
+    Unit: Res-Modele [3D mesh]
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Класс для хранения модели в виде многогранника
+ ************************************************************/
+
 #ifndef __RES__MODEL_MODEL_H
 #define __RES__MODEL_MODEL_H
 
@@ -7,8 +19,7 @@
 
 #include "../../graph/graph_interface.h"
 
-
- //3D Object as triangles mesh, Abstract class
+ //3D Object as triangles mesh
 class Model: public Res
 {
 public:
@@ -21,15 +32,6 @@ public:
     Normals				normal;    // Vertex normals
 	FaceMaterials		faceMaterial;
 	float				volume;
-
-    // sTangent - vektor v storonu uveli4enija S teksturnoj koordinati (vpravo)
-    // tangentSpaceLight - vektor ot ver6uni do to4ki osveshenija v TBN (Tangent, Binormal, Normal) prostrastve (sTangent, tTangent, normal) - tangent space http://www.paulsprojects.net/tutorials/tutorials.html
-    //( Sx Sy Sz )
-    //( Tx Ty Tz ) - matrix to convert from object space to tangent space
-    //( Nx Ny Nz )
-    // links: http://www.ati.com/developer/sdk/RADEONSDK/Html/Tutorials/RADEONBumpMap.html
- 
-//    mat_id mat;  
 
     std::string name;
 
@@ -58,6 +60,5 @@ public:
 	float calculateVolume(); // вычислить объём
 	float getVolume(); // вычислить объём
 };
-
 
 #endif

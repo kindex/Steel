@@ -1,19 +1,12 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-//	matrix44.h
-//	Class declaration for a 4x4 matrix
-//	You may use this code however you wish, but if you do, please credit me and
-//	provide a link to my website in a readme file or similar
-//	Downloaded from: www.paulsprojects.net
-//	Created:	20th July 2002
-//	Updated:	19th August 2002	-	Corrected 2nd SetPerspective for n!=1.0f
-//				26th September 2002	-	Added nudge to prevent artifacts with infinite far plane
-//									-	Improved speed
-//				7th November 2002	-	Added Affine Inverse functions
-//									-	Changed constructors
-//									-	Added special cases for row3 = (0, 0, 0, 1)
-//				17th December 2002	-	Converted from radians to degrees for consistency
-//										with OpenGL. Should have been done a long time ago...
-//////////////////////////////////////////////////////////////////////////////////////////	
+/*id*********************************************************
+    Unit: math/matrix4x4
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Description:
+		Class declaration for a 4x4 matrix
+************************************************************/
 
 #include "vector4d.h"
 #include "../common/types.h"
@@ -112,7 +105,11 @@ public:
 	void setRotationX(const double angle);
 	void setRotationY(const double angle);
 	void setRotationZ(const double angle);
+	void setRotationZ(const double c, const double s);
+
 	void setRotationEuler(const double angleX, const double angleY, const double angleZ);
+	void setRotationEuler(const double cr, const double sr, const double cp	,const double sp	,const double cy	,const double sy);
+
 	void setPerspective(float left, float right, float bottom, float top, float n, float f);
 	void setPerspective(float fovy, float aspect, float n, float f);
 	void setOrtho(float left, float right, float bottom, float top, float n, float f);
@@ -133,4 +130,4 @@ public:
 	coord a[16];
 };
 
-#endif	//matrix44_H
+#endif	// __MATRIX4x4_H

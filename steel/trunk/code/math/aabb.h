@@ -1,7 +1,17 @@
+/*id*********************************************************
+    Unit: math/aabb
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	Licence:
+        Только для Division
+    Description:
+		AABB (Axis-Aligned bounding box)
+************************************************************/
+
 #ifndef __MATH_AABB_H
 #define __MATH_AABB_H
-
-// AABB (Axis-Aligned bounding box)
 
 #include "vector3d.h"
 #include "matrix4x4.h"

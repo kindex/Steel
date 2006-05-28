@@ -18,9 +18,6 @@
 #define __GRAPH_ENGINE_H
 
 #include "../res/conf/conf.h"
-
-/********************************* GRAPH **********************************************/
-
 #include "graph_interface.h"
 
 class GraphEngine;
@@ -33,18 +30,9 @@ public:
 public:
     void seteye(const v3 &EYE) { eye = EYE; }
     void setcenter(const v3 &CENTER) { center = CENTER; }
+	void setup(const v3 &EYE, const v3 &DIR);
 
-	void setup(const v3 &EYE, const v3 &DIR)
-	{
-		eye = EYE;
-		center = EYE + DIR;
-	}
-
-	Camera(): 
-		up(v3(0.0, 0.0, 1.0)), 
-		eye(10.0, 10.0, 1.0), 
-		center(v3(0.0, 0.0, 0.0)) {}
-
+	Camera();
 };
 
 class GraphEngine: public Engine
@@ -85,7 +73,6 @@ public:
 	// Collect information about object: how to render it
 	virtual bool inject(GraphInterface *object);
 	virtual bool remove(GraphInterface *object);
-	
 	virtual bool prepare(GraphInterface *object, matrix44 matrix = matrix44::getIdentity());
 
 	// Draw colelcted information. May be called few times without recollection information

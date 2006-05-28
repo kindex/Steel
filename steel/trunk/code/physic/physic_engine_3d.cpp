@@ -1,3 +1,14 @@
+/*id*********************************************************
+    Unit: 3D PhysicEngine
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        “олько дл€ Division
+    Description:
+		Kinematics, Collision Detection and Collision Reaction
+ ************************************************************/
 
 #include "physic_engine_3d.h"
 
@@ -29,8 +40,8 @@ bool PhysicEngine3D::moveObject(PhysicInterface &o, v3 oldPos, v3 dir /*global*/
 		}
 
 		collision.a = &o;
-
-		if(findCollision(collision) == 0)
+		int cnt = findCollision(collision);
+		if(cnt == 0)
 		{
 			if(helper) // draw collision
 				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
@@ -75,35 +86,7 @@ bool PhysicEngine3D::rotateObject(PhysicInterface &o, matrix44 oldMatrix, v3 rot
 		}
 		else
 			return true; // движение закончено - объект столкнулс€ с дургим обхектом повторно
-
 		return true;
-
-/*		float len = dir.getLength();
-		len *= collision.time;
-		len -= CONTACT_EPSILON;
-		if(len>EPSILON)
-		{
-			dir = dir.getNormalized()*len;
-			o.setPosition(oldPos + dir);
-		}
-
-		collision.a = &o;
-
-		if(findCollision(collision) == 0)
-		{
-			if(helper) // draw collision
-				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
-
-			collisionReaction(collision);
-			incCollision(collision);
-
-			total.collisionCount++;
-			processedTime = collision.time;
-			return false;
-		}
-		else
-			return true; // движение закончено - объект столкнулс€ с дургим обхектом повторно
-		*/
 	}
 	else
 	{
@@ -154,12 +137,15 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 			collisionCount++;
 		}
 		while(!ended && collisionCount<1);
-		// Rotation
 
-		velocity v = o.getVelocity();
-		if(v.rotationAxis.getSquaredLengthd()>EPSILON2) // rotation
+		// Rotation
+		if(conf->geti("kiRotation"))
 		{
-			rotateObject(o, o.getMatrix(), v.rotationAxis*(float)time, endProcessedTime);
+			velocity v = o.getVelocity();
+			if(v.rotationAxis.getSquaredLengthd()>EPSILON2) // rotation
+			{
+				rotateObject(o, o.getMatrix(), v.rotationAxis*(float)time, endProcessedTime);
+			}
 		}
 	}
 
@@ -222,8 +208,19 @@ void PhysicEngine3D::incCollision(const Collision collision)
 int PhysicEngine3D::findCollision(const Collision collision)
 {
 	std::map<Collision, int>::iterator it = allCollisions.find(collision);
+
 	if(it == allCollisions.end()) 
-		return false;
+	{
+		Collision collision2 = collision;
+		collision2.a = collision.b;
+		collision2.b = collision.a;
+
+		std::map<Collision, int>::iterator it2 = allCollisions.find(collision2);
+		if(it2 == allCollisions.end())
+			return false;
+		else
+			return (*it2).second;
+	}
 	else
 		return (*it).second;
 }
@@ -234,14 +231,7 @@ bool PhysicEngine3D::collisionReaction(Collision collision)
 	ProcessKind::ProcessKind akind = collision.a->getProcessKind();
 	ProcessKind::ProcessKind bkind = collision.b->getProcessKind();
 	if(akind == ProcessKind::uni && bkind == ProcessKind::uni)
-	{
-//		return collisionReactionUniUni(collision); 
-		PhysicInterface *swap = collision.a;
-		collision.a = collision.b; 
-		collision.b = swap;
-
-		return collisionReactionUniNone(collision); // UNI
-	}
+		return collisionReactionUniUni(collision); 
 
 	if(akind == ProcessKind::uni && (bkind == ProcessKind::none || bkind == ProcessKind::custom))
 		return collisionReactionUniNone(collision);
@@ -276,6 +266,17 @@ v3	getSpeed(PhysicInterface &o, v3 point)
 }
 
 
+void PhysicEngine3D::applyImpule(PhysicInterface &a, v3 point, v3 impulse)
+{
+	v3 pc = point - a.getGlobalMatrix()*v3(0,0,0);// point to center
+	v3 pcn = pc.getNormalized();
+	float m = a.getMass();
+	velocity v = a.getGlobalVelocity();
+	v.translation += (pcn&impulse)*pcn;
+	a.setVelocity(v);
+}
+
+
 bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 {
 	v3 t = collision.normal.getNormalized();
@@ -288,7 +289,8 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 	v3 v2 = getSpeed(*collision.b, collision.point);
 
 // энерги€ первого тела
-	float T = v1.getSquaredLength() + V1.rotationAxis.getSquaredLength();
+	float rk = 0;
+	float T = v1.getSquaredLength() + rk*V1.rotationAxis.getSquaredLength();
 
 	float v1t = t&v1; float v2t = t&v2;
 
@@ -296,54 +298,60 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 	v3 v2sr = v2 - t*v2t;
 
 	v3 v12sr = v1sr - v2sr; // относительна€ скорость в точке удара
-	v12sr *= 0.9f;
+	
+//	v12sr *= conf->getf("crUNFriction", 1.0);
+
 	v1sr = v2sr + v12sr;
 
 	float u1t = v2t - v1t; 
 
 	v3 u1a = v1sr + t*u1t; // линейна€ скорость в точке удара
 
-	v3 center = collision.a->getGlobalMatrix()*v3(0,0,0);
+	if(conf->geti("crRotation"))
+	{
+		v3 center = collision.a->getGlobalMatrix()*v3(0,0,0);
 
-	float center_point = (center - collision.point).getLength();
-	
-	v3 normal = ((center - collision.point)*v3(0,0,1)).getNormalized()*center_point;
+		float center_point = (center - collision.point).getLength();
+		
+		v3 normal = ((center - collision.point)*v3(0,0,1)).getNormalized()*center_point;
 
-	v3 pa = collision.point;
-	v3 pb = center + (center - collision.point)*0.5f + normal*sqrt(3.0f)/2;
-	v3 pc = center + (center - collision.point)*0.5f - normal*sqrt(3.0f)/2;
+		v3 pa = collision.point;
+		v3 pb = center + (center - collision.point)*0.5f + normal*sqrt(3.0f)/2;
+		v3 pc = center + (center - collision.point)*0.5f - normal*sqrt(3.0f)/2;
 
-	v3 u1b = getSpeed(*collision.a, pb); // линейна€ скорость в противоположной точке
-	v3 u1c = getSpeed(*collision.a, pc); // линейна€ скорость в противоположной точке
+		v3 u1b = getSpeed(*collision.a, pb); // линейна€ скорость в противоположной точке
+		v3 u1c = getSpeed(*collision.a, pc); // линейна€ скорость в противоположной точке
 
-	helper->drawLine(Line(pa, pb-pa), 0,0, v4());
-	helper->drawLine(Line(pa, pc-pa), 0,0, v4());
-	helper->drawLine(Line(pb, pc-pb), 0,0, v4());
+		helper->drawLine(Line(pa, pb-pa), 0,0, v4());
+		helper->drawLine(Line(pa, pc-pa), 0,0, v4());
+		helper->drawLine(Line(pb, pc-pb), 0,0, v4());
 
-	helper->drawVector(Line(pa, u1a*0.1f), 0,0, v4());
-	helper->drawVector(Line(pb, u1b*0.1f), 0,0, v4());
-	helper->drawVector(Line(pc, u1c*0.1f), 0,0, v4());
+		helper->drawVector(Line(pa, u1a*0.1f), 0,0, v4());
+		helper->drawVector(Line(pb, u1b*0.1f), 0,0, v4());
+		helper->drawVector(Line(pc, u1c*0.1f), 0,0, v4());
 
-	v3 da = (center-u1a).getNormalized();
-	v3 db = (center-u1b).getNormalized();
-	v3 dc = (center-u1c).getNormalized();
+		v3 da = (center-pa).getNormalized();
+		v3 db = (center-pb).getNormalized();
+		v3 dc = (center-pc).getNormalized();
 
 
-	v3 rot = ((u1a*da) + (u1b*db) + (u1c*dc))/3;
+		v3 rot = ((u1a*da) + (u1b*db) + (u1c*dc)).getNormalized();
 
-	v3 tr = ((u1a&da)*da + (u1b&db)*db + (u1c&dc)*dc).getNormalized();
-	
-//	T *= 0.5;
+		v3 tr = (u1a&da)*da;
+		
+		T -= tr.getSquaredLength();
+		if(T>EPSILON)
+			rot *= sqrt(T/rk);
+		else
+			rot.loadZero();
 
-	T -= rot.getSquaredLength();
-	if(T>EPSILON)
-		tr *= sqrt(T);
+		V1.translation = tr;
+		V1.rotationAxis= rot;
+	}
 	else
-		tr.loadZero();
-
-	V1.translation = tr;
-	V1.rotationAxis= rot;
-
+	{
+		V1.translation = u1a;
+	}
 	collision.a->setVelocity(V1);
 
 	return true;
@@ -374,6 +382,7 @@ bool PhysicEngine3D::collisionReactionUniUni(const Collision collision)
 
 	float D = B*B - 4*A*C;
 
+	D *= conf->getf("crUUEnergySave", 1.0);
 //	D *= 0.5;
 
 	if (D<EPSILON) D = 0;//	assert(D>=0, "collisionReaction D>=0");

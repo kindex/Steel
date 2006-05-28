@@ -1,3 +1,15 @@
+/*id*********************************************************
+    Unit: game/Model Object
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Статическая модель, котоаря рисуется и движется
+ ************************************************************/
+
 #ifndef __GAME_MODEL_OBJ_H
 #define __GAME_MODEL_OBJ_H
 
@@ -13,16 +25,9 @@ protected:
 	Model *m;
 
 public:
-	void assignModel(Model *M)
-	{
-		m = M;
-	}
-	GameObjModel()
-	{ 
-		m = NULL;
-	}
+	void assignModel(Model *M)	{		m = M;	}
+	GameObjModel()	{ 		m = NULL;	}
 	bool	init(ScriptLine	&s, ResCollection &res);
-
 
 	uid		getId() { return m->getId(); }
 	aabb getFrame();
@@ -58,17 +63,12 @@ public:
 		else
 			return NULL;
 	}
-	Lights* getLights()
-	{
-		return NULL;
-	}
+	Lights* getLights()	{		return NULL;	}
 
 	TexCoords*	getTexCoords(int mapNumber)
 	{
 		return m->getTexCoords(mapNumber);
 	}
-//	bool	init(ScriptLine	&line)
 };
-
 
 #endif

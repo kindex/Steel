@@ -4,6 +4,12 @@
 // uni  -universal physic object
 // tag	- object with coordinates, but no graph and physic
 
+uni			sphere/sphere2	-3,0,1	0,0,0	1	0,0	
+
+;uni			sphere/sphere2	3,0,1	0,0,0	1.5	-10,0,0
+
+
+
 //KIND	parent	id	CONF		X,Y,Z		Angle		Scale	Vx,Vy,Vz
 solid			wall/wall1	20,0,-1
 solid			wall/wall1	-20,0,-1
@@ -11,13 +17,15 @@ solid			wall/wall1	0,0,10
 solid			wall/wall1	0,20,-1
 solid			wall/wall1	0,-20,-1
 
-solid			wall/wall1	0,0,-19	1,0,0
-solid			wall/wall1	0,0,-19	-1,0,0
-solid			wall/wall1	0,0,-19	0,1,0
-solid			wall/wall1	0,0,-19	0,-1,0
+solid			wall/wall1	0,0,-21
 
-;uni			box/box1	0,0,1.6	0,0,0	1	0,0,0	1,0,0	1
-;uni			box/box1	0,-0.9,0.52	0,0,0	1	0,0,0	0,1,0	0
+;solid			wall/wall1	0,0,-19	1,0,0
+;solid			wall/wall1	0,0,-19	-1,0,0
+;solid			wall/wall1	0,0,-19	0,1,0
+;solid			wall/wall1	0,0,-19	0,-1,0
+
+;uni			box/box1	0,0.01,2.0	0,0,0	1	0,0,-10	1,0,0	0
+;solid			box/box1	0,-0.9,0.52	0,0,0	1	0,0,0	0,1,0	0
 
 
 ;uni			sphere/sphere2	0,0,1	0,0,0	1	0,0,0	0,0,1	10
@@ -25,7 +33,9 @@ solid			wall/wall1	0,0,-19	0,-1,0
 ;uni			sphere/sphere2	0.1,0,6.1	0,0,0	1	0,0,0	1,0,1	1
 ;uni			sphere/sphere2	0.1,0,8.2	0,0,0	1	0,0,0	1,1,1	0
 
-uni			sphere/sphere2	4,0,-2	0,0,0	1	1,10,0
+;uni			sphere/sphere2	4,2,-2	0,0,0	1	1,10,0	0,0,1	10
+
+;uni			sphere/sphere2	2.5,0.5,2.0
 ;uni			sphere/sphere2	3,0,4.1
 ;uni			sphere/sphere2	3,0,6.2
 ;uni			sphere/sphere2	3,0,8.3
@@ -94,13 +104,14 @@ uni			sphere/sphere2	4,0,-2	0,0,0	1	1,10,0
 
 //custom		path1		4	4	0
 
-#uni			box/box1	0,2.41,4
-#include			group/main.scene	0,0,2
-//include			group/main.scene	0	0	0	0	1
-//include			group/main.scene	0	0	4	3.14	1
+;uni			box/box1	0,2.41,4
+
+;include			group/main.scene	0,0,2
+;include			group/main.scene	0	0	0	0	1
+;include			group/main.scene	0	0	4	3.14	1
 
 //kind	parent	id	CONF	X	Y	Z	Align	Size
-//sprite			box/metal	0	0	3	1,-1,0	2
+;sprite			box/box	0	0	3	1,-1,0	2
 
-//ps		ps2	particle_system/ps	0	0	0
+;ps		ps2	particle_system/ps	0	0	0
 

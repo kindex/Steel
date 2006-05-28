@@ -15,9 +15,7 @@
  ************************************************************/
 
 #include "graph_engine.h"
-
 using namespace std;
-
 
 bool GraphEngine::inject(GraphInterface *object)
 {
@@ -53,27 +51,22 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 	if(pos == Interface::local)
 	{
 		object_matrix = parent_matrix*object_matrix;
-
 		object->processGraph(parent_matrix.getInverse()*camera.eye, parent_matrix.getInverse()*(camera.center-camera.eye));
 	}
 	else if(pos == Interface::global) 
-	{
 		object->processGraph(camera.eye, (camera.center-camera.eye));
-	}
 	else
 		return false;
 
 	aabb frame = object->getFrame();
 	frame.mul(object_matrix);
 
-	if(!isVisible(frame)) return false;
-	
-/* TODO: сюда надо поставить проверку, находится ли frame
+/*проверка, находится ли frame
 внутри пирамиды, которую образует угол обзора камеры.
 Если не попадает, то откидываем этот объект и всех его потомков
 */
-
-
+	if(!isVisible(frame)) return false;
+	
 	GraphInterface &o = *(GraphInterface*)object;
 	GraphInterfaceList children = o.getChildrens();
 	for(GraphInterfaceList::iterator it=children.begin();
@@ -98,10 +91,6 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 
 	if(v != NULL)
 		total.vertex += v->data.size();
-
-//	if(t != NULL)
-//		vector<bool>	usedTriangle(t->data.size(), false);
-//		int totalUsed = 0;
 
 	if(m != NULL)
 	for(FaceMaterials::iterator it = (*m).begin(); it != (*m).end(); it++)
@@ -142,54 +131,6 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 		e.blend = false;
 	}
 
-	
-
-/*	Sprites		*s = object->getSprites();
-	if(s != NULL)
-	for(Sprites::iterator it = s->begin(); it != s->end(); it++)
-	{
-		int c = element.size();
-		element.resize(c+1);
-
-		matrix44 matrix = new_matrix;
-
-		matrix.a[12] += it->pos.x;
-		matrix.a[13] += it->pos.y;
-		matrix.a[14] += it->pos.z;
-
-		element[c].materialName = it->material;
-		element[c].material = (Config*)res->get(Res::config, string("material/") + element[c].materialName);
-		if(element[c].material == NULL)
-		{
-			alog.msg("error renderer res material", string("Material not found ")+ element[c].materialName);
-			return false;
-		}
-		element[c].alpha = element[c].material->gets("color_mode") == "alpha";
-
-		element[c].triangle = new Triangles(2);
-		for(int i=0; i<3; i++)
-		{
-			element[c].triangle->operator[](0).a[i] = 3-i;
-			element[c].triangle->operator[](1).a[i] = 3-(i+2)%4;
-		}
-
-
-		coord size = it->width;
-
-		element[c].mapcoord = new MapCoords(4);
-		element[c].mapcoord->operator [](0) = v2(0, 0);
-		element[c].mapcoord->operator [](1) = v2(1, 0);
-		element[c].mapcoord->operator [](2) = v2(1, 1);
-		element[c].mapcoord->operator [](3) = v2(0, 1);
-
-		element[c].matrix = matrix;
-
-		element[c].normal = new Normals(4);
-		for(int i=0; i<4; i++)
-			element[c].normal->operator [](i) = dir;
-
-		total.triangle += 2;
-	}*/
 	return true;
 }
 
@@ -206,3 +147,15 @@ bool GraphEngine::clear()
 }
 
 
+void Camera::setup(const v3 &EYE, const v3 &DIR)
+{
+	eye = EYE;
+	center = EYE + DIR;
+}
+
+Camera::Camera(): 
+		up(v3(0.0, 0.0, 1.0)), 
+		eye(10.0, 10.0, 1.0), 
+		center(v3(0.0, 0.0, 0.0)) 
+{
+}

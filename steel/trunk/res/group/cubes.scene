@@ -1,13 +1,5 @@
 // Types:
 
-// g - graph. Only rendering
-// f - physic + graph object. 
-// solid. Unmovable physic object
-// light 
-// tag	- object with coordinates, but no graph and physic
-// path		id	speed	{tags}
-
-//Type	Parent	Id	Model	X	Y	Z
 
 solid		master	box/box1	0.0,0.0,0.0
 

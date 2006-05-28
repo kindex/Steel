@@ -1,3 +1,15 @@
+/*id*********************************************************
+    Unit: game/objects/Path
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    Licence:
+        Только для Division
+    Description:
+		Path. Метка, которя движется по траектории от объекта к объекту.
+ ************************************************************/
+
 #include "path.h"
 
 /*
@@ -70,6 +82,4 @@ void TagPath::process(steel::time curTime, steel::time frameLength, PhysicEngine
 	}
 	else
 		vel.translation = (tp-curPos).getNormalized()* speed;
-
-
 }
