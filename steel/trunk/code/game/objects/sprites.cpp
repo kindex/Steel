@@ -34,6 +34,11 @@ bool Sprite::init(ScriptLine &s, ResCollection &_res)
 	return true;
 }
 
+void Sprite::setAlign(const v3 _align)
+{
+	customAlign = _align;
+}
+
 void SpriteSystem::initSprites()
 {
 	vertex.data.resize(sprite.size()*4);

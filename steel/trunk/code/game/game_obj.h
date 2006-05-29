@@ -36,6 +36,7 @@ public:
 	Vertexes*	getVertexes()	{	return NULL;	}
 	Vertexes*	getPVertexes()	{	return getVertexes(); }
 	Triangles*	getTriangles()	{	return NULL;	}
+	Config*		getPMaterial()	{	return NULL;	}
 	Normals*	getNormals()	{	return NULL;	}
 	Lights*		getLights()		{	return NULL;	}
 	GLines*		getLines()		{	return NULL;	}

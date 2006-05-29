@@ -36,7 +36,9 @@ protected:
 		}
 	};
 
-	std::map<Collision, int> allCollisions;
+	typedef std::map<Collision, int> collisionSet;
+	
+	collisionSet allCollisions, lastCollisions;
 
 	v3 g;
 //	std::map<std::string, int> tag;
@@ -89,7 +91,7 @@ public:
 	void applyImpule(PhysicInterface &a, v3 point, v3 impulse);
 
 	void incCollision(const Collision collision);
-	int findCollision(const Collision collision);
+	int findCollision(const collisionSet col, const Collision collision);
 };
 
 #endif

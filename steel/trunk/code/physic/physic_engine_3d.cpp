@@ -40,9 +40,11 @@ bool PhysicEngine3D::moveObject(PhysicInterface &o, v3 oldPos, v3 dir /*global*/
 		}
 
 		collision.a = &o;
-		int cnt = findCollision(collision);
-		if(cnt == 0)
+		int cnt = findCollision(allCollisions, collision);
+		if(cnt == 0 && (collision.time>EPSILON || findCollision(lastCollisions, collision) == 0))
 		{
+			
+
 			if(helper) // draw collision
 				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
 
@@ -75,7 +77,7 @@ bool PhysicEngine3D::rotateObject(PhysicInterface &o, matrix44 oldMatrix, v3 rot
 	{
 		collision.a = &o;
 
-		if(findCollision(collision) == 0)
+		if(findCollision(allCollisions, collision) == 0)
 		{
 			if(helper) // draw collision
 				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
@@ -136,7 +138,7 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 			totalProcessedTime += (1-totalProcessedTime)*endProcessedTime;
 			collisionCount++;
 		}
-		while(!ended && collisionCount<1);
+		while(!ended && collisionCount<3);
 
 		// Rotation
 		if(conf->geti("kiRotation"))
@@ -181,6 +183,7 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 	if(helper) // draw velocity
 		helper->setTime(globalTime);
 
+	lastCollisions = allCollisions;
 	allCollisions.clear();
 
 /*	element.clear();*/
@@ -205,18 +208,18 @@ void PhysicEngine3D::incCollision(const Collision collision)
 	allCollisions[collision]++;
 }
 
-int PhysicEngine3D::findCollision(const Collision collision)
+int PhysicEngine3D::findCollision(const collisionSet col, const Collision collision)
 {
-	std::map<Collision, int>::iterator it = allCollisions.find(collision);
+	std::map<Collision, int>::const_iterator it = col.find(collision);
 
-	if(it == allCollisions.end()) 
+	if(it == col.end()) 
 	{
 		Collision collision2 = collision;
 		collision2.a = collision.b;
 		collision2.b = collision.a;
 
-		std::map<Collision, int>::iterator it2 = allCollisions.find(collision2);
-		if(it2 == allCollisions.end())
+		std::map<Collision, int>::const_iterator it2 = col.find(collision2);
+		if(it2 == col.end())
 			return false;
 		else
 			return (*it2).second;
@@ -283,14 +286,21 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 
 	velocity V1 = collision.a->getVelocity(); 
 	v3 v1 = getSpeed(*collision.a, collision.point);
+	Config *aconf = collision.a->getPMaterial();
+	Config *bconf = collision.b->getPMaterial();
 
 	velocity V2 = collision.b->getVelocity(); 
 //	v3 v2 = V2.translation;
 	v3 v2 = getSpeed(*collision.b, collision.point);
 
-// энергия первого тела
+// энергия
 	float rk = 0;
-	float T = v1.getSquaredLength() + rk*V1.rotationAxis.getSquaredLength();
+	
+	float Tmin = v2.getSquaredLength() + rk*V2.rotationAxis.getSquaredLength();
+	float Tmax = v1.getSquaredLength() + rk*V1.rotationAxis.getSquaredLength();
+
+	float energySave = clamp(1 - aconf->getf("energyLose",0) + bconf->getf("energyLose",0));
+	float T = Tmin*(1-energySave) + Tmax*energySave;
 
 	float v1t = t&v1; float v2t = t&v2;
 
@@ -298,18 +308,19 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 	v3 v2sr = v2 - t*v2t;
 
 	v3 v12sr = v1sr - v2sr; // относительная скорость в точке удара
-	
 //	v12sr *= conf->getf("crUNFriction", 1.0);
-
 	v1sr = v2sr + v12sr;
 
 	float u1t = v2t - v1t; 
-
+//	float u1t = T - v1sr.getSquaredLength();
 	v3 u1a = v1sr + t*u1t; // линейная скорость в точке удара
+	v3 u1b = v2;
+
+	u1a = u1b*(1-energySave) + u1a*energySave;
 
 	if(conf->geti("crRotation"))
 	{
-		v3 center = collision.a->getGlobalMatrix()*v3(0,0,0);
+/*		v3 center = collision.a->getGlobalMatrix()*v3(0,0,0);
 
 		float center_point = (center - collision.point).getLength();
 		
@@ -346,7 +357,7 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 			rot.loadZero();
 
 		V1.translation = tr;
-		V1.rotationAxis= rot;
+		V1.rotationAxis= rot;*/
 	}
 	else
 	{
@@ -367,6 +378,11 @@ bool PhysicEngine3D::collisionReactionUniUni(const Collision collision)
 	velocity V1 = collision.a->getVelocity(); v3 v1 = V1.translation; float v1t = t&v1;	
 	velocity V2 = collision.b->getVelocity(); v3 v2 = V2.translation; float v2t = t&v2;
 
+	Config *aconf = collision.a->getPMaterial();
+	Config *bconf = collision.b->getPMaterial();
+
+	float energySave = clamp(1 - aconf->getf("energyLose",0) - bconf->getf("energyLose",0));
+
 //	if(v1t*v2t>0) return false;
 
 	float It = v1t*m1 + v2t*m2;
@@ -382,8 +398,7 @@ bool PhysicEngine3D::collisionReactionUniUni(const Collision collision)
 
 	float D = B*B - 4*A*C;
 
-	D *= conf->getf("crUUEnergySave", 1.0);
-//	D *= 0.5;
+	D *= energySave;
 
 	if (D<EPSILON) D = 0;//	assert(D>=0, "collisionReaction D>=0");
 
@@ -840,7 +855,11 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 
 					Collision newCollision;	newCollision.time = INF;
 					if(checkCollisionMTrgTrg(at, distance, bt, newCollision) && collision.time > newCollision.time)
+					{
+							Collision newCollision;	newCollision.time = INF;
+							checkCollisionMTrgTrg(at, distance, bt, newCollision);
 							collision = newCollision, ok = true;
+					}
 				}
 			}
 		}

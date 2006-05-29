@@ -17,6 +17,7 @@
 #include "../math/aabb.h"
 #include "../math/matrix4x4.h"
 #include "../math/vector3d.h"
+#include "../res/conf/conf.h"
 
 #include <string>
 
@@ -106,6 +107,7 @@ public:
 	virtual	bool	setPosition(v3 const &v) = 0;
 //	virtual std::string getMaterial() = 0;
 
+	virtual Config* getPMaterial() = 0;
 	// эта функция вызывается, еслу другой объект трогает этот
 	virtual void	trigger(PhysicInterface *object) = 0;
 };

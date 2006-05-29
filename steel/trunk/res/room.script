@@ -4,9 +4,13 @@
 // uni  -universal physic object
 // tag	- object with coordinates, but no graph and physic
 
-uni			sphere/sphere2	-3,0,1	0,0,0	1	0,0	
-
+;uni			sphere/sphere2	-3,0,1	0,0,0	1	10,0	
 ;uni			sphere/sphere2	3,0,1	0,0,0	1.5	-10,0,0
+
+
+;uni			box/box1	2,0,0	0,0,0	1	0,0,-100
+;uni			box/box1	2,0,1.1	0,0,0	1	0,0,-100
+;uni			box/box1	2,0,2.2	0,0,0	1	0,0,-100
 
 
 
@@ -17,12 +21,12 @@ solid			wall/wall1	0,0,10
 solid			wall/wall1	0,20,-1
 solid			wall/wall1	0,-20,-1
 
-solid			wall/wall1	0,0,-21
+;solid			wall/wall1	0,0,-21
 
-;solid			wall/wall1	0,0,-19	1,0,0
-;solid			wall/wall1	0,0,-19	-1,0,0
-;solid			wall/wall1	0,0,-19	0,1,0
-;solid			wall/wall1	0,0,-19	0,-1,0
+solid			wall/wall1	0,0,-19	1,0,0
+solid			wall/wall1	0,0,-19	-1,0,0
+solid			wall/wall1	0,0,-19	0,1,0
+solid			wall/wall1	0,0,-19	0,-1,0
 
 ;uni			box/box1	0,0.01,2.0	0,0,0	1	0,0,-10	1,0,0	0
 ;solid			box/box1	0,-0.9,0.52	0,0,0	1	0,0,0	0,1,0	0
@@ -111,7 +115,7 @@ solid			wall/wall1	0,0,-21
 ;include			group/main.scene	0	0	4	3.14	1
 
 //kind	parent	id	CONF	X	Y	Z	Align	Size
-;sprite			box/box	0	0	3	1,-1,0	2
+;sprite			box/box	0	0	3	1,-1,0	1
 
 ;ps		ps2	particle_system/ps	0	0	0
 

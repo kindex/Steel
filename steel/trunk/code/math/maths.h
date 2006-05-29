@@ -36,6 +36,7 @@
 #define INF 1.0e+12f
 #endif
 
+float clamp(float a);
 
 template<typename T> T sqr(T x);
 int sgn(float A);

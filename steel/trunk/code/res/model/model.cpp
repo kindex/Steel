@@ -172,7 +172,7 @@ float Model::calculateVolume() // вычислить объём
 		volume += (a*b)&c;
 	}
 
-	return fabs(volume)/6.0;
+	return fabs(volume)/6.0f;
 }
 
 float Model::getVolume() // вычислить объём

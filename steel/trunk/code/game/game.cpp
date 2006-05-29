@@ -50,6 +50,8 @@ void Game::handleEventKeyDown(std::string key)
 	if(key == "8") speedup = 20;
 	if(key == "9") speedup = 50;
 
+	if(key == "c") conf->toggle("crosshair");
+
 	if(key == "g")
 	{
 		if(g.getSquaredLengthd()>EPSILON)
@@ -62,46 +64,43 @@ void Game::handleEventKeyDown(std::string key)
 
 	if(key == "mouse1")
 	{
-		Script *weapon = (Script*)res->add(Res::script, "weapon.script");
-		if(weapon)
-		{
-			ScriptLine line = weapon->get(0);
-			GameObj *o = new GameObjModel;
-			o->init(line, *res);
-			
-			o->changePositionKind(Interface::global);
+		ScriptLine line;
+		line.set(conf->gets("weapon"));
+		GameObj *o = new GameObjModel;
+		o->init(line, *res);
+		
+		o->changePositionKind(Interface::global);
 
-			o->setProcessKind(ProcessKind::uni);
+		o->setProcessKind(ProcessKind::uni);
 
-			matrix44 m = o->getMatrix();
+		matrix44 m = o->getMatrix();
 
 
-			v2 d(direction.x, direction.y);
-			d.normalize();
+		v2 d(direction.x, direction.y);
+		d.normalize();
 
-			matrix44 rm1; 	rm1.loadIdentity();
-			
+		matrix44 rm1; 	rm1.loadIdentity();
+		
 //			rm1.setRotationZ(d.x, d.y);
-			float c = direction.z;
+		float c = direction.z;
 
-			rm1.setRotationEuler(1,0, c, sqrt(1-c*c), d.x, d.y);
+		rm1.setRotationEuler(1,0, c, sqrt(1-c*c), d.x, d.y);
 
-			v3 pos = o->getPosition();
-			
-			m = m*rm1;
-			m.setTranslation(pos.x*direction.getNormalized() + eye);
+		v3 pos = o->getPosition();
+		
+		m = m*rm1;
+		m.setTranslation(pos.x*direction.getNormalized() + eye);
 
-			o->setMatrix(m);
+		o->setMatrix(m);
 
-			velocity v(o->getVelocity());
-			v.translation = direction*v.translation.x;
-			v.rotationAxis = v3(0,0,0);
-			o->setVelocity(v);
+		velocity v(o->getVelocity());
+		v.translation = direction*v.translation.x;
+		v.rotationAxis = v3(0,0,0);
+		o->setVelocity(v);
 
-			world->addChildren(o);
-			graphEngine->inject(o);
-			physicEngine->inject(o);
-		}
+		world->addChildren(o);
+		graphEngine->inject(o);
+		physicEngine->inject(o);
 	}
 }
 
@@ -217,8 +216,13 @@ void Game::draw(GraphEngine *graph)
 	direction.normalize();
 
 	if(conf->geti("drawHelper"))
-	{
 		graph->inject(physicHelper);
+	if(conf->geti("crosshair"))
+	{
+		crosshair->setPosition(eye + direction*0.01);
+		((Sprite*)crosshair)->setAlign(-direction);
+
+		graph->inject(crosshair);
 	}
 
 	graph->camera.setup(eye, direction);
@@ -226,9 +230,9 @@ void Game::draw(GraphEngine *graph)
 	graph->process();
 
 	if(conf->geti("drawHelper"))
-	{
 		graph->remove(physicHelper);
-	}
+	if(conf->geti("crosshair"))
+		graph->remove(crosshair);
 }
 
 
@@ -279,6 +283,17 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 
 	g = conf->getv3("g");
 	physicEngine->setGravitation(g);
+
+// * crosshair
+	crosshair = new Sprite;
+	
+	ScriptLine csc;
+	csc.set(conf->gets("crosshairConfig"));
+
+	if(!crosshair->init(csc, *res))
+	{
+		return false;
+	}
 
 	_alive = true;
 	paused = conf->geti("paused", 0) == 1;

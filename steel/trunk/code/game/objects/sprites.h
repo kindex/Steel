@@ -54,6 +54,7 @@ class Sprite: public SpriteSystem
 {
 public:
 	bool init(ScriptLine	&s, ResCollection &res);
+	void setAlign(const v3 _align);
 };
 
 #endif

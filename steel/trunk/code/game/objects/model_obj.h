@@ -23,6 +23,7 @@ class GameObjModel: public GameObj
 {
 protected:
 	Model *m;
+	Config *conf;
 
 public:
 	void assignModel(Model *M)	{		m = M;	}
@@ -68,6 +69,10 @@ public:
 	TexCoords*	getTexCoords(int mapNumber)
 	{
 		return m->getTexCoords(mapNumber);
+	}
+	Config*		getPMaterial()
+	{	
+		return conf;
 	}
 };
 
