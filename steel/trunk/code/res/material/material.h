@@ -14,7 +14,8 @@ namespace MapMode
 		none,
 		replace,
 		add,
-		mul
+		mul,
+		blend
 	} map_mode;
 }
 
@@ -27,6 +28,7 @@ namespace MapKind
 		color,
 		env,
 		normal_map,
+		bump_map,
 		diffuse_lights // procedure texture
 	} tex_kind;
 }

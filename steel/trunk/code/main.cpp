@@ -121,6 +121,7 @@ int main(int argc, char *argv[])
 
 				);
 			speed = 1.0f/timer.getfps();
+			if(speed > 0.1f) speed = 0.1f;
 
 			captionUdateTime = timer.total();
 		}

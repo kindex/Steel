@@ -22,6 +22,7 @@
 
 #include "../../res/image/image.h"
 #include "gl/libext.h"
+#include "ext/normalisation_cube_map.h"
 //#include "extensions.h"
 
 #include <algorithm>
@@ -40,6 +41,8 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glPushMatrix();
 	glLoadMatrixf(e.matrix.a);
+
+	vector<uid> buffersToDelete;
 
 	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
 	{
@@ -71,6 +74,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 			int texCount = m->map.size();
 
+			int curTexArb = 0;
 			// идём по всем картам
 			for(int i=0; i<texCount; i++)
 			{
@@ -78,49 +82,99 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 				if(glActiveTextureARB)
 				{
-					glActiveTextureARB(GL_TEXTURE0_ARB + i);
-					glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
+					glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+					glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
 				}
-				else if(i>0) break;
-
-				if(map.kind == MapKind::color_map) // обычная текстура
-				{	// загружем текстуру
-					bindTexture(map.texture); // 2D texture (auto detect from Image)
-					// загружаем тектурные координаты
-					TexCoords *coords = e.object->getTexCoords(i);
-					if(coords && !coords->data.empty())
-					{
-						if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
-							glTexCoordPointer(2, GL_FLOAT, 0,0);
-						else
-						{
-							glEnable(GL_TEXTURE_COORD_ARRAY);
-							glTexCoordPointer(2, GL_FLOAT, 0, &coords->data[0]);
-						}
-					}
-				}
-				if(map.kind == MapKind::env) // карта отражения
-				{ // загружаем текстуру
-					bindTexture(map.texture); // Cube texture (auto detect from Image)
-					// TODO: в этом месте тектурные координаты должны генерированться сами
-					//  шейдером или еще чем-либо
-					glTexGeni ( GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
-				    glTexGeni ( GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
-					glTexGeni ( GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
-
-					glEnable  ( GL_TEXTURE_GEN_S );
-					glEnable  ( GL_TEXTURE_GEN_T );
-					glEnable  ( GL_TEXTURE_GEN_R );
-				}
-
-				if(map.kind == MapKind::color) // цвет RGBA
-					glColor4f(map.color.x, map.color.y, map.color.z, map.color.w);
+				else if(curTexArb>0) break;
 
 				// режим мультитекстурирования
 				GLint mode = GL_REPLACE;
-				if(map.mode == MapMode::mul && i>0) mode = GL_BLEND;
+				if(i>0)
+				{
+					switch(map.mode)
+					{
+						case MapMode::mul: 	mode = GL_MODULATE; break;
+						case MapMode::add:  mode = GL_ADD; break; // TODO: GL_ADD_SIGNED_ARB ??
+						case MapMode::blend: mode = GL_BLEND; break;
+					}
+				}
+
 				if(glActiveTextureARB)
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+
+				if(map.kind == MapKind::bump_map && !light.empty())
+				{
+					TexCoords *coords = e.object->getTexCoords(i);
+
+					int j = 0;
+					 // find best
+/*					for(Lights::const_iterator it = light.begin(); it != light.end(); it++)
+					{
+					}*/
+
+					glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+					glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+
+					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+					uid bufId = res->genUid();
+					buffersToDelete.push_back(bufId);
+
+					drawBump(e, coords, e.matrix, light[j].pos, bufId);
+
+					glActiveTextureARB(GL_TEXTURE1_ARB + curTexArb);
+					glClientActiveTextureARB(GL_TEXTURE1_ARB + curTexArb);
+
+					bindTexture(map.texture);
+					if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+						glTexCoordPointer(2, GL_FLOAT, 0,0);
+
+					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
+					glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
+					glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_DOT3_RGB_ARB);
+
+					glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB_ARB, GL_PREVIOUS_ARB);
+
+					curTexArb +=2;
+				}
+				else
+				{
+					if(map.kind == MapKind::color_map) // обычная текстура
+					{	// загружем текстуру
+						bindTexture(map.texture); // 2D texture (auto detect from Image)
+						// загружаем тектурные координаты
+						TexCoords *coords = e.object->getTexCoords(i);
+						if(coords && !coords->data.empty())
+						{
+							if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+								glTexCoordPointer(2, GL_FLOAT, 0,0);
+							else
+							{
+								glEnable(GL_TEXTURE_COORD_ARRAY);
+								glTexCoordPointer(2, GL_FLOAT, 0, &coords->data[0]);
+							}
+						}
+					}
+					
+					if(map.kind == MapKind::env) // карта отражения
+					{ // загружаем текстуру
+						bindTexture(map.texture); // Cube texture (auto detect from Image)
+						// TODO: в этом месте тектурные координаты должны генерированться сами
+						//  шейдером или еще чем-либо
+						glTexGeni ( GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+						glTexGeni ( GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+						glTexGeni ( GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+
+						glEnable  ( GL_TEXTURE_GEN_S );
+						glEnable  ( GL_TEXTURE_GEN_T );
+						glEnable  ( GL_TEXTURE_GEN_R );
+					}
+
+					if(map.kind == MapKind::color) // цвет RGBA
+						glColor4f(map.color.x, map.color.y, map.color.z, map.color.w);
+
+					curTexArb++;
+				}
 			}
 
 			if(e.blend)
@@ -151,6 +205,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 // -------------------------------------------------------------------------------
 			// откат настроек
 			glPopAttrib();
+
+			for(vector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
+				cleanBuffer(*it);
 		}
 
 		if(conf->geti("drawWire"))
@@ -308,7 +365,11 @@ bool OpenGL_Engine::bindTexture(Image *image)
 	return true;
 }
 
-
+void OpenGL_Engine::cleanBuffer(uid bufId)
+{
+	glDeleteBuffersARB(1, &buffer[bufId].glid);
+	buffer.erase(bufId);
+}
 
 template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, int elCnt)
 {
@@ -319,6 +380,7 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 		uid	id = v->getId();
 		if(id == 0) 
 		{
+			if(mode)glEnableClientState(mode);
 			glBindBufferARB(mode2, 0);
 			return false;
 		}
@@ -342,6 +404,7 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 
 			buf.lastUsedTime = time;
 			buf.usedCnt++;
+//			buf.temp = false;
 		}
 		else
 		{
@@ -362,6 +425,7 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 			if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
 				buf.kind = OpenGLBuffer::index;
 
+//			buf.temp = false;
 			buf.lastUsedTime = time;
 			buf.usedCnt++;
 		}
@@ -372,6 +436,18 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 }
 
 
+/*void OpenGL_Engine::cleanCache()
+{
+	for(map<uid, OpenGLBuffer>::iterator it = buffer.begin(); it != buffer.end(); it++)
+	{
+		uid id = it->first;
+		OpenGLBuffer &buf = it->second;
+		if(buf.temp)
+		{
+
+		}
+	}
+}*/
 
 v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 {
@@ -397,19 +473,20 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 
 
 
-/*void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, MapCoords const *mapcoord, Triangles const *triangle, Normals	const *normal,	std::vector<v3> **sTangent, std::vector<v3> **tTangent)
-{
-	// TODO: hash
-	if(tangentSpaceCacheS.find((int)vertex) != tangentSpaceCacheS.end())
+void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, Triangles const *triangle, Normals const *normal, std::vector<v3> **sTangent, std::vector<v3> **tTangent)
+{ // TODO: mem cleanup
+	int id = vertex->getId();
+	
+	if(!vertex->wasChanged() && id>0 && tangentSpaceCache.find(id) != tangentSpaceCache.end())
 	{
-		*sTangent = tangentSpaceCacheS[(int)vertex];
-		*tTangent = tangentSpaceCacheT[(int)vertex];
+		*sTangent = tangentSpaceCache[id].s;
+		*tTangent = tangentSpaceCache[id].t;
 		return;
 	}
 
-	if(!vertex || !mapcoord || mapcoord->empty()) return;
+	if(!vertex || !mapcoord || mapcoord->data.empty()) return;
 
-    unsigned int size = vertex->size();
+    unsigned int size = vertex->data.size();
 //    tangentSpaceLight.resize(s); // TODO
 
 	v3List *S, *T;
@@ -424,11 +501,11 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
         t[i].loadZero();
     }
 
-    for (unsigned int i=0; i<triangle->size(); i++)
+    for (unsigned int i=0; i<triangle->data.size(); i++)
     {
-        int a = triangle->operator[](i).a[0];
-        int b = triangle->operator[](i).a[1];
-        int c = triangle->operator[](i).a[2];
+        int a = triangle->data[i].a[0];
+        int b = triangle->data[i].a[1];
+        int c = triangle->data[i].a[2];
         int e, f; // from e to f
 
 		v2 me;
@@ -436,62 +513,68 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 
         e = a;
         // vertex a (vector ab)
-		ve = vertex->operator[](e);
-		ne = normal->operator[](e);
+		ve = vertex->data[i];
+		ne = normal->data[i];
 
-        f = b;  s[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(1.0, 0.0));
+        f = b;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
         // vertex a (vector ac)
-        f = c;  s[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(1.0, 0.0));
-        f = b;  t[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(0.0, -1.0));
-        f = c;  t[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(0.0, -1.0));
+        f = c;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+        f = b;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
+        f = c;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
 
         e = b;
-		me = mapcoord->operator[](e);ve = vertex->operator[](e);
-		ne = normal->operator[](e);
-        f = a;  s[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(1.0, 0.0));
-        f = c;  s[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(1.0, 0.0));
-        f = a;  t[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(0.0, -1.0));
-        f = c;  t[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(0.0, -1.0));
+		me = mapcoord->data[e]; ve = vertex->data[e];
+		ne = normal->data[e];
+        f = a;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+        f = c;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+        f = a;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
+        f = c;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
 
         e = c;
-		me = mapcoord->operator[](e);ve = vertex->operator[](e);
-		ne = normal->operator[](e);
-        f = a;  s[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(1.0, 0.0));
-        f = b;  s[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(1.0, 0.0));
-        f = a;  t[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(0.0, -1.0));
-        f = b;  t[e] += getstangent(mapcoord->operator[](f)-me, vertex->operator[](f) - ve, ne, v2(0.0, -1.0));
+		me = mapcoord->data[e]; ve = vertex->data[e];
+		ne = normal->data[e];
+        f = a;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+        f = b;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+        f = a;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
+        f = b;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
     }
     for (unsigned int i=0; i<size; i++)
     {
         s[i].normalize();
         t[i].normalize();
     }
-	*sTangent = S;	tangentSpaceCacheS[(int)vertex] = S;
-	*tTangent = S;	tangentSpaceCacheT[(int)vertex] = T;
+	
+	*sTangent = S;
+	*tTangent = T;
+	if(id > 0)
+	{
+		tangentSpaceCache[id].s = S;
+		tangentSpaceCache[id].t = T;
+	}
 };
-*/
 
-/*void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix44 const matrix, const v3 light,	v3List **tangentSpaceLight)
+
+void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix44 const matrix, const v3 light,	v3List &tangentSpaceLight)
 {
 	matrix44 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
 
 	v3 objectLightPosition = inverseModelMatrix*light;
 
-	*tangentSpaceLight = new v3List(vertex.size());
-	v3List &tl = **tangentSpaceLight;
+	v3List &tl = tangentSpaceLight;
 
     // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
-    for (unsigned int i=0; i<vertex.size(); i++)
+    for (unsigned int i=0; i<vertex.data.size(); i++)
     {
-		v3 lightVector =  objectLightPosition - vertex[i];
+		v3 lightVector =  objectLightPosition - vertex.data[i];
 
 		tl[i].x = sTangent[i].dotProduct(lightVector); // scalar product
 		tl[i].y = tTangent[i].dotProduct(lightVector);
-		tl[i].z =   normal[i].dotProduct(lightVector);
+		tl[i].z = normal.data[i].dotProduct(lightVector);
     }
 }
 
+/*
 void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 _camera,	v3List **tangentSpaceLight)
 {
 	matrix44 inverseModelMatrix;
@@ -591,68 +674,42 @@ void OpenGL_Engine::drawDistColor(DrawElement &e, matrix44 const matrix, v3 cons
 }
 */
 
-/*
-void OpenGL_Engine::drawBump(DrawElement &e, GLuint normalMap, matrix44 const matrix, v3 const light)
+void OpenGL_Engine::drawBump(DrawElement &e, TexCoords *coords, matrix44 const matrix, v3 const light, uid bufId)
 {
-	v3List *sTangent, *tTangent, *tangentSpaceLight;
-
-//	getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
-	genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
-
-	glBindTexture(GL_TEXTURE_2D, normalMap);
-
-	glEnable(GL_TEXTURE_2D);
-
 	//Bind normalisation cube map to texture unit 1
-	glActiveTextureARB(GL_TEXTURE1_ARB);
 	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, normalisationCubeMap);
 	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-	glActiveTextureARB(GL_TEXTURE0_ARB);
-
- 	//Send texture coords for normal map to unit 0
-//    glTexCoordPointer(2, GL_FLOAT, 8, &e.mapcoord->front());
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	//Send tangent space light vectors for normalisation to unit 1
-	glClientActiveTextureARB(GL_TEXTURE1_ARB);
-	glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
+
+    tangentSpaceLightBufferedArray tangentSpaceLight;
+
+	tangentSpaceLight.changed = true;
+	tangentSpaceLight.id = bufId;
+	tangentSpaceLight.data.resize(e.vertex->data.size());
+
+	v3List *sTangent, *tTangent;
+
+	getTangentSpace(e.vertex, coords, e.triangle, e.normal, &sTangent, &tTangent);
+	genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, tangentSpaceLight.data);
+
+	if(bind(&tangentSpaceLight, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+		glTexCoordPointer(3, GL_FLOAT, 0,0);
+
+//	buffer[tangentSpaceLight.id].temp = true;
+
+/*	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+	glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight.data.front());
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glClientActiveTextureARB(GL_TEXTURE0_ARB);
+*/
 
 //Set up texture environment to do (tex0 dot tex1)*color
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
-	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
-	glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_REPLACE);
+//	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
 
-	glActiveTextureARB(GL_TEXTURE1_ARB);
 
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
-	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
-	glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_DOT3_RGB_ARB);
-	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB_ARB, GL_PREVIOUS_ARB);
-
-	glActiveTextureARB(GL_TEXTURE0_ARB);
-
-    drawFaces(e);
-
-	glActiveTextureARB(GL_TEXTURE1_ARB);
-	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-	glActiveTextureARB(GL_TEXTURE0_ARB);
-
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glClientActiveTextureARB(GL_TEXTURE1_ARB);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glClientActiveTextureARB(GL_TEXTURE0_ARB);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-
-//Return to standard modulate texenv
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	delete tangentSpaceLight;
-}*/
+//	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
+//	glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_REPLACE);
+}
 
 /*
 void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix44 const matrix, v3 const light)
@@ -863,7 +920,8 @@ bool OpenGL_Engine::init(std::string _conf)
 
 //	SetUpARB_multitexture();
 	
-//	normalisationCubeMap	= GenerateNormalisationCubeMap();
+	normalisationCubeMap	= generateNormalisationCubeMap();
+
 	//lightCubeMap			= GenerateLightCubeMap();
 	//distMap					= generateDistanceLinearMap();
 

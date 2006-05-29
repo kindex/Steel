@@ -86,6 +86,9 @@ bool GameGroup::load(ResCollection *res, GameObj *global)
 
 		// метка в простнанстве, не рисуется
 		CHECK_KIND("tag", GameTag, ProcessKind::none);
+		// источник освещения
+		CHECK_KIND("light", GameLight, ProcessKind::none);
+
 		//"ps"		parent	id	CONF	X	Y	Z	Angle	Scale
 		CHECK_KIND("ps", ParticleSystem, ProcessKind::custom);
 		//"include"	parent	id	CONF	X	Y	Z	Angle	Scale

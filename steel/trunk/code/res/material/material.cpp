@@ -43,6 +43,7 @@ bool Material::init(string name, ResCollection *res)
 		if(sMode == "")	m.mode = MapMode::replace;
 		if(sMode == "+")m.mode = MapMode::add;
 		if(sMode == "*")m.mode = MapMode::mul;
+		if(sMode == "blend")m.mode = MapMode::blend;
 
 		string kind = conf->gets(i, 1);
 		string file = conf->gets(i, 2);
@@ -56,6 +57,18 @@ bool Material::init(string name, ResCollection *res)
 			if(m.texture)
 			{
 				m.kind = MapKind::color_map;
+				map.push_back(m);
+			}
+		}
+		if(kind == "bump")
+		{
+			m.texture = (Image*)res->add(Res::image, file);
+			if(!m.texture)
+				m.texture = (Image*)res->add(Res::image, dir + "/" + file);
+
+			if(m.texture)
+			{
+				m.kind = MapKind::bump_map;
 				map.push_back(m);
 			}
 		}
@@ -79,6 +92,8 @@ bool Material::init(string name, ResCollection *res)
 			map.push_back(m);
 		}
 	}
+	if(map.empty()) return false;
+
 	blend = map[0].mode != MapMode::replace;
 	return true;
 }

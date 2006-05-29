@@ -40,7 +40,7 @@ class Game: public steelAbstract
 {
 protected:
 // Camera
-	v3	eye, direction;
+	v3	eye, direction, cameraSpeed;
 	v3 g;
 	float speedup, speed;
 	steel::time time;

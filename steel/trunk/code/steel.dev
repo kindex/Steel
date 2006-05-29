@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=106
+UnitCount=108
 Type=0
 Ver=1
 ObjFiles=
@@ -20,7 +20,7 @@ ObjectOutput=..\temp
 OverrideOutput=0
 OverrideOutputName=steel.exe
 HostApplication=
-Folders=common,game,game/objects,graph,graph/opengl,graph/opengl/gl,input,math,physic,res,res/conf,res/image,res/material,res/model,res/script
+Folders=common,game,game/objects,graph,graph/opengl,graph/opengl/extensions,graph/opengl/gl,input,math,physic,res,res/conf,res/image,res/material,res/model,res/script
 CommandLine=
 UseCustomMakefile=0
 CustomMakefile=
@@ -32,7 +32,7 @@ CompilerSettings=0000000001001000000000
 [Unit1]
 FileName=_cpp.h
 CompileCpp=1
-Folder=Project1
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -42,7 +42,7 @@ BuildCmd=
 [Unit2]
 FileName=engine.cpp
 CompileCpp=1
-Folder=Project1
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -52,7 +52,7 @@ BuildCmd=
 [Unit3]
 FileName=engine.h
 CompileCpp=1
-Folder=Project1
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -62,7 +62,7 @@ BuildCmd=
 [Unit4]
 FileName=main.cpp
 CompileCpp=1
-Folder=Project1
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -72,7 +72,7 @@ BuildCmd=
 [Unit5]
 FileName=main.h
 CompileCpp=1
-Folder=Project1
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -82,7 +82,7 @@ BuildCmd=
 [Unit6]
 FileName=steel.cpp
 CompileCpp=1
-Folder=Project1
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -92,7 +92,7 @@ BuildCmd=
 [Unit7]
 FileName=steel.h
 CompileCpp=1
-Folder=Project1
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -830,7 +830,7 @@ BuildCmd=
 [Unit80]
 FileName=interface.h
 CompileCpp=1
-Folder=Steel
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -1030,7 +1030,7 @@ BuildCmd=
 [Unit99]
 FileName=test.cpp
 CompileCpp=1
-Folder=Steel
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -1040,7 +1040,7 @@ BuildCmd=
 [Unit100]
 FileName=helper.h
 CompileCpp=1
-Folder=Steel
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -1108,9 +1108,19 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit107]
-FileName=game\objects\model_obj.h
+FileName=graph\opengl\ext\normalisation_cube_map.cpp
 CompileCpp=1
-Folder=game/objects
+Folder=graph/opengl/extensions
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit108]
+FileName=graph\opengl\ext\normalisation_cube_map.h
+CompileCpp=1
+Folder=graph/opengl/extensions
 Compile=1
 Link=1
 Priority=1000

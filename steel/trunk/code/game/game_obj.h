@@ -170,18 +170,19 @@ public:
 /*
 Источник освещения.
 */
-/*class GameLight: public GameObjDummy
+
+class GameLight: public GameObj
 {
 public:
 
 	Lights* getLights()
 	{
 		Lights *a = new Lights(1);
-		a->operator [](0).intensivity = 1.0f;
-		a->operator [](0).range = 1000;
+		a->at(0).intensivity = 1.0f;
+		a->at(0).range = 1000;
 		return a;
 	}
-};*/
+};
 
 /*
 Контейнер для других объектов.

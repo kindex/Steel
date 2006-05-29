@@ -35,9 +35,9 @@ public:
 	// уникальный идентификатор для массива данных
 	uid		id;
 public:
-	uid		getId() { return id; }
+	uid		getId() const { return id; }
 	void	setId(uid _id) { id = _id; changed = false; }
-	bool	wasChanged() { return changed; }
+	bool	wasChanged() const { return changed; }
 	void	setChanged(bool _changed) {changed = _changed; }
 };
 

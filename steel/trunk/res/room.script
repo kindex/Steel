@@ -13,7 +13,6 @@
 ;uni			box/box1	2,0,2.2	0,0,0	1	0,0,-100
 
 
-
 //KIND	parent	id	CONF		X,Y,Z		Angle		Scale	Vx,Vy,Vz
 solid			wall/wall1	20,0,-1
 solid			wall/wall1	-20,0,-1
@@ -21,12 +20,12 @@ solid			wall/wall1	0,0,10
 solid			wall/wall1	0,20,-1
 solid			wall/wall1	0,-20,-1
 
-;solid			wall/wall1	0,0,-21
+solid			wall/wall1	0,0,-21
 
-solid			wall/wall1	0,0,-19	1,0,0
-solid			wall/wall1	0,0,-19	-1,0,0
-solid			wall/wall1	0,0,-19	0,1,0
-solid			wall/wall1	0,0,-19	0,-1,0
+;solid			wall/wall1	0,0,-19	1,0,0
+;solid			wall/wall1	0,0,-19	-1,0,0
+;solid			wall/wall1	0,0,-19	0,1,0
+;solid			wall/wall1	0,0,-19	0,-1,0
 
 ;uni			box/box1	0,0.01,2.0	0,0,0	1	0,0,-10	1,0,0	0
 ;solid			box/box1	0,-0.9,0.52	0,0,0	1	0,0,0	0,1,0	0
@@ -110,7 +109,8 @@ solid			wall/wall1	0,0,-19	0,-1,0
 
 ;uni			box/box1	0,2.41,4
 
-;include			group/main.scene	0,0,2
+include			group/main.scene	0,0,2
+
 ;include			group/main.scene	0	0	0	0	1
 ;include			group/main.scene	0	0	4	3.14	1
 

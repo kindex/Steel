@@ -85,7 +85,7 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 		for(Lights::iterator it = l->begin(); it != l->end(); it++)
 		{
 			light.push_back(*it);
-			light[light.size()-1].pos = object_matrix.getCoords();
+			light[light.size()-1].pos = object_matrix*v3(0,0,0);
 		}
 	}
 

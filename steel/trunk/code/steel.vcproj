@@ -458,18 +458,6 @@
 					Name="OpenGL"
 					>
 					<File
-						RelativePath=".\graph\opengl\extensions.h"
-						>
-					</File>
-					<File
-						RelativePath=".\graph\opengl\gl\libExt.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\graph\opengl\gl\libExt.h"
-						>
-					</File>
-					<File
 						RelativePath=".\graph\opengl\opengl_engine.cpp"
 						>
 					</File>
@@ -493,6 +481,30 @@
 						RelativePath=".\graph\opengl\opengl_win_engine.h"
 						>
 					</File>
+					<Filter
+						Name="extensions"
+						>
+						<File
+							RelativePath=".\graph\opengl\extensions.h"
+							>
+						</File>
+						<File
+							RelativePath=".\graph\opengl\gl\libExt.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\graph\opengl\gl\libExt.h"
+							>
+						</File>
+						<File
+							RelativePath=".\graph\opengl\ext\normalisation_cube_map.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\graph\opengl\ext\normalisation_cube_map.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 			<Filter

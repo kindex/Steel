@@ -62,7 +62,7 @@ void Game::handleEventKeyDown(std::string key)
 		physicEngine->setGravitation(g);
 	}
 
-	if(key == "mouse1")
+	if(key == "mouse1" && input->isMouseCaptured())
 	{
 		ScriptLine line;
 		line.set(conf->gets("weapon"));
@@ -94,7 +94,7 @@ void Game::handleEventKeyDown(std::string key)
 		o->setMatrix(m);
 
 		velocity v(o->getVelocity());
-		v.translation = direction*v.translation.x;
+		v.translation = direction*v.translation.x + cameraSpeed;
 		v.rotationAxis = v3(0,0,0);
 		o->setVelocity(v);
 
@@ -145,10 +145,13 @@ void Game::process(steel::time globalTime, steel::time time)
 {
 	processKeyboard();
 
-	eye += moveSpeed.x*direction*(float)speed;
-	eye += moveSpeed.y*v3(-direction.y, direction.x, 0).getNormalized()*(float)speed;
-	eye += moveSpeed.z*v3(0, 0, 1)*(float)speed;
+	cameraSpeed = 
+	moveSpeed.x*direction
+	+ moveSpeed.y*v3(-direction.y, direction.x, 0).getNormalized()
+	+ moveSpeed.z*v3(0, 0, 1);
 
+	eye += cameraSpeed*(float)speed;
+	
 	if(!paused || framesToPass>0)
 	{
 		static steel::time totalPhysicTime = 0;
@@ -219,7 +222,7 @@ void Game::draw(GraphEngine *graph)
 		graph->inject(physicHelper);
 	if(conf->geti("crosshair"))
 	{
-		crosshair->setPosition(eye + direction*0.01);
+		crosshair->setPosition(eye + direction*0.01f);
 		((Sprite*)crosshair)->setAlign(-direction);
 
 		graph->inject(crosshair);
