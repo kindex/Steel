@@ -35,6 +35,8 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 {
 	::hInstance = hInstance;
 
+	commandLine = lpCmdLine;
+
 	return main1(0, NULL);							// Exit The Program
 }
 #endif

@@ -66,7 +66,10 @@ protected:
 
 public:
 	Game() { } 
-	bool init(ResCollection *_res, std::string _conf, Input *_input);
+	bool init(ResCollection *_res, std::string _conf, Input *_input, std::string params);
+
+	bool executeScript(std::string script);
+	bool executeCommand(std::string command);
 
 	void bind(GraphEngine *engine);
 	void bindPhysicEngine();
@@ -80,6 +83,7 @@ public:
 	void handleMouse(double dx, double dy);
 	bool isAlive() {return _alive;} 
 	void setspeed(float _speed, steel::time _time) {speed = _speed; time = _time; } 
+	bool createObject();
 
 	v3	getGlobalPosition(std::string obj);
 };

@@ -32,7 +32,10 @@
 
 #include "res/res_main.h"
 
+using namespace std;
+
 bool test();
+std::string commandLine;
 
 #ifdef COMPILER_DEVCPP
 int main1(int argc, char *argv[])
@@ -41,6 +44,7 @@ int main(int argc, char *argv[])
 #endif
 {
 	alog.open("../steel.log");
+	alog.msg("core info", "Command Line: '" + commandLine + "'");
 
 	if(!test())
 	{
@@ -74,7 +78,8 @@ int main(int argc, char *argv[])
 	if(!input.init(&res, "input")) return 1;
 // ******************* GAME *************************
 	Game game;
-	if(!game.init(&res, "game", &input)) return 1;
+
+	if(!game.init(&res, "game", &input, commandLine)) return 1;
 
 	game.bind(&graph);
 

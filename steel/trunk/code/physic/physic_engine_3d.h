@@ -57,6 +57,13 @@ public:
 	bool update(Element &element);
 	bool clear();
 // CD
+	bool checkInvariant(PhysicInterface &o, PhysicInterface &clip);
+	bool checkInvariant(PhysicInterface &a, PhysicInterface &b, PhysicInterface &clip);
+	bool crossModelModel(PhysicInterface &a, PhysicInterface &b);
+	bool intersectModelModel(PhysicInterface &a, PhysicInterface &b);
+	bool crossPointModel(v3 point, PhysicInterface &b);
+
+
 	void collisionDetection(PhysicInterface &a, PhysicInterface &b, v3 distance, Collision &collision, PhysicInterface *clip);
 	void collisionDetectionRotation(PhysicInterface &a, PhysicInterface &b, const matrix44 rotation, Collision &collision, PhysicInterface *clip);
 	void collisionDetection(PhysicInterface &o, v3 distance, Collision &collision, PhysicInterface *clip);

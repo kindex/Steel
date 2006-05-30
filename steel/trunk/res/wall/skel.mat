@@ -13,7 +13,8 @@
 #*	modulate
 
 #mode	texkind		texture
-
-	bump	skel_wallnm
-*	color_map	skel_wall
-
+;	bump	skel_wallnm
+;*	color_map	skel_wall
+;	color_map	smile
+	bump	medflr3_local
+*	color_map	medflr3_med_d

@@ -152,14 +152,14 @@ void Image::convertFromHeightMapToNormalMap()
             float X, Y, Z;
 
             X = ((float)C-(float)D)/255.0f;
-            Y = ((float)E-A)/255.0f;
+            Y = ((float)E- (float)D)/255.0f;
 
-            //Z = 1 - sqr(X) -sqr(Y);
-			Z=1-X*X-Y*Y;
+           //Z = 1 - sqr(X) -sqr(Y);
+			Z = sqrt(1 - X*X - Y*Y);
 
-            float r = (X+1)/2;
-            float g = (Y+1)/2;
-            float b = (Z+1)/2;
+            float r = clamp((X + 1.0f)/2);
+            float g = clamp((Y + 1.0f)/2);
+            float b = clamp((Z + 1.0f)/2);
 
             bitmap[bpl*y + x*3 + 0] = (unsigned char)(r*255);
             bitmap[bpl*y + x*3 + 1] = (unsigned char)(g*255);

@@ -62,53 +62,97 @@ void Game::handleEventKeyDown(std::string key)
 		physicEngine->setGravitation(g);
 	}
 
-	if(key == "mouse1" && input->isMouseCaptured())
-	{
-		ScriptLine line;
-		line.set(conf->gets("weapon"));
-		GameObj *o = new GameObjModel;
-		o->init(line, *res);
-		
-		o->changePositionKind(Interface::global);
+/*	if(key == "mouse1" && input->isMouseCaptured())
+		createObject();
+		*/
+}
 
-		o->setProcessKind(ProcessKind::uni);
+bool Game::createObject()
+{
+	static int balls = 0;
 
-		matrix44 m = o->getMatrix();
+	ScriptLine line;
+	line.set(conf->gets("weapon"));
+	GameObj *o = new GameObjModel;
+	o->init(line, *res);
+	
+	o->changePositionKind(Interface::global);
+	o->setProcessKind(ProcessKind::uni);
 
+	matrix44 m = o->getMatrix();
 
-		v2 d(direction.x, direction.y);
-		d.normalize();
+	v2 d(direction.x, direction.y);
+	d.normalize();
 
-		matrix44 rm1; 	rm1.loadIdentity();
-		
+	matrix44 rm1; 	rm1.loadIdentity();
+	
 //			rm1.setRotationZ(d.x, d.y);
-		float c = direction.z;
+	float cen = direction.z;
 
-		rm1.setRotationEuler(1,0, c, sqrt(1-c*c), d.x, d.y);
+	rm1.setRotationEuler(1,0, cen, sqrt(1-cen*cen), d.x, d.y);
 
-		v3 pos = o->getPosition();
-		
-		m = m*rm1;
+	v3 pos = o->getPosition();
+	
+	m = m*rm1;
+	m.setTranslation(pos.x*direction.getNormalized() + eye);
+
+	o->setMatrix(m);
+
+	velocity v(o->getVelocity());
+	v.translation = direction*v.translation.x + cameraSpeed;
+	v.rotationAxis = v3(0,0,0);
+	o->setVelocity(v);
+
+	GameLight *light = NULL;
+	Sprite *c = NULL;
+	if(balls == 0)
+	{
+		light = new GameLight;
+		light->changePositionKind(Interface::local);
+		light->setProcessKind(ProcessKind::none);
+		o->addChildren(light);
+		matrix44 m;
+		m.loadIdentity();
+		light->setMatrix(m);
+
+		c = new Sprite;
+		ScriptLine csc;
+		csc.set(conf->gets("lightSprite"));
+		c->init(csc, *res);
+		c->changePositionKind(Interface::local);
+		o->addChildren(c);
+
 		m.setTranslation(pos.x*direction.getNormalized() + eye);
-
 		o->setMatrix(m);
+	}
 
-		velocity v(o->getVelocity());
-		v.translation = direction*v.translation.x + cameraSpeed;
-		v.rotationAxis = v3(0,0,0);
-		o->setVelocity(v);
-
+	if(physicEngine->checkInvariant(*o, *o))
+	{
 		world->addChildren(o);
 		graphEngine->inject(o);
 		physicEngine->inject(o);
+		balls++;
+		return true;
+	}
+	else
+	{
+		if(light) delete light;
+		if(c) delete c;
+		delete o;
+		return false;
 	}
 }
-
 
 void Game::processKeyboard()
 {
 	if(input->isMouseCaptured())
 	{
+		if(input->isPressed("mouse1"))
+		{
+			createObject();
+		}
+
+
 		v3 dir(0,0,0);
 		if(input->isPressed("w")) 	dir += v3(1,0,0);
 		if(input->isPressed("s")) 	dir += v3(-1,0,0);
@@ -239,8 +283,9 @@ void Game::draw(GraphEngine *graph)
 }
 
 
-bool Game::init(ResCollection *_res, string _conf, Input *_input)
+bool Game::init(ResCollection *_res, string _conf, Input *_input, std::string params)
 {
+	// Config
 	res = _res;	
 	input = _input; 
 	input->setGame(this);
@@ -250,7 +295,13 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 		alog.msg("error game res", string("Cannot load game config ") + _conf);
 		return false;
 	}
+	if(!executeScript(params))
+	{
+		alog.msg("core error", "Cannor execute script");
+		return false;
+	}
 
+	// Init world
 	eye = v3(conf->getf("camera.eye.x"), conf->getf("camera.eye.y"), conf->getf("camera.eye.z"));
 
 	v3 target = v3(conf->getf("camera.target.x"), conf->getf("camera.target.y"), conf->getf("camera.target.z"));
@@ -308,5 +359,42 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input)
 
 void Game::handleEventKeyUp(std::string key)
 {
+}
+
+bool Game::executeScript(std::string script)
+{
+	alog.msg("console", "ExecScript: '" + script + "'");
+
+	vector<string> lines = explode(';', script);
+	for(vector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
+		if(!executeCommand(*it)) return false;
+	return true;
+}
+
+bool Game::executeCommand(std::string command)
+{
+	if(command.empty()) return true;
+	alog.msg("console", "ExecCommand: '" + command + "'");
+
+	// var=value
+
+	vector<string> token = explode('=', command);
+	if(token.size() != 2) return false;
+	vector<string> var = explode('.', token[0]);
+	if(var.size() == 1)
+	{
+		conf->setup(var[0], token[1]);
+		alog.msg("script", var[0] + " = " + token[1]);
+		return true;
+	}
+	else
+	if(var.size() == 2)
+	{
+// TODO: change engine params (graph, physic)
+		return false;
+
+	}
+	else
+		return false;
 }
 

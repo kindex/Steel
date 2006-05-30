@@ -4,8 +4,14 @@
 // uni  -universal physic object
 // tag	- object with coordinates, but no graph and physic
 
+// Energy save
 ;uni			sphere/sphere2	-3,0,1	0,0,0	1	10,0	
 ;uni			sphere/sphere2	3,0,1	0,0,0	1.5	-10,0,0
+
+// Env map
+;uni			sphere/sphere2	0,0,3	0,0,0	3	0,0,0
+
+uni			box/box1	0,0,3	0,0,0	1	0,0,0
 
 
 ;uni			box/box1	2,0,0	0,0,0	1	0,0,-100
@@ -109,8 +115,7 @@ solid			wall/wall1	0,0,-21
 
 ;uni			box/box1	0,2.41,4
 
-include			group/main.scene	0,0,2
-
+;include			group/main.scene	0,0,2
 ;include			group/main.scene	0	0	0	0	1
 ;include			group/main.scene	0	0	4	3.14	1
 

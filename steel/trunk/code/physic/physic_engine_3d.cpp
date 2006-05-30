@@ -105,10 +105,10 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 	ProcessKind::ProcessKind kind = o.getProcessKind();
 	if(kind != ProcessKind::none) 
 	{
-		if(kind == ProcessKind::custom)
+		if(kind == ProcessKind::custom) // custom velocity calculations
 			o.process(globalTime, time, this);
 
-		if(kind == ProcessKind::uni)
+		if(kind == ProcessKind::uni) // forces
 		{
 			velocity v = o.getVelocity();
 			v.translation += g*(float)time;	// gravitation
@@ -151,18 +151,15 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 		}
 	}
 
-
+// move childrens
 	PhysicInterfaceList c = o.getPChildrens();
-
-	for(PhysicInterfaceList::iterator it = c.begin(); it != c.end(); it++)
+	for(PhysicInterfaceList::const_iterator it = c.begin(); it != c.end(); it++)
 		process(**it, globalTime, time);
 
 	if(helper && o.getProcessKind() != ProcessKind::none) // draw velocity
 		helper->drawVector(
 					Line(o.getGlobalMatrix()*v3(0,0,0),	
-					o.getGlobalVelocity().translation*0.1f), 0.0f,0.0f, v4(0.0f,1.0f,0.0f,1.0f)
-					)
-					;
+					o.getGlobalVelocity().translation*0.1f), 0.0f,0.0f, v4(0.0f,1.0f,0.0f,1.0f));
 
 	if(helper) // draw AABB
 	{
@@ -1031,3 +1028,84 @@ bool PhysicEngine3D::clear()
 	return true;
 }
 
+bool PhysicEngine3D::checkInvariant(PhysicInterface &o, PhysicInterface &clip)
+{
+	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+		if((*it) != &o)
+			if(!checkInvariant(o, **it, clip)) return false;
+
+	PhysicInterfaceList c = o.getPChildrens();
+	for(PhysicInterfaceList::iterator it = c.begin(); it != c.end(); it++)
+		if(!checkInvariant(**it, clip)) return false;
+	return true;
+}
+
+bool PhysicEngine3D::checkInvariant(PhysicInterface &a, PhysicInterface &b, PhysicInterface &clip)
+{
+	if(&a == &b || &b == &clip) return true;
+			
+	if(b.getTriangles() && b.getPVertexes()) 
+	{	
+		// a cross b ?
+		if(crossModelModel(a, b)) return false;
+	}
+
+	PhysicInterfaceList c = b.getPChildrens();
+	for(PhysicInterfaceList::iterator it = c.begin(); it != c.end(); it++)
+		if(!checkInvariant(a, **it, clip)) return false;
+	return true;
+}
+
+// пересекаются или находятся внутри
+bool PhysicEngine3D::crossModelModel(PhysicInterface &a, PhysicInterface &b)
+{
+	Vertexes *v1 = a.getPVertexes();
+	Vertexes *v2 = b.getPVertexes();
+	if(!v1 || !v2 || v1->data.empty() || v2->data.empty()) return false;
+
+	if(intersectModelModel(a,b)) return true;
+
+	if(crossPointModel(a.getGlobalMatrix()*v1->data[0], b)) return true;
+
+	if(crossPointModel(b.getGlobalMatrix()*v2->data[0], a)) return true;
+	return false;
+}
+
+// пересекаются контуры
+bool PhysicEngine3D::intersectModelModel(PhysicInterface &a, PhysicInterface &b)
+{
+	Collision collision;
+	collision.time = INF;
+	return checkCollision(a, v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON), b, collision);
+}
+
+// точка находится внутри
+bool PhysicEngine3D::crossPointModel(v3 point, PhysicInterface &a)
+{
+	Triangles *t = a.getTriangles();	
+	Vertexes *v = a.getPVertexes();		
+	matrix44 matrix = a.getGlobalMatrix();
+
+	int cnt = 0;
+
+	Plane at;
+	if(t)
+	for(vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
+	{
+		at.base = matrix * v->data[it->a[0]];
+		at.a	= matrix * v->data[it->a[1]] - at.base;
+		at.b	= matrix * v->data[it->a[2]] - at.base;
+
+		float k;
+		if(isCross(at, Line(point, v3(0,0,1)), k))
+		{
+			v3 cpoint = point + v3(0,0,1)*k;
+			if(k>-EPSILON && at.isInTrg(cpoint))
+				cnt++;
+		}
+	}
+	if(cnt%2 == 0)
+		return false;
+	else
+		return true;
+}

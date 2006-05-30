@@ -159,15 +159,15 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 					if(map.kind == MapKind::env) // карта отражения
 					{ // загружаем текстуру
 						bindTexture(map.texture); // Cube texture (auto detect from Image)
+
+						uid bufId = res->genUid();
+						buffersToDelete.push_back(bufId);
+						drawReflect(e, e.matrix, camera.eye, bufId);
+
 						// TODO: в этом месте тектурные координаты должны генерированться сами
 						//  шейдером или еще чем-либо
-						glTexGeni ( GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
-						glTexGeni ( GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
-						glTexGeni ( GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_ARB );
+//						drawBump(e, coords, e.matrix, light[j].pos, bufId);
 
-						glEnable  ( GL_TEXTURE_GEN_S );
-						glEnable  ( GL_TEXTURE_GEN_T );
-						glEnable  ( GL_TEXTURE_GEN_R );
 					}
 
 					if(map.kind == MapKind::color) // цвет RGBA
@@ -203,11 +203,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data.front());
 
 // -------------------------------------------------------------------------------
+
 			// откат настроек
 			glPopAttrib();
-
-			for(vector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
-				cleanBuffer(*it);
 		}
 
 		if(conf->geti("drawWire"))
@@ -265,6 +263,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 	if(conf->geti("drawAABB", 0))
 		drawAABB(e, e.matrix);
 	glPopMatrix();
+
+	for(vector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
+		cleanBuffer(*it);
 }
 
 bool OpenGL_Engine::isVisible(aabb box)
@@ -313,6 +314,8 @@ bool OpenGL_Engine::bindTexture(Image *image)
 
 		int format;
 		if(image->getFormat() == ImageFormat::rgb) format = GL_RGB; 
+		else
+		if(image->getFormat() == ImageFormat::normal) format = GL_RGB; 
 		else if(image->getFormat() == ImageFormat::rgba) format = GL_RGBA;
 		else return false;
 
@@ -344,7 +347,6 @@ bool OpenGL_Engine::bindTexture(Image *image)
 					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i,	0, 
 						GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image->getBitmap() + w*w*bpp*i);
 				}
-
 
 				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -567,53 +569,48 @@ void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::v
     for (unsigned int i=0; i<vertex.data.size(); i++)
     {
 		v3 lightVector =  objectLightPosition - vertex.data[i];
-
 		tl[i].x = sTangent[i].dotProduct(lightVector); // scalar product
 		tl[i].y = tTangent[i].dotProduct(lightVector);
 		tl[i].z = normal.data[i].dotProduct(lightVector);
+		
+/*		TODO 
+		v3 lightVector =  light - matrix*vertex.data[i];
+		tl[i].x = v3(matrix*(sTangent[i] + vertex.data[i])  - matrix*vertex.data[i]).dotProduct(lightVector); // scalar product
+		tl[i].y = v3(matrix*(tTangent[i] + vertex.data[i])  - matrix*vertex.data[i]).dotProduct(lightVector);
+		tl[i].z = v3(matrix*(normal.data[i] + vertex.data[i])  - matrix*vertex.data[i]).dotProduct(lightVector);
+*/
     }
 }
 
-/*
-void OpenGL_Engine::genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 _camera,	v3List **tangentSpaceLight)
+
+void OpenGL_Engine::genTangentSpaceSphere(Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 _camera,	v3List &tangentSpaceLight)
 {
 	matrix44 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
 
 	v3 camera = inverseModelMatrix*_camera;
 
-	*tangentSpaceLight = new v3List(vertex.size());
-	v3List &tl = **tangentSpaceLight;
+	tangentSpaceLight.resize(vertex.data.size());
+	v3List &tl = tangentSpaceLight;
 
     // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
-    for (unsigned int i=0; i<vertex.size(); i++)
+    for (unsigned int i=0; i<vertex.data.size(); i++)
     {
-		v3 c = camera - vertex[i];
-
+		v3 c = _camera - matrix*vertex.data[i];
         c.normalize();
-
-        v3 d = (matrix*(vertex[i]+normal[i]))- matrix*vertex[i];
+        v3 d = (matrix*(vertex.data[i]+normal.data[i]))- matrix*vertex.data[i];
         d.normalize(); // realnaja normal'
 
         float pscale = c.dotProduct(d); // cos ugla mezhdu c i nermal
 
         v3 p = d*pscale;
-//        VECTOR3D x = (p - c);
 
 //		tangentSpaceLight[i] = - p - p + c;
 		tl[i] = p + p - c;
-//        tangentSpaceLight[i] = -(tangentSpaceLight[i]+d);
-//		tangentSpaceLight[i] = x-c;
-//		tangentSpaceLight[i] = ModelMatrix*vertex[i];
-
-        tl[i].normalize();
     }
 }
 
-
-
-
-
+/*
 void OpenGL_Engine::drawDistColor(DrawElement &e, matrix44 const matrix, v3 const light, float const distance)
 {
 	float *coords = new float[e.vertex->size()];
@@ -683,7 +680,6 @@ void OpenGL_Engine::drawBump(DrawElement &e, TexCoords *coords, matrix44 const m
 	//Send tangent space light vectors for normalisation to unit 1
 
     tangentSpaceLightBufferedArray tangentSpaceLight;
-
 	tangentSpaceLight.changed = true;
 	tangentSpaceLight.id = bufId;
 	tangentSpaceLight.data.resize(e.vertex->data.size());
@@ -695,49 +691,20 @@ void OpenGL_Engine::drawBump(DrawElement &e, TexCoords *coords, matrix44 const m
 
 	if(bind(&tangentSpaceLight, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 		glTexCoordPointer(3, GL_FLOAT, 0,0);
-
-//	buffer[tangentSpaceLight.id].temp = true;
-
-/*	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
-	glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight.data.front());
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-*/
-
-//Set up texture environment to do (tex0 dot tex1)*color
-//	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
-
-
-//	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
-//	glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_REPLACE);
 }
 
-/*
-void OpenGL_Engine::drawReflect(DrawElement &e, GLuint cubeMap, matrix44 const matrix, v3 const light)
+void OpenGL_Engine::drawReflect(DrawElement &e, matrix44 const matrix, v3 const light, uid bufId)
 {
-	v3List *sTangent, *tTangent, *tangentSpaceLight;
+    tangentSpaceLightBufferedArray tangentSpaceLight;
+	tangentSpaceLight.changed = true;
+	tangentSpaceLight.id = bufId;
+	tangentSpaceLight.data.resize(e.vertex->data.size());
 
-//	getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
-	
-	genTangentSpaceSphere(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
+	genTangentSpaceSphere(*e.vertex, *e.normal, matrix, light, tangentSpaceLight.data);
 
-	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, cubeMap);
-	glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    drawFaces(e);
-
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-
-	delete tangentSpaceLight;
+	if(bind(&tangentSpaceLight, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+		glTexCoordPointer(3, GL_FLOAT, 0,0);
 }
-*/
-
-/*void OpenGL_Engine::drawFaces(DrawElement &e)
-{
-	glDrawElements(GL_TRIANGLES, e.triangle->size()*3, GL_UNSIGNED_INT, &(e.triangle->front()));
-}*/
 
 void OpenGL_Engine::drawNormals(DrawElement &e)
 {
