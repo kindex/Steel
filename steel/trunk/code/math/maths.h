@@ -28,7 +28,7 @@
 #endif
 
 #ifndef EPSILON2
-#define EPSILON2 1.0e-12
+#define EPSILON2 1.0e-10
 #endif
 
 

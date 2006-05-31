@@ -23,7 +23,7 @@ bool GameObjModel::init(ScriptLine	&s, ResCollection &res)
 	}
 
 	float scale = getGlobalScale();
-	mass = m->getVolume()*scale*scale*scale;
+	mass = m->getVolume()*scale*scale*scale*conf->getf("density", 1.0f);
 
 	return m != NULL;
 }

@@ -81,7 +81,7 @@ bool pointInPrism(const Plane a, const v3 d, v3 p)
 bool crossMLineLine(const Line a, const v3 direction, const Line b, float &k)
 { 
 	Plane p(a.base, a.a, direction);
-	
+
 	if(!isCross(p, b, k)) return false;
 	if(k<-EPSILON || k>1+ EPSILON) return false;
 

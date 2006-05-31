@@ -1,5 +1,6 @@
 (C) DiVision: KindeX 2006
-Steel Engine Demo [12]
+Steel Engine Demo [1.0.13.125]
+http://steel.kindex.lv:82/
 
 Features:
 * custom kinematic
@@ -7,7 +8,9 @@ Features:
 * object grouping
 
 Usage:
-run bin/steel.exe
+bin/steel.exe script=<level.script>
+*.bat
+
 
 Controls:
 
@@ -17,8 +20,12 @@ pause	pause physic model
 n	process next frame in paused mode
 asdw'/  camera movement
 1..9    change physic model speed
-F1..F6  toggle draw elements (helper, color, wire, aabb, vertexes, clear)
+F1..F6  toggle draw elements (helper, color, wire, bump, vertexes, clear)
 g	toggle gravity
 c	toggle crosshair
 mouse1	create sphere
+
+
+Author:
+Andrej Ivanov, kindex@kindex.lv, http://kindex.lv
 

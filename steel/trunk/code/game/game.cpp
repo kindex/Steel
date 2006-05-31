@@ -29,9 +29,9 @@ void Game::handleEventKeyDown(std::string key)
 	if(key == "n") framesToPass = 1;
 
 	if(key == "f1") conf->toggle("drawHelper");
-	if(key == "f2") graphEngine->conf->toggle("drawTexture");
+	if(key == "f2") graphEngine->conf->toggle("drawFill");
 	if(key == "f3") graphEngine->conf->toggle("drawWire");
-	if(key == "f4") graphEngine->conf->toggle("drawAABB");
+	if(key == "f4") graphEngine->conf->toggle("drawBump");
 	if(key == "f5") graphEngine->conf->toggle("drawVertexes");
 
 	if(key == "f6") 
@@ -69,7 +69,8 @@ void Game::handleEventKeyDown(std::string key)
 
 bool Game::createObject()
 {
-	static int balls = 0;
+	static int balls = 1;
+	static int safe = 0;
 
 	ScriptLine line;
 	line.set(conf->gets("weapon"));
@@ -99,7 +100,7 @@ bool Game::createObject()
 	o->setMatrix(m);
 
 	velocity v(o->getVelocity());
-	v.translation = direction*v.translation.x + cameraSpeed;
+	v.translation = direction*v.translation.x /*+ cameraSpeed*/;
 	v.rotationAxis = v3(0,0,0);
 	o->setVelocity(v);
 
@@ -126,16 +127,18 @@ bool Game::createObject()
 		o->setMatrix(m);
 	}
 
-	if(physicEngine->checkInvariant(*o, *o))
+	if(physicEngine->checkInvariant(*o, *o)/* && safe <= 0*/)
 	{
 		world->addChildren(o);
 		graphEngine->inject(o);
 		physicEngine->inject(o);
 		balls++;
+		safe = 3;
 		return true;
 	}
 	else
 	{
+		safe--;
 		if(light) delete light;
 		if(c) delete c;
 		delete o;
@@ -151,7 +154,6 @@ void Game::processKeyboard()
 		{
 			createObject();
 		}
-
 
 		v3 dir(0,0,0);
 		if(input->isPressed("w")) 	dir += v3(1,0,0);
@@ -179,8 +181,8 @@ void Game::handleMouse(double dx, double dy)
 {
 	direction.rotateZ((float)dx);
 
-	if(dy<0 && direction.dotProduct(v3(0,0, 1))<0.9 || 
-		dy>0 && direction.dotProduct(v3(0,0, -1))<0.9 )
+	if(dy<0 && direction.dotProduct(v3(0,0, 1))<0.99 || 
+		dy>0 && direction.dotProduct(v3(0,0, -1))<0.99 )
 
 	direction.rotateAxis((float)dy, v3( -direction.y, direction.x, 0));
 }

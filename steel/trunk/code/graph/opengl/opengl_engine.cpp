@@ -47,13 +47,15 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
 	{
 		Material *m = e.material; // получаем материал
-		if(m != NULL  && conf->geti("drawTexture", 1))
+		if(m != NULL  && conf->geti("drawFill", 1))
 		{
 			glPushAttrib(GL_ALL_ATTRIB_BITS);
 			// загружаем вершины объекта
 
 			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+			{
 				glVertexPointer(3, GL_FLOAT, 0, 0);
+			}
 			else
 			{
 				glEnable(GL_VERTEX_ARRAY);
@@ -64,7 +66,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			if(e.normal && !e.normal->data.empty())
 			{
 				if(bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+				{
 					glNormalPointer(GL_FLOAT, 0, 0);
+				}
 				else
 				{
 					glEnable(GL_NORMAL_ARRAY);
@@ -102,7 +106,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				if(glActiveTextureARB)
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 
-				if(map.kind == MapKind::bump_map && !light.empty())
+				if(conf->geti("drawBump") && map.kind == MapKind::bump_map && !light.empty())
 				{
 					TexCoords *coords = e.object->getTexCoords(i);
 
@@ -127,7 +131,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 					bindTexture(map.texture);
 					if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+					{
 						glTexCoordPointer(2, GL_FLOAT, 0,0);
+					}
 
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
 					glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
@@ -139,7 +145,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				}
 				else
 				{
-					if(map.kind == MapKind::color_map) // обычная текстура
+					if(conf->geti("drawTexture") && map.kind == MapKind::color_map) // обычная текстура
 					{	// загружем текстуру
 						bindTexture(map.texture); // 2D texture (auto detect from Image)
 						// загружаем тектурные координаты
@@ -147,7 +153,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 						if(coords && !coords->data.empty())
 						{
 							if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+							{
 								glTexCoordPointer(2, GL_FLOAT, 0,0);
+							}
 							else
 							{
 								glEnable(GL_TEXTURE_COORD_ARRAY);
@@ -156,8 +164,10 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 						}
 					}
 					
-					if(map.kind == MapKind::env) // карта отражения
+					if(conf->geti("drawReflect") && map.kind == MapKind::env) // карта отражения
 					{ // загружаем текстуру
+						glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+						glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
 						bindTexture(map.texture); // Cube texture (auto detect from Image)
 
 						uid bufId = res->genUid();
@@ -198,7 +208,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 // -------------------------------------------------------------------------------
 			// загружаем и ресуем треугольники
 			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
+			{
 				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+			}
 			else
 				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data.front());
 
@@ -206,6 +218,14 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 			// откат настроек
 			glPopAttrib();
+
+			while(curTexArb >= 0)
+			{
+				glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+				glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				curTexArb--;
+			}
 		}
 
 		if(conf->geti("drawWire"))
@@ -219,7 +239,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 			// загружаем вершины объекта
 			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+			{
 				glVertexPointer(3, GL_FLOAT, 0, 0);
+			}
 			else
 			{
 				glEnable(GL_VERTEX_ARRAY);
@@ -230,7 +252,9 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			glDepthFunc(GL_LEQUAL); // For blending
 
 			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
+			{
 				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+			}
 			else
 				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data[0]);
 
@@ -419,7 +443,7 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 			if(v->changed)
 				usage = GL_STREAM_DRAW;
 			glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
-
+	
 			buf.loaded = true;
 			buf.loadCnt++;
 			if(mode2 == GL_ARRAY_BUFFER_ARB)
@@ -690,7 +714,9 @@ void OpenGL_Engine::drawBump(DrawElement &e, TexCoords *coords, matrix44 const m
 	genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, tangentSpaceLight.data);
 
 	if(bind(&tangentSpaceLight, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+	{
 		glTexCoordPointer(3, GL_FLOAT, 0,0);
+	}
 }
 
 void OpenGL_Engine::drawReflect(DrawElement &e, matrix44 const matrix, v3 const light, uid bufId)
@@ -703,7 +729,9 @@ void OpenGL_Engine::drawReflect(DrawElement &e, matrix44 const matrix, v3 const 
 	genTangentSpaceSphere(*e.vertex, *e.normal, matrix, light, tangentSpaceLight.data);
 
 	if(bind(&tangentSpaceLight, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+	{
 		glTexCoordPointer(3, GL_FLOAT, 0,0);
+	}
 }
 
 void OpenGL_Engine::drawNormals(DrawElement &e)

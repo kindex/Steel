@@ -49,7 +49,7 @@ bool GameObj::init(ScriptLine	&s, ResCollection &res)
 	if(scalef<=0) scalef = 1.0f;
 	matrix44 scale; scale.loadIdentity(); 	scale.setScale(v3(scalef, scalef, scalef));
 
-	matrix = scale*matrix*rx*ry*rz; // TODO: order
+	matrix = matrix*rx*ry*rz*scale; // TODO: order
 
 	setVelocity(velocity(s.getv3(7), s.getv3(8).getNormalized()*s.getf(9)));
 

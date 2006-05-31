@@ -29,6 +29,8 @@ protected:
 		float	time; // время (от начала карда) в процентах [0..1]
 		steel::time globalTime;
 		PhysicInterface *a, *b; // учатники коллизии
+		bool fake; // false collision
+		Collision() { fake = true; }
 
 		bool operator<(const Collision second) const
 		{
@@ -72,7 +74,9 @@ public:
 	bool checkCollision(PhysicInterface &a, v3 distance, PhysicInterface &b, Collision &collision);
 	bool checkCollisionRotation(PhysicInterface &a, const matrix44 rot, PhysicInterface &b, Collision &collision);
 
-	bool checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Collision &collision);
+	bool checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Collision &collision, PhysicInterface &aobj, PhysicInterface &bobj);
+	bool intersectTrgTrg(Plane a, Plane b);
+	bool intersectLineTrg(Line a, Plane b);
 	bool checkCollisionRTrgTrg(Plane a, v3 d1, v3 d2, v3 d3, Plane b, Collision &collision);
 
 	void checkCollisionMVertexTrg(const v3 point,	const v3 direction, const Plane b,	Collision &collision);
