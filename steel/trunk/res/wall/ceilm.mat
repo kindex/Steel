@@ -17,7 +17,5 @@
 ;*	color_map	skel_wall
 ;	color_map	smile
 
-;	bump	medflr3_local
-;	bump	cs_floor3_1_local
-
-	color_map	medflr3_med_d
+	bump	box/boxes/box_local
+*	color_map	tex/ceil

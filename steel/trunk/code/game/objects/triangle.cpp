@@ -42,7 +42,7 @@ bool GameTriangleObj::init(ScriptLine	&s, ResCollection &res)
 
 	face[0].name = s.gets(3);
 	face[0].material = (Material*)res.add(Res::material, face[0].name);
-	face[0].triangles = triangle;
+	face[0].triangles = &triangle;
 
 	return true;
 }

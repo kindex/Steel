@@ -56,7 +56,7 @@ typedef TexCoord TexCoords;
 struct FaceMaterial
 {
 	Material		*material;
-	Triangles		triangles;
+	Triangles		*triangles;
 	std::string		name;
 };
 

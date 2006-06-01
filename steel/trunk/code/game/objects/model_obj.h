@@ -24,6 +24,7 @@ class GameObjModel: public GameObj
 protected:
 	Model *m;
 	Config *conf;
+	FaceMaterials faceMaterial;
 
 public:
 	void assignModel(Model *M)	{		m = M;	}
@@ -57,13 +58,7 @@ public:
 		else
 			return NULL;
 	}
-	FaceMaterials* getFaceMaterials()
-	{
-		if(m)
-			return &m->faceMaterial;
-		else
-			return NULL;
-	}
+	FaceMaterials* getFaceMaterials();
 	Lights* getLights()	{		return NULL;	}
 
 	TexCoords*	getTexCoords(int mapNumber)

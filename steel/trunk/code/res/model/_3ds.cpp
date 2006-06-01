@@ -158,7 +158,8 @@ int chain_model_material(_3DS &m, rstream &f, int size) // model material info
 	m.faceMaterial.resize(s+1);
 	m.faceMaterial[s].name = materialName;
 
-	Triangles &a = m.faceMaterial[s].triangles;
+	m.faceMaterial[s].triangles = new Triangles;
+	Triangles &a = *m.faceMaterial[s].triangles;
 
 	a.data.resize(count);
 
@@ -305,7 +306,7 @@ bool _3DS::init(const std::string name, ResCollection &res)
 		for(std::vector<FaceMaterial>::iterator it = faceMaterial.begin();
 					it != faceMaterial.end(); it++)
 		{
-			it->triangles.setId(res.genUid());
+			it->triangles->setId(res.genUid());
 
 			string mat = it->name;
 			
@@ -313,7 +314,7 @@ bool _3DS::init(const std::string name, ResCollection &res)
 			if(!it->material)
 				it->material = (Material*)res.add(material, mat);
 
-			if(!it->material) return false;
+//			if(!it->material) return false;
 		}
 
 		return true;

@@ -63,6 +63,8 @@ protected:
 	GameGroup	*world;
 	GraphHelper	*physicHelper;
 	Sprite		*crosshair;
+	GameObj		*lightTag;
+	GameLight	*light;
 
 public:
 	Game() { } 
@@ -83,7 +85,7 @@ public:
 	void handleMouse(double dx, double dy);
 	bool isAlive() {return _alive;} 
 	void setspeed(float _speed, steel::time _time) {speed = _speed; time = _time; } 
-	bool createObject();
+	bool createObject(int super);
 
 	v3	getGlobalPosition(std::string obj);
 };

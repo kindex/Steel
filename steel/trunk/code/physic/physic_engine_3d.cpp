@@ -1219,7 +1219,8 @@ bool PhysicEngine3D::intersectModelModel(PhysicInterface &a, PhysicInterface &b)
 			{
 				Plane bt = *jt;
 
-				if(intersectTrgTrg(at, bt)) return true;
+				if(intersectTrgTrg(at, bt)) 
+					return true;
 			}
 		}
 	}

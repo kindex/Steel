@@ -52,16 +52,17 @@ void SpriteSystem::initSprites()
 	face.resize(1);
 	face[0].material = m;
 
-	face[0].triangles.data.resize(sprite.size()*2);
-	face[0].triangles.id = res->genUid();
-	face[0].triangles.changed = false;
+	face[0].triangles = new Triangles;
+	face[0].triangles->data.resize(sprite.size()*2);
+	face[0].triangles->id = res->genUid();
+	face[0].triangles->changed = false;
 
 	for(unsigned int j=0; j<sprite.size(); j++)
 	{
 		for(int i=0; i<3; i++)
 		{
-			face[0].triangles.data[j*2 + 0].a[i] = j*4 + 3-i;
-			face[0].triangles.data[j*2 + 1].a[i] = j*4 + 3-(i+2)%4;
+			face[0].triangles->data[j*2 + 0].a[i] = j*4 + 3-i;
+			face[0].triangles->data[j*2 + 1].a[i] = j*4 + 3-(i+2)%4;
 		}
 	}
 

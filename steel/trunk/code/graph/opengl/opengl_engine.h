@@ -52,6 +52,7 @@ class OpenGL_Engine: public GraphEngine
 protected:
 	std::map<uid, OpenGLBuffer> buffer;
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
+	Image *zeroNormal;
 
 	typedef
 		std::vector<v3>
@@ -98,7 +99,7 @@ public:
 	void drawAABB(DrawElement &e, matrix44 matrix);
 
 	
-	void drawBump(DrawElement &e, TexCoords *coords, matrix44 const matrix, v3 const light, uid bufId);
+	void drawBump(DrawElement &e, TexCoords *coords, matrix44 const matrix, v3 const light, uid bufId, int texnum, Image *bump);
 	void drawReflect(DrawElement &e, matrix44 const matrix, v3 const light, uid bufId);
 
 	bool drawDiffuse(DrawElement &e, matrix44 const matrix, v3 const light);

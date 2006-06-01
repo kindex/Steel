@@ -106,42 +106,42 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 				if(glActiveTextureARB)
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 
-				if(conf->geti("drawBump") && map.kind == MapKind::bump_map && !light.empty())
+				if(conf->geti("drawBump") && !light.empty() && (i==0) && !e.blend && (map.kind == MapKind::bump_map || map.kind == MapKind::color_map))
 				{
 					TexCoords *coords = e.object->getTexCoords(i);
 
 					int j = 0;
-					 // find best
-/*					for(Lights::const_iterator it = light.begin(); it != light.end(); it++)
-					{
-					}*/
-
-					glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-					glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
 
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
 					uid bufId = res->genUid();
 					buffersToDelete.push_back(bufId);
 
-					drawBump(e, coords, e.matrix, light[j].pos, bufId);
-
-					glActiveTextureARB(GL_TEXTURE1_ARB + curTexArb);
-					glClientActiveTextureARB(GL_TEXTURE1_ARB + curTexArb);
-
-					bindTexture(map.texture);
-					if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+					if(map.kind == MapKind::bump_map)
 					{
-						glTexCoordPointer(2, GL_FLOAT, 0,0);
+						drawBump(e, coords, e.matrix, light[j].pos, bufId, curTexArb, map.texture);
+						curTexArb +=2;
+					}
+					else
+					{
+						drawBump(e, coords, e.matrix, light[j].pos, bufId, curTexArb, zeroNormal);
+						glActiveTextureARB(GL_TEXTURE2_ARB + curTexArb);
+						glClientActiveTextureARB(GL_TEXTURE2_ARB + curTexArb);
+						glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+						bindTexture(map.texture); // 2D texture (auto detect from Image)
+						if(coords && !coords->data.empty())
+						{
+							if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+								glTexCoordPointer(2, GL_FLOAT, 0,0);
+							else
+							{
+								glEnable(GL_TEXTURE_COORD_ARRAY);
+								glTexCoordPointer(2, GL_FLOAT, 0, &coords->data[0]);
+							}
+						}
+						curTexArb += 3;
 					}
 
-					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
-					glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
-					glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_DOT3_RGB_ARB);
-
-					glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB_ARB, GL_PREVIOUS_ARB);
-
-					curTexArb +=2;
 				}
 				else
 				{
@@ -153,9 +153,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 						if(coords && !coords->data.empty())
 						{
 							if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
-							{
 								glTexCoordPointer(2, GL_FLOAT, 0,0);
-							}
 							else
 							{
 								glEnable(GL_TEXTURE_COORD_ARRAY);
@@ -539,8 +537,7 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, TexCoords const *map
 
         e = a;
         // vertex a (vector ab)
-		ve = vertex->data[i];
-		ne = normal->data[i];
+		me = mapcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
 
         f = b;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
         // vertex a (vector ac)
@@ -549,16 +546,14 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, TexCoords const *map
         f = c;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
 
         e = b;
-		me = mapcoord->data[e]; ve = vertex->data[e];
-		ne = normal->data[e];
+		me = mapcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
         f = a;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
         f = c;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
         f = a;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
         f = c;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
 
         e = c;
-		me = mapcoord->data[e]; ve = vertex->data[e];
-		ne = normal->data[e];
+		me = mapcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
         f = a;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
         f = b;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
         f = a;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
@@ -586,6 +581,9 @@ void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::v
     inverseModelMatrix = matrix.getInverse();
 
 	v3 objectLightPosition = inverseModelMatrix*light;
+
+/*	v3 coords = matrix.getCoords();
+	v3 objectLightPosition = light - coords;*/
 
 	v3List &tl = tangentSpaceLight;
 
@@ -695,8 +693,12 @@ void OpenGL_Engine::drawDistColor(DrawElement &e, matrix44 const matrix, v3 cons
 }
 */
 
-void OpenGL_Engine::drawBump(DrawElement &e, TexCoords *coords, matrix44 const matrix, v3 const light, uid bufId)
+void OpenGL_Engine::drawBump(DrawElement &e, TexCoords *coords, matrix44 const matrix, v3 const light, uid bufId, int curTexArb, Image *img)
 {
+
+	glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+	glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+
 	//Bind normalisation cube map to texture unit 1
 	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, normalisationCubeMap);
 	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
@@ -717,6 +719,20 @@ void OpenGL_Engine::drawBump(DrawElement &e, TexCoords *coords, matrix44 const m
 	{
 		glTexCoordPointer(3, GL_FLOAT, 0,0);
 	}
+
+	glActiveTextureARB(GL_TEXTURE1_ARB + curTexArb);
+	glClientActiveTextureARB(GL_TEXTURE1_ARB + curTexArb);
+
+	bindTexture(img);
+	if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+	{
+		glTexCoordPointer(2, GL_FLOAT, 0,0);
+	}
+
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
+	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
+	glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_DOT3_RGB_ARB);
+	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB_ARB, GL_PREVIOUS_ARB);
 }
 
 void OpenGL_Engine::drawReflect(DrawElement &e, matrix44 const matrix, v3 const light, uid bufId)
@@ -916,6 +932,12 @@ bool OpenGL_Engine::init(std::string _conf)
 //	SetUpARB_multitexture();
 	
 	normalisationCubeMap	= generateNormalisationCubeMap();
+	zeroNormal = (Image*)res->add(Res::image, "zero");
+	if(!zeroNormal)
+	{
+		alog.msg("error graph res", "Zero normal map not found");
+		return false;
+	}
 
 	//lightCubeMap			= GenerateLightCubeMap();
 	//distMap					= generateDistanceLinearMap();

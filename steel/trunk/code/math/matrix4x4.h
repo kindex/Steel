@@ -31,7 +31,7 @@ public:
 	float getEntry(int position) const;
 	v4 getRow(int position) const;
 	v4 getColumn(int position) const;
-	v3 getCoords() { return v3(a[12], a[13], a[14]); }
+	v3 getCoords() const { return v3(a[12], a[13], a[14]); }
 	
 	void loadIdentity(void);
 	static matrix44	getIdentity() { return matrix44(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1); }

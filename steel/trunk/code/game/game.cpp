@@ -62,15 +62,15 @@ void Game::handleEventKeyDown(std::string key)
 		physicEngine->setGravitation(g);
 	}
 
-/*	if(key == "mouse1" && input->isMouseCaptured())
-		createObject();
-		*/
+	if(key == "f")
+		createObject(true);
 }
 
-bool Game::createObject()
+bool Game::createObject(int super)
 {
-	static int balls = 1;
 	static int safe = 0;
+
+	if(conf->getf("weaponSpeed")<EPSILON) return false;
 
 	ScriptLine line;
 	line.set(conf->gets("weapon"));
@@ -90,7 +90,7 @@ bool Game::createObject()
 //			rm1.setRotationZ(d.x, d.y);
 	float cen = direction.z;
 
-	rm1.setRotationEuler(1,0, cen, sqrt(1-cen*cen), d.x, d.y);
+	//rm1.setRotationEuler(1,0, cen, sqrt(1-cen*cen), d.x, d.y);
 
 	v3 pos = o->getPosition();
 	
@@ -100,47 +100,43 @@ bool Game::createObject()
 	o->setMatrix(m);
 
 	velocity v(o->getVelocity());
-	v.translation = direction*v.translation.x /*+ cameraSpeed*/;
+	v.translation = direction*conf->getf("weaponSpeed") /*+ cameraSpeed*/;
 	v.rotationAxis = v3(0,0,0);
 	o->setVelocity(v);
 
-	GameLight *light = NULL;
-	Sprite *c = NULL;
-	if(balls == 0)
-	{
-		light = new GameLight;
-		light->changePositionKind(Interface::local);
-		light->setProcessKind(ProcessKind::none);
-		o->addChildren(light);
-		matrix44 m;
-		m.loadIdentity();
-		light->setMatrix(m);
-
-		c = new Sprite;
-		ScriptLine csc;
-		csc.set(conf->gets("lightSprite"));
-		c->init(csc, *res);
-		c->changePositionKind(Interface::local);
-		o->addChildren(c);
-
-		m.setTranslation(pos.x*direction.getNormalized() + eye);
-		o->setMatrix(m);
-	}
 
 	if(physicEngine->checkInvariant(*o, *o)/* && safe <= 0*/)
 	{
-		world->addChildren(o);
+		GameLight *light = NULL;
+		Sprite *c = NULL;
+		if(super)
+		{
+			lightTag = c;
+			light = new GameLight;
+			light->changePositionKind(Interface::local);
+			light->setProcessKind(ProcessKind::none);
+			o->addChildren(light);
+
+			matrix44 m;
+			m.loadIdentity();
+			light->setMatrix(m);
+
+			c = new Sprite;
+			ScriptLine csc;
+			csc.set(conf->gets("lightSprite"));
+			c->init(csc, *res);
+			c->changePositionKind(Interface::local);
+			o->addChildren(c);
+		}
+
+
 		graphEngine->inject(o);
 		physicEngine->inject(o);
-		balls++;
-		safe = 3;
 		return true;
 	}
 	else
 	{
 		safe--;
-		if(light) delete light;
-		if(c) delete c;
 		delete o;
 		return false;
 	}
@@ -152,7 +148,7 @@ void Game::processKeyboard()
 	{
 		if(input->isPressed("mouse1"))
 		{
-			createObject();
+			createObject(false);
 		}
 
 		v3 dir(0,0,0);
@@ -304,15 +300,15 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input, std::string pa
 	}
 
 	// Init world
-	eye = v3(conf->getf("camera.eye.x"), conf->getf("camera.eye.y"), conf->getf("camera.eye.z"));
+	eye = v3(conf->getf("camera_eye_x", 1.0f), conf->getf("camera_eye_y", 1.0f), conf->getf("camera_eye_z", 1.0f));
 
-	v3 target = v3(conf->getf("camera.target.x"), conf->getf("camera.target.y"), conf->getf("camera.target.z"));
+	v3 target = v3(conf->getf("camera_target_x"), conf->getf("camera_target_y"), conf->getf("camera_target_z"));
 
 	direction = target-eye;
 	direction.normalize();
 
-	accSpeed = conf->getf("camera.acc", 100);
-	brakeSpeed = conf->getf("camera.brakes", 200);
+	accSpeed = conf->getf("camera_acc", 50);
+	brakeSpeed = conf->getf("camera_brakes", 200);
 
 	moveSpeed.loadZero();
 

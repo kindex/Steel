@@ -102,7 +102,7 @@ bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
 		e.object = object;
 
 		e.material = (*it).material;
-		e.triangle = &it->triangles;
+		e.triangle = it->triangles;
 		e.vertex = v;
 		e.matrix = object_matrix;
 		e.normal = n;
