@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 			graph.setCaption(std::string("Sleel engine")
 				+ " Obj: " + IntToStr(graph.total.object)
 				+ " Trg: " + IntToStr(graph.total.triangle)
-				+ " Col: " + IntToStr(game.getCollisionCount())
+//				+ " Col: " + IntToStr(game.getCollisionCount())
 				+ " FPS " + timer.getfps_s()
 
 				);

@@ -96,20 +96,20 @@ public:
 //	void drawFaces(DrawElement &e);
 	void drawNormals(DrawElement &e);
 	void drawVertexes(DrawElement &e);
-	void drawAABB(DrawElement &e, matrix44 matrix);
+	void drawAABB(DrawElement &e, matrix34 matrix);
 
 	
-	void drawBump(DrawElement &e, TexCoords *coords, matrix44 const matrix, v3 const light, uid bufId, int texnum, Image *bump);
-	void drawReflect(DrawElement &e, matrix44 const matrix, v3 const light, uid bufId);
+	void drawBump(DrawElement &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int texnum, Image *bump);
+	void drawReflect(DrawElement &e, matrix34 const matrix, v3 const light, uid bufId);
 
-	bool drawDiffuse(DrawElement &e, matrix44 const matrix, v3 const light);
-	void drawDistColor(DrawElement &e, matrix44 const matrix, v3 const light, float const distance);
+	bool drawDiffuse(DrawElement &e, matrix34 const matrix, v3 const light);
+	void drawDistColor(DrawElement &e, matrix34 const matrix, v3 const light, float const distance);
 
 	void getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, Triangles const *triangle, Normals const *normal, std::vector<v3> **sTangent, std::vector<v3> **tTangent);
-	void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix44 const matrix, const v3 light,	v3List &tangentSpaceLight);
-	void genTangentSpaceSphere(Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 _camera,	v3List &tangentSpaceLight);
+	void genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
+	void genTangentSpaceSphere(Vertexes const &vertex, Normals	const &normal, matrix34 const matrix, const v3 _camera,	v3List &tangentSpaceLight);
 
-	//void genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix44 const matrix, const v3 camera,	v3List **tangentSpaceLight);
+	//void genTangentSpaceSphere(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix34 const matrix, const v3 camera,	v3List **tangentSpaceLight);
 
 //	GLuint getCubeMap(std::string imageName);
 

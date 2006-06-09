@@ -14,7 +14,7 @@
 #define __MATH_AABB_H
 
 #include "vector3d.h"
-#include "matrix4x4.h"
+#include "matrix34.h"
 
 #include <vector>
 
@@ -32,7 +32,7 @@ struct aabb3 // AABB 3D
     void merge(const v3 point);
     void merge(const aabb3 &second);
 	bool intersect(aabb3 const &second);
-	void mul(const matrix44 &matrix);
+	void mul(const matrix34 &matrix);
 	void add(v3 direction);
 	void cross(const aabb3 second);
 };

@@ -12,7 +12,7 @@ tag		tag27		1,-1,1
 
 path		path3	tag27	3	0	tag26	3	0	tag25	3	0	tag24	3	0	tag23	3	0	tag22	3	0	
 
-solid	path3	slave	box/box1	0.0,0.0,0.0	0,0,0	0.99
+solid	path3	slave	box/box1	0.0,0.0,0.0	0,0,0	0.9
 
 ;ps	2	ps1	particle_system/ps_black	0,0,0
 ;ps	2	ps2	particle_system/ps	0,0,0

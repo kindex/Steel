@@ -391,11 +391,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\math\matrix4x4.cpp"
+					RelativePath=".\math\matrix33.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\math\matrix4x4.h"
+					RelativePath=".\math\matrix33.h"
+					>
+				</File>
+				<File
+					RelativePath=".\math\matrix34.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\math\matrix34.h"
 					>
 				</File>
 				<File
@@ -658,6 +666,14 @@
 					Name="objects"
 					>
 					<File
+						RelativePath=".\game\objects\complex_particle_system.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\game\objects\complex_particle_system.h"
+						>
+					</File>
+					<File
 						RelativePath=".\game\objects\custom_path.cpp"
 						>
 					</File>
@@ -732,6 +748,14 @@
 				</File>
 				<File
 					RelativePath=".\physic\physic_engine_3d.h"
+					>
+				</File>
+				<File
+					RelativePath=".\physic\physic_engine_ps.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\physic\physic_engine_ps.h"
 					>
 				</File>
 				<File

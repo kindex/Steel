@@ -1,11 +1,19 @@
+/*id*********************************************************
+    Unit: game/objects/sprites
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * def [Alexander Papyshev]
+    Description:
+		Класс для анимирования графической системы частиц
+************************************************************/
 
 #ifndef PARTICLE_SYSTEM_H
 #define PARTICLE_SYSTEM_H
 
 #include "sprites.h"
 
-
-struct Particle
+struct ParticleSimple
 {
 	v3		position, velocity, acc;
 	steel::time endTime, startTime;
@@ -13,7 +21,7 @@ struct Particle
 	bool	alive;
 
 	void process(steel::time curTime, steel::time frameLength);
-	void born(steel::time curTime, steel::time frameLength, Config *conf, matrix44 global, v3 globalVelocity);
+	void born(steel::time curTime, steel::time frameLength, Config *conf, matrix34 global, v3 globalVelocity);
 };
 
 //ParticleSystem nasleduet metod risovanija iz SpriteSystem
@@ -23,7 +31,7 @@ class ParticleSystem: public SpriteSystem
 protected:
 	TexCoords	texCoords1D; //dobavljaem teksturniju koordinatu dlja Alfa Kanala
 
-	std::vector<Particle> particle;
+	std::vector<ParticleSimple> particle;
 	Config	*conf;
 
 public:
@@ -32,7 +40,7 @@ public:
 
 	void process(steel::time curTime, steel::time frameLength, PhysicEngine *engine);
 	void processGraph(v3	cameraEye, v3 cameraDirection);
-	PositionKind	getPositionKind(){	return global;}
+	PositionKind::PositionKind	getPositionKind(){	return PositionKind::global; }
 
 	TexCoords*	getTexCoords(int texNumber);
 };

@@ -47,8 +47,8 @@ void TagPath::process(steel::time curTime, steel::time frameLength, PhysicEngine
 	GameObj *t = parent->findChildren(target[currentTarget].id);
 	if(!t) return;
 
-	v3 curPos = getPosition();
-	v3 tp = t->getPosition();
+	v3 curPos = getPosition().getVector();
+	v3 tp = t->getPosition().getVector();
 
 	coord speed = target[currentTarget].speed;
 	coord dst = (tp - curPos).getLength();
@@ -78,7 +78,7 @@ void TagPath::process(steel::time curTime, steel::time frameLength, PhysicEngine
 		}
 		else
 			vel.translation = (tp-curPos).getNormalized()* speed * (1-k) +
-			(n->getPosition()-curPos).getNormalized()* target[(currentTarget + 1)%cnt].speed * k;
+			(n->getPosition().getVector()-curPos).getNormalized()* target[(currentTarget + 1)%cnt].speed * k;
 	}
 	else
 		vel.translation = (tp-curPos).getNormalized()* speed;

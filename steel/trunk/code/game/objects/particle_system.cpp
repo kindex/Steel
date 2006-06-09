@@ -1,3 +1,13 @@
+/*id*********************************************************
+    Unit: game/objects/sprites
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * def [Alexander Papyshev]
+    Description:
+		Класс для анимирования графической системы частиц
+************************************************************/
+
 #include "particle_system.h"
 #include "../../common/utils.h"
 
@@ -47,13 +57,17 @@ void ParticleSystem::process(steel::time curTime, steel::time frameLength, Physi
 		else
 			if(limit>0)
 			{
-				particle[i].born(curTime, frameLength, conf, getParent()->getGlobalMatrix(), getParent()->getGlobalVelocity().translation);
+				particle[i].born(
+					curTime, 
+					frameLength, 
+					conf, 
+					getParent()->getGlobalPosition(), getParent()->getGlobalVelocity().translation);
 				limit--;
 			}
 	}
 }
 
-void Particle::process(steel::time curTime, steel::time frameLength)
+void ParticleSimple::process(steel::time curTime, steel::time frameLength)
 {
 	if(alive)
 	{
@@ -72,7 +86,7 @@ void Particle::process(steel::time curTime, steel::time frameLength)
 
 }
 
-void Particle::born(steel::time curTime, steel::time frameLength, Config *conf, matrix44 global, v3 globalVelocity)
+void ParticleSimple::born(steel::time curTime, steel::time frameLength, Config *conf, matrix34 global, v3 globalVelocity)
 {
     v3  globalsize = global * v3(1, 0, 0) - global * v3(0, 0, 0);
 	float k = globalsize.getLength();

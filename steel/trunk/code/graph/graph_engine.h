@@ -48,7 +48,7 @@ protected:
 		Material	*material;
 		GLines		*lines;
 
-		matrix44	matrix;
+		matrix34	matrix;
 		aabb		frame;
 		bool		blend; // true if blending
 		coord		distance; // расстояние до камеры
@@ -73,7 +73,7 @@ public:
 	// Collect information about object: how to render it
 	virtual bool inject(GraphInterface *object);
 	virtual bool remove(GraphInterface *object);
-	virtual bool prepare(GraphInterface *object, matrix44 matrix = matrix44::getIdentity());
+	virtual bool prepare(GraphInterface *object, matrix34 matrix = matrix34::getIdentity());
 
 	// Draw colelcted information. May be called few times without recollection information
 	virtual bool process() = 0; // Override OpenGL, D3D, ...

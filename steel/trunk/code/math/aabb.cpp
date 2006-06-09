@@ -40,7 +40,7 @@ bool aabb::intersect(aabb const &second)
 	::intersect(min.z, max.z, second.min.z, second.max.z);
 }
 
-void aabb::mul(const matrix44 &matrix)
+void aabb::mul(const matrix34 &matrix)
 {
 	std::vector<v3> v = getVertexes();
 	

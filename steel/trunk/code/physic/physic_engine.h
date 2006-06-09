@@ -24,7 +24,7 @@ protected:
 	struct Element
 	{
 		PhysicInterface	*object, *parent;
-		matrix44		matrix, parentMatrix; // abloslute
+		matrix34		matrix, parentMatrix; // abloslute
 		Vertexes		*vertex;
 		Triangles		*triangle;
 		aabb			frame;
@@ -33,6 +33,7 @@ protected:
 
 	std::vector<Element> element;
 	std::vector<PhysicInterface*> object;
+	v3 g;
 
 public:
 	struct TotalInfo
@@ -47,7 +48,7 @@ public:
 	// У custom и none не может быть детей с типом uni
 	virtual bool inject(PhysicInterface *object);
 
-	virtual bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL) = 0;
+	virtual bool prepare(PhysicInterface *object, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL) = 0;
 	virtual bool update(Element &element) = 0;
 
 	// Move objects
@@ -57,6 +58,9 @@ public:
 
 	virtual bool init(std::string _conf);
 	virtual bool deinit() { return clear();}
+
+	virtual void setGravitation(const v3 force) { g = force; }
+
 };
 
 #endif

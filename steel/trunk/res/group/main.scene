@@ -8,7 +8,5 @@ tag		tag5		-1,-1,0
 //		id	(Target	Speed	Smooth)
 path		path1	tag1	5	2	tag2	4	0	tag3	10	3	tag4	7	1
 
-light	path1			0,0,0
-
 include	path1	group1	group/cubes.scene
 

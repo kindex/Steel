@@ -18,15 +18,15 @@
 
 using namespace std;
 
-void GameObj::changePositionKind(const PositionKind newKind)
+void GameObj::setPositionKind(const PositionKind::PositionKind newKind)
 {
-	PositionKind oldKind = getPositionKind();
+	PositionKind::PositionKind oldKind = getPositionKind();
 	if(oldKind == newKind) return;
-	if(newKind == global && oldKind == local)
+	if(newKind == PositionKind::global && oldKind == PositionKind::local)
 	{
-		matrix = getGlobalMatrix();
+		position = getGlobalPosition();
 		vel = getGlobalVelocity();
-		positionKind = global;
+		positionKind = PositionKind::global;
 	}
 	else
 	{} // TODO
@@ -35,21 +35,21 @@ void GameObj::changePositionKind(const PositionKind newKind)
 
 bool GameObj::init(ScriptLine	&s, ResCollection &res)
 {
-	matrix.loadIdentity();
+	position.loadIdentity();
 
-	matrix.setTranslation(s.getv3(4));
+	position.setTranslation(s.getv3(4));
 
 	v3 rot = s.getv3(5);
 
-	matrix44 rx; rx.loadIdentity(); 	rx.setRotationX(rot.x);
-	matrix44 ry; ry.loadIdentity(); 	ry.setRotationY(rot.y);
-	matrix44 rz; rz.loadIdentity(); 	rz.setRotationZ(rot.z);
+	matrix34 rx; rx.loadIdentity(); 	rx.setRotationX(rot.x);
+	matrix34 ry; ry.loadIdentity(); 	ry.setRotationY(rot.y);
+	matrix34 rz; rz.loadIdentity(); 	rz.setRotationZ(rot.z);
 
 	float scalef = s.getf(6, 1.0f);
 	if(scalef<=0) scalef = 1.0f;
-	matrix44 scale; scale.loadIdentity(); 	scale.setScale(v3(scalef, scalef, scalef));
+	matrix34 scale; scale.loadIdentity(); 	scale.setScale(v3(scalef, scalef, scalef));
 
-	matrix = matrix*rx*ry*rz*scale; // TODO: order
+	position = position*rx*ry*rz*scale; // TODO: order
 
 	setVelocity(velocity(s.getv3(7), s.getv3(8).getNormalized()*s.getf(9)));
 
@@ -57,23 +57,23 @@ bool GameObj::init(ScriptLine	&s, ResCollection &res)
 }
 
 
-matrix44	GameObj::getGlobalMatrix()
+ObjectPosition	GameObj::getGlobalPosition()
 {
-	if(getPositionKind() == Interface::global)
-		return getMatrix();
+	if(getPositionKind() == PositionKind::global)
+		return getPosition();
 	else 
 	{
 		GameObj *p = getParent();
 		if(p)
-			return p->getGlobalMatrix() * getMatrix();
+			return p->getGlobalPosition() * getPosition();
 		else
-			return getMatrix();
+			return getPosition();
 	}
 }
 
 velocity GameObj::getGlobalVelocity()
 {
-	if(getPositionKind() == Interface::global)
+	if(getPositionKind() == PositionKind::global)
 		return getVelocity();
 	else 
 	{
@@ -83,7 +83,7 @@ velocity GameObj::getGlobalVelocity()
 			velocity v = getVelocity();
 			velocity g = p->getGlobalVelocity();
 			
-			v.translation = g.translation + p->getGlobalMatrix()*v.translation;
+			v.translation = g.translation + p->getGlobalPosition().getMatrix33()*v.translation;
 			return v; // TODO
 		}
 		else
@@ -93,9 +93,9 @@ velocity GameObj::getGlobalVelocity()
 
 float GameObj::getGlobalScale()
 {
-	matrix44 global = getGlobalMatrix();
+	matrix33 global = getGlobalPosition().getMatrix33();
 	v3 p;
-    p = global*v3(1,0,0) - global*v3(0,0,0);
+    p = global*v3(1,0,0);
 	return p.getLength();
 }
 
@@ -149,7 +149,7 @@ aabb GameObjSet::getPFrame()
 		aabb loc = (*it)->getPFrame();
 		if(!loc.empty())
 		{
-			loc.mul((*it)->getMatrix());
+			loc.mul((*it)->getPosition());
 			box.merge(loc);
 		}
 	}

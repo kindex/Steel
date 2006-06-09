@@ -27,6 +27,8 @@ protected:
 	FaceMaterials faceMaterial;
 
 public:
+	CollisionType::CollisionType getCollisionType() { return CollisionType::polyhedra; }
+
 	void assignModel(Model *M)	{		m = M;	}
 	GameObjModel()	{ 		m = NULL;	}
 	bool	init(ScriptLine	&s, ResCollection &res);

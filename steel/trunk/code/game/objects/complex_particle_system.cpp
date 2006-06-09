@@ -1,0 +1,60 @@
+#include "complex_particle_system.h"
+#include "../../common/utils.h"
+
+bool Particle::init(Config *_conf, ResCollection &_res)
+{
+	conf = _conf;
+	res = &_res;
+	
+	m = (Material*)res->add(Res::material, conf->gets("material"));
+
+	align = SpriteAlign::screen;
+
+	sprite.resize(1);
+	sprite[0].pos = v3(0,0,0);
+	sprite[0].size = conf->getf("size");
+	position.loadIdentity();
+	position.setTranslation(v3(frand(), frand(), frand()));
+	vel.translation.set(frand()*0.1, frand()*0.1, frand()*0.1);
+	//vel.translation.loadZero();
+
+	initSprites();
+	return true;
+}
+
+bool ComplexParticleSystem::init(ScriptLine	&s, ResCollection &res)
+{
+	if(!GameObj::init(s, res)) return false;
+	
+	if(s.count()<3) return false;
+	conf = (Config*)res.add(Res::config, s.gets(3));
+	if(!conf)
+	{
+		alog.msg("error res model", "Model config not found: " + s.gets(3));
+		return false;
+	}
+	int count = conf->geti("count");
+	particles.resize(count);
+	for(int i=0; i<count; i++)
+	{
+		particles[i] = new Particle;
+		particles[i]->init(conf, res);
+	}
+
+	return true;
+}
+
+GraphInterfaceList ComplexParticleSystem::getChildrens()
+{
+	GraphInterfaceList a;
+	for(std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); it++)
+		a.push_back(*it);
+	return a;
+}
+PhysicInterfaceList ComplexParticleSystem::getPChildrens()
+{
+	PhysicInterfaceList a;
+	for(std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); it++)
+		a.push_back(*it);
+	return a;
+}

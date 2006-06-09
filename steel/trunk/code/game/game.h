@@ -22,7 +22,8 @@
 #include "objects/group.h"
 #include "objects/sprites.h"
 
-#include "../physic/physic_engine_3d.h"
+//#include "../physic/physic_engine_3d.h"
+#include "../physic/physic_engine_ps.h"
 #include "../graph/graph_engine.h"
 #include "../graph/graph_helper.h"
 
@@ -55,7 +56,7 @@ protected:
 	Config		*conf;
 
 	GraphEngine *graphEngine;
-	PhysicEngine3D *physicEngine;
+	PhysicEnginePS *physicEngine;
 
 	void processKeyboard();
 
@@ -77,7 +78,7 @@ public:
 	void bindPhysicEngine();
 	void draw(GraphEngine *engine);
 	void process(steel::time globalTime, steel::time time);
-	int getCollisionCount() { return physicEngine->total.collisionCount; }
+//	int getCollisionCount() { return physicEngine->total.collisionCount; }
 
 	void handleEventKeyDown(std::string key);
 	void handleEventKeyUp(std::string key);

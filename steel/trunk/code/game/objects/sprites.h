@@ -1,3 +1,12 @@
+/*id*********************************************************
+    Unit: game/objects/sprites
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * def [Alexander Papyshev]
+    Description:
+		“ут содержатс€ классы дл€ рендеринга системы частиц
+************************************************************/
 #ifndef __GAME_SPRITES
 #define __GAME_SPRITES
 
@@ -20,6 +29,7 @@ namespace SpriteAlign
 	} SpriteAlign;
 }
 
+// Ётот класс отвечает за вывод одного спрайта через стандартный интерфейт steel engine
 class SpriteSystem: public GameObj
 {
 protected:
@@ -50,6 +60,7 @@ public:
 	void processGraph(v3	cameraEye, v3 cameraDirection);
 };
 
+// ќдин спрайт
 class Sprite: public SpriteSystem
 {
 public:

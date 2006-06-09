@@ -46,10 +46,9 @@ public:
 // Graph
 	void		processGraph(v3	cameraEye, v3 cameraDirection);
 
-	matrix44	getMatrix()		{	return matrix44(); }
-	void		setMatrix(matrix44 const &m) {}
-	PositionKind	getPositionKind() {return Interface::global; }
-	void		changePositionKind(const PositionKind newKind) {}
+	ObjectPosition getPosition(void) { return matrix34::getIdentity(); }
+	
+	PositionKind::PositionKind	getPositionKind() {return PositionKind::global; }
 	GraphInterfaceList getChildrens() { return GraphInterfaceList(0);}
 
 	GLines*		getLines()		{	return &glines;	}

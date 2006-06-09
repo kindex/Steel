@@ -26,6 +26,7 @@
 #include "particle_system.h"
 #include "triangle.h"
 #include "model_obj.h"
+#include "complex_particle_system.h"
 
 using namespace std;
 
@@ -45,7 +46,7 @@ bool GameGroup::init(ScriptLine	&s, ResCollection &res)
 
 bool GameGroup::load(ResCollection *res, GameObj *global)
 {
-	if(!parent) positionKind = Interface::global;
+	if(!parent) positionKind = PositionKind::global;
 
 	Script *s = (Script*)res->add(Res::script, conf);
 	if(!s)
@@ -91,6 +92,9 @@ bool GameGroup::load(ResCollection *res, GameObj *global)
 
 		//"ps"		parent	id	CONF	X	Y	Z	Angle	Scale
 		CHECK_KIND("ps", ParticleSystem, ProcessKind::custom);
+		
+		CHECK_KIND("cps", ComplexParticleSystem, ProcessKind::uni);
+
 		//"include"	parent	id	CONF	X	Y	Z	Angle	Scale
 		CHECK_KIND("include", GameGroup, ProcessKind::none);
 		// "sprite"	parent	id	MATERIAL	X	Y	Z	ALIGN	Scale(Sprite Size)
@@ -119,12 +123,12 @@ bool GameGroup::load(ResCollection *res, GameObj *global)
 		{
 			if(obj->getProcessKind() == ProcessKind::uni)
 			{
-				if(obj->getPositionKind() == Interface::local)
+				if(obj->getPositionKind() == PositionKind::local)
 				{ // TODO
-					obj->positionKind = Interface::global;
+					obj->positionKind = PositionKind::global;
 
-					matrix44 matrix = this->getGlobalMatrix();
-					obj->setMatrix(matrix * obj->getMatrix());
+					ObjectPosition matrix = this->getGlobalPosition();
+					obj->setPosition(matrix * obj->getPosition());
 
 					velocity vel = obj->getVelocity();
 					vel.translation = this->getGlobalVelocity().translation + (matrix*vel.translation - matrix*v3(0,0,0)); 

@@ -1,3 +1,13 @@
+/*id*********************************************************
+    Unit: game/objects/sprites
+    Part of: Steel engine
+    Version: 1.0
+    Authors:
+        * def [Alexander Papyshev]
+    Description:
+		“ут содержатс€ классы дл€ рендеринга системы частиц
+************************************************************/
+
 #include "sprites.h"
 #include "../../common/utils.h"
 
@@ -89,7 +99,10 @@ void SpriteSystem::processGraph(v3	cameraEye, v3 cameraDirection)
 		v3 &pos = sprite[i].pos;
 
 		v3 dir;
-
+//¬ зависимости от типа выравнивани€ рассчитываем перпендикул€р к плоскости спрайта (dir).
+//cameraDirection Ц ось камеры
+//cameraEye Ц положение камеры
+//pos Ц положение спрайта
 		switch(align)
 		{
 			case SpriteAlign::screen: dir = -cameraDirection; break;
@@ -100,17 +113,20 @@ void SpriteSystem::processGraph(v3	cameraEye, v3 cameraDirection)
 
 
 		dir.normalize();
+		// per1 и per2 - это направл€ющие сторон спрайта
 		v3 per1(-dir.y, dir.x, 0); // перендикул€р к dir
 		per1.normalize();
-		v3 per2 = dir.vectorProduct(per1);
-		per1 *= sprite[i].size;
+		v3 per2 = dir.vectorProduct(per1); // перпендикул€р к dir и per1
+		per1 *= sprite[i].size; // умножаем на размер спарйта
 		per2 *= sprite[i].size;
 
+		// углы спарйта
 		vertex.data[i4 + 0]  = pos + per1 - per2;
 		vertex.data[i4 + 1]  = pos + -per1 - per2;
 		vertex.data[i4 + 2]  = pos + -per1 + per2;
 		vertex.data[i4 + 3]  = pos + per1 + per2;
 
+		// нормали к углам спарйта
 		normal.data[i4 + 0] = dir;
 		normal.data[i4 + 1] = dir;
 		normal.data[i4 + 2] = dir;

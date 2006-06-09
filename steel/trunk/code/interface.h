@@ -14,7 +14,7 @@
 #define INTERFACE_H
 
 #include "math/vector3d.h"
-#include "math/matrix4x4.h"
+#include "math/matrix34.h"
 
 #include <vector>
 
@@ -55,6 +55,21 @@ struct Triangles: public BufferedElement
 };
 
 /*
+местоположение + поворот объекта
+*/
+typedef matrix34 ObjectPosition;
+
+namespace PositionKind
+{
+	typedef enum
+	{
+		none,
+		local,
+		global
+	} PositionKind;
+};
+
+/*
 Interface protottype
 От этого класса наследуются все объекты и интерфейсы в движке.
 
@@ -64,22 +79,11 @@ Interface protottype
 относительно его родителя или в глобальный коорлинатах. Систему отсчёта определяет 
 функция getPositionKind
 */
-
 class Interface
 {
 public:
-	virtual	matrix44	getMatrix() = 0;
-	virtual	void		setMatrix(matrix44 const &m) = 0; 
-
-	typedef enum
-	{
-		none,
-		local,
-		global
-	} PositionKind;
-
-    virtual PositionKind	getPositionKind() = 0;
-	virtual void changePositionKind(const PositionKind newKind) = 0;
+	virtual	ObjectPosition getPosition(void) = 0;
+	virtual PositionKind::PositionKind getPositionKind(void) = 0;
 };
 
 #endif

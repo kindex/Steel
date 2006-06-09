@@ -15,7 +15,7 @@
 
 #include "../engine.h"
 #include "../math/aabb.h"
-#include "../math/matrix4x4.h"
+#include "../math/matrix34.h"
 #include "../math/vector3d.h"
 #include "../res/conf/conf.h"
 
@@ -41,8 +41,10 @@ namespace CollisionType
 	typedef enum
 	{
 		none,
-		uni,
-		trigger
+		polyhedra,
+		trigger,
+		particle1, // sphere, collide with polyhedra
+		particle2, // sphere, collide with polyhedra & other particles
 	} CollisionType;
 };
 
@@ -76,7 +78,12 @@ class PhysicInterface: public Interface
 	friend class PhysicEngine3D;
 
 public:
+	virtual	ObjectPosition getGlobalPosition(void) = 0;
+	virtual	void setPosition(ObjectPosition const &newPosition) = 0;
+	virtual	void setPositionKind(PositionKind::PositionKind const newPositionKind) = 0;
+
 	virtual ProcessKind::ProcessKind getProcessKind() = 0;
+	virtual CollisionType::CollisionType getCollisionType() = 0;
 
 	PhysicInterface() {}
 /*	список составных частей объекта (потомков). Ќапример, дл€ мира - это стены и монстры, а дл€ монстра это может быть частами тела.*/
@@ -91,8 +98,7 @@ public:
 
 	// скорость в глобальных коодринатах
 	virtual velocity	getVelocity() = 0;
-	virtual void	setVelocity(const velocity &v) = 0;
-	virtual matrix44	getGlobalMatrix() = 0;
+	virtual void		setVelocity(const velocity &v) = 0;
 	virtual velocity	getGlobalVelocity() = 0;
 	virtual	float		getGlobalScale() = 0;
 
@@ -103,8 +109,6 @@ public:
 	virtual std::string getName() = 0;
 	
 	virtual	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine) = 0;
-	virtual	v3		getPosition() = 0;
-	virtual	bool	setPosition(v3 const &v) = 0;
 //	virtual std::string getMaterial() = 0;
 
 	virtual Config* getPMaterial() = 0;

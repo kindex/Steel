@@ -42,20 +42,18 @@ protected:
 	
 	collisionSet allCollisions, lastCollisions;
 
-	v3 g;
 //	std::map<std::string, int> tag;
 public:
 	PhysicEngine3D() { helper = NULL; conf = NULL; }
-	void setGravitation(const v3 force) { g = force; }
 
 	bool process(steel::time globalTime, steel::time time);
 
 	bool process(PhysicInterface &o, steel::time globalTime, steel::time time);
 	bool moveObject(PhysicInterface &o, v3 oldPos, v3 direction /*global*/, float &processedTime);
-	bool rotateObject(PhysicInterface &o, matrix44 oldMatrix, v3 rotAxis /*local*/, float &processedTime);
+	bool rotateObject(PhysicInterface &o, matrix34 oldMatrix, v3 rotAxis /*local*/, float &processedTime);
 
 	bool init(std::string _conf);
-	bool prepare(PhysicInterface *object, matrix44 matrix = matrix44::getIdentity(), PhysicInterface *parent = NULL);
+	bool prepare(PhysicInterface *object, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL);
 	bool update(Element &element);
 	bool clear();
 // CD
@@ -67,12 +65,12 @@ public:
 
 
 	void collisionDetection(PhysicInterface &a, PhysicInterface &b, v3 distance, Collision &collision, PhysicInterface *clip);
-	void collisionDetectionRotation(PhysicInterface &a, PhysicInterface &b, const matrix44 rotation, Collision &collision, PhysicInterface *clip);
+	void collisionDetectionRotation(PhysicInterface &a, PhysicInterface &b, const matrix34 rotation, Collision &collision, PhysicInterface *clip);
 	void collisionDetection(PhysicInterface &o, v3 distance, Collision &collision, PhysicInterface *clip);
-	void collisionDetectionRotation(PhysicInterface &o, const matrix44 rotation, Collision &collision, PhysicInterface *clip);
+	void collisionDetectionRotation(PhysicInterface &o, const matrix34 rotation, Collision &collision, PhysicInterface *clip);
 
 	bool checkCollision(PhysicInterface &a, v3 distance, PhysicInterface &b, Collision &collision);
-	bool checkCollisionRotation(PhysicInterface &a, const matrix44 rot, PhysicInterface &b, Collision &collision);
+	bool checkCollisionRotation(PhysicInterface &a, const matrix34 rot, PhysicInterface &b, Collision &collision);
 
 	bool checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Collision &collision, PhysicInterface &aobj, PhysicInterface &bobj);
 	bool intersectTrgTrg(Plane a, Plane b);

@@ -40,20 +40,20 @@ bool GraphEngine::remove(GraphInterface *object)
 }
 
 
-bool GraphEngine::prepare(GraphInterface *object, matrix44 parent_matrix)
+bool GraphEngine::prepare(GraphInterface *object, matrix34 parent_matrix)
 {
 	if(object == NULL) return false;
 	total.object++;
 
-	matrix44 object_matrix = object->getMatrix(); // global 
+	matrix34 object_matrix = object->getPosition(); // global 
 
-	Interface::PositionKind pos = object->getPositionKind();
-	if(pos == Interface::local)
+	PositionKind::PositionKind pos = object->getPositionKind();
+	if(pos == PositionKind::local)
 	{
 		object_matrix = parent_matrix*object_matrix;
 		object->processGraph(parent_matrix.getInverse()*camera.eye, parent_matrix.getInverse()*(camera.center-camera.eye));
 	}
-	else if(pos == Interface::global) 
+	else if(pos == PositionKind::global) 
 		object->processGraph(camera.eye, (camera.center-camera.eye));
 	else
 		return false;

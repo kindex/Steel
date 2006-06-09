@@ -42,6 +42,7 @@ public:
 	GLines*		getLines()		{	return NULL;	}
 	FaceMaterials* getFaceMaterials()	{	return NULL;	}
 	TexCoords*	getTexCoords(int texNumber)	{	return NULL;	}
+	CollisionType::CollisionType getCollisionType() { return CollisionType::none; }
 };
 
 class GameObj;
@@ -62,10 +63,10 @@ public:
 	std::vector<GameObj*> children;
 	velocity	vel;
 	coord		mass;
-	matrix44	matrix;
+	ObjectPosition	position;
 	std::string		name;
 	ProcessKind::ProcessKind		processKind;
-	PositionKind	positionKind;
+	PositionKind::PositionKind	positionKind;
 
 protected:
 	std::map<std::string, GameObj*>	tag;
@@ -75,12 +76,12 @@ public:
 	{
 		parent	= false;
 		processKind	= ProcessKind::none;
-		positionKind = local;
+		positionKind = PositionKind::local;
 	}
-	PositionKind	getPositionKind(){	return positionKind;}
-	ProcessKind::ProcessKind		getProcessKind() { return processKind; }
+	PositionKind::PositionKind	getPositionKind(){	return positionKind;}
+	ProcessKind::ProcessKind	getProcessKind() { return processKind; }
 
-	void changePositionKind(const PositionKind newKind);
+	void setPositionKind(const PositionKind::PositionKind newKind);
 
 	void			setProcessKind(const ProcessKind::ProcessKind _kind) { processKind = _kind; }
 	virtual	bool	init(ScriptLine	&s, ResCollection &res);
@@ -94,15 +95,11 @@ public:
 
 	void	trigger(PhysicInterface *object) {}
 
-	matrix44 getMatrix()	
-	{		
-		return matrix;	
-	}
-	matrix44	getGlobalMatrix();
+	ObjectPosition	getGlobalPosition();
 	velocity	getGlobalVelocity();
 	float		getGlobalScale();
 
-	void	setMatrix(matrix44 const &m) { matrix = m; } 
+	void	setPosition(ObjectPosition const &newPos) { position = newPos; } 
 
 	void attach(GameObj *obj) 
 	{ 
@@ -128,14 +125,7 @@ public:
 	}
 	GameObj *getParent() { return parent; }
 
-	v3		getPosition() {return v3(matrix.a[12], matrix.a[13], matrix.a[14]);}
-	bool	setPosition(v3 const &v)
-	{ 
-		matrix.a[12] = v.x;
-		matrix.a[13] = v.y;
-		matrix.a[14] = v.z;
-		return true;
-	}
+	ObjectPosition		getPosition() {return position;}
 
 	// скорость
 	velocity	getVelocity() { return vel; }

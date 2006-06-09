@@ -36,7 +36,9 @@ bool PhysicEngine3D::moveObject(PhysicInterface &o, v3 oldPos, v3 dir /*global*/
 		if(len>EPSILON)
 		{
 			dir = dir.getNormalized()*len;
-			o.setPosition(oldPos + dir);
+			matrix34 pos = o.getPosition();
+			pos.setTranslation(oldPos + dir);
+			o.setPosition(pos);
 		}
 
 		collision.a = &o;
@@ -64,17 +66,19 @@ bool PhysicEngine3D::moveObject(PhysicInterface &o, v3 oldPos, v3 dir /*global*/
 	}
 	else
 	{
-		o.setPosition(oldPos + dir);
+		matrix34 pos = o.getPosition();
+		pos.setTranslation(oldPos + dir);
+		o.setPosition(pos);
 	}
 	processedTime = 1;
 	return true;
 }
 
-bool PhysicEngine3D::rotateObject(PhysicInterface &o, matrix44 oldMatrix, v3 rotAxis /*local*/, float &processedTime)
+bool PhysicEngine3D::rotateObject(PhysicInterface &o, matrix34 oldMatrix, v3 rotAxis /*local*/, float &processedTime)
 {
 	Collision collision; collision.time = INF; // no collision
 
-	matrix44 path;
+	matrix34 path;
 
 	path.setRotationAxis(rotAxis.getLength(), rotAxis.getNormalized());
 
@@ -100,7 +104,7 @@ bool PhysicEngine3D::rotateObject(PhysicInterface &o, matrix44 oldMatrix, v3 rot
 	}
 	else
 	{
-		o.setMatrix(o.getMatrix() * path);
+		o.setPosition(o.getPosition() * path);
 	}
 	return true;
 
@@ -123,16 +127,16 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 		bool ended;
 		do
 		{
-			const matrix44 global = o.getGlobalMatrix();
+			const matrix34 global = o.getGlobalPosition();
 			velocity v = o.getVelocity();
 			v3 path = v.translation*(float)time;
-			v3 oldPos = o.getPosition();
+			v3 oldPos = o.getPosition().getTranslation();
 			v3 newPos = oldPos + path;
 
-			Interface::PositionKind pos = o.getPositionKind();
+			PositionKind::PositionKind pos = o.getPositionKind();
 			v3 dir; // global
 
-			if(pos == Interface::local)
+			if(pos == PositionKind::local)
 				dir = global*newPos-global*oldPos;
 			else
 				dir = newPos - oldPos;
@@ -180,7 +184,7 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 			velocity v = o.getVelocity();
 			if(v.rotationAxis.getSquaredLengthd()>EPSILON2) // rotation
 			{
-				rotateObject(o, o.getMatrix(), v.rotationAxis*(float)time, endProcessedTime);
+				rotateObject(o, o.getPosition(), v.rotationAxis*(float)time, endProcessedTime);
 			}
 		}
 	}
@@ -192,7 +196,7 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 
 	if(helper && o.getProcessKind() != ProcessKind::none) // draw velocity
 		helper->drawVector(
-					Line(o.getGlobalMatrix()*v3(0,0,0),	
+					Line(o.getGlobalPosition()*v3(0,0,0),	
 					o.getGlobalVelocity().translation*0.1f), 0.0f,0.0f, v4(0.0f,1.0f,0.0f,1.0f));
 
 	if(helper) // draw AABB
@@ -200,7 +204,7 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 		aabb frame = o.getPFrame();
 		if(!frame.empty())
 		{
-			frame.mul(o.getGlobalMatrix());
+			frame.mul(o.getGlobalPosition());
 			helper->drawBox(frame, 0,0, v4(1,1,1, 0.5f));
 		}
 	}
@@ -300,7 +304,7 @@ float getDist(Line line, v3 point)
 
 v3	getSpeed(PhysicInterface &o, v3 point)
 {
-	v3 center = o.getGlobalMatrix()*v3(0,0,0);
+	v3 center = o.getGlobalPosition()*v3(0,0,0);
 	velocity v = o.getGlobalVelocity();
 //	float dist = getDist(Line(center, v.rotationAxis), point);
 	v3 rs = v.rotationAxis*(point - center);
@@ -311,7 +315,7 @@ v3	getSpeed(PhysicInterface &o, v3 point)
 
 void PhysicEngine3D::applyImpule(PhysicInterface &a, v3 point, v3 impulse)
 {
-	v3 pc = point - a.getGlobalMatrix()*v3(0,0,0);// point to center
+	v3 pc = point - a.getGlobalPosition()*v3(0,0,0);// point to center
 	v3 pcn = pc.getNormalized();
 	float m = a.getMass();
 	velocity v = a.getGlobalVelocity();
@@ -519,7 +523,7 @@ void PhysicEngine3D::collisionDetection(PhysicInterface &a, PhysicInterface &b, 
 		collisionDetection(a, **it, distance, collision, clip);
 }
 
-void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &a, PhysicInterface &b, const matrix44 rotation, Collision &collision, PhysicInterface *clip)
+void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &a, PhysicInterface &b, const matrix34 rotation, Collision &collision, PhysicInterface *clip)
 {
 	if(&a == &b || &b == clip) return ;
 			
@@ -550,7 +554,7 @@ void PhysicEngine3D::collisionDetection(PhysicInterface &o, v3 distance, Collisi
 }
 
 // Check for collision между одним объектом и всеми
-void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &o, const matrix44 rotation, Collision &collision, PhysicInterface *clip)
+void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &o, const matrix34 rotation, Collision &collision, PhysicInterface *clip)
 {
 	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
 		if((*it) != &o)
@@ -902,14 +906,14 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 {
 	// каждый треугольник движущегося тела при движении образует призму
 	// проверяем пересечение этой призмы со всеми треугольниками второго тела
-	aabb newframe1 = a.getPFrame();	newframe1.mul(a.getGlobalMatrix());	newframe1.add(distance);
-	aabb newframe2 = b.getPFrame();	newframe2.mul(b.getGlobalMatrix());
+	aabb newframe1 = a.getPFrame();	newframe1.mul(a.getGlobalPosition());	newframe1.add(distance);
+	aabb newframe2 = b.getPFrame();	newframe2.mul(b.getGlobalPosition());
 
 	newframe1.cross(newframe2);
 	if(newframe1.empty()) return false;
 
-	Triangles *t = a.getTriangles();	Vertexes *v = a.getPVertexes();		matrix44 matrix = a.getGlobalMatrix();
-	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix44 matrix2 = b.getGlobalMatrix();
+	Triangles *t = a.getTriangles();	Vertexes *v = a.getPVertexes();		matrix34 matrix = a.getGlobalPosition();
+	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix34 matrix2 = b.getGlobalPosition();
 
 	vector<Plane> bp;
 	for(vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
@@ -970,21 +974,21 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 // проверяет коллизию между врашающимя телом а
 // и неподвижным телом b. 
 // функция возвращает самую первую во ремени коллизию
-bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix44 rot, PhysicInterface &b, Collision &collision)
+bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix34 rot, PhysicInterface &b, Collision &collision)
 {
 	// каждый треугольник движущегося тела при движении образует призму
 	// проверяем пересечение этой призмы со всеми треугольниками второго тела
-	aabb newframe1(a.getPFrame());		newframe1.mul(a.getGlobalMatrix());
+	aabb newframe1(a.getPFrame());		newframe1.mul(a.getGlobalPosition());
 	aabb newframe1b(newframe1);	newframe1.mul(rot);	
 	newframe1.merge(newframe1b);
 
-	aabb newframe2 = b.getPFrame();	newframe2.mul(b.getGlobalMatrix());
+	aabb newframe2 = b.getPFrame();	newframe2.mul(b.getGlobalPosition());
 
 	newframe1.cross(newframe2);
 	if(newframe1.empty()) return false;
 
-	Triangles *t = a.getTriangles();	Vertexes *v = a.getPVertexes();		matrix44 matrix = a.getGlobalMatrix();
-	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix44 matrix2 = b.getGlobalMatrix();
+	Triangles *t = a.getTriangles();	Vertexes *v = a.getPVertexes();		matrix34 matrix = a.getGlobalPosition();
+	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix34 matrix2 = b.getGlobalPosition();
 
 	if(!t2 || !t) return false;
 	vector<Plane> bp;
@@ -997,7 +1001,7 @@ bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix44 r
 	}
 
 	Plane at, anew;
-	matrix44 newpos = matrix*rot;
+	matrix34 newpos = matrix*rot;
 
 	for(vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
 	{
@@ -1048,11 +1052,11 @@ bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix44 r
 
 bool PhysicEngine3D::update(Element &el)
 {
-	Interface::PositionKind pos = el.object->getPositionKind();
+	PositionKind::PositionKind pos = el.object->getPositionKind();
 
-	el.matrix   = el.object->getMatrix();
+	el.matrix   = el.object->getPosition();
 	el.frame	= el.object->getPFrame(); // local
-	if(pos == Interface::local)
+	if(pos == PositionKind::local)
 		el.matrix = el.parentMatrix*el.matrix; // TODO: update parent matrix
 	
 	el.frame.mul(el.matrix); // global
@@ -1064,7 +1068,7 @@ bool PhysicEngine3D::update(Element &el)
 }
 
 
-bool PhysicEngine3D::prepare(PhysicInterface *object, matrix44 parent_matrix, PhysicInterface *parent)
+bool PhysicEngine3D::prepare(PhysicInterface *object, matrix34 parent_matrix, PhysicInterface *parent)
 {
 	if(!object) return false;
 
@@ -1167,9 +1171,9 @@ bool PhysicEngine3D::crossModelModel(PhysicInterface &a, PhysicInterface &b)
 
 	if(intersectModelModel(a,b)) return true;
 
-	if(crossPointModel(a.getGlobalMatrix()*v1->data[0], b)) return true;
+	if(crossPointModel(a.getGlobalPosition()*v1->data[0], b)) return true;
 
-	if(crossPointModel(b.getGlobalMatrix()*v2->data[0], a)) return true;
+	if(crossPointModel(b.getGlobalPosition()*v2->data[0], a)) return true;
 	return false;
 }
 
@@ -1178,14 +1182,14 @@ bool PhysicEngine3D::intersectModelModel(PhysicInterface &a, PhysicInterface &b)
 {
 	// каждый треугольник движущегося тела при движении образует призму
 	// проверяем пересечение этой призмы со всеми треугольниками второго тела
-	aabb newframe1 = a.getPFrame();	newframe1.mul(a.getGlobalMatrix());
-	aabb newframe2 = b.getPFrame();	newframe2.mul(b.getGlobalMatrix());
+	aabb newframe1 = a.getPFrame();	newframe1.mul(a.getGlobalPosition());
+	aabb newframe2 = b.getPFrame();	newframe2.mul(b.getGlobalPosition());
 
 	newframe1.cross(newframe2);
 	if(newframe1.empty()) return false;
 
-	Triangles *t = a.getTriangles();	Vertexes *v = a.getPVertexes();		matrix44 matrix = a.getGlobalMatrix();
-	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix44 matrix2 = b.getGlobalMatrix();
+	Triangles *t = a.getTriangles();	Vertexes *v = a.getPVertexes();		matrix34 matrix = a.getGlobalPosition();
+	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix34 matrix2 = b.getGlobalPosition();
 
 	vector<Plane> bp;
 	for(vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
@@ -1252,7 +1256,7 @@ bool PhysicEngine3D::crossPointModel(v3 point, PhysicInterface &a)
 {
 	Triangles *t = a.getTriangles();	
 	Vertexes *v = a.getPVertexes();		
-	matrix44 matrix = a.getGlobalMatrix();
+	matrix34 matrix = a.getGlobalPosition();
 
 	int cnt = 0;
 

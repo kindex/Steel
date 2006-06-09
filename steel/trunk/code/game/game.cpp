@@ -77,35 +77,36 @@ bool Game::createObject(int super)
 	GameObj *o = new GameObjModel;
 	o->init(line, *res);
 	
-	o->changePositionKind(Interface::global);
+	o->setPositionKind(PositionKind::global);
 	o->setProcessKind(ProcessKind::uni);
 
-	matrix44 m = o->getMatrix();
+	matrix34 m = o->getPosition();
 
 	v2 d(direction.x, direction.y);
 	d.normalize();
 
-	matrix44 rm1; 	rm1.loadIdentity();
+	matrix34 rm1; 	rm1.loadIdentity();
 	
 //			rm1.setRotationZ(d.x, d.y);
 	float cen = direction.z;
 
 	//rm1.setRotationEuler(1,0, cen, sqrt(1-cen*cen), d.x, d.y);
 
-	v3 pos = o->getPosition();
+	matrix34 pos = o->getPosition();
 	
 	m = m*rm1;
-	m.setTranslation(pos.x*direction.getNormalized() + eye);
+	m.setTranslation(pos.getTranslation().x*direction.getNormalized() + eye);
 
-	o->setMatrix(m);
+	o->setPosition(m);
 
 	velocity v(o->getVelocity());
 	v.translation = direction*conf->getf("weaponSpeed") /*+ cameraSpeed*/;
 	v.rotationAxis = v3(0,0,0);
 	o->setVelocity(v);
 
+	return false;
 
-	if(physicEngine->checkInvariant(*o, *o)/* && safe <= 0*/)
+/*	if(physicEngine->checkInvariant(*o, *o)
 	{
 		GameLight *light = NULL;
 		Sprite *c = NULL;
@@ -113,19 +114,17 @@ bool Game::createObject(int super)
 		{
 			lightTag = c;
 			light = new GameLight;
-			light->changePositionKind(Interface::local);
+			light->setPositionKind(PositionKind::local);
 			light->setProcessKind(ProcessKind::none);
 			o->addChildren(light);
 
-			matrix44 m;
-			m.loadIdentity();
-			light->setMatrix(m);
+			light->setPosition(matrix34::getIdentity());
 
 			c = new Sprite;
 			ScriptLine csc;
 			csc.set(conf->gets("lightSprite"));
 			c->init(csc, *res);
-			c->changePositionKind(Interface::local);
+			c->setPositionKind(PositionKind::local);
 			o->addChildren(c);
 		}
 
@@ -139,7 +138,7 @@ bool Game::createObject(int super)
 		safe--;
 		delete o;
 		return false;
-	}
+	}*/
 }
 
 void Game::processKeyboard()
@@ -160,7 +159,15 @@ void Game::processKeyboard()
 		if(input->isPressed("/")) 	dir += v3(0, 0, -1);
 
 		if(dir.getLength()>EPSILON)
+		{
 			moveSpeed += dir*accSpeed*(float)speed;
+			float len = moveSpeed.getLength();
+			float maxspeed = conf->getf("camera_max_speed", 10);
+			if(len > maxspeed) 
+			{
+				moveSpeed  = moveSpeed.getNormalized()*maxspeed;
+			}
+		}
 		else
 		{
 			float d = brakeSpeed*(float)speed;
@@ -264,7 +271,11 @@ void Game::draw(GraphEngine *graph)
 		graph->inject(physicHelper);
 	if(conf->geti("crosshair"))
 	{
-		crosshair->setPosition(eye + direction*0.01f);
+		matrix34 m;
+
+		m.loadIdentity(); m.setTranslation(eye + direction*0.01f);
+
+		crosshair->setPosition(m);
 		((Sprite*)crosshair)->setAlign(-direction);
 
 		graph->inject(crosshair);
@@ -328,7 +339,7 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input, std::string pa
 // ******************* PHYSIC **************************
 	physicHelper  = new GraphHelper;
 
-	physicEngine = new PhysicEngine3D;
+	physicEngine = new PhysicEnginePS;
 	physicEngine->bindResColelntion(res);
 	if(!physicEngine->init("physic")) return 1;
 	this->bindPhysicEngine();
