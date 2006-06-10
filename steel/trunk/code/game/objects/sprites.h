@@ -35,7 +35,7 @@ class SpriteSystem: public GameObj
 protected:
 	ResCollection	*res;
 
-	std::vector<sprite_t> sprite;
+	steel::vector<sprite_t> sprite;
 	Material	*m;
 	Vertexes	vertex;
 	FaceMaterials	face;

@@ -11,8 +11,6 @@
 #include "particle_system.h"
 #include "../../common/utils.h"
 
-using namespace std;
-
 
 bool ParticleSystem::init(ScriptLine &s, ResCollection &_res)
 {

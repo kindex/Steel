@@ -1,7 +1,5 @@
 #include "graph_helper.h"
 
-using namespace std;
-
 void GraphHelper::setTime(const steel::time _time) 
 {
 	time = _time; 
@@ -59,7 +57,7 @@ void GraphHelper::processGraph(v3	cameraEye, v3 cameraDirection)
 
 	int vi = 0;
 	int li = 0;
-	for(vector<LineElement>::iterator it = vectors.begin(); it != vectors.end(); it++)
+	for(steel::vector<LineElement>::iterator it = vectors.begin(); it != vectors.end(); it++)
 	{
 		v3 b = it->line.a * cameraDirection.getNormalized()*0.1f;
 		vertex.data[vi + 0].set(it->line.base);
@@ -95,7 +93,7 @@ void GraphHelper::processGraph(v3	cameraEye, v3 cameraDirection)
 	{
 		aabb &b = it->box;
 
-		std::vector<v3> r = b.getVertexes();
+		steel::vector<v3> r = b.getVertexes();
 		for(int i=0;  i<8; i++)
 			vertex.data[vi + i].set(r[i]);
 

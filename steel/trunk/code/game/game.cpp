@@ -68,6 +68,15 @@ void Game::handleEventKeyDown(std::string key)
 
 bool Game::createObject(int super)
 {
+	light = new GameLight;
+	light->setPositionKind(PositionKind::global);
+	light->setProcessKind(ProcessKind::none);
+
+	graphEngine->inject(light);
+
+
+	return true;
+
 	static int safe = 0;
 
 	if(conf->getf("weaponSpeed")<EPSILON) return false;
@@ -376,8 +385,8 @@ bool Game::executeScript(std::string script)
 {
 	alog.msg("console", "ExecScript: '" + script + "'");
 
-	vector<string> lines = explode(';', script);
-	for(vector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
+	steel::vector<string> lines = explode(';', script);
+	for(steel::vector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
 		if(!executeCommand(*it)) return false;
 	return true;
 }
@@ -389,9 +398,9 @@ bool Game::executeCommand(std::string command)
 
 	// var=value
 
-	vector<string> token = explode('=', command);
+	steel::vector<string> token = explode('=', command);
 	if(token.size() != 2) return false;
-	vector<string> var = explode('.', token[0]);
+	steel::vector<string> var = explode('.', token[0]);
 	if(var.size() == 1)
 	{
 		conf->setup(var[0], token[1]);

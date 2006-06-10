@@ -14,7 +14,6 @@
 #include "../../common/logger.h"
 #include <string> 
 
-using namespace std;
 
 Res* createTGA(const std::string filename, ResCollection *res) 
 {

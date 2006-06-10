@@ -53,14 +53,14 @@ bool ComplexParticleSystem::init(ScriptLine	&s, ResCollection &res)
 GraphInterfaceList ComplexParticleSystem::getChildrens()
 {
 	GraphInterfaceList a;
-	for(std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); it++)
+	for(steel::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); it++)
 		a.push_back(*it);
 	return a;
 }
 PhysicInterfaceList ComplexParticleSystem::getPChildrens()
 {
 	PhysicInterfaceList a;
-	for(std::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); it++)
+	for(steel::vector<Particle*>::iterator it = particles.begin(); it != particles.end(); it++)
 		a.push_back(*it);
 	return a;
 }

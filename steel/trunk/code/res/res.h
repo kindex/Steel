@@ -40,7 +40,6 @@ Res* createBMP(string filename) {return new BMP(filename); }
 #define __RES_H
 
 #include <map>
-#include <vector>
 #include <string>
 #include <fstream>
 
@@ -113,7 +112,7 @@ public:
 	};
 
 	typedef
-		std::vector<ResLocator>
+		steel::vector<ResLocator>
 		ResLocatorArray;
 
 //	virtual bool init(const std::string name, ResCollection &res) = 0;
@@ -126,12 +125,15 @@ public:
 
 // тип: функция для геренирования копии класса, унаследованного от Res
 typedef Res*(funcCreateResClass)(const std::string filename, ResCollection *res); 
+
 // копия класса. Нужна для ассоциирования класса с типом ресурса.
 struct ClassCopy
 {
+	funcCreateResClass* func;
+
+	ClassCopy(): func(NULL) {}
 	ClassCopy(funcCreateResClass* _func){ func = _func;}
 
-	funcCreateResClass* func;
 };
 
 
@@ -147,17 +149,17 @@ struct ClassCopy
 class ResCollection
 {
 // Массив с классами, в которых хранятся ресурсы
-	std::vector<Res*> data;
+	steel::vector<Res*> data;
 // Типы этих ресурсов
-	std::vector<Res::res_kind> resType;
+	steel::vector<Res::res_kind> resType;
 // Map: resource name->index
 // По имени возврашает индекс в массивах data и resType
 	std::map<const std::string,int> index; 
-	std::vector<std::string> names;
+	steel::vector<std::string> names;
 	uid	freeUid;
 
 	typedef 
-		std::vector<ClassCopy> 
+		steel::vector<ClassCopy> 
 		ResClassArray;
 // Массивы классов для рагрузки ресурсов каждого типа
 	ResClassArray classes[RES_KIND_COUNT];

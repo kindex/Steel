@@ -65,7 +65,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 	glLoadMatrixf(m);
 
-	vector<uid> buffersToDelete;
+	steel::vector<uid> buffersToDelete;
 
 	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
 	{
@@ -309,7 +309,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 		drawAABB(e, e.matrix);
 	glPopMatrix();
 
-	for(vector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
+	for(steel::vector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
 		cleanBuffer(*it);
 }
 
@@ -520,7 +520,7 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 
 
 
-void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, Triangles const *triangle, Normals const *normal, std::vector<v3> **sTangent, std::vector<v3> **tTangent)
+void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, Triangles const *triangle, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent)
 { // TODO: mem cleanup
 	int id = vertex->getId();
 	
@@ -598,7 +598,7 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, TexCoords const *map
 };
 
 
-void OpenGL_Engine::genTangentSpaceLight(std::vector<v3> const &sTangent, std::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(steel::vector<v3> const &sTangent, steel::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
 {
 	matrix34 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
@@ -855,7 +855,7 @@ bool OpenGL_Engine::process()
 	total.triangle = 0;
 	total.object = 0;
 
-	for(std::vector<GraphInterface*>::iterator it = objects.begin(); 
+	for(steel::vector<GraphInterface*>::iterator it = objects.begin(); 
 			it != objects.end(); it++)
 		prepare((*it));
 
@@ -875,10 +875,10 @@ bool OpenGL_Engine::process()
 	glLightfv( GL_LIGHT0, GL_POSITION, v4( camera.center ));*/
 
 
-	std::vector<DrawElement> elementAlpha;
+	steel::vector<DrawElement> elementAlpha;
 
 // В начале выводим только непрозрачные объекты
-	for(vector<DrawElement>::iterator it = element.begin(); it != element.end(); it++)
+	for(steel::vector<DrawElement>::iterator it = element.begin(); it != element.end(); it++)
 		if(!it->blend)
 			drawElement((*it));
 		else
@@ -893,7 +893,7 @@ bool OpenGL_Engine::process()
 	{
 		sort(elementAlpha.begin(), elementAlpha.end());
 
-		for(vector<DrawElement>::iterator it = elementAlpha.begin(); it != elementAlpha.end(); it++)
+		for(steel::vector<DrawElement>::iterator it = elementAlpha.begin(); it != elementAlpha.end(); it++)
 			drawElement((*it));
 	}
 

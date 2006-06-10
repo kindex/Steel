@@ -3,15 +3,14 @@
 
 #include "../res.h"
 #include <string>
-#include <vector>
 
 class ScriptLine
 {
 protected:
 	std::string str;
-	std::vector<std::string> el_s; // element string
-	std::vector<double> el_d; // element double
-	std::vector<v3> el_v3; // element v3
+	steel::vector<std::string> el_s; // element string
+	steel::vector<double> el_d; // element double
+	steel::vector<v3> el_v3; // element v3
 public:
 	std::string gets(unsigned int n, std::string defaults = "");
 	double	getd(unsigned int n) { return el_d[n];}
@@ -37,7 +36,7 @@ public:
 class Script: public Res
 {
 protected:
-	std::vector<ScriptLine> line;
+	steel::vector<ScriptLine> line;
 public:
 	int count() { return line.size(); }
 	int count(unsigned int n) { return line[n].count(); }

@@ -3,7 +3,6 @@
 #include "../../common/logger.h"
 #include "../../common/utils.h"
 #include <fstream>
-
 using namespace std;
 
 Res* createConfigText(const std::string filename, ResCollection *res)

@@ -5,9 +5,10 @@
 
 #include <windows.h>		// Header File For Windows
 #include <winbase.h>
-typedef POINT Point;									// This is a window structure that holds an X and Y
 
 using namespace std;
+
+typedef POINT Point;									// This is a window structure that holds an X and Y
 
 void InputWIN::captureMouse()
 {

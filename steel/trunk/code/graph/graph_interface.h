@@ -29,13 +29,13 @@ struct Light
 	float intensivity, range;
 };
 
-typedef std::vector<Light>		Lights;
+typedef steel::vector<Light>		Lights;
 
 //	kind : 2d only
 class TexCoord: public BufferedElement
 {
 public:
-	std::vector<v2>	data;
+	steel::vector<v2>	data;
 };
 
 class GLine // al-a triangle
@@ -46,7 +46,7 @@ public:
 	void set(const int A, const int B) { a[0] = A; a[1] = B; }
 };
 
-typedef std::vector<GLine> GLines;
+typedef steel::vector<GLine> GLines;
 
 typedef Vertexes	Normals;
 
@@ -60,7 +60,7 @@ struct FaceMaterial
 	std::string		name;
 };
 
-typedef std::vector<FaceMaterial>	FaceMaterials;
+typedef steel::vector<FaceMaterial>	FaceMaterials;
 
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 
@@ -74,7 +74,7 @@ typedef std::vector<FaceMaterial>	FaceMaterials;
 */
 
 class GraphInterface;
-typedef std::vector<GraphInterface*> GraphInterfaceList;
+typedef steel::vector<GraphInterface*> GraphInterfaceList;
 
 class GraphInterface: public Interface
 {

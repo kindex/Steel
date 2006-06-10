@@ -10,7 +10,6 @@
 
 #include "sprites.h"
 #include "../../common/utils.h"
-
 using namespace std;
 
 bool Sprite::init(ScriptLine &s, ResCollection &_res)
@@ -137,7 +136,7 @@ void SpriteSystem::processGraph(v3	cameraEye, v3 cameraDirection)
 aabb SpriteSystem::getFrame()
 {
 	aabb frame;
-	for(vector<v3>::iterator it = vertex.data.begin(); it != vertex.data.end(); it++)
+	for(steel::vector<v3>::iterator it = vertex.data.begin(); it != vertex.data.end(); it++)
 		frame.merge(*it);
 
 	return frame;

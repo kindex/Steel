@@ -16,7 +16,7 @@
 #include "math/vector3d.h"
 #include "math/matrix34.h"
 
-#include <vector>
+#include "common/steel_vector.h"
 
 // One triangle, indexes of vertexes
 struct Triangle // anti-clockwise direction (one side Triangle)
@@ -44,14 +44,14 @@ public:
 // массив вершин многогранника
 struct Vertexes: public BufferedElement
 {
-	std::vector<v3> data;
-	Vertexes(): data(0) {}
+	steel::vector<v3> data;
+	Vertexes() {}
 };
 
 // массив треугольников многогранника
 struct Triangles: public BufferedElement
 {
-	std::vector<Triangle> data;
+	steel::vector<Triangle> data;
 };
 
 /*

@@ -42,7 +42,7 @@ bool aabb::intersect(aabb const &second)
 
 void aabb::mul(const matrix34 &matrix)
 {
-	std::vector<v3> v = getVertexes();
+	steel::vector<v3> v = getVertexes();
 	
 	clear();
 	for(int i=0; i<8; i++)
@@ -72,9 +72,9 @@ void aabb::merge(aabb const &second)
 	if (max.z < second.max.z) max.z = second.max.z;
  }
 
-std::vector<v3> aabb::getVertexes() const
+steel::vector<v3> aabb::getVertexes() const
 {
-	std::vector<v3> r;
+	steel::vector<v3> r;
 	const v3 &a = min; 
 	const v3 &b = max;
 	

@@ -4,7 +4,6 @@
 
 #include "input_sdl.h"
 #include <SDL.h>
-using namespace std;
 
 void InputSDL::process()
 {

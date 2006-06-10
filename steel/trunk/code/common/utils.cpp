@@ -1,5 +1,4 @@
 #include "utils.h"
-
 using namespace std;
 
 float frand()
@@ -15,7 +14,7 @@ float prand()
 
 v3	stov3(string s)
 {
-	vector<string> v = explode(',', s);
+	steel::vector<string> v = explode(',', s);
 	v.resize(3);
 	v3 r((float)atof(v[0].c_str()), (float)atof(v[1].c_str()), (float)atof(v[2].c_str()));
 	return r;
@@ -36,9 +35,9 @@ string IntToStr(int a)
     return string(s);
 }
 
-vector<string> explode(char delimiter, string s)
+steel::vector<string> explode(char delimiter, string s)
 {
-	vector<string> res;
+	steel::vector<string> res;
 	string::size_type last, start = 0, len = s.length();
 	while(start<=len)
 	{
@@ -50,18 +49,25 @@ vector<string> explode(char delimiter, string s)
 		else
 			start++;
 
+
+		string* T = NULL;
+
+		int x = errno;
+		T = (string*)realloc(T, 32);
+		int y = errno;
+
 		res.push_back(s.substr(last, start - last - 1));
 	}
 	return res;
 }
 
 
-string implode(char delimiter, vector<string> elements)
+string implode(char delimiter, steel::vector<string> elements)
 {
 	if(elements.empty()) return "";
 
 	string res;
-	vector<string>::iterator it = elements.begin();
+	steel::vector<string>::iterator it = elements.begin();
 	res = *it;
 	it++;
 	for(; it != elements.end(); it++)

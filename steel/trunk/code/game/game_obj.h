@@ -45,7 +45,7 @@ public:
 };
 
 class GameObj;
-typedef std::vector<GameObj*> GameObjList;
+typedef steel::vector<GameObj*> GameObjList;
 
 /*
 Игровой объект, который может:
@@ -59,7 +59,7 @@ class GameObj: public GameObjDummy
 {
 public:
 	GameObj			*parent;
-	std::vector<GameObj*> children;
+	steel::vector<GameObj*> children;
 	velocity	vel;
 	coord		mass;
 	ObjectPosition	position;
@@ -111,14 +111,14 @@ public:
 	GraphInterfaceList getChildrens()
 	{
 		GraphInterfaceList a;
-		for(std::vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
+		for(steel::vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
 			a.push_back(*it);
 		return a;
 	}
 	PhysicInterfaceList getPChildrens()
 	{
 		PhysicInterfaceList a;
-		for(std::vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
+		for(steel::vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
 			a.push_back(*it);
 		return a;
 	}

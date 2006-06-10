@@ -15,7 +15,6 @@
 #include "vector2d.h"
 #include "vector3d.h"
 #include "matrix4x4.h"
-#include <vector>
 
 // cos(a+b) = cos(a)*cos(b) - sin(a)*sin(b)
 // sin(a+b) = sin(a)*cos(b) + cos(a)*sin(b)
@@ -60,7 +59,7 @@ struct Line
 /*
 struct polygon // Mnogougolnik
 { // koordinati vershin mnogougolnika
-    std::vector<v2> p;
+    steel::vector<v2> p;
     int n; // p.size()
 
     polygon(): n(0) {}

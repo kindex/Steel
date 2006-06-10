@@ -1,6 +1,5 @@
 #include "physic_engine.h"
 
-using namespace std;
 
 bool PhysicEngine::init(std::string _conf)
 {
@@ -28,7 +27,7 @@ bool PhysicEngine::inject(PhysicInterface *obj)
 
 bool PhysicEngine::clear()
 {
-/*	for(std::vector<Element>::iterator it = objects.begin(); it != objects.end(); it++)
+/*	for(steel::vector<Element>::iterator it = objects.begin(); it != objects.end(); it++)
 		it->obj->cleanupP();
 */
 	object.clear();

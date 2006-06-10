@@ -1,5 +1,4 @@
 #include "script_text.h"
-
 using namespace std;
 
 Res* createScriptText(const std::string filename, ResCollection *res)

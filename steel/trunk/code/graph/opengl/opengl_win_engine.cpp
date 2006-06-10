@@ -19,10 +19,6 @@
 #include "../../input/input_win.h"
 #include "../../common/utils.h"
 
-#include <vector>
-
-using namespace std;
-
 extern HINSTANCE hInstance;
 
 struct Window
@@ -33,7 +29,7 @@ struct Window
 	OpenGL_WIN_Engine *engine;
 };
 
-vector<Window> window;
+steel::vector<Window> window;
 
 bool OpenGL_WIN_Engine::init(std::string _conf, InputWIN *_input)
 {
@@ -62,7 +58,7 @@ void RedrawWindow(HWND hWnd)
 LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     LONG    lRet = 0;
-	for(vector<Window>::iterator it = window.begin(); it != window.end(); it++)
+	for(steel::vector<Window>::iterator it = window.begin(); it != window.end(); it++)
     if (hWnd == it->handle)
 	{
 

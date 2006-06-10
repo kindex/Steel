@@ -15,7 +15,6 @@
 #include "../common/logger.h"
 #include "../common/utils.h"
 #include "game_obj.h"
-
 using namespace std;
 
 void GameObj::setPositionKind(const PositionKind::PositionKind newKind)
@@ -144,7 +143,7 @@ aabb GameObjSet::getPFrame()
 	aabb box;
 	box.clear();
 
-	for(vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
+	for(steel::vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
 	{
 		aabb loc = (*it)->getPFrame();
 		if(!loc.empty())

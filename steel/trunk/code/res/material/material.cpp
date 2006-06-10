@@ -1,6 +1,5 @@
 #include "material.h"
 #include "../../common/utils.h"
-
 using namespace std;
 
 Res* createMaterial(const std::string filename, ResCollection *res)
@@ -30,7 +29,7 @@ bool Material::init(string name, ResCollection *res)
 
 	map.clear();
 
-	vector<string> path = explode('/', name);
+	steel::vector<string> path = explode('/', name);
 	string filename = path.back();
 	path.pop_back();
 	string dir = implode('/', path);

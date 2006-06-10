@@ -27,7 +27,7 @@ Path. Метка, которя движется по траектории от объекта к объекту.
 class TagPath: public GameObjSet
 {
 	int currentTarget;
-	std::vector<PathTarget> target;
+	steel::vector<PathTarget> target;
 	bool smooth;
 	steel::time smoothStart, smoothLen;
 

@@ -15,8 +15,6 @@
 #include "../math/plane.h"
 #include "../common/utils.h"
 
-using namespace std;
-
 #define CONTACT_EPSILON (0.01f)
 
 // Сердце физического движка
@@ -222,20 +220,20 @@ bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 	allCollisions.clear();
 
 /*	element.clear();*/
-	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
 		prepare(*it);
 
 	static int framepass = 0;
 
 	framepass++;
 
-	if(framepass%2 == 0)
-	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+//	if(framepass%2 == 0)
+	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
 		process(**it, globalTime, time);
-	else // reverse order
-		for(vector<PhysicInterface*>::reverse_iterator it = object.rbegin(); it != object.rend(); it++)
+/*	else // reverse order
+		for(steel::vector<PhysicInterface*>::reverse_iterator it = object.rbegin(); it != object.rend(); it++)
 			process(**it, globalTime, time);
-
+*/
 
 /*	for(vector<Element>::iterator it = element.begin(); it != element.end(); it++)
 	{
@@ -544,7 +542,7 @@ void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &a, PhysicInterf
 // Check for collision между одним объектом и всеми
 void PhysicEngine3D::collisionDetection(PhysicInterface &o, v3 distance, Collision &collision, PhysicInterface *clip)
 {
-	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
 		if((*it) != &o)
 			collisionDetection(o, **it, distance, collision, clip);
 
@@ -556,7 +554,7 @@ void PhysicEngine3D::collisionDetection(PhysicInterface &o, v3 distance, Collisi
 // Check for collision между одним объектом и всеми
 void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &o, const matrix34 rotation, Collision &collision, PhysicInterface *clip)
 {
-	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
 		if((*it) != &o)
 			collisionDetectionRotation(o, **it, rotation, collision, clip);
 
@@ -915,8 +913,8 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 	Triangles *t = a.getTriangles();	Vertexes *v = a.getPVertexes();		matrix34 matrix = a.getGlobalPosition();
 	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix34 matrix2 = b.getGlobalPosition();
 
-	vector<Plane> bp;
-	for(vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
+	steel::vector<Plane> bp;
+	for(steel::vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
 	{
 		Plane bt;
 		bt.base = matrix2 * v2->data[jt->a[0]];
@@ -930,7 +928,7 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 
 	Plane at;
 	if(t)
-	for(vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
+	for(steel::vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
 	{
 		at.base = matrix * v->data[it->a[0]];
 		at.a	= matrix * v->data[it->a[1]] - at.base;
@@ -945,7 +943,7 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 			bool ok = false;
 			if(newframe1.intersect(aabb1))
 			{
-				for(vector<Plane>::iterator jt = bp.begin(); jt != bp.end(); jt++)
+				for(steel::vector<Plane>::iterator jt = bp.begin(); jt != bp.end(); jt++)
 				{
 					Plane bt = *jt;
 
@@ -991,8 +989,8 @@ bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix34 r
 	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix34 matrix2 = b.getGlobalPosition();
 
 	if(!t2 || !t) return false;
-	vector<Plane> bp;
-	for(vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
+	steel::vector<Plane> bp;
+	for(steel::vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
 	{
 		Plane bt;	bt.base = matrix2 * v2->data[jt->a[0]];		bt.a	= matrix2 * v2->data[jt->a[1]] - bt.base;		bt.b	= matrix2 * v2->data[jt->a[2]] - bt.base;
 		aabb aabb2(bt.base);		aabb2.merge(bt.base + bt.a);		aabb2.merge(bt.base + bt.b);
@@ -1003,7 +1001,7 @@ bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix34 r
 	Plane at, anew;
 	matrix34 newpos = matrix*rot;
 
-	for(vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
+	for(steel::vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
 	{
 		at.base = matrix * v->data[it->a[0]];
 		at.a	= matrix * v->data[it->a[1]] - at.base;
@@ -1035,7 +1033,7 @@ bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix34 r
 			bool ok = false;
 			if(newframe1.intersect(old))
 			{
-				for(vector<Plane>::iterator jt = bp.begin(); jt != bp.end(); jt++)
+				for(steel::vector<Plane>::iterator jt = bp.begin(); jt != bp.end(); jt++)
 				{
 					Plane bt = *jt;
 
@@ -1136,7 +1134,7 @@ bool PhysicEngine3D::clear()
 
 bool PhysicEngine3D::checkInvariant(PhysicInterface &o, PhysicInterface &clip)
 {
-	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
 		if((*it) != &o)
 			if(!checkInvariant(o, **it, clip)) return false;
 
@@ -1191,8 +1189,8 @@ bool PhysicEngine3D::intersectModelModel(PhysicInterface &a, PhysicInterface &b)
 	Triangles *t = a.getTriangles();	Vertexes *v = a.getPVertexes();		matrix34 matrix = a.getGlobalPosition();
 	Triangles *t2 = b.getTriangles();	Vertexes *v2 = b.getPVertexes();	matrix34 matrix2 = b.getGlobalPosition();
 
-	vector<Plane> bp;
-	for(vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
+	steel::vector<Plane> bp;
+	for(steel::vector<Triangle>::iterator jt = t2->data.begin(); jt != t2->data.end(); jt++)
 	{
 		Plane bt;
 		bt.base = matrix2 * v2->data[jt->a[0]];
@@ -1206,7 +1204,7 @@ bool PhysicEngine3D::intersectModelModel(PhysicInterface &a, PhysicInterface &b)
 
 	Plane at;
 	if(t)
-	for(vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
+	for(steel::vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
 	{
 		at.base = matrix * v->data[it->a[0]];
 		at.a	= matrix * v->data[it->a[1]] - at.base;
@@ -1219,7 +1217,7 @@ bool PhysicEngine3D::intersectModelModel(PhysicInterface &a, PhysicInterface &b)
 		bool ok = false;
 		if(newframe1.intersect(aabb1))
 		{
-			for(vector<Plane>::iterator jt = bp.begin(); jt != bp.end(); jt++)
+			for(steel::vector<Plane>::iterator jt = bp.begin(); jt != bp.end(); jt++)
 			{
 				Plane bt = *jt;
 
@@ -1262,7 +1260,7 @@ bool PhysicEngine3D::crossPointModel(v3 point, PhysicInterface &a)
 
 	Plane at;
 	if(t)
-	for(vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
+	for(steel::vector<Triangle>::iterator it = t->data.begin(); it != t->data.end(); it++)
 	{
 		at.base = matrix * v->data[it->a[0]];
 		at.a	= matrix * v->data[it->a[1]] - at.base;

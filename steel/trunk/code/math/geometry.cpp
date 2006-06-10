@@ -11,9 +11,6 @@
 #include "geometry.h"
 #include "maths.h"
 
-#include <vector>
-using namespace std;
-
 bool intersect(float amin, float amax, float bmin, float bmax)
 {
 	if(bmin > amin) amin = bmin;

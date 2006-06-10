@@ -3,7 +3,6 @@
 
 #include "../game_obj.h"
 #include "sprites.h"
-#include <vector>
 
 class Particle: public SpriteSystem
 {
@@ -23,7 +22,7 @@ public:
 class ComplexParticleSystem: public GameObj
 {
 	Config *conf;
-	std::vector<Particle*> particles;
+	steel::vector<Particle*> particles;
 public:
 	bool init(ScriptLine	&s, ResCollection &res);
 	GraphInterfaceList getChildrens();

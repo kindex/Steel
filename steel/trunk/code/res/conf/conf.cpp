@@ -1,7 +1,6 @@
 
 #include "conf.h"
 #include "../../common/utils.h"
-
 using namespace std;
 
 string Config::gets(string key, string _default)

@@ -31,7 +31,7 @@ class ParticleSystem: public SpriteSystem
 protected:
 	TexCoords	texCoords1D; //dobavljaem teksturniju koordinatu dlja Alfa Kanala
 
-	std::vector<ParticleSimple> particle;
+	steel::vector<ParticleSimple> particle;
 	Config	*conf;
 
 public:

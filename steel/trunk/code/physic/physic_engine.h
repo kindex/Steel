@@ -31,8 +31,8 @@ protected:
 		int				collisionCount;
 	};
 
-	std::vector<Element> element;
-	std::vector<PhysicInterface*> object;
+	steel::vector<Element> element;
+	steel::vector<PhysicInterface*> object;
 	v3 g;
 
 public:

@@ -22,7 +22,7 @@
 #include <string>
 
 class PhysicInterface;
-typedef std::vector<PhysicInterface*> PhysicInterfaceList;
+typedef steel::vector<PhysicInterface*> PhysicInterfaceList;
 
 class PhysicEngine;
 

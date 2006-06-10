@@ -28,7 +28,6 @@
 #include "helper.h"
 
 #include <string>
-#include <vector>
 
 class Engine: public steelAbstract
 {

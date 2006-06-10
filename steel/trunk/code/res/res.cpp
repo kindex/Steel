@@ -14,21 +14,19 @@
 #include "res.h"
 #include "../common/logger.h"
 
-using namespace std;
-
 void ResCollection::registerClass(funcCreateResClass *_func, const Res::res_kind kind)
 {
 	classes[kind].push_back(ClassCopy(_func));
 }
 
-Res* ResCollection::createClass(ClassCopy *aclass, string name)
+Res* ResCollection::createClass(ClassCopy *aclass, std::string name)
 {
 	return aclass->func(name, this);
 }
 
-string getext(string name)
+std::string getext(std::string name)
 {
-	string r;
+	std::string r;
 	for(int i=name.length()-1; i>=0; i--)
 		if(name[i]!='.')
 			r = name[i] + r;
@@ -131,12 +129,12 @@ void rstream::skip(int n)
 
 void rstream::read(void *dest, int size)
 {
-	ifstream::read((char*)dest, size);
+	std::ifstream::read((char*)dest, size);
 }
 
 bool rstream::open(std::string s, std::string ext, ios_base::openmode _Mode) 
 { 
-	string r = std::string("../res/") + s + (ext == ""?"":"." + ext);
+	std::string r = std::string("../res/") + s + (ext == ""?"":"." + ext);
 
 	std::ifstream::open(r.c_str(), _Mode | std::ios::in);
 	if(fail())

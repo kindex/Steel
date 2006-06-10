@@ -13,7 +13,7 @@
 
 #include "physic_engine.h"
 
-#include <vector>
+#include "../common/steel_vector.h"
 
 
 class PhysicEnginePS: public PhysicEngine
@@ -27,7 +27,7 @@ protected:
 
 	};
 
-	std::vector<PhysicObjectStorage> storage;
+	steel::svector<PhysicObjectStorage> storage;
 
 public:
 	bool inject(PhysicInterface *object);

@@ -16,7 +16,7 @@
 #include "vector3d.h"
 #include "matrix34.h"
 
-#include <vector>
+#include "../common/steel_vector.h"
 
 struct aabb3 // AABB 3D
 {
@@ -27,7 +27,7 @@ struct aabb3 // AABB 3D
 	aabb3(const v3 point): min(point), max(point) {}
 	bool empty() const { return min.x>max.x + EPSILON || min.y>max.y + EPSILON || min.z>max.z + EPSILON;  }
 	void clear();
-	std::vector<v3> getVertexes() const;
+	steel::vector<v3> getVertexes() const;
 
     void merge(const v3 point);
     void merge(const aabb3 &second);

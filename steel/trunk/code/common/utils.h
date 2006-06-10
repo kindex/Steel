@@ -4,7 +4,7 @@
 #include "../_cpp.h"
 #include "../math/vector3d.h"
 #include <string>
-#include <vector>
+#include "steel_vector.h"
 
 //Returns random value [0..1)
 float frand();
@@ -18,9 +18,9 @@ std::string FloatToStr(double a);
 std::string IntToStr(int a);
 
 // split string into vector
-std::vector<std::string> explode(char delimiter, std::string s);
+steel::vector<std::string> explode(char delimiter, std::string s);
 // unsplit vector to string
-std::string implode(char delimiter, std::vector<std::string> elements);
+std::string implode(char delimiter, steel::vector<std::string> elements);
 
 
 #endif

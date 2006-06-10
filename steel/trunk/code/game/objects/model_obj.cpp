@@ -1,6 +1,5 @@
 #include "model_obj.h"
 #include "../../common/utils.h"
-
 using namespace std;
 
 bool GameObjModel::init(ScriptLine	&s, ResCollection &res)

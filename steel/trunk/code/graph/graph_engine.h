@@ -57,8 +57,8 @@ protected:
 	};
 
 	// data, to store collected information
-	std::vector<DrawElement> element;
-	std::vector<GraphInterface*> objects;
+	steel::vector<DrawElement> element;
+	steel::vector<GraphInterface*> objects;
 	Lights light;
 
 public:

@@ -1,5 +1,5 @@
 (C) DiVision: KindeX 2006
-Steel Engine Demo [1.0.13.126]
+Steel Engine Demo [1.0.14.137]
 http://steel.kindex.lv:82/
 
 Features:
@@ -28,5 +28,7 @@ mouse1	create sphere
 
 
 Author:
-Andrej Ivanov, kindex@kindex.lv, http://kindex.lv
+KindeX, Andrej Ivanov, kindex@kindex.lv, http://kindex.lv
+Def, Alexander Papyshev, 9000gl@gmail.com
+
 

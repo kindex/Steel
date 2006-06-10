@@ -3,7 +3,6 @@
 
 #include "../helper.h"
 #include "graph_interface.h"
-#include <vector>
 
 class GraphHelper: virtual public EngineHelper, virtual public GraphInterface
 {
@@ -28,8 +27,8 @@ class GraphHelper: virtual public EngineHelper, virtual public GraphInterface
 		BoxElement(const aabb _box, const steel::time _start, const steel::time _fade, const steel::time _end, const v4 _color) :box(_box)		{ 	start = _start; fade = _fade; end = _end; 	color = _color;	}
 	};
 
-	std::vector<LineElement> lines, vectors;
-	std::vector<BoxElement> boxes;
+	steel::vector<LineElement> lines, vectors;
+	steel::vector<BoxElement> boxes;
 
 	Vertexes	vertex;
 	FaceMaterials face;

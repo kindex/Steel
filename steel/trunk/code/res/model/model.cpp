@@ -9,7 +9,6 @@
 
 
 #include "model.h"
-using namespace std;
 
 /*void Model:: updateMaterial()
 {
@@ -62,7 +61,7 @@ void Model::generateNormals()
 */
 
 
-    vector<v3> facenormal;
+	steel::vector<v3> facenormal;
     facenormal.resize(triangleAll.data.size());
 
     normal.data.resize(vertex.data.size());
@@ -156,7 +155,7 @@ void Model::generateNormals()
 void Model::updateAABB()
 {
 	frame.clear();
-	for(std::vector<v3>::iterator it = vertex.data.begin(); it != vertex.data.end(); it++)
+	for(steel::vector<v3>::iterator it = vertex.data.begin(); it != vertex.data.end(); it++)
 		frame.merge(*it);
 }
 
@@ -164,7 +163,7 @@ void Model::updateAABB()
 float Model::calculateVolume() // вычислить объём
 {
 	float volume = 0;
-	for(std::vector<Triangle>::iterator it = triangleAll.data.begin(); it != triangleAll.data.end(); it++)
+	for(steel::vector<Triangle>::iterator it = triangleAll.data.begin(); it != triangleAll.data.end(); it++)
 	{
 		v3 a(vertex.data[it->a[0]]);
 		v3 b(vertex.data[it->a[1]]);

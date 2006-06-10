@@ -1,5 +1,4 @@
 #include "physic_engine_ps.h"
-using namespace std;
 
 v3 PhysicEnginePS::calculateForce(PhysicInterface *obj1, PhysicInterface *obj2)
 {
@@ -34,7 +33,7 @@ v3 PhysicEnginePS::calculateForce(PhysicInterface *obj1, PhysicInterface *obj2)
 
 	res += (pos2-pos1).getNormalized() * (dist - spring_r0)*spring_k; // пружина
 
-	if(dist>gravity_min_dist && gravity_k>0)
+	if(dist>gravity_min_dist && gravity_k != 0)
 	{
 		res += (pos2-pos1).getNormalized() * pow(dist, gravity_power)*gravity_k; // гравитация
 	}
@@ -53,7 +52,7 @@ v3 PhysicEnginePS::calculateForce(PhysicInterface *obj)
 	v3 res;
 	res.loadZero();
 
-	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
 		res += calculateForce(obj, *it);
 
 	return res;
@@ -101,11 +100,11 @@ bool PhysicEnginePS::process(steel::time globalTime, steel::time time)
 	}
 */
 
-	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
 		process(**it, globalTime, time);
 
 
-	for(vector<PhysicObjectStorage>::iterator it = storage.begin(); it != storage.end(); it++)
+	for(steel::svector<PhysicObjectStorage>::iterator it = storage.begin(); it != storage.end(); it++)
 	{
 		PhysicObjectStorage &objectStorage = *it;
 		PhysicInterface &object = *objectStorage.object;

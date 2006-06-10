@@ -15,7 +15,6 @@
  ************************************************************/
 
 #include "graph_engine.h"
-using namespace std;
 
 bool GraphEngine::inject(GraphInterface *object)
 {
@@ -28,7 +27,7 @@ bool GraphEngine::inject(GraphInterface *object)
 
 bool GraphEngine::remove(GraphInterface *object)
 {
-	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
+	for(steel::vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		if(*it == object)
 		{
 			total.global--;
@@ -136,7 +135,7 @@ bool GraphEngine::prepare(GraphInterface *object, matrix34 parent_matrix)
 
 bool GraphEngine::clear()
 {
-	for(vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
+	for(steel::vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		(*it)->cleanup();
 
 	objects.clear();
