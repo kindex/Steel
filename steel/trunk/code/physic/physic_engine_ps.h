@@ -19,28 +19,36 @@
 class PhysicEnginePS: public PhysicEngine
 {
 protected:
+	bool helperDrawLines;
 
 	struct PhysicObjectStorage
 	{
 		PhysicInterface *object;
+		CollisionType::CollisionType collisionType;
 		v3 force;
-
+		v3 position;
+		v3 velocity;
+		float mass, spring_r0, spring_k, gravity_k, gravity_power, gravity_min_dist;
+		Config *material;
 	};
 
+
 	steel::svector<PhysicObjectStorage> storage;
+	steel::svector<int> particleSet;
 
 public:
 	bool inject(PhysicInterface *object);
 	bool makeStorage(PhysicInterface *object);
+	void cacheStorage(PhysicObjectStorage &objectStorage);
 
 	bool process(steel::time globalTime, steel::time time);
-	bool process(PhysicInterface &o, steel::time globalTime, steel::time time);
+
+	bool processParticle(PhysicObjectStorage &objectStorage, steel::time globalTime, steel::time time);
 
 	bool prepare(PhysicInterface *object, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL){ return true;}
-	bool update(Element &element) { return true;}
 
-	v3 calculateForce(PhysicInterface *object);
-	v3 calculateForce(PhysicInterface *object1, PhysicInterface *object2);
+	v3 calculateForceForParticle(PhysicObjectStorage &storage);
+	v3 calculateForceForParticle(PhysicObjectStorage &storage1, PhysicObjectStorage &storage2);
 };
 
 

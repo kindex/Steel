@@ -21,17 +21,6 @@
 class PhysicEngine: public Engine
 {
 protected:
-	struct Element
-	{
-		PhysicInterface	*object, *parent;
-		matrix34		matrix, parentMatrix; // abloslute
-		Vertexes		*vertex;
-		Triangles		*triangle;
-		aabb			frame;
-		int				collisionCount;
-	};
-
-	steel::vector<Element> element;
 	steel::vector<PhysicInterface*> object;
 	v3 g;
 
@@ -47,9 +36,9 @@ public:
 	// У uni не может быть детей
 	// У custom и none не может быть детей с типом uni
 	virtual bool inject(PhysicInterface *object);
+	virtual bool remove(PhysicInterface *object);
 
 	virtual bool prepare(PhysicInterface *object, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL) = 0;
-	virtual bool update(Element &element) = 0;
 
 	// Move objects
 	virtual bool process(steel::time globalTime, steel::time time) = 0; 

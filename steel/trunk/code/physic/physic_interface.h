@@ -79,15 +79,27 @@ class PhysicInterface: public Interface
 	friend class PhysicEngine3D;
 
 public:
+	virtual bool beforeInject() { return true;}
+	virtual void afterRemove() {}
+	// возвращает true, если хоть один из параметров изменил своё значение не
+	// через вызовы функций set* (mass, position, material, mesh)
+	// скорость может меняться	
+	virtual bool wasChanged() { return false; }
+
 	virtual void setStorageId(const int _id) { storageId = _id; }
 	virtual int getStorageId(void) { return storageId; }
 
+	virtual CollisionType::CollisionType getCollisionType() = 0;
+
 	virtual	ObjectPosition getGlobalPosition(void) = 0;
 	virtual	void setPosition(ObjectPosition const &newPosition) = 0;
+	virtual ProcessKind::ProcessKind getProcessKind() = 0;
 	virtual	void setPositionKind(PositionKind::PositionKind const newPositionKind) = 0;
 
-	virtual ProcessKind::ProcessKind getProcessKind() = 0;
-	virtual CollisionType::CollisionType getCollisionType() = 0;
+	// скорость в глобальных коодринатах
+	virtual velocity	getVelocity() = 0;
+	virtual void		setVelocity(const velocity &v) = 0;
+	virtual velocity	getGlobalVelocity() = 0;
 
 	PhysicInterface() {}
 /*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
@@ -95,15 +107,10 @@ public:
 
 /*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
 	virtual aabb getPFrame() = 0; // AABB of object
-	virtual bool cleanupP() = 0; // при необходимости отчищает
-	virtual Vertexes*	getPVertexes() = 0; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	virtual Vertexes*	getPVertexes() = 0; // список вершин (координаты относительно getPosition() и всех матриц предков)
 	// массив индексов вершин, которые образуют треугольники (грани)
 	virtual Triangles*	getTriangles() = 0; 
 
-	// скорость в глобальных коодринатах
-	virtual velocity	getVelocity() = 0;
-	virtual void		setVelocity(const velocity &v) = 0;
-	virtual velocity	getGlobalVelocity() = 0;
 	virtual	float		getGlobalScale() = 0;
 
 	// масса

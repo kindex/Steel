@@ -1,35 +1,67 @@
-<html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
 
 <head>
 <meta http-equiv=Content-Type content="text/html; charset=windows-1251">
-<meta name=Generator content="Microsoft Word 11 (filtered)">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="04.design_document_files/filelist.xml">
 <title>Спецификация движка</title>
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
 <style>
 <!--
  /* Font Definitions */
  @font-face
 	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
  /* Style Definitions */
  p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
+	{mso-style-parent:"";
+	margin:0cm;
 	margin-bottom:.0001pt;
 	text-indent:0cm;
+	mso-pagination:widow-orphan;
 	font-size:12.0pt;
-	font-family:"Times New Roman";}
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
 h1
-	{margin-right:0cm;
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
 	margin-bottom:5.95pt;
 	margin-left:0cm;
 	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
 	font-size:16.0pt;
 	font-family:Arial;
 	font-weight:bold;}
 h2
-	{margin-right:0cm;
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
 	margin-bottom:5.95pt;
 	margin-left:2.85pt;
 	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
 	font-size:14.0pt;
 	font-family:Arial;
 	font-weight:bold;
@@ -40,7 +72,9 @@ h3
 	margin-bottom:3.0pt;
 	margin-left:5.65pt;
 	text-indent:0cm;
+	mso-pagination:widow-orphan;
 	page-break-after:avoid;
+	mso-outline-level:3;
 	font-size:13.0pt;
 	font-family:Arial;
 	font-weight:bold;}
@@ -50,26 +84,94 @@ p
 	margin-bottom:3.0pt;
 	margin-left:1.0cm;
 	text-indent:1.0cm;
+	mso-pagination:widow-orphan;
 	font-size:12.0pt;
-	font-family:"Times New Roman";}
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
 @page Section1
 	{size:595.3pt 841.9pt;
-	margin:2.0cm 42.5pt 2.0cm 3.0cm;}
+	margin:2.0cm 42.5pt 2.0cm 3.0cm;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
 div.Section1
 	{page:Section1;}
  /* List Definitions */
- ol
+ @list l0
+	{mso-list-id:258375291;
+	mso-list-type:hybrid;
+	mso-list-template-ids:771379860 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:110.7pt;
+	mso-level-number-position:left;
+	margin-left:110.7pt;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:872618981;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1920847426 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:92.7pt;
+	mso-level-number-position:left;
+	margin-left:92.7pt;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+ol
 	{margin-bottom:0cm;}
 ul
 	{margin-bottom:0cm;}
 -->
 </style>
-
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.MsoTableGrid
+	{mso-style-name:"Table Grid";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	border:solid windowtext 1.0pt;
+	mso-border-alt:solid windowtext .5pt;
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-border-insideh:.5pt solid windowtext;
+	mso-border-insidev:.5pt solid windowtext;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
 </head>
 
-<body lang=RU>
+<body lang=RU style='tab-interval:35.4pt'>
 
 <div class=Section1>
 
@@ -77,33 +179,733 @@ ul
 
 <h2>О документе</h2>
 
-<p>В этом документе отображается процесс разработки <span lang=EN-US>Steel</span><span
-lang=EN-US> </span><span lang=EN-US>Engine</span>, интерфейсы модулей, объяснения
-выбранных решений. Структура документа совпадает со структурой движка.</p>
+<p>В этом документе отображается процесс разработки <span lang=EN-US
+style='mso-ansi-language:EN-US'>Steel</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>Engine</span>, интерфейсы модулей,
+объяснения выбранных решений. Структура документа совпадает со структурой
+движка.</p>
 
 <p>В документе должны присутствовать:</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt'><span style='font-family:
-Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Текущее состояние движка</p>
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Текущее состояние движка</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt'><span style='font-family:
-Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Предыдущее состояние и причиной отказа</p>
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Предыдущее состояние и причиной отказа</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt'><span style='font-family:
-Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Идеи по дальнейшему улучшению (<span lang=EN-US>TODO</span>) </p>
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Идеи по дальнейшему улучшению (TODO)</p>
 
-<p><span lang=EN-US>&nbsp;</span></p>
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>Непонятные момоенты и объяснения<o:p></o:p></span></p>
 
-<p><span lang=EN-US>&nbsp;</span></p>
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:red;
+mso-highlight:red'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:red;mso-highlight:red'>То,
+что присутствует, но должно быть удалено<o:p></o:p></span></p>
 
-<p><span lang=EN-US>&nbsp;</span></p>
+<p><o:p>&nbsp;</o:p></p>
+
+<h2><span lang=EN-US style='mso-ansi-language:EN-US'>Physic Engine<o:p></o:p></span></h2>
+
+<h3><span lang=EN-US style='mso-ansi-language:EN-US'>Physic Interface<o:p></o:p></span></h3>
+
+<p>Любой объект, который должен обрабатываться стандартными физическими
+движками, должен поддерживать этот интерфейс (быть унаследованным от <span
+style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'>PhysicInterface</span>).
+Объект сам отвечает за хранение всех параметров (конфигурация). Объект может брать
+парамерты из других мест, например коллекции ресурсов. Объект в определённых
+случаях может менять свои параметры, например скорость или форму.</p>
+
+<p>До добавления в [физический] движок объект может как угодно менять свои
+параметры. Непосредственно перед добавлением в движок вызывается функция <span
+style='font-size:10.0pt;font-family:"Courier New";color:blue;mso-no-proof:yes'>bool</span><span
+style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'>
+beforeInject().</span> Объект не добавляется, если возвращается <span
+lang=EN-US style='mso-ansi-language:EN-US'>false</span>. После удаления из
+движка вызывается процедура <span style='font-size:10.0pt;font-family:"Courier New";
+color:blue;mso-no-proof:yes'>void</span><span style='font-size:10.0pt;
+font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
+удаления из движка обхект может как угодно менять свою конфигурацию.</p>
+
+<p><span style='background:yellow;mso-highlight:yellow'>Объект не может быть
+добавлен сразу в два движка [Параметры могут кешироваться и второй движок не
+узнает изменения – произойдёт рассинхронизация]</span></p>
+
+<p>Конфигурация объекта:</p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>Type<o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>Name<o:p></o:p></span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>set<o:p></o:p></span></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>Object Can Change<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
+  lang=EN-US style='mso-ansi-language:EN-US'>Desc</span></span><span
+  lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
+  lang=EN-US style='mso-ansi-language:EN-US'>int</span></span><span lang=EN-US
+  style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>StorageId</span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>set<o:p></o:p></span></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>no<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'>Физический движок назначает
+  уникальный идентификатор объекту для сопоставления двух объектов в разных
+  кадрах (кеширование)</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>ObjectPosition</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:
+  EN-US;mso-no-proof:yes'>=<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='font-size:
+  10.0pt;font-family:"Courier New";mso-ansi-language:EN-US;mso-no-proof:yes'>matrix34</span><span
+  lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>Position</span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>set<o:p></o:p></span></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>warn<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'>Положение и поворот произвольной
+  точки объекта в локальный координатах (точка отсчёта объекта). Именно за
+  изменения этого параметра и отвечает физический движок.</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='background:red;
+  mso-highlight:red'>...<o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";background:red;mso-highlight:red;mso-no-proof:yes'>GlobalPosition</span><span
+  style='background:red;mso-highlight:red'><o:p></o:p></span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'>warn<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='background:red;
+  mso-highlight:red'>Тоже самое, но только в глобальных координатах<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='font-size:
+  10.0pt;font-family:"Courier New";mso-ansi-language:EN-US;mso-no-proof:yes'>enum{local,
+  global}</span><span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>PositionKind</span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>no<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'>Система координат: локальная
+  относительно родителя или глобальная</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='font-size:
+  10.0pt;font-family:"Courier New";mso-ansi-language:EN-US;mso-no-proof:yes'>enum{</span><span
+  style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'>polyhedra</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:
+  EN-US;mso-no-proof:yes'>, </span><span style='font-size:10.0pt;font-family:
+  "Courier New";mso-no-proof:yes'>particle</span><span lang=EN-US
+  style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:EN-US;
+  mso-no-proof:yes'>}</span><span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>CollisionType<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>no<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'>Форма объекта и способ проверки и
+  обработки коллизий</p>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>Polyhedra – полигональное тело<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>Particle - частица</span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
+  lang=EN-US style='mso-ansi-language:EN-US'>struct</span></span><span
+  lang=EN-US style='mso-ansi-language:EN-US'> {<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>v3 translation,<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>v3 <span class=SpellE>rotationAxis</span><o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>}<o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>Velocity</span><o:p></o:p></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>set<o:p></o:p></span></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>yes<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'>скорость в <span style='background:
+  yellow;mso-highlight:yellow'>локальных</span> коодринатах<o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>PhysicInterface</span><span
+  lang=EN-US style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:
+  EN-US;mso-no-proof:yes'>[]</span><span lang=EN-US style='mso-ansi-language:
+  EN-US'><o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>PChildrens</span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  yellow;mso-highlight:yellow;mso-ansi-language:EN-US'>no/warn</span><span
+  lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'>Список детей</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
+  lang=EN-US style='background:red;mso-highlight:red;mso-ansi-language:EN-US'>aabb</span></span><span
+  lang=EN-US style='background:red;mso-highlight:red;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";background:red;mso-highlight:red;mso-no-proof:yes'>PFrame</span><span
+  style='background:red;mso-highlight:red'><o:p></o:p></span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='background:red;
+  mso-highlight:red'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'>warn<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'>Box</span><span
+  style='background:red;mso-highlight:red'>, в который целиком помещается объект
+  [</span><span lang=EN-US style='background:red;mso-highlight:red;mso-ansi-language:
+  EN-US'>To</span><span lang=EN-US style='background:red;mso-highlight:red'> </span><span
+  lang=EN-US style='background:red;mso-highlight:red;mso-ansi-language:EN-US'>delete</span><span
+  style='background:red;mso-highlight:red'>]<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>v3[]</span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>PVertexes</span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>warn<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'>писок вершин (координаты
+  отночительно <span lang=EN-US style='mso-ansi-language:EN-US'>Position</span>()
+  и всех матриц предков)</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:10'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
+  lang=EN-US style='mso-ansi-language:EN-US'>int</span></span><span lang=EN-US
+  style='mso-ansi-language:EN-US'>[][3]<o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>Triangles</span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>warn<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'>массив индексов вершин, которые
+  образуют треугольники (грани)</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:11'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  yellow;mso-highlight:yellow;mso-ansi-language:EN-US'>string<o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  yellow;mso-highlight:yellow;mso-ansi-language:EN-US'>Name<o:p></o:p></span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  yellow;mso-highlight:yellow;mso-ansi-language:EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='background:yellow;
+  mso-highlight:yellow'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  yellow;mso-highlight:yellow;mso-ansi-language:EN-US'>??<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='background:yellow;
+  mso-highlight:yellow'>уникальный идентификатор объекта или пустая строка<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:12'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
+  lang=EN-US style='mso-ansi-language:EN-US'>Config</span></span><span
+  lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
+  font-family:"Courier New";mso-no-proof:yes'>PMaterial</span><span lang=EN-US
+  style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>warn<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'>Множество дополнительных
+  параметров типа <span lang=EN-US style='mso-ansi-language:EN-US'>float</span>,
+  <span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>int</span></span><span
+  lang=EN-US> </span>и <span lang=EN-US style='mso-ansi-language:EN-US'>string</span>.</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:13;mso-yfti-lastrow:yes'>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'>float<o:p></o:p></span></p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'>Mass<o:p></o:p></span></p>
+  </td>
+  <td width=58 valign=top style='width:43.25pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'>get<o:p></o:p></span></p>
+  </td>
+  <td width=50 valign=top style='width:37.75pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='background:red;
+  mso-highlight:red'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width=92 valign=top style='width:69.1pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'>warn<o:p></o:p></span></p>
+  </td>
+  <td width=435 valign=top style='width:326.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='background:red;
+  mso-highlight:red'>Масса </span><span lang=EN-US style='background:red;
+  mso-highlight:red;mso-ansi-language:EN-US'>[</span><span style='background:
+  red;mso-highlight:red'>переместить в материал</span><span lang=EN-US
+  style='background:red;mso-highlight:red;mso-ansi-language:EN-US'>]<o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>Object</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Can</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Change</span><span
+lang=EN-US> </span>– может ли объект сам менять этот парамерт, находясь под
+контролем движка. <span lang=EN-US style='mso-ansi-language:EN-US'>Warn</span><span
+lang=EN-US> </span>– может менять, но при первом же вызове функции <span
+style='font-size:10.0pt;font-family:"Courier New";color:blue;mso-no-proof:yes'>bool</span><span
+style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'>
+wasChanged()</span> должен вернуть true.</p>
 
 <h1>Составители</h1>
 
-<p><span lang=EN-US>KindeX</span></p>
+<p><span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>KindeX</span></span></p>
 
 </div>
 

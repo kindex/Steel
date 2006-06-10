@@ -54,7 +54,6 @@ public:
 
 	bool init(std::string _conf);
 	bool prepare(PhysicInterface *object, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL);
-	bool update(Element &element);
 	bool clear();
 // CD
 	bool checkInvariant(PhysicInterface &o, PhysicInterface &clip);

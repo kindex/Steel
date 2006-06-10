@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 
 		timer.incframe();
 
-		if(captionUdateTime + 0.25 < timer.total())
+		if(captionUdateTime + 0.5 < timer.total())
 		{
 			graph.setCaption(std::string("Sleel engine")
 				+ " Obj: " + IntToStr(graph.total.object)

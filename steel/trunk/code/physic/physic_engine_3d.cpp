@@ -1048,24 +1048,6 @@ bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix34 r
 }
 
 
-bool PhysicEngine3D::update(Element &el)
-{
-	PositionKind::PositionKind pos = el.object->getPositionKind();
-
-	el.matrix   = el.object->getPosition();
-	el.frame	= el.object->getPFrame(); // local
-	if(pos == PositionKind::local)
-		el.matrix = el.parentMatrix*el.matrix; // TODO: update parent matrix
-	
-	el.frame.mul(el.matrix); // global
-
-	el.frame.min -= v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON);
-	el.frame.max += v3(CONTACT_EPSILON, CONTACT_EPSILON, CONTACT_EPSILON);
-
-	return true;
-}
-
-
 bool PhysicEngine3D::prepare(PhysicInterface *object, matrix34 parent_matrix, PhysicInterface *parent)
 {
 	if(!object) return false;

@@ -28,7 +28,7 @@ void Game::handleEventKeyDown(std::string key)
 	if(key == "pause") paused = !paused;
 	if(key == "n") framesToPass = 1;
 
-	if(key == "f1") conf->toggle("drawHelper");
+	if(key == "f1") physicEngine->conf->toggle("helperDrawLines");
 	if(key == "f2") graphEngine->conf->toggle("drawFill");
 	if(key == "f3") graphEngine->conf->toggle("drawWire");
 	if(key == "f4") graphEngine->conf->toggle("drawBump");
@@ -240,6 +240,8 @@ void Game::bind(GraphEngine *engine)
 {
 	graphEngine = engine;
 
+	graphEngine->inject(physicHelper);
+
 	GraphInterfaceList list = world->getChildrens();
 	for(GraphInterfaceList::iterator it = list.begin(); it != list.end(); it++)
 	{
@@ -276,8 +278,6 @@ void Game::draw(GraphEngine *graph)
 */
 	direction.normalize();
 
-	if(conf->geti("drawHelper"))
-		graph->inject(physicHelper);
 	if(conf->geti("crosshair"))
 	{
 		matrix34 m;
@@ -294,8 +294,6 @@ void Game::draw(GraphEngine *graph)
 	graph->processCamera();
 	graph->process();
 
-	if(conf->geti("drawHelper"))
-		graph->remove(physicHelper);
 	if(conf->geti("crosshair"))
 		graph->remove(crosshair);
 }
