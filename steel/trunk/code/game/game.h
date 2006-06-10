@@ -22,7 +22,7 @@
 #include "objects/group.h"
 #include "objects/sprites.h"
 
-//#include "../physic/physic_engine_3d.h"
+#include "../physic/physic_engine_3d.h"
 #include "../physic/physic_engine_ps.h"
 #include "../graph/graph_engine.h"
 #include "../graph/graph_helper.h"
@@ -56,7 +56,8 @@ protected:
 	Config		*conf;
 
 	GraphEngine *graphEngine;
-	PhysicEnginePS *physicEngine;
+//	PhysicEnginePS *physicEngine;
+	PhysicEngine *physicEngine;
 
 	void processKeyboard();
 

@@ -13,8 +13,10 @@ public:
 	{ 
 		return CollisionType::particle1; 
 	}
-	bool init(Config *conf, ResCollection &_res);
-	coord	getMass(){return 1.0f;}
+	bool init(ObjectPosition	emitterPosition, Config *conf, ResCollection &_res);
+	coord	getMass(){return conf->getf("mass");}
+	PositionKind::PositionKind	getPositionKind(){	return PositionKind::global;}
+	Config* getPMaterial() { return conf; }
 
 };
 

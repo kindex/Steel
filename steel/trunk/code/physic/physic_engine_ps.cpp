@@ -15,11 +15,29 @@ v3 PhysicEnginePS::calculateForce(PhysicInterface *obj1, PhysicInterface *obj2)
 	v3 pos1 = obj1->getPosition().getTranslation();
 	v3 pos2 = obj2->getPosition().getTranslation();
 
+	if(helper) // draw collision
+		helper->drawLine(Line(pos1, pos2-pos1), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
+
+
+	Config *material1 =  obj1->getPMaterial();
+	Config *material2 =  obj2->getPMaterial();
+
 	float dist = (pos2-pos1).getLength();
 	
-	float r0 = 0.6f;
+	float spring_r0 = material1->getf("spring_r0") + material2->getf("spring_r0");
+	float spring_k = material1->getf("spring_k") + material2->getf("spring_k");
 
-	res += (pos2-pos1).getNormalized() * (dist - r0);
+	float gravity_k = material1->getf("gravity_k") + material2->getf("gravity_k");
+	float gravity_power = 0.5f*(material1->getf("gravity_power") + material2->getf("gravity_power"));
+	float gravity_min_dist = 0.5f*(material1->getf("gravity_min_dist") + material2->getf("gravity_min_dist"));
+
+
+	res += (pos2-pos1).getNormalized() * (dist - spring_r0)*spring_k; // пружина
+
+	if(dist>gravity_min_dist && gravity_k>0)
+	{
+		res += (pos2-pos1).getNormalized() * pow(dist, gravity_power)*gravity_k; // гравитация
+	}
 
 // ---------------
 	}
@@ -52,21 +70,15 @@ bool PhysicEnginePS::process(PhysicInterface &o, steel::time globalTime, steel::
 		velocity vel = o.getVelocity();
 		float mass = o.getMass();
 
-		v3 f;
-		f.loadZero();
+		int id = o.getStorageId();
+		PhysicObjectStorage &objectStorage = storage[id];
+
+		objectStorage.force.loadZero();
 // -------------------
-		f = g*mass*0;
-
-		f += calculateForce(&o);
-
+		objectStorage.force = g*mass*0;
+		v3 f = calculateForce(&o);
+		objectStorage.force += f;
 // -------------------
-		vel.translation += time*f/mass;
-
-		coord += vel.translation*time;
-
-		pos.setTranslation(coord);
-		o.setPosition(pos);
-		o.setVelocity(vel);
 	}
 
 // move childrens
@@ -80,8 +92,68 @@ bool PhysicEnginePS::process(PhysicInterface &o, steel::time globalTime, steel::
 
 bool PhysicEnginePS::process(steel::time globalTime, steel::time time)
 {
+	if(helper) // draw velocity
+		helper->setTime(globalTime);
+
+/*	for(vector<PhysicObjectStorage>::iterator it = storage.begin(); it != storage.end(); it++)
+	{
+		it->force.loadZero();
+	}
+*/
+
 	for(vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
 		process(**it, globalTime, time);
+
+
+	for(vector<PhysicObjectStorage>::iterator it = storage.begin(); it != storage.end(); it++)
+	{
+		PhysicObjectStorage &objectStorage = *it;
+		PhysicInterface &object = *objectStorage.object;
+
+		int id = object.getStorageId();
+
+		if(object.getCollisionType() == CollisionType::particle1)
+		{
+			matrix34 pos = object.getPosition();
+			v3 coord = pos.getTranslation();
+
+			velocity vel = object.getVelocity();
+
+			float mass = object.getMass();
+
+			vel.translation += time*objectStorage.force/mass;
+			coord += vel.translation*time;
+
+			vel.translation *= 0.99f;
+
+			pos.setTranslation(coord);
+			object.setPosition(pos);
+			object.setVelocity(vel);
+		}
+	}
+
+	return true;
+}
+
+bool PhysicEnginePS::inject(PhysicInterface *obj)
+{
+	object.push_back(obj);
+	makeStorage(obj);
+
+	return true;
+}
+
+bool PhysicEnginePS::makeStorage(PhysicInterface *object)
+{
+	int id = storage.size();
+	storage.resize(id + 1);
+
+	object->setStorageId(id);
+	storage[id].object = object;
+
+	PhysicInterfaceList children = object->getPChildrens();
+	for(PhysicInterfaceList::iterator it = children.begin(); it != children.end(); it++)
+		makeStorage(*it);
 
 	return true;
 }

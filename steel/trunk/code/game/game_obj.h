@@ -28,7 +28,6 @@ Dummy. Объект, который имеет положение и детей, но не имеет собственной формы.
 class GameObjDummy: public virtual GraphInterface, public virtual PhysicInterface
 {
 public:
-	uid			getId()			{	return 0;		}
 	aabb		getPFrame()		{	return getFrame(); }
 	aabb		getFrame()		{	return aabb();	}
 	bool		cleanup()		{	return true;	}

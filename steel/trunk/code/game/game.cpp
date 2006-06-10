@@ -339,7 +339,9 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input, std::string pa
 // ******************* PHYSIC **************************
 	physicHelper  = new GraphHelper;
 
+//	physicEngine = new PhysicEngine3D;
 	physicEngine = new PhysicEnginePS;
+
 	physicEngine->bindResColelntion(res);
 	if(!physicEngine->init("physic")) return 1;
 	this->bindPhysicEngine();

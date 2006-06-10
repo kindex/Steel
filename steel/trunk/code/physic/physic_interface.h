@@ -73,15 +73,14 @@ struct velocity
 
 class PhysicInterface: public Interface
 {
-	int id;
-	steel::time	currentTime; // время, в котором находиться объект
+	int storageId;
+//	steel::time	currentTime; // время, в котором находиться объект
 	friend class PhysicEngine;
 	friend class PhysicEngine3D;
 
 public:
-	virtual void setId(const int _id) { id = _id; }
-	virtual int getId(void) { return id; }
-
+	virtual void setStorageId(const int _id) { storageId = _id; }
+	virtual int getStorageId(void) { return storageId; }
 
 	virtual	ObjectPosition getGlobalPosition(void) = 0;
 	virtual	void setPosition(ObjectPosition const &newPosition) = 0;

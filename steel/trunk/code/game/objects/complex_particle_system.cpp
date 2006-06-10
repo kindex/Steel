@@ -1,12 +1,14 @@
 #include "complex_particle_system.h"
 #include "../../common/utils.h"
 
-bool Particle::init(Config *_conf, ResCollection &_res)
+bool Particle::init(ObjectPosition	emitterPosition, Config *_conf, ResCollection &_res)
 {
 	conf = _conf;
 	res = &_res;
 	
 	m = (Material*)res->add(Res::material, conf->gets("material"));
+
+//	conf->getf("aaa") example: reads from config file Veriable named aaa, with float type
 
 	align = SpriteAlign::screen;
 
@@ -14,9 +16,13 @@ bool Particle::init(Config *_conf, ResCollection &_res)
 	sprite[0].pos = v3(0,0,0);
 	sprite[0].size = conf->getf("size");
 	position.loadIdentity();
-	position.setTranslation(v3(frand(), frand(), frand()));
-	vel.translation.set(frand()*0.1, frand()*0.1, frand()*0.1);
-	//vel.translation.loadZero();
+
+	position.setTranslation(v3(frand(), frand(), frand()) + emitterPosition.getTranslation());
+	
+
+//	vel.translation.set(frand()*0.1f, frand()*0.1f, frand()*0.1f);
+	
+	vel.translation.loadZero();
 
 	initSprites();
 	return true;
@@ -38,7 +44,7 @@ bool ComplexParticleSystem::init(ScriptLine	&s, ResCollection &res)
 	for(int i=0; i<count; i++)
 	{
 		particles[i] = new Particle;
-		particles[i]->init(conf, res);
+		particles[i]->init(position, conf, res);
 	}
 
 	return true;

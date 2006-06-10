@@ -13,10 +13,26 @@
 
 #include "physic_engine.h"
 
+#include <vector>
+
 
 class PhysicEnginePS: public PhysicEngine
 {
+protected:
+
+	struct PhysicObjectStorage
+	{
+		PhysicInterface *object;
+		v3 force;
+
+	};
+
+	std::vector<PhysicObjectStorage> storage;
+
 public:
+	bool inject(PhysicInterface *object);
+	bool makeStorage(PhysicInterface *object);
+
 	bool process(steel::time globalTime, steel::time time);
 	bool process(PhysicInterface &o, steel::time globalTime, steel::time time);
 
