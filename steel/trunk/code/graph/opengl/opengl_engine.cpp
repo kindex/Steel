@@ -222,9 +222,8 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 					if(m->map[0].mode == MapMode::add)	glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_DST_ALPHA); // ?
 					if(m->map[0].mode == MapMode::mul)	glBlendFunc(GL_DST_ALPHA, GL_ZERO);
 				}
-
-//				glDepthFunc(GL_ALWAYS);
-				glDepthMask(0);
+//				glDepthFunc(GL_LESS);
+				glDepthMask(GL_FALSE);
 			}
 // -------------------------------------------------------------------------------
 			// загружаем и ресуем треугольники
@@ -883,7 +882,7 @@ bool OpenGL_Engine::process()
 			drawElement((*it));
 		else
 		{
-			it->distance = (camera.eye - it->matrix*v3()).getLength();
+			it->distance = (camera.eye - it->matrix*v3(0,0,0)).getLength();
 			elementAlpha.push_back(*it);
 		}
 
@@ -896,7 +895,6 @@ bool OpenGL_Engine::process()
 		for(steel::vector<DrawElement>::iterator it = elementAlpha.begin(); it != elementAlpha.end(); it++)
 			drawElement((*it));
 	}
-
 	elementAlpha.clear();
 
 	if(conf->geti("swapBuffers", 1))
