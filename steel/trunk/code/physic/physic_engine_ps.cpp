@@ -2,8 +2,6 @@
 
 v3 PhysicEnginePS::calculateForceForParticle(PhysicObjectStorage &storage1, PhysicObjectStorage &storage2)
 {
-	if(storage1.object == storage2.object) return v3(0,0,0);
-
 	v3 res;
 	res.loadZero();
 
@@ -47,7 +45,7 @@ v3 PhysicEnginePS::calculateForceForParticle(PhysicObjectStorage &storage1)
 	res.loadZero();
 // реагируем только с частицами, номер которых больше этого
 // для того, чтобы исключить повторную проверку (сила действия равна силе противодействия)
-	for(unsigned int i = storage1.id; i < particleSet.size(); i++)
+	for(unsigned int i = storage1.pSetId + 1; i < particleSet.size(); i++)
 		res += calculateForceForParticle(storage1, storage[particleSet[i]]);
 
 	return res;
@@ -61,6 +59,7 @@ bool PhysicEnginePS::processParticle(PhysicObjectStorage &objectStorage, steel::
 // -------------------
 	objectStorage.force += g*objectStorage.mass*0;
 	objectStorage.force += calculateForceForParticle(objectStorage);
+
 // -------------------
 
 	return true;
@@ -96,9 +95,23 @@ bool PhysicEnginePS::process(steel::time globalTime, steel::time time)
 		PhysicObjectStorage &objectStorage = storage[*it];
 
 		objectStorage.velocity += time*objectStorage.force/objectStorage.mass;
+
+		objectStorage.force += objectStorage.velocity.getNormalized() * objectStorage.velocity.getNormalized();
+
+		v3 frictionForce  = 
+			-objectStorage.velocity.getNormalized() * pow(objectStorage.velocity.getLength(), objectStorage.friction_power)*objectStorage.friction_k;
+
+		v3 newVelocity = objectStorage.velocity + time*frictionForce/objectStorage.mass;
+
+		if((newVelocity & objectStorage.velocity) >0) // сила трения не может развернуть тело
+				objectStorage.velocity = newVelocity;
+		else
+			objectStorage.velocity.loadZero();
+
+
+
 		objectStorage.position += objectStorage.velocity*time;
 
-		objectStorage.velocity *= 0.99f;// TODO
 
 		PhysicInterface &object = *objectStorage.object;
 
@@ -139,6 +152,8 @@ void PhysicEnginePS::cacheStorage(PhysicObjectStorage &objectStorage)
 		objectStorage.gravity_k			= objectStorage.material->getf("gravity_k");
 		objectStorage.gravity_power		= objectStorage.material->getf("gravity_power");
 		objectStorage.gravity_min_dist	= objectStorage.material->getf("gravity_min_dist");
+		objectStorage.friction_k		= objectStorage.material->getf("friction_k");
+		objectStorage.friction_power	= objectStorage.material->getf("friction_power");
 	}
 }
 
@@ -158,7 +173,10 @@ bool PhysicEnginePS::makeStorage(PhysicInterface *object)
 	cacheStorage(objectStorage);
 
 	if(objectStorage.collisionType == CollisionType::particle1)
+	{
 		particleSet.push_back(id);
+		objectStorage.pSetId = particleSet.size()-1;
+	}
 
 	PhysicInterfaceList children = object->getPChildrens();
 	for(PhysicInterfaceList::iterator it = children.begin(); it != children.end(); it++)

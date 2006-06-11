@@ -23,13 +23,13 @@ protected:
 
 	struct PhysicObjectStorage
 	{
-		int id;
+		int id, pSetId;
 		PhysicInterface *object;
 		CollisionType::CollisionType collisionType;
 		v3 force;
 		v3 position;
 		v3 velocity;
-		float mass, spring_r0, spring_k, gravity_k, gravity_power, gravity_min_dist;
+		float mass, spring_r0, spring_k, gravity_k, gravity_power, gravity_min_dist, friction_k, friction_power;
 		Config *material;
 	};
 
