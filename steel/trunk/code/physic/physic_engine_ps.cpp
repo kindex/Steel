@@ -27,7 +27,8 @@ v3 PhysicEnginePS::calculateForceForParticle(PhysicObjectStorage &storage1, Phys
 	float gravity_power = 0.5f*(storage1.gravity_power + storage2.gravity_power);
 	float gravity_min_dist = 0.5f*(storage1.gravity_min_dist + storage2.gravity_min_dist);
 
-	res += (pos2-pos1).getNormalized() * (dist - spring_r0)*spring_k; // пружина
+	//res += (pos2-pos1).getNormalized() * (dist - spring_r0)*spring_k; // пружина
+	res += (pos2-pos1).getNormalized() * (pow((1/dist),2) - pow(1/dist,3)); // lennard-jones
 
 	if(dist>gravity_min_dist && gravity_k != 0)
 	{
