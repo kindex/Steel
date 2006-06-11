@@ -737,6 +737,10 @@
 						RelativePath=".\game\objects\triangle.h"
 						>
 					</File>
+					<Filter
+						Name="ps"
+						>
+					</Filter>
 				</Filter>
 			</Filter>
 			<Filter

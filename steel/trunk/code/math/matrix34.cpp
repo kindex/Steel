@@ -13,15 +13,14 @@
 
 void matrix34::loadIdentity(void)
 {
-	memset(data.a, 0, 12*sizeof(float));
-	data.m[0][0] = 1.0f;
-	data.m[1][1] = 1.0f;
-	data.m[2][2] = 1.0f;
+	data.combine.matrix.loadIdentity();
+	data.combine.vector.x = data.combine.vector.y = data.combine.vector.z = 0.0f;
 }
 
 void matrix34::loadZero(void)
 {
-	memset(data.a, 0, 12*sizeof(float));
+	data.combine.matrix.loadZero();
+	data.combine.vector.x = data.combine.vector.y = data.combine.vector.z = 0.0f;
 }
 
 void matrix34::operator+=(const matrix34 operand)

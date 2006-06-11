@@ -37,13 +37,12 @@ struct v3simple
 	inline void operator-=(const v3 & a);
 	inline void operator*=(const float a);
 	inline void operator/=(const float a);
-	inline void loadZero(void)	{	x=y=z=0.0f;	}
-	inline void loadOne(void)	{	x=y=z=1.0f;	}
+	inline void loadZero(void)	{	x = y = z = 0.0f;	}
+	inline void loadOne(void)	{	x = y = z = 1.0f;	}
 
 	//unary operators
 	inline v3simple operator-(void) const {return get(-x, -y, -z);}
 	inline v3simple operator+(void) const {return *this;}
-
 };
 
 

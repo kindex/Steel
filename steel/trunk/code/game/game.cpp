@@ -19,6 +19,7 @@
 #include "../res/script/script.h"
 
 #include "objects/model_obj.h"
+#include "objects/complex_particle_system.h"
 
 using namespace std;
 
@@ -62,18 +63,26 @@ void Game::handleEventKeyDown(std::string key)
 		physicEngine->setGravitation(g);
 	}
 
-	if(key == "f")
-		createObject(true);
+	if(key == "mouse1" && !conf->getf("automaticGun"))
+		createObject();
 }
 
-bool Game::createObject(int super)
+bool Game::createObject()
 {
-	light = new GameLight;
+	Particle *p = new Particle;
+
+	if(p->init(eye, direction, (Config*)res->add(Res::config, "ps_weapon"), *res))
+	{
+		graphEngine->inject(p);
+		physicEngine->inject(p);
+	}
+
+/*	light = new GameLight;
 	light->setPositionKind(PositionKind::global);
 	light->setProcessKind(ProcessKind::none);
 
 	graphEngine->inject(light);
-
+*/
 
 	return true;
 
@@ -154,10 +163,8 @@ void Game::processKeyboard()
 {
 	if(input->isMouseCaptured())
 	{
-		if(input->isPressed("mouse1"))
-		{
-			createObject(false);
-		}
+		if(input->isPressed("mouse1") && conf->getf("automaticGun"))
+			createObject();
 
 		v3 dir(0,0,0);
 		if(input->isPressed("w")) 	dir += v3(1,0,0);

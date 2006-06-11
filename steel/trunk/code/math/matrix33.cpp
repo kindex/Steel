@@ -109,17 +109,20 @@ void matrix33::loadZero(void)
 void matrix33::operator*=(const matrix33 o)
 {
 	matrix33 copy = *this; // copy
-	data.m[0][0] = copy.data.m[0][0]*o.data.m[0][0] + copy.data.m[0][1]*o.data.m[1][0] + copy.data.m[0][2]*o.data.m[2][0];
-	data.m[0][1] = copy.data.m[0][0]*o.data.m[0][1] + copy.data.m[0][1]*o.data.m[1][1] + copy.data.m[0][2]*o.data.m[2][1];
-	data.m[0][2] = copy.data.m[0][0]*o.data.m[0][2] + copy.data.m[0][1]*o.data.m[1][2] + copy.data.m[0][2]*o.data.m[2][2];
+	const m33 &a = copy.data.m;
+	const m33 &b = o.data.m;
 
-	data.m[1][0] = copy.data.m[1][0]*o.data.m[0][0] + copy.data.m[1][1]*o.data.m[1][0] + copy.data.m[1][2]*o.data.m[2][0];
-	data.m[1][1] = copy.data.m[1][0]*o.data.m[0][1] + copy.data.m[1][1]*o.data.m[1][1] + copy.data.m[1][2]*o.data.m[2][1];
-	data.m[1][2] = copy.data.m[1][0]*o.data.m[0][2] + copy.data.m[1][1]*o.data.m[1][2] + copy.data.m[1][2]*o.data.m[2][2];
+	data.m[0][0] = a[0][0]*b[0][0] + a[0][1]*b[1][0] + a[0][2]*b[2][0];
+	data.m[0][1] = a[0][0]*b[0][1] + a[0][1]*b[1][1] + a[0][2]*b[2][1];
+	data.m[0][2] = a[0][0]*b[0][2] + a[0][1]*b[1][2] + a[0][2]*b[2][2];
 
-	data.m[2][0] = copy.data.m[2][0]*o.data.m[0][0] + copy.data.m[2][1]*o.data.m[1][0] + copy.data.m[2][2]*o.data.m[2][0];
-	data.m[2][1] = copy.data.m[2][0]*o.data.m[0][1] + copy.data.m[2][1]*o.data.m[1][1] + copy.data.m[2][2]*o.data.m[2][1];
-	data.m[2][2] = copy.data.m[2][0]*o.data.m[0][2] + copy.data.m[2][1]*o.data.m[1][2] + copy.data.m[2][2]*o.data.m[2][2];
+	data.m[1][0] = a[1][0]*b[0][0] + a[1][1]*b[1][0] + a[1][2]*b[2][0];
+	data.m[1][1] = a[1][0]*b[0][1] + a[1][1]*b[1][1] + a[1][2]*b[2][1];
+	data.m[1][2] = a[1][0]*b[0][2] + a[1][1]*b[1][2] + a[1][2]*b[2][2];
+
+	data.m[2][0] = a[2][0]*b[0][0] + a[2][1]*b[1][0] + a[2][2]*b[2][0];
+	data.m[2][1] = a[2][0]*b[0][1] + a[2][1]*b[1][1] + a[2][2]*b[2][1];
+	data.m[2][2] = a[2][0]*b[0][2] + a[2][1]*b[1][2] + a[2][2]*b[2][2];
 }
 
 void matrix33::setRotationZ(const float sin, const float cos)
@@ -176,39 +179,43 @@ void matrix33::setRotationAxis(const float s, const float c, const v3 v)
 
 	data.m[1][0] = v.x*v.y*(1-c) + s*v.z;
 	data.m[1][1] = v.y*v.y*(1-c) + c;
-	data.m[1][1] = v.y*v.z*(1-c) - s*v.x;
+	data.m[1][2] = v.y*v.z*(1-c) - s*v.x;
 
 	data.m[2][0] = v.x*v.z*(1-c) - s*v.y;
 	data.m[2][1] = v.y*v.z*(1-c) + s*v.x;
-	data.m[2][1] = v.z*v.z*(1-c) + c;
+	data.m[2][2] = v.z*v.z*(1-c) + c;
 }
 
 matrix33 matrix33::getInverse(void) const
 {
 	matrix33 res;
+	const m33 &m = data.m;
 
-	float m00 =  data.m[1][1]*data.m[2][2] - data.m[2][1]*data.m[1][2];
-	float m01 = -data.m[0][1]*data.m[2][2] + data.m[2][1]*data.m[0][2];
-	float m02 =  data.m[1][0]*data.m[2][1] - data.m[1][1]*data.m[2][0];
+// алгебраические дополнения
+	float m00 =  m[1][1]*m[2][2] - m[2][1]*m[1][2];
+	float m01 = -m[1][0]*m[2][2] + m[1][2]*m[2][0];
+	float m02 =  m[1][0]*m[2][1] - m[1][1]*m[2][0];
 
-	float m10 = -data.m[0][1]*data.m[2][2] + data.m[0][2]*data.m[2][0];
-	float m11 =  data.m[0][0]*data.m[2][2] - data.m[0][2]*data.m[2][0];
-	float m12 = -data.m[0][0]*data.m[2][1] + data.m[0][1]*data.m[2][0];
+	float m10 = -m[0][1]*m[2][2] + m[0][2]*m[2][1];
+	float m11 =  m[0][0]*m[2][2] - m[0][2]*m[2][0];
+	float m12 = -m[0][0]*m[2][1] + m[0][1]*m[2][0];
 
-	float m20 =  data.m[0][1]*data.m[1][2] - data.m[0][2]*data.m[1][1];
-	float m21 = -data.m[0][0]*data.m[1][2] + data.m[1][0]*data.m[0][2];
-	float m22 =  data.m[0][0]*data.m[1][1] - data.m[0][1]*data.m[1][0];
+	float m20 =  m[0][1]*m[1][2] - m[0][2]*m[1][1];
+	float m21 = -m[0][0]*m[1][2] + m[1][0]*m[0][2];
+	float m22 =  m[0][0]*m[1][1] - m[0][1]*m[1][0];
 
+/*	float det = 
+		data.m[0][0]*m00 + 		data.m[0][1]*m01 + 		data.m[0][2]*m02 + 
+		data.m[1][0]*m10 + 		data.m[1][1]*m11 + 		data.m[1][2]*m12 + 
+		data.m[2][0]*m20 + 		data.m[2][1]*m21 + 		data.m[2][2]*m22;*/
 	float det = 
-		data.m[0][0]*m00 + 
-		data.m[0][1]*m01 + 
-		data.m[0][2]*m02 + 
-		data.m[1][0]*m10 + 
-		data.m[1][1]*m11 + 
-		data.m[1][2]*m12 + 
-		data.m[2][0]*m20 + 
-		data.m[2][1]*m21 + 
-		data.m[2][2]*m22;
+		+ m[0][0]*m[1][1]*m[2][2]
+		+ m[0][1]*m[1][2]*m[2][0]
+		+ m[0][2]*m[1][0]*m[2][1]
+		- m[0][2]*m[1][1]*m[2][0]
+		- m[0][0]*m[1][2]*m[2][1]
+		- m[0][1]*m[1][0]*m[2][2];
+
 
 	if(det != 0)
 	{

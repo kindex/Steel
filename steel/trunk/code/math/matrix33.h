@@ -19,11 +19,12 @@
 
 struct matrix33
 {
+	typedef float m33[3][3];
 	//member variables
 	union
 	{
 		float a[9]; // 1D array
-		float m[3][3]; // 2D array - matrix 4 rows x 3 cols
+		m33 m; // 2D array - matrix 4 rows x 3 cols
 //		v3simple v[3];
 	} data;
 

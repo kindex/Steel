@@ -65,7 +65,7 @@ void ParticleSystem::process(steel::time curTime, steel::time frameLength, Physi
 	}
 }
 
-void ParticleSimple::process(steel::time curTime, steel::time frameLength)
+void PS_Particle::process(steel::time curTime, steel::time frameLength)
 {
 	if(alive)
 	{
@@ -84,7 +84,7 @@ void ParticleSimple::process(steel::time curTime, steel::time frameLength)
 
 }
 
-void ParticleSimple::born(steel::time curTime, steel::time frameLength, Config *conf, matrix34 global, v3 globalVelocity)
+void PS_Particle::born(steel::time curTime, steel::time frameLength, Config *conf, matrix34 global, v3 globalVelocity)
 {
     v3  globalsize = global * v3(1, 0, 0) - global * v3(0, 0, 0);
 	float k = globalsize.getLength();

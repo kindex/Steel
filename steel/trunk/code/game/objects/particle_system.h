@@ -13,7 +13,7 @@
 
 #include "sprites.h"
 
-struct ParticleSimple
+struct PS_Particle
 {
 	v3		position, velocity, acc;
 	steel::time endTime, startTime;
@@ -24,6 +24,16 @@ struct ParticleSimple
 	void born(steel::time curTime, steel::time frameLength, Config *conf, matrix34 global, v3 globalVelocity);
 };
 
+typedef steel::svector<PS_Particle> PS_Array;
+
+
+class PS_Emmiter
+{
+public:
+	void bind(PS_Array *ps_array);
+
+};
+
 //ParticleSystem nasleduet metod risovanija iz SpriteSystem
 //Mozhno skazatj, 4to ParticleSystem zaniametsja Fizikoj PS
 class ParticleSystem: public SpriteSystem
@@ -31,7 +41,7 @@ class ParticleSystem: public SpriteSystem
 protected:
 	TexCoords	texCoords1D; //dobavljaem teksturniju koordinatu dlja Alfa Kanala
 
-	steel::vector<ParticleSimple> particle;
+	steel::vector<PS_Particle> particle;
 	Config	*conf;
 
 public:

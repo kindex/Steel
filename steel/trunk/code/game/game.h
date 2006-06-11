@@ -87,7 +87,7 @@ public:
 	void handleMouse(double dx, double dy);
 	bool isAlive() {return _alive;} 
 	void setspeed(float _speed, steel::time _time) {speed = _speed; time = _time; } 
-	bool createObject(int super);
+	bool createObject();
 
 	v3	getGlobalPosition(std::string obj);
 };

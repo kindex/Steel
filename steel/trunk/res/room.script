@@ -20,3 +20,4 @@ cps			particle_system/cps	0,0,3
 
 ;uni			sphere/sphere2	0,0,2	0,0,0	2
 
+;light			0,0,4
