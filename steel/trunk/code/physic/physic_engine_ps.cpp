@@ -36,6 +36,7 @@ v3 PhysicEnginePS::calculateForceForParticle(PhysicObjectStorage &storage1, Phys
 	}
 
 // --------------------------------------------------------------------------
+	storage2.force -= res; // сила действия равна силе противодействия
 
 	return res;
 }
@@ -44,9 +45,10 @@ v3 PhysicEnginePS::calculateForceForParticle(PhysicObjectStorage &storage1)
 {
 	v3 res;
 	res.loadZero();
-
-	for(steel::svector<int>::iterator it = particleSet.begin(); it != particleSet.end(); it++)
-		res += calculateForceForParticle(storage1, storage[*it]);
+// реагируем только с частицами, номер которых больше этого
+// для того, чтобы исключить повторную проверку (сила действия равна силе противодействия)
+	for(unsigned int i = storage1.id; i < particleSet.size(); i++)
+		res += calculateForceForParticle(storage1, storage[particleSet[i]]);
 
 	return res;
 }
@@ -57,7 +59,7 @@ bool PhysicEnginePS::processParticle(PhysicObjectStorage &objectStorage, steel::
 	objectStorage.position;
 
 // -------------------
-	objectStorage.force = g*objectStorage.mass*0;
+	objectStorage.force += g*objectStorage.mass*0;
 	objectStorage.force += calculateForceForParticle(objectStorage);
 // -------------------
 
@@ -77,6 +79,8 @@ bool PhysicEnginePS::process(steel::time globalTime, steel::time time)
 		objectStorage.velocity = objectStorage.object->getGlobalVelocity().translation;
 		if(objectStorage.object->wasChanged())
 			cacheStorage(objectStorage);
+
+		objectStorage.force.loadZero();
 	}
 
 
@@ -93,7 +97,8 @@ bool PhysicEnginePS::process(steel::time globalTime, steel::time time)
 
 		objectStorage.velocity += time*objectStorage.force/objectStorage.mass;
 		objectStorage.position += objectStorage.velocity*time;
-		objectStorage.velocity *= 0.99f;
+
+		objectStorage.velocity *= 0.99f;// TODO
 
 		PhysicInterface &object = *objectStorage.object;
 
@@ -146,6 +151,7 @@ bool PhysicEnginePS::makeStorage(PhysicInterface *object)
 	PhysicObjectStorage &objectStorage = storage[id];
 
 	objectStorage.object = object;
+	objectStorage.id = id;
 	objectStorage.collisionType = object->getCollisionType();
 	objectStorage.force.loadZero();
 

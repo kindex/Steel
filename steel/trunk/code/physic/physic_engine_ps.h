@@ -23,6 +23,7 @@ protected:
 
 	struct PhysicObjectStorage
 	{
+		int id;
 		PhysicInterface *object;
 		CollisionType::CollisionType collisionType;
 		v3 force;
