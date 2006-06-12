@@ -20,7 +20,6 @@
 
 #include "game_obj.h"
 #include "objects/group.h"
-#include "objects/sprites.h"
 
 #include "../physic/physic_engine_3d.h"
 #include "../physic/physic_engine_ps.h"
@@ -64,7 +63,7 @@ protected:
 // World - custom objects
 	GameGroup	*world;
 	GraphHelper	*physicHelper;
-	Sprite		*crosshair;
+//	Sprite		*crosshair;
 	GameObj		*lightTag;
 	GameLight	*light;
 

@@ -23,6 +23,7 @@
 	}									\
 }
 
+#define abort_init(keywords, _msg) { alog.msg(keywords, _msg); return false; }
 
 
 class Logger

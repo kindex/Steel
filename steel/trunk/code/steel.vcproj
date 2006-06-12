@@ -674,14 +674,6 @@
 					Name="objects"
 					>
 					<File
-						RelativePath=".\game\objects\complex_particle_system.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\game\objects\complex_particle_system.h"
-						>
-					</File>
-					<File
 						RelativePath=".\game\objects\custom_path.cpp"
 						>
 					</File>
@@ -706,27 +698,11 @@
 						>
 					</File>
 					<File
-						RelativePath=".\game\objects\particle_system.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\game\objects\particle_system.h"
-						>
-					</File>
-					<File
 						RelativePath=".\game\objects\path.cpp"
 						>
 					</File>
 					<File
 						RelativePath=".\game\objects\path.h"
-						>
-					</File>
-					<File
-						RelativePath=".\game\objects\sprites.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\game\objects\sprites.h"
 						>
 					</File>
 					<File
@@ -737,10 +713,69 @@
 						RelativePath=".\game\objects\triangle.h"
 						>
 					</File>
-					<Filter
-						Name="ps"
+				</Filter>
+				<Filter
+					Name="ps"
+					>
+					<File
+						RelativePath=".\game\ps\animator.cpp"
 						>
-					</Filter>
+					</File>
+					<File
+						RelativePath=".\game\ps\animator.h"
+						>
+					</File>
+					<File
+						RelativePath=".\game\ps\emitter.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\game\ps\emitter.h"
+						>
+					</File>
+					<File
+						RelativePath=".\game\ps\particle_system.cpp"
+						>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="DebugWin|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\game\ps\particle_system.h"
+						>
+					</File>
+					<File
+						RelativePath=".\game\ps\ps_renderer.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\game\ps\ps_renderer.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

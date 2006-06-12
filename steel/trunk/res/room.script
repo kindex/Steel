@@ -14,10 +14,4 @@ solid			wall/wall1	0,-20,-1
 solid			wall/floor	0,0,-20.5
 
 
-cps			particle_system/cps	0,0,3
-;cps			particle_system/cps2	0,0,3
-;cps			particle_system/cps3	0,0,3
-
-;uni			sphere/sphere2	0,0,2	0,0,0	2
-
-;light			0,0,4
+ps			particle_system/ps	0,0,2

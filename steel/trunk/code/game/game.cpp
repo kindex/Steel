@@ -19,7 +19,6 @@
 #include "../res/script/script.h"
 
 #include "objects/model_obj.h"
-#include "objects/complex_particle_system.h"
 
 using namespace std;
 
@@ -69,14 +68,14 @@ void Game::handleEventKeyDown(std::string key)
 
 bool Game::createObject()
 {
-	Particle *p = new Particle;
+/*	Particle *p = new Particle;
 
 	if(p->init(eye, direction, (Config*)res->add(Res::config, "ps_weapon"), *res))
 	{
 		graphEngine->inject(p);
 		physicEngine->inject(p);
 	}
-
+*/
 /*	light = new GameLight;
 	light->setPositionKind(PositionKind::global);
 	light->setProcessKind(ProcessKind::none);
@@ -285,7 +284,7 @@ void Game::draw(GraphEngine *graph)
 */
 	direction.normalize();
 
-	if(conf->geti("crosshair"))
+/*	if(conf->geti("crosshair"))
 	{
 		matrix34 m;
 
@@ -295,14 +294,14 @@ void Game::draw(GraphEngine *graph)
 		((Sprite*)crosshair)->setAlign(-direction);
 
 		graph->inject(crosshair);
-	}
+	}*/
 
 	graph->camera.setup(eye, direction);
 	graph->processCamera();
 	graph->process();
 
-	if(conf->geti("crosshair"))
-		graph->remove(crosshair);
+//	if(conf->geti("crosshair"))
+//		graph->remove(crosshair);
 }
 
 
@@ -364,16 +363,16 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input, std::string pa
 	physicEngine->setGravitation(g);
 
 // * crosshair
-	crosshair = new Sprite;
+//	crosshair = new Sprite;
 	
 	ScriptLine csc;
 	csc.set(conf->gets("crosshairConfig"));
 
-	if(!crosshair->init(csc, *res))
+/*	if(!crosshair->init(csc, *res))
 	{
 		return false;
 	}
-
+*/
 	_alive = true;
 	paused = conf->geti("paused", 0) == 1;
 	framesToPass = 0;

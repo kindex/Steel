@@ -22,11 +22,9 @@
 #include "group.h"
 #include "custom_path.h"
 #include "path.h"
-#include "sprites.h"
-#include "particle_system.h"
 #include "triangle.h"
 #include "model_obj.h"
-#include "complex_particle_system.h"
+#include "../ps/particle_system.h"
 
 using namespace std;
 
@@ -93,8 +91,6 @@ bool GameGroup::load(ResCollection *res, GameObj *global)
 		//"ps"		parent	id	CONF	X	Y	Z	Angle	Scale
 		CHECK_KIND("ps", ParticleSystem, ProcessKind::custom);
 		
-		CHECK_KIND("cps", ComplexParticleSystem, ProcessKind::uni);
-
 		//"include"	parent	id	CONF	X	Y	Z	Angle	Scale
 		CHECK_KIND("include", GameGroup, ProcessKind::none);
 		// "sprite"	parent	id	MATERIAL	X	Y	Z	ALIGN	Scale(Sprite Size)
@@ -103,7 +99,7 @@ bool GameGroup::load(ResCollection *res, GameObj *global)
 		// camera - смотрит врегда в центр камеры
 		// screen - стороны выровнены по сторонам экрана
 		// X,Y,Z - вектор, указывающий направление спрайта (не зависит от положения камеры)
-		CHECK_KIND("sprite", Sprite, ProcessKind::none);
+//		CHECK_KIND("sprite", Sprite, ProcessKind::none);
 		
 		// объект, который движется по своим законам
 		// TODO правила движения - дифур
