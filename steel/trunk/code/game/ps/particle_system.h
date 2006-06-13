@@ -1,7 +1,7 @@
 /*id*********************************************************
     Unit: particle_system
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
 		* kindex [Andrey Ivanov]
         * def [Alexander Papyshev]

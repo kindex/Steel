@@ -1,11 +1,11 @@
 /*id*********************************************************
     Unit: game/objects/Path
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    Licence:
-        Только для Division
+    License:
+        Steel Engine License
     Description:
 		Path. Метка, которя движется по траектории от объекта к объекту.
 ************************************************************/

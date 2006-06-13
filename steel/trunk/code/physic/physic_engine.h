@@ -1,11 +1,11 @@
 /*id*********************************************************
     Unit: PhysicEngine
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    Licence:
-        Только для Division
+    License:
+        Steel Engine License
     Description:
 		TODO
  ************************************************************/
@@ -14,7 +14,6 @@
 #define PHYSIC_ENGINE_H
 
 #include "../res/conf/conf.h"
-#include "../math/matrix4x4.h"
 
 #include "physic_interface.h"
 

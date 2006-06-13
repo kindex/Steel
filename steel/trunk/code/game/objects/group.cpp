@@ -1,11 +1,11 @@
 /*id*********************************************************
     Unit: game/objects/group
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    Licence:
-        Только для Division
+    License:
+        Steel Engine License
     Description:
 		Контейнер для других объектов.
 		К нему прикрепляются другие объекты и движутся как единое целое.

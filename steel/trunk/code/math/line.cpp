@@ -1,11 +1,11 @@
 /*id*********************************************************
     Unit: math/line
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-	Licence:
-        Только для Division
+	License:
+        Steel Engine License
     Description:
 		Line, LineSement
 ************************************************************/
@@ -20,7 +20,7 @@ bool isCross(const Line a, const Line b, float &t, float &s)
 	double len2 = bbxab.getSquaredLengthd();
 	if(len2<EPSILON2) return false; // линии параллельны
 	
-	s = ((a.base - b.base)*a.a)&bbxab / len2;
+	s = (((a.base - b.base)*a.a)&bbxab / len2);
 
 	v3 p = b.point(s);
 

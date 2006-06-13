@@ -1,11 +1,11 @@
 /*id*********************************************************
     Unit: game
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    Licence:
-        Только для Division
+    License:
+        Steel Engine License
     Description:
 		Этот юнит является дополнением к steel engine и служит
 		примером использования движка. В этом юните задаются правила игры
@@ -76,12 +76,22 @@ bool Game::createObject()
 		physicEngine->inject(p);
 	}
 */
-/*	light = new GameLight;
-	light->setPositionKind(PositionKind::global);
-	light->setProcessKind(ProcessKind::none);
+	if(!light)
+	{
+		light = new GameLight;
+		light->setPositionKind(PositionKind::global);
+		light->setProcessKind(ProcessKind::none);
 
-	graphEngine->inject(light);
-*/
+		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
+
+		graphEngine->inject(light);
+	}
+	else
+	{
+		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
+	}
+
+
 
 	return true;
 
@@ -377,6 +387,7 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input, std::string pa
 	paused = conf->geti("paused", 0) == 1;
 	framesToPass = 0;
 	speedup = 1;
+	light = NULL;
 
 	return true;
 }

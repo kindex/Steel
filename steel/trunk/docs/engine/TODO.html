@@ -11,6 +11,8 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <title>Спецификация движка</title>
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
   <w:ValidateAgainstSchemas/>
   <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
   <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
@@ -78,6 +80,12 @@ p
 	font-size:12.0pt;
 	font-family:"Times New Roman";
 	mso-fareast-font-family:"Times New Roman";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
 @page Section1
 	{size:595.3pt 841.9pt;
 	margin:2.0cm 42.5pt 2.0cm 3.0cm;
@@ -230,22 +238,80 @@ table.MsoTableGrid
 
 <h1>О документе</h1>
 
-<p>В этом документе содержится список нереальзиванны возможностей (идей). У
-кажой возможности есть приоритет. Постепенно по мере реализации чать этого
+<p>В этом документе содержится список нереализованных возможностей (идей). У
+каждой возможности есть приоритет. Постепенно по мере реализации часть этого
 документа переходит в <span lang=EN-US style='mso-ansi-language:EN-US'>Design</span><span
 lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Document</span>.
-В квадратных скобочках пишется атрор идеи.</p>
+В квадратных скобочках пишется аврор идеи.</p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<h1><span lang=EN-US style='mso-ansi-language:EN-US'>Physic</span><span
-lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Engine</span>
-- <span lang=EN-US style='mso-ansi-language:EN-US'>Particle</span><span
-lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>System</span></h1>
+<h3>Быстрый Список</h3>
 
-<h3>Канал взаимодействия <span lang=EN-US style='mso-ansi-language:EN-US'>[kindex]<o:p></o:p></span></h3>
+<p><span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>Res</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'>:<o:p></o:p></span></p>
 
-<p>Канал взаимодейтсвия. Реагируют между собой только те частицы, которые имеют
+<p><span class=SpellE><span class=GramE><span lang=EN-US style='mso-ansi-language:
+EN-US'>res</span></span></span><span lang=EN-US> </span><span lang=EN-US
+style='mso-ansi-language:EN-US'>names</span><span lang=EN-US> </span>–
+допускать дублирование имён. </p>
+
+<p>Счётчик использования. Добавить удаление ресурсов.</p>
+
+<p>Текущая директория (стек директорий)</p>
+
+<p><span class=SpellE>Конфиги</span> – множество настроек, а не загрузка из
+файла. Переопределение через <span class=SpellE>скрипты</span> всех настроек.</p>
+
+<p>--</p>
+
+<p>Зачистить интерфейсы, <span class=SpellE>откомментить</span>, описать в <span
+lang=EN-US style='mso-ansi-language:EN-US'>design</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>document</span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>Graph Engine: <o:p></o:p></span></p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>storage</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'>, children change, hierarchy<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>OpenGL levels: <span
+class=SpellE>glBegin+blend</span>, VBO + <span class=SpellE>multitex</span>,
+dynamic lighting<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>Full screen fix (recreate
+window)<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>PS – dynamic blending,
+colors<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>Physic Engine:<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>Sort: particle, solid<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>Hierarchy, custom move<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>PS – triangle<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>Solid physic<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>3D hash, clusters, <span
+class=SpellE>vilibility</span> lists<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+
+<h1><span lang=EN-US style='mso-ansi-language:EN-US'>Physic Engine - Particle
+System<o:p></o:p></span></h1>
+
+<h3>Канал<span style='mso-ansi-language:EN-US'> </span>взаимодействия<span
+lang=EN-US style='mso-ansi-language:EN-US'> [<span class=SpellE>kindex</span>]<o:p></o:p></span></h3>
+
+<p>Канал взаимодействия. Реагируют между собой только те частицы, которые имеют
 хоть один общий канал. У каждой частицы может быть много каналов. Канал
 характеризуется типом и силой взаимодействия.</p>
 
@@ -280,7 +346,7 @@ tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>Spring</span>
-с срущимисямя связями</p>
+с рвущимися связями</p>
 
 <p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
@@ -290,7 +356,8 @@ style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 
 <p>Кроме того, на каждую частицу действует сила трения.</p>
 
-<h3>Модульность <span lang=EN-US style='mso-ansi-language:EN-US'>[kindex]</span></h3>
+<h3>Модульность [<span class=SpellE><span lang=EN-US style='mso-ansi-language:
+EN-US'>kindex</span></span>]</h3>
 
 <p>Надо иметь возможность заменять следующие модули для каждой системы частиц:</p>
 
@@ -304,8 +371,9 @@ style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>Renderer</span>
-(спрайты, система спрайтов, многогранники, меташарики)</p>
+</span></span></span><![endif]><span class=SpellE><span lang=EN-US
+style='mso-ansi-language:EN-US'>Renderer</span></span> (спрайты, система
+спрайтов, многогранники, <span class=SpellE>меташарики</span>)</p>
 
 <p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo4;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
@@ -315,7 +383,7 @@ style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
 
 <h1>Составители</h1>
 
-<p><span lang=EN-US style='mso-ansi-language:EN-US'>KindeX</span></p>
+<p><span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>KindeX</span></span></p>
 
 </div>
 

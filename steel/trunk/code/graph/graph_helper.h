@@ -1,6 +1,7 @@
 #ifndef __GRAPH_HELPER_H
 #define __GRAPH_HELPER_H
 
+#include "../math/line.h"
 #include "../helper.h"
 #include "graph_interface.h"
 
@@ -11,20 +12,20 @@ class GraphHelper: virtual public EngineHelper, virtual public GraphInterface
 	struct Element
 	{
 		steel::time start, fade, end;
-		v4 color;
+		color4f color;
 	};
 
 	struct LineElement: public Element
 	{
 		Line line;
 		LineElement() {}
-		LineElement(const Line _line, const steel::time _start, const steel::time _fade, const steel::time _end, const v4 _color) 			:line(_line)		{ 			start = _start; fade = _fade; end = _end; 				color = _color;		}	
+		LineElement(const Line _line, const steel::time _start, const steel::time _fade, const steel::time _end, const color4f _color):line(_line)	{ start = _start; fade = _fade; end = _end; color = _color;	}	
 	};
 	struct BoxElement: public Element
 	{
 		aabb box;
 		BoxElement() {}
-		BoxElement(const aabb _box, const steel::time _start, const steel::time _fade, const steel::time _end, const v4 _color) :box(_box)		{ 	start = _start; fade = _fade; end = _end; 	color = _color;	}
+		BoxElement(const aabb _box, const steel::time _start, const steel::time _fade, const steel::time _end, const color4f _color) :box(_box)		{ 	start = _start; fade = _fade; end = _end; 	color = _color;	}
 	};
 
 	steel::vector<LineElement> lines, vectors;
@@ -38,9 +39,9 @@ public:
 // Helper
 	void setTime(const steel::time _time);
 	void clean() {}
-	void drawLine(const Line line, const steel::time duration, const steel::time fade, const v4 color);
-	void drawVector(const Line line, const steel::time duration, const steel::time fade, const v4 color);
-	void drawBox(const aabb box, const steel::time duration, const steel::time fade, const v4 color);
+	void drawLine(const Line line, const steel::time duration, const steel::time fade, const color4f color);
+	void drawVector(const Line line, const steel::time duration, const steel::time fade, const color4f color);
+	void drawBox(const aabb box, const steel::time duration, const steel::time fade, const color4f color);
 
 // Graph
 	void		processGraph(v3	cameraEye, v3 cameraDirection);

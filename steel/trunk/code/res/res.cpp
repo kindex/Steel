@@ -1,11 +1,11 @@
 /*id*********************************************************
     Unit: Res [Resources]
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    Licence:
-        “олько дл€ Division
+    License:
+        Steel Engine License
     Description:
         ћолуль дл€ хранени€, загрузки игровых ресурсов и 
 		контрол€ над ними. 

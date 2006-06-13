@@ -87,7 +87,7 @@ bool Material::init(string name, ResCollection *res)
 		{
 			m.texture = NULL;
 			m.kind = MapKind::color;
-			m.color = v4(conf->getf(i, 2, 0.0f), conf->getf(i, 3, 0.0f), conf->getf(i, 4, 0.0f), conf->getf(i, 5, 1.0f));
+			m.color.set(conf->getf(i, 2, 0.0f), conf->getf(i, 3, 0.0f), conf->getf(i, 4, 0.0f), conf->getf(i, 5, 1.0f));
 			map.push_back(m);
 		}
 	}

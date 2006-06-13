@@ -4,8 +4,7 @@
 #include "../image/image.h"
 #include "../conf/conf.h"
 #include "../script/script.h"
-
-#include "../../math/vector4d.h"
+#include "../../graph/types.h"
 
 namespace MapMode
 {
@@ -40,7 +39,7 @@ public:
 
 	MapMode::map_mode	mode;
 	MapKind::tex_kind	kind;
-	v4					color;
+	color4f				color;
 	// color
 	// mode
 	// shader

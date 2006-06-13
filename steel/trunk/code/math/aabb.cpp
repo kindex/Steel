@@ -1,17 +1,26 @@
 /*id*********************************************************
     Unit: math/aabb
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-	Licence:
-        Только для Division
+	License:
+        Steel Engine License
     Description:
 		AABB (Axis-Aligned bounding box)
  ************************************************************/
 
 #include "aabb.h"
-#include "geometry.h"
+
+
+bool intersect(float amin, float amax, float bmin, float bmax)
+{
+	if(bmin > amin) amin = bmin;
+	if(bmax < amax) amax = bmax;
+
+    return
+		amin  < amax+ EPSILON;
+}
 
 void aabb::clear()
 { 

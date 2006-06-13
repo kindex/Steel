@@ -1,9 +1,11 @@
 /*id*********************************************************
     Unit: math/matrix4x4
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+        Steel Engine License
     Description:
 		Class declaration for a 3x4 matrix
 ************************************************************/
@@ -13,43 +15,43 @@
 
 void matrix34::loadIdentity(void)
 {
-	data.combine.matrix.loadIdentity();
-	data.combine.vector.x = data.combine.vector.y = data.combine.vector.z = 0.0f;
+	data.matrix.loadIdentity();
+	data.vector.x = data.vector.y = data.vector.z = 0.0f;
 }
 
 void matrix34::loadZero(void)
 {
-	data.combine.matrix.loadZero();
-	data.combine.vector.x = data.combine.vector.y = data.combine.vector.z = 0.0f;
+	data.matrix.loadZero();
+	data.vector.x = data.vector.y = data.vector.z = 0.0f;
 }
 
 void matrix34::operator+=(const matrix34 operand)
 {
-	data.combine.matrix += operand.data.combine.matrix;
-	data.combine.vector += operand.data.combine.vector;
+	data.matrix += operand.data.matrix;
+	data.vector += operand.data.vector;
 }
 
 void matrix34::operator-=(const matrix34 operand)
 {
-	data.combine.matrix -= operand.data.combine.matrix;
-	data.combine.vector -= operand.data.combine.vector;
+	data.matrix -= operand.data.matrix;
+	data.vector -= operand.data.vector;
 }
 
 void matrix34::operator*=(const float operand)
 {
-	data.combine.matrix *= operand;
-	data.combine.vector *= operand;
+	data.matrix *= operand;
+	data.vector *= operand;
 }
 
 void matrix34::operator/=(const float operand)
 {
-	data.combine.matrix *= operand;
-	data.combine.vector *= operand;
+	data.matrix *= operand;
+	data.vector *= operand;
 }
 
 void matrix34::operator*=(const matrix34 operand)
 {
-	data.combine.matrix *= operand.data.combine.matrix;
-	data.combine.vector += data.combine.matrix * operand.data.combine.vector;
+	data.matrix *= operand.data.matrix;
+	data.vector += data.matrix * operand.data.vector;
 }
 

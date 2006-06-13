@@ -1,10 +1,10 @@
 /*id*********************************************************
     Unit: 3D PhysicEngine
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
-    Licence:
-        Только для Division
+    License:
+        Steel Engine License
     Description:
 ************************************************************/
 

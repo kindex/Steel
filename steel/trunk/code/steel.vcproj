@@ -363,18 +363,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\math\geometry.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\math\geometry.h"
-					>
-				</File>
-				<File
-					RelativePath=".\math\geometry2d.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\math\line.cpp"
 					>
 				</File>
@@ -428,14 +416,6 @@
 				</File>
 				<File
 					RelativePath=".\math\vector3d.h"
-					>
-				</File>
-				<File
-					RelativePath=".\math\vector4d.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\math\vector4d.h"
 					>
 				</File>
 			</Filter>
@@ -859,6 +839,10 @@
 				</File>
 				<File
 					RelativePath=".\graph\graph_interface.h"
+					>
+				</File>
+				<File
+					RelativePath=".\graph\types.h"
 					>
 				</File>
 				<Filter

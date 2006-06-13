@@ -11,7 +11,7 @@ v3 PhysicEnginePS::calculateForceForParticle(PhysicObjectStorage &storage1, Phys
 	v3 &pos2 = storage2.position;
 
 	if(helperDrawLines) // draw collision
-		helper->drawLine(Line(pos1, pos2-pos1), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
+		helper->drawLine(Line(pos1, pos2-pos1), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
 
 	Config *material1 =  storage1.object->getPMaterial();
 	Config *material2 =  storage2.object->getPMaterial();

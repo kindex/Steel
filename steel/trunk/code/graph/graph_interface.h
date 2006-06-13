@@ -1,13 +1,13 @@
 /*id*********************************************************
     Unit: GraphEngine
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [Anton]
 		* Bond [Andrey Bondarenko]
-    Licence:
-        Только для Division
+    License:
+        Steel Engine License
     Description:
 		Графический джижок - интерфейс рисуемого объекта
  ************************************************************/
@@ -16,41 +16,10 @@
 #define __GRAPH_INTERFACE_H
 
 #include "../engine.h"
-#include "../math/aabb.h"
-#include "../math/maths.h"
-#include "../math/vector3d.h"
-#include "../math/vector2d.h"
+
+#include "types.h"
 
 #include "../res/material/material.h"
-
-struct Light
-{
-	v3 pos;
-	float intensivity, range;
-};
-
-typedef steel::vector<Light>		Lights;
-
-//	kind : 2d only
-class TexCoord: public BufferedElement
-{
-public:
-	steel::vector<v2>	data;
-};
-
-class GLine // al-a triangle
-{
-public:
-	int a[2]; // vertex indexes
-	v4 color; // line color
-	void set(const int A, const int B) { a[0] = A; a[1] = B; }
-};
-
-typedef steel::vector<GLine> GLines;
-
-typedef Vertexes	Normals;
-
-typedef TexCoord TexCoords;
 
 // материал + треугольники, к которым он относится
 struct FaceMaterial
@@ -61,6 +30,7 @@ struct FaceMaterial
 };
 
 typedef steel::vector<FaceMaterial>	FaceMaterials;
+
 
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 

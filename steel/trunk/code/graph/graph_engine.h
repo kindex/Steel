@@ -1,12 +1,12 @@
 /*id*********************************************************
     Unit: GraphEngine
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [Anton]
-    Licence:
-        Только для Division
+    License:
+        Steel Engine License
     Description:
 		Графический джижок. Получет трехмерный объект в виде 3d-mesh
 		и потомки графического движка (OpenGL_Engine) занимаются

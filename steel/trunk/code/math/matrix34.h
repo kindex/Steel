@@ -1,9 +1,11 @@
 /*id*********************************************************
     Unit: math/matrix4x4
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+        Steel Engine License
     Description:
 		Class declaration for a 3x4 matrix
 		3 Rows x 4 Columns
@@ -23,15 +25,12 @@
 struct matrix34
 {
 	//member variables
-	union
+	struct
 	{
 //		float a[12]; // 1D array
 //		float m[4][3]; // 2D array - matrix 4 rows x 3 cols
-		struct
-		{
-			matrix33 matrix;
-			v3simple vector;
-		} combine;
+		matrix33 matrix;
+		v3simple vector;
 	} data;
 
 	void loadIdentity(void);
@@ -40,11 +39,11 @@ struct matrix34
 	static const inline matrix34 get(float _00, float _01, float _02, float _10, float _11, float _12, float _20, float _21, float _22,	float _x, float _y, float _z)
 	{
 		matrix34 t;
-		t.data.combine.matrix.data.m[0][0] = _00;	t.data.combine.matrix.data.m[0][1] = _01;	t.data.combine.matrix.data.m[0][2] = _02;
-		t.data.combine.matrix.data.m[1][0] = _10;	t.data.combine.matrix.data.m[1][1] = _11;	t.data.combine.matrix.data.m[1][2] = _12;
-		t.data.combine.matrix.data.m[2][0] = _20;	t.data.combine.matrix.data.m[2][1] = _21;	t.data.combine.matrix.data.m[2][2] = _22;
+		t.data.matrix.data.m[0][0] = _00;	t.data.matrix.data.m[0][1] = _01;	t.data.matrix.data.m[0][2] = _02;
+		t.data.matrix.data.m[1][0] = _10;	t.data.matrix.data.m[1][1] = _11;	t.data.matrix.data.m[1][2] = _12;
+		t.data.matrix.data.m[2][0] = _20;	t.data.matrix.data.m[2][1] = _21;	t.data.matrix.data.m[2][2] = _22;
 
-		t.data.combine.vector.x = _x;		t.data.combine.vector.y = _y;		t.data.combine.vector.z = _z;
+		t.data.vector.x = _x;		t.data.vector.y = _y;		t.data.vector.z = _z;
 		return t;
 	}
 
@@ -67,28 +66,28 @@ struct matrix34
 	void operator/=(const float operand);
 	inline matrix34 operator/(const float operand) const	{ matrix34 m = *this; m /= operand; return m; }
 
-	inline void setRotationX(const float angle) { data.combine.matrix.setRotationX(angle);  data.combine.vector.loadZero();}
-	inline void setRotationX(const float sin, const float cos) { data.combine.matrix.setRotationX(sin, cos);  data.combine.vector.loadZero();}
-	inline void setRotationY(const float angle) { data.combine.matrix.setRotationY(angle);  data.combine.vector.loadZero();}
-	inline void setRotationY(const float sin, const float cos) { data.combine.matrix.setRotationY(sin, cos);  data.combine.vector.loadZero();}
-	inline void setRotationZ(const float angle) { 		data.combine.matrix.setRotationZ(angle); data.combine.vector.loadZero();	}
-	inline void setRotationZ(const float sin, const float cos) { data.combine.matrix.setRotationZ(sin, cos);  data.combine.vector.loadZero();}
-	inline void setScale(const v3 scale) {data.combine.matrix.setScale(scale);  data.combine.vector.loadZero();}
+	inline void setRotationX(const float angle) { data.matrix.setRotationX(angle);  data.vector.loadZero();}
+	inline void setRotationX(const float sin, const float cos) { data.matrix.setRotationX(sin, cos);  data.vector.loadZero();}
+	inline void setRotationY(const float angle) { data.matrix.setRotationY(angle);  data.vector.loadZero();}
+	inline void setRotationY(const float sin, const float cos) { data.matrix.setRotationY(sin, cos);  data.vector.loadZero();}
+	inline void setRotationZ(const float angle) { 		data.matrix.setRotationZ(angle); data.vector.loadZero();	}
+	inline void setRotationZ(const float sin, const float cos) { data.matrix.setRotationZ(sin, cos);  data.vector.loadZero();}
+	inline void setScale(const v3 scale) {data.matrix.setScale(scale);  data.vector.loadZero();}
 
 	v3 getRow(const int rowNumber) const
 	{
 		v3 temp;
-		temp.x = data.combine.matrix.data.m[rowNumber][0];
-		temp.y = data.combine.matrix.data.m[rowNumber][1];
-		temp.z = data.combine.matrix.data.m[rowNumber][2];
+		temp.x = data.matrix.data.m[rowNumber][0];
+		temp.y = data.matrix.data.m[rowNumber][1];
+		temp.z = data.matrix.data.m[rowNumber][2];
 		return temp;
 	}
 
 	void setRow(int rowNumber, v3 row)
 	{
-		data.combine.matrix.data.m[rowNumber][0] = row.x;
-		data.combine.matrix.data.m[rowNumber][1] = row.y;
-		data.combine.matrix.data.m[rowNumber][2] = row.z;
+		data.matrix.data.m[rowNumber][0] = row.x;
+		data.matrix.data.m[rowNumber][1] = row.y;
+		data.matrix.data.m[rowNumber][2] = row.z;
 	}
 
 	inline void setTranslation(v3 row) 	{		setRow(3, row);	}
@@ -99,24 +98,29 @@ struct matrix34
 
 	inline v3 operator*(const v3 operand) const	
 	{ 
-		return  this->data.combine.matrix*operand + v3(data.combine.vector);
+		return  this->data.matrix*operand + v3(data.vector);
 	}
-	matrix33 &getMatrix33(void) { return data.combine.matrix; }
+	matrix33 &getMatrix33(void) { return data.matrix; }
 	
-	v3 getVector(void) { return data.combine.vector; }
+	v3 getVector(void) { return data.vector; }
 
 	inline void setRotationAxis(const float angle, const v3 axis)	{		setRotationAxis(sin(angle), sin(angle), axis);	}
 	void setRotationAxis(const float sinAngle, const float cosAngle, const v3 axis)
 	{
-		data.combine.matrix.setRotationAxis(sinAngle, cosAngle, axis);
-		data.combine.vector.loadZero();
+		data.matrix.setRotationAxis(sinAngle, cosAngle, axis);
+		data.vector.loadZero();
+	}
+
+	inline void getInverse(matrix34 &operand) const
+	{
+		data.matrix.getInverse(operand.data.matrix);
+		operand.data.vector = -data.vector;
 	}
 
 	inline matrix34 getInverse(void) const
 	{
 		matrix34 temp;
-		temp.data.combine.matrix = data.combine.matrix.getInverse();
-		temp.data.combine.vector = -data.combine.vector;
+		getInverse(temp);
 		return temp;
 	}
 

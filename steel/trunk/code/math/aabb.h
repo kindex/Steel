@@ -1,11 +1,11 @@
 /*id*********************************************************
     Unit: math/aabb
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-	Licence:
-        Только для Division
+	License:
+        Steel Engine License
     Description:
 		AABB (Axis-Aligned bounding box)
 ************************************************************/

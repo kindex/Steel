@@ -1,9 +1,11 @@
 /*id*********************************************************
     Unit: math/vector3d
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+        Steel Engine License
     Description:
 		Class declaration for a 3d vector
 ************************************************************/
@@ -51,7 +53,7 @@ struct v3
 	//member variables
 	float x, y, z;
 	//constructors
-	inline v3(void)	{}
+	inline v3(void)	{} // не инициализирует ничего (для повышения производительности)
 	inline v3(float X, float Y, float Z)	{ x = X; y = Y; z = Z; }
 
 	inline void set(float X, float Y, float Z) {	x = X;	y = Y;	z = Z;	}
@@ -68,6 +70,7 @@ struct v3
 	inline float getY() const {return y;}	//inline, const
 	inline float getZ() const {return z;}
 
+	// доступ к полям: 0 - x, 1 - y, 2 - z
 	float& operator[](int i)
 	{
 		return ((float*)(&x))[i];
@@ -195,23 +198,22 @@ struct v3
 };
 
 
-	//self-add etc
-	inline void v3simple::operator+=(const v3 & a)
-	{	x+=a.x;	y+=a.y;	z+=a.z;	}
+//self-add etc
+inline void v3simple::operator+=(const v3 & a)
+{	x+=a.x;	y+=a.y;	z+=a.z;	}
 
-	inline void v3simple::operator-=(const v3 & a)
-	{	x-=a.x;	y-=a.y;	z-=a.z;	}
+inline void v3simple::operator-=(const v3 & a)
+{	x-=a.x;	y-=a.y;	z-=a.z;	}
 
-	inline void v3simple::operator*=(const float a)
-	{	x*=a;	y*=a;	z*=a;	}
-	
-	inline void v3simple::operator/=(const float a)
-	{	if(a==0.0f)
-			return;
-		else
-		{	x/=a; y/=a; z/=a;	}
-	}
+inline void v3simple::operator*=(const float a)
+{	x*=a;	y*=a;	z*=a;	}
 
+inline void v3simple::operator/=(const float a)
+{	if(a==0.0f)
+		return;
+	else
+	{	x/=a; y/=a; z/=a;	}
+}
 
 
 #endif	// __MATH_VECTOR3D_H

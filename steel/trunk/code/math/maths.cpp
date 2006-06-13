@@ -7,18 +7,3 @@ float clamp(float a)
 	else return a;
 }
 
-
-template<typename T> T sqr(T x) 
-{
-	return x*x;
-}
-
-/*template<typename T>int sgn(T A) 
-{ 
-	return (A>EPSILON)-(A<-EPSILON);
-}*/
-
-int sgn(float A) 
-{ 
-	return (A>EPSILON)-(A<-EPSILON);
-}

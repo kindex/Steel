@@ -1,12 +1,12 @@
 /*id*********************************************************
     Unit: GraphEngine - OpenGL Engine
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [Anton]
-    Licence:
-        Только для Division
+    License:
+        Steel Engine License
     Description:
 		Графический джижок релизлванный на фунциях OpenGL. 
 		Рисует трехмерный объект в виде 3d-mesh,
@@ -43,24 +43,24 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 	float m[16]; // TODO
 
-	m[0] = e.matrix.data.combine.matrix.data.m[0][0];
-	m[1] = e.matrix.data.combine.matrix.data.m[1][0];
-	m[2] = e.matrix.data.combine.matrix.data.m[2][0];
+	m[0] = e.matrix.data.matrix.data.m[0][0];
+	m[1] = e.matrix.data.matrix.data.m[1][0];
+	m[2] = e.matrix.data.matrix.data.m[2][0];
 	m[3] = 0;
 
-	m[4] = e.matrix.data.combine.matrix.data.m[0][1];
-	m[5] = e.matrix.data.combine.matrix.data.m[1][1];
-	m[6] = e.matrix.data.combine.matrix.data.m[2][1];
+	m[4] = e.matrix.data.matrix.data.m[0][1];
+	m[5] = e.matrix.data.matrix.data.m[1][1];
+	m[6] = e.matrix.data.matrix.data.m[2][1];
 	m[7] = 0;
 
-	m[8] = e.matrix.data.combine.matrix.data.m[0][2];
-	m[9] = e.matrix.data.combine.matrix.data.m[1][2];
-	m[10] = e.matrix.data.combine.matrix.data.m[2][2];
+	m[8] = e.matrix.data.matrix.data.m[0][2];
+	m[9] = e.matrix.data.matrix.data.m[1][2];
+	m[10] = e.matrix.data.matrix.data.m[2][2];
 	m[11] = 0;
 
-	m[12] = e.matrix.data.combine.vector.x;
-	m[13] = e.matrix.data.combine.vector.y;
-	m[14] = e.matrix.data.combine.vector.z;
+	m[12] = e.matrix.data.vector.x;
+	m[13] = e.matrix.data.vector.y;
+	m[14] = e.matrix.data.vector.z;
 	m[15] = 1;
 
 	glLoadMatrixf(m);
@@ -202,7 +202,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 					}
 
 					if(map.kind == MapKind::color) // цвет RGBA
-						glColor4f(map.color.x, map.color.y, map.color.z, map.color.w);
+						glColor4f(map.color.r, map.color.g, map.color.b, map.color.a);
 
 					curTexArb++;
 				}
@@ -253,7 +253,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 			glPushAttrib(GL_ALL_ATTRIB_BITS);
 
 			if(e.material && !e.material->map.empty() &&e.material->map[0].kind == MapKind::color) // цвет RGBA
-					glColor4f(e.material->map[0].color.x, e.material->map[0].color.y, e.material->map[0].color.z, e.material->map[0].color.w);
+					glColor4f(e.material->map[0].color.r, e.material->map[0].color.g, e.material->map[0].color.b, e.material->map[0].color.a);
 			else
 				glColor4f(1,1,1,1);
 
@@ -506,10 +506,10 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 
 //    return B.rotate(N, sina, cosa);
 
-    matrix34 M;
+    matrix33 M;
     M.setRotationAxis(sina, cosa, v3(N.x, N.y, N.z)); // povernut' na ang v ploskoti perpedukularnoj N
 
-    v4 V(B.x, B.y, B.z, 1.0), R;
+    v3 V(B.x, B.y, B.z), R;
     R = M*V;
     v3 Res(R.x, R.y, R.z);
     Res.normalize();

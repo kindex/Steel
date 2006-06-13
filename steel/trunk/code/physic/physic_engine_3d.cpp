@@ -1,11 +1,11 @@
 /*id*********************************************************
     Unit: 3D PhysicEngine
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    Licence:
-        Только для Division
+    License:
+        Steel Engine License
     Description:
 		Kinematics, Collision Detection and Collision Reaction
  ************************************************************/
@@ -47,7 +47,7 @@ bool PhysicEngine3D::moveObject(PhysicInterface &o, v3 oldPos, v3 dir /*global*/
 			)
 		{
 			if(helper) // draw collision
-				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
+				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
 
 			collisionReaction(collision);	incCollision(collision); total.collisionCount++;
 			processedTime = collision.time;
@@ -57,7 +57,7 @@ bool PhysicEngine3D::moveObject(PhysicInterface &o, v3 oldPos, v3 dir /*global*/
 		else
 		{
 			if(cnt ==0 && helper) // draw collision
-				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
+				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
 			processedTime = 0;
 			return true; // движение закончено - объект столкнулся с дургим объектом повторно
 		}
@@ -90,7 +90,7 @@ bool PhysicEngine3D::rotateObject(PhysicInterface &o, matrix34 oldMatrix, v3 rot
 		if(findCollision(allCollisions, collision) == 0)
 		{
 			if(helper) // draw collision
-				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
+				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
 
 			collisionReaction(collision);	incCollision(collision); total.collisionCount++;
 			processedTime = 0;
@@ -195,7 +195,7 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 	if(helper && o.getProcessKind() != ProcessKind::none) // draw velocity
 		helper->drawVector(
 					Line(o.getGlobalPosition()*v3(0,0,0),	
-					o.getGlobalVelocity().translation*0.1f), 0.0f,0.0f, v4(0.0f,1.0f,0.0f,1.0f));
+					o.getGlobalVelocity().translation*0.1f), 0.0f,0.0f, color4f(0.0f,1.0f,0.0f,1.0f));
 
 	if(helper) // draw AABB
 	{
@@ -203,7 +203,7 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 		if(!frame.empty())
 		{
 			frame.mul(o.getGlobalPosition());
-			helper->drawBox(frame, 0,0, v4(1,1,1, 0.5f));
+			helper->drawBox(frame, 0,0, color4f(1,1,1, 0.5f));
 		}
 	}
 
@@ -950,13 +950,13 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 					Collision newCollision;	newCollision.time = INF;
 					if(checkCollisionMTrgTrg(at, distance, bt, newCollision, a, b) && collision.time > newCollision.time)
 					{
-						helper->drawLine(Line(at.base + distance*collision.time, at.a), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
-						helper->drawLine(Line(at.base + distance*collision.time, at.b), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
-						helper->drawLine(Line(at.base + at.a + distance*collision.time, at.b - at.a), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
+						helper->drawLine(Line(at.base + distance*collision.time, at.a), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
+						helper->drawLine(Line(at.base + distance*collision.time, at.b), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
+						helper->drawLine(Line(at.base + at.a + distance*collision.time, at.b - at.a), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
 
-						helper->drawLine(Line(bt.base, bt.a), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
-						helper->drawLine(Line(bt.base, bt.b), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
-						helper->drawLine(Line(bt.base + bt.a, bt.b - bt.a), 0.0f,0.0f, v4(1.0f,0.0f,0.0f,1.0f));
+						helper->drawLine(Line(bt.base, bt.a), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
+						helper->drawLine(Line(bt.base, bt.b), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
+						helper->drawLine(Line(bt.base + bt.a, bt.b - bt.a), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
 
 						collision = newCollision;
 						ok = true;

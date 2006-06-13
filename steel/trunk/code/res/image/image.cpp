@@ -1,17 +1,16 @@
 /*id*********************************************************
     Unit: Res-Image [Resources - Images (RGB bitmap)]
     Part of: Steel engine Res unit
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    Licence:
-        Только для Division
+    License:
+        Steel Engine License
     Description:
 		Класс для хранения изображения в виде RGB (без загрузки)
  ************************************************************/
 
 #include "image.h"
-#include "../../math/geometry.h"
 #include "../../math/maths.h"
 
 bool Image::createImage(int WIDTH, int HEIGHT, int BPP)

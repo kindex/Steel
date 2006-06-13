@@ -1,12 +1,12 @@
 /*id*********************************************************
     Unit: core
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [Anton]
-    Licence:
-        “олько дл€ Division
+    License:
+        Steel Engine License
     Description:
 		main() создайт игровые классы, коллеццию ресурсов, загружет 
 		плагины, содержит главный цикл игры.

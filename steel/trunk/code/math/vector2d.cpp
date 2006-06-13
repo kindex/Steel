@@ -1,23 +1,21 @@
-/****************************************************************
-  TheGame 2D geometry unit (Steel engine)
-  (C) KindeX (Andrey Ivanov), kindex@inbox.lv, http://kindex.lv
-  Division, 2004-2005.
-******************************************************************/
-//////////////////////////////////////////////////////////////////////////////////////////
-//	based on v2.cpp
-//	Function definitions for 2d vector class
-//	You may use this code however you wish, but if you do, please credit me and
-//	provide a link to my website in a readme file or similar
-//	Downloaded from: www.paulsprojects.net
-//	Created:	8th November 2002
-//////////////////////////////////////////////////////////////////////////////////////////
+/*id*********************************************************
+    Unit: math/vector3d
+    Part of: Steel engine
+    (C) DiVision, 2004-2006
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+        Steel Engine License
+    Description:
+		Class declaration for a 3d vector
+************************************************************/
 
-#include "Maths.h"
+#include "maths.h"
 #include "vector2d.h"
 
 void v2::normalize()
 {
-	coord length;
+	float length;
 	length = getLength();
 
 	if(length == 0)			//return if length is 1 or 0
@@ -36,8 +34,8 @@ v2 v2::getNormalized() const
 	return result;
 }
 
-/*v2 operator*(float scaleFactor, const v2 & rhs)
+/*v2 operator*(float scaleFactor, const v2 & operand)
 {
-	return rhs*scaleFactor;
+	return operand*scaleFactor;
 }*/
 

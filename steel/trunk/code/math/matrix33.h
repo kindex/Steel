@@ -1,9 +1,11 @@
 /*id*********************************************************
     Unit: math/matrix3x3
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+        Steel Engine License
     Description:
 		Class declaration for a 3x4 matrix
 		3 Rows x 3 Columns
@@ -56,7 +58,7 @@ struct matrix33
 	inline matrix33 operator/(const float operand) const	{ matrix33 m = *this; m /= operand; return m; }
 
 
-	// in radians
+	// делают матрицу матрицей поворота вдоль указанной оси на указанный угол в радианах
 	inline void setRotationX(const float angle) { setRotationX(sin(angle), cos(angle)); }
 	void setRotationX(const float sin, const float cos);
 	inline void setRotationY(const float angle) { setRotationY(sin(angle), cos(angle)); }
@@ -67,8 +69,17 @@ struct matrix33
 	inline void setRotationAxis(const float angle, const v3 axis)	{		setRotationAxis(sin(angle), sin(angle), axis);	}
 	void setRotationAxis(const float sinAngle, const float cosAngle, const v3 axis);
 
+	// setScale – делает матрицу масштабирования
 	void setScale(const v3 scale);
-	matrix33 getInverse(void) const;
+
+	// возвращает обратнрую матрицу
+	matrix33 getInverse(void) const
+	{
+		matrix33 temp;
+		getInverse(temp);
+		return temp;
+	}
+	void getInverse(matrix33 &operand) const;
 };
 
 #endif

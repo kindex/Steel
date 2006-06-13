@@ -1,7 +1,7 @@
 /*id*********************************************************
     Unit: math/matrix4x4
     Part of: Steel engine
-    Version: 1.0
+    (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
     Description:
@@ -186,28 +186,10 @@ void matrix33::setRotationAxis(const float s, const float c, const v3 v)
 	data.m[2][2] = v.z*v.z*(1-c) + c;
 }
 
-matrix33 matrix33::getInverse(void) const
+void matrix33::getInverse(matrix33 &res) const
 {
-	matrix33 res;
 	const m33 &m = data.m;
 
-// алгебраические дополнения
-	float m00 =  m[1][1]*m[2][2] - m[2][1]*m[1][2];
-	float m01 = -m[1][0]*m[2][2] + m[1][2]*m[2][0];
-	float m02 =  m[1][0]*m[2][1] - m[1][1]*m[2][0];
-
-	float m10 = -m[0][1]*m[2][2] + m[0][2]*m[2][1];
-	float m11 =  m[0][0]*m[2][2] - m[0][2]*m[2][0];
-	float m12 = -m[0][0]*m[2][1] + m[0][1]*m[2][0];
-
-	float m20 =  m[0][1]*m[1][2] - m[0][2]*m[1][1];
-	float m21 = -m[0][0]*m[1][2] + m[1][0]*m[0][2];
-	float m22 =  m[0][0]*m[1][1] - m[0][1]*m[1][0];
-
-/*	float det = 
-		data.m[0][0]*m00 + 		data.m[0][1]*m01 + 		data.m[0][2]*m02 + 
-		data.m[1][0]*m10 + 		data.m[1][1]*m11 + 		data.m[1][2]*m12 + 
-		data.m[2][0]*m20 + 		data.m[2][1]*m21 + 		data.m[2][2]*m22;*/
 	float det = 
 		+ m[0][0]*m[1][1]*m[2][2]
 		+ m[0][1]*m[1][2]*m[2][0]
@@ -217,21 +199,36 @@ matrix33 matrix33::getInverse(void) const
 		- m[0][1]*m[1][0]*m[2][2];
 
 
+
 	if(det != 0)
 	{
+		// алгебраические дополнения
+		float m00 =  m[1][1]*m[2][2] - m[2][1]*m[1][2];
+		float m01 = -m[1][0]*m[2][2] + m[1][2]*m[2][0];
+		float m02 =  m[1][0]*m[2][1] - m[1][1]*m[2][0];
+
+		float m10 = -m[0][1]*m[2][2] + m[0][2]*m[2][1];
+		float m11 =  m[0][0]*m[2][2] - m[0][2]*m[2][0];
+		float m12 = -m[0][0]*m[2][1] + m[0][1]*m[2][0];
+
+		float m20 =  m[0][1]*m[1][2] - m[0][2]*m[1][1];
+		float m21 = -m[0][0]*m[1][2] + m[1][0]*m[0][2];
+		float m22 =  m[0][0]*m[1][1] - m[0][1]*m[1][0];
+
 		float d = 1/det;
-		res.data.m[0][0] = m00*d;
-		res.data.m[0][1] = m01*d;
-		res.data.m[0][2] = m02*d;
+		res.data.m[0][0] = m22*d;
+		res.data.m[0][1] = m21*d;
+		res.data.m[0][2] = m20*d;
 
-		res.data.m[1][0] = m10*d;
+		res.data.m[1][0] = m12*d;
 		res.data.m[1][1] = m11*d;
-		res.data.m[1][2] = m12*d;
+		res.data.m[1][2] = m10*d;
 
-		res.data.m[2][0] = m20*d;
-		res.data.m[2][1] = m21*d;
-		res.data.m[2][2] = m22*d;
+		res.data.m[2][0] = m02*d;
+		res.data.m[2][1] = m01*d;
+		res.data.m[2][2] = m00*d;
 	}
+	else
+		res.loadZero();
 
-	return res;
 }

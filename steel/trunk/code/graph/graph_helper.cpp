@@ -14,17 +14,17 @@ void GraphHelper::setTime(const steel::time _time)
 		else it++;*/
 }
 
-void GraphHelper::drawVector(const Line line, const steel::time duration, const steel::time fade, const v4 color)
+void GraphHelper::drawVector(const Line line, const steel::time duration, const steel::time fade, const color4f color)
 {
 	vectors.push_back(LineElement(line, time, time + fade, time + duration, color));
 }
 
-void GraphHelper::drawLine(const Line line, const steel::time duration, const steel::time fade, const v4 color)
+void GraphHelper::drawLine(const Line line, const steel::time duration, const steel::time fade, const color4f color)
 {
 	lines.push_back(LineElement(line, time, time + fade, time + duration, color));
 }
 
-void GraphHelper::drawBox(const aabb box, const steel::time duration, const steel::time fade, const v4 color)
+void GraphHelper::drawBox(const aabb box, const steel::time duration, const steel::time fade, const color4f color)
 {
 	boxes.push_back(BoxElement(box, time, time + fade, time + duration, color));
 }

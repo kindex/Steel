@@ -1,7 +1,6 @@
 #include "_cpp.h"
 #include "common/logger.h"
 
-#include "math/geometry.h"
 #include "math/line.h"
 #include "math/plane.h"
 

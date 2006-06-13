@@ -38,8 +38,17 @@
 
 float clamp(float a);
 
-template<typename T> T sqr(T x);
-int sgn(float A);
+template<typename T> T sqr(T x) 
+{
+	return x*x;
+}
+
+template<typename T> int sgn(T A) 
+{ 
+	return (A>EPSILON)-(A<-EPSILON);
+}
+
+
 //template<typename T>int sgn(T A);
 
 
