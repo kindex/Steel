@@ -7,7 +7,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 11">
 <meta name=Originator content="Microsoft Word 11">
-<link rel=File-List href="04.design_document_files/filelist.xml">
+<link rel=File-List href="design_document_files/filelist.xml">
 <title>Спецификация движка</title>
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
@@ -81,6 +81,30 @@ p
 	font-size:12.0pt;
 	font-family:"Times New Roman";
 	mso-fareast-font-family:"Times New Roman";}
+span.NormalWebChar
+	{mso-style-name:"Normal \(Web\) Char";
+	mso-style-locked:yes;
+	mso-style-link:"Normal \(Web\)";
+	mso-ansi-font-size:12.0pt;
+	mso-bidi-font-size:12.0pt;
+	mso-ansi-language:RU;
+	mso-fareast-language:RU;
+	mso-bidi-language:AR-SA;}
+span.codeChar
+	{mso-style-name:"code Char";
+	mso-style-locked:yes;
+	mso-style-parent:"Normal \(Web\) Char";
+	mso-style-link:code;
+	mso-ansi-font-size:12.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:RU;
+	mso-bidi-language:AR-SA;
+	mso-no-proof:yes;}
 p.code, li.code, div.code
 	{mso-style-name:code;
 	mso-style-parent:"Normal \(Web\)";
@@ -99,28 +123,6 @@ p.code, li.code, div.code
 	mso-fareast-font-family:"Times New Roman";
 	mso-ansi-language:EN-US;
 	mso-no-proof:yes;}
-span.NormalWebChar
-	{mso-style-name:"Normal \(Web\) Char";
-	mso-style-locked:yes;
-	mso-style-link:"Normal \(Web\)";
-	mso-ansi-font-size:12.0pt;
-	mso-bidi-font-size:12.0pt;
-	mso-ansi-language:RU;
-	mso-fareast-language:RU;
-	mso-bidi-language:AR-SA;}
-span.codeChar
-	{mso-style-name:"code Char";
-	mso-style-locked:yes;
-	mso-style-parent:"Normal \(Web\) Char";
-	mso-style-link:code;
-	font-family:"Courier New";
-	mso-ascii-font-family:"Courier New";
-	mso-hansi-font-family:"Courier New";
-	mso-bidi-font-family:"Courier New";
-	mso-ansi-language:EN-US;
-	mso-fareast-language:RU;
-	mso-bidi-language:AR-SA;
-	mso-no-proof:yes;}
 span.SpellE
 	{mso-style-name:"";
 	mso-spl-e:yes;}
@@ -137,9 +139,9 @@ div.Section1
 	{page:Section1;}
  /* List Definitions */
  @list l0
-	{mso-list-id:872618981;
+	{mso-list-id:288316242;
 	mso-list-type:hybrid;
-	mso-list-template-ids:-1920847426 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
+	mso-list-template-ids:1418075520 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
 @list l0:level1
 	{mso-level-number-format:bullet;
 	mso-level-text:\F0B7;
@@ -177,6 +179,50 @@ div.Section1
 	mso-level-number-position:left;
 	text-indent:-18.0pt;}
 @list l0:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1
+	{mso-list-id:872618981;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1920847426 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:92.7pt;
+	mso-level-number-position:left;
+	margin-left:92.7pt;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l1:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level9
 	{mso-level-tab-stop:324.0pt;
 	mso-level-number-position:left;
 	text-indent:-18.0pt;}
@@ -243,39 +289,39 @@ lang=EN-US style='mso-ansi-language:EN-US'>Engine</span>, интерфейсы модулей,
 
 <p>В документе должны присутствовать:</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>Текущее состояние движка</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>Предыдущее состояние и причиной отказа</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>Идеи по дальнейшему улучшению (TODO)</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:yellow;
 mso-highlight:yellow'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span style='background:yellow;mso-highlight:
 yellow'>Непонятные момоенты и объяснения<o:p></o:p></span></p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:red;
 mso-highlight:red'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span style='background:red;mso-highlight:red'>То,
 что присутствует, но должно быть удалено<o:p></o:p></span></p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
 mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -444,9 +490,9 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>Положение и поворот произвольной
-  точки объекта в локальный координатах (точка отсчёта объекта). Именно за
-  изменения этого параметра и отвечает физический движок.</p>
+  <p style='margin-left:0cm;text-indent:0cm'>Положение и поворот произвольной точки
+  объекта в локальный координатах (точка отсчёта объекта). Именно за изменения
+  этого параметра и отвечает физический движок.</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3'>
@@ -964,13 +1010,46 @@ lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Change</span
 lang=EN-US> </span>– может ли объект сам менять этот парамерт, находясь под
 контролем движка. <span lang=EN-US style='mso-ansi-language:EN-US'>Warn</span><span
 lang=EN-US> </span>– может менять, но при первом же вызове функции <span
-class=codeChar><span lang=EN-US>bool wasChanged()</span></span><span
-lang=EN-US> </span>должен вернуть <span class=SpellE>true</span>.</p>
+class=codeChar><span lang=EN-US>bool</span></span><span class=codeChar><span
+lang=EN-US style='mso-ansi-language:RU'> </span><span lang=EN-US>wasChanged</span></span><span
+class=codeChar><span style='mso-ansi-language:RU'>()</span></span> должен
+вернуть <span class=SpellE>true</span>.</p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<h3><span lang=EN-US style='mso-ansi-language:EN-US'>Particle</span><span
-lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>System</span></h3>
+<h3><span lang=EN-US style='mso-ansi-language:EN-US'>Particle System</span></h3>
+
+<h3><span style='background:silver;mso-highlight:silver'>Модульность [</span><span
+class=SpellE><span lang=EN-US style='background:silver;mso-highlight:silver;
+mso-ansi-language:EN-US'>kindex</span></span><span style='background:silver;
+mso-highlight:silver'>]<o:p></o:p></span></h3>
+
+<p><span style='background:silver;mso-highlight:silver'>Надо иметь возможность
+заменять следующие модули для каждой системы частиц:<o:p></o:p></span></p>
+
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo3;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
+mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:silver;mso-highlight:
+silver'>Эмиттер (точечный, разброс, равномерный разброс)<o:p></o:p></span></p>
+
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo3;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
+mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span lang=EN-US
+style='background:silver;mso-highlight:silver;mso-ansi-language:EN-US'>Renderer</span></span><span
+style='background:silver;mso-highlight:silver'> (спрайты, система спрайтов,
+многогранники, <span class=SpellE>меташарики</span>)<o:p></o:p></span></p>
+
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo3;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
+mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span lang=EN-US style='background:silver;
+mso-highlight:silver;mso-ansi-language:EN-US'>Physic</span><span
+style='background:silver;mso-highlight:silver'><o:p></o:p></span></p>
 
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
@@ -984,8 +1063,8 @@ lang=EN-US style='mso-ansi-language:EN-US'>vector</span>3<span lang=EN-US
 style='mso-ansi-language:EN-US'>d</span>.<span lang=EN-US style='mso-ansi-language:
 EN-US'>h</span>)</h3>
 
-<p>Используется для хранения трёхмерного вектора, положения точки в пространстве,
-направляющих прямых, нормалей к плоскостям и т.д.</p>
+<p>Используется для хранения трёхмерного вектора, положения точки в
+пространстве, направляющих прямых, нормалей к плоскостям и т.д.</p>
 
 <p>Содержит 3 поля: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>float</span></span><span
 style='mso-bidi-font-size:10.0pt'> <span class=SpellE>x</span>, <span
@@ -996,11 +1075,10 @@ class=SpellE>y</span>, <span class=SpellE>z</span>;</span></p>
 <p><span style='mso-bidi-font-size:10.0pt'>v3() – не инициализирует ничего (для
 повышения производительности)<o:p></o:p></span></p>
 
-<p><span style='mso-bidi-font-size:10.0pt'>v3(<span class=SpellE>float</span> <span
-class=SpellE>x</span>, <span class=SpellE>float</span> <span class=SpellE>y</span>,
-<span class=SpellE>float</span> <span class=SpellE>z</span>)<o:p></o:p></span></p>
+<p><span lang=EN-US style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'>v3(float
+x, float y, float z)<o:p></o:p></span></p>
 
-<p><o:p>&nbsp;</o:p></p>
+<p><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
 
 <p>Чтение и запись полей осуществляется по их именам. Кроме <span class=GramE>того</span>
 доступен <span class=SpellE>operator</span>[](<span class=SpellE>int</span> <span
@@ -1014,14 +1092,17 @@ style='mso-bidi-font-size:10.0pt'>(), <span class=SpellE>loadOne</span>()<o:p></
 </p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>operator==</span></span><span
-style='mso-bidi-font-size:10.0pt'> и <span class=SpellE>operator!=</span> сравнивают
-ве</span>к<span style='mso-bidi-font-size:10.0pt'>тора по</span> компонентам.</p>
+style='mso-bidi-font-size:10.0pt'> и <span class=SpellE>operator!=</span>
+сравнивают ве</span>к<span style='mso-bidi-font-size:10.0pt'>тора по</span>
+компонентам.</p>
 
-<p>Полезные функции: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>getLength</span></span><span
-style='mso-bidi-font-size:10.0pt'>, <span class=SpellE>normalize</span>, <span
-class=SpellE>getNormalized</span>, <span class=SpellE>getSquaredLength</span><o:p></o:p></span></p>
+<p>Полезные<span style='mso-ansi-language:EN-US'> </span>функции<span
+lang=EN-US style='mso-ansi-language:EN-US'>: </span><span lang=EN-US
+style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'>getLength, normalize,
+getNormalized, getSquaredLength<o:p></o:p></span></p>
 
-<p><span style='mso-spacerun:yes'> </span></p>
+<p><span lang=EN-US style='mso-ansi-language:EN-US'><span
+style='mso-spacerun:yes'> </span><o:p></o:p></span></p>
 
 <p>Кроме <span class=GramE>того</span> <span class=SpellE>доступена</span>
 упрощенная версия v3 без конструктора. v3simple. Можно использовать только
@@ -1059,8 +1140,9 @@ style='mso-bidi-font-size:10.0pt'> операторы: + - * /<o:p></o:p></span></p>
 строки, из второй столбцы.<o:p></o:p></span></p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>setRotation</span></span><span
-style='mso-bidi-font-size:10.0pt'>[X, Y, Z, <span class=SpellE>Axis</span>] делают
-матрицу матрицей поворота вдоль указанной оси на указанный угол в радианах. </span></p>
+style='mso-bidi-font-size:10.0pt'>[X, Y, Z, <span class=SpellE>Axis</span>]
+делают матрицу матрицей поворота вдоль указанной оси на указанный угол в
+радианах. </span></p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>setScale</span></span><span
 style='mso-bidi-font-size:10.0pt'> – делает матрицу масштабирования</span></p>
@@ -1073,51 +1155,74 @@ style='mso-bidi-font-size:10.0pt'> – возвращает обратную матрицу<o:p></o:p></spa
 <p><span style='mso-bidi-font-size:10.0pt'>Примеры использования: изменения
 системы координат<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>matrix33 a,b,c;<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>matrix</span><span style='mso-ansi-language:
+RU'>33 </span><span lang=EN-US>a</span><span style='mso-ansi-language:RU'>,</span><span
+lang=EN-US>b</span><span style='mso-ansi-language:RU'>,</span><span lang=EN-US>c</span><span
+style='mso-ansi-language:RU'>;<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>a.setRotationX(1);<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>a.setRotationX(1);</span></p>
 
-<p class=code><span lang=EN-US>b = a.getInverse();<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>b = a.getInverse();</span></p>
 
-<p class=code><span lang=EN-US>c = a*b; <span style='color:green'>// должна
-получиться единичная матрица<o:p></o:p></span></span></p>
+<p class=code><span lang=EN-US>c</span><span style='mso-ansi-language:RU'> = </span><span
+lang=EN-US>a</span><span style='mso-ansi-language:RU'>*</span><span lang=EN-US>b</span><span
+style='mso-ansi-language:RU'>; <span style='color:green'>// должна получиться
+единичная матрица<o:p></o:p></span></span></p>
 
-<p class=code><span lang=EN-US>v3(1,2,3)*a; <span style='color:green'>// вектор
-(1,2,3) повернутый на 1 радиан в положительном направлении вдоль оси X<o:p></o:p></span></span></p>
+<p class=code><span lang=EN-US>v</span><span style='mso-ansi-language:RU'>3(1,2,3)*</span><span
+lang=EN-US>a</span><span style='mso-ansi-language:RU'>; <span style='color:
+green'>// вектор (1,2,3) повернутый на 1 радиан в положительном направлении
+вдоль оси </span></span><span lang=EN-US style='color:green'>X</span><span
+style='color:green;mso-ansi-language:RU'><o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>b.setRotationY(2);<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>b.setRotationY(2);</span></p>
 
-<p class=code><span lang=EN-US>c = a*b;<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>c = a*b;</span></p>
 
-<p class=code><span lang=EN-US>v3(1,2,3)*c; <span style='color:green'>// вектор
-(1,2,3) повернутый на 1 радиан в положительном направлении вдоль оси X, и после
-этого еще на 2 радиана вдоль оси Y<o:p></o:p></span></span></p>
+<p class=code><span lang=EN-US>v</span><span style='mso-ansi-language:RU'>3(1,2,3)*</span><span
+lang=EN-US>c</span><span style='mso-ansi-language:RU'>; <span style='color:
+green'>// вектор (1,2,3) повернутый на 1 радиан в положительном направлении
+вдоль оси </span></span><span lang=EN-US style='color:green'>X</span><span
+style='color:green;mso-ansi-language:RU'>, и после этого еще на 2 радиана вдоль
+оси </span><span lang=EN-US style='color:green'>Y</span><span style='color:
+green;mso-ansi-language:RU'><o:p></o:p></span></p>
 
 <h3>matrix34</h3>
 
-<p>Матрица из трёх строк и четырёх столбцов. Служит эмуляцией матрицы 4x4, к
-которой нижняя строка равна (0,0,0,1). Интерфейс аналогичен matrix33. matrix34 состоит
+<p>Матрица из трёх строк и четырёх столбцов. Служит эмуляцией матрицы 4x4, к которой
+нижняя строка равна (0,0,0,1). Интерфейс аналогичен matrix33. matrix34 состоит
 из matrix33 (первые 3 колонки) и v3 (четвертая колонка)</p>
 
-<p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>setTranslation</span></span><span
-style='mso-bidi-font-size:10.0pt'> и <span class=SpellE>getTranslation</span> работают
-с вектором. Эти функции делают матрицу переноса.</span></p>
+<p><span lang=EN-US style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'>setTranslation
+</span><span style='mso-bidi-font-size:10.0pt'>и</span><span lang=EN-US
+style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'> getTranslation </span><span
+style='mso-bidi-font-size:10.0pt'>работают</span><span style='mso-bidi-font-size:
+10.0pt;mso-ansi-language:EN-US'> </span><span style='mso-bidi-font-size:10.0pt'>с</span><span
+style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'> </span><span
+style='mso-bidi-font-size:10.0pt'>вектором</span><span lang=EN-US
+style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'>. </span><span
+style='mso-bidi-font-size:10.0pt'>Эти функции делают матрицу переноса.</span></p>
 
 <p><o:p>&nbsp;</o:p></p>
 
 <p>Примеры использования: изменения системы координат</p>
 
-<p class=code><span lang=EN-US>matrix34 a,b, c;<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>matrix</span><span style='mso-ansi-language:
+RU'>34 </span><span lang=EN-US>a</span><span style='mso-ansi-language:RU'>,</span><span
+lang=EN-US>b</span><span style='mso-ansi-language:RU'>, </span><span
+lang=EN-US>c</span><span style='mso-ansi-language:RU'>;<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>a.setRotationZ(M_PI/2);<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>a.setRotationZ(M_PI/2);</span></p>
 
-<p class=code><span lang=EN-US>a.setTranslation(v3(1,0,0));<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>a.setTranslation(v3(1,0,0));</span></p>
 
 <p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
 
-<p class=code><span lang=EN-US>c *= a*a;<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>c</span><span style='mso-ansi-language:RU'> *= </span><span
+lang=EN-US>a</span><span style='mso-ansi-language:RU'>*</span><span lang=EN-US>a</span><span
+style='mso-ansi-language:RU'>;<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+<p class=code><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
 
 <p class=code><span lang=EN-US>v</span><span style='mso-ansi-language:RU'>3 </span><span
 lang=EN-US>result</span><span style='mso-ansi-language:RU'> = </span><span

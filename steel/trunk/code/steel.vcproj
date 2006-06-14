@@ -324,10 +324,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\engine.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\engine.h"
 				>
 			</File>

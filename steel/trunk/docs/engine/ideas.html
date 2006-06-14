@@ -7,11 +7,10 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 11">
 <meta name=Originator content="Microsoft Word 11">
-<link rel=File-List href="work_rules_files/filelist.xml">
+<link rel=File-List href="ideas_files/filelist.xml">
 <title>Спецификация движка</title>
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
-  <w:Zoom>120</w:Zoom>
   <w:ValidateAgainstSchemas/>
   <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
   <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
@@ -24,14 +23,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
 </xml><![endif]-->
 <style>
 <!--
- /* Font Definitions */
- @font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;
-	mso-font-charset:2;
-	mso-generic-font-family:auto;
-	mso-font-pitch:variable;
-	mso-font-signature:0 268435456 0 0 -2147483648 0;}
  /* Style Definitions */
  p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{mso-style-parent:"";
@@ -97,9 +88,9 @@ div.Section1
 	{page:Section1;}
  /* List Definitions */
  @list l0
-	{mso-list-id:1346858440;
+	{mso-list-id:288316242;
 	mso-list-type:hybrid;
-	mso-list-template-ids:-483219368 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
+	mso-list-template-ids:1418075520 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
 @list l0:level1
 	{mso-level-number-format:bullet;
 	mso-level-text:\F0B7;
@@ -108,6 +99,82 @@ div.Section1
 	margin-left:92.7pt;
 	text-indent:-18.0pt;
 	font-family:Symbol;}
+@list l0:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1
+	{mso-list-id:537860882;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1911915996 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:92.7pt;
+	mso-level-number-position:left;
+	margin-left:92.7pt;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+@list l1:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l1:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
 ol
 	{margin-bottom:0cm;}
 ul
@@ -159,61 +226,17 @@ table.MsoTableGrid
 
 <div class=Section1>
 
-<h1><span lang=EN-US style='mso-ansi-language:EN-US'>Work Rules<o:p></o:p></span></h1>
+<h1><span lang=EN-US style='mso-ansi-language:EN-US'>Ideas</span></h1>
 
-<h2>О документе</h2>
+<h1>О документе</h1>
 
-<p>В этом документе описывается порядок и правила работы команды: <span
-lang=EN-US style='mso-ansi-language:EN-US'>SVN</span><span style='background:
-yellow;mso-highlight:yellow'>, встречи, стиль</span>, правила тестирования?</p>
+<p>В этом документе содержится список всевозможных не отсортированных идей и
+фишек. </p>
 
-<h1><span lang=EN-US style='mso-ansi-language:EN-US'>SVN</span></h1>
+<h3>Быстрый Список</h3>
 
-<p>Исходный код проекта и минимальный набор ресурсов храниться в <span
-lang=EN-US style='mso-ansi-language:EN-US'>SVN</span>-репозитории (<span
-lang=EN-US style='mso-ansi-language:EN-US'>Subversion</span>). Адрес
-репозитория: <span lang=EN-US style='mso-ansi-language:EN-US'>svn</span>+<span
-lang=EN-US style='mso-ansi-language:EN-US'>ssh</span>://<span lang=EN-US
-style='mso-ansi-language:EN-US'>kindex</span>@<span lang=EN-US
-style='mso-ansi-language:EN-US'>kindex</span>.<span lang=EN-US
-style='mso-ansi-language:EN-US'>lv</span>/<span lang=EN-US style='mso-ansi-language:
-EN-US'>var</span>/<span lang=EN-US style='mso-ansi-language:EN-US'>svn</span>/<span
-lang=EN-US style='mso-ansi-language:EN-US'>steel</span>/<span lang=EN-US
-style='mso-ansi-language:EN-US'>steel</span></p>
-
-<p>Структура репозитория:</p>
-
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
-tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
-mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
-style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>trunk</span><span
-lang=EN-US> </span>– текущая стабильно работающая версия проекта.</p>
-
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
-tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
-mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
-style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>branches</span><span
-lang=EN-US> </span>– тестовые версии или версии с новыми возможностями, на этапе
-реализации которых могкт быть неработающие версии.</p>
-
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
-tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
-mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
-style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>demo</span><span
-lang=EN-US> </span>– ключевые (констрольные) точки проекта хранятся для
-истории. Формат директорий: <span lang=EN-US style='mso-ansi-language:EN-US'>[</span>номер<span
-lang=EN-US style='mso-ansi-language:EN-US'>]_[</span>имя<span lang=EN-US
-style='mso-ansi-language:EN-US'>].</span></p>
-
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
-tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
-mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
-style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>tags
-– </span>различные интересные версии.</p>
+<p>Монстр, который состоит из системы частиц, поглощает пули и кладёт их себе
+на броню (питается ими).</p>
 
 <h1>Составители</h1>
 
