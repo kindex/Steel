@@ -1,0 +1,38 @@
+env=Environment(CPPPATH=["/usr/include/SDL"], CCFLAGS="-Wall")
+#env=Environment(CCFLAGS="-Wall")
+
+env.Append(CCFLAGS=" -DDEBUG -g")
+#env.Append(CCFLAGS=" -O3")
+
+sources = Split("""
+	common/logger.cpp
+	graph/opengl_engine.cpp
+	graph/time.cpp
+	graph/graph_engine.cpp
+	math/matrix4x4.cpp
+	math/vector2d.cpp
+	math/vector3d.cpp
+	math/vector4d.cpp
+	math/geometry.cpp
+	math/maths.cpp
+	res/model/model.cpp
+	res/model/bones.cpp
+	res/model/_3ds.cpp
+	res/model/lightwave.cpp
+	res/image/image.cpp
+	res/image/bmp.cpp
+	res/res.cpp
+	utils.cpp
+	main.cpp
+	engine.cpp
+	""")
+
+libs = Split("""
+	SDL
+	GL
+	""")
+
+libpaths = Split("""
+	""")
+
+Default(env.Program("steel",sources,LIBS=libs,LIBPATH=libpaths))

@@ -1,0 +1,9 @@
+;	color_map	gbnm
+;	bump	gbnm
+
+	bump	boxes/tr_wall_outside_04_local
+*	color_map	boxes/hl_crate
+
+;	env	image/env/tsccity
+;	bump	medflr2_local
+;*	color_map	medflr2_med_d

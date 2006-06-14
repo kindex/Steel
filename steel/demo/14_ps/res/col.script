@@ -1,0 +1,37 @@
+// Main scene file
+
+// solid. Unmovable physic object
+// uni  -universal physic object
+// tag	- object with coordinates, but no graph and physic
+
+
+//KIND	parent	id	CONF		X,Y,Z		Angle		Scale	Vx,Vy,Vz
+solid			wall/wall1	20,0,-1
+solid			wall/wall1	-20,0,-1
+solid			wall/wall1	0,0,15
+solid			wall/wall1	0,20,-1
+solid			wall/wall1	0,-20,-1
+
+solid			wall/wall1	0,0,-21
+
+
+uni			sphere/sphere2	0,0,2	0,0,0	2
+uni			sphere/sphere2	0,0,4.1	0,0,0	2
+uni			sphere/sphere2	0,0,6.2	0,0,0	2
+uni			sphere/sphere2	0,0,8.3	0,0,0	2
+
+uni			sphere/sphere2	3,0,2	0,0,0	2
+uni			sphere/sphere2	3,0,4.1	0,0,0	2
+uni			sphere/sphere2	3,0,6.2	0,0,0	2
+uni			sphere/sphere2	3,0,8.3	0,0,0	2
+
+uni			sphere/sphere2	0,3,2	0,0,0	2
+uni			sphere/sphere2	0,3,4.1	0,0,0	2
+uni			sphere/sphere2	0,3,6.2	0,0,0	2
+uni			sphere/sphere2	0,3,8.3	0,0,0	2
+
+uni			sphere/sphere2	3,3,2	0,0,0	2
+uni			sphere/sphere2	3,3,4.1	0,0,0	2
+uni			sphere/sphere2	3,3,6.2	0,0,0	2
+uni			sphere/sphere2	3,3,8.3	0,0,0	2
+
