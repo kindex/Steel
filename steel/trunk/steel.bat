@@ -1,2 +1,2 @@
 cd "build.debug"
-steel.exe script=pir.script
+steel.exe script=room.script

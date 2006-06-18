@@ -4,7 +4,7 @@
     (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-		* Kane [Anton]
+		* Kane [J. Anton, kane@mail.berlios.de]
     License:
         Steel Engine License
     Description:
@@ -25,7 +25,7 @@
 
 //Compiler
 //#undef BC // Borland C++ Builder 6 
-//--define COMPILER_VS8 // Visual Studio 8 (2005) - automatic in steel.sln
+//--define COMPILER_VS8 // Visual Studio 8 (2005) - automatic in steel.vcproj
 
 #ifndef COMPILER_VS8
 #define COMPILER_DEVCPP

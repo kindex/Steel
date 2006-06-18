@@ -15,6 +15,15 @@
 
 #include "../common/steel_vector.h"
 
+// hash_map include (различные файлы, так как hash_map не входит в стандарт С++)
+#ifdef COMPILER_VS8
+	#include <hash_map>
+#endif
+
+#ifdef COMPILER_DEVCPP
+	#include <ext/hash_map>
+#endif
+
 
 class PhysicEnginePS: public PhysicEngine
 {
@@ -23,7 +32,7 @@ protected:
 
 	struct PhysicObjectStorage
 	{
-		int id, pSetId;
+		int objectId, storageId, partiecleSetId;
 		PhysicInterface *object;
 		CollisionType::CollisionType collisionType;
 		v3 force;
@@ -33,6 +42,16 @@ protected:
 		Config *material;
 	};
 
+	// hash_map namespace
+#ifdef COMPILER_VS8
+	stdext::
+#endif
+
+#ifdef COMPILER_DEVCPP
+	__gnu_cxx::
+#endif
+		
+	hash_map<uid, int> idHash;
 
 	steel::svector<PhysicObjectStorage> storage;
 	steel::svector<int> particleSet;

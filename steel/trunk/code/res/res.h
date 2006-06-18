@@ -229,5 +229,7 @@ public:
 	uid	genUid() { return freeUid++; }
 };
 
+// глобальная коллекция ресурсов
+extern ResCollection res;
 
 #endif

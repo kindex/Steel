@@ -73,7 +73,6 @@ struct velocity
 
 class PhysicInterface: public Interface
 {
-	int storageId;
 //	steel::time	currentTime; // время, в котором находиться объект
 	friend class PhysicEngine;
 	friend class PhysicEngine3D;
@@ -85,9 +84,6 @@ public:
 	// через вызовы функций set* (mass, position, material, mesh)
 	// скорость может меняться	
 	virtual bool wasChanged() { return false; }
-
-	virtual void setStorageId(const int _id) { storageId = _id; }
-	virtual int getStorageId(void) { return storageId; }
 
 	virtual CollisionType::CollisionType getCollisionType() = 0;
 

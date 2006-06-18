@@ -11,7 +11,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <title>Спецификация движка</title>
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
-  <w:SpellingState>Clean</w:SpellingState>
   <w:GrammarState>Clean</w:GrammarState>
   <w:ValidateAgainstSchemas/>
   <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
@@ -70,6 +69,14 @@ h3
 	font-size:13.0pt;
 	font-family:Arial;
 	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
 p
 	{mso-style-link:"Normal \(Web\) Char";
 	margin-top:3.0pt;
@@ -123,9 +130,6 @@ p.code, li.code, div.code
 	mso-fareast-font-family:"Times New Roman";
 	mso-ansi-language:EN-US;
 	mso-no-proof:yes;}
-span.SpellE
-	{mso-style-name:"";
-	mso-spl-e:yes;}
 span.GramE
 	{mso-style-name:"";
 	mso-gram-e:yes;}
@@ -273,7 +277,7 @@ table.MsoTableGrid
 <meta name=CHANGED content="20060330;18132082">
 </head>
 
-<body lang=RU style='tab-interval:35.4pt'>
+<body lang=RU link=blue vlink=purple style='tab-interval:35.4pt'>
 
 <div class=Section1>
 
@@ -285,7 +289,7 @@ table.MsoTableGrid
 style='mso-ansi-language:EN-US'>Steel</span><span lang=EN-US> </span><span
 lang=EN-US style='mso-ansi-language:EN-US'>Engine</span>, интерфейсы модулей,
 объяснения выбранных решений. Структура документа совпадает со структурой
-движка. В квадратных скобочках пишется <span class=SpellE>атрор</span>.</p>
+движка. В квадратных скобочках пишется атрор.</p>
 
 <p>В документе должны присутствовать:</p>
 
@@ -330,10 +334,34 @@ silver'>Недописанные части<o:p></o:p></span></p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<h2><span lang=EN-US style='mso-ansi-language:EN-US'>Physic Engine<o:p></o:p></span></h2>
+<h1><span lang=EN-US style='mso-ansi-language:EN-US'>Steel Engine<o:p></o:p></span></h1>
 
-<h3><span lang=EN-US style='mso-ansi-language:EN-US'>Physic Interface [<span
-class=SpellE>kindex</span>]<o:p></o:p></span></h3>
+<p>В основе <span lang=EN-US style='mso-ansi-language:EN-US'>Steel</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Engine</span>
+лежат понятия об объекте и движке.<span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><o:p></o:p></span></p>
+
+<h2><a name="_Object"></a><span lang=EN-US style='mso-ansi-language:EN-US'>Object</span></h2>
+
+<p>Первое определение: Объект – это набор полей и методов, которые что-то
+хранят и что-то делают. Каждый объект идентифицируется адресом в памяти, по
+которому он расположен.</p>
+
+<p>Второе определение: [Игровой] объект – нечто, что обрабатывается движком. Объект
+имеет стандартный набор методов для общения с внешним миром. Такой набор методов
+называется интерфейсом. Каждый объект идентифицируется числом (<span
+lang=EN-US style='mso-ansi-language:EN-US'><a href="#_uid">uid</a>)<o:p></o:p></span></p>
+
+<p>Объект имеет положение в пространстве (<span lang=EN-US style='mso-ansi-language:
+EN-US'>Position</span>). Положение – это смещение, поворот и масштабирование. Положение
+задаётся матрицей <span lang=EN-US style='mso-ansi-language:EN-US'>3x4.</span></p>
+
+<h2><span lang=EN-US style='mso-ansi-language:EN-US'>Physic</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Engine</span></h2>
+
+<h3><span lang=EN-US style='mso-ansi-language:EN-US'>Physic</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Interface</span>
+[<span lang=EN-US style='mso-ansi-language:EN-US'>kindex</span>]</h3>
 
 <p>Любой объект, который должен обрабатываться стандартными физическими
 движками, должен поддерживать этот интерфейс (быть унаследованным от <span
@@ -396,18 +424,16 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   <td width=435 valign=top style='width:326.5pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
-  lang=EN-US style='mso-ansi-language:EN-US'>Desc</span></span><span
-  lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>Desc<o:p></o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
   <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
-  lang=EN-US style='mso-ansi-language:EN-US'>int</span></span><span lang=EN-US
-  style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>int<o:p></o:p></span></p>
   </td>
   <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -490,9 +516,9 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>Положение и поворот произвольной точки
-  объекта в локальный координатах (точка отсчёта объекта). Именно за изменения
-  этого параметра и отвечает физический движок.</p>
+  <p style='margin-left:0cm;text-indent:0cm'>Положение и поворот произвольной
+  точки объекта в локальный координатах (точка отсчёта объекта). Именно за
+  изменения этого параметра и отвечает физический движок.</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3'>
@@ -639,13 +665,12 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
-  lang=EN-US style='mso-ansi-language:EN-US'>struct</span></span><span
-  lang=EN-US style='mso-ansi-language:EN-US'> {<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>struct {<o:p></o:p></span></p>
   <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
   EN-US'>v3 translation,<o:p></o:p></span></p>
   <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
-  EN-US'>v3 <span class=SpellE>rotationAxis</span><o:p></o:p></span></p>
+  EN-US'>v3 rotationAxis<o:p></o:p></span></p>
   <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
   EN-US'>}<o:p></o:p></span></p>
   </td>
@@ -734,9 +759,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
-  lang=EN-US style='background:red;mso-highlight:red;mso-ansi-language:EN-US'>aabb</span></span><span
-  lang=EN-US style='background:red;mso-highlight:red;mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
+  red;mso-highlight:red;mso-ansi-language:EN-US'>aabb<o:p></o:p></span></p>
   </td>
   <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -828,9 +852,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
-  lang=EN-US style='mso-ansi-language:EN-US'>int</span></span><span lang=EN-US
-  style='mso-ansi-language:EN-US'>[][3]<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>int[][3]<o:p></o:p></span></p>
   </td>
   <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -914,9 +937,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span class=SpellE><span
-  lang=EN-US style='mso-ansi-language:EN-US'>Config</span></span><span
-  lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='mso-ansi-language:
+  EN-US'>Config<o:p></o:p></span></p>
   </td>
   <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -952,8 +974,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p style='margin-left:0cm;text-indent:0cm'>Множество дополнительных
   параметров типа <span lang=EN-US style='mso-ansi-language:EN-US'>float</span>,
-  <span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>int</span></span><span
-  lang=EN-US> </span>и <span lang=EN-US style='mso-ansi-language:EN-US'>string</span>.</p>
+  <span lang=EN-US style='mso-ansi-language:EN-US'>int</span><span lang=EN-US> </span>и
+  <span lang=EN-US style='mso-ansi-language:EN-US'>string</span>.</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:13;mso-yfti-lastrow:yes'>
@@ -1013,37 +1035,37 @@ lang=EN-US> </span>– может менять, но при первом же вызове функции <span
 class=codeChar><span lang=EN-US>bool</span></span><span class=codeChar><span
 lang=EN-US style='mso-ansi-language:RU'> </span><span lang=EN-US>wasChanged</span></span><span
 class=codeChar><span style='mso-ansi-language:RU'>()</span></span> должен
-вернуть <span class=SpellE>true</span>.</p>
+вернуть true.</p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<h3><span lang=EN-US style='mso-ansi-language:EN-US'>Particle System</span></h3>
+<h3><span lang=EN-US style='mso-ansi-language:EN-US'>Particle</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>System</span></h3>
 
 <h3><span style='background:silver;mso-highlight:silver'>Модульность [</span><span
-class=SpellE><span lang=EN-US style='background:silver;mso-highlight:silver;
-mso-ansi-language:EN-US'>kindex</span></span><span style='background:silver;
-mso-highlight:silver'>]<o:p></o:p></span></h3>
+lang=EN-US style='background:silver;mso-highlight:silver;mso-ansi-language:
+EN-US'>kindex</span><span style='background:silver;mso-highlight:silver'>]<o:p></o:p></span></h3>
 
-<p><span style='background:silver;mso-highlight:silver'>Надо иметь возможность
-заменять следующие модули для каждой системы частиц:<o:p></o:p></span></p>
+<p><span style='background:silver;mso-highlight:silver'>Надо иметь возможность заменять
+следующие модули для каждой системы частиц:<o:p></o:p></span></p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo3;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo4;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
 mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span style='background:silver;mso-highlight:
 silver'>Эмиттер (точечный, разброс, равномерный разброс)<o:p></o:p></span></p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo3;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo4;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
 mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span class=SpellE><span lang=EN-US
-style='background:silver;mso-highlight:silver;mso-ansi-language:EN-US'>Renderer</span></span><span
+</span></span></span><![endif]><span lang=EN-US style='background:silver;
+mso-highlight:silver;mso-ansi-language:EN-US'>Renderer</span><span
 style='background:silver;mso-highlight:silver'> (спрайты, система спрайтов,
-многогранники, <span class=SpellE>меташарики</span>)<o:p></o:p></span></p>
+многогранники, меташарики)<o:p></o:p></span></p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo3;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo4;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
 mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1053,22 +1075,37 @@ style='background:silver;mso-highlight:silver'><o:p></o:p></span></p>
 
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
-<h1>Базовые типы данных</h1>
+<h1>Базовые типы данных<span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h1>
+
+<h3><a name="_uid"></a><span class=GramE><span lang=EN-US style='mso-ansi-language:
+EN-US'>uid</span></span></h3>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>uid</span><span lang=EN-US>
+</span>(<span lang=EN-US style='mso-ansi-language:EN-US'>unique</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>identifier</span>)
+– идентификатор объекта или ресурса. У двух разных объектов должны быть
+различные идентификаторы.</p>
+
+<p>За генерацию уникальных идентификаторов отвечает класс IdGenerator (<span
+lang=EN-US style='mso-ansi-language:EN-US'>interface</span>.<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span>). Для каждого типа объектов существует
+свой идентификатор. Для <a href="#_Object">игровых объектов</a> <span
+style='mso-spacerun:yes'> </span>- objectIdGenerator.</p>
+
+<h2><span lang=EN-US style='mso-ansi-language:EN-US'>Math</span></h2>
 
 <p>Основные геометрические типы данных хранятся в директории <span lang=EN-US
 style='mso-ansi-language:EN-US'>math</span>. </p>
 
-<h3><span lang=EN-US style='mso-ansi-language:EN-US'>v</span>3 (<span
-lang=EN-US style='mso-ansi-language:EN-US'>vector</span>3<span lang=EN-US
-style='mso-ansi-language:EN-US'>d</span>.<span lang=EN-US style='mso-ansi-language:
-EN-US'>h</span>)</h3>
+<h3><a name="_v3_(vector3d.h)"></a><span lang=EN-US style='mso-ansi-language:
+EN-US'>v</span>3 (<span lang=EN-US style='mso-ansi-language:EN-US'>vector</span>3<span
+lang=EN-US style='mso-ansi-language:EN-US'>d</span>.<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span>)</h3>
 
 <p>Используется для хранения трёхмерного вектора, положения точки в
 пространстве, направляющих прямых, нормалей к плоскостям и т.д.</p>
 
-<p>Содержит 3 поля: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>float</span></span><span
-style='mso-bidi-font-size:10.0pt'> <span class=SpellE>x</span>, <span
-class=SpellE>y</span>, <span class=SpellE>z</span>;</span></p>
+<p>Содержит 3 поля: <span style='mso-bidi-font-size:10.0pt'>float x, y, z;</span></p>
 
 <p>Конструкторы: </p>
 
@@ -1081,20 +1118,15 @@ x, float y, float z)<o:p></o:p></span></p>
 <p><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
 
 <p>Чтение и запись полей осуществляется по их именам. Кроме <span class=GramE>того</span>
-доступен <span class=SpellE>operator</span>[](<span class=SpellE>int</span> <span
-class=SpellE>i</span>) для доступа к полям: 0 - <span class=SpellE>x</span>, 1
-- <span class=SpellE>y</span>, 2 – <span class=SpellE>z</span></p>
+доступен operator[](int i) для доступа к полям: 0 - x, 1 - y, 2 – z</p>
 
-<p>Инициализация: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>loadZero</span></span><span
-style='mso-bidi-font-size:10.0pt'>(), <span class=SpellE>loadOne</span>()<o:p></o:p></span></p>
+<p>Инициализация: <span style='mso-bidi-font-size:10.0pt'>loadZero(), loadOne()<o:p></o:p></span></p>
 
 <p>И множество полезных операторов: векторное и скалярное произведение, + - * /
 </p>
 
-<p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>operator==</span></span><span
-style='mso-bidi-font-size:10.0pt'> и <span class=SpellE>operator!=</span>
-сравнивают ве</span>к<span style='mso-bidi-font-size:10.0pt'>тора по</span>
-компонентам.</p>
+<p><span style='mso-bidi-font-size:10.0pt'>operator== и operator!= сравнивают
+ве</span>к<span style='mso-bidi-font-size:10.0pt'>тора по</span> компонентам.</p>
 
 <p>Полезные<span style='mso-ansi-language:EN-US'> </span>функции<span
 lang=EN-US style='mso-ansi-language:EN-US'>: </span><span lang=EN-US
@@ -1104,21 +1136,22 @@ getNormalized, getSquaredLength<o:p></o:p></span></p>
 <p><span lang=EN-US style='mso-ansi-language:EN-US'><span
 style='mso-spacerun:yes'> </span><o:p></o:p></span></p>
 
-<p>Кроме <span class=GramE>того</span> <span class=SpellE>доступена</span>
-упрощенная версия v3 без конструктора. v3simple. Можно использовать только
-тогда, когда нельзя использовать v3 (например, в <span class=SpellE>union</span>).</p>
+<p>Кроме <span class=GramE>того</span> доступена упрощенная версия v3 без
+конструктора. v3simple. Можно использовать только тогда, когда нельзя
+использовать v3 (например, в union).</p>
 
 <h3><span lang=EN-US style='mso-ansi-language:EN-US'>v</span>2 (<span
 lang=EN-US style='mso-ansi-language:EN-US'>vector</span>2<span lang=EN-US
 style='mso-ansi-language:EN-US'>d</span>.<span lang=EN-US style='mso-ansi-language:
 EN-US'>h</span>)</h3>
 
-<p>Полностью <span class=GramE>аналогичен</span> классу <span lang=EN-US
-style='mso-ansi-language:EN-US'>v</span>3. Реже используется и поэтому может не
-содержать все функции, которые есть в <span lang=EN-US style='mso-ansi-language:
-EN-US'>v</span>3. При необходимости можно добавить их.</p>
+<p>Полностью аналогичен классу <span lang=EN-US style='mso-ansi-language:EN-US'><a
+href="#_v3_(vector3d.h)">v<span lang=RU style='mso-ansi-language:RU'>3</span></a></span>.
+Реже используется и поэтому может не содержать все функции, которые есть в <span
+lang=EN-US style='mso-ansi-language:EN-US'>v</span>3. При необходимости можно
+добавить их.</p>
 
-<h3>matrix33</h3>
+<h3><a name="_matrix33"></a>matrix33</h3>
 
 <p>Квадратная матрица 3x3. Используется как матрица преобразования координат.</p>
 
@@ -1126,34 +1159,29 @@ EN-US'>v</span>3. При необходимости можно добавить их.</p>
 имени. 9 чисел доступны двумя способами: как одномерный массив из 9ти элементов
 и как двумерный массив 3x3 (первый индекс – номер строки).</p>
 
-<p>Нет конструктора, так как этот класс используется в <span class=SpellE>union</span>.</p>
+<p>Нет конструктора, так как этот класс используется в union.</p>
 
-<p>Инициализаторы: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>loadIdentity</span></span><span
-style='mso-bidi-font-size:10.0pt'> (единичная матрица), <span class=SpellE>loadZero</span>
-(нулевая матрица).<o:p></o:p></span></p>
+<p>Инициализаторы: <span style='mso-bidi-font-size:10.0pt'>loadIdentity
+(единичная матрица), loadZero (нулевая матрица).<o:p></o:p></span></p>
 
-<p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>Пергруженные</span></span><span
-style='mso-bidi-font-size:10.0pt'> операторы: + - * /<o:p></o:p></span></p>
+<p><span style='mso-bidi-font-size:10.0pt'>Пергруженные операторы: + - * /<o:p></o:p></span></p>
 
-<p><span style='mso-bidi-font-size:10.0pt'>matrix33 <span class=SpellE>operator</span>*(matrix33
-<span class=SpellE>operand</span>) перемножает 2 матрицы. Из первой берутся
-строки, из второй столбцы.<o:p></o:p></span></p>
+<p><span style='mso-bidi-font-size:10.0pt'>matrix33 operator*(matrix33 operand)
+перемножает 2 матрицы. Из первой берутся строки, из второй столбцы.<o:p></o:p></span></p>
 
-<p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>setRotation</span></span><span
-style='mso-bidi-font-size:10.0pt'>[X, Y, Z, <span class=SpellE>Axis</span>]
-делают матрицу матрицей поворота вдоль указанной оси на указанный угол в
-радианах. </span></p>
+<p><span style='mso-bidi-font-size:10.0pt'>setRotation[X, Y, Z, Axis] делают
+матрицу матрицей поворота вдоль указанной оси на указанный угол в радианах. </span></p>
 
-<p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>setScale</span></span><span
-style='mso-bidi-font-size:10.0pt'> – делает матрицу масштабирования</span></p>
+<p><span style='mso-bidi-font-size:10.0pt'>setScale – делает матрицу
+масштабирования</span></p>
 
-<p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>getInverse</span></span><span
-style='mso-bidi-font-size:10.0pt'> – возвращает обратную матрицу<o:p></o:p></span></p>
+<p><span style='mso-bidi-font-size:10.0pt'>getInverse – возвращает обратную
+матрицу<o:p></o:p></span></p>
 
 <p><span style='mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
 
-<p><span style='mso-bidi-font-size:10.0pt'>Примеры использования: изменения
-системы координат<o:p></o:p></span></p>
+<p><span style='mso-bidi-font-size:10.0pt'>Примеры использования: изменения системы
+координат<o:p></o:p></span></p>
 
 <p class=code><span lang=EN-US>matrix</span><span style='mso-ansi-language:
 RU'>33 </span><span lang=EN-US>a</span><span style='mso-ansi-language:RU'>,</span><span
@@ -1189,9 +1217,9 @@ green;mso-ansi-language:RU'><o:p></o:p></span></p>
 
 <h3>matrix34</h3>
 
-<p>Матрица из трёх строк и четырёх столбцов. Служит эмуляцией матрицы 4x4, к которой
-нижняя строка равна (0,0,0,1). Интерфейс аналогичен matrix33. matrix34 состоит
-из matrix33 (первые 3 колонки) и v3 (четвертая колонка)</p>
+<p>Матрица из трёх строк и четырёх столбцов. Служит эмуляцией матрицы 4x4, к
+которой нижняя строка равна (0,0,0,1). Интерфейс аналогичен <a href="#_matrix33">matrix33</a>.
+matrix34 состоит из matrix33 (первые 3 колонки) и v3 (четвертая колонка)</p>
 
 <p><span lang=EN-US style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'>setTranslation
 </span><span style='mso-bidi-font-size:10.0pt'>и</span><span lang=EN-US
@@ -1234,7 +1262,7 @@ style='mso-ansi-language:RU'>3(0,0,0); <span style='color:green'>// должно
 
 <h1>Составители</h1>
 
-<p><span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>KindeX</span></span></p>
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>KindeX</span></p>
 
 </div>
 

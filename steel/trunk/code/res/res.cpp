@@ -14,6 +14,9 @@
 #include "res.h"
 #include "../common/logger.h"
 
+
+ResCollection res;
+
 void ResCollection::registerClass(funcCreateResClass *_func, const Res::res_kind kind)
 {
 	classes[kind].push_back(ClassCopy(_func));

@@ -1,5 +1,5 @@
 Steel Engine License
-(C) KindeX 2006
+(C) DiVision 2006
 
 Steel engine sources can use only Steel Engine developers.
 Steel engine binaries can use anyone without modifications

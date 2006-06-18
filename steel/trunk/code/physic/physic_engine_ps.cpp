@@ -45,7 +45,7 @@ v3 PhysicEnginePS::calculateForceForParticle(PhysicObjectStorage &storage1)
 	res.loadZero();
 // реагируем только с частицами, номер которых больше этого
 // для того, чтобы исключить повторную проверку (сила действия равна силе противодействия)
-	for(unsigned int i = storage1.pSetId + 1; i < particleSet.size(); i++)
+	for(unsigned int i = storage1.partiecleSetId + 1; i < particleSet.size(); i++)
 		res += calculateForceForParticle(storage1, storage[particleSet[i]]);
 
 	return res;
@@ -159,14 +159,17 @@ void PhysicEnginePS::cacheStorage(PhysicObjectStorage &objectStorage)
 
 bool PhysicEnginePS::makeStorage(PhysicInterface *object)
 {
-	int id = storage.size();
-	storage.resize(id + 1);
+	int storageId = storage.size();
+	storage.resize(storageId + 1);
 
-	object->setStorageId(id);
-	PhysicObjectStorage &objectStorage = storage[id];
+	uid objectId = object->getId();
+	PhysicObjectStorage &objectStorage = storage[storageId];
+
+	idHash[objectId] = storageId;
 
 	objectStorage.object = object;
-	objectStorage.id = id;
+	objectStorage.storageId = storageId;
+	objectStorage.objectId = objectId;
 	objectStorage.collisionType = object->getCollisionType();
 	objectStorage.force.loadZero();
 
@@ -174,8 +177,8 @@ bool PhysicEnginePS::makeStorage(PhysicInterface *object)
 
 	if(objectStorage.collisionType == CollisionType::particle1)
 	{
-		particleSet.push_back(id);
-		objectStorage.pSetId = particleSet.size()-1;
+		particleSet.push_back(storageId);
+		objectStorage.partiecleSetId = particleSet.size()-1;
 	}
 
 	PhysicInterfaceList children = object->getPChildrens();

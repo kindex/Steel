@@ -4,7 +4,7 @@
     (C) DiVision, 2004-2006
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-		* Kane [Anton]
+		* Kane [J. Anton, kane@mail.berlios.de]
 		* Bond [Andrey Bondarenko]
     License:
         Steel Engine License

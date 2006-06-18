@@ -69,21 +69,38 @@ namespace PositionKind
 	} PositionKind;
 };
 
+class IdGenerator
+{
+protected:
+	uid freeId;
+public:
+	IdGenerator() { freeId = 1; }
+	uid genUid() { return freeId++;}
+};
+
+extern IdGenerator objectIdGenerator;
+
 /*
 Interface protottype
 От этого класса наследуются все объекты и интерфейсы в движке.
 
 Объект этого класса:
 * имеет положение (в голобадьных или локальных координатах). 
-Положение - матрица 4х4, в которой определяет сдвиг, поморот и масштабирование тела
+Положение - матрица 3х4, в которой определяет сдвиг, поморот и масштабирование тела
 относительно его родителя или в глобальный коорлинатах. Систему отсчёта определяет 
 функция getPositionKind
 */
+
 class Interface
 {
+protected:
+	uid id;
 public:
-	virtual	ObjectPosition getPosition(void) = 0;
-	virtual PositionKind::PositionKind getPositionKind(void) = 0;
+	Interface() { id = objectIdGenerator.genUid(); }
+
+	virtual uid								getId()				{ return id; }
+	virtual	ObjectPosition					getPosition(void) = 0;
+	virtual PositionKind::PositionKind		getPositionKind(void) { return PositionKind::local; }
 };
 
 #endif
