@@ -83,7 +83,7 @@ public:
 	void setPositionKind(const PositionKind::PositionKind newKind);
 
 	void			setProcessKind(const ProcessKind::ProcessKind _kind) { processKind = _kind; }
-	virtual	bool	init(ScriptLine	&s, ResCollection &res);
+	virtual	bool	init(ScriptLine	&s);
 	GameObj *findChildren(std::string name)
 	{
 		if(tag.find(name) != tag.end()) return tag[name]; else return NULL;

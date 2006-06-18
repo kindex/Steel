@@ -32,7 +32,6 @@
 class Engine: public steelAbstract
 {
 protected:
-	ResCollection	*res;
 	EngineHelper	*helper;
 public:
 	Config			*conf;
@@ -47,7 +46,6 @@ public:
 	virtual bool deinit() = 0;
 	virtual void bindHelper(EngineHelper *_helper) { helper = _helper; } 
 	// TODO: убрать это. Не вписывает в идею движка
-	virtual void bindResColelntion(ResCollection *_res) { res = _res; }
 };
 
 #endif

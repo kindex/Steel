@@ -7,9 +7,9 @@
 
 #include <string>
 
-bool ParticleSystem::init(ScriptLine	&s, ResCollection &res)
+bool ParticleSystem::init(ScriptLine	&s)
 {
-	if(!GameObj::init(s, res)) return false;
+	if(!GameObj::init(s)) return false;
 
 	conf = (Config*)res.add(Res::config, s.gets(3));
 	if(!conf) return false;
@@ -28,13 +28,13 @@ bool ParticleSystem::init(ScriptLine	&s, ResCollection &res)
 	std::string animatorClass = animatorConf->gets("class");	animator = NULL;
 	if(animatorClass == "UniPSanimator")	animator = new UniPSanimator;
 	if(!animator) abort_init("error res ps renderer", "Animator class " + animatorClass + " not found");
-	if(!animator->init(animatorConf, &particleSet, &res, this)) abort_init("error res ps animator", "Animator class " + animatorClass + " cannot initialize");
+	if(!animator->init(animatorConf, &particleSet, this)) abort_init("error res ps animator", "Animator class " + animatorClass + " cannot initialize");
 
 
 	std::string rendererClass = rendererConf->gets("class");	renderer = NULL;
 	if(rendererClass == "SpriteRenderer")	renderer = new SpriteRenderer;
 	if(!renderer) abort_init("error res ps renderer", "Renderer class " + rendererClass + " not found");
-	if(!renderer->init(rendererConf, &particleSet, &res, this)) abort_init("error res ps renderer", "Renderer class " + rendererClass + " cannot initialize");
+	if(!renderer->init(rendererConf, &particleSet,  this)) abort_init("error res ps renderer", "Renderer class " + rendererClass + " cannot initialize");
 
 	return true;
 }
@@ -63,10 +63,10 @@ void ParticleEmitter::initParticles()
 		born(set->particles[i]);
 }
 
-bool ParticleRenderer::init(Config *_conf, ParticleSet *_set, ResCollection	*_res, GraphInterface *_particleSystem)
+bool ParticleRenderer::init(Config *_conf, ParticleSet *_set, GraphInterface *_particleSystem)
 {
 	if(!(conf = _conf)) return false;
-	set = _set;	res = _res;
+	set = _set;
 	particleSystem = _particleSystem;
 
 	if(!initParticles()) return false;
@@ -74,10 +74,10 @@ bool ParticleRenderer::init(Config *_conf, ParticleSet *_set, ResCollection	*_re
 	return true;
 }
 
-bool ParticleAnimator::init(Config *_conf, ParticleSet *_set, ResCollection	*_res, PhysicInterface  *_particleSystem)
+bool ParticleAnimator::init(Config *_conf, ParticleSet *_set, PhysicInterface  *_particleSystem)
 {
 	if(!(conf = _conf)) return false;
-	set = _set;	res = _res;
+	set = _set;
 	particleSystem = _particleSystem;
 
 	if(!initParticles()) return false;

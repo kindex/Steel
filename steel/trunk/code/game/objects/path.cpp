@@ -17,7 +17,7 @@
 предок и первая цель.
 */
 
-bool TagPath::init(ScriptLine &s, ResCollection &res)
+bool TagPath::init(ScriptLine &s)
 {
 	if(!parent) return false;
 

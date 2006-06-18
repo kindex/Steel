@@ -20,10 +20,10 @@ http://kindex.times.lv
 #include "../../common/utils.h"
 using namespace std;
 
-Res* create3DS(const std::string filename, ResCollection *res)		
+Res* create3DS(const std::string filename)
 {
 	_3DS *o = new _3DS;
-	if(o->init(filename, *res)) 
+	if(o->init(filename)) 
 		return o;
 	else
 		return NULL;
@@ -276,7 +276,7 @@ int chain_4d4d(_3DS &m, rstream &f, int size)
 	return parsechain(m, f, t, size);
 }
 
-bool _3DS::init(const std::string name, ResCollection &res)
+bool _3DS::init(const std::string name)
 {
 		rstream f;
 		

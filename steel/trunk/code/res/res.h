@@ -26,7 +26,6 @@
 
 Res* createBMP(string filename) {return new BMP(filename); }
 
-	ResCollection res;
 	res.registerClass(createBMP,	Res::image);
 
 	res.add(Res::image, "box");
@@ -124,7 +123,7 @@ public:
 };
 
 // тип: функция для геренирования копии класса, унаследованного от Res
-typedef Res*(funcCreateResClass)(const std::string filename, ResCollection *res); 
+typedef Res*(funcCreateResClass)(const std::string filename); 
 
 // копия класса. Нужна для ассоциирования класса с типом ресурса.
 struct ClassCopy

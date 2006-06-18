@@ -6,9 +6,9 @@
 class ConfigText:public Config
 {
 public:
-	bool init(const std::string name, ResCollection &res);
+	bool init(const std::string name);
 };
 
-Res* createConfigText(const std::string filename, ResCollection *res);
+Res* createConfigText(const std::string filename);
 
 #endif

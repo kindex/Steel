@@ -26,8 +26,8 @@ class GameGroup: public GameObjSet
 public:
 	std::string conf;
 
-	bool init(ScriptLine	&s,		ResCollection &res);
-	bool load(ResCollection *res,	GameObj *global);
+	bool init(ScriptLine	&s);
+	bool load(GameObj *global);
 };
 
 #endif

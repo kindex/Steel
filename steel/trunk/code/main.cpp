@@ -57,8 +57,7 @@ int main(int argc, char *argv[])
 
 	float speed = 0.01f; // 100 FPS
 // ******************** RES ************************
-	ResCollection res;
-	registerResources(res);
+	registerResources();
 
 // ******************* GRAPH ************************
 #ifdef OPENGL_SDL	
@@ -70,16 +69,15 @@ int main(int argc, char *argv[])
 #ifdef OPENGL_WIN
 	OpenGL_WIN_Engine graph;
 	InputWIN input;
-	graph.bindResColelntion(&res);
 	if(!graph.init("renderer", &input)) return 1;
 #endif
 	
 // ******************* INPUT ************************
-	if(!input.init(&res, "input")) return 1;
+	if(!input.init("input")) return 1;
 // ******************* GAME *************************
 	Game game;
 
-	if(!game.init(&res, "game", &input, commandLine)) return 1;
+	if(!game.init("game", &input, commandLine)) return 1;
 
 	game.bind(&graph);
 

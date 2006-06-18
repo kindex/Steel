@@ -21,7 +21,7 @@ public:
 	bool init(const std::string name);
 };
 
-Res* createBMP(const std::string filename, ResCollection *res);
+Res* createBMP(const std::string filename);
 
 
 #endif

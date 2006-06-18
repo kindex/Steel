@@ -5,13 +5,12 @@ bool Input::isPressed(std::string key)
 	return keyPressed.find(key) != keyPressed.end() && keyPressed[key];
 }
 
-bool Input::init(ResCollection *_res, std::string _conf) 
+bool Input::init(std::string _conf) 
 { 
-	res = _res;
 	alive = true; 
 	mouseCaptured = false; 
 
-	conf = (Config*)res->add(Res::config, _conf);
+	conf = (Config*)res.add(Res::config, _conf);
 	if(!conf)
 	{
 		alog.msg("error input res", "Input config file not found");

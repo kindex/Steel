@@ -10,26 +10,26 @@
 // Image filename:
 // name[.cube][.normal|.height][.bmp|.tga]
 
-Res *createBitmap(const std::string filename, ResCollection *res)
+Res *createBitmap(const std::string filename)
 {
 	Res *r;
 	// try to load image2d
-	if(r = createBMP(filename, res)) return r;
-	if(r = createTGA(filename, res)) return r;
+	if(r = createBMP(filename)) return r;
+	if(r = createTGA(filename)) return r;
 	return NULL;
 }
 
-Res *createImageFormat(const std::string filename, ResCollection *res)
+Res *createImageFormat(const std::string filename)
 {
 	Res *r;
 	// try to load image2d
-	if(r = createBitmap(filename, res))	return r;
-	if(r = createBitmap(filename + ".normal", res))	
+	if(r = createBitmap(filename))	return r;
+	if(r = createBitmap(filename + ".normal"))	
 	{
 		((Image*)r)->setFormat(ImageFormat::normal);
 		return r;
 	}
-	if(r = createBitmap(filename + ".height", res))
+	if(r = createBitmap(filename + ".height"))
 	{
 		((Image*)r)->convertFromHeightMapToNormalMap();
 		((Image*)r)->setFormat(ImageFormat::normal);
@@ -40,13 +40,13 @@ Res *createImageFormat(const std::string filename, ResCollection *res)
 }
 
 
-Res *createImage(const std::string filename, ResCollection *res)
+Res *createImage(const std::string filename)
 {
 	Res *r;
 	// try to load image2d
-	if(r = createImageFormat(filename, res)) return r;
+	if(r = createImageFormat(filename)) return r;
 	// try to load cubemap
-	if(r = createImageFormat(filename + ".cube", res))
+	if(r = createImageFormat(filename + ".cube"))
 	{
 		((Image*)r)->setKind(ImageKind::cube);
 		return r;
@@ -55,7 +55,7 @@ Res *createImage(const std::string filename, ResCollection *res)
 }
 
 
-bool registerResources(ResCollection &res)
+bool registerResources()
 {
 	res.registerClass(createImage,		Res::image);
 	res.registerClass(create3DS,		Res::model);

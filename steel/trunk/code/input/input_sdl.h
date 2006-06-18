@@ -17,9 +17,9 @@ public:
 	void captureMouse();
 	void freeMouse();
 
-	bool init(ResCollection *_res, std::string _conf)
+	bool init(std::string _conf)
 	{ 
-		if(!Input::init(_res, _conf)) return false;
+		if(!Input::init(_conf)) return false;
 		firstMouse = true;
 		lastdx = 0;
 		lastdy = 0;

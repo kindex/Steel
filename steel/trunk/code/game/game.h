@@ -50,7 +50,6 @@ protected:
 	bool _alive, paused;
 	int framesToPass;
 //  Input-Output 
-	ResCollection	*res;
 	Input		*input;
 	Config		*conf;
 
@@ -69,7 +68,7 @@ protected:
 
 public:
 	Game() { } 
-	bool init(ResCollection *_res, std::string _conf, Input *_input, std::string params);
+	bool init(std::string _conf, Input *_input, std::string params);
 
 	bool executeScript(std::string script);
 	bool executeCommand(std::string command);

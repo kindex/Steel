@@ -5,6 +5,6 @@
 
 #include "res.h"
 
-bool registerResources(ResCollection &res);
+bool registerResources();
 
 #endif

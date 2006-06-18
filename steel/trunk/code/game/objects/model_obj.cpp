@@ -2,9 +2,9 @@
 #include "../../common/utils.h"
 using namespace std;
 
-bool GameObjModel::init(ScriptLine	&s, ResCollection &res)
+bool GameObjModel::init(ScriptLine	&s)
 {
-	if(!GameObj::init(s, res)) return false;
+	if(!GameObj::init(s)) return false;
 	
 	if(s.count()<3) return false;
 	conf = (Config*)res.add(Res::config, s.gets(3));

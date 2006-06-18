@@ -1,8 +1,8 @@
 #include "triangle.h"
 
-bool GameTriangleObj::init(ScriptLine	&s, ResCollection &res)
+bool GameTriangleObj::init(ScriptLine	&s)
 {
-	if(!GameObj::init(s, res)) return false;
+	if(!GameObj::init(s)) return false;
 
 	vertex.changed = false;
 	vertex.setId(res.genUid());

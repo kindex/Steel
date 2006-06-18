@@ -12,7 +12,7 @@ protected:
 	TexCoords	texCoords;
 	aabb		frame;
 public:
-	bool init(ScriptLine	&s, ResCollection &res);
+	bool init(ScriptLine	&s);
 
 	TexCoords*	getTexCoords(int texNumber) { return &texCoords; }
 	Vertexes*	getVertexes() { return &vertex; }

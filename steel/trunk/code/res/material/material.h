@@ -52,10 +52,10 @@ public:
 	steel::vector<Map> map;
 	bool				blend;
 
-	bool init(std::string _conf, ResCollection *res);
+	bool init(std::string _conf);
 	virtual bool unload() {return true; };
 };
 
-Res* createMaterial(const std::string filename, ResCollection *res);
+Res* createMaterial(const std::string filename);
 
 #endif

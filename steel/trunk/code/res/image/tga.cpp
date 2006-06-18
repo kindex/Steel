@@ -15,12 +15,12 @@
 #include <string> 
 
 
-Res* createTGA(const std::string filename, ResCollection *res) 
+Res* createTGA(const std::string filename) 
 {
 	TGA *o = new TGA;
 	if(o->init(filename)) 
 	{
-		o->setId(res->genUid());
+		o->setId(res.genUid());
 		return o;
 	}
 	else

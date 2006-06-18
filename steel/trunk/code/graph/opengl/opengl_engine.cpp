@@ -137,7 +137,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-					uid bufId = res->genUid();
+					uid bufId = res.genUid();
 					buffersToDelete.push_back(bufId);
 
 					if(map.kind == MapKind::bump_map)
@@ -191,7 +191,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 						glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
 						bindTexture(map.texture); // Cube texture (auto detect from Image)
 
-						uid bufId = res->genUid();
+						uid bufId = res.genUid();
 						buffersToDelete.push_back(bufId);
 						drawReflect(e, e.matrix, camera.eye, bufId);
 
@@ -910,13 +910,13 @@ bool OpenGL_Engine::process()
 
 bool OpenGL_Engine::init(std::string _conf)
 {
-	if(!res->add(Res::config, _conf))
+	if(!res.add(Res::config, _conf))
 	{
 		alog.msg("error graph conf res","Cannot find renderer config file "+_conf);
 		return false;
 	}
 
-	conf = (Config*)res->get(Res::config, _conf);
+	conf = (Config*)res.get(Res::config, _conf);
 
 	conf->setDefault("window.left", "10");
 	conf->setDefault("window.top", "10");
@@ -953,7 +953,7 @@ bool OpenGL_Engine::init(std::string _conf)
 //	SetUpARB_multitexture();
 	
 	normalisationCubeMap	= generateNormalisationCubeMap();
-	zeroNormal = (Image*)res->add(Res::image, "zero");
+	zeroNormal = (Image*)res.add(Res::image, "zero");
 	if(!zeroNormal)
 	{
 		alog.msg("error graph res", "Zero normal map not found");

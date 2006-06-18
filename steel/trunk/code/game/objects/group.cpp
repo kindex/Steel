@@ -34,19 +34,19 @@ using namespace std;
 		obj->setProcessKind(PROCESS_KIND);		\
 	}
 
-bool GameGroup::init(ScriptLine	&s, ResCollection &res)
+bool GameGroup::init(ScriptLine	&s)
 {
 	if(s.count()<4) return false;
-	if(!GameObj::init(s, res)) return false;
+	if(!GameObj::init(s)) return false;
 	conf = s.gets(3);
 	return true;
 }
 
-bool GameGroup::load(ResCollection *res, GameObj *global)
+bool GameGroup::load(GameObj *global)
 {
 	if(!parent) positionKind = PositionKind::global;
 
-	Script *s = (Script*)res->add(Res::script, conf);
+	Script *s = (Script*)res.add(Res::script, conf);
 	if(!s)
 	{
 		alog.msg("error game res", "Cannot load script");
@@ -156,15 +156,15 @@ bool GameGroup::load(ResCollection *res, GameObj *global)
 		}
 		if(obj)
 		{
-			if(!obj->init(s->get(i), *res))
+			if(!obj->init(s->get(i)))
 			{							
-				obj->init(s->get(i), *res);
+				obj->init(s->get(i));
 
 				alog.msg("game script error", string("Cannot init object ") + kind + ":" + id);
 				return false;						
 			}										
 			if(kind == "include")
-				if(!((GameGroup*)obj)->load(res, global)) return false;
+				if(!((GameGroup*)obj)->load(global)) return false;
 		}
 	}
 	return true;

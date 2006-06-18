@@ -3,13 +3,13 @@
 
 bool PhysicEngine::init(std::string _conf)
 {
-	if(!res->add(Res::config, _conf))
+	if(!res.add(Res::config, _conf))
 	{
 		alog.msg("error graph conf res","Cannot find renderer config file "+_conf);
 		return false;
 	}
 
-	conf = (Config*)res->get(Res::config, _conf);
+	conf = (Config*)res.get(Res::config, _conf);
 
 	total.collisionCount = 0;
 

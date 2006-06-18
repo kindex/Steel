@@ -61,11 +61,10 @@ public:
 class ParticleRenderer: public GraphInterface, public ParticleProcessor
 {
 protected:
-	ResCollection	*res;
 	GraphInterface *particleSystem;
 
 public:
-	virtual bool init(Config *_conf, ParticleSet *_set, ResCollection	*_res, GraphInterface *_particleSystem);
+	virtual bool init(Config *_conf, ParticleSet *_set, GraphInterface *_particleSystem);
 	virtual bool initParticles() = 0;
 };
 
@@ -73,10 +72,9 @@ public:
 class ParticleAnimator: public PhysicInterface, public ParticleProcessor
 {
 protected:
-	ResCollection	*res;
 	PhysicInterface *particleSystem;
 public:
-	virtual bool init(Config *_conf, ParticleSet *_set, ResCollection	*_res, PhysicInterface *_particleSystem);
+	virtual bool init(Config *_conf, ParticleSet *_set, PhysicInterface *_particleSystem);
 	virtual bool initParticles() = 0;
 };
 
@@ -90,7 +88,7 @@ class ParticleSystem: public GameObj
 	ParticleAnimator	*animator;
 
 public:
-	bool init(ScriptLine	&s, ResCollection &res);
+	bool init(ScriptLine	&s);
 	GraphInterfaceList getChildrens()
 	{
 		GraphInterfaceList a;

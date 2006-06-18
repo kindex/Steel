@@ -14,12 +14,12 @@
 #include "../../common/logger.h"
 #include <string> 
 
-Res* createBMP(const std::string filename, ResCollection *res)
+Res* createBMP(const std::string filename)
 {
 	BMP *o = new BMP;
 	if(o->init(filename))
 	{
-		o->setId(res->genUid());
+		o->setId(res.genUid());
 		return o;
 	}
 	else

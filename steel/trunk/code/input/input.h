@@ -22,12 +22,11 @@ protected:
 	bool alive, mouseCaptured, focused;
 	Game	*game;
 	Config	*conf;
-	ResCollection		*res;
 
 	int cx, cy, lastdx, lastdy;
 
 public:
-	bool init(ResCollection *_res, std::string _conf);
+	bool init(std::string _conf);
 	void setGame(Game *_game) { game = _game; }
 
 	bool isPressed(std::string key);

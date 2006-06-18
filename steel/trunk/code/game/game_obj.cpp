@@ -32,7 +32,7 @@ void GameObj::setPositionKind(const PositionKind::PositionKind newKind)
 }
 
 
-bool GameObj::init(ScriptLine	&s, ResCollection &res)
+bool GameObj::init(ScriptLine	&s)
 {
 	position.loadIdentity();
 

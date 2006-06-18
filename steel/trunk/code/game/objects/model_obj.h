@@ -31,7 +31,7 @@ public:
 
 	void assignModel(Model *M)	{		m = M;	}
 	GameObjModel()	{ 		m = NULL;	}
-	bool	init(ScriptLine	&s, ResCollection &res);
+	bool	init(ScriptLine	&s);
 
 	uid		getId() { return m->getId(); }
 	aabb getFrame();

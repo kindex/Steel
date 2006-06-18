@@ -32,7 +32,7 @@ class TagPath: public GameObjSet
 	steel::time smoothStart, smoothLen;
 
 public:
-	bool	init(ScriptLine	&s, ResCollection &res);
+	bool	init(ScriptLine	&s);
 	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine);
 };
 

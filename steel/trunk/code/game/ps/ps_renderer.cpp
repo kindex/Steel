@@ -61,16 +61,16 @@ void SpriteRenderer::initSprites()
 	face[0].material = m;
 
 	face[0].triangles = new Triangles;
-	face[0].triangles->id = res->genUid();
+	face[0].triangles->id = res.genUid();
 	face[0].triangles->changed = false;
 
-	normal.id = res->genUid();
-	vertex.id = res->genUid();
+	normal.id = res.genUid();
+	vertex.id = res.genUid();
 	vertex.changed = true;
 	normal.changed = true;
 
 	texCoords.changed = false;
-	texCoords.id = res->genUid();
+	texCoords.id = res.genUid();
 }
 
 void SpriteRenderer::initSprites(int begin, int end)
@@ -102,7 +102,7 @@ void SpriteRenderer::initSprites(int begin, int end)
 
 bool SpriteRenderer::initParticles()
 {
-	if(!(m = (Material*)res->add(Res::material, conf->gets("material")))) abort_init("res ps renderer", "Cannot find material " + conf->gets("material"));
+	if(!(m = (Material*)res.add(Res::material, conf->gets("material")))) abort_init("res ps renderer", "Cannot find material " + conf->gets("material"));
 
 	std::string salign = conf->gets("align", "screen"); // align;
 	if(salign == "screen")	align = SpriteAlign::screen; else

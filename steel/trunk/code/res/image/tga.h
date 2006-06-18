@@ -22,7 +22,7 @@ public:
 	bool init(const std::string name);
 };
 
-Res* createTGA(const std::string filename, ResCollection *res);
+Res* createTGA(const std::string filename);
 
 
 #endif

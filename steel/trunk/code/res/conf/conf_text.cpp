@@ -5,16 +5,16 @@
 #include <fstream>
 using namespace std;
 
-Res* createConfigText(const std::string filename, ResCollection *res)
+Res* createConfigText(const std::string filename)
 {
 	ConfigText *o = new ConfigText;
-	if(o->init(filename, *res)) 
+	if(o->init(filename)) 
 		return o;
 	else
 		return NULL;
 }
 
-bool ConfigText::init(const std::string name, ResCollection &res)
+bool ConfigText::init(const std::string name)
 {
 	std::string file = name + ".conf";
 

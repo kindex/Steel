@@ -70,7 +70,7 @@ bool Game::createObject()
 {
 /*	Particle *p = new Particle;
 
-	if(p->init(eye, direction, (Config*)res->add(Res::config, "ps_weapon"), *res))
+	if(p->init(eye, direction, (Config*)res.add(Res::config, "ps_weapon")))
 	{
 		graphEngine->inject(p);
 		physicEngine->inject(p);
@@ -102,7 +102,7 @@ bool Game::createObject()
 	ScriptLine line;
 	line.set(conf->gets("weapon"));
 	GameObj *o = new GameObjModel;
-	o->init(line, *res);
+	o->init(line);
 	
 	o->setPositionKind(PositionKind::global);
 	o->setProcessKind(ProcessKind::uni);
@@ -150,7 +150,7 @@ bool Game::createObject()
 			c = new Sprite;
 			ScriptLine csc;
 			csc.set(conf->gets("lightSprite"));
-			c->init(csc, *res);
+			c->init(csc);
 			c->setPositionKind(PositionKind::local);
 			o->addChildren(c);
 		}
@@ -315,13 +315,12 @@ void Game::draw(GraphEngine *graph)
 }
 
 
-bool Game::init(ResCollection *_res, string _conf, Input *_input, std::string params)
+bool Game::init(string _conf, Input *_input, std::string params)
 {
 	// Config
-	res = _res;	
 	input = _input; 
 	input->setGame(this);
-	conf = (Config*)res->add(Res::config, _conf);
+	conf = (Config*)res.add(Res::config, _conf);
 	if(!conf)
 	{
 		alog.msg("error game res", string("Cannot load game config ") + _conf);
@@ -357,7 +356,7 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input, std::string pa
 	
 //	Interface::global, 
 	world->conf = conf->gets("script");
-	if(!world->load(res, world)) return false;
+	if(!world->load(world)) return false;
 
 // ******************* PHYSIC **************************
 	physicHelper  = new GraphHelper;
@@ -365,7 +364,6 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input, std::string pa
 //	physicEngine = new PhysicEngine3D;
 	physicEngine = new PhysicEnginePS;
 
-	physicEngine->bindResColelntion(res);
 	if(!physicEngine->init("physic")) return 1;
 	this->bindPhysicEngine();
 
@@ -378,7 +376,7 @@ bool Game::init(ResCollection *_res, string _conf, Input *_input, std::string pa
 	ScriptLine csc;
 	csc.set(conf->gets("crosshairConfig"));
 
-/*	if(!crosshair->init(csc, *res))
+/*	if(!crosshair->init(csc))
 	{
 		return false;
 	}

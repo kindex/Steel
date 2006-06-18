@@ -2,10 +2,10 @@
 #include "../../common/utils.h"
 using namespace std;
 
-Res* createMaterial(const std::string filename, ResCollection *res)
+Res* createMaterial(const std::string filename)
 {
 	Material *m = new Material;
-	if(m->init(filename, res))
+	if(m->init(filename))
 	{
 		return m;
 	}
@@ -16,9 +16,9 @@ Res* createMaterial(const std::string filename, ResCollection *res)
 	}
 }
 
-bool Material::init(string name, ResCollection *res)
+bool Material::init(string name)
 {
-	conf = (Script*)res->add(Res::script, name + ".mat");
+	conf = (Script*)res.add(Res::script, name + ".mat");
 	if(conf == NULL)
 	{
 		alog.msg("error res material", string("Material not found: ") + name);
@@ -49,9 +49,9 @@ bool Material::init(string name, ResCollection *res)
 
 		if(kind == "color_map")
 		{
-			m.texture = (Image*)res->add(Res::image, file);
+			m.texture = (Image*)res.add(Res::image, file);
 			if(!m.texture)
-				m.texture = (Image*)res->add(Res::image, dir + "/" + file);
+				m.texture = (Image*)res.add(Res::image, dir + "/" + file);
 
 			if(m.texture)
 			{
@@ -61,9 +61,9 @@ bool Material::init(string name, ResCollection *res)
 		}
 		if(kind == "bump")
 		{
-			m.texture = (Image*)res->add(Res::image, file);
+			m.texture = (Image*)res.add(Res::image, file);
 			if(!m.texture)
-				m.texture = (Image*)res->add(Res::image, dir + "/" + file);
+				m.texture = (Image*)res.add(Res::image, dir + "/" + file);
 
 			if(m.texture)
 			{
@@ -73,9 +73,9 @@ bool Material::init(string name, ResCollection *res)
 		}
 		if(kind == "env")
 		{
-			m.texture = (Image*)res->add(Res::image, file);
+			m.texture = (Image*)res.add(Res::image, file);
 			if(!m.texture)
-				m.texture = (Image*)res->add(Res::image, dir + "/" + file);
+				m.texture = (Image*)res.add(Res::image, dir + "/" + file);
 
 			if(m.texture)
 			{

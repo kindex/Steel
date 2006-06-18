@@ -15,7 +15,7 @@ public:
 	{ 
 		return CollisionType::particle1; 
 	}
-	bool init(v3 emitterPosition, v3 emitterDirection, Config *conf, ResCollection &_res);
+	bool init(v3 emitterPosition, v3 emitterDirection, Config *conf);
 	
 	float getMass()
 	{

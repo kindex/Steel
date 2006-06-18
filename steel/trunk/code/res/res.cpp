@@ -24,7 +24,7 @@ void ResCollection::registerClass(funcCreateResClass *_func, const Res::res_kind
 
 Res* ResCollection::createClass(ClassCopy *aclass, std::string name)
 {
-	return aclass->func(name, this);
+	return aclass->func(name);
 }
 
 std::string getext(std::string name)

@@ -24,7 +24,7 @@ struct Triangle // anti-clockwise direction (one side Triangle)
 	unsigned int a[3];
 };
 
-typedef int	uid;// уникальный идентификатор модели
+typedef unsigned int	uid;// уникальный идентификатор модели
 
 // Массив значений, который может быть кеширован в графическом ускорителе
 class BufferedElement
@@ -59,6 +59,7 @@ struct Triangles: public BufferedElement
 */
 typedef matrix34 ObjectPosition;
 
+// Тип положения объекта: local – относительно родитиля, global – в глобальной системе координат.
 namespace PositionKind
 {
 	typedef enum
@@ -96,10 +97,14 @@ class Interface
 protected:
 	uid id;
 public:
+	// дефолтовый конструктор присваюивает уникальный идентификатор.
 	Interface() { id = objectIdGenerator.genUid(); }
 
+	// Object unique identifier
 	virtual uid								getId()				{ return id; }
+	// Положение и поворот произвольной точки объекта в локальных или глобальных координатах (точка отсчёта объекта).
 	virtual	ObjectPosition					getPosition(void) = 0;
+	// Система координат: локальная относительно родителя или глобальная
 	virtual PositionKind::PositionKind		getPositionKind(void) { return PositionKind::local; }
 };
 
