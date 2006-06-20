@@ -3,7 +3,7 @@
 
 #include "../_cpp.h"
 
-#ifdef OPENGL_SDL
+#ifdef STEEL_OPENGL_SDL
 
 #include "input.h"
 
@@ -26,5 +26,5 @@ public:
 		return true; 
 	}
 };
-#endif // OPENGL_SDL
+#endif // STEEL_OPENGL_SDL
 #endif // INPUT_SDL_H

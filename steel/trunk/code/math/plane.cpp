@@ -37,7 +37,7 @@ bool isCross(const Plane a, const Line b, float &k)
 	double len2 = baxaaxabxaa.getSquaredLengthd();
 	if(len2<EPSILON2) return false;
 
-	k = (((a_b*a.a)*(abxaa)) & baxaaxabxaa) / len2;
+	k = (((a_b*a.a)*(abxaa)) & baxaaxabxaa) / (float)len2;
 
 	return true;
 }

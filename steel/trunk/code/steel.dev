@@ -7,11 +7,11 @@ Ver=1
 ObjFiles=
 Includes=
 Libs=
-PrivateResource=
+PrivateResource=steel_private.rc
 ResourceIncludes=
 MakeIncludes=
-Compiler=
-CppCompiler=
+Compiler=_@@_
+CppCompiler=-DSTEEL_COMPILER_DEVCPP_@@_-DSTEEL_OS_WIN32_@@_-DSTEEL_OPENGL_WIN_@@_
 Linker=-lopengl32 -lglu32 -lglaux -lkernel32 -luser32 -lgdi32 _@@_
 IsCpp=1
 Icon=
@@ -24,10 +24,10 @@ Folders=common,game,game/objects,game/ps,graph,graph/opengl,graph/opengl/extensi
 CommandLine=
 UseCustomMakefile=0
 CustomMakefile=
-IncludeVersionInfo=0
+IncludeVersionInfo=1
 SupportXPThemes=0
 CompilerSet=0
-CompilerSettings=0000000001001000000000
+CompilerSettings=00000000010010000000g1
 
 [Unit1]
 FileName=_cpp.h
@@ -138,13 +138,13 @@ LanguageID=1033
 CharsetID=1252
 CompanyName=
 FileVersion=
-FileDescription=Developed using the Dev-C++ IDE
+FileDescription=Steel Engine developer version
 InternalName=
-LegalCopyright=
+LegalCopyright=DiVision
 LegalTrademarks=
 OriginalFilename=
-ProductName=
-ProductVersion=
+ProductName=Steel Engine
+ProductVersion=dev
 AutoIncBuildNr=0
 
 [Unit11]
@@ -1191,16 +1191,6 @@ BuildCmd=
 FileName=interface.cpp
 CompileCpp=1
 Folder=Steel
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit116]
-FileName=game\ps\particle_system.h
-CompileCpp=1
-Folder=game/ps
 Compile=1
 Link=1
 Priority=1000

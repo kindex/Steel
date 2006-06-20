@@ -14,7 +14,7 @@
 
 #include "../../_cpp.h"
 
-#ifdef OPENGL_SDL
+#ifdef STEEL_OPENGL_SDL
 
 #include "opengl_sdl_engine.h"
 
@@ -27,7 +27,7 @@ bool OpenGL_SDL_Engine::createWindow()
 {
 	if (SDL_Init(SDL_INIT_VIDEO)<0)
 	{
-		alog.out("SDL initialization failed: %s\n",SDL_GetError());
+		steel::log.out("SDL initialization failed: %s\n",SDL_GetError());
 		lastError = SE_SDL_INIT;
 		return false;
 	}
@@ -38,7 +38,7 @@ bool OpenGL_SDL_Engine::createWindow()
 	videoInfo = SDL_GetVideoInfo();
 	if ( !videoInfo )
 	{
-		alog.out("Video query failed: %s\n",SDL_GetError());
+		steel::log.out("Video query failed: %s\n",SDL_GetError());
 		lastError = SE_SDL_VQUERY;
 		SDL_Quit();
 		return false;
@@ -73,13 +73,13 @@ bool OpenGL_SDL_Engine::createWindow()
 	surface = SDL_SetVideoMode(conf->geti("window.width"), conf->geti("window.height"), conf->geti("screen.depth"), videoFlags);
 	if ( !surface )
 	{
-		alog.out("Video mode set failed: %s\n",SDL_GetError());
+		steel::log.out("Video mode set failed: %s\n",SDL_GetError());
 		lastError = SE_SDL_VIDEO;
 		SDL_Quit();
 		return false;
 	}
 	
-    	alog.out("Video mode has been set!\n" \
+    	steel::log.out("Video mode has been set!\n" \
     		"\tResolution: %dx%dx%d\n" \
     		"\tVideo memory: %dK\n" \
     		"\tHardware surface: %s\n" \

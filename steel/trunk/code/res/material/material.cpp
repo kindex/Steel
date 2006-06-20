@@ -21,7 +21,7 @@ bool Material::init(string name)
 	conf = (Script*)res.add(Res::script, name + ".mat");
 	if(conf == NULL)
 	{
-		alog.msg("error res material", string("Material not found: ") + name);
+		log_msg("error res material", string("Material not found: ") + name);
 		return false;
 	} 
 	int lines = conf->count();

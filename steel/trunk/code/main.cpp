@@ -15,11 +15,11 @@
 #include "_cpp.h"
 #include "physic/physic_engine_3d.h"
 
-#ifdef OPENGL_SDL	
+#ifdef STEEL_OPENGL_SDL	
 	#include "graph/opengl/opengl_sdl_engine.h"
 	#include "input/input_sdl.h"
 #endif
-#ifdef OPENGL_WIN
+#ifdef STEEL_OPENGL_WIN
 	#include "graph/opengl/opengl_win_engine.h"
 	#include "input/input_win.h"
 #endif
@@ -37,18 +37,19 @@ using namespace std;
 bool test();
 std::string commandLine;
 
-#ifdef COMPILER_DEVCPP
+#ifdef STEEL_COMPILER_DEVCPP
 int main1(int argc, char *argv[])
 #else
 int main(int argc, char *argv[])
 #endif
 {
-	alog.open("../steel.log");
-	alog.msg("core info", "Command Line: '" + commandLine + "'");
+	steel::log.open("../steel.log");
+
+	log_msg("core info", "Command Line: '" + commandLine + "'");
 
 	if(!test())
 	{
-		alog.close();
+		steel::log.close();
 		return 0;
 	}
 
@@ -60,13 +61,13 @@ int main(int argc, char *argv[])
 	registerResources();
 
 // ******************* GRAPH ************************
-#ifdef OPENGL_SDL	
+#ifdef STEEL_OPENGL_SDL	
 	OpenGL_SDL_Engine graph;
 	InputSDL input;
 	graph.bindResColelntion(&res);
 	if(!graph.init("renderer")) return 1;
 #endif
-#ifdef OPENGL_WIN
+#ifdef STEEL_OPENGL_WIN
 	OpenGL_WIN_Engine graph;
 	InputWIN input;
 	if(!graph.init("renderer", &input)) return 1;
@@ -83,7 +84,7 @@ int main(int argc, char *argv[])
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
-	alog.msg("core", "\n\t\tEntering main loop");
+	log_msg("core", "\n\t\tEntering main loop");
 	bool first = true;
 	steel::time	lastFrameTime = timer.total();
 
@@ -131,15 +132,15 @@ int main(int argc, char *argv[])
 		if(first)
 		{
 			first = false;
-			alog.msg("core", "\n\t\tMain loop: first frame passed");
+			log_msg("core", "\n\t\tMain loop: first frame passed");
 			timer.resume();
 		}
 	}
-	alog.msg("core", "\n\t\tExit from main loop");
+	log_msg("core", "\n\t\tExit from main loop");
 // ******************* MAIN LOOP ************************
 	input.freeMouse();
 
 	graph.deinit();
-	alog.close();
+	steel::log.close();
 	return 0;
 }

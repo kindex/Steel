@@ -5,7 +5,7 @@ bool PhysicEngine::init(std::string _conf)
 {
 	if(!res.add(Res::config, _conf))
 	{
-		alog.msg("error graph conf res","Cannot find renderer config file "+_conf);
+		log_msg("error graph conf res","Cannot find renderer config file "+_conf);
 		return false;
 	}
 

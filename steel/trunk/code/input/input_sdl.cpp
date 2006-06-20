@@ -1,6 +1,6 @@
 #include "../_cpp.h"
 
-#ifdef OPENGL_SDL
+#ifdef STEEL_OPENGL_SDL
 
 #include "input_sdl.h"
 #include <SDL.h>

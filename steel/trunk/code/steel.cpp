@@ -25,7 +25,7 @@
 /*extern int mainCRTStartup(void);
 */
 
-#ifdef COMPILER_DEVCPP
+#ifdef STEEL_COMPILER_DEVCPP
 HINSTANCE hInstance;
 
 int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
@@ -41,8 +41,8 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 }
 #endif
 
-#ifdef COMPILER_VS8
-#ifdef OPENGL_WIN
+#ifdef STEEL_COMPILER_VS8
+#ifdef STEEL_OPENGL_WIN
 HINSTANCE hInstance;
 
 int APIENTRY WinMain(HINSTANCE hInstance,

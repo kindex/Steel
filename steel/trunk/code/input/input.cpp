@@ -13,7 +13,7 @@ bool Input::init(std::string _conf)
 	conf = (Config*)res.add(Res::config, _conf);
 	if(!conf)
 	{
-		alog.msg("error input res", "Input config file not found");
+		log_msg("error input res", "Input config file not found");
 		return false;
 	}
 

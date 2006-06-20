@@ -49,11 +49,11 @@ bool GameGroup::load(GameObj *global)
 	Script *s = (Script*)res.add(Res::script, conf);
 	if(!s)
 	{
-		alog.msg("error game res", "Cannot load script");
+		log_msg("error game res", "Cannot load script");
 		return false;
 	}
 
-	alog.msg("game script", IntToStr(s->count()) + " Lines");
+	log_msg("game script", IntToStr(s->count()) + " Lines");
 	for(int i=0; i<s->count(); i++)
 	{
 		GameObj *obj = NULL;
@@ -135,17 +135,17 @@ bool GameGroup::load(GameObj *global)
 			else if(parent == "")
 			{
 				addChildren(obj);
-				alog.msg("game script", string("Added object '") + kind + ":" + id + "' to group space");
+				log_msg("game script", string("Added object '") + kind + ":" + id + "' to group space");
 			}
 			else
 			{
 				if(tag.find(parent) == tag.end())
 				{
-					alog.msg("error game script", string("Object with id '") + parent + "' not found");
+					log_msg("error game script", string("Object with id '") + parent + "' not found");
 					return false;
 				}
 				tag[parent]->addChildren(obj);
-				alog.msg("game script", string("Added object '") + kind + ":" + id + "' to '" + parent + "'");
+				log_msg("game script", string("Added object '") + kind + ":" + id + "' to '" + parent + "'");
 			}
 		}
 
@@ -160,7 +160,7 @@ bool GameGroup::load(GameObj *global)
 			{							
 				obj->init(s->get(i));
 
-				alog.msg("game script error", string("Cannot init object ") + kind + ":" + id);
+				log_msg("game script error", string("Cannot init object ") + kind + ":" + id);
 				return false;						
 			}										
 			if(kind == "include")

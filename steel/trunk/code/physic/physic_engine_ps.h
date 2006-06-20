@@ -16,11 +16,11 @@
 #include "../common/steel_vector.h"
 
 // hash_map include (различные файлы, так как hash_map не входит в стандарт С++)
-#ifdef COMPILER_VS8
+#ifdef STEEL_COMPILER_VS8
 	#include <hash_map>
 #endif
 
-#ifdef COMPILER_DEVCPP
+#ifdef STEEL_COMPILER_DEVCPP
 	#include <ext/hash_map>
 #endif
 
@@ -43,11 +43,11 @@ protected:
 	};
 
 	// hash_map namespace
-#ifdef COMPILER_VS8
+#ifdef STEEL_COMPILER_VS8
 	stdext::
 #endif
 
-#ifdef COMPILER_DEVCPP
+#ifdef STEEL_COMPILER_DEVCPP
 	__gnu_cxx::
 #endif
 		

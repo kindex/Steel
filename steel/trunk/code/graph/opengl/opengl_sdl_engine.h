@@ -17,7 +17,7 @@
 
 #include "../../_cpp.h"
 
-#ifdef OPENGL_SDL
+#ifdef STEEL_OPENGL_SDL
 
 #include "opengl_engine.h"
 #include "../../common/logger.h"

@@ -23,7 +23,7 @@ bool ScriptText::init(const string name)
 		file = name + ".script";
 		if(!f.open(file)) 
 		{
-			alog.msg("error res script", string("Res/Material/Script: cannot open file ") + file.c_str());
+			log_msg("error res script", string("Res/Material/Script: cannot open file ") + file.c_str());
 			return false;
 		}
 	}

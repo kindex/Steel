@@ -8,33 +8,25 @@
     License:
         Steel Engine License
     Description:
-		ќсновные директивы и определени€ (includes) дл€ всего проекта
+		ќсновные директивы и определени€ (includes) дл€ всего проекта.
+		„асть директив хранитс€ в makefiles и аналогичных
  ************************************************************/
-
 
 #ifndef _CPP_H
 #define _CPP_H
 
-// OS
-#define STEEL_WIN32
-
-//#define OPENGL_SDL
-#define OPENGL_WIN
-
-//#define Linux
-
-//Compiler
-//#undef BC // Borland C++ Builder 6 
-//--define COMPILER_VS8 // Visual Studio 8 (2005) - automatic in steel.vcproj
-
-#ifndef COMPILER_VS8
-#define COMPILER_DEVCPP
-#endif
-
-#define _CRT_SECURE_NO_DEPRECATE 
+/*
+ƒирективы:
+STEEL_OS_WIN32 Ц определена, если проект компилируетс€ дл€ WIN32 платформы
+STEEL_OPENGL_WIN Ц определена, если проект использует создание окна средствами Windows
+STEEL_OPENGL_SDL Ц определена, если проект использует создание окна средствами SDL
+STEEL_COMPILER_VS8 Ц определена, если проект компилируетс€ компил€тором Microsoft Visual Studio 8 (2005)
+STEEL_COMPILER_DEVCPP Ц определена, если проект компилируетс€ компил€тором Dev-C++
+*/
 
 #include "common/logger.h"
 #include "common/types.h"
+#include "common/utils.h"
 
 using namespace steel;
 

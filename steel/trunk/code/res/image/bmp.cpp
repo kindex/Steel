@@ -19,7 +19,7 @@ Res* createBMP(const std::string filename)
 	BMP *o = new BMP;
 	if(o->init(filename))
 	{
-		o->setId(res.genUid());
+		o->setId(bufferIdGenerator.genUid());
 		return o;
 	}
 	else
@@ -116,7 +116,7 @@ bool BMP::init(const std::string name)
 
 /*	if(sizeof(fh)!= 14) 
 	{	
-		alog.out("Res/Image/BMP: head struct size 14 != %d", sizeof(fh));
+		steel::log.out("Res/Image/BMP: head struct size 14 != %d", sizeof(fh));
 		throw;
 	}
 */
@@ -127,7 +127,7 @@ bool BMP::init(const std::string name)
 
 	if(!f.open(file, "bmp")) 
 	{
-// 		alog.out("Res/Image/BMP: cannot open file %s", file.c_str());
+// 		steel::log.out("Res/Image/BMP: cannot open file %s", file.c_str());
 		return false;
 	}
 

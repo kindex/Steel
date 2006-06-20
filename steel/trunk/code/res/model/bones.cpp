@@ -16,7 +16,7 @@ boneSet::boneSet( unsigned int initialSize )
 	bones=(boneNode*)malloc(sizeof(boneNode)*bonesCnt);
 	if ( bones==NULL )
 	{
-		alog.out("boneSet::boneSet: failed to allocate a memory!\n");
+		steel::log.out("boneSet::boneSet: failed to allocate a memory!\n");
 		bonesCnt=0;
 	}
 }
@@ -31,7 +31,7 @@ boneNode *boneSet::operator [] ( unsigned int i )
 {
 	if ( i>=bonesCnt )
 	{
-		alog.out("boneSet::operator[]: requested value is out of range!\n");
+		steel::log.out("boneSet::operator[]: requested value is out of range!\n");
 		return NULL;
 	}
 	return bones+i;
@@ -44,7 +44,7 @@ boneAnim::boneAnim( unsigned int initialSize )
 	anims=(boneANode*)malloc(sizeof(boneANode)*animsCnt);
 	if ( anims==NULL )
 	{
-		alog.out("boneAnim::boneAnim: failed to allocate a memory!\n");
+		steel::log.out("boneAnim::boneAnim: failed to allocate a memory!\n");
 		animsCnt=0;
 	}
 }
@@ -59,7 +59,7 @@ boneANode *boneAnim::operator [] ( unsigned int i )
 {
 	if ( i>=animsCnt )
 	{
-		alog.out("boneAnim::operator[]: requested value is out of range!\n");
+		steel::log.out("boneAnim::operator[]: requested value is out of range!\n");
 		return NULL;
 	}
 	return anims+i;

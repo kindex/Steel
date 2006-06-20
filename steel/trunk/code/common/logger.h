@@ -1,57 +1,92 @@
-/***************************************************************************
- *            logger.h
- *
- *  Fri Feb 10 11:36:51 2006
- *  Copyright  2006  J. Anton
- *  kane@mail.berlios.de
- ****************************************************************************/
+/*id*********************************************************
+    Unit: logger
+    Part of: Steel engine
+    (C) DiVision, 2004-2006
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kane [J. Anton, kane@mail.berlios.de]
+    License:
+        Steel Engine License
+    Description:
+		Лог-файл
+ ************************************************************/
 
 #ifndef __LOGGER_H__
 #define __LOGGER_H__
 
+#include "timer.h"
+
 #include <string>
-#include <stdio.h>
+#include <fstream>
 
 #undef assert
 
-#define assert(check, message)			\
+/*
+	проверка истиности выражения expression во время выполнения программы. 
+	Если expression не выполняется, то выводится сообщение в файл и вызывается throw.
+*/
+#define assert(expression, message)		\
 {										\
-	if(!(check))						\
+	if(!(expression))					\
 	{									\
-		alog.msg("assert", message);	\
+		log_msg("assert", message);		\
 		throw;							\
 	}									\
 }
 
-#define abort_init(keywords, _msg) { alog.msg(keywords, _msg); return false; }
+/*
+	проверка условия во время компиляции. 
+	Если условие не выполняется, то компиляция прерывается 
+	с ошибкой «cannot allocate an array of constant size 0»
+*/
+#define cassert(expression)	{	int __[(expression)?1:0];	}
 
+// именно этим макросом надо выводить все временные отладочные сообщения в лог файл.
+#define debug(message)	log_msg("debug", message)
 
+// именно этим макросом надо выводить сообщения в лог-файл
+#define log_msg(keywords, message)	steel::log.msg(keywords, message)
+
+// неудачный выход из процедуры с сообщением в лог
+#define abort_init(keywords, _msg) { log_msg(keywords, _msg); return false; }
+
+/*
+	Класс для стандартного способа сообщения информации пользователю.
+*/
 class Logger
 {
+protected:
+	bool opened;
+	std::fstream f;
+	Timer timer;
+
 public:
-	/*
-		Открытие и закрытие файла лога,
-		true в случае успеха
-	*/
-	bool open( char *filename );
-	bool open( std::string filename );
-	bool close( void );
-	
-	/*
-		Запись в файл, перед текстом ставится дата и время
-	*/
-	void out( char *fmt, ... );
-	void out( std::string str );
+	Logger() { opened = false; }
 
-	void msg(std::string keywords, std::string str);
+	//	Открытие файла лога и иницализация таймера, true в случае успеха.
+	bool open(std::string filename);
+	bool close(void);
 
+/*
+	Добавление сообщения в файл, перед текстом ставится время от начала открытия лог-файла. 
+	Str – текст сообщения. 
+	keywords – ключевые слова для быстрого поиска и отсеивания нужных записей в логе. 
+	Ключевые слова отделяются пробелом. Обычно ключевое слово это имя модуля или функции, 
+	откуда пришло сообщение.
+*/
+	void msg(std::string keywords, std::string message);
 
-private:
-	FILE *f;
+	// вывод без ключевых слов
+	void out(std::string str);
 };
 
-extern Logger alog;
 
-void debug(const std::string message);
+#include <math.h> // для избежания конфликта имён с math.h::log()
+
+// глобальный экземпляр класса steel::log, через который следует выводить все сообщения
+namespace steel
+{
+	extern Logger log;
+}
 
 #endif

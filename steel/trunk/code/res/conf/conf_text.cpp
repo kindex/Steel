@@ -21,7 +21,7 @@ bool ConfigText::init(const std::string name)
 	rstream f(file); // no binary acces, only text
 	if(!f.good()) 
 	{
-		alog.out("Res/Material/Conf: cannot open file %s", file.c_str());
+		log_msg("res conf error", "Cannot open file " + file);
 		return false;
 	}
 

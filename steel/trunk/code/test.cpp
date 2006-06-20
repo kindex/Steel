@@ -11,5 +11,10 @@
 
 bool test()
 {
+	v3 a(1,1,1), b(2,2,2), c(1,-1,0);
+
+	v3 d = a + b*c;
+
+
 	return true;
 }

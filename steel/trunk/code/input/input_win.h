@@ -3,7 +3,7 @@
 
 #include "../_cpp.h"
 
-#ifdef OPENGL_WIN
+#ifdef STEEL_OPENGL_WIN
 
 #include "input.h"
 #include <windows.h>

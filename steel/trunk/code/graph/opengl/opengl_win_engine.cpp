@@ -13,7 +13,7 @@
 
 #include "../../_cpp.h"
 
-#ifdef OPENGL_WIN
+#ifdef STEEL_OPENGL_WIN
 
 #include "opengl_win_engine.h"
 #include "../../input/input_win.h"
@@ -280,7 +280,7 @@ bool OpenGL_WIN_Engine::createWindow()
 
 	if(!RegisterClass(&wndclass)) 
 	{
-		alog.msg("error graph opengl", std::string("Cannot register class ") + wndclass.lpszClassName);
+		log_msg("error graph opengl", std::string("Cannot register class ") + wndclass.lpszClassName);
 		return false;							// Register the class
 	}
 	
@@ -360,9 +360,10 @@ bool OpenGL_WIN_Engine::createWindow()
 	if(conf->geti("fullscreen"))
 			   	changeToFullScpeen();							// Go to full screen
 
-	alog.out("Video mode has been set!\n" \
-		"\tWindow size: %dx%dx%d\n" ,
-		conf->geti("window.width"), conf->geti("window.height"), conf->geti("screen.depth") );
+	log_msg("opengl graph", "Video mode has been set! (" +	
+		IntToStr(conf->geti("window.width")) + "x" + 
+		IntToStr(conf->geti("window.height")) + "x" +
+		IntToStr(conf->geti("screen.depth"))+ ")" );
 
 	return_pressed = false;
 

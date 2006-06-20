@@ -297,15 +297,15 @@ bool _3DS::init(const std::string name)
 		path.pop_back();
 		string dir = implode('/', path);
 
-		vertex.setId(res.genUid());
-		normal.setId(res.genUid());
-		triangleAll.setId(res.genUid());
-		texCoords.setId(res.genUid());
+		vertex.setId(bufferIdGenerator.genUid());
+		normal.setId(bufferIdGenerator.genUid());
+		triangleAll.setId(bufferIdGenerator.genUid());
+		texCoords.setId(bufferIdGenerator.genUid());
 
 		for(steel::vector<FaceMaterial>::iterator it = faceMaterial.begin();
 					it != faceMaterial.end(); it++)
 		{
-			it->triangles->setId(res.genUid());
+			it->triangles->setId(bufferIdGenerator.genUid());
 
 			string mat = it->name;
 			

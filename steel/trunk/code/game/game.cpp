@@ -323,12 +323,12 @@ bool Game::init(string _conf, Input *_input, std::string params)
 	conf = (Config*)res.add(Res::config, _conf);
 	if(!conf)
 	{
-		alog.msg("error game res", string("Cannot load game config ") + _conf);
+		log_msg("error game res", string("Cannot load game config ") + _conf);
 		return false;
 	}
 	if(!executeScript(params))
 	{
-		alog.msg("core error", "Cannor execute script");
+		log_msg("core error", "Cannor execute script");
 		return false;
 	}
 
@@ -347,7 +347,7 @@ bool Game::init(string _conf, Input *_input, std::string params)
 
 	if(!conf->isset("script"))
 	{
-		alog.msg("error game res", "Cannot find script to init scene");
+		log_msg("error game res", "Cannot find script to init scene");
 		return false;
 	}
 
@@ -396,7 +396,7 @@ void Game::handleEventKeyUp(std::string key)
 
 bool Game::executeScript(std::string script)
 {
-	alog.msg("console", "ExecScript: '" + script + "'");
+	log_msg("console", "ExecScript: '" + script + "'");
 
 	steel::vector<string> lines = explode(';', script);
 	for(steel::vector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
@@ -407,7 +407,7 @@ bool Game::executeScript(std::string script)
 bool Game::executeCommand(std::string command)
 {
 	if(command.empty()) return true;
-	alog.msg("console", "ExecCommand: '" + command + "'");
+	log_msg("console", "ExecCommand: '" + command + "'");
 
 	// var=value
 
@@ -417,7 +417,7 @@ bool Game::executeCommand(std::string command)
 	if(var.size() == 1)
 	{
 		conf->setup(var[0], token[1]);
-		alog.msg("script", var[0] + " = " + token[1]);
+		log_msg("script", var[0] + " = " + token[1]);
 		return true;
 	}
 	else

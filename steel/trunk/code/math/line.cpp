@@ -20,7 +20,7 @@ bool isCross(const Line a, const Line b, float &t, float &s)
 	double len2 = bbxab.getSquaredLengthd();
 	if(len2<EPSILON2) return false; // линии параллельны
 	
-	s = (((a.base - b.base)*a.a)&bbxab / len2);
+	s = (((a.base - b.base)*a.a)&bbxab / (float)len2);
 
 	v3 p = b.point(s);
 
@@ -40,7 +40,7 @@ bool isCrossFast(const Line a, const Line b, float &s)
 	v3 bbxab = (b.a*a.a);
 	double len2 = bbxab.getSquaredLengthd();
 	
-	s = ((a.base - b.base)*a.a)&bbxab / len2;
+	s = ((a.base - b.base)*a.a)&bbxab / (float)len2;
 
 	return true;
 }

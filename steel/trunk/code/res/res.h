@@ -155,7 +155,6 @@ class ResCollection
 // По имени возврашает индекс в массивах data и resType
 	std::map<const std::string,int> index; 
 	steel::vector<std::string> names;
-	uid	freeUid;
 
 	typedef 
 		steel::vector<ClassCopy> 
@@ -165,7 +164,7 @@ class ResCollection
 // Количество рагруженных ресурсов (в начале 0)
 	int freeindex;
 public:
-	ResCollection(): freeindex(0), freeUid(1) {}
+	ResCollection(): freeindex(0){}
 // Вернуть ресурс по номеру
 	Res* operator [] (const int n)        { return data[n]; }
 // Проверить, существует ли ресурс с указанным именем
@@ -207,7 +206,7 @@ public:
 			return m;
 		else
 		{
-			alog.msg("error res model", "Model not found: "+name);
+			log_msg("error res model", "Model not found: "+name);
 			return NULL;
 		}
 	}
@@ -224,8 +223,6 @@ public:
 	void registerClass(funcCreateResClass *_func, const Res::res_kind kind);
 // Вернуть копию класса
 	Res* createClass(ClassCopy *aclass, std::string name);
-
-	uid	genUid() { return freeUid++; }
 };
 
 // глобальная коллекция ресурсов

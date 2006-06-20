@@ -18,7 +18,7 @@
 #include "_cpp.h"
 #include <string>
 
-#ifdef COMPILER_DEVCPP
+#ifdef STEEL_COMPILER_DEVCPP
 int main1(int argc, char *argv[]);
 #else
 int main(int argc, char *argv[]);

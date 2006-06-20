@@ -79,7 +79,7 @@ public:
 	uid genUid() { return freeId++;}
 };
 
-extern IdGenerator objectIdGenerator;
+extern IdGenerator objectIdGenerator, bufferIdGenerator;
 
 /*
 Interface protottype

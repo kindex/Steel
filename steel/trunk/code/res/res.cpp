@@ -77,12 +77,12 @@ Res* ResCollection::addForce(const Res::res_kind kind, const std::string& name)
 		data[freeindex] = obj;
 		resType[freeindex] = kind;
 	
-		alog.out("Res: loaded %s", name.c_str());
+		log_msg("res", "loaded " + name);
 
 		freeindex++;
 		return data[freeindex-1];
 	}
-	alog.out("Res: failed %s", name.c_str());
+	log_msg("res", "Res: failed " + name);
 	return NULL;
 }
 

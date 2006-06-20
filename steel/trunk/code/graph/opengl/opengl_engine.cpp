@@ -137,7 +137,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-					uid bufId = res.genUid();
+					uid bufId = bufferIdGenerator.genUid();
 					buffersToDelete.push_back(bufId);
 
 					if(map.kind == MapKind::bump_map)
@@ -191,7 +191,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 						glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
 						bindTexture(map.texture); // Cube texture (auto detect from Image)
 
-						uid bufId = res.genUid();
+						uid bufId = bufferIdGenerator.genUid();
 						buffersToDelete.push_back(bufId);
 						drawReflect(e, e.matrix, camera.eye, bufId);
 
@@ -912,7 +912,7 @@ bool OpenGL_Engine::init(std::string _conf)
 {
 	if(!res.add(Res::config, _conf))
 	{
-		alog.msg("error graph conf res","Cannot find renderer config file "+_conf);
+		log_msg("error graph conf res","Cannot find renderer config file "+_conf);
 		return false;
 	}
 
@@ -956,14 +956,14 @@ bool OpenGL_Engine::init(std::string _conf)
 	zeroNormal = (Image*)res.add(Res::image, "zero");
 	if(!zeroNormal)
 	{
-		alog.msg("error graph res", "Zero normal map not found");
+		log_msg("error graph res", "Zero normal map not found");
 		return false;
 	}
 
 	//lightCubeMap			= GenerateLightCubeMap();
 	//distMap					= generateDistanceLinearMap();
 
-	alog.out("OpenGL engine has been initialized!\n");
+	steel::log.out("OpenGL engine has been initialized!\n");
 
 	setCaption("Steel Engine");
 
@@ -974,7 +974,7 @@ bool OpenGL_Engine::init(std::string _conf)
 
 bool OpenGL_Engine::deinit()
 {
-	alog.out("OpenGL engine has been stopped!\n");
+	steel::log.out("OpenGL engine has been stopped!\n");
 	return true;
 }
 

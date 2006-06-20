@@ -10,7 +10,7 @@ bool GameObjModel::init(ScriptLine	&s)
 	conf = (Config*)res.add(Res::config, s.gets(3));
 	if(!conf)
 	{
-		alog.msg("error res model", "Model config not found: " + s.gets(3));
+		log_msg("error res model", "Model config not found: " + s.gets(3));
 		return false;
 	}
 	string modelName = conf->gets("model");
@@ -18,7 +18,7 @@ bool GameObjModel::init(ScriptLine	&s)
 	m = (Model*)res.add(Res::model, modelName);
 	if(!m) 
 	{
-		alog.msg("error res model", "Model not found: " + modelName);
+		log_msg("error res model", "Model not found: " + modelName);
 		return false;
 	}
 
@@ -37,12 +37,12 @@ bool GameObjModel::init(ScriptLine	&s)
 			if(m)
 				it->material = m;
 			else
-				alog.msg("error model object game", "Cannot find material '" + material + "'");
+				log_msg("error model object game", "Cannot find material '" + material + "'");
 		}
 		i++;
 		if(!it->material) 
 		{
-			alog.msg("error game object model", "No material for object");
+			log_msg("error game object model", "No material for object");
 			return false;
 		}
 	}

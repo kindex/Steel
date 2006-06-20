@@ -1,5 +1,7 @@
 #include "../_cpp.h"
-#ifdef OPENGL_WIN
+
+#ifdef STEEL_OPENGL_WIN
+
 #include "input_win.h"
 #include "../common/utils.h"
 

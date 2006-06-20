@@ -20,7 +20,7 @@ Res* createTGA(const std::string filename)
 	TGA *o = new TGA;
 	if(o->init(filename)) 
 	{
-		o->setId(res.genUid());
+		o->setId(bufferIdGenerator.genUid());
 		return o;
 	}
 	else
@@ -33,7 +33,7 @@ bool TGA::init(const std::string name)
 
 	if(!f.open(name, "tga"))
 	{
-//		alog.msg("warning res image tga", string("Res/Image/TGA: cannot open file ")+ name.c_str());
+//		log_msg("warning res image tga", string("Res/Image/TGA: cannot open file ")+ name.c_str());
 		return false;
 	}
 

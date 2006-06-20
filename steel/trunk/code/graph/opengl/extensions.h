@@ -12,7 +12,7 @@
 
 #include "../../_cpp.h"
 
-#ifdef STEEL_WIN32
+#ifdef STEEL_OS_WIN32
 #include <windows.h>
 #endif
 
@@ -22,7 +22,7 @@
 //#define GL_GLEXT_PROTOTYPES
 #include "gl/glext.h"
 
-#ifdef STEEL_WIN32
+#ifdef STEEL_OS_WIN32
 //#include "wglext.h"
 #endif
 

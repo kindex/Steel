@@ -1,3 +1,3 @@
 #include "interface.h"
 
-IdGenerator objectIdGenerator;
+IdGenerator objectIdGenerator, bufferIdGenerator;

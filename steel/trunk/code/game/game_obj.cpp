@@ -108,7 +108,7 @@ void GameObj::addChildren(GameObj *obj)
 	{
 		if(tag.find(name) != tag.end())
 		{
-			alog.msg("error scene", string("Duplicated object id '") + name + "'");
+			log_msg("error scene", string("Duplicated object id '") + name + "'");
 		}
 		tag[name] = obj;
 	}
@@ -118,7 +118,7 @@ GameObj *GameObj::getChildren(std::string name)
 {
 	if(tag.find(name) == tag.end())
 	{
-		alog.msg("error scene", string("Object not found: '") + name + "'");
+		log_msg("error scene", string("Object not found: '") + name + "'");
 		return NULL;
 	}
 	return tag[name];

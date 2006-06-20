@@ -18,7 +18,7 @@
 
 #include "../../_cpp.h"
 
-#ifdef OPENGL_WIN
+#ifdef STEEL_OPENGL_WIN
 
 #include "opengl_engine.h"
 #include "../../common/logger.h"
