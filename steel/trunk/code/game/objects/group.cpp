@@ -25,6 +25,7 @@
 #include "triangle.h"
 #include "model_obj.h"
 #include "../ps/particle_system.h"
+#include "../../res/res_main.h"
 
 using namespace std;
 
@@ -46,7 +47,7 @@ bool GameGroup::load(GameObj *global)
 {
 	if(!parent) positionKind = PositionKind::global;
 
-	Script *s = (Script*)res.add(Res::script, conf);
+	Script *s = resScript.add( conf);
 	if(!s)
 	{
 		log_msg("error game res", "Cannot load script");

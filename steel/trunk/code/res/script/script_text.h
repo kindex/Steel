@@ -10,6 +10,6 @@ public:
 	bool init(const std::string name);
 };
 
-Res* createScriptText(const std::string filename);
+Script* createScriptText(const std::string filename);
 
 #endif

@@ -1,15 +1,14 @@
 #include "physic_engine.h"
+#include "../res/res_main.h"
 
 
 bool PhysicEngine::init(std::string _conf)
 {
-	if(!res.add(Res::config, _conf))
+	if(!(conf = resConfig.add(_conf)))
 	{
 		log_msg("error graph conf res","Cannot find renderer config file "+_conf);
 		return false;
 	}
-
-	conf = (Config*)res.get(Res::config, _conf);
 
 	total.collisionCount = 0;
 

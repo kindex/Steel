@@ -20,6 +20,8 @@
 
 #include "objects/model_obj.h"
 
+#include "../res/res_main.h"
+
 using namespace std;
 
 void Game::handleEventKeyDown(std::string key)
@@ -70,7 +72,7 @@ bool Game::createObject()
 {
 /*	Particle *p = new Particle;
 
-	if(p->init(eye, direction, (Config*)res.add(Res::config, "ps_weapon")))
+	if(p->init(eye, direction, resConfig.add( "ps_weapon")))
 	{
 		graphEngine->inject(p);
 		physicEngine->inject(p);
@@ -320,7 +322,7 @@ bool Game::init(string _conf, Input *_input, std::string params)
 	// Config
 	input = _input; 
 	input->setGame(this);
-	conf = (Config*)res.add(Res::config, _conf);
+	conf = resConfig.add( _conf);
 	if(!conf)
 	{
 		log_msg("error game res", string("Cannot load game config ") + _conf);

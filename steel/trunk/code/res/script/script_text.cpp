@@ -1,7 +1,7 @@
 #include "script_text.h"
 using namespace std;
 
-Res* createScriptText(const std::string filename)
+Script* createScriptText(const std::string filename)
 {
 	ScriptText *o = new ScriptText;
 	if(o->init(filename)) 

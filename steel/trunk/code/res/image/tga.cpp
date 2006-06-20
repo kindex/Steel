@@ -15,7 +15,7 @@
 #include <string> 
 
 
-Res* createTGA(const std::string filename) 
+Image* createTGA(const std::string filename) 
 {
 	TGA *o = new TGA;
 	if(o->init(filename)) 

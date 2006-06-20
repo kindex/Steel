@@ -69,8 +69,6 @@ public:
 	void skip(int n);// skip n byten in input stream
 };
 
-// Forward declaration
-class ResCollection;
 
 /*
 Класс - храниель и рагрузчик одного ресурса.
@@ -122,19 +120,6 @@ public:
 	void setId(uid _id) { id = _id; }
 };
 
-// тип: функция для геренирования копии класса, унаследованного от Res
-typedef Res*(funcCreateResClass)(const std::string filename); 
-
-// копия класса. Нужна для ассоциирования класса с типом ресурса.
-struct ClassCopy
-{
-	funcCreateResClass* func;
-
-	ClassCopy(): func(NULL) {}
-	ClassCopy(funcCreateResClass* _func){ func = _func;}
-
-};
-
 
 /*
 Коллекция ресурсов
@@ -145,35 +130,49 @@ struct ClassCopy
 Например, для загрузки ресурса типа "image" вызовутся загрузчики BMP, JPG, PNG. Если хоть один из них сможет загрузить 
 ресурс - рагзузиться, иначе - нет.
 */
+template<class T>
 class ResCollection
 {
+protected:
 // Массив с классами, в которых хранятся ресурсы
-	steel::vector<Res*> data;
-// Типы этих ресурсов
-	steel::vector<Res::res_kind> resType;
+	steel::vector<T*> data;
 // Map: resource name->index
 // По имени возврашает индекс в массивах data и resType
 	std::map<const std::string,int> index; 
 	steel::vector<std::string> names;
 
-	typedef 
-		steel::vector<ClassCopy> 
-		ResClassArray;
+
+	// тип: функция для геренирования копии класса, унаследованного от Res
+	typedef T*(funcCreateResClass)(const std::string filename); 
+
+	// копия класса. Нужна для ассоциирования класса с типом ресурса.
+	struct ClassCopy
+	{
+		funcCreateResClass* func;
+
+		ClassCopy(): func(NULL) {}
+		ClassCopy(funcCreateResClass* _func){ func = _func;}
+
+	};
+
+	
 // Массивы классов для рагрузки ресурсов каждого типа
-	ResClassArray classes[RES_KIND_COUNT];
+	steel::vector<ClassCopy> classes;
 // Количество рагруженных ресурсов (в начале 0)
 	int freeindex;
 public:
-	ResCollection(): freeindex(0){}
+	ResCollection(): freeindex(0) {}
 // Вернуть ресурс по номеру
-	Res* operator [] (const int n)        { return data[n]; }
+
+	T* operator[](const int n) const { return data[n]; }
+
 // Проверить, существует ли ресурс с указанным именем
 	bool find(const std::string& name) {return index.find(name) != index.end(); } 
 // Найти номер ресурса по имени
     int getIndex(const std::string name)   {if(index.find(name) != index.end())	return index[name];	else return -1;  }  /*If exist - return*, esle 0 */
     
 // Вернуть ресурс по имени
-	Res* operator [] (const std::string& name) 
+	T* operator [] (const std::string& name) 
 	{
 		int i = getIndex(name);
 		if(i<0)
@@ -183,49 +182,86 @@ public:
 	}
 
 // Вернуть ресурс по имени и типу
-	Res* get(const Res::res_kind kind, const std::string& name) 
+	T* get(const std::string& name) 
 	{ 
 		int i = getIndex(name);
 		if(i<0)
 			return NULL;
 		else
-		{
-			if(kind == resType[i])
-				return data[i]; 
-			else
-				return NULL;
-		}
+			return data[i]; 
 	}
 
-// Вернуть ресурс (модель) по имени 
-// TODO: не красиво - оптимизация
-	Res* getModel(const std::string& name)
+/*
+	Добавить ресурс по имени и типу
+	name - идентификатор ресурса. Обычно это имя файла без расширения, 
+	но может быть ипрограммно генерируемой тестурой.
+	Пробуем загрузить всеми доступными загрузчиками по порядку.
+*/
+	T* addForce(const std::string name)
 	{
-		Res* m = add(Res::model, name);
-		if(m != NULL)
-			return m;
-		else
+        int s = classes.size();
+		for(int i = 0; i < s; i++)
 		{
-			log_msg("error res model", "Model not found: "+name);
-			return NULL;
+			T *obj = createClass(&classes[i], name);
+			if(obj == NULL) continue;
+			
+			index[name] = freeindex;
+			data.resize(freeindex+1);
+			names.resize(freeindex+1);
+		    
+			index[name] = freeindex; 
+			names[freeindex] = name; 
+
+			data[freeindex] = obj;
+		
+			log_msg("res", "loaded " + name);
+
+			freeindex++;
+			return data[freeindex-1];
 		}
+		log_msg("res", "failed " + name);
+		return NULL;
+	}
+// Добавить ресурс по имени и типу, если ресурса еще нет в коллекции
+	T* add(const std::string name)
+	{
+		if(index.find(name) == index.end())
+		{
+			return addForce(name);
+		}
+		else
+			return get(name);
 	}
 
-// Добавить ресурс по имени и типу
-	Res* addForce(const Res::res_kind kind, const std::string& name);
-// Добавить ресурс по имени и типу, если ресурса еще нет в коллекции
-	Res* add(const Res::res_kind kind, const std::string& name);
+
+
 // Добавить массив ресурсов
-	bool add(Res::ResLocatorArray &names);
+	bool add(const Res::ResLocatorArray &names)
+	{
+		for(Res::ResLocatorArray::iterator it = names.begin();	it != names.end();	it++)
+    		{
+    			if(!find(it->name))
+    			{
+    				if(!addForce(it->kind, it->name)) return false;
+    			}
+    		}
+		return true;
+	}
+
 
 // Ассоциировать тип ресурса и загрузчик.
 // _func - функция для создания класса для загрузки (унаследоманного от Res)
-	void registerClass(funcCreateResClass *_func, const Res::res_kind kind);
+	void registerClass(funcCreateResClass *_func)
+	{
+		classes.push_back(ClassCopy(_func));
+	}
 // Вернуть копию класса
-	Res* createClass(ClassCopy *aclass, std::string name);
+	T* createClass(ClassCopy *aclass, std::string name)
+	{
+		return aclass->func(name);
+	}
 };
 
-// глобальная коллекция ресурсов
-extern ResCollection res;
+
 
 #endif

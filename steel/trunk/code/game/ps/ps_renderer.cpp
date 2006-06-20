@@ -1,4 +1,5 @@
 #include "ps_renderer.h"
+#include "../../res/res_main.h"
 
 void SpriteRenderer::processGraph(v3	cameraEye, v3 cameraDirection)
 {
@@ -102,7 +103,7 @@ void SpriteRenderer::initSprites(int begin, int end)
 
 bool SpriteRenderer::initParticles()
 {
-	if(!(m = (Material*)res.add(Res::material, conf->gets("material")))) abort_init("res ps renderer", "Cannot find material " + conf->gets("material"));
+	if(!(m = resMaterial.add(conf->gets("material")))) abort_init("res ps renderer", "Cannot find material " + conf->gets("material"));
 
 	std::string salign = conf->gets("align", "screen"); // align;
 	if(salign == "screen")	align = SpriteAlign::screen; else

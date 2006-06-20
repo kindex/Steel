@@ -1,4 +1,5 @@
-<html xmlns:o="urn:schemas-microsoft-com:office:office"
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
 xmlns:w="urn:schemas-microsoft-com:office:word"
 xmlns="http://www.w3.org/TR/REC-html40">
 
@@ -8,7 +9,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=Generator content="Microsoft Word 11">
 <meta name=Originator content="Microsoft Word 11">
 <link rel=File-List href="conception_files/filelist.xml">
-<title>Спецификация движка</title>
+<title>Steel Engine: концепция</title>
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:Zoom>120</w:Zoom>
@@ -136,55 +137,6 @@ span.GramE
 	mso-paper-source:0;}
 div.Section1
 	{page:Section1;}
- /* List Definitions */
- @list l0
-	{mso-list-id:872618981;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-1920847426 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
-@list l0:level1
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
-	mso-level-tab-stop:92.7pt;
-	mso-level-number-position:left;
-	margin-left:92.7pt;
-	text-indent:-18.0pt;
-	font-family:Symbol;}
-@list l0:level2
-	{mso-level-tab-stop:72.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l0:level3
-	{mso-level-tab-stop:108.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l0:level4
-	{mso-level-tab-stop:144.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l0:level5
-	{mso-level-tab-stop:180.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l0:level6
-	{mso-level-tab-stop:216.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l0:level7
-	{mso-level-tab-stop:252.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l0:level8
-	{mso-level-tab-stop:288.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l0:level9
-	{mso-level-tab-stop:324.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-ol
-	{margin-bottom:0cm;}
-ul
-	{margin-bottom:0cm;}
 -->
 </style>
 <!--[if gte mso 10]>
@@ -226,37 +178,44 @@ table.MsoTableGrid
 <![endif]-->
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
 </head>
 
 <body lang=RU style='tab-interval:35.4pt'>
 
 <div class=Section1>
 
-<h1>Концепция <span class=SpellE>Steel</span> <span class=SpellE>Engine</span><o:p></o:p></h1>
+<h1>Концепция <span class=SpellE>Steel</span> <span class=SpellE>Engine</span></h1>
 
-<h3>Аудитория<o:p></o:p></h3>
+<h3>Аудитория</h3>
 
 <p>Документ предназначен для использования командой разработчиков <span
 class=SpellE>Steel</span> <span class=SpellE>Engine</span>, игр на основе этого
-движка, а также для руководства T-NAME.<o:p></o:p></p>
+движка, а также для руководства T-NAME.</p>
 
-<h3>Идея проекта<o:p></o:p></h3>
+<h3>Идея проекта</h3>
 
-<p><span class=SpellE>Steel</span> <span class=SpellE>Engine</span> является продуктом,
-предназначенным для создания компьютерных игр имеющих <span style='background:
-yellow;mso-highlight:yellow'>вид</span> <span style='background:yellow;
-mso-highlight:yellow'>сбоку</span>. Основными частями <span class=SpellE>Steel</span>
-<span class=SpellE>Engine</span> являются непосредственно сам движок игры,
-обеспечивающий общение между миром игры и игроком, <span style='background:
-yellow;mso-highlight:yellow'>а также редактор, с помощью которого <span
-class=SpellE>геймдизайнеры</span> создают игровое пространство.</span><o:p></o:p></p>
+<p><span class=SpellE>Steel</span> <span class=SpellE>Engine</span> является
+продуктом, предназначенным для создания компьютерных игр имеющих <span
+style='background:yellow;mso-highlight:yellow'>вид</span> <span
+style='background:yellow;mso-highlight:yellow'>сбоку</span>. Основными частями <span
+class=SpellE>Steel</span> <span class=SpellE>Engine</span> являются
+непосредственно сам движок игры, обеспечивающий общение между миром игры и
+игроком, <span style='background:yellow;mso-highlight:yellow'>а также редактор,
+с помощью которого <span class=SpellE>геймдизайнеры</span> создают игровое
+пространство.</span></p>
 
 <p>Как уже было сказано выше, движок <span class=SpellE>Steel</span> <span
 class=SpellE>Engine</span> является программным продуктом, организующим общение
 между миром игры и игроком. Он использует игровые ресурсы, созданные <span
 class=SpellE>геймдизайнерами</span> для моделирования игрового пространства и
 состоит из двух частей – базы (<span class=SpellE>base</span>) и дополнительной
-части.<o:p></o:p></p>
+части.</p>
 
 <p><span class=SpellE>Base</span> является системой основных модулей и отвечает
 за графику, физику, звук, управление, организацию хранения ресурсов и сеть. <span
@@ -264,49 +223,49 @@ class=SpellE>Base</span> должна быть достаточно гибкая, так как в последствии
 предполагается её эволюционное развитие. Также она при минимальных изменениях
 (или даже без таковых) может служить основой для создания других движков,
 графических демонстраций и программ моделирования различных процессов, например
-таких, как прослеживание пути рентгеновских лучей.<o:p></o:p></p>
+таких, как прослеживание пути рентгеновских лучей.</p>
 
 <p><span style='background:yellow;mso-highlight:yellow'>Дополнительная часть
 движка не может существовать без <span class=GramE>базовой</span>. При
 использовании <span class=SpellE>Steel</span> <span class=SpellE>Engine</span>
 в различных проектах, эта часть может подвергаться достаточно сильным
-изменениям или же может быть полностью переписана. По умолчанию она
-соответствует игровому проекту <span class=SpellE>Gerda</span> &amp; <span
-class=SpellE>Kay</span>. В этой части движка присутствует физическая модель
-игрового пространства, <span class=GramE>представляющая из себя</span> хранение
-и обработку всех объектов в этом пространстве (<span class=SpellE>юниты</span>,
-пули, стены, погодные эффекты, визуальные системы частиц). В основе физического
-моделирования <span class=SpellE>Steel</span> <span class=SpellE>Engine</span>
-лежит многослойная двумерная реалистичная физическая модель. Кроме этого, в
-дополнительной части содержится AI (<span class=SpellE>Artificial</span> <span
-class=SpellE>Intelligence</span>, <span class=SpellE>искуственный</span>
-интеллект). AI – это способность живых, или любых других мыслящих объектов (<span
-class=SpellE>юнитов</span>) реалистично (по правилам игры) достигать своей
-цели, реагировать на обстоятельства и действия игрока с целью помешать или
-помочь ему что-то сделать, или же просто выжить. Также в этой части
-присутствуют и другие модули, <span class=GramE>например</span> такие как модуль
-позволяющий создать пользовательский игровой интерфейс.</span><o:p></o:p></p>
+изменениям или же может быть полностью переписана. По умолчанию она соответствует
+игровому проекту <span class=SpellE>Gerda</span> &amp; <span class=SpellE>Kay</span>.
+В этой части движка присутствует физическая модель игрового пространства, <span
+class=GramE>представляющая из себя</span> хранение и обработку всех объектов в
+этом пространстве (<span class=SpellE>юниты</span>, пули, стены, погодные
+эффекты, визуальные системы частиц). В основе физического моделирования <span
+class=SpellE>Steel</span> <span class=SpellE>Engine</span> лежит многослойная
+двумерная реалистичная физическая модель. Кроме этого, в дополнительной части
+содержится AI (<span class=SpellE>Artificial</span> <span class=SpellE>Intelligence</span>,
+<span class=SpellE>искуственный</span> интеллект). AI – это способность живых,
+или любых других мыслящих объектов (<span class=SpellE>юнитов</span>)
+реалистично (по правилам игры) достигать своей цели, реагировать на
+обстоятельства и действия игрока с целью помешать или помочь ему что-то
+сделать, или же просто выжить. Также в этой части присутствуют и другие модули,
+<span class=GramE>например</span> такие как модуль позволяющий создать
+пользовательский игровой интерфейс.</span></p>
 
 <p><span style='background:yellow;mso-highlight:yellow'>Редактор <span
 class=SpellE>Steel</span> <span class=SpellE>Engine</span> предназначен для
 создания и редактирования некоторых ресурсов игры, а также непосредственно для
-сборки готовой игры. Для создания распространённых типов ресурсов (звуки, текстуры,
-некоторые 3D модели) необходимо будет воспользоваться готовыми редакторами (<span
-class=GramE>например</span> <span class=SpellE>Adobe</span> <span class=SpellE>PhotoShop</span>,
-3DS <span class=SpellE>Max</span>), в свою очередь такие специфичные типы
-ресурсов, как уровень игры, будет создаваться в самом редакторе. Редактор
-должен иметь возможность изменять большинство параметров, <span
-style='mso-shading:white'>поддерживаемых движком и <span class=GramE>позволять <span
-class=SpellE>геймдизайнерам</span> создавать игру не вдаваясь</span> в его
-реализацию.</span></span><o:p></o:p></p>
+сборки готовой игры. Для создания распространённых типов ресурсов (звуки,
+текстуры, некоторые 3D модели) необходимо будет воспользоваться готовыми
+редакторами (<span class=GramE>например</span> <span class=SpellE>Adobe</span> <span
+class=SpellE>PhotoShop</span>, 3DS <span class=SpellE>Max</span>), в свою
+очередь такие специфичные типы ресурсов, как уровень игры, будет создаваться в
+самом редакторе. Редактор должен иметь возможность изменять большинство
+параметров, <span style='mso-shading:white'>поддерживаемых движком и <span
+class=GramE>позволять <span class=SpellE>геймдизайнерам</span> создавать игру
+не вдаваясь</span> в его реализацию.</span></span></p>
 
-<h3>Составители<span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h3>
+<h3>Составители</h3>
 
-<p>Андрей Иванов (<span class=SpellE>KindeX</span>)<o:p></o:p></p>
+<p>Андрей Иванов (<span class=SpellE>KindeX</span>)</p>
 
-<p>Александр <span class=SpellE>Папышев</span> (<span class=SpellE>Def</span>)<o:p></o:p></p>
+<p>Александр <span class=SpellE>Папышев</span> (<span class=SpellE>Def</span>)</p>
 
-<p>Дмитрий Федоров (<span class=SpellE>fdf</span>)<o:p></o:p></p>
+<p>Дмитрий Федоров (<span class=SpellE>fdf</span>)</p>
 
 <p><o:p>&nbsp;</o:p></p>
 

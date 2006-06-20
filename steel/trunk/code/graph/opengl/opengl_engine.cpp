@@ -24,6 +24,7 @@
 #include "gl/libext.h"
 #include "ext/normalisation_cube_map.h"
 //#include "extensions.h"
+#include "../../res/res_main.h"
 
 #include <algorithm>
 
@@ -910,13 +911,11 @@ bool OpenGL_Engine::process()
 
 bool OpenGL_Engine::init(std::string _conf)
 {
-	if(!res.add(Res::config, _conf))
+	if(!(conf = resConfig.add(_conf)))
 	{
 		log_msg("error graph conf res","Cannot find renderer config file "+_conf);
 		return false;
 	}
-
-	conf = (Config*)res.get(Res::config, _conf);
 
 	conf->setDefault("window.left", "10");
 	conf->setDefault("window.top", "10");
@@ -953,7 +952,7 @@ bool OpenGL_Engine::init(std::string _conf)
 //	SetUpARB_multitexture();
 	
 	normalisationCubeMap	= generateNormalisationCubeMap();
-	zeroNormal = (Image*)res.add(Res::image, "zero");
+	zeroNormal = resImage.add( "zero");
 	if(!zeroNormal)
 	{
 		log_msg("error graph res", "Zero normal map not found");

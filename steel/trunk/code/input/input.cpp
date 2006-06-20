@@ -1,4 +1,5 @@
 #include "input.h"
+#include "../res/res_main.h"
 
 bool Input::isPressed(std::string key)
 {
@@ -10,7 +11,7 @@ bool Input::init(std::string _conf)
 	alive = true; 
 	mouseCaptured = false; 
 
-	conf = (Config*)res.add(Res::config, _conf);
+	conf = resConfig.add(_conf);
 	if(!conf)
 	{
 		log_msg("error input res", "Input config file not found");

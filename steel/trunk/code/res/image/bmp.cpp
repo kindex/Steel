@@ -14,7 +14,7 @@
 #include "../../common/logger.h"
 #include <string> 
 
-Res* createBMP(const std::string filename)
+Image* createBMP(const std::string filename)
 {
 	BMP *o = new BMP;
 	if(o->init(filename))

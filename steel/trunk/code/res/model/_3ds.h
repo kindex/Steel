@@ -27,7 +27,7 @@ public:
 	bool init(const std::string name);
 };
 
-Res* create3DS(const std::string filename);
+Model* create3DS(const std::string filename);
 
 
 //---------------------------------------------------------------------------

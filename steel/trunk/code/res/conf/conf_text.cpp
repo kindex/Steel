@@ -5,7 +5,7 @@
 #include <fstream>
 using namespace std;
 
-Res* createConfigText(const std::string filename)
+Config* createConfigText(const std::string filename)
 {
 	ConfigText *o = new ConfigText;
 	if(o->init(filename)) 

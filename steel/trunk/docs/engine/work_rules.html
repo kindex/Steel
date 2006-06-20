@@ -1,4 +1,5 @@
-<html xmlns:o="urn:schemas-microsoft-com:office:office"
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
 xmlns:w="urn:schemas-microsoft-com:office:word"
 xmlns="http://www.w3.org/TR/REC-html40">
 
@@ -8,10 +9,12 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=Generator content="Microsoft Word 11">
 <meta name=Originator content="Microsoft Word 11">
 <link rel=File-List href="work_rules_files/filelist.xml">
-<title>—пецификаци€ движка</title>
+<title>Steel Engine: work rules</title>
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:Zoom>120</w:Zoom>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
   <w:ValidateAgainstSchemas/>
   <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
   <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
@@ -24,14 +27,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
 </xml><![endif]-->
 <style>
 <!--
- /* Font Definitions */
- @font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;
-	mso-font-charset:2;
-	mso-generic-font-family:auto;
-	mso-font-pitch:variable;
-	mso-font-signature:0 268435456 0 0 -2147483648 0;}
  /* Style Definitions */
  p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{mso-style-parent:"";
@@ -87,6 +82,12 @@ p
 	font-size:12.0pt;
 	font-family:"Times New Roman";
 	mso-fareast-font-family:"Times New Roman";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
 @page Section1
 	{size:595.3pt 841.9pt;
 	margin:2.0cm 42.5pt 2.0cm 3.0cm;
@@ -108,6 +109,38 @@ div.Section1
 	margin-left:92.7pt;
 	text-indent:-18.0pt;
 	font-family:Symbol;}
+@list l0:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l0:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
 ol
 	{margin-bottom:0cm;}
 ul
@@ -153,71 +186,85 @@ table.MsoTableGrid
 <![endif]-->
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
 </head>
 
 <body lang=RU style='tab-interval:35.4pt'>
 
 <div class=Section1>
 
-<h1><span lang=EN-US style='mso-ansi-language:EN-US'>Work Rules<o:p></o:p></span></h1>
+<h1><span lang=EN-US style='mso-ansi-language:EN-US'>Work</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Rules</span></h1>
 
 <h2>ќ документе</h2>
 
 <p>¬ этом документе описываетс€ пор€док и правила работы команды: <span
-lang=EN-US style='mso-ansi-language:EN-US'>SVN</span><span style='background:
-yellow;mso-highlight:yellow'>, встречи, стиль</span>, правила тестировани€?</p>
+class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>SVN</span><span
+style='background:yellow;mso-highlight:yellow'>, встречи, стиль</span>, правила
+тестировани€?</span></p>
 
 <h1><span lang=EN-US style='mso-ansi-language:EN-US'>SVN</span></h1>
 
 <p>»сходный код проекта и минимальный набор ресурсов хранитьс€ в <span
-lang=EN-US style='mso-ansi-language:EN-US'>SVN</span>-репозитории (<span
-lang=EN-US style='mso-ansi-language:EN-US'>Subversion</span>). јдрес
-репозитори€: <span lang=EN-US style='mso-ansi-language:EN-US'>svn</span>+<span
-lang=EN-US style='mso-ansi-language:EN-US'>ssh</span>://<span lang=EN-US
-style='mso-ansi-language:EN-US'>kindex</span>@<span lang=EN-US
-style='mso-ansi-language:EN-US'>kindex</span>.<span lang=EN-US
-style='mso-ansi-language:EN-US'>lv</span>/<span lang=EN-US style='mso-ansi-language:
-EN-US'>var</span>/<span lang=EN-US style='mso-ansi-language:EN-US'>svn</span>/<span
+lang=EN-US style='mso-ansi-language:EN-US'>SVN</span>-<span class=SpellE>репозитории</span>
+(<span lang=EN-US style='mso-ansi-language:EN-US'>Subversion</span>). јдрес <span
+class=SpellE>репозитори€</span>: <span class=SpellE><span lang=EN-US
+style='mso-ansi-language:EN-US'>svn</span></span>+<span class=SpellE><span
+lang=EN-US style='mso-ansi-language:EN-US'>ssh</span></span>://<span
+class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>kindex</span></span>@<span
+class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>kindex</span></span>.<span
+class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>lv</span></span>/<span
+class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>var</span></span>/<span
+class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>svn</span></span>/<span
 lang=EN-US style='mso-ansi-language:EN-US'>steel</span>/<span lang=EN-US
 style='mso-ansi-language:EN-US'>steel</span></p>
 
-<p>—труктура репозитори€:</p>
+<p>—труктура <span class=SpellE>репозитори€</span>:</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>Ј<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>trunk</span><span
-lang=EN-US> </span>Ц текуща€ стабильно работающа€ верси€ проекта.</p>
+</span></span></span><![endif]><span class=GramE><span lang=EN-US
+style='mso-ansi-language:EN-US'>trunk</span></span><span lang=EN-US> </span>Ц
+текуща€ стабильно работающа€ верси€ проекта.</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>Ј<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>branches</span><span
-lang=EN-US> </span>Ц тестовые версии или версии с новыми возможност€ми, на этапе
-реализации которых могкт быть неработающие версии.</p>
+</span></span></span><![endif]><span class=GramE><span lang=EN-US
+style='mso-ansi-language:EN-US'>branches</span></span><span lang=EN-US> </span>Ц
+тестовые версии или версии с новыми возможност€ми, на этапе реализации которых <span
+class=SpellE>могкт</span> быть неработающие версии.</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>Ј<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>demo</span><span
-lang=EN-US> </span>Ц ключевые (констрольные) точки проекта хран€тс€ дл€
+</span></span></span><![endif]><span class=GramE><span lang=EN-US
+style='mso-ansi-language:EN-US'>demo</span></span><span lang=EN-US> </span>Ц
+ключевые (<span class=SpellE>констрольные</span>) точки проекта хран€тс€ дл€
 истории. ‘ормат директорий: <span lang=EN-US style='mso-ansi-language:EN-US'>[</span>номер<span
 lang=EN-US style='mso-ansi-language:EN-US'>]_[</span>им€<span lang=EN-US
 style='mso-ansi-language:EN-US'>].</span></p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>Ј<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>tags
-Ц </span>различные интересные версии.</p>
+</span></span></span><![endif]><span class=GramE><span lang=EN-US
+style='mso-ansi-language:EN-US'>tags</span></span><span lang=EN-US
+style='mso-ansi-language:EN-US'> Ц </span>различные интересные версии.</p>
 
 <h1>—оставители</h1>
 
-<p><span lang=EN-US style='mso-ansi-language:EN-US'>KindeX</span></p>
+<p><span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>KindeX</span></span></p>
 
 </div>
 

@@ -56,6 +56,6 @@ public:
 	virtual bool unload() {return true; };
 };
 
-Res* createMaterial(const std::string filename);
+Material* createMaterial(const std::string filename);
 
 #endif

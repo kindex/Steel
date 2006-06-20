@@ -7,21 +7,29 @@
 #include "script/script_text.h"
 
 
+ResCollection<Config> resConfig;
+ResCollection<Image> resImage;
+ResCollection<Model> resModel;
+ResCollection<Material> resMaterial;
+ResCollection<Script> resScript;
+
+
+
 // Image filename:
 // name[.cube][.normal|.height][.bmp|.tga]
 
-Res *createBitmap(const std::string filename)
+Image *createBitmap(const std::string filename)
 {
-	Res *r;
+	Image *r;
 	// try to load image2d
 	if(r = createBMP(filename)) return r;
 	if(r = createTGA(filename)) return r;
 	return NULL;
 }
 
-Res *createImageFormat(const std::string filename)
+Image *createImageFormat(const std::string filename)
 {
-	Res *r;
+	Image *r;
 	// try to load image2d
 	if(r = createBitmap(filename))	return r;
 	if(r = createBitmap(filename + ".normal"))	
@@ -40,9 +48,9 @@ Res *createImageFormat(const std::string filename)
 }
 
 
-Res *createImage(const std::string filename)
+Image *createImage(const std::string filename)
 {
-	Res *r;
+	Image *r;
 	// try to load image2d
 	if(r = createImageFormat(filename)) return r;
 	// try to load cubemap
@@ -57,10 +65,11 @@ Res *createImage(const std::string filename)
 
 bool registerResources()
 {
-	res.registerClass(createImage,		Res::image);
-	res.registerClass(create3DS,		Res::model);
-	res.registerClass(createMaterial,	Res::material);
-	res.registerClass(createConfigText,	Res::config);
-	res.registerClass(createScriptText,	Res::script);
+	resImage.registerClass(createImage);
+	resModel.registerClass(create3DS);
+	resMaterial.registerClass(createMaterial);
+	resConfig.registerClass(createConfigText);
+	resScript.registerClass(createScriptText);
+
 	return true;
 }

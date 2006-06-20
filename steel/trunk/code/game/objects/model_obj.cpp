@@ -1,5 +1,7 @@
 #include "model_obj.h"
 #include "../../common/utils.h"
+#include "../../res/res_main.h"
+
 using namespace std;
 
 bool GameObjModel::init(ScriptLine	&s)
@@ -7,7 +9,7 @@ bool GameObjModel::init(ScriptLine	&s)
 	if(!GameObj::init(s)) return false;
 	
 	if(s.count()<3) return false;
-	conf = (Config*)res.add(Res::config, s.gets(3));
+	conf = resConfig.add(s.gets(3));
 	if(!conf)
 	{
 		log_msg("error res model", "Model config not found: " + s.gets(3));
@@ -15,7 +17,7 @@ bool GameObjModel::init(ScriptLine	&s)
 	}
 	string modelName = conf->gets("model");
 
-	m = (Model*)res.add(Res::model, modelName);
+	m = resModel.add( modelName);
 	if(!m) 
 	{
 		log_msg("error res model", "Model not found: " + modelName);
@@ -33,7 +35,7 @@ bool GameObjModel::init(ScriptLine	&s)
 		string material = conf->gets("material" + IntToStr(i));
 		if(!material.empty())
 		{
-			Material* m = (Material*)res.add(Res::material, material);
+			Material* m = resMaterial.add(material);
 			if(m)
 				it->material = m;
 			else

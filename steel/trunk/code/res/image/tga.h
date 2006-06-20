@@ -22,7 +22,7 @@ public:
 	bool init(const std::string name);
 };
 
-Res* createTGA(const std::string filename);
+Image* createTGA(const std::string filename);
 
 
 #endif

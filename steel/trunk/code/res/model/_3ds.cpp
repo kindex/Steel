@@ -16,11 +16,13 @@ http://kindex.times.lv
 Это делает процедура updatematerial()
 
 **********************************************************************/
+
 #include "_3ds.h"
+#include "../res_main.h"
 #include "../../common/utils.h"
 using namespace std;
 
-Res* create3DS(const std::string filename)
+Model* create3DS(const std::string filename)
 {
 	_3DS *o = new _3DS;
 	if(o->init(filename)) 
@@ -309,9 +311,9 @@ bool _3DS::init(const std::string name)
 
 			string mat = it->name;
 			
-			it->material = (Material*)res.add(material, dir + "/" + mat);
+			it->material = resMaterial.add( dir + "/" + mat);
 			if(!it->material)
-				it->material = (Material*)res.add(material, mat);
+				it->material = resMaterial.add( mat);
 
 //			if(!it->material) return false;
 		}

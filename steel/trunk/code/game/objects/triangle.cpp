@@ -1,4 +1,5 @@
 #include "triangle.h"
+#include "../../res/res_main.h"
 
 bool GameTriangleObj::init(ScriptLine	&s)
 {
@@ -41,7 +42,7 @@ bool GameTriangleObj::init(ScriptLine	&s)
 	face.resize(1);
 
 	face[0].name = s.gets(3);
-	face[0].material = (Material*)res.add(Res::material, face[0].name);
+	face[0].material = resMaterial.add(face[0].name);
 	face[0].triangles = &triangle;
 
 	return true;

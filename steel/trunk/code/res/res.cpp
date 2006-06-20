@@ -15,18 +15,6 @@
 #include "../common/logger.h"
 
 
-ResCollection res;
-
-void ResCollection::registerClass(funcCreateResClass *_func, const Res::res_kind kind)
-{
-	classes[kind].push_back(ClassCopy(_func));
-}
-
-Res* ResCollection::createClass(ClassCopy *aclass, std::string name)
-{
-	return aclass->func(name);
-}
-
 std::string getext(std::string name)
 {
 	std::string r;
@@ -38,63 +26,8 @@ std::string getext(std::string name)
 	return r;
 }
 
-bool ResCollection::add(Res::ResLocatorArray &names)
-{
-	for(Res::ResLocatorArray::iterator it = names.begin();
-		it != names.end();
-		it++)
-	{
-		if(!find(it->name))
-		{
-			if(!addForce(it->kind, it->name)) return false;
-		}
-	}
-	return true;
-}
 
 
-/*
-name - идентификатор ресурса. Обычно это имя файла без расширения, 
-но может быть ипрограммно генерируемой тестурой.
-Пробуем загрузить всеми доступными загрузчиками по порядку.
-*/
-
-Res* ResCollection::addForce(const Res::res_kind kind, const std::string& name)
-{
-	for(ResClassArray::iterator it = classes[kind].begin(); it != classes[kind].end(); it++)
-	{
-		Res *obj = createClass(&(*it), name);
-		if(obj == NULL) continue;
-		
-		index[name] = freeindex;
-	    data.resize(freeindex+1);
-	    names.resize(freeindex+1);
-	    resType.resize(freeindex+1);
-	    
-		index[name] = freeindex; 
-		names[freeindex] = name; 
-
-		data[freeindex] = obj;
-		resType[freeindex] = kind;
-	
-		log_msg("res", "loaded " + name);
-
-		freeindex++;
-		return data[freeindex-1];
-	}
-	log_msg("res", "Res: failed " + name);
-	return NULL;
-}
-
-Res* ResCollection::add(const Res::res_kind kind, const std::string& name)
-{
-	if(index.find(name) == index.end())
-	{
-		return addForce(kind, name);
-	}
-	else
-		return get(kind, name);
-}
 
 
 /*bool Res::init(string& name)

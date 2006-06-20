@@ -1,4 +1,5 @@
-<html xmlns:o="urn:schemas-microsoft-com:office:office"
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
 xmlns:w="urn:schemas-microsoft-com:office:word"
 xmlns="http://www.w3.org/TR/REC-html40">
 
@@ -8,7 +9,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=Generator content="Microsoft Word 11">
 <meta name=Originator content="Microsoft Word 11">
 <link rel=File-List href="TODO_files/filelist.xml">
-<title>Спецификация движка</title>
+<title>Steel Engine: TODO</title>
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:Zoom>120</w:Zoom>
@@ -97,9 +98,9 @@ div.Section1
 	{page:Section1;}
  /* List Definitions */
  @list l0
-	{mso-list-id:288316242;
+	{mso-list-id:537860882;
 	mso-list-type:hybrid;
-	mso-list-template-ids:1418075520 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
+	mso-list-template-ids:-1911915996 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
 @list l0:level1
 	{mso-level-number-format:bullet;
 	mso-level-text:\F0B7;
@@ -137,50 +138,6 @@ div.Section1
 	mso-level-number-position:left;
 	text-indent:-18.0pt;}
 @list l0:level9
-	{mso-level-tab-stop:324.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l1
-	{mso-list-id:537860882;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-1911915996 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
-@list l1:level1
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
-	mso-level-tab-stop:92.7pt;
-	mso-level-number-position:left;
-	margin-left:92.7pt;
-	text-indent:-18.0pt;
-	font-family:Symbol;}
-@list l1:level2
-	{mso-level-tab-stop:72.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l1:level3
-	{mso-level-tab-stop:108.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l1:level4
-	{mso-level-tab-stop:144.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l1:level5
-	{mso-level-tab-stop:180.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l1:level6
-	{mso-level-tab-stop:216.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l1:level7
-	{mso-level-tab-stop:252.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l1:level8
-	{mso-level-tab-stop:288.0pt;
-	mso-level-number-position:left;
-	text-indent:-18.0pt;}
-@list l1:level9
 	{mso-level-tab-stop:324.0pt;
 	mso-level-number-position:left;
 	text-indent:-18.0pt;}
@@ -229,6 +186,12 @@ table.MsoTableGrid
 <![endif]-->
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
 </head>
 
 <body lang=RU style='tab-interval:35.4pt'>
@@ -318,38 +281,38 @@ lang=EN-US style='mso-ansi-language:EN-US'> [<span class=SpellE>kindex</span>]<o
 
 <p>Типы взаимодействия</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>Свободное падение</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>Внешние силы (ветер)</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]>Столкновение с полигонами</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>Gravity</span></p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>Spring</span>
 с рвущимися связями</p>
 
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
 style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -4,6 +4,7 @@
 #include "emitter.h"
 #include "ps_renderer.h"
 #include "animator.h"
+#include "../../res/res_main.h"
 
 #include <string>
 
@@ -11,12 +12,12 @@ bool ParticleSystem::init(ScriptLine	&s)
 {
 	if(!GameObj::init(s)) return false;
 
-	conf = (Config*)res.add(Res::config, s.gets(3));
+	conf = resConfig.add(s.gets(3));
 	if(!conf) return false;
 
-	if(!(emitterConf = (Config*)res.add(Res::config, conf->gets("emitter")))) abort_init("error res ps", "Cannot find class emitterConf");
-	if(!(rendererConf = (Config*)res.add(Res::config, conf->gets("renderer")))) abort_init("error res ps", "Cannot find class rendererConf");
-	if(!(animatorConf = (Config*)res.add(Res::config, conf->gets("animator")))) abort_init("error res ps", "Cannot find class animatorConf");
+	if(!(emitterConf = resConfig.add( conf->gets("emitter")))) abort_init("error res ps", "Cannot find class emitterConf");
+	if(!(rendererConf = resConfig.add( conf->gets("renderer")))) abort_init("error res ps", "Cannot find class rendererConf");
+	if(!(animatorConf = resConfig.add( conf->gets("animator")))) abort_init("error res ps", "Cannot find class animatorConf");
 
 	particleSet.countScale = conf->getf("countScale", 1);
 
