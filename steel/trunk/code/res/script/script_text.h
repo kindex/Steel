@@ -7,9 +7,7 @@
 class ScriptText: public Script
 {
 public:
-	bool init(const std::string name);
+	bool init(const std::string name, const std::string dir);
 };
-
-Script* createScriptText(const std::string filename);
 
 #endif

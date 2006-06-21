@@ -93,8 +93,6 @@ bool Game::createObject()
 		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
 	}
 
-
-
 	return true;
 
 	static int safe = 0;

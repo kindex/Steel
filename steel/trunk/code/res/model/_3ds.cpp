@@ -22,15 +22,6 @@ http://kindex.times.lv
 #include "../../common/utils.h"
 using namespace std;
 
-Model* create3DS(const std::string filename)
-{
-	_3DS *o = new _3DS;
-	if(o->init(filename)) 
-		return o;
-	else
-		return NULL;
-}
-
 
 /*color_f string2color(string s)
 {
@@ -278,45 +269,37 @@ int chain_4d4d(_3DS &m, rstream &f, int size)
 	return parsechain(m, f, t, size);
 }
 
-bool _3DS::init(const std::string name)
+bool _3DS::init(const std::string name, const std::string dir)
 {
-		rstream f;
+	rstream f;
+	
+	if(!f.open(dir + "/" + name, "3ds"))
+			return false;
+
+	steel::vector<chainProcessor> t;
+	t.push_back(chainProcessor(0x4D4D, chain_4d4d));
+
+	parsechain(*this, f, t);
+
+	// Следует сгенерировать нормали, так как в 3DS файле нет нормалей
+	generateNormals();
+	updateAABB();
+
+
+	vertex.setId(objectIdGenerator.genUid());
+	normal.setId(objectIdGenerator.genUid());
+	triangleAll.setId(objectIdGenerator.genUid());
+	texCoords.setId(objectIdGenerator.genUid());
+
+	for(steel::vector<FaceMaterial>::iterator it = faceMaterial.begin();
+				it != faceMaterial.end(); it++)
+	{
+		it->triangles->setId(objectIdGenerator.genUid());
+
+		string mat = it->name;
 		
-		if(!f.open(name, "3ds"))
-				return false;
+		it->material = resMaterial.add(mat);
+	}
 
-		steel::vector<chainProcessor> t;
-		t.push_back(chainProcessor(0x4D4D, chain_4d4d));
-
-		parsechain(*this, f, t);
-
-		// Следует сгенерировать нормали, так как в 3DS файле нет нормалей
-		generateNormals();
-		updateAABB();
-
-		steel::vector<string> path = explode('/', name);
-		string filename = path.back();
-		path.pop_back();
-		string dir = implode('/', path);
-
-		vertex.setId(bufferIdGenerator.genUid());
-		normal.setId(bufferIdGenerator.genUid());
-		triangleAll.setId(bufferIdGenerator.genUid());
-		texCoords.setId(bufferIdGenerator.genUid());
-
-		for(steel::vector<FaceMaterial>::iterator it = faceMaterial.begin();
-					it != faceMaterial.end(); it++)
-		{
-			it->triangles->setId(bufferIdGenerator.genUid());
-
-			string mat = it->name;
-			
-			it->material = resMaterial.add( dir + "/" + mat);
-			if(!it->material)
-				it->material = resMaterial.add( mat);
-
-//			if(!it->material) return false;
-		}
-
-		return true;
+	return true;
 }

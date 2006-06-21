@@ -6,7 +6,7 @@ bool GameTriangleObj::init(ScriptLine	&s)
 	if(!GameObj::init(s)) return false;
 
 	vertex.changed = false;
-	vertex.setId(bufferIdGenerator.genUid());
+	vertex.setId(objectIdGenerator.genUid());
 	vertex.data.resize(3);
 	vertex.data[0].set(0,0,0);
 	vertex.data[1].set(1,0,0);
@@ -19,14 +19,14 @@ bool GameTriangleObj::init(ScriptLine	&s)
 
 
 	texCoords.changed = false;
-	texCoords.setId(bufferIdGenerator.genUid());
+	texCoords.setId(objectIdGenerator.genUid());
 	texCoords.data.resize(3);
 	texCoords.data[0].set(0,0);
 	texCoords.data[1].set(1,0);
 	texCoords.data[2].set(0,1);
 
 	triangle.changed = false;
-	triangle.setId(bufferIdGenerator.genUid());
+	triangle.setId(objectIdGenerator.genUid());
 	triangle.data.resize(2);
 	triangle.data[0].a[0] = 0;
 	triangle.data[0].a[1] = 1;

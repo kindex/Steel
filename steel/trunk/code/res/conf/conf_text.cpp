@@ -5,18 +5,9 @@
 #include <fstream>
 using namespace std;
 
-Config* createConfigText(const std::string filename)
+bool ConfigText::init(const std::string name, const std::string dir)
 {
-	ConfigText *o = new ConfigText;
-	if(o->init(filename)) 
-		return o;
-	else
-		return NULL;
-}
-
-bool ConfigText::init(const std::string name)
-{
-	std::string file = name + ".conf";
+	std::string file = dir + "/" + name + ".conf";
 
 	rstream f(file); // no binary acces, only text
 	if(!f.good()) 

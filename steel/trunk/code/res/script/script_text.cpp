@@ -1,26 +1,16 @@
 #include "script_text.h"
 using namespace std;
 
-Script* createScriptText(const std::string filename)
+bool ScriptText::init(const string name, const std::string dir)
 {
-	ScriptText *o = new ScriptText;
-	if(o->init(filename)) 
-		return o;
-	else
-		return NULL;
-}
-
-
-bool ScriptText::init(const string name)
-{
-	std::string file = name;
+	std::string file = (dir.empty()?"":dir+"/") + name;
 
 	rstream f; // no binary acces, only text
 
 	if(!f.open(file)) 
 	{
 		f.close();
-		file = name + ".script";
+		file = (dir.empty()?"":dir+"/") + name + ".script";
 		if(!f.open(file)) 
 		{
 			log_msg("error res script", string("Res/Material/Script: cannot open file ") + file.c_str());

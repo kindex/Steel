@@ -138,7 +138,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-					uid bufId = bufferIdGenerator.genUid();
+					uid bufId = objectIdGenerator.genUid();
 					buffersToDelete.push_back(bufId);
 
 					if(map.kind == MapKind::bump_map)
@@ -192,7 +192,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 						glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
 						bindTexture(map.texture); // Cube texture (auto detect from Image)
 
-						uid bufId = bufferIdGenerator.genUid();
+						uid bufId = objectIdGenerator.genUid();
 						buffersToDelete.push_back(bufId);
 						drawReflect(e, e.matrix, camera.eye, bufId);
 

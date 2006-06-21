@@ -3,37 +3,23 @@
 #include "../../common/utils.h"
 using namespace std;
 
-Material* createMaterial(const std::string filename)
+bool Material::init(string name, const std::string dir)
 {
-	Material *m = new Material;
-	if(m->init(filename))
-	{
-		return m;
-	}
-	else
-	{
-		delete m;
-		return NULL;
-	}
-}
-
-bool Material::init(string name)
-{
-	conf = resScript.add( name + ".mat");
+	conf = resScript.add(name + ".mat", false);
 	if(conf == NULL)
 	{
 		log_msg("error res material", string("Material not found: ") + name);
+		resScript.pop();
 		return false;
 	} 
 	int lines = conf->count();
-	if(lines == 0) return false;
+	if(lines == 0) 
+	{
+		resScript.pop();
+		return false;
+	}
 
 	map.clear();
-
-	steel::vector<string> path = explode('/', name);
-	string filename = path.back();
-	path.pop_back();
-	string dir = implode('/', path);
 
 	for(int i=0; i<lines; i++)
 	{
@@ -92,9 +78,14 @@ bool Material::init(string name)
 			map.push_back(m);
 		}
 	}
-	if(map.empty()) return false;
+	if(map.empty()) 
+	{
+		resScript.pop();
+		return false;
+	}
 
 	blend = map[0].mode != MapMode::replace;
+	resScript.pop();
 	return true;
 }
 

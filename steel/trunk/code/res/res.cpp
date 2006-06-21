@@ -14,6 +14,7 @@
 #include "res.h"
 #include "../common/logger.h"
 
+ResStack resStack;
 
 std::string getext(std::string name)
 {
@@ -80,4 +81,47 @@ bool rstream::open(std::string s, std::string ext, ios_base::openmode _Mode)
 			return false;
 	}
 	return true;
+}
+
+bool ResStack::push(std::string directory)
+{
+	if(level>100) abort_init("res error", "To many recursive res::add executions (>100)");
+
+	stack.push(directory);
+	level++;
+	steel::log.push();
+
+	return true;
+}
+
+bool ResStack::pop(void)
+{
+	if(level==0) 
+		abort_init("res error", "Stack underflow");
+	level--;
+	stack.pop();
+	steel::log.pop();
+	return true;
+}
+
+std::string ResStack::top(void)
+{
+	if(level==0)
+		return std::string("");
+	else
+		return stack.top();
+}
+
+
+int ResStack::getLevel(void)
+{
+	return level;
+}
+
+std::string getFullPath(std::string filename, std::string directory)
+{
+	if((!filename.empty() && filename[0] == '/') || directory.empty())
+		return filename;
+	else
+		return directory + "/" + filename;
 }

@@ -47,6 +47,9 @@
 // именно этим макросом надо выводить сообщения в лог-файл
 #define log_msg(keywords, message)	steel::log.msg(keywords, message)
 
+// именно этим макросом надо выводить сообщения в лог-файл
+#define error(keywords, message)	steel::log.msg(keywords, message) // TODO file + line number
+
 // неудачный выход из процедуры с сообщением в лог
 #define abort_init(keywords, _msg) { log_msg(keywords, _msg); return false; }
 
@@ -59,6 +62,7 @@ protected:
 	bool opened;
 	std::fstream f;
 	Timer timer;
+	int level;
 
 public:
 	Logger() { opened = false; }
@@ -78,6 +82,8 @@ public:
 
 	// вывод без ключевых слов
 	void out(std::string str);
+	void push() { level++;}
+	void pop(){ level--;}
 };
 
 

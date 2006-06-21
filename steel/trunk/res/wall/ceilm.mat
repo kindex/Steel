@@ -17,5 +17,5 @@
 ;*	color_map	skel_wall
 ;	color_map	smile
 
-	bump	box/boxes/box_local
+	bump	/box/boxes/box_local
 *	color_map	tex/ceil2

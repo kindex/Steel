@@ -48,13 +48,13 @@ Image *createImageFormat(const std::string filename)
 }
 
 
-Image *createImage(const std::string filename)
+Image *createImage(const std::string filename, const std::string base)
 {
 	Image *r;
 	// try to load image2d
-	if(r = createImageFormat(filename)) return r;
+	if(r = createImageFormat(base + "/" +  filename)) return r;
 	// try to load cubemap
-	if(r = createImageFormat(filename + ".cube"))
+	if(r = createImageFormat(base + "/" + filename + ".cube"))
 	{
 		((Image*)r)->setKind(ImageKind::cube);
 		return r;
@@ -63,13 +63,30 @@ Image *createImage(const std::string filename)
 }
 
 
+
+template<class T, class T2>
+T2* createClass(const std::string filename, const std::string base)
+{
+	if(filename.empty()) return false;
+
+	T* object = new T;
+
+	if(object->init(filename, base))
+	{
+		object->setId(objectIdGenerator.genUid());
+		return object;
+	}
+	else
+		return NULL;
+}
+
 bool registerResources()
 {
-	resImage.registerClass(createImage);
-	resModel.registerClass(create3DS);
-	resMaterial.registerClass(createMaterial);
-	resConfig.registerClass(createConfigText);
-	resScript.registerClass(createScriptText);
+	resImage.registerClass(createImage);						resImage.setId("image");
+	resModel.registerClass(createClass<_3DS, Model>);			resModel.setId("model");
+	resMaterial.registerClass(createClass<Material, Material>);	resMaterial.setId("material");
+	resConfig.registerClass(createClass<ConfigText, Config>);	resConfig.setId("config");
+	resScript.registerClass(createClass<ScriptText, Script>);	resScript.setId("script");
 
 	return true;
 }

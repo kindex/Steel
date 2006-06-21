@@ -62,16 +62,16 @@ void SpriteRenderer::initSprites()
 	face[0].material = m;
 
 	face[0].triangles = new Triangles;
-	face[0].triangles->id = bufferIdGenerator.genUid();
+	face[0].triangles->id = objectIdGenerator.genUid();
 	face[0].triangles->changed = false;
 
-	normal.id = bufferIdGenerator.genUid();
-	vertex.id = bufferIdGenerator.genUid();
+	normal.id = objectIdGenerator.genUid();
+	vertex.id = objectIdGenerator.genUid();
 	vertex.changed = true;
 	normal.changed = true;
 
 	texCoords.changed = false;
-	texCoords.id = bufferIdGenerator.genUid();
+	texCoords.id = objectIdGenerator.genUid();
 }
 
 void SpriteRenderer::initSprites(int begin, int end)

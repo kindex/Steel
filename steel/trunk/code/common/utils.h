@@ -18,9 +18,14 @@ std::string FloatToStr(double a);
 std::string IntToStr(int a);
 
 // split string into vector
-steel::vector<std::string> explode(char delimiter, std::string s);
+steel::vector<std::string> explode(char delimiter, const std::string s);
 // unsplit vector to string
-std::string implode(char delimiter, steel::vector<std::string> elements);
+std::string implode(const char delimiter, const steel::vector<std::string> elements);
+
+std::string getPath(std::string fullpath);
+
+void splitPath(std::string fullpath, std::string &path, std::string &filename);
+
 
 
 #endif

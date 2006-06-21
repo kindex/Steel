@@ -12,31 +12,43 @@ bool ParticleSystem::init(ScriptLine	&s)
 {
 	if(!GameObj::init(s)) return false;
 
-	conf = resConfig.add(s.gets(3));
+	conf = resConfig.add(s.gets(3), false); // Dont pop resStack
 	if(!conf) return false;
 
-	if(!(emitterConf = resConfig.add( conf->gets("emitter")))) abort_init("error res ps", "Cannot find class emitterConf");
-	if(!(rendererConf = resConfig.add( conf->gets("renderer")))) abort_init("error res ps", "Cannot find class rendererConf");
-	if(!(animatorConf = resConfig.add( conf->gets("animator")))) abort_init("error res ps", "Cannot find class animatorConf");
+	if(!(emitterConf = resConfig.add(conf->gets("emitter")))) 
+	{
+		resConfig.pop();
+		abort_init("error res ps", "Cannot find class emitterConf");
+	}
+	if(!(rendererConf = resConfig.add(conf->gets("renderer"))))
+	{
+		resConfig.pop();
+		abort_init("error res ps", "Cannot find class rendererConf");
+	}
+	if(!(animatorConf = resConfig.add(conf->gets("animator")))) 
+	{
+		resConfig.pop();
+		abort_init("error res ps", "Cannot find class animatorConf");
+	}
 
 	particleSet.countScale = conf->getf("countScale", 1);
 
 	std::string emitterClass = emitterConf->gets("class");	emitter = NULL;
 	if(emitterClass == "SimpleEmitter")	emitter = new SimpleEmitter;
 	if(!emitter) abort_init("error res ps emitter", "Emitter class " + emitterClass + " not found");
-	if(!emitter->init(emitterConf, &particleSet, getPosition())) abort_init("error res ps emitter", "Emitter class " + emitterClass + " cannot initialize");
+	if(!emitter->init(emitterConf, &particleSet, getPosition())) { resConfig.pop(); abort_init("error res ps emitter", "Emitter class " + emitterClass + " cannot initialize"); }
 
 	std::string animatorClass = animatorConf->gets("class");	animator = NULL;
 	if(animatorClass == "UniPSanimator")	animator = new UniPSanimator;
 	if(!animator) abort_init("error res ps renderer", "Animator class " + animatorClass + " not found");
-	if(!animator->init(animatorConf, &particleSet, this)) abort_init("error res ps animator", "Animator class " + animatorClass + " cannot initialize");
-
+	if(!animator->init(animatorConf, &particleSet, this)) { resConfig.pop(); abort_init("error res ps animator", "Animator class " + animatorClass + " cannot initialize"); }
 
 	std::string rendererClass = rendererConf->gets("class");	renderer = NULL;
 	if(rendererClass == "SpriteRenderer")	renderer = new SpriteRenderer;
 	if(!renderer) abort_init("error res ps renderer", "Renderer class " + rendererClass + " not found");
-	if(!renderer->init(rendererConf, &particleSet,  this)) abort_init("error res ps renderer", "Renderer class " + rendererClass + " cannot initialize");
+	if(!renderer->init(rendererConf, &particleSet,  this)) { resConfig.pop(); abort_init("error res ps renderer", "Renderer class " + rendererClass + " cannot initialize"); }
 
+	resConfig.pop();
 	return true;
 }
 

@@ -47,7 +47,7 @@ bool GameGroup::load(GameObj *global)
 {
 	if(!parent) positionKind = PositionKind::global;
 
-	Script *s = resScript.add( conf);
+	Script *s = resScript.add(conf);
 	if(!s)
 	{
 		log_msg("error game res", "Cannot load script");

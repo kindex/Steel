@@ -95,11 +95,17 @@ void Logger::msg(std::string keywords, std::string str)
  
 	f.width(0); 
 
-	f << "\t" << str;
+	std::string levels;
+	for(int i=0; i<level; i++)
+		levels += "  ";
+
+	f << levels;
+
+	f << " " << str;
 
 	if(!keywords.empty())
 	{
-		for(unsigned int i = 0; i < 4 - (unsigned int)str.length()/8; i++)
+		for(int i = 0; i < 6 - ((int)str.length() + 2 + level*2)/8; i++)
 			f << "\t";
 
 		f << "\t[ " << keywords << " ]";

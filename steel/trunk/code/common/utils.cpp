@@ -35,7 +35,7 @@ string IntToStr(int a)
     return string(s);
 }
 
-steel::vector<string> explode(char delimiter, string s)
+steel::vector<string> explode(char delimiter, const std::string s)
 {
 	steel::vector<string> res;
 	string::size_type last, start = 0, len = s.length();
@@ -62,12 +62,12 @@ steel::vector<string> explode(char delimiter, string s)
 }
 
 
-string implode(char delimiter, steel::vector<string> elements)
+string implode(const char delimiter, const steel::vector<std::string> elements)
 {
 	if(elements.empty()) return "";
 
 	string res;
-	steel::vector<string>::iterator it = elements.begin();
+	steel::vector<string>::const_iterator it = elements.begin();
 	res = *it;
 	it++;
 	for(; it != elements.end(); it++)
@@ -76,4 +76,20 @@ string implode(char delimiter, steel::vector<string> elements)
 		res += *it;
 	}
 	return res;
+}
+
+std::string getPath(std::string fullpath)
+{
+	steel::vector<std::string> path = explode('/', fullpath);
+	path.pop_back();
+
+	return  implode('/', path);
+}
+
+void splitPath(std::string fullpath, std::string &path, std::string &filename)
+{
+	steel::vector<std::string> apath = explode('/', fullpath);
+	filename = apath.back();
+	apath.pop_back();
+	path = implode('/', apath);
 }

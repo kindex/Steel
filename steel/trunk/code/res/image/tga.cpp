@@ -20,7 +20,7 @@ Image* createTGA(const std::string filename)
 	TGA *o = new TGA;
 	if(o->init(filename)) 
 	{
-		o->setId(bufferIdGenerator.genUid());
+		o->setId(objectIdGenerator.genUid());
 		return o;
 	}
 	else
