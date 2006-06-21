@@ -11,10 +11,11 @@
 		Ëמד-פאיכ
  ************************************************************/
 
-#include <time.h>
-#include <stdarg.h>
-
 #include "logger.h"
+#include "utils.h"
+
+#include <time.h>
+#include <map>
 
 using namespace std;
 
@@ -30,8 +31,6 @@ bool Logger::open(std::string filename)
 	}
 
 	opened = true;
-
-	timer.start();
 
 	f << ">>>>>>>>>>>>>>>>" << endl;
 	f << "Started Logging" << endl;
@@ -87,7 +86,7 @@ void Logger::msg(std::string keywords, std::string str)
 {
 	if(!opened) return;
 
-	steel::time total = timer.total();
+	steel::time total = globalTimer.total();
 	
 	f.fill('0');	f.width(2); 	f << (int)total/60 << ":";
 	f.fill('0');	f.width(2); 	f << (int)total%60 << ".";
@@ -117,3 +116,65 @@ namespace steel
 {
 	Logger log;
 }
+
+map<string, Logger*> loggers;
+
+void _log_msg(string keywords, string message)
+{
+	steel::vector<string> keys = explode(' ', keywords);
+	for(steel::vector<string>::iterator it = keys.begin(); it != keys.end(); it++)
+	{
+		string key = *it;
+		if(loggers.find(key) == loggers.end())
+		{
+			loggers[key] = new Logger;
+			loggers[key]->open("../log/" + key + ".log");
+		}
+		loggers[key]->setLevel(steel::log.getLevel());
+		loggers[key]->msg(keywords, message);
+	}
+	if(logFilter.check(keywords))
+		steel::log.msg(keywords, message);
+}
+
+void LogFilter::set(std::string filter)
+{
+	steel::vector<string> keys = explode(' ', filter);
+	for(steel::vector<string>::iterator it = keys.begin(); it!= keys.end(); it++)
+	{
+		filterItem item;
+
+		string k = *it;
+		if(k.empty()) continue;
+
+		item.action = true;
+		if(k[0] == '-') item.action = false;
+
+		if(k[0] == '-') k.erase(0, 1);
+		if(k[0] == '+') k.erase(0, 1);
+
+		item.keyword = k;
+
+		filters.push_back(item);
+	}
+
+}
+
+bool LogFilter::check(std::string keywords)
+{
+	steel::vector<string> keys = explode(' ', keywords);
+
+	for(steel::vector<filterItem>::iterator it = filters.begin(); it!= filters.end(); it++)
+	{
+		for(steel::vector<string>::iterator jt = keys.begin(); jt!= keys.end(); jt++)
+			if(it->keyword == *jt)
+			{
+				return it->action;
+			}
+	}
+	return true;
+}
+
+LogFilter logFilter;
+
+

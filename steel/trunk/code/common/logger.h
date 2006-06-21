@@ -18,6 +18,7 @@
 
 #include <string>
 #include <fstream>
+#include "steel_vector.h"
 
 #undef assert
 
@@ -44,11 +45,13 @@
 // именно этим макросом надо выводить все временные отладочные сообщения в лог файл.
 #define debug(message)	log_msg("debug", message)
 
-// именно этим макросом надо выводить сообщения в лог-файл
-#define log_msg(keywords, message)	steel::log.msg(keywords, message)
+void _log_msg(std::string keywords, std::string message);
 
 // именно этим макросом надо выводить сообщения в лог-файл
-#define error(keywords, message)	steel::log.msg(keywords, message) // TODO file + line number
+#define log_msg(keywords, message)	_log_msg(keywords, message)
+
+// именно этим макросом надо выводить сообщения в лог-файл
+#define error(keywords, message)	log_msg(keywords, message) // TODO file + line number
 
 // неудачный выход из процедуры с сообщением в лог
 #define abort_init(keywords, _msg) { log_msg(keywords, _msg); return false; }
@@ -61,11 +64,10 @@ class Logger
 protected:
 	bool opened;
 	std::fstream f;
-	Timer timer;
 	int level;
 
 public:
-	Logger() { opened = false; }
+	Logger() { opened = false; level = 0; }
 
 	//	Открытие файла лога и иницализация таймера, true в случае успеха.
 	bool open(std::string filename);
@@ -84,6 +86,8 @@ public:
 	void out(std::string str);
 	void push() { level++;}
 	void pop(){ level--;}
+	void setLevel(int _level) { level = _level; }
+	int getLevel(void) { return level;}
 };
 
 
@@ -94,5 +98,24 @@ namespace steel
 {
 	extern Logger log;
 }
+
+class LogFilter
+{
+private:
+	struct filterItem
+	{
+		std::string keyword;
+		bool action;
+	};
+	steel::vector<filterItem> filters;
+
+public:
+	void set(std::string filter);
+	bool check(std::string keywords);
+};
+
+extern LogFilter logFilter;
+
+
 
 #endif

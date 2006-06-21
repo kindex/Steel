@@ -1,4 +1,7 @@
 #include "utils.h"
+
+#include <windows.h>
+
 using namespace std;
 
 float frand()
@@ -92,4 +95,27 @@ void splitPath(std::string fullpath, std::string &path, std::string &filename)
 	filename = apath.back();
 	apath.pop_back();
 	path = implode('/', apath);
+}
+
+void deleteFile(std::string dir, std::string file)
+{
+	if(file.substr(0,1) != ".")
+		DeleteFile( (dir + "\\" + file).c_str());
+}
+
+void deleteFiles(string dir, string mask)
+{
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	hFind = FindFirstFile((dir + "\\" + mask).c_str(), &FindFileData);
+
+	if(hFind == INVALID_HANDLE_VALUE) 
+		return;
+
+	deleteFile(dir, FindFileData.cFileName);
+    while (FindNextFile(hFind, &FindFileData) != 0) 
+		deleteFile(dir, FindFileData.cFileName);
+      
+    FindClose(hFind);
 }

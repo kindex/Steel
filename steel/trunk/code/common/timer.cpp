@@ -62,3 +62,5 @@ void Timer::start()
 	curIntervalFrameCnt		= 0;
 	totalFrames				= 0;
 }
+
+Timer globalTimer;

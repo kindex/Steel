@@ -287,7 +287,7 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
 		freeindex++;
 		return data[freeindex-1];
 	}
-	log_msg("res " + id, "Failed " + baseDirectory + "/" + name);
+	log_msg("res error " + id, "Failed " + baseDirectory + "/" + name);
 	if(pop) resStack.pop();
 
 	return NULL;

@@ -26,6 +26,8 @@ std::string getPath(std::string fullpath);
 
 void splitPath(std::string fullpath, std::string &path, std::string &filename);
 
+void deleteFiles(std::string dir, std::string mask);
+void deleteFile(std::string dir, std::string file);
 
 
 #endif

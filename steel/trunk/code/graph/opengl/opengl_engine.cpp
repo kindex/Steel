@@ -962,7 +962,7 @@ bool OpenGL_Engine::init(std::string _conf)
 	//lightCubeMap			= GenerateLightCubeMap();
 	//distMap					= generateDistanceLinearMap();
 
-	steel::log.out("OpenGL engine has been initialized!\n");
+	log_msg("opengl graph", "OpenGL engine has been initialized!");
 
 	setCaption("Steel Engine");
 
@@ -973,7 +973,7 @@ bool OpenGL_Engine::init(std::string _conf)
 
 bool OpenGL_Engine::deinit()
 {
-	steel::log.out("OpenGL engine has been stopped!\n");
+	log_msg("opengl graph","OpenGL engine has been stopped!");
 	return true;
 }
 

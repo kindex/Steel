@@ -43,9 +43,14 @@ int main1(int argc, char *argv[])
 int main(int argc, char *argv[])
 #endif
 {
+	globalTimer.start();
+
+	deleteFiles("..\\log", "*.log");
+	logFilter.set("error debug -res -script");
+
 	steel::log.open("../steel.log");
 
-	log_msg("core info", "Command Line: '" + commandLine + "'");
+	log_msg("core", "Command Line: '" + commandLine + "'");
 
 	if(!test())
 	{
@@ -84,7 +89,7 @@ int main(int argc, char *argv[])
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
-	log_msg("core", "\n\t\tEntering main loop");
+	log_msg("core", "Entering main loop");
 	bool first = true;
 	steel::time	lastFrameTime = timer.total();
 
@@ -132,11 +137,11 @@ int main(int argc, char *argv[])
 		if(first)
 		{
 			first = false;
-			log_msg("core", "\n\t\tMain loop: first frame passed");
+			log_msg("core", "Main loop: first frame passed");
 			timer.resume();
 		}
 	}
-	log_msg("core", "\n\t\tExit from main loop");
+	log_msg("core", "Exit from main loop");
 // ******************* MAIN LOOP ************************
 	input.freeMouse();
 
