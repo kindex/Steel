@@ -1,7 +1,7 @@
 #ifndef __GAME_OBJECTS_CUSTOM_H
 #define __GAME_OBJECTS_CUSTOM_H
 
-#include "../game_obj.h"
+#include "game_obj.h"
 
 class GameTriangleObj: public GameObj
 {

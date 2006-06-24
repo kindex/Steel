@@ -18,7 +18,7 @@
 
 #include "../res/script/script.h"
 
-#include "objects/model_obj.h"
+#include "../objects/model_obj.h"
 
 #include "../res/res_main.h"
 

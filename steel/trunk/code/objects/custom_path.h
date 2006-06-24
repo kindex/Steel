@@ -1,7 +1,7 @@
 #ifndef __GAME_CUSTOM_PATH_H
 #define __GAME_CUSTOM_PATH_H
 
-#include "../game_obj.h"
+#include "game_obj.h"
 
 /*
 Path. Метка, скорость которой рассчитывает диффуром.

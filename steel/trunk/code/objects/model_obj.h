@@ -1,5 +1,5 @@
 /*id*********************************************************
-    Unit: game/Model Object
+    Unit: objects/model
     Part of: Steel engine
     (C) DiVision, 2004-2006
     Authors:
@@ -13,7 +13,7 @@
 #ifndef __GAME_MODEL_OBJ_H
 #define __GAME_MODEL_OBJ_H
 
-#include "../game_obj.h"
+#include "game_obj.h"
 
 /*
 Рисуемый объект, GraphMesh и PhysicMesh берутся из модели

@@ -1,5 +1,5 @@
 /*id*********************************************************
-    Unit: game/objects/group
+    Unit: objects/group
     Part of: Steel engine
     (C) DiVision, 2004-2006
     Authors:
@@ -19,7 +19,7 @@
 #ifndef __GAME_GROUP_H
 #define __GAME_GROUP_H
 
-#include "../game_obj.h"
+#include "game_obj.h"
 
 class GameGroup: public GameObjSet
 {

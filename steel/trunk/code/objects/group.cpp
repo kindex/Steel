@@ -1,5 +1,5 @@
 /*id*********************************************************
-    Unit: game/objects/group
+    Unit: objects/group
     Part of: Steel engine
     (C) DiVision, 2004-2006
     Authors:
@@ -16,16 +16,16 @@
 		другими группами.
  ************************************************************/
 
-#include "../../common/logger.h"
-#include "../../common/utils.h"
+#include "../common/logger.h"
+#include "../common/utils.h"
 
 #include "group.h"
 #include "custom_path.h"
 #include "path.h"
 #include "triangle.h"
 #include "model_obj.h"
-#include "../ps/particle_system.h"
-#include "../../res/res_main.h"
+#include "ps/particle_system.h"
+#include "../res/res_main.h"
 
 using namespace std;
 

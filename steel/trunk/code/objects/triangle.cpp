@@ -1,5 +1,5 @@
 #include "triangle.h"
-#include "../../res/res_main.h"
+#include "../res/res_main.h"
 
 bool GameTriangleObj::init(ScriptLine	&s)
 {

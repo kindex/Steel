@@ -18,8 +18,8 @@
 #include "../steel.h"
 #include "../res/res.h"
 
-#include "game_obj.h"
-#include "objects/group.h"
+#include "../objects/game_obj.h"
+#include "../objects/group.h"
 
 #include "../physic/physic_engine_3d.h"
 #include "../physic/physic_engine_ps.h"

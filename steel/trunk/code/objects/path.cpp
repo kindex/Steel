@@ -1,5 +1,5 @@
 /*id*********************************************************
-    Unit: game/objects/Path
+    Unit: objects/path
     Part of: Steel engine
     (C) DiVision, 2004-2006
     Authors:
