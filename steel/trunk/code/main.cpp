@@ -46,11 +46,13 @@ int main(int argc, char *argv[])
 	globalTimer.start();
 
 	deleteFiles("..\\log", "*.log");
-	logFilter.set("error debug -res -script");
+	//logFilter.set("error debug -res -script");
 
 	steel::log.open("../steel.log");
 
 	log_msg("core", "Command Line: '" + commandLine + "'");
+// ******************** RES ************************
+	registerResources();
 
 	if(!test())
 	{
@@ -62,8 +64,6 @@ int main(int argc, char *argv[])
 	timer.start();	timer.pause();
 
 	float speed = 0.01f; // 100 FPS
-// ******************** RES ************************
-	registerResources();
 
 // ******************* GRAPH ************************
 #ifdef STEEL_OPENGL_SDL	

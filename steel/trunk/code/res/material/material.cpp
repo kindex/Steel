@@ -89,3 +89,12 @@ bool Material::init(string name, const std::string dir)
 	return true;
 }
 
+Material::~Material()
+{
+	for(steel::vector<Map>::iterator it = map.begin(); it != map.end(); it++)
+	{
+		if(it->texture) resImage.remove(it->texture);
+	}
+
+	resScript.remove(conf);
+}

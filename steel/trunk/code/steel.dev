@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=115
+UnitCount=117
 Type=0
 Ver=1
 ObjFiles=
@@ -1198,9 +1198,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit117]
-FileName=game\ps\ps_renderer.cpp
+FileName=res\rstream.h
 CompileCpp=1
-Folder=game/ps
+Folder=res
 Compile=1
 Link=1
 Priority=1000
@@ -1211,6 +1211,16 @@ BuildCmd=
 FileName=game\ps\ps_renderer.h
 CompileCpp=1
 Folder=game/ps
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit116]
+FileName=res\rstream.cpp
+CompileCpp=1
+Folder=res
 Compile=1
 Link=1
 Priority=1000

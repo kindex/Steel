@@ -1,4 +1,6 @@
 #include "script_text.h"
+#include "../rstream.h"
+
 using namespace std;
 
 bool ScriptText::init(const string name, const std::string dir)

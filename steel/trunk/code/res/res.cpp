@@ -40,48 +40,6 @@ std::string getext(std::string name)
 	return !f.bad();
 }*/
 
-//TEMP
-#define bufsize 1024
-char buf[bufsize];
-
-void rstream::skip(int n)
-{
-	while(n>0)
-	{
-		int m =n;
-		if(m > bufsize) m = bufsize;
-		read(buf, m);
-		n -= m;
-	}
-}
-
-/*rstream::rstream(string s)
-{
-	f = fopen(s.c_str(), "rb");
-	if(f)
-		ok = true;
-	else
-		ok = false;
-}*/
-
-void rstream::read(void *dest, int size)
-{
-	std::ifstream::read((char*)dest, size);
-}
-
-bool rstream::open(std::string s, std::string ext, ios_base::openmode _Mode) 
-{ 
-	std::string r = std::string("../res/") + s + (ext == ""?"":"." + ext);
-
-	std::ifstream::open(r.c_str(), _Mode | std::ios::in);
-	if(fail())
-	{
-		std::ifstream::open((std::string("../res/") + s).c_str(), _Mode | std::ios::in);
-		if(fail())
-			return false;
-	}
-	return true;
-}
 
 bool ResStack::push(std::string directory)
 {
@@ -118,9 +76,15 @@ int ResStack::getLevel(void)
 	return level;
 }
 
+// TODO: обрабатывать /../ и /./
 std::string getFullPath(std::string filename, std::string directory)
 {
-	if((!filename.empty() && filename[0] == '/') || directory.empty())
+	if((!filename.empty() && filename[0] == '/'))
+	{
+		filename.erase(0,1);
+		return filename;
+	}
+	else if(directory.empty())
 		return filename;
 	else
 		return directory + "/" + filename;

@@ -440,6 +440,14 @@
 					RelativePath=".\res\res_main.h"
 					>
 				</File>
+				<File
+					RelativePath=".\res\rstream.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\res\rstream.h"
+					>
+				</File>
 				<Filter
 					Name="image"
 					>

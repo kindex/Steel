@@ -51,7 +51,7 @@ protected:
 public:
 
 	Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; kind = ImageKind::none; format =ImageFormat::none; }
-    ~Image() { }
+    ~Image() { unload(); }
 
     bool unload() 
 	{

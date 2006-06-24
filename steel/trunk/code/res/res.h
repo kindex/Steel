@@ -13,129 +13,71 @@
 		В поддиректория хранятся классы для загрузки и хранения всех типов ресурсов.
 **************************************************************************************/
 
-/*-----------------------------------------------------------------------
-
-    Full Description:
-        Молуль для хранения, загрузки и контроля над игровыми ресурсами, 
-		такими как: image, model, audio.
-		Главный класс ResCollection получает запросы на загрузку ресурсов, 
-		обрабатывает их, исключает дублирование ресурсов.
-		Потомки класса Res используются для кранения  и рагрузки ресурсов по типам.
-		Res::res_kind определяет типы ресурсов.
-		Пример использования:
-
-Res* createBMP(string filename) {return new BMP(filename); }
-
-	res.registerClass(createBMP,	Res::image);
-
-	res.add(Res::image, "box");
-
-	res["Image"]->bitmap ... 
-
------------------------------------------------------------------------*/
-
-
 #ifndef __RES_H
 #define __RES_H
 
-#include <map>
-#include <string>
-#include <fstream>
-#include <stack>
-
 #include "../interface.h"
-
 #include "../common/types.h"
 #include "../steel.h"
 #include "../_cpp.h"
 
+#include <map>
+#include <string>
+#include <stack>
 
-/*
-Resourse input file stream
-Все рагрузки ресурсов из файловой системы должны использовать этот класс для чтения из файлов
-От него наследуются загрузки из файла, архива или скачивания из инета.
-*/
-class rstream: public std::ifstream
-{
-public:
-	rstream() {}
-	rstream(std::string s, std::string ext = "", ios_base::openmode _Mode = std::ios::binary) 
-	{ 
-		open(s, ext, _Mode);
-	}
+// Собирает полное имя файла относительно директории. Если имя файла начинается с /, то имя файла считается уже полным
+std::string getFullPath(std::string filename, std::string directory);
 
-	bool open(std::string s, std::string ext = "", ios_base::openmode _Mode = std::ios::binary);
-
-	void read(void *dest, int size);
-	void skip(int n);// skip n byten in input stream
-};
-
-
+// Стек текущих директорий. Используется только коллекцией ресурсов.
 class ResStack
 {
 protected:
 	int level;
 	std::stack<std::string> stack;
 
-public:
-	ResStack(): level(0) {}
-
 	bool	push(std::string directory);
+	bool	pushFullPath(std::string path)
+	{
+		std::string baseDirectory;		
+		splitPath(path, baseDirectory, path);
+		return push(baseDirectory);
+	}
+
 	bool	pop(void);
 	int		getLevel(void);
 	std::string top(void);
-};
 
+	std::string getFullName(const std::string name)
+	{
+		return getFullPath(name, top());
+	}
+
+	template<class T>
+	friend class ResCollection;
+
+public:
+		ResStack(): level(0) {}
+};
 extern ResStack resStack;
 
 /*
-Класс - храниель и рагрузчик одного ресурса.
-Хранение - стандартизовано для каждого ресурса. Загруска - для каждого типа может быть несколько классов для загрузки.
+	Класс - храниель и рагрузчик одного ресурса.
+	Хранение - стандартизовано для каждого типа ресурса. Загруска - для каждого типа может быть несколько классов для загрузки.
 
-От этого класса наследуются классы для хранения ресурсов для каждого типа (image, model).
-В них реализуется unload, который уничтожает структуры, созданные при загрузке.
-От них наследуются загрузчики, которые переопределяют метод init.
-init загружает ресурс или генерирует по строковому идентификатору.
-
-Например, загружая cubeMap надо загрузить 6 текстур, а только потом собрать из них одну. 
-Для загрузки каждой из этих текстур используется класс image, который может грузить из любого
-формата (bmp, jpg, png).
+	От этого класса наследуются классы для хранения ресурсов для каждого типа (image, model).
+	В них реализуется деструктор, который уничтожает структуры, созданные при загрузке.
+	От них наследуются загрузчики, которые переопределяют метод init.
+	init загружает ресурс или генерирует по строковому идентификатору.
 */
 class Res//: public virtual BufferedElement
 {
+protected:
+	uid resId; // уникальный идентификатор
 public:
-// количестко типов ресурсов
-#define RES_KIND_COUNT 6
-// типы ресурсов (типы хранения)
-	typedef enum 
-	{
-			none,
-			image, // class Image: 2D, 3D, Cubemap (1x6 maps in one)
-			model, // class Model
-			config, // class Config
-			script,
-			material
-
-	}	res_kind;
-// Структура для идентификации ресурса (тип, строка)
-	struct ResLocator
-	{
-		res_kind kind;
-		std::string name;
-
-		ResLocator(res_kind akind, std::string aname): kind(akind), name(aname) {}
-	};
-
-	typedef
-		steel::vector<ResLocator>
-		ResLocatorArray;
-
 //	virtual bool init(const std::string name, const std::string dir) = 0;
-	virtual bool unload() = 0;
 
-	uid id;
-	uid	getId() { return id; }
-	void setId(uid _id) { id = _id; }
+	uid	getId() { return resId; }
+	void setId(uid id) { resId = id; }
 };
 
 
@@ -146,121 +88,165 @@ public:
 У каждого ресурса должен быть уникальный строковой идентификатор, который не включает в себя расширение файла.
 При вызове метода add, коллекция пытается загрузить ресурс всеми возможными способами для загрузки ресурса этого типа.
 Например, для загрузки ресурса типа "image" вызовутся загрузчики BMP, JPG, PNG. Если хоть один из них сможет загрузить 
-ресурс - рагзузиться, иначе - нет.
+ресурс - то он рагзузится, иначе - нет.
 */
 template<class T>
 class ResCollection
 {
-protected:
-	// Идентификатор коллекции (model, image, ...)
-	std::string id;
-	bool lastCached;
-// Массив с классами, в которых хранятся ресурсы
-	steel::vector<T*> data;
-// Map: resource name->index
-// По имени возврашает индекс в массивах data и resType
-	std::map<const std::string,int> index; 
-	steel::vector<std::string> names;
-
-
-	// тип: функция для геренирования копии класса, унаследованного от Res
-	typedef T*(funcCreateResClass)(const std::string filename, const std::string baseName); 
-
-	// копия класса. Нужна для ассоциирования класса с типом ресурса.
-	struct ClassCopy
-	{
-		funcCreateResClass* func;
-
-		ClassCopy(): func(NULL) {}
-		ClassCopy(funcCreateResClass* _func){ func = _func;}
-
-	};
-
-	
-// Массивы классов для рагрузки ресурсов каждого типа
-	steel::vector<ClassCopy> classes;
-// Количество рагруженных ресурсов (в начале 0)
-	int freeindex;
 public:
-	ResCollection(): freeindex(0) {}
-	void setId(std::string _id) { id = _id; }
+	ResCollection() {}
 
-	// Вернуть ресурс по номеру
-	inline T* operator[](const int n) const { return data[n]; }
-
-	// Проверить, существует ли ресурс с указанным именем
-	inline bool find(const std::string& name) {return index.find(name) != index.end(); } 
-
-	// Найти номер ресурса по имени
-    inline int getIndex(const std::string name);
-    
-	// Вернуть ресурс по имени
-	inline T* operator[] (const std::string& name);
-
-	// Вернуть ресурс по имени и типу
-	inline T* get(const std::string& name) { return operator[](name); }
-
-/*
-	Добавить ресурс по имени и типу
-	name - идентификатор ресурса. Обычно это имя файла без расширения, 
-	но может быть ипрограммно генерируемой тестурой.
-	Пробуем загрузить всеми доступными загрузчиками по порядку.
-*/
-	T* addForce(std::string name, bool pop = true);
+	inline T* operator[] (const std::string& name);// Вернуть ресурс по полному имени
+	inline T* get(const std::string& name) { return operator[](name); }  // Вернуть ресурс по полному имени
 
 	// Добавить ресурс по имени и типу, если ресурса еще нет в коллекции
 	T* add(const std::string name, bool pop = true);
 
-	// Добавить массив ресурсов
-	bool add(const Res::ResLocatorArray &names);
+	// Удалить ресурс
+	bool remove(const std::string name);
+	bool remove(T* object);
 
-	// Ассоциировать тип ресурса и загрузчик.
-	// _func - функция для создания класса для загрузки (унаследоманного от Res)
-	void registerClass(funcCreateResClass *_func)	{		classes.push_back(ClassCopy(_func));	}
+	// У процедуры add есть второй параметр типа bool. Если он равняется false, то после загрузки ресурса текущая директория не восстанавливается и надо это делать вручную с помощью вызова pop.
+	void pop() { resStack.pop(); }
 
-	// Вернуть копию класса
-	T* createClass(ClassCopy *aclass, std::string name, std::string baseName)	{		return aclass->func(name, baseName);	}
 
-	void pop() { if(!lastCached) resStack.pop(); }
+protected:
+	std::string id; // строковой идентификатор коллекции (image, model)
+	std::map<const std::string,int> index; // отображение полных имён ресурсов на индекс в массиве data. Для увеличения скорости поиска по имени.
+	std::map<T*,int> resIndex; // отображение указателя ресурса на индекс в массиве data. Для увеличения скорости удаления ресурса по ссылке на него.
+
+	struct ResStorage
+	{
+		T*		object;		// ссылка на ресурс
+		uid		id;			// уникальный идентификатор ресурса
+		int		links;		// количество ссылок на этот ресурс. При добавлении дублируемого ресурса счётчик увеличивается на 1. При удалении -  уменьшается на 1. Если количество ссылок становится равным 1, то ресурс удаляется из коллекции. (аналогично Linux ext2fs)
+		std::string name;	// полное имя ресурса
+	};
+	steel::vector<ResStorage> data; // массив хранимых ресурсов и дополнительная информация к каждому ресурсу.
+
+	// тип: функция для геренирования копии класса, унаследованного от Res
+	typedef T*(funcCreateResClass)(const std::string filename, const std::string baseName); 
+
+// Массивы классов для рагрузки ресурсов каждого типа
+	steel::vector<funcCreateResClass*> classes;
+
+	// *********** Functions ***************
+	bool removeRaw(int index); // удаляет ссылку на ресурс. Если количество ссылок = 0, то ресурс удалается физически из коллекции
+	bool purge(int delIndex); // физически удаляет ресурс из коллекции
+	void setId(std::string _id) { id = _id; } // устанавливает идентификатор коллекии
+
+	// Добавляет функцию для создания класса, котоыре умеет загружать ресурс
+	void registerResLoader(funcCreateResClass *_func)	{		classes.push_back(_func);	}
+
+	// Найти номер ресурса по полному имени
+    inline int getIndex(const std::string name);
+	// Проверить, существует ли ресурс с указанным полным именем
+	inline bool find(const std::string& name) {return index.find(name) != index.end(); } 
+
+	T* addForce(std::string name, bool pop = true);
+
+	friend bool registerResources();
 };
 
-std::string getFullPath(std::string filename, std::string directory);
 
-template<class T>
-bool ResCollection<T>::add(const Res::ResLocatorArray &names)
-{
-	for(Res::ResLocatorArray::iterator it = names.begin();	it != names.end();	it++)
-		{
-			if(!find(it->name))
-			{
-				if(!addForce(it->kind, it->name)) return false;
-			}
-		}
-	return true;
-}
 
 template<class T>
 T* ResCollection<T>::add(const std::string name, bool pop)
 {
-	if(getIndex(name) < 0)
+	std::string name2 = resStack.getFullName(name);
+	int index = getIndex(name2);
+
+	if(index < 0)
 	{
-		lastCached = false;
-		return addForce(name, pop);
+		return addForce(name2, pop);
 	}
 	else
 	{
-		lastCached = true;
-		return get(name);
+		data[index].links++;
+
+		if(!pop)
+			resStack.pushFullPath(name2);
+
+		return data[index].object;
 	}
 }
 
 template<class T>
+bool ResCollection<T>::remove(T* object)
+{
+#ifndef STEEL_COMPILER_DEVCPP
+    std::map<T*,int>::const_iterator it = resIndex.find(object);
+     
+	if(it == resIndex.end())
+		return false;
+	else 
+		return removeRaw(it->second);
+#else
+// TODO
+	if(resIndex.find(object) == resIndex.end())
+		return false;
+	else 
+		return removeRaw(resIndex.find(object)->second);
+#endif
+}
+
+
+template<class T>
+bool ResCollection<T>::remove(const std::string name)
+{
+	int index = getIndex(name);
+	if(index < 0)
+		return false;
+	else
+		return removeRaw(index);
+}
+
+template<class T>
+bool ResCollection<T>::removeRaw(int index)
+{
+	if(data[index].links > 0)
+	{
+		data[index].links--;
+		if(data[index].links == 0)
+		purge(index);
+		return true;
+	}
+	else
+		return false;// уже удалён
+}
+
+template<class T>
+bool ResCollection<T>::purge(int delIndex)
+{
+	std::string name;
+	name = data[delIndex].name;
+	
+	resIndex.erase(data[delIndex].object);
+	index.erase(name);
+
+	log_msg("res del " + id, "Deleting resourse " + data[delIndex].name);
+	delete data[delIndex].object;
+
+	if(delIndex + 1 < (int)data.size())
+	{
+		index[data.back().name] = delIndex;
+		resIndex[data.back().object] = delIndex;
+		data[delIndex] = data.back();
+	}
+	
+	data.resize(data.size() - 1);
+		
+	return true;
+}
+
+
+template<class T>
 T* ResCollection<T>::addForce(std::string name, bool pop)
 {
-	std::string baseDirectory = resStack.top();
-	name = getFullPath(name, baseDirectory);
-
+	std::string baseDirectory;
+	
 	splitPath(name, baseDirectory, name);
+
 	resStack.push(baseDirectory);
 
 	log_msg("res " + id, "Loading " + baseDirectory + "/" + name);
@@ -268,24 +254,29 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
     int s = classes.size();
 	for(int i = 0; i < s; i++)
 	{
-		T *obj = createClass(&classes[i], name, baseDirectory); // + baseDirectory
+//		T *obj = createClass(&classes[i], name, baseDirectory); // + baseDirectory
+
+		T *obj = (*classes[i])(name, baseDirectory); // + baseDirectory
+
 		if(obj == NULL) continue;
 		
-		index[name] = freeindex;
-		data.resize(freeindex+1);
-		names.resize(freeindex+1);
-	    
 		std::string fullResName = baseDirectory + "/" + name;
-		index[fullResName] = freeindex;
-		names[freeindex] = fullResName;
 
-		data[freeindex] = obj;
+		ResStorage newResStorage;
+		newResStorage.id = obj->getId();
+		newResStorage.name = fullResName;
+		newResStorage.links = 1;
+		newResStorage.object = obj;
+
+		data.push_back(newResStorage);
+
+		index[fullResName] = data.size() - 1;
+		resIndex[obj] = data.size() - 1;
 	
-		log_msg("res " + id, "OK " + baseDirectory + "/" + name);
+		log_msg("res " + id, "OK " + fullResName);
 		if(pop) resStack.pop();
 
-		freeindex++;
-		return data[freeindex-1];
+		return obj;
 	}
 	log_msg("res error " + id, "Failed " + baseDirectory + "/" + name);
 	if(pop) resStack.pop();
@@ -301,15 +292,15 @@ inline T* ResCollection<T>::operator[] (const std::string& name)
 	if(i<0)
 		return NULL;
 	else
-		return data[i];
+		return data[i].object;
 }
 
 template<class T>
 inline int ResCollection<T>::getIndex(const std::string name)   
 {
-	std::string realname = getFullPath(name, resStack.top());
-	if(index.find(realname) != index.end())
-		return index[realname];	
+	std::map<const std::string,int>::const_iterator it = index.find(name);
+	if(it != index.end())
+		return it->second;	
 	else 
 		return -1;
 }  /*If exist - return*, esle 0 */

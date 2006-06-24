@@ -12,6 +12,7 @@
 
 #include "tga.h"
 #include "../../common/logger.h"
+#include "../rstream.h"
 #include <string> 
 
 

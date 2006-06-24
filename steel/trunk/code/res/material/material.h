@@ -48,12 +48,13 @@ public:
 class Material: public Res
 {
 public:
-	Script			*conf;
+	Script* conf;
+	bool	blend;
 	steel::vector<Map> map;
-	bool				blend;
 
 	bool init(std::string _conf, const std::string dir);
-	virtual bool unload() {return true; };
+
+	~Material();
 };
 
 #endif

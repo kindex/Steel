@@ -82,11 +82,11 @@ T2* createClass(const std::string filename, const std::string base)
 
 bool registerResources()
 {
-	resImage.registerClass(createImage);						resImage.setId("image");
-	resModel.registerClass(createClass<_3DS, Model>);			resModel.setId("model");
-	resMaterial.registerClass(createClass<Material, Material>);	resMaterial.setId("material");
-	resConfig.registerClass(createClass<ConfigText, Config>);	resConfig.setId("config");
-	resScript.registerClass(createClass<ScriptText, Script>);	resScript.setId("script");
+	resImage.registerResLoader(createImage);						resImage.setId("image");
+	resModel.registerResLoader(createClass<_3DS, Model>);			resModel.setId("model");
+	resMaterial.registerResLoader(createClass<Material, Material>);	resMaterial.setId("material");
+	resConfig.registerResLoader(createClass<ConfigText, Config>);	resConfig.setId("config");
+	resScript.registerResLoader(createClass<ScriptText, Script>);	resScript.setId("script");
 
 	return true;
 }

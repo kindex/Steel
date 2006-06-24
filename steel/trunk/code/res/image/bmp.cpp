@@ -12,6 +12,7 @@
 
 #include "bmp.h"
 #include "../../common/logger.h"
+#include "../rstream.h"
 #include <string> 
 
 Image* createBMP(const std::string filename)

@@ -4,7 +4,7 @@
 #define _3dsH
 
 #include "model.h"
-#include <fstream>
+#include "../rstream.h"
 
 
 class _3DS;

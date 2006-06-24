@@ -52,10 +52,6 @@ public:
     int duplicateVertex(int src, v3 newnormal);
 
 	void generateNormals();
-	bool unload()
-	{
-		return true;
-	}
 	TexCoords	*getTexCoords(int mapNumber);
 	float calculateVolume(); // вычислить объём
 	float getVolume(); // вычислить объём

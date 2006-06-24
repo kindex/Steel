@@ -9,7 +9,8 @@ bool GameObjModel::init(ScriptLine	&s)
 	if(!GameObj::init(s)) return false;
 	
 	if(s.count()<3) return false;
-	conf = resConfig.add(s.gets(3), false);
+	string config = s.gets(3);
+	conf = resConfig.add(config, false);
 	if(!conf)
 	{
 		log_msg("error res model", "Model config not found: " + s.gets(3));

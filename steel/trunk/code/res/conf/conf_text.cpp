@@ -2,7 +2,8 @@
 #include "conf_text.h"
 #include "../../common/logger.h"
 #include "../../common/utils.h"
-#include <fstream>
+#include "../rstream.h"
+
 using namespace std;
 
 bool ConfigText::init(const std::string name, const std::string dir)
