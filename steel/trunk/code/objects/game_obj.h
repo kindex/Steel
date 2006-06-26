@@ -59,7 +59,10 @@ class GameObj: public GameObjDummy
 {
 public:
 	GameObj			*parent;
-	steel::vector<GameObj*> children;
+	
+	PhysicObjectList physicChildren;
+	steel::svector<GraphInterface*> graphChildren;
+
 	velocity	vel;
 	coord		mass;
 	ObjectPosition	position;
@@ -80,8 +83,6 @@ public:
 	PositionKind::PositionKind	getPositionKind(){	return positionKind;}
 	ProcessKind::ProcessKind	getProcessKind() { return processKind; }
 
-	void setPositionKind(const PositionKind::PositionKind newKind);
-
 	void			setProcessKind(const ProcessKind::ProcessKind _kind) { processKind = _kind; }
 	virtual	bool	init(ScriptLine	&s);
 	GameObj *findChildren(std::string name)
@@ -94,10 +95,6 @@ public:
 
 	void	trigger(PhysicInterface *object) {}
 
-	ObjectPosition	getGlobalPosition();
-	velocity	getGlobalVelocity();
-	float		getGlobalScale();
-
 	void	setPosition(ObjectPosition const &newPos) { position = newPos; } 
 
 	void attach(GameObj *obj) 
@@ -106,22 +103,10 @@ public:
 	}
 	
 	void addChildren(GameObj *obj);
-	GameObj *getChildren(std::string name);
 
-	GraphInterfaceList getChildrens()
-	{
-		GraphInterfaceList a;
-		for(steel::vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
-			a.push_back(*it);
-		return a;
-	}
-	PhysicInterfaceList getPChildrens()
-	{
-		PhysicInterfaceList a;
-		for(steel::vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
-			a.push_back(*it);
-		return a;
-	}
+	PhysicObjectList *getPhysicChildren()	{		return &physicChildren;	}
+	GraphObjectList *getGraphChildren()	{		return &graphChildren;	}
+
 	GameObj *getParent() { return parent; }
 
 	ObjectPosition		getPosition() {return position;}
@@ -135,7 +120,7 @@ public:
 	bool	getTarget(v3 &targetPoint, coord &speed) {return false;}
 	void	setTargetReached() {}
 
-	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine) {}
+	void	process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
 	void	processGraph(v3	cameraEye, v3 cameraDirection) {}
 };
 

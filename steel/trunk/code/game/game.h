@@ -21,8 +21,7 @@
 #include "../objects/game_obj.h"
 #include "../objects/group.h"
 
-#include "../physic/physic_engine_3d.h"
-#include "../physic/physic_engine_ps.h"
+#include "../physic/physic_engine_steel.h"
 #include "../graph/graph_engine.h"
 #include "../graph/graph_helper.h"
 
@@ -54,7 +53,7 @@ protected:
 	Config		*conf;
 
 	GraphEngine *graphEngine;
-//	PhysicEnginePS *physicEngine;
+//	PhysicEngineSteel *physicEngine;
 	PhysicEngine *physicEngine;
 
 	void processKeyboard();

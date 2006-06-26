@@ -15,7 +15,6 @@ public:
 	{ 
 		return CollisionType::particle1; 
 	}
-	bool init(v3 emitterPosition, v3 emitterDirection, Config *conf);
 	
 	float getMass()
 	{
@@ -24,9 +23,6 @@ public:
 
 	PositionKind::PositionKind	getPositionKind(){	return PositionKind::global;}
 	Config* getPMaterial() { return conf; }
-
-
-	PhysicInterfaceList getPChildrens() { 		PhysicInterfaceList a;		return a; }
 
 	ObjectPosition getPosition()
 	{ 
@@ -41,9 +37,7 @@ public:
 	void setPosition(ObjectPosition const &newPosition) {particle->position = newPosition.getTranslation(); }
 
 
-	ObjectPosition getGlobalPosition() { return getPosition(); }
 	ProcessKind::ProcessKind getProcessKind() { return ProcessKind::none; }
-	void setPositionKind(PositionKind::PositionKind const newPositionKind) {}
 
 
 	aabb		getPFrame()		{	return aabb(); } // TODO
@@ -51,35 +45,26 @@ public:
 	Vertexes*	getPVertexes()	{	return NULL;}
 	Triangles*	getTriangles()	{	return NULL;}
 
-	velocity	getGlobalVelocity() { return getVelocity(); }
-	float		getGlobalScale() {return 1.0f;}
-
 	std::string getName() { return ""; }
-
-	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine) {}
-	void	trigger(PhysicInterface *object) {}
-
-
-
 };
 
 class UniPSanimator: public ParticleAnimator
 {
-	PhysicInterfaceList children;
+	PhysicObjectList children;
 
 public:
 	bool initParticles();
-	PhysicInterfaceList getPChildrens() { return children; }
+	PhysicObjectList *getPhysicChildrenList() { return &children; }
+
+	ModificationTime getChildrenModificationTime(void) { return set->modificationTime; }
 
 	ObjectPosition getPosition() { return particleSystem->getPosition(); }
 	PositionKind::PositionKind getPositionKind() { return particleSystem->getPositionKind(); }
 	CollisionType::CollisionType getCollisionType() { return CollisionType::none; }
 
-	ObjectPosition getGlobalPosition() { return particleSystem->getGlobalPosition(); }
 	void setPosition(ObjectPosition const &newPosition) {}
 	ProcessKind::ProcessKind getProcessKind() { return ProcessKind::none; }
-	void setPositionKind(PositionKind::PositionKind const newPositionKind) {}
-
+	void	process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime);
 
 	aabb		getPFrame()		{	return aabb(); } // TODO
 	bool		cleanupP()		{	return true;	}
@@ -89,14 +74,9 @@ public:
 
 	velocity	getVelocity() { return velocity(v3(0,0,0),v3(0,0,0));}
 	void		setVelocity(const velocity &v) {}
-	velocity	getGlobalVelocity() { return getVelocity(); }
-	float		getGlobalScale() {return 1.0f;}
 
 	float	getMass() { return 1.0f;}
 	std::string getName() { return ""; }
-
-	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine) {}
-	void	trigger(PhysicInterface *object) {}
 };
 
 #endif

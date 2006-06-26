@@ -3,6 +3,8 @@
 
 void SpriteRenderer::processGraph(v3	cameraEye, v3 cameraDirection)
 {
+	initSprites(vertex.data.size()/4, set->particles.size());
+
 	v3 pos_diff = particleSystem->getPosition().getTranslation();
 	eye = cameraEye;
 
@@ -82,7 +84,7 @@ void SpriteRenderer::initSprites(int begin, int end)
 	normal.data.resize(end*4);
 	face[0].triangles->data.resize(end*2);
 
-	for(int j=begin; j<end; j++)
+	for(int j = begin; j<end; j++)
 	{
 		for(int i=0; i<3; i++)
 		{
@@ -118,6 +120,12 @@ bool SpriteRenderer::initParticles()
 
 	initSprites();
 	initSprites(0, set->particles.size());
+
+	return true;
+}
+
+bool ObjectPSRenderer::initParticles()
+{
 
 	return true;
 }

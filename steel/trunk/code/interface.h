@@ -76,7 +76,7 @@ protected:
 	uid freeId;
 public:
 	IdGenerator() { freeId = 1; }
-	uid genUid() { return freeId++;}
+	uid genUid();
 };
 
 extern IdGenerator objectIdGenerator;
@@ -91,14 +91,22 @@ Interface protottype
 относительно его родителя или в глобальный коорлинатах. Систему отсчёта определяет 
 функция getPositionKind
 */
+class Interface;
+
+typedef steel::svector<Interface *> ObjectList;
+
+typedef int ModificationTime;
+
+extern ModificationTime globalFrameNumber;
 
 class Interface
 {
 protected:
 	uid id;
+	ModificationTime modificationTime;
 public:
 	// дефолтовый конструктор присваюивает уникальный идентификатор.
-	Interface() { id = objectIdGenerator.genUid(); }
+	Interface() { id = objectIdGenerator.genUid(); modificationTime = 0; }
 
 	// Object unique identifier
 	virtual uid								getId()				{ return id; }
@@ -106,6 +114,14 @@ public:
 	virtual	ObjectPosition					getPosition(void) = 0;
 	// Система координат: локальная относительно родителя или глобальная
 	virtual PositionKind::PositionKind		getPositionKind(void) { return PositionKind::local; }
+
+	// когда менялся список детей
+	virtual ModificationTime getChildrenModificationTime(void) { return modificationTime; }
+
+	// когда менялось состяние объектов (то, что с warn в design document)
+	// когда хоть один из параметров изменил своё значение
+	// скорость может меняться	
+	virtual ModificationTime getModificationTime(void) { return modificationTime; }
 };
 
 #endif

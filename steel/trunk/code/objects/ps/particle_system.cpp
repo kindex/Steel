@@ -36,7 +36,7 @@ bool ParticleSystem::init(ScriptLine	&s)
 	std::string emitterClass = emitterConf->gets("class");	emitter = NULL;
 	if(emitterClass == "SimpleEmitter")	emitter = new SimpleEmitter;
 	if(!emitter) abort_init("error res ps emitter", "Emitter class " + emitterClass + " not found");
-	if(!emitter->init(emitterConf, &particleSet, getPosition())) { resConfig.pop(); abort_init("error res ps emitter", "Emitter class " + emitterClass + " cannot initialize"); }
+	if(!emitter->init(emitterConf, &particleSet, this)) { resConfig.pop(); abort_init("error res ps emitter", "Emitter class " + emitterClass + " cannot initialize"); }
 
 	std::string animatorClass = animatorConf->gets("class");	animator = NULL;
 	if(animatorClass == "UniPSanimator")	animator = new UniPSanimator;
@@ -45,8 +45,12 @@ bool ParticleSystem::init(ScriptLine	&s)
 
 	std::string rendererClass = rendererConf->gets("class");	renderer = NULL;
 	if(rendererClass == "SpriteRenderer")	renderer = new SpriteRenderer;
+	if(rendererClass == "ObjectPSRenderer")	renderer = new ObjectPSRenderer;
 	if(!renderer) abort_init("error res ps renderer", "Renderer class " + rendererClass + " not found");
 	if(!renderer->init(rendererConf, &particleSet,  this)) { resConfig.pop(); abort_init("error res ps renderer", "Renderer class " + rendererClass + " cannot initialize"); }
+
+	graphList.push_back(renderer);
+	physicList.push_back(animator);
 
 	resConfig.pop();
 	return true;
@@ -57,10 +61,10 @@ void ParticleEmitter::kill(int i) // убить частицу с номером i
 
 }
 
-bool ParticleEmitter::init(Config *_conf, ParticleSet *_set, ObjectPosition _positionEmitter)
+bool ParticleEmitter::init(Config *_conf, ParticleSet *_set, ParticleSystem *_particleSystem)
 {
 	if(!(conf = _conf)) return false;
-	set = _set;	positionEmitter = _positionEmitter;
+	set = _set;	particleSystem = _particleSystem;
 
 	initParticles();
 
@@ -70,7 +74,7 @@ bool ParticleEmitter::init(Config *_conf, ParticleSet *_set, ObjectPosition _pos
 void ParticleEmitter::initParticles()
 {
 	int initSize = (int)ceil(conf->geti("init_size") * set->countScale);
-	set->changed = true;
+	set->modificationTime = -1;
 	set->particles.resize(initSize);
 	for(int i=0; i<initSize; i++)
 		born(set->particles[i]);
@@ -87,7 +91,7 @@ bool ParticleRenderer::init(Config *_conf, ParticleSet *_set, GraphInterface *_p
 	return true;
 }
 
-bool ParticleAnimator::init(Config *_conf, ParticleSet *_set, PhysicInterface  *_particleSystem)
+bool ParticleAnimator::init(Config *_conf, ParticleSet *_set, ParticleSystem  *_particleSystem)
 {
 	if(!(conf = _conf)) return false;
 	set = _set;

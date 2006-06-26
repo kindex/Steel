@@ -27,13 +27,13 @@ protected:
 	FaceMaterials faceMaterial;
 
 public:
+	GameObjModel()	{ 		m = NULL; conf = NULL;	}
+
 	CollisionType::CollisionType getCollisionType() { return CollisionType::polyhedra; }
 
 	void assignModel(Model *M)	{		m = M;	}
-	GameObjModel()	{ 		m = NULL;	}
 	bool	init(ScriptLine	&s);
 
-	uid		getId() { return m->getId(); }
 	aabb getFrame();
 	bool cleanup()	{	return true;		}
 	bool cleanupP()	{	return cleanup();	}

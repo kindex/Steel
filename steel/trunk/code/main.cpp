@@ -13,7 +13,6 @@
  ************************************************************/
 
 #include "_cpp.h"
-#include "physic/physic_engine_3d.h"
 
 #ifdef STEEL_OPENGL_SDL	
 	#include "graph/opengl/opengl_sdl_engine.h"
@@ -43,7 +42,8 @@ int main1(int argc, char *argv[])
 int main(int argc, char *argv[])
 #endif
 {
-	globalTimer.start();
+	globalTimer.start(); globalFrameNumber = 1;
+
 
 	deleteFiles("..\\log", "*.log");
 	//logFilter.set("error debug -res -script");
@@ -140,6 +140,7 @@ int main(int argc, char *argv[])
 			log_msg("core", "Main loop: first frame passed");
 			timer.resume();
 		}
+		globalFrameNumber++;
 	}
 	log_msg("core", "Exit from main loop");
 // ******************* MAIN LOOP ************************

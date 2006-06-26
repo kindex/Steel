@@ -665,19 +665,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\physic\physic_engine_3d.cpp"
+					RelativePath=".\physic\physic_engine_steel.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\physic\physic_engine_3d.h"
-					>
-				</File>
-				<File
-					RelativePath=".\physic\physic_engine_ps.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\physic\physic_engine_ps.h"
+					RelativePath=".\physic\physic_engine_steel.h"
 					>
 				</File>
 				<File

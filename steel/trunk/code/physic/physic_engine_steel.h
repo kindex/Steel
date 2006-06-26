@@ -25,16 +25,22 @@
 #endif
 
 
-class PhysicEnginePS: public PhysicEngine
+class PhysicEngineSteel: public PhysicEngine
 {
 protected:
 	bool helperDrawLines;
 
 	struct PhysicObjectStorage
 	{
-		int objectId, storageId, partiecleSetId;
+		int objectId, storageId;
 		PhysicInterface *object;
 		CollisionType::CollisionType collisionType;
+		ModificationTime modificationTime, childrenModificationTime;
+
+		steel::svector<int> children;
+
+
+		int partiecleSetId;
 		v3 force;
 		v3 position;
 		v3 velocity;
@@ -60,12 +66,13 @@ public:
 	bool inject(PhysicInterface *object);
 	bool makeStorage(PhysicInterface *object);
 	void cacheStorage(PhysicObjectStorage &objectStorage);
+	void cacheChildrenStorage(PhysicObjectStorage &objectStorage, bool force = false);
 
 	bool process(steel::time globalTime, steel::time time);
 
 	bool processParticle(PhysicObjectStorage &objectStorage, steel::time globalTime, steel::time time);
 
-	bool prepare(PhysicInterface *object, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL){ return true;}
+	void prepare(PhysicInterface &object, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL);
 
 	v3 calculateForceForParticle(PhysicObjectStorage &storage);
 	v3 calculateForceForParticle(PhysicObjectStorage &storage1, PhysicObjectStorage &storage2);

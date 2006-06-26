@@ -855,8 +855,7 @@ bool OpenGL_Engine::process()
 	total.triangle = 0;
 	total.object = 0;
 
-	for(steel::vector<GraphInterface*>::iterator it = objects.begin(); 
-			it != objects.end(); it++)
+	for(steel::vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		prepare((*it));
 
 //	if(!ARB_multitexture_supported) 

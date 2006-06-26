@@ -124,11 +124,14 @@ bool GameGroup::load(GameObj *global)
 				{ // TODO
 					obj->positionKind = PositionKind::global;
 
-					ObjectPosition matrix = this->getGlobalPosition();
-					obj->setPosition(matrix * obj->getPosition());
+//					ObjectPosition matrix = this->getGlobalPosition();
+//					obj->setPosition(matrix * obj->getPosition());
 
 					velocity vel = obj->getVelocity();
-					vel.translation = this->getGlobalVelocity().translation + (matrix*vel.translation - matrix*v3(0,0,0)); 
+					
+//					vel.translation = this->getGlobalVelocity().translation + (matrix*vel.translation - matrix*v3(0,0,0)); 
+					vel.translation.loadZero();
+
 					obj->setVelocity(vel);
 				}
 				global->addChildren(obj);

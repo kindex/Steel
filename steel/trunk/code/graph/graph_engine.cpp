@@ -66,12 +66,11 @@ bool GraphEngine::prepare(GraphInterface *object, matrix34 parent_matrix)
 */
 	if(!isVisible(frame)) return false;
 	
-	GraphInterface &o = *(GraphInterface*)object;
-	GraphInterfaceList children = o.getChildrens();
-	for(GraphInterfaceList::iterator it=children.begin();
-		it != children.end();
-		it++)
-		if(!prepare(*it, object_matrix)) return false;
+	GraphInterface &o = *object;
+	GraphObjectList *children = o.getGraphChildrenList();
+	if(children)
+	for(unsigned int i = 0; i < children->size(); i++)
+		if(!prepare(children->at(i), object_matrix)) return false;
 
 	FaceMaterials* m = object->getFaceMaterials();
 	Vertexes	*v = object->getVertexes();

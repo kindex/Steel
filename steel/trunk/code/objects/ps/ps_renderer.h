@@ -40,13 +40,34 @@ public:
 
 	ObjectPosition getPosition() { return particleSystem->getPosition(); }
 	PositionKind::PositionKind getPositionKind() { return PositionKind::global; }
-	GraphInterfaceList getChildrens() {GraphInterfaceList a; return a;}
 	bool cleanup() { return true;}
 	GLines*	getLines(){ return NULL; }
 	Lights*	getLights() { return NULL;}
 
 	void processGraph(v3 cameraEye, v3 cameraDirection);
-
 };
+
+class ObjectPSRenderer: public ParticleRenderer
+{
+protected:
+public:
+	bool initParticles();
+
+	Vertexes*	getVertexes() { return NULL; }
+	FaceMaterials* getFaceMaterials() { return NULL; }
+	Normals*	getNormals() { return NULL; }
+	TexCoords*	getTexCoords(int texNumber) { return NULL; }
+
+	aabb getFrame() { return aabb(); } // TODO
+
+	ObjectPosition getPosition() { return particleSystem->getPosition(); }
+	PositionKind::PositionKind getPositionKind() { return PositionKind::global; }
+	bool cleanup() { return true;}
+	GLines*	getLines(){ return NULL; }
+	Lights*	getLights() { return NULL;}
+
+	void processGraph(v3 cameraEye, v3 cameraDirection) {}
+};
+
 
 #endif

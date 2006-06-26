@@ -49,7 +49,6 @@ public:
 	ObjectPosition getPosition(void) { return matrix34::getIdentity(); }
 	
 	PositionKind::PositionKind	getPositionKind() {return PositionKind::global; }
-	GraphInterfaceList getChildrens() { return GraphInterfaceList(0);}
 
 	GLines*		getLines()		{	return &glines;	}
 	uid			getId()			{	return 0;		}

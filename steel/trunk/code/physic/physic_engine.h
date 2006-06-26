@@ -20,7 +20,7 @@
 class PhysicEngine: public Engine
 {
 protected:
-	steel::vector<PhysicInterface*> object;
+	steel::vector<PhysicInterface*> objects;
 	v3 g;
 
 public:
@@ -37,7 +37,7 @@ public:
 	virtual bool inject(PhysicInterface *object);
 	virtual bool remove(PhysicInterface *object);
 
-	virtual bool prepare(PhysicInterface *object, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL) = 0;
+//	virtual bool prepare(PhysicInterface *object, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL) = 0;
 
 	// Move objects
 	virtual bool process(steel::time globalTime, steel::time time) = 0; 

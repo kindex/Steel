@@ -30,7 +30,7 @@ struct Particle
 struct ParticleSet
 {
 	float countScale;
-	bool changed;
+	ModificationTime modificationTime;
 
 	steel::svector<Particle> particles;
 
@@ -49,12 +49,13 @@ public:
 class ParticleEmitter: public ParticleProcessor
 {
 protected:
-	ObjectPosition positionEmitter;
+	ParticleSystem *particleSystem;
 public:
-	virtual bool init(Config *_conf, ParticleSet *_set, ObjectPosition _positionEmitter);
+	virtual bool init(Config *_conf, ParticleSet *_set, ParticleSystem *_particleSystem);
 	virtual void initParticles();
 	virtual void born(Particle &particle) = 0; // создать частицу
 	virtual void kill(int i); // убить частицу с номером i
+	virtual void	process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) = 0;
 };
 
 // класс для рисования: множество спрайтов, набор объектов, меташарики
@@ -72,9 +73,9 @@ public:
 class ParticleAnimator: public PhysicInterface, public ParticleProcessor
 {
 protected:
-	PhysicInterface *particleSystem;
+	ParticleSystem *particleSystem;
 public:
-	virtual bool init(Config *_conf, ParticleSet *_set, PhysicInterface *_particleSystem);
+	virtual bool init(Config *_conf, ParticleSet *_set, ParticleSystem *_particleSystem);
 	virtual bool initParticles() = 0;
 };
 
@@ -87,21 +88,27 @@ class ParticleSystem: public GameObj
 	ParticleRenderer	*renderer;
 	ParticleAnimator	*animator;
 
+	GraphObjectList graphList;
+	PhysicObjectList physicList;
+
 public:
 	bool init(ScriptLine	&s);
-	GraphInterfaceList getChildrens()
-	{
-		GraphInterfaceList a;
-		if(renderer) a.push_back(renderer);
-		return a;
-	}
-	PhysicInterfaceList getPChildrens()
-	{
-		PhysicInterfaceList a;
-		if(animator) a.push_back(animator);
-		return a;
-	}
+
+	GraphObjectList* getGraphChildrenList(void) { return &graphList; }
+	PhysicObjectList* getPhysicChildrenList(void) { return &physicList; }
+	
 	PositionKind::PositionKind getPositionKind(void) { return PositionKind::global;}
+
+	void setChildrenChangeTime(ModificationTime time) 
+	{ 
+		particleSet.modificationTime = time;
+	}
+	ModificationTime getChildrenModificationTime(void) { return particleSet.modificationTime; }
+	void	process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime)
+	{
+		emitter->process(curTime, frameLength, modificationTime);
+	}
+
 };
 
 #endif

@@ -81,7 +81,6 @@ bool Game::createObject()
 	if(!light)
 	{
 		light = new GameLight;
-		light->setPositionKind(PositionKind::global);
 		light->setProcessKind(ProcessKind::none);
 
 		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
@@ -104,7 +103,6 @@ bool Game::createObject()
 	GameObj *o = new GameObjModel;
 	o->init(line);
 	
-	o->setPositionKind(PositionKind::global);
 	o->setProcessKind(ProcessKind::uni);
 
 	matrix34 m = o->getPosition();
@@ -258,13 +256,12 @@ void Game::bind(GraphEngine *engine)
 
 	graphEngine->inject(physicHelper);
 
-	GraphInterfaceList list = world->getChildrens();
-	for(GraphInterfaceList::iterator it = list.begin(); it != list.end(); it++)
+	GraphObjectList *children = world->getGraphChildren();
+	if(children)
+	for(unsigned int i = 0; i < children->size(); i++)
 	{
-		engine->inject(*it);
+		engine->inject(children->at(i));
 	}
-
-//	engine->inject(world);
 }
 
 void Game::bindPhysicEngine()
@@ -272,10 +269,11 @@ void Game::bindPhysicEngine()
 //	if(conf->geti("drawHelper"))
 	physicEngine->bindHelper(physicHelper);
 
-	PhysicInterfaceList list = world->getPChildrens();
-	for(PhysicInterfaceList::iterator it = list.begin(); it != list.end(); it++)
+	PhysicObjectList *children = world->getPhysicChildren();
+	if(children)
+	for(unsigned int i = 0; i < children->size(); i++)
 	{
-		physicEngine->inject(*it);
+		physicEngine->inject(children->at(i));
 	}
 }
 
@@ -362,7 +360,7 @@ bool Game::init(string _conf, Input *_input, std::string params)
 	physicHelper  = new GraphHelper;
 
 //	physicEngine = new PhysicEngine3D;
-	physicEngine = new PhysicEnginePS;
+	physicEngine = new PhysicEngineSteel;
 
 	if(!physicEngine->init("physic")) return 1;
 	this->bindPhysicEngine();

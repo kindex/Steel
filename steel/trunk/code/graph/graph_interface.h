@@ -44,13 +44,16 @@ typedef steel::vector<FaceMaterial>	FaceMaterials;
 */
 
 class GraphInterface;
-typedef steel::vector<GraphInterface*> GraphInterfaceList;
+typedef steel::svector<GraphInterface*> GraphObjectList;
 
 class GraphInterface: public Interface
 {
 public:
-/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
-	virtual GraphInterfaceList getChildrens() = 0;
+
+	// список детей
+	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
+	virtual GraphObjectList* getGraphChildrenList(void) { return NULL; }
+
 
 /*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
 	virtual aabb getFrame() = 0; // AABB of object

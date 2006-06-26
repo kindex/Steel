@@ -17,19 +17,19 @@
 #include "game_obj.h"
 using namespace std;
 
-void GameObj::setPositionKind(const PositionKind::PositionKind newKind)
+/*void GameObj::setPositionKind(const PositionKind::PositionKind newKind)
 {
 	PositionKind::PositionKind oldKind = getPositionKind();
 	if(oldKind == newKind) return;
 	if(newKind == PositionKind::global && oldKind == PositionKind::local)
 	{
-		position = getGlobalPosition();
+//		position = getGlobalPosition();
 		vel = getGlobalVelocity();
 		positionKind = PositionKind::global;
 	}
 	else
 	{} // TODO
-}
+}*/
 
 
 bool GameObj::init(ScriptLine	&s)
@@ -56,7 +56,7 @@ bool GameObj::init(ScriptLine	&s)
 }
 
 
-ObjectPosition	GameObj::getGlobalPosition()
+/*ObjectPosition	GameObj::getGlobalPosition()
 {
 	if(getPositionKind() == PositionKind::global)
 		return getPosition();
@@ -68,9 +68,9 @@ ObjectPosition	GameObj::getGlobalPosition()
 		else
 			return getPosition();
 	}
-}
+}*/
 
-velocity GameObj::getGlobalVelocity()
+/*velocity GameObj::getGlobalVelocity()
 {
 	if(getPositionKind() == PositionKind::global)
 		return getVelocity();
@@ -88,20 +88,22 @@ velocity GameObj::getGlobalVelocity()
 		else
 			return getVelocity();
 	}
-}
+}*/
 
-float GameObj::getGlobalScale()
+/*float GameObj::getGlobalScale()
 {
 	matrix33 global = getGlobalPosition().getMatrix33();
 	v3 p;
     p = global*v3(1,0,0);
 	return p.getLength();
-}
+}*/
 
 
 void GameObj::addChildren(GameObj *obj)
 {
-	children.push_back(obj);
+	graphChildren.push_back((GraphInterface*)obj);
+	physicChildren.push_back((PhysicInterface*)obj);
+
 	obj->attach(this);
 	string name = obj->getName();
 	if(!name.empty())
@@ -114,15 +116,6 @@ void GameObj::addChildren(GameObj *obj)
 	}
 }
 
-GameObj *GameObj::getChildren(std::string name)
-{
-	if(tag.find(name) == tag.end())
-	{
-		log_msg("error scene", string("Object not found: '") + name + "'");
-		return NULL;
-	}
-	return tag[name];
-}
 
 /*GameSprite::GameSprite(coord width, std::string material)
 {
@@ -143,7 +136,7 @@ aabb GameObjSet::getPFrame()
 	aabb box;
 	box.clear();
 
-	for(steel::vector<GameObj*>::iterator it = children.begin(); it != children.end(); it++)
+	for(PhysicObjectList::iterator it = physicChildren.begin(); it != physicChildren.end(); it++)
 	{
 		aabb loc = (*it)->getPFrame();
 		if(!loc.empty())

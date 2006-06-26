@@ -18,7 +18,7 @@ bool PhysicEngine::init(std::string _conf)
 bool PhysicEngine::inject(PhysicInterface *obj)
 {
 	if(!obj->beforeInject()) return false;
-	object.push_back(obj);
+	objects.push_back(obj);
 
 //	prepare(obj);
 
@@ -29,20 +29,20 @@ bool PhysicEngine::clear()
 {
 	// TODO: foreach remove
 
-	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+	for(steel::vector<PhysicInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		(*it)->afterRemove();
 
-	object.clear();
+	objects.clear();
 
 	return true;
 }
 
 bool PhysicEngine::remove(PhysicInterface *_object)
 {
-	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
+	for(steel::vector<PhysicInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
 		if(*it == _object)
 		{
-			object.erase(it);
+			objects.erase(it);
 			_object->afterRemove();
 			return true;
 		}

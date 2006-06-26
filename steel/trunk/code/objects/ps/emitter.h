@@ -7,6 +7,7 @@ class SimpleEmitter: public ParticleEmitter
 {
 public:
 	void born(Particle &particle); // создать частицу
+	void process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime);
 
 };
 

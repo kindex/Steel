@@ -52,6 +52,22 @@ public:
 	typedef iterator const_iterator;
 
 	svector() { _size = _count = 0; data = NULL; }
+	svector(const svector &original)
+	{ 
+		_size = original._size;
+		_count = original._count;
+		data = (T*)malloc(_size * sizeof(T));
+		memcpy(data, original.data, _count* sizeof(T));
+	}
+
+	svector& operator=(const svector &original)
+	{ 
+		_size = original._size;
+		_count = original._count;
+		data = (T*)malloc(_size * sizeof(T));
+		memcpy(data, original.data, _count* sizeof(T));
+		return *this;
+	}
 
 	svector(size_t initSize) 
 	{ 
@@ -76,20 +92,20 @@ public:
 			data = (T*)realloc(data, _size*sizeof(T));
 		}
 
-/*		if(oldCount<_count)
+		if(oldCount<_count)
 		{
-			memset((char*)data + oldCount*sizeof(T), 0, (_count - oldCount)*sizeof(T));
+//			memset((char*)data + oldCount*sizeof(T), 0, (_count - oldCount)*sizeof(T));
 			for(size_t i = oldCount; i<_count; i++)
 			{
-				data[i] = T();
+				new (&data[i]) T();
 			}
-		}*/
+		}
 		if(oldCount > _count)
 		{
-/*			for(size_t i = _count + 1; i <= oldCount; i++)
+			for(size_t i = _count + 1; i <= oldCount; i++)
 			{
 				data[i].~T();
-			}*/
+			}
 			pack();
 		}
 

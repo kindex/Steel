@@ -21,11 +21,6 @@
 
 #include <string>
 
-class PhysicInterface;
-typedef steel::vector<PhysicInterface*> PhysicInterfaceList;
-
-class PhysicEngine;
-
 namespace ProcessKind
 {
 	typedef enum
@@ -71,35 +66,35 @@ struct velocity
 	}
 };
 
+class PhysicInterface;
+
+typedef steel::svector<PhysicInterface *> PhysicObjectList;
+
 class PhysicInterface: public Interface
 {
 //	steel::time	currentTime; // время, в котором находиться объект
 	friend class PhysicEngine;
-	friend class PhysicEngine3D;
+	friend class PhysicEngineSteel;
 
 public:
+
+	// список детей
+	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
+	virtual PhysicObjectList* getPhysicChildrenList(void) { return NULL; }
+
+
 	virtual bool beforeInject() { return true;}
 	virtual void afterRemove() {}
-	// возвращает true, если хоть один из параметров изменил своё значение не
-	// через вызовы функций set* (mass, position, material, mesh)
-	// скорость может меняться	
-	virtual bool wasChanged() { return false; }
 
 	virtual CollisionType::CollisionType getCollisionType() = 0;
 
-	virtual	ObjectPosition getGlobalPosition(void) = 0;
 	virtual	void setPosition(ObjectPosition const &newPosition) = 0;
 	virtual ProcessKind::ProcessKind getProcessKind() = 0;
-	virtual	void setPositionKind(PositionKind::PositionKind const newPositionKind) = 0;
 
 	// скорость в глобальных коодринатах
 	virtual velocity	getVelocity() = 0;
 	virtual void		setVelocity(const velocity &v) = 0;
-	virtual velocity	getGlobalVelocity() = 0;
 
-	PhysicInterface() {}
-/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
-	virtual PhysicInterfaceList getPChildrens() = 0;
 
 /*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
 	virtual aabb getPFrame() = 0; // AABB of object
@@ -107,20 +102,17 @@ public:
 	// массив индексов вершин, которые образуют треугольники (грани)
 	virtual Triangles*	getTriangles() = 0; 
 
-	virtual	float		getGlobalScale() = 0;
-
 	// масса
 	virtual	coord	getMass() = 0;
 
 // уникальный идентификатор объекта или пустая строка
 	virtual std::string getName() = 0;
 	
-	virtual	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine) = 0;
-//	virtual std::string getMaterial() = 0;
+	virtual	void	process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
 
 	virtual Config* getPMaterial() = 0;
 	// эта функция вызывается, еслу другой объект трогает этот
-	virtual void	trigger(PhysicInterface *object) = 0;
+	virtual void	trigger(PhysicInterface *object) {}
 };
 
 #endif

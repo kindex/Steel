@@ -93,7 +93,7 @@ void GraphHelper::processGraph(v3	cameraEye, v3 cameraDirection)
 	{
 		aabb &b = it->box;
 
-		steel::vector<v3> r = b.getVertexes();
+		steel::svector<v3> r = b.getVertexes();
 		for(int i=0;  i<8; i++)
 			vertex.data[vi + i].set(r[i]);
 
