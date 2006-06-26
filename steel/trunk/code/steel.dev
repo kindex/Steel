@@ -20,7 +20,7 @@ ObjectOutput=..\temp
 OverrideOutput=0
 OverrideOutputName=steel.exe
 HostApplication=
-Folders=common,game,game/objects,game/ps,graph,graph/opengl,graph/opengl/extensions,graph/opengl/gl,input,math,objects,objects/ps,physic,res,res/conf,res/image,res/material,res/model,res/script
+Folders=common,game,graph,graph/opengl,graph/opengl/extensions,graph/opengl/gl,input,math,objects,objects/ps,physic,res,res/conf,res/image,res/material,res/model,res/script
 CommandLine=
 UseCustomMakefile=0
 CustomMakefile=
@@ -950,7 +950,7 @@ BuildCmd=
 [Unit95]
 FileName=interface.cpp
 CompileCpp=1
-Folder=Steel
+Folder=
 Compile=1
 Link=1
 Priority=1000
