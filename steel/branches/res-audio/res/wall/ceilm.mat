@@ -1,0 +1,21 @@
+# Material config
+# Each line - texture
+# using multitexturing
+
+#normal_map=skel_wall
+
+#text kind:
+#color_map: load texture file as color map
+
+#mode
+#(empty) - replace
+#+	add
+#*	modulate
+
+#mode	texkind		texture
+;	bump	skel_wallnm
+;*	color_map	skel_wall
+;	color_map	smile
+
+	bump	/box/boxes/box_local
+*	color_map	tex/ceil2

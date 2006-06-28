@@ -1,0 +1,7 @@
+;	color_map	gbnm
+;	bump	gbnm
+;*	color_map	gb
+;	env	image/env/tsccity
+
+	bump	medflr2_local
+*	color_map	medflr2_med_d
