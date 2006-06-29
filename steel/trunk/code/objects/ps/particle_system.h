@@ -32,7 +32,7 @@ struct ParticleSet
 	float countScale;
 	ModificationTime modificationTime;
 
-	steel::svector<Particle> particles;
+	steel::svector<Particle*> particles;
 
 	friend class ParticleSystem;
 };

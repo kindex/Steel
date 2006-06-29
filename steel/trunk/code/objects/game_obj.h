@@ -67,7 +67,7 @@ public:
 	coord		mass;
 	ObjectPosition	position;
 	std::string		name;
-	ProcessKind::ProcessKind		processKind;
+	ProcessKind::ProcessKind	processKind;
 	PositionKind::PositionKind	positionKind;
 
 protected:
@@ -80,6 +80,7 @@ public:
 		processKind	= ProcessKind::none;
 		positionKind = PositionKind::local;
 	}
+	void setPositionKind(PositionKind::PositionKind newKind) { positionKind = newKind; }
 	PositionKind::PositionKind	getPositionKind(){	return positionKind;}
 	ProcessKind::ProcessKind	getProcessKind() { return processKind; }
 

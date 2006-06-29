@@ -12,7 +12,7 @@ void SpriteRenderer::processGraph(v3	cameraEye, v3 cameraDirection)
 	for(int i=0; i<cnt; i++)
 	{
 		int i4 = i*4;
-		v3 pos = set->particles[i].position - pos_diff;
+		v3 pos = set->particles[i]->position - pos_diff;
 
 		v3 dir;
 //¬ зависимости от типа выравнивани€ рассчитываем перпендикул€р к плоскости спрайта (dir).
@@ -32,8 +32,8 @@ void SpriteRenderer::processGraph(v3	cameraEye, v3 cameraDirection)
 		v3 per1(-dir.y, dir.x, 0); // перендикул€р к dir
 		per1.normalize();
 		v3 per2 = dir.vectorProduct(per1); // перпендикул€р к dir и per1
-		per1 *= set->particles[i].size; // умножаем на размер спарйта
-		per2 *= set->particles[i].size;
+		per1 *= set->particles[i]->size; // умножаем на размер спарйта
+		per2 *= set->particles[i]->size;
 
 		// углы спарйта
 		vertex.data[i4 + 0]  = pos + per1 - per2;
@@ -128,4 +128,33 @@ bool ObjectPSRenderer::initParticles()
 {
 
 	return true;
+}
+
+void ObjectPSRenderer::processGraph(v3 cameraEye, v3 cameraDirection)
+{
+	int newSize = set->particles.size();
+	int oldSize = children.size();
+	if(newSize > oldSize)
+	{
+		children.resize(newSize);
+		childrenModel.resize(newSize);
+		for(int i = oldSize; i < newSize; i++)
+		{
+			childrenModel[i] = new GameObjModel;
+			children[i] = childrenModel[i];
+			ScriptLine line;
+
+			line.set("solid			sphere/sphere2	0,0,0	0,0,0	0.2");
+			childrenModel[i]->init(line);
+			childrenModel[i]->setPositionKind(PositionKind::global);
+		}
+	}
+
+	for(int i = 0; i < newSize; i++)
+	{
+		ObjectPosition pos = childrenModel[i]->getPosition();
+		pos.setTranslation(set->particles[i]->position);
+		childrenModel[i]->setPosition(pos);
+	}
+
 }

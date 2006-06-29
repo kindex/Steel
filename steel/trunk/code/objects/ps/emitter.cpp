@@ -11,11 +11,14 @@ void SimpleEmitter::born(Particle &particle)
 
 void SimpleEmitter::process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime)
 {
-	if(frand() < -0.01)
+	if(frand() < 0.1)
 	{
-		set->particles.resize(set->particles.size() + 1);
+		int bornId = set->particles.size();
+		set->particles.resize(bornId + 1);
 
-		born(set->particles[set->particles.size() - 1]);
+		set->particles[bornId] = new Particle;
+
+		born(*set->particles[bornId]);
 
 		particleSystem->setChildrenChangeTime(modificationTime);
 	}

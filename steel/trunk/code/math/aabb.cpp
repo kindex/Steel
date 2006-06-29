@@ -51,7 +51,8 @@ bool aabb::intersect(aabb const &second)
 
 void aabb::mul(const matrix34 &matrix)
 {
-	steel::svector<v3> v = getVertexes();
+	steel::svector<v3> v;
+	getVertexes(v);
 	
 	clear();
 	for(int i=0; i<8; i++)
@@ -81,22 +82,20 @@ void aabb::merge(aabb const &second)
 	if (max.z < second.max.z) max.z = second.max.z;
  }
 
-steel::svector<v3> aabb::getVertexes() const
+void aabb::getVertexes(steel::svector<v3> &dest) const
 {
-	steel::svector<v3> r(8);
+	dest.resize(8);
 	const v3 &a = min; 
 	const v3 &b = max;
 	
-	r[0].set(a.x, a.y, a.z);
-	r[1].set(a.x, a.y, b.z);
-	r[2].set(a.x, b.y, a.z);
-	r[3].set(a.x, b.y, b.z);
-	r[4].set(b.x, a.y, a.z);
-	r[5].set(b.x, a.y, b.z);
-	r[6].set(b.x, b.y, a.z);
-	r[7].set(b.x, b.y, b.z);
-
-	return r;
+	dest[0].set(a.x, a.y, a.z);
+	dest[1].set(a.x, a.y, b.z);
+	dest[2].set(a.x, b.y, a.z);
+	dest[3].set(a.x, b.y, b.z);
+	dest[4].set(b.x, a.y, a.z);
+	dest[5].set(b.x, a.y, b.z);
+	dest[6].set(b.x, b.y, a.z);
+	dest[7].set(b.x, b.y, b.z);
 }
 
 void aabb::cross(const aabb3 b)

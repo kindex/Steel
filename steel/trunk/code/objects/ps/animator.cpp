@@ -15,7 +15,7 @@ void UniPSanimator::process(steel::time curTime, steel::time frameLength, Modifi
 		{
 			children.resize(size);
 			for(int i = oldsize; i < size; i++)
-				children[i] = new UniParticle(&set->particles[i], conf);
+				children[i] = new UniParticle(set->particles[i], conf);
 		}
 		if(size < (int)children.size())
 		{

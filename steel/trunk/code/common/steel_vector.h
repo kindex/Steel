@@ -52,13 +52,15 @@ public:
 	typedef iterator const_iterator;
 
 	svector() { _size = _count = 0; data = NULL; }
-	svector(const svector &original)
+/*	svector(const svector &original)
 	{ 
+		free(data);
+
 		_size = original._size;
 		_count = original._count;
 		data = (T*)malloc(_size * sizeof(T));
 		memcpy(data, original.data, _count* sizeof(T));
-	}
+	}*/
 
 	svector& operator=(const svector &original)
 	{ 

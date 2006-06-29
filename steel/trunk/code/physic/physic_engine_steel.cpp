@@ -65,21 +65,138 @@ bool PhysicEngineSteel::processParticle(PhysicObjectStorage &objectStorage, stee
 	return true;
 }
 
-void PhysicEngineSteel::prepare(PhysicInterface &object, steel::time globalTime, steel::time time, matrix34 matrix, PhysicInterface *parent)
+
+/////////////////////////////////// PHYSIC CORE ////////////////////////////////////
+
+PhysicEngineSteel::PhysicObjectStorage &PhysicEngineSteel::getStorage(PhysicInterface *object)
 {
-	object.process(globalTime, time, globalFrameNumber);
+	uid id = object->getId();
+	assert(idHash.find(id) != idHash.end(), "Object not found in physic storage");
 
-	PhysicObjectStorage &objectStorage = storage[idHash[object.getId()]];
+	return storage[idHash[id]];
+}
 
-	cacheStorage(objectStorage);
-	cacheChildrenStorage(objectStorage);
+bool PhysicEngineSteel::inject(PhysicInterface *object)
+{
+	// если объект не хочет добавляться
+	if(!object->beforeInject()) return false;
+	// список глобальных объектов
+	objects.push_back(object);
+	// кешируем объект
+	makeStorageForObject(object);
+//	cacheStroageObject(getStorage(object));
+	makeStorageForChildren(object);
 
-	PhysicObjectList *children = object.getPhysicChildrenList();
+	return true;
+}
+
+void PhysicEngineSteel::makeStorageForObject(PhysicInterface *object)
+{
+	uid objectId = object->getId();
+	if(idHash.find(objectId) != idHash.end())
+	{
+		log_msg("error physic", "Duplicate object " + IntToStr(objectId) + " in storage");
+		return;
+	}
+
+	int storageId = storage.size();
+	storage.resize(storageId + 1);
+
+	PhysicObjectStorage &objectStorage = storage[storageId];
+
+	idHash[objectId] = storageId;
+
+	objectStorage.object = object;
+	objectStorage.storageId = storageId;
+	objectStorage.objectId = objectId;
+	objectStorage.collisionType = object->getCollisionType();
+	objectStorage.force.loadZero();
+
+	objectStorage.modificationTime = -1;
+	objectStorage.childrenModificationTime = -1;
+
+	if(objectStorage.collisionType == CollisionType::particle1)
+	{
+		particleSet.push_back(storageId);
+		objectStorage.partiecleSetId = particleSet.size()-1;
+	}
+}
+
+
+void PhysicEngineSteel::makeStorageForChildren(PhysicInterface *object)
+{
+	PhysicObjectList *children = object->getPhysicChildrenList();
 	if(children)
 	for(unsigned int i = 0; i < children->size(); i++)
 	{
 		PhysicInterface *child = children->at(i);
-		prepare(*child, globalTime, time);
+		makeStorageForObject(child);
+		makeStorageForChildren(child);
+	}
+}
+
+void PhysicEngineSteel::cacheStorageObject(PhysicObjectStorage &objectStorage)
+{
+	PhysicInterface *object = objectStorage.object;
+
+	if(objectStorage.modificationTime < object->getModificationTime())
+	{
+		objectStorage.modificationTime = object->getModificationTime();
+		objectStorage.position = object->getPosition().getTranslation();
+		objectStorage.mass = object->getMass();
+
+		objectStorage.material = object->getPMaterial();
+
+		if(objectStorage.collisionType == CollisionType::particle1)
+		{
+			objectStorage.spring_r0			= objectStorage.material->getf("spring_r0");
+			objectStorage.spring_k			= objectStorage.material->getf("spring_k");
+			objectStorage.gravity_k			= objectStorage.material->getf("gravity_k");
+			objectStorage.gravity_power		= objectStorage.material->getf("gravity_power");
+			objectStorage.gravity_min_dist	= objectStorage.material->getf("gravity_min_dist");
+			objectStorage.friction_k		= objectStorage.material->getf("friction_k");
+			objectStorage.friction_power	= objectStorage.material->getf("friction_power");
+		}
+	}
+}
+
+
+void PhysicEngineSteel::prepare(PhysicInterface *object, steel::time globalTime, steel::time time, matrix34 matrix, PhysicInterface *parent)
+{
+	object->process(globalTime, time, globalFrameNumber);
+
+	PhysicObjectStorage &objectStorage = getStorage(object);
+	cacheStorageObject(objectStorage);
+
+	if(objectStorage.childrenModificationTime < object->getChildrenModificationTime())
+	{
+		objectStorage.childrenModificationTime = object->getChildrenModificationTime();
+
+		PhysicObjectList *children = object->getPhysicChildrenList();
+		if(children)
+		for(unsigned int i = 0; i < children->size(); i++)
+		{
+			PhysicInterface *child = children->at(i);
+			uid id = child->getId();
+
+			if(idHash.find(id) == idHash.end())
+			{
+				// add new object to storage
+				makeStorageForObject(child);
+				makeStorageForChildren(child);
+			}
+			cacheStorageObject(getStorage(child));
+		}
+	}
+
+
+	PhysicObjectList *children = object->getPhysicChildrenList();
+	if(children)
+	for(unsigned int i = 0; i < children->size(); i++)
+	{
+		PhysicInterface *child = children->at(i);
+		
+		prepare(child, globalTime, time);
 	}
 }
 
@@ -92,7 +209,7 @@ bool PhysicEngineSteel::process(steel::time globalTime, steel::time time)
 
 	int size = objects.size();
 	for(int i=0; i < size; i++)
-		prepare(*objects[i], globalTime, time);
+		prepare(objects[i], globalTime, time);
 
 	for(steel::svector<PhysicObjectStorage>::iterator it = storage.begin(); it != storage.end(); it++)
 	{
@@ -101,21 +218,18 @@ bool PhysicEngineSteel::process(steel::time globalTime, steel::time time)
 		objectStorage.force.loadZero();
 	}
 
-
 	for(steel::svector<int>::iterator it = particleSet.begin(); it != particleSet.end(); it++)
 	{
 		processParticle(storage[*it], globalTime, time);
 	}
-		
+	
 
 	for(steel::svector<int>::iterator it = particleSet.begin(); it != particleSet.end(); it++)
 	{
 		PhysicObjectStorage &objectStorage = storage[*it];
 
 		objectStorage.velocity += time*objectStorage.force/objectStorage.mass;
-
 		objectStorage.force += objectStorage.velocity.getNormalized() * objectStorage.velocity.getNormalized();
-
 		v3 frictionForce  = 
 			-objectStorage.velocity.getNormalized() * pow(objectStorage.velocity.getLength(), objectStorage.friction_power)*objectStorage.friction_k;
 
@@ -144,95 +258,3 @@ bool PhysicEngineSteel::process(steel::time globalTime, steel::time time)
 	return true;
 }
 
-bool PhysicEngineSteel::inject(PhysicInterface *obj)
-{
-	if(!obj->beforeInject()) return false;
-	objects.push_back(obj);
-	makeStorage(obj);
-
-	PhysicObjectStorage &objectStorage = storage[idHash[obj->getId()]];
-	cacheChildrenStorage(objectStorage, true);
-
-	return true;
-}
-
-void PhysicEngineSteel::cacheStorage(PhysicObjectStorage &objectStorage)
-{
-	PhysicInterface *object = objectStorage.object;
-
-	if(objectStorage.modificationTime < object->getModificationTime())
-	{
-		objectStorage.modificationTime = object->getModificationTime();
-		objectStorage.position = object->getPosition().getTranslation();
-		objectStorage.mass = object->getMass();
-
-		objectStorage.material = object->getPMaterial();
-
-		if(objectStorage.collisionType == CollisionType::particle1)
-		{
-			objectStorage.spring_r0			= objectStorage.material->getf("spring_r0");
-			objectStorage.spring_k			= objectStorage.material->getf("spring_k");
-			objectStorage.gravity_k			= objectStorage.material->getf("gravity_k");
-			objectStorage.gravity_power		= objectStorage.material->getf("gravity_power");
-			objectStorage.gravity_min_dist	= objectStorage.material->getf("gravity_min_dist");
-			objectStorage.friction_k		= objectStorage.material->getf("friction_k");
-			objectStorage.friction_power	= objectStorage.material->getf("friction_power");
-		}
-	}
-}
-
-void PhysicEngineSteel::cacheChildrenStorage(PhysicObjectStorage &objectStorage, bool force)
-{
-	PhysicInterface *object = objectStorage.object;
-
-	if(force || objectStorage.childrenModificationTime < object->getChildrenModificationTime())
-	{
-		objectStorage.childrenModificationTime = object->getChildrenModificationTime();
-
-		PhysicObjectList *children = object->getPhysicChildrenList();
-		if(children)
-		for(unsigned int i = 0; i < children->size(); i++)
-		{
-			PhysicInterface *child = children->at(i);
-			uid id = child->getId();
-
-			if(idHash.find(id) == idHash.end())
-				makeStorage(child);
-			else
-				cacheStorage(storage[idHash[id]]);
-		}
-	}
-}
-
-
-bool PhysicEngineSteel::makeStorage(PhysicInterface *object)
-{
-	int storageId = storage.size();
-	storage.resize(storageId + 1);
-
-	uid objectId = object->getId();
-
-	PhysicObjectStorage &objectStorage = storage[storageId];
-
-	idHash[objectId] = storageId;
-
-	objectStorage.object = object;
-	objectStorage.storageId = storageId;
-	objectStorage.objectId = objectId;
-	objectStorage.collisionType = object->getCollisionType();
-	objectStorage.force.loadZero();
-
-	objectStorage.modificationTime = -1;
-	objectStorage.childrenModificationTime = -1;
-
-	cacheStorage(objectStorage);
-	cacheChildrenStorage(objectStorage, true);
-
-	if(objectStorage.collisionType == CollisionType::particle1)
-	{
-		particleSet.push_back(storageId);
-		objectStorage.partiecleSetId = particleSet.size()-1;
-	}
-
-	return true;
-}

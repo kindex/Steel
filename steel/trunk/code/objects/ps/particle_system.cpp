@@ -44,8 +44,11 @@ bool ParticleSystem::init(ScriptLine	&s)
 	if(!animator->init(animatorConf, &particleSet, this)) { resConfig.pop(); abort_init("error res ps animator", "Animator class " + animatorClass + " cannot initialize"); }
 
 	std::string rendererClass = rendererConf->gets("class");	renderer = NULL;
+	
 	if(rendererClass == "SpriteRenderer")	renderer = new SpriteRenderer;
 	if(rendererClass == "ObjectPSRenderer")	renderer = new ObjectPSRenderer;
+	if(rendererClass == "DummyPSRenderer")	renderer = new DummyPSRenderer;
+
 	if(!renderer) abort_init("error res ps renderer", "Renderer class " + rendererClass + " not found");
 	if(!renderer->init(rendererConf, &particleSet,  this)) { resConfig.pop(); abort_init("error res ps renderer", "Renderer class " + rendererClass + " cannot initialize"); }
 
@@ -77,7 +80,10 @@ void ParticleEmitter::initParticles()
 	set->modificationTime = -1;
 	set->particles.resize(initSize);
 	for(int i=0; i<initSize; i++)
-		born(set->particles[i]);
+	{
+		set->particles[i] = new Particle;
+		born(*set->particles[i]);
+	}
 }
 
 bool ParticleRenderer::init(Config *_conf, ParticleSet *_set, GraphInterface *_particleSystem)

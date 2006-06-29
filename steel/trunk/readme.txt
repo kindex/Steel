@@ -8,7 +8,7 @@ Features:
 * object grouping
 
 Usage:
-bin/steel.exe script=<level.script>
+bin/steel.exe [script=<level.script>]
 *.bat
 
 
@@ -27,8 +27,8 @@ f	create light
 mouse1	create sphere
 
 
-Author:
-KindeX, Andrej Ivanov, kindex@kindex.lv, http://kindex.lv
-Def, Alexander Papyshev, 9000gl@gmail.com
-
+Authors:
+KindeX [Andrej Ivanov, kindex@kindex.lv, http://kindex.lv]
+Def [Alexander Papyshev, 9000gl@gmail.com]
+Kane [J. Anton, kane@mail.berlios.de]
 
