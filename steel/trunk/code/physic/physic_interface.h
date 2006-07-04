@@ -19,8 +19,6 @@
 #include "../math/vector3d.h"
 #include "../res/conf/conf.h"
 
-#include <string>
-
 namespace ProcessKind
 {
 	typedef enum
@@ -38,8 +36,8 @@ namespace CollisionType
 		none,
 		polyhedra,
 		trigger,
-		particle1, // sphere, collide with polyhedra
-		particle2, // sphere, collide with polyhedra & other particles
+		particle, // sphere, collide with polyhedra
+		sphere
 	} CollisionType;
 };
 
@@ -66,11 +64,11 @@ struct velocity
 	}
 };
 
-class PhysicInterface;
+class PhysicObject;
 
-typedef steel::svector<PhysicInterface *> PhysicObjectList;
+typedef steel::svector<PhysicObject *> PhysicObjectList;
 
-class PhysicInterface: public Interface
+class PhysicObject: public Interface
 {
 //	steel::time	currentTime; // время, в котором находиться объект
 	friend class PhysicEngine;
@@ -78,42 +76,52 @@ class PhysicInterface: public Interface
 
 public:
 
+// *** Common ***
+
 	// список детей
 	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
-	virtual int getPhysicChildrenCount(void) { return 0; }
-	virtual PhysicInterface* getPhysicChildren(int number) { return NULL; }
+	// возвращает количество детей
+	virtual int getPhysicChildrenCount(void) { return 0; } 
+	// ребёнок с указанным номером
+	virtual PhysicObject* getPhysicChildren(int number) { return NULL; }
 
-
+	// Непосредственно перед добавлением в движок вызывается 
 	virtual bool beforeInject() { return true;}
+	// После удаления из движка вызывается процедура afterRemove
 	virtual void afterRemove() {}
 
-	virtual CollisionType::CollisionType getCollisionType() = 0;
+	// вызывается перед каждой итерацией обработки. Внутри этой процедуры объект может менять некоторые свои параметры
+	virtual	void process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
 
+
+// *** Configuration ***
+
+
+	// Форма объекта и способ проверки и обработки коллизий
+	virtual CollisionType::CollisionType getCollisionType() = 0; 
+
+	// Положение и поворот произвольной точки объекта в локальный координатах (точка отсчёта объекта). Именно за изменения этого параметра и отвечает физический движок.
 	virtual	void setPosition(ObjectPosition const &newPosition) = 0;
-	virtual ProcessKind::ProcessKind getProcessKind() = 0;
 
-	// скорость в глобальных коодринатах
+	// скорость
 	virtual velocity	getVelocity() = 0;
 	virtual void		setVelocity(const velocity &v) = 0;
 
 
 /*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
 	virtual aabb getPFrame() = 0; // AABB of object
-	virtual Vertexes*	getPVertexes() = 0; // список вершин (координаты относительно getPosition() и всех матриц предков)
+
+	// *** Polyhedra ***
+	virtual Vertexes*	getPVertexes() { return NULL; } // список вершин (координаты относительно getPosition() и всех матриц предков)
 	// массив индексов вершин, которые образуют треугольники (грани)
-	virtual Triangles*	getTriangles() = 0; 
+	virtual Triangles*	getTriangles() { return NULL; }
 
 	// масса
 	virtual	coord	getMass() = 0;
 
-// уникальный идентификатор объекта или пустая строка
-	virtual std::string getName() = 0;
-	
-	virtual	void	process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
-
 	virtual Config* getPMaterial() = 0;
 	// эта функция вызывается, еслу другой объект трогает этот
-	virtual void	trigger(PhysicInterface *object) {}
+	virtual void	trigger(PhysicObject *object) {}
 };
 
 #endif

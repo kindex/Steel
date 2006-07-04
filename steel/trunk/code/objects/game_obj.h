@@ -25,7 +25,7 @@
 Dummy. Объект, который имеет положение и детей, но не имеет собственной формы.
 */
 
-class GameObjDummy: public virtual GraphInterface, public virtual PhysicInterface
+class GameObjDummy: public virtual GraphInterface, public virtual PhysicObject
 {
 public:
 	aabb		getPFrame()		{	return getFrame(); }
@@ -94,7 +94,7 @@ public:
 	std::string getName() { return name; }
 	void setName(std::string _name) { name = _name;}
 
-	void	trigger(PhysicInterface *object) {}
+	void	trigger(PhysicObject *object) {}
 
 	void	setPosition(ObjectPosition const &newPos) { position = newPos; } 
 
@@ -105,7 +105,7 @@ public:
 	
 	void addChildren(GameObj *obj);
 
-	PhysicInterface* getPhysicChildren(int i)	{		return physicChildren[i];	}
+	PhysicObject* getPhysicChildren(int i)	{		return physicChildren[i];	}
 	int getPhysicChildrenCount(void)	{		return physicChildren.size();	}
 
 	GraphObjectList* getGraphChildrenList()	{		return &graphChildren;	}

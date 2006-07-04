@@ -3,7 +3,7 @@
 
 #include "particle_system.h"
 
-class UniParticle: public PhysicInterface
+class UniParticle: public PhysicObject
 {
 	Config *conf;
 	Particle *particle;
@@ -14,7 +14,7 @@ public:
 
 	CollisionType::CollisionType getCollisionType() 
 	{ 
-		return CollisionType::particle1; 
+		return CollisionType::particle; 
 	}
 	
 	float getMass()
@@ -56,7 +56,7 @@ class UniPSanimator: public ParticleAnimator
 public:
 	bool initParticles();
 	int getPhysicChildrenCount() { return children.size(); }
-	PhysicInterface* getPhysicChildren(int i) { return children[i]; }
+	PhysicObject* getPhysicChildren(int i) { return children[i]; }
 
 	ModificationTime getChildrenModificationTime(void) { return set->modificationTime; }
 

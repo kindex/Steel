@@ -70,7 +70,7 @@ public:
 };
 
 // класс, который анимирует частицы
-class ParticleAnimator: public PhysicInterface, public ParticleProcessor
+class ParticleAnimator: public PhysicObject, public ParticleProcessor
 {
 protected:
 	ParticleSystem *particleSystem;
@@ -96,7 +96,7 @@ public:
 	GraphObjectList* getGraphChildrenList(void) { return &graphList; }
 
 	int getPhysicChildrenCount(void) { return 1; }
-	PhysicInterface* getPhysicChildren(int i) { return animator; }
+	PhysicObject* getPhysicChildren(int i) { return animator; }
 	
 	PositionKind::PositionKind getPositionKind(void) { return PositionKind::global;}
 

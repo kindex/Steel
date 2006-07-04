@@ -1,11 +1,15 @@
 /*id*********************************************************
-    Unit: 3D PhysicEngine
+    Unit: 3D PhysicEngine Steel
     Part of: Steel engine
     (C) DiVision, 2004-2006
     Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
     License:
         Steel Engine License
     Description:
+		Steel Версия физического движка. 
+		Обрабатывает движение частиц, полигональных тел и шаров.
+		Поддерживает ирерархию объектов, кеширует информацию об	объектах.
 ************************************************************/
 
 #ifndef PHYSIC_ENGINE_PS_H
@@ -33,17 +37,25 @@ class PhysicEngineSteel: public PhysicEngine
 protected:
 	bool helperDrawLines;
 
+	// кеш объекта
 	struct PhysicObjectStorage
 	{
-		int objectId, storageId;
-		PhysicInterface *object;
+		// инентификатор объекта (uid)
+		uid objectId;
+		int storageId; // индекс этой структуры (кеша) в массиве stroage
+		PhysicObject *object; // ссылка на объект
 		CollisionType::CollisionType collisionType;
+
+		// время последнего изменения объекта. Если отлично от того, что возвращает PhysicObject::getModificationTime(), то надо обновить кеш.
 		ModificationTime modificationTime, childrenModificationTime;
 
-		steel::svector<int> children;
+		// список детей объекта (uid)
+		steel::svector<uid> children;
 
-
+		// индекс в массиве particleSet
 		int partiecleSetId;
+
+		// *** Particle ***
 		v3 force;
 		v3 position;
 		v3 velocity;
@@ -51,48 +63,36 @@ protected:
 		Config *material;
 	};
 
-	/*
-	// hash_map namespace
-#ifdef STEEL_COMPILER_VS8
-	stdext::
-#endif
-
-#ifdef STEEL_COMPILER_DEVCPP
-	__gnu_cxx::
-#endif
-	hash_map <uid, int>
-		*/
-	typedef std::map <uid, int> StorageHash;
-	StorageHash idHash;
-
+	// кеш объектов
 	steel::svector<PhysicObjectStorage> storage;
+	// множество объектов с типом обработки частица
 	steel::svector<int> particleSet;
 
 public:
-	// добавляет объект и его детей в движок для обработки
-	bool inject(PhysicInterface *object);
-	bool remove(PhysicInterface *object);
 
-	PhysicObjectStorage &getStorage(PhysicInterface *object);
+	PhysicObjectStorage &getStorage(PhysicObject *object);
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	void makeStorageForObject(PhysicInterface *object);
+	void makeStorageForObject(PhysicObject *object);
 	void deleteStorageForObject(int sid);
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	void makeStorageForChildren(PhysicInterface *object);
+	void makeStorageForChildren(PhysicObject *object);
 	void deleteStorageForChildren(int sid);
 
 	// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
 	void cacheStorageObject(PhysicObjectStorage &objectStorage);
 
 	// рекурсивно обновить информацию об объектах и их детей
-	void prepare(PhysicInterface *object, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL);
+	void prepare(PhysicObject *object, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), PhysicObject *parent = NULL);
 
+	// обработать движение всех объектов
 	bool process(steel::time globalTime, steel::time time);
 
-
+	// обработать движение одного объекта
 	bool processParticle(PhysicObjectStorage &objectStorage, steel::time globalTime, steel::time time);
 
+	// рассчитать суммарно действующие силы для частицы
 	v3 calculateForceForParticle(PhysicObjectStorage &storage);
+	// рассчитать силу взаимодействия между двумя частицами
 	v3 calculateForceForParticle(PhysicObjectStorage &storage1, PhysicObjectStorage &storage2);
 };
 

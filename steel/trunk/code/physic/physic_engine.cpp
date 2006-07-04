@@ -1,6 +1,19 @@
+/*id*********************************************************
+    Unit: 3D PhysicEngine
+    Part of: Steel engine
+    (C) DiVision, 2004-2006
+    Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    License:
+        Steel Engine License
+    Description:
+		Абстрактный физический движок
+		Обрабатывает движение объектов.
+		Поддерживает ирерархию объектов, кеширует информацию об	объектах.
+************************************************************/
+
 #include "physic_engine.h"
 #include "../res/res_main.h"
-
 
 bool PhysicEngine::init(std::string _conf)
 {
@@ -15,36 +28,43 @@ bool PhysicEngine::init(std::string _conf)
 	return true;
 }
 
-bool PhysicEngine::inject(PhysicInterface *obj)
+bool PhysicEngine::inject(PhysicObject *object)
 {
-	if(!obj->beforeInject()) return false;
-	objects.push_back(obj);
-
-//	prepare(obj);
+	// если объект не хочет добавляться
+	if(!object->beforeInject()) return false;
+	// список глобальных объектов
+	objects.push_back(object);
+	// кешируем объект
+	makeStorageForObject(object);
+//	cacheStroageObject(getStorage(object));
+	makeStorageForChildren(object);
 
 	return true;
 }
+
 
 bool PhysicEngine::clear()
 {
-	// TODO: foreach remove
-
-	for(steel::vector<PhysicInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
-		(*it)->afterRemove();
-
-	objects.clear();
+	while(!objects.empty())
+	{
+		remove(objects.back());
+	}
 
 	return true;
 }
 
-bool PhysicEngine::remove(PhysicInterface *_object)
+bool PhysicEngine::remove(PhysicObject *object)
 {
-	for(steel::vector<PhysicInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
-		if(*it == _object)
+	deleteStorageForChildren(idHash[object->getId()]);
+	deleteStorageForObject(idHash[object->getId()]);
+	
+	for(steel::vector<PhysicObject*>::iterator it = objects.begin(); it != objects.end(); it++)
+		if(*it == object)
 		{
 			objects.erase(it);
-			_object->afterRemove();
-			return true;
+			break;
 		}
-	return false;
+	object->afterRemove();
+
+	return true;
 }

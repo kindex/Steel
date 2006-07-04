@@ -68,6 +68,7 @@ protected:
 public:
 	Game() { } 
 	bool init(std::string _conf, Input *_input, std::string params);
+	void deinit();
 
 	bool executeScript(std::string script);
 	bool executeCommand(std::string command);

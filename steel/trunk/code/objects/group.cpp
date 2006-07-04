@@ -64,7 +64,7 @@ bool GameGroup::load(GameObj *global)
 		string parent	= s->gets(i, 1);
 		string id		= s->gets(i, 2);
 
-//		CHECK_KIND("light", GameLight, PhysicInterface::none);
+//		CHECK_KIND("light", GameLight, PhysicObject::none);
 
 		// Стандартная строка настройки
 		// KIND	parent	id	CONF	X,Y,Z	AngleX,Y,Z	Scale	Vx,Vy,Vz

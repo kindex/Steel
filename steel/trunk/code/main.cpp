@@ -147,6 +147,7 @@ int main(int argc, char *argv[])
 	input.freeMouse();
 
 	graph.deinit();
+	game.deinit();
 	steel::log.close();
 	return 0;
 }

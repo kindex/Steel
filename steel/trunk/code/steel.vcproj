@@ -657,6 +657,10 @@
 				Name="physic"
 				>
 				<File
+					RelativePath=".\physic\pe_particle.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\physic\physic_engine.cpp"
 					>
 				</File>

@@ -43,7 +43,6 @@ public:
 //	protottype: virtual bool inject(Interface *object) { return false; }; // add object to process by engine
 //	virtual	bool remove(Interface *object);
 //	virtual bool process() = 0; // add object to process by engine
-	virtual bool deinit() = 0;
 	virtual void bindHelper(EngineHelper *_helper) { helper = _helper; } 
 	// TODO: убрать это. Не вписывает в идею движка
 };

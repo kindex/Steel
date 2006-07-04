@@ -1,14 +1,17 @@
 /*id*********************************************************
-    Unit: PhysicEngine
+    Unit: 3D PhysicEngine
     Part of: Steel engine
     (C) DiVision, 2004-2006
     Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
     License:
         Steel Engine License
     Description:
-		TODO
- ************************************************************/
+		Абстрактный физический движок
+		Обрабатывает движение объектов.
+		Поддерживает ирерархию объектов, кеширует информацию об	объектах.
+************************************************************/
+
 
 #ifndef PHYSIC_ENGINE_H
 #define PHYSIC_ENGINE_H
@@ -20,8 +23,14 @@
 class PhysicEngine: public Engine
 {
 protected:
-	steel::vector<PhysicInterface*> objects;
+	// спиок [глобальных] объектов, котоыре были лобавлены в движок для обработки с помощью процедуры inject()
+	steel::vector<PhysicObject*> objects;
+	// действующая гратация на все обхекты
 	v3 g;
+
+	typedef std::map <uid, int> StorageHash;
+	// отображение идентификаторов объекта на положение в массиве storage
+	StorageHash idHash;
 
 public:
 	struct TotalInfo
@@ -30,25 +39,32 @@ public:
 	} total;
 
 public:
+	virtual bool init(std::string _conf);
+	virtual void deinit() { clear();}
+
+	// удаляет все объекты из движка (foreach remove)
+	virtual bool clear();
+
+	// обрабатывает движение всех объектов
+	virtual bool process(steel::time globalTime, steel::time time) = 0; 
+
 	// Inject добавляет объект для обработки
 	// Типы движений объектов: uni, custom, none
 	// У uni не может быть детей
 	// У custom и none не может быть детей с типом uni
-	virtual bool inject(PhysicInterface *object);
-	virtual bool remove(PhysicInterface *object);
+	// добавляет объект и его детей в движок для обработки
+	virtual bool inject(PhysicObject *object);
+	virtual bool remove(PhysicObject *object);
 
-//	virtual bool prepare(PhysicInterface *object, matrix34 matrix = matrix34::getIdentity(), PhysicInterface *parent = NULL) = 0;
 
-	// Move objects
-	virtual bool process(steel::time globalTime, steel::time time) = 0; 
-	// Clear collected information
-	virtual bool clear();
-
-	virtual bool init(std::string _conf);
-	virtual bool deinit() { return clear();}
+	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
+	virtual void makeStorageForObject(PhysicObject *object) = 0;
+	virtual void deleteStorageForObject(int sid)  = 0;
+	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
+	virtual void makeStorageForChildren(PhysicObject *object)  = 0;
+	virtual void deleteStorageForChildren(int sid)  = 0;
 
 	virtual void setGravitation(const v3 force) { g = force; }
-
 };
 
 #endif

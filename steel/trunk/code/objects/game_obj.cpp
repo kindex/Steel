@@ -102,7 +102,7 @@ bool GameObj::init(ScriptLine	&s)
 void GameObj::addChildren(GameObj *obj)
 {
 	graphChildren.push_back((GraphInterface*)obj);
-	physicChildren.push_back((PhysicInterface*)obj);
+	physicChildren.push_back((PhysicObject*)obj);
 
 	obj->attach(this);
 	string name = obj->getName();

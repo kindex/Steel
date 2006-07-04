@@ -387,6 +387,17 @@ bool Game::init(string _conf, Input *_input, std::string params)
 	return true;
 }
 
+void Game::deinit()
+{
+	if(physicEngine)
+	{
+		physicEngine->deinit();
+		delete physicEngine;
+		physicEngine = NULL;
+	}
+}
+
+
 void Game::handleEventKeyUp(std::string key)
 {
 }
