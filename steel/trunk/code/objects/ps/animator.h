@@ -10,6 +10,7 @@ class UniParticle: public PhysicInterface
 public:
 
 	UniParticle(Particle *_particle, Config *_conf) { particle = _particle; conf = _conf;}
+	void setParticle(Particle *_particle) { particle = _particle; }
 
 	CollisionType::CollisionType getCollisionType() 
 	{ 
@@ -50,11 +51,12 @@ public:
 
 class UniPSanimator: public ParticleAnimator
 {
-	PhysicObjectList children;
+	steel::svector<UniParticle*> children;
 
 public:
 	bool initParticles();
-	PhysicObjectList *getPhysicChildrenList() { return &children; }
+	int getPhysicChildrenCount() { return children.size(); }
+	PhysicInterface* getPhysicChildren(int i) { return children[i]; }
 
 	ModificationTime getChildrenModificationTime(void) { return set->modificationTime; }
 

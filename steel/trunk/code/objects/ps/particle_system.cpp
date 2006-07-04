@@ -53,7 +53,6 @@ bool ParticleSystem::init(ScriptLine	&s)
 	if(!renderer->init(rendererConf, &particleSet,  this)) { resConfig.pop(); abort_init("error res ps renderer", "Renderer class " + rendererClass + " cannot initialize"); }
 
 	graphList.push_back(renderer);
-	physicList.push_back(animator);
 
 	resConfig.pop();
 	return true;

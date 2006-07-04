@@ -256,7 +256,7 @@ void Game::bind(GraphEngine *engine)
 
 	graphEngine->inject(physicHelper);
 
-	GraphObjectList *children = world->getGraphChildren();
+	GraphObjectList *children = world->getGraphChildrenList();
 	if(children)
 	for(unsigned int i = 0; i < children->size(); i++)
 	{
@@ -269,11 +269,10 @@ void Game::bindPhysicEngine()
 //	if(conf->geti("drawHelper"))
 	physicEngine->bindHelper(physicHelper);
 
-	PhysicObjectList *children = world->getPhysicChildren();
-	if(children)
-	for(unsigned int i = 0; i < children->size(); i++)
+	int count = world->getPhysicChildrenCount();
+	for(int i = 0; i < count; i++)
 	{
-		physicEngine->inject(children->at(i));
+		physicEngine->inject(world->getPhysicChildren(i));
 	}
 }
 

@@ -27,4 +27,8 @@ void UniPSanimator::process(steel::time curTime, steel::time frameLength, Modifi
 		modificationTime = _modificationTime;
 		particleSystem->setChildrenChangeTime(_modificationTime);
 	}
+
+	for(int i=0; i<size; i++)
+		children[i]->setParticle(set->particles[i]);
+
 }

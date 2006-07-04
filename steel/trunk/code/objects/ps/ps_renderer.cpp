@@ -150,6 +150,17 @@ void ObjectPSRenderer::processGraph(v3 cameraEye, v3 cameraDirection)
 		}
 	}
 
+	if(newSize < oldSize)
+	{
+		for(int i = newSize; i < oldSize; i++)
+		{
+			delete childrenModel[i];
+		}
+		children.resize(newSize);
+		childrenModel.resize(newSize);
+	}
+
+
 	for(int i = 0; i < newSize; i++)
 	{
 		ObjectPosition pos = childrenModel[i]->getPosition();

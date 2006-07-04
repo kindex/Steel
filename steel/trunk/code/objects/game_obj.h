@@ -105,8 +105,10 @@ public:
 	
 	void addChildren(GameObj *obj);
 
-	PhysicObjectList *getPhysicChildren()	{		return &physicChildren;	}
-	GraphObjectList *getGraphChildren()	{		return &graphChildren;	}
+	PhysicInterface* getPhysicChildren(int i)	{		return physicChildren[i];	}
+	int getPhysicChildrenCount(void)	{		return physicChildren.size();	}
+
+	GraphObjectList* getGraphChildrenList()	{		return &graphChildren;	}
 
 	GameObj *getParent() { return parent; }
 

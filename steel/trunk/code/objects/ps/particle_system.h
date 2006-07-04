@@ -89,13 +89,14 @@ class ParticleSystem: public GameObj
 	ParticleAnimator	*animator;
 
 	GraphObjectList graphList;
-	PhysicObjectList physicList;
 
 public:
 	bool init(ScriptLine	&s);
 
 	GraphObjectList* getGraphChildrenList(void) { return &graphList; }
-	PhysicObjectList* getPhysicChildrenList(void) { return &physicList; }
+
+	int getPhysicChildrenCount(void) { return 1; }
+	PhysicInterface* getPhysicChildren(int i) { return animator; }
 	
 	PositionKind::PositionKind getPositionKind(void) { return PositionKind::global;}
 

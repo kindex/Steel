@@ -71,12 +71,15 @@ protected:
 public:
 	// добавляет объект и его детей в движок для обработки
 	bool inject(PhysicInterface *object);
+	bool remove(PhysicInterface *object);
 
 	PhysicObjectStorage &getStorage(PhysicInterface *object);
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
 	void makeStorageForObject(PhysicInterface *object);
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта и его детей
+	void deleteStorageForObject(int sid);
+	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
 	void makeStorageForChildren(PhysicInterface *object);
+	void deleteStorageForChildren(int sid);
 
 	// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
 	void cacheStorageObject(PhysicObjectStorage &objectStorage);

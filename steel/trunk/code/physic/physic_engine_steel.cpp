@@ -90,6 +90,27 @@ bool PhysicEngineSteel::inject(PhysicInterface *object)
 	return true;
 }
 
+bool PhysicEngineSteel::remove(PhysicInterface *object)
+{
+	// если объект не хочет добавляться
+	// кешируем объект
+	deleteStorageForObject(idHash[object->getId()]);
+//	cacheStroageObject(getStorage(object));
+	deleteStorageForChildren(idHash[object->getId()]);
+	// список глобальных объектов
+	
+	for(steel::vector<PhysicInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
+		if(*it == object)
+		{
+			objects.erase(it);
+			break;
+		}
+	object->afterRemove();
+
+	return true;
+}
+
+
 void PhysicEngineSteel::makeStorageForObject(PhysicInterface *object)
 {
 	uid objectId = object->getId();
@@ -122,14 +143,38 @@ void PhysicEngineSteel::makeStorageForObject(PhysicInterface *object)
 	}
 }
 
+void PhysicEngineSteel::deleteStorageForObject(int sid)
+{
+	if(storage[sid].collisionType == CollisionType::particle1)
+	{
+		storage[particleSet.back()].partiecleSetId = storage[sid].partiecleSetId;
+		particleSet[storage[sid].partiecleSetId] = particleSet.back();
+		particleSet.pop_back();
+	}
+	idHash.erase(storage[sid].objectId);
+	storage[sid] = storage.back();
+	idHash[storage[sid].objectId] = sid;
+	storage.pop_back();
+}
+
+void PhysicEngineSteel::deleteStorageForChildren(int sid)
+{
+	int count = storage[sid].children.size();
+	for(int i = 0; i < count; i++)
+	{
+		int n = idHash[storage[sid].children[i]];
+		deleteStorageForChildren(n);
+		deleteStorageForObject(n);
+	}
+}
+
 
 void PhysicEngineSteel::makeStorageForChildren(PhysicInterface *object)
 {
-	PhysicObjectList *children = object->getPhysicChildrenList();
-	if(children)
-	for(unsigned int i = 0; i < children->size(); i++)
+	int count = object->getPhysicChildrenCount();
+	for(int i = 0; i < count; i++)
 	{
-		PhysicInterface *child = children->at(i);
+		PhysicInterface *child = object->getPhysicChildren(i);
 		makeStorageForObject(child);
 		makeStorageForChildren(child);
 	}
@@ -165,36 +210,56 @@ void PhysicEngineSteel::prepare(PhysicInterface *object, steel::time globalTime,
 {
 	object->process(globalTime, time, globalFrameNumber);
 
-	PhysicObjectStorage &objectStorage = getStorage(object);
-	cacheStorageObject(objectStorage);
+	int sid = idHash[object->getId()];
+		
+	cacheStorageObject(storage[sid]);
 
-	if(objectStorage.childrenModificationTime < object->getChildrenModificationTime())
+	if(storage[sid].childrenModificationTime < object->getChildrenModificationTime())
 	{
-		objectStorage.childrenModificationTime = object->getChildrenModificationTime();
+		storage[sid].childrenModificationTime = object->getChildrenModificationTime();
 
-		PhysicObjectList *children = object->getPhysicChildrenList();
-		if(children)
-		for(unsigned int i = 0; i < children->size(); i++)
+		StorageHash newChildrenId;
+
+		int count = object->getPhysicChildrenCount();
+		for(int i = 0; i < count; i++) // add new + cache
 		{
-			PhysicInterface *child = children->at(i);
+			PhysicInterface *child = object->getPhysicChildren(i);
 			uid id = child->getId();
+			newChildrenId[id] = i;
 
 			if(idHash.find(id) == idHash.end())
 			{
 				// add new object to storage
 				makeStorageForObject(child);
 				makeStorageForChildren(child);
+
+				storage[sid].children.push_back(id);
 			}
 			cacheStorageObject(getStorage(child));
+		}
+		int size = storage[sid].children.size();
+
+		for(int i = 0; i<size; i++)
+		{
+			uid id = storage[sid].children[i];
+			if(newChildrenId.find(id) == newChildrenId.end())
+			{
+				int n = idHash[id];
+				deleteStorageForChildren(n);
+				deleteStorageForObject(n);
+				storage[sid].children[i] = storage[sid].children.back();
+				storage[sid].children.pop_back();
+				size--;
+				i--;
+			}
 		}
 	}
 
 
-	PhysicObjectList *children = object->getPhysicChildrenList();
-	if(children)
-	for(unsigned int i = 0; i < children->size(); i++)
+	int count = object->getPhysicChildrenCount();
+	for(int i = 0; i < count; i++)
 	{
-		PhysicInterface *child = children->at(i);
+		PhysicInterface *child = object->getPhysicChildren(i);
 		
 		prepare(child, globalTime, time);
 	}

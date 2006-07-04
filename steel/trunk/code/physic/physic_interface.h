@@ -80,7 +80,8 @@ public:
 
 	// список детей
 	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
-	virtual PhysicObjectList* getPhysicChildrenList(void) { return NULL; }
+	virtual int getPhysicChildrenCount(void) { return 0; }
+	virtual PhysicInterface* getPhysicChildren(int number) { return NULL; }
 
 
 	virtual bool beforeInject() { return true;}
