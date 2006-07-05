@@ -25,7 +25,7 @@
 Dummy. Объект, который имеет положение и детей, но не имеет собственной формы.
 */
 
-class GameObjDummy: public virtual GraphInterface, public virtual PhysicObject
+class GameObjDummy: public virtual GraphObject, public virtual PhysicObject
 {
 public:
 	aabb		getPFrame()		{	return getFrame(); }
@@ -61,7 +61,7 @@ public:
 	GameObj			*parent;
 	
 	PhysicObjectList physicChildren;
-	steel::svector<GraphInterface*> graphChildren;
+	steel::svector<GraphObject*> graphChildren;
 
 	velocity	vel;
 	coord		mass;

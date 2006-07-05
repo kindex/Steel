@@ -305,7 +305,7 @@ void Game::draw(GraphEngine *graph)
 
 	graph->camera.setup(eye, direction);
 	graph->processCamera();
-	graph->process();
+	graph->process(0,0);
 
 //	if(conf->geti("crosshair"))
 //		graph->remove(crosshair);

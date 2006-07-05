@@ -86,12 +86,12 @@ public:
 	virtual PhysicObject* getPhysicChildren(int number) { return NULL; }
 
 	// Непосредственно перед добавлением в движок вызывается 
-	virtual bool beforeInject() { return true;}
+	virtual bool PhysicBeforeInject() { return true;}
 	// После удаления из движка вызывается процедура afterRemove
-	virtual void afterRemove() {}
+	virtual void PhysicAfterRemove() {}
 
 	// вызывается перед каждой итерацией обработки. Внутри этой процедуры объект может менять некоторые свои параметры
-	virtual	void process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
+	virtual	void ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
 
 
 // *** Configuration ***

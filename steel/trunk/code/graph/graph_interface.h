@@ -43,17 +43,29 @@ typedef steel::vector<FaceMaterial>	FaceMaterials;
 например, как мета-шарики, система частиц
 */
 
-class GraphInterface;
-typedef steel::svector<GraphInterface*> GraphObjectList;
+class GraphObject;
+typedef steel::svector<GraphObject*> GraphObjectList;
 
-class GraphInterface: public Interface
+class GraphObject: public Interface
 {
 public:
-
+// *** Common ***
 	// список детей
 	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
-	virtual GraphObjectList* getGraphChildrenList(void) { return NULL; }
+	// возвращает количество детей
+	virtual int getGraphChildrenCount(void) { return 0; } 
+	// ребёнок с указанным номером
+	virtual GraphObject* getGraphChildren(int number) { return NULL; }
 
+	// Непосредственно перед добавлением в движок вызывается 
+	virtual bool GraphBeforeInject() { return true;}
+	// После удаления из движка вызывается процедура afterRemove
+	virtual void GraphAfterRemove() {}
+
+	// вызывается перед каждой итерацией обработки. Внутри этой процедуры объект может менять некоторые свои параметры
+	virtual	void processGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
+
+// *** Configuration ***
 
 /*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
 	virtual aabb getFrame() = 0; // AABB of object

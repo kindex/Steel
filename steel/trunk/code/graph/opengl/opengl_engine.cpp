@@ -36,34 +36,66 @@ using namespace std;
 Графических элемент - это полигоны одного объекта, имеющие общий материал.
 */
 
-void OpenGL_Engine::drawElement(DrawElement &e)
+void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel::time time)
+{
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+
+	float m[16]; // TODO
+	m[0] = e.matrix.data.matrix.data.m[0][0];	m[1] = e.matrix.data.matrix.data.m[1][0];	m[2] = e.matrix.data.matrix.data.m[2][0];	m[3] = 0;
+	m[4] = e.matrix.data.matrix.data.m[0][1];	m[5] = e.matrix.data.matrix.data.m[1][1];	m[6] = e.matrix.data.matrix.data.m[2][1];	m[7] = 0;
+	m[8] = e.matrix.data.matrix.data.m[0][2];	m[9] = e.matrix.data.matrix.data.m[1][2];	m[10] = e.matrix.data.matrix.data.m[2][2];	m[11] = 0;
+	m[12] = e.matrix.data.vector.x;	m[13] = e.matrix.data.vector.y;	m[14] = e.matrix.data.vector.z;	m[15] = 1;
+	glLoadMatrixf(m);
+	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
+	{
+        TexCoords *coords = e.object->getTexCoords(0);
+		Map map = e.material->map[0]; // текущая текстура
+		 
+	 
+		glEnable(GL_TEXTURE_2D);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		int format;
+		if(map.texture->getFormat() == ImageFormat::rgb) format = GL_RGB; 
+		else
+		if(map.texture->getFormat() == ImageFormat::normal) format = GL_RGB; 
+		else if(map.texture->getFormat() == ImageFormat::rgba) format = GL_RGBA;
+		else
+			assert(false, "Unsupported image format");
+
+
+//        glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, map.texture->getWidth(), map.texture->getHeight(),0,
+//					format,  GL_UNSIGNED_BYTE , map.texture->getBitmap());
+					
+        glBegin(GL_TRIANGLES);
+         
+        for(int i=0; i<e.triangle->data.size(); i++)
+        {
+            glTexCoord2fv(&coords->data[ e.triangle->data[i].a[0] ].x);              glVertex3fv(&e.vertex->data[ e.triangle->data[i].a[0] ].x);
+            glTexCoord2fv(&coords->data[ e.triangle->data[i].a[1] ].x);              glVertex3fv(&e.vertex->data[ e.triangle->data[i].a[1] ].x);
+            glTexCoord2fv(&coords->data[ e.triangle->data[i].a[2] ].x);              glVertex3fv(&e.vertex->data[ e.triangle->data[i].a[2] ].x);
+        }
+         
+        glEnd();
+    }
+	glPopMatrix();
+}
+
+
+/*void OpenGL_Engine::drawElement(GraphObjectStorage &e)
 {
 //  загружает матрицу преобразрвания для объекта (перенос, масштаб, поворот) в глобальых координатах
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
 	float m[16]; // TODO
-
-	m[0] = e.matrix.data.matrix.data.m[0][0];
-	m[1] = e.matrix.data.matrix.data.m[1][0];
-	m[2] = e.matrix.data.matrix.data.m[2][0];
-	m[3] = 0;
-
-	m[4] = e.matrix.data.matrix.data.m[0][1];
-	m[5] = e.matrix.data.matrix.data.m[1][1];
-	m[6] = e.matrix.data.matrix.data.m[2][1];
-	m[7] = 0;
-
-	m[8] = e.matrix.data.matrix.data.m[0][2];
-	m[9] = e.matrix.data.matrix.data.m[1][2];
-	m[10] = e.matrix.data.matrix.data.m[2][2];
-	m[11] = 0;
-
-	m[12] = e.matrix.data.vector.x;
-	m[13] = e.matrix.data.vector.y;
-	m[14] = e.matrix.data.vector.z;
-	m[15] = 1;
-
+	m[0] = e.matrix.data.matrix.data.m[0][0];	m[1] = e.matrix.data.matrix.data.m[1][0];	m[2] = e.matrix.data.matrix.data.m[2][0];	m[3] = 0;
+	m[4] = e.matrix.data.matrix.data.m[0][1];	m[5] = e.matrix.data.matrix.data.m[1][1];	m[6] = e.matrix.data.matrix.data.m[2][1];	m[7] = 0;
+	m[8] = e.matrix.data.matrix.data.m[0][2];	m[9] = e.matrix.data.matrix.data.m[1][2];	m[10] = e.matrix.data.matrix.data.m[2][2];	m[11] = 0;
+	m[12] = e.matrix.data.vector.x;	m[13] = e.matrix.data.vector.y;	m[14] = e.matrix.data.vector.z;	m[15] = 1;
 	glLoadMatrixf(m);
 
 	steel::vector<uid> buffersToDelete;
@@ -311,7 +343,7 @@ void OpenGL_Engine::drawElement(DrawElement &e)
 
 	for(steel::vector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
 		cleanBuffer(*it);
-}
+}*/
 
 bool OpenGL_Engine::isVisible(aabb box)
 {
@@ -518,8 +550,7 @@ v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 
 }
 
-
-
+/*
 void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, Triangles const *triangle, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent)
 { // TODO: mem cleanup
 	int id = vertex->getId();
@@ -597,16 +628,12 @@ void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, TexCoords const *map
 	}
 };
 
-
 void OpenGL_Engine::genTangentSpaceLight(steel::vector<v3> const &sTangent, steel::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
 {
 	matrix34 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
 
 	v3 objectLightPosition = inverseModelMatrix*light;
-
-/*	v3 coords = matrix.getCoords();
-	v3 objectLightPosition = light - coords;*/
 
 	v3List &tl = tangentSpaceLight;
 
@@ -618,12 +645,6 @@ void OpenGL_Engine::genTangentSpaceLight(steel::vector<v3> const &sTangent, stee
 		tl[i].y = tTangent[i].dotProduct(lightVector);
 		tl[i].z = normal.data[i].dotProduct(lightVector);
 		
-/*		TODO 
-		v3 lightVector =  light - matrix*vertex.data[i];
-		tl[i].x = v3(matrix*(sTangent[i] + vertex.data[i])  - matrix*vertex.data[i]).dotProduct(lightVector); // scalar product
-		tl[i].y = v3(matrix*(tTangent[i] + vertex.data[i])  - matrix*vertex.data[i]).dotProduct(lightVector);
-		tl[i].z = v3(matrix*(normal.data[i] + vertex.data[i])  - matrix*vertex.data[i]).dotProduct(lightVector);
-*/
     }
 }
 
@@ -655,7 +676,7 @@ void OpenGL_Engine::genTangentSpaceSphere(Vertexes const &vertex, Normals	const 
     }
 }
 
-/*
+
 void OpenGL_Engine::drawDistColor(DrawElement &e, matrix34 const matrix, v3 const light, float const distance)
 {
 	float *coords = new float[e.vertex->size()];
@@ -684,9 +705,9 @@ void OpenGL_Engine::drawDistColor(DrawElement &e, matrix34 const matrix, v3 cons
 
 	delete coords;
 }
-*/
 
-/*bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix34 const matrix, v3 const light)
+
+bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix34 const matrix, v3 const light)
 {
 //	if(GL_TEXTURE_CUBE_MAP_ARB_supported)
 	{
@@ -714,7 +735,7 @@ void OpenGL_Engine::drawDistColor(DrawElement &e, matrix34 const matrix, v3 cons
 //	else
 //		return false;
 }
-*/
+
 
 void OpenGL_Engine::drawBump(DrawElement &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img)
 {
@@ -842,21 +863,21 @@ void OpenGL_Engine::drawAABB(DrawElement &e, matrix34 matrix)
 
 	glPopMatrix();
 }
+*/
 
 
-
-bool OpenGL_Engine::process()
+bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 {
 	// TODO repair DC 
-	element.clear();
+	int size = objects.size();
+	for(int i=0; i < size; i++)
+		prepare(objects[i], globalTime, time);
 
 	light.clear();
 	total.vertex = 0;
 	total.triangle = 0;
 	total.object = 0;
 
-	for(steel::vector<GraphInterface*>::iterator it = objects.begin(); it != objects.end(); it++)
-		prepare((*it));
 
 //	if(!ARB_multitexture_supported) 
 //		conf->setup("drawBump", 0);
@@ -874,21 +895,22 @@ bool OpenGL_Engine::process()
 	glLightfv( GL_LIGHT0, GL_POSITION, v4( camera.center ));*/
 
 
-	steel::vector<DrawElement> elementAlpha;
+//	steel::vector<int> elementAlpha;
 
 // В начале выводим только непрозрачные объекты
-	for(steel::vector<DrawElement>::iterator it = element.begin(); it != element.end(); it++)
-		if(!it->blend)
-			drawElement((*it));
-		else
+	for(steel::vector<GraphObjectStorage>::iterator it = storage.begin(); it != storage.end(); it++)
+//		if(!it->blend)
+			process(*it, globalTime, time);
+/*		else
 		{
 			it->distance = (camera.eye - it->matrix*v3(0,0,0)).getLength();
 			elementAlpha.push_back(*it);
 		}
+*/
 
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
 
-	if(conf->geti("drawAlpha")>0)
+/*	if(conf->geti("drawAlpha")>0)
 	{
 		sort(elementAlpha.begin(), elementAlpha.end());
 
@@ -896,7 +918,7 @@ bool OpenGL_Engine::process()
 			drawElement((*it));
 	}
 	elementAlpha.clear();
-
+*/
 	if(conf->geti("swapBuffers", 1))
 	{
 		glFlush(); // TODO: flush in thread
@@ -996,3 +1018,223 @@ void OpenGL_Engine::processCamera()
     glLoadIdentity();
 }
 
+OpenGL_Engine::GraphObjectStorage &OpenGL_Engine::getStorage(GraphObject *object)
+{
+	uid id = object->getId();
+	assert(idHash.find(id) != idHash.end(), "Object not found in graph storage");
+
+	return storage[idHash[id]];
+}
+
+void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::time time, matrix34 matrix, GraphObject *parent)
+{
+	object->processGraph(globalTime, time, globalFrameNumber);
+
+	int sid = idHash[object->getId()];
+		
+	cacheStorageObject(storage[sid]);
+
+	if(storage[sid].childrenModificationTime < object->getChildrenModificationTime())
+	{
+		storage[sid].childrenModificationTime = object->getChildrenModificationTime();
+
+		StorageHash newChildrenId;
+
+		int count = object->getGraphChildrenCount();
+		for(int i = 0; i < count; i++) // add new + cache
+		{
+			GraphObject *child = object->getGraphChildren(i);
+			uid id = child->getId();
+			newChildrenId[id] = i;
+
+			if(idHash.find(id) == idHash.end())
+			{
+				// add new object to storage
+				makeStorageForObject(child);
+				makeStorageForChildren(child);
+
+				storage[sid].children.push_back(id);
+			}
+			cacheStorageObject(getStorage(child));
+		}
+		int size = storage[sid].children.size();
+
+		for(int i = 0; i<size; i++)
+		{
+			uid id = storage[sid].children[i];
+			if(newChildrenId.find(id) == newChildrenId.end())
+			{
+				int n = idHash[id];
+				deleteStorageForChildren(n);
+				deleteStorageForObject(n);
+				storage[sid].children[i] = storage[sid].children.back();
+				storage[sid].children.pop_back();
+				size--;
+				i--;
+			}
+		}
+	}
+
+
+	int count = object->getGraphChildrenCount();
+	for(int i = 0; i < count; i++)
+	{
+		GraphObject *child = object->getGraphChildren(i);
+		
+		prepare(child, globalTime, time);
+	}
+
+}
+
+void OpenGL_Engine::cacheStorageObject(GraphObjectStorage &objectStorage)
+{
+	GraphObject *object = objectStorage.object;
+
+	if(objectStorage.modificationTime < object->getModificationTime())
+	{
+		objectStorage.modificationTime = object->getModificationTime();
+
+
+	}
+
+/*	if(object == NULL) return ;
+	total.object++;
+
+	matrix34 object_matrix = object->getPosition(); // global 
+
+	PositionKind::PositionKind pos = object->getPositionKind();
+	if(pos == PositionKind::local)
+	{
+		object_matrix = parent_matrix*object_matrix;
+		object->processGraph(parent_matrix.getInverse()*camera.eye, parent_matrix.getInverse()*(camera.center-camera.eye));
+	}
+	else if(pos == PositionKind::global) 
+		object->processGraph(camera.eye, (camera.center-camera.eye));
+	else
+		return false;
+
+	aabb frame = object->getFrame();
+	frame.mul(object_matrix);
+
+// проверка, находится ли frame внутри пирамиды, которую образует угол обзора камеры. Если не попадает, то откидываем этот объект и всех его потомков
+	if(!isVisible(frame)) return false;
+	
+	GraphObject &o = *object;
+	GraphObjectList *children = o.getGraphChildrenList();
+	if(children)
+	for(unsigned int i = 0; i < children->size(); i++)
+		if(!prepare(children->at(i), object_matrix)) return false;
+
+	FaceMaterials* m = object->getFaceMaterials();
+	Vertexes	*v = object->getVertexes();
+	Lights		*l = object->getLights();
+	Normals		*n = object->getNormals();
+	GLines		*glines = object->getLines();
+
+	if(l != NULL)
+	{
+		for(Lights::iterator it = l->begin(); it != l->end(); it++)
+		{
+			light.push_back(*it);
+			light[light.size()-1].pos = object_matrix*v3(0,0,0);
+		}
+	}
+
+	if(v != NULL)
+		total.vertex += v->data.size();
+
+	if(m != NULL)
+	for(FaceMaterials::iterator it = (*m).begin(); it != (*m).end(); it++)
+	{
+		int c = element.size();
+		element.resize(c+1);
+		DrawElement &e = element[c];
+
+		e.object = object;
+
+		e.material = (*it).material;
+		e.triangle = it->triangles;
+		e.vertex = v;
+		e.matrix = object_matrix;
+		e.normal = n;
+		e.frame = frame;
+		e.blend = element[c].material->blend;
+		e.lines = NULL;
+
+		total.triangle += element[c].triangle->data.size();
+	}
+
+	if(glines)
+	{
+		int c = element.size();
+		element.resize(c+1);
+		DrawElement &e = element[c];
+
+		e.object = object;
+
+		e.material = NULL;
+		e.triangle = NULL;
+		e.vertex = v;
+		e.matrix = object_matrix;
+		e.normal = NULL;
+		e.frame = frame;
+		e.lines = glines;
+		e.blend = false;
+	}
+*/
+}
+
+void OpenGL_Engine::makeStorageForObject(GraphObject *object)
+{
+	uid objectId = object->getId();
+	if(idHash.find(objectId) != idHash.end())
+	{
+		log_msg("error graph", "Duplicate object " + IntToStr(objectId) + " in storage");
+		return;
+	}
+
+	int storageId = storage.size();
+	storage.resize(storageId + 1);
+
+	GraphObjectStorage &objectStorage = storage[storageId];
+
+	idHash[objectId] = storageId;
+
+	objectStorage.object = object;
+	objectStorage.storageId = storageId;
+	objectStorage.objectId = objectId;
+
+	objectStorage.modificationTime = -1;
+	objectStorage.childrenModificationTime = -1;
+}
+
+void OpenGL_Engine::deleteStorageForObject(int sid)
+{
+	idHash.erase(storage[sid].objectId);
+	storage[sid] = storage.back();
+	idHash[storage[sid].objectId] = sid;
+	storage.pop_back();
+}
+
+void OpenGL_Engine::deleteStorageForChildren(int sid)
+{
+	int count = storage[sid].children.size();
+	for(int i = 0; i < count; i++)
+	{
+		int n = idHash[storage[sid].children[i]];
+		deleteStorageForChildren(n);
+		deleteStorageForObject(n);
+	}
+}
+
+
+void OpenGL_Engine::makeStorageForChildren(GraphObject *object)
+{
+	int count = object->getGraphChildrenCount();
+	for(int i = 0; i < count; i++)
+	{
+		GraphObject *child = object->getGraphChildren(i);
+		makeStorageForObject(child);
+		makeStorageForChildren(child);
+	}
+}

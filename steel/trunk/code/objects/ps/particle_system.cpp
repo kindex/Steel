@@ -85,7 +85,7 @@ void ParticleEmitter::initParticles()
 	}
 }
 
-bool ParticleRenderer::init(Config *_conf, ParticleSet *_set, GraphInterface *_particleSystem)
+bool ParticleRenderer::init(Config *_conf, ParticleSet *_set, GraphObject *_particleSystem)
 {
 	if(!(conf = _conf)) return false;
 	set = _set;

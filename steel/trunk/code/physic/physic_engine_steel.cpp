@@ -123,7 +123,7 @@ void PhysicEngineSteel::cacheStorageObject(PhysicObjectStorage &objectStorage)
 
 void PhysicEngineSteel::prepare(PhysicObject *object, steel::time globalTime, steel::time time, matrix34 matrix, PhysicObject *parent)
 {
-	object->process(globalTime, time, globalFrameNumber);
+	object->ProcessPhysic(globalTime, time, globalFrameNumber);
 
 	int sid = idHash[object->getId()];
 		

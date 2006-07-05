@@ -101,7 +101,7 @@ bool GameObj::init(ScriptLine	&s)
 
 void GameObj::addChildren(GameObj *obj)
 {
-	graphChildren.push_back((GraphInterface*)obj);
+	graphChildren.push_back((GraphObject*)obj);
 	physicChildren.push_back((PhysicObject*)obj);
 
 	obj->attach(this);

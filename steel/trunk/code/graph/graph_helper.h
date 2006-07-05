@@ -5,7 +5,7 @@
 #include "../helper.h"
 #include "graph_interface.h"
 
-class GraphHelper: virtual public EngineHelper, virtual public GraphInterface
+class GraphHelper: virtual public EngineHelper, virtual public GraphObject
 {
 	steel::time time;
 

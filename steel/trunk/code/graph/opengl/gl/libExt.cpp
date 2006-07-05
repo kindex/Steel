@@ -239,7 +239,7 @@ bool    isExtensionSupported ( const char * ext )
 {
     initExtensions ();                      // since we will need it for platform-specific extensions
 
-    const char * extensions = (const char *) glGetString ( GL_EXTENSIONS );
+    const char *extensions = (const char *) glGetString ( GL_EXTENSIONS );
 
     if ( isExtensionSupported ( ext, extensions ) )
     return true;
@@ -286,8 +286,20 @@ static void * getProcAddress ( const char * name )
 #endif
 }
 
+
+std::string strtr(const char *s, char a, char b)
+{
+    std::string res;
+    steel::vector<std::string> r = explode(a, s);
+    for(int i = 0; i < r.size(); i++)
+    {
+        res += "\n\t\t" + IntToStr(i) + ": " + r[i];
+    }
+    return res;
+}
+
 #ifdef  _WIN32
-bool    initWin32Extensions ()
+bool    initWin32Extensions()
 {
     wglGetExtensionsStringARB = (PFNWGLGETEXTENSIONSSTRINGARBPROC) getProcAddress ( "wglGetExtensionsStringARB" );
 
@@ -295,6 +307,12 @@ bool    initWin32Extensions ()
         return false;
 
     const char * exts = wglGetExtensionsStringARB ( wglGetCurrentDC () );
+    const char * exts2 = (char*)glGetString(GL_EXTENSIONS);
+    
+
+    log_msg("graph opengl", std::string("Supported WGL extensions: ") + strtr(exts, ' ', '\n' ));
+
+    log_msg("graph opengl", std::string("Supported GL extensions: ") + strtr(exts2, ' ', '\n' ));
 
     if ( exts == NULL )
         return false;
@@ -306,31 +324,34 @@ bool    initWin32Extensions ()
         wglReleasePbufferDCARB = (PFNWGLRELEASEPBUFFERDCARBPROC)  wglGetProcAddress ( "wglReleasePbufferDCARB" );
         wglDestroyPbufferARB   = (PFNWGLDESTROYPBUFFERARBPROC)    wglGetProcAddress ( "wglDestroyPbufferARB"   );
         wglQueryPbufferARB     = (PFNWGLQUERYPBUFFERARBPROC)      wglGetProcAddress ( "wglQueryPbufferARB"     );
-
-        printf ( "WGL_ARB_pbuffer supported.\n" );
     }
+    else
+        log_msg("error graph opengl", "WGL_ARB_pbuffer not supported");
 
     if ( strstr ( exts, "WGL_ARB_pixel_format" ) != NULL )
     {
         wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)wglGetProcAddress ( "wglChoosePixelFormatARB" );
-
-        printf ( "WGL_ARB_pixel_format supported.\n" );
     }
+    else
+        log_msg("error graph opengl", "WGL_ARB_pixel_format not supported");
 
     if ( strstr ( exts, "WGL_ARB_render_texture" ) != NULL )
     {
         wglBindTexImageARB      = (PFNWGLBINDTEXIMAGEARBPROC)     wglGetProcAddress ( "wglBindTexImageARB"     );
         wglReleaseTexImageARB   = (PFNWGLRELEASETEXIMAGEARBPROC)  wglGetProcAddress ( "wglReleaseTexImageARB"  );
         wglSetPbufferAttribARB  = (PFNWGLSETPBUFFERATTRIBARBPROC) wglGetProcAddress ( "wglSetPbufferAttribARB" );
-
-        printf ( "WGL_ARB_render_texture supported.\n" );
     }
+    else
+        log_msg("error graph opengl", "WGL_ARB_render_texture not supported");
 
     if ( strstr ( exts, "WGL_EXT_swap_control" ) != NULL )
     {
         wglSwapIntervalEXT      = (PFNWGLSWAPINTERVALEXTPROC)       wglGetProcAddress ( "wglSwapIntervalEXT"    );
         wglGetSwapIntervalEXT   = (PFNWGLGETSWAPINTERVALEXTPROC)    wglGetProcAddress ( "wglGetSwapIntervalEXT" );
     }
+    else
+        log_msg("error graph opengl", "WGL_ARB_render_texture not supported");
+    
 
     return true;
 }

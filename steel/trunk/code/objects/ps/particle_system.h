@@ -59,13 +59,13 @@ public:
 };
 
 // класс для рисования: множество спрайтов, набор объектов, меташарики
-class ParticleRenderer: public GraphInterface, public ParticleProcessor
+class ParticleRenderer: public GraphObject, public ParticleProcessor
 {
 protected:
-	GraphInterface *particleSystem;
+	GraphObject *particleSystem;
 
 public:
-	virtual bool init(Config *_conf, ParticleSet *_set, GraphInterface *_particleSystem);
+	virtual bool init(Config *_conf, ParticleSet *_set, GraphObject *_particleSystem);
 	virtual bool initParticles() = 0;
 };
 

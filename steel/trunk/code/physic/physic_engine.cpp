@@ -31,7 +31,7 @@ bool PhysicEngine::init(std::string _conf)
 bool PhysicEngine::inject(PhysicObject *object)
 {
 	// если объект не хочет добавляться
-	if(!object->beforeInject()) return false;
+	if(!object->PhysicBeforeInject()) return false;
 	// список глобальных объектов
 	objects.push_back(object);
 	// кешируем объект
@@ -64,7 +64,7 @@ bool PhysicEngine::remove(PhysicObject *object)
 			objects.erase(it);
 			break;
 		}
-	object->afterRemove();
+	object->PhysicAfterRemove();
 
 	return true;
 }

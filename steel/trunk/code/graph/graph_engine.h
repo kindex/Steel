@@ -38,28 +38,12 @@ public:
 class GraphEngine: public Engine
 {
 protected:
-	struct DrawElement // множество треугольников одного материала
-	{
-		GraphInterface *object;
-		Vertexes	*vertex;
-		Triangles	*triangle;
-		Normals		*normal;
-
-		Material	*material;
-		GLines		*lines;
-
-		matrix34	matrix;
-		aabb		frame;
-		bool		blend; // true if blending
-		coord		distance; // расстояние до камеры
-
-		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
-	};
-
-	// data, to store collected information
-	steel::vector<DrawElement> element;
-	steel::vector<GraphInterface*> objects;
+	steel::vector<GraphObject*> objects;
 	Lights light;
+
+	typedef std::map <uid, int> StorageHash;
+	// отображение идентификаторов объекта на положение в массиве storage
+	StorageHash idHash;
 
 public:
 	struct TotalInfo
@@ -71,15 +55,22 @@ public:
 	Camera camera;
 	virtual void processCamera() = 0;
 	// Collect information about object: how to render it
-	virtual bool inject(GraphInterface *object);
-	virtual bool remove(GraphInterface *object);
-	virtual bool prepare(GraphInterface *object, matrix34 matrix = matrix34::getIdentity());
+	virtual bool inject(GraphObject *object);
+	virtual bool remove(GraphObject *object);
+	
+	virtual bool process(steel::time globalTime, steel::time time) = 0;
 
 	// Draw colelcted information. May be called few times without recollection information
-	virtual bool process() = 0; // Override OpenGL, D3D, ...
 	virtual bool isVisible(aabb box) = 0;
 	// Clear collected information
 	bool clear();
+	
+		// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
+	virtual void makeStorageForObject(GraphObject *object) = 0;
+	virtual void deleteStorageForObject(int sid)  = 0;
+	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
+	virtual void makeStorageForChildren(GraphObject *object)  = 0;
+	virtual void deleteStorageForChildren(int sid)  = 0;
 };
 
 #endif
