@@ -592,6 +592,26 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="audio"
+					>
+					<File
+						RelativePath=".\res\audio\audio.h"
+						>
+					</File>
+					<File
+						RelativePath=".\res\audio\ogg.h"
+						>
+					</File>
+					<File
+						RelativePath=".\res\audio\wav.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\audio\wav.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audio"

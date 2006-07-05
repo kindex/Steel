@@ -10,6 +10,7 @@
 #include "model/model.h"
 #include "material/material.h"
 #include "script/script.h"
+#include "audio/audio.h"
 
 // глобальная коллекция ресурсов
 extern ResCollection<Config> resConfig;
@@ -17,6 +18,7 @@ extern ResCollection<Image> resImage;
 extern ResCollection<Model> resModel;
 extern ResCollection<Material> resMaterial;
 extern ResCollection<Script> resScript;
+extern ResCollection<Audio> resAudio;
 
 
 bool registerResources();

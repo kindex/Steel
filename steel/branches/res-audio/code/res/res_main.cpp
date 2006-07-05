@@ -5,6 +5,8 @@
 #include "model/_3ds.h"
 #include "conf/conf_text.h"
 #include "script/script_text.h"
+#include "audio/wav.h"
+#include "audio/ogg.h"
 
 
 ResCollection<Config> resConfig;
@@ -12,6 +14,7 @@ ResCollection<Image> resImage;
 ResCollection<Model> resModel;
 ResCollection<Material> resMaterial;
 ResCollection<Script> resScript;
+ResCollection<Audio> resAudio;
 
 
 
@@ -77,7 +80,10 @@ T2* createClass(const std::string filename, const std::string base)
 		return object;
 	}
 	else
+	{
+        delete object;
 		return NULL;
+    }
 }
 
 bool registerResources()
@@ -87,6 +93,8 @@ bool registerResources()
 	resMaterial.registerResLoader(createClass<Material, Material>);	resMaterial.setId("material");
 	resConfig.registerResLoader(createClass<ConfigText, Config>);	resConfig.setId("config");
 	resScript.registerResLoader(createClass<ScriptText, Script>);	resScript.setId("script");
+	resAudio.registerResLoader(createClass<Audio, WAV>);            resAudio.setId("audio");
+	resAudio.registerResLoader(createClass<Audio, OGG>);            resAudio.setId("audio");
 
 	return true;
 }

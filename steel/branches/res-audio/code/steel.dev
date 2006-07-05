@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=115
+UnitCount=121
 Type=0
 Ver=1
 ObjFiles=
@@ -20,7 +20,7 @@ ObjectOutput=..\temp
 OverrideOutput=0
 OverrideOutputName=steel.exe
 HostApplication=
-Folders=common,game,graph,graph/opengl,graph/opengl/extensions,graph/opengl/gl,input,math,objects,objects/ps,physic,res,res/conf,res/image,res/material,res/model,res/script
+Folders=common,game,graph,graph/opengl,graph/opengl/extensions,graph/opengl/gl,input,math,objects,objects/ps,physic,res,res/audio,res/conf,res/image,res/material,res/model,res/script
 CommandLine=
 UseCustomMakefile=0
 CustomMakefile=
@@ -1188,9 +1188,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit117]
-FileName=physic\physic_engine_steel.h
+FileName=res\audio\wav.h
 CompileCpp=1
-Folder=physic
+Folder=res/audio
 Compile=1
 Link=1
 Priority=1000
@@ -1198,9 +1198,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit118]
-FileName=game\ps\ps_renderer.h
+FileName=res\audio\ogg.h
 CompileCpp=1
-Folder=game/ps
+Folder=res/audio
 Compile=1
 Link=1
 Priority=1000
@@ -1208,9 +1208,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit116]
-FileName=physic\physic_engine_steel.cpp
+FileName=res\audio\audio.h
 CompileCpp=1
-Folder=physic
+Folder=res/audio
 Compile=1
 Link=1
 Priority=1000
@@ -1221,6 +1221,36 @@ BuildCmd=
 FileName=res\script\script.cpp
 CompileCpp=1
 Folder=res/script
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit119]
+FileName=res\audio\wav.cpp
+CompileCpp=1
+Folder=res/audio
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit120]
+FileName=ogg.cpp
+CompileCpp=1
+Folder=res/audio
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit121]
+FileName=audio.cpp
+CompileCpp=1
+Folder=res/audio
 Compile=1
 Link=1
 Priority=1000
