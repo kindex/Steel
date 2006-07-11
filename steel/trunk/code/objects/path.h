@@ -33,7 +33,7 @@ class TagPath: public GameObjSet
 
 public:
 	bool	init(ScriptLine	&s);
-	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine);
+	void	ProcessPhysic(steel::time curTime, steel::time frameLength, PhysicEngine *engine);
 };
 
 #endif

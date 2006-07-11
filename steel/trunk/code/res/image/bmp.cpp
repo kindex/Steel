@@ -24,7 +24,10 @@ Image* createBMP(const std::string filename)
 		return o;
 	}
 	else
+	{
+		delete o;
 		return NULL;
+	}
 }
 
 typedef unsigned char byte; // 1 byte

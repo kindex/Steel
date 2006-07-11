@@ -77,7 +77,10 @@ T2* createClass(const std::string filename, const std::string base)
 		return object;
 	}
 	else
+	{
+		delete object;
 		return NULL;
+	}
 }
 
 bool registerResources()

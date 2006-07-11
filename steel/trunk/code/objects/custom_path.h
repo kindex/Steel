@@ -10,7 +10,7 @@ class CustomPath: public GameObj
 {
 public:
 	
-	void	process(steel::time curTime, steel::time frameLength, PhysicEngine *engine);
+	void	ProcessPhysic(steel::time curTime, steel::time frameLength, PhysicEngine *engine);
 };
 
 #endif

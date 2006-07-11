@@ -86,7 +86,7 @@ void PhysicEngineSteel::deleteStorageForChildren(int sid)
 
 void PhysicEngineSteel::makeStorageForChildren(PhysicObject *object)
 {
-	int count = object->getPhysicChildrenCount();
+	int count = object->GetPhysicChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
 		PhysicObject *child = object->getPhysicChildren(i);
@@ -135,7 +135,7 @@ void PhysicEngineSteel::prepare(PhysicObject *object, steel::time globalTime, st
 
 		StorageHash newChildrenId;
 
-		int count = object->getPhysicChildrenCount();
+		int count = object->GetPhysicChildrenCount();
 		for(int i = 0; i < count; i++) // add new + cache
 		{
 			PhysicObject *child = object->getPhysicChildren(i);
@@ -171,7 +171,7 @@ void PhysicEngineSteel::prepare(PhysicObject *object, steel::time globalTime, st
 	}
 
 
-	int count = object->getPhysicChildrenCount();
+	int count = object->GetPhysicChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
 		PhysicObject *child = object->getPhysicChildren(i);
@@ -194,7 +194,7 @@ bool PhysicEngineSteel::process(steel::time globalTime, steel::time time)
 	for(steel::svector<PhysicObjectStorage>::iterator it = storage.begin(); it != storage.end(); it++)
 	{
 		PhysicObjectStorage &objectStorage = *it;
-		objectStorage.velocity = objectStorage.object->getVelocity().translation;
+		objectStorage.velocity = objectStorage.object->GetVelocity().translation;
 		objectStorage.force.loadZero();
 	}
 
@@ -228,11 +228,11 @@ bool PhysicEngineSteel::process(steel::time globalTime, steel::time time)
 
 		ObjectPosition objectPosition = objectStorage.object->getPosition();
 		objectPosition.setTranslation(objectStorage.position);
-		objectStorage.object->setPosition(objectPosition);
+		objectStorage.object->SetPosition(objectPosition);
 
 		velocity vel;
 		vel.translation = objectStorage.velocity;
-		objectStorage.object->setVelocity(vel);
+		objectStorage.object->SetVelocity(vel);
 	}
 
 	return true;

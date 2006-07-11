@@ -14,11 +14,11 @@ protected:
 public:
 	bool init(ScriptLine	&s);
 
-	TexCoords*	getTexCoords(int texNumber) { return &texCoords; }
-	Vertexes*	getVertexes() { return &vertex; }
-	Vertexes*	getPVertexes() { return getVertexes(); }
+	TexCoords*	GetTexCoords(int texNumber) { return &texCoords; }
+	Vertexes*	GetVertexes() { return &vertex; }
+	Vertexes*	getPVertexes() { return GetVertexes(); }
 	Triangles*	getTriangles() { return &triangle; }
-	FaceMaterials* getFaceMaterials() { return &face; }
+	FaceMaterials* GetFaceMaterials() { return &face; }
 	aabb getFrame()		{	return frame; }
 	aabb getPFrame()	{	return frame; }
 };

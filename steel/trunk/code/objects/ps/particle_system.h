@@ -55,7 +55,7 @@ public:
 	virtual void initParticles();
 	virtual void born(Particle &particle) = 0; // создать частицу
 	virtual void kill(int i); // убить частицу с номером i
-	virtual void	process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) = 0;
+	virtual void ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) = 0;
 };
 
 // класс для рисования: множество спрайтов, набор объектов, меташарики
@@ -88,26 +88,31 @@ class ParticleSystem: public GameObj
 	ParticleRenderer	*renderer;
 	ParticleAnimator	*animator;
 
-	GraphObjectList graphList;
-
 public:
 	bool init(ScriptLine	&s);
 
-	GraphObjectList* getGraphChildrenList(void) { return &graphList; }
-
-	int getPhysicChildrenCount(void) { return 1; }
+	int GetPhysicChildrenCount(void) { return animator?1:0; }
 	PhysicObject* getPhysicChildren(int i) { return animator; }
-	
+
+	int GetGraphChildrenCount(void) { return renderer?1:0; }
+	GraphObject* GetGraphChildren(int i) { return renderer; }
+
+
 	PositionKind::PositionKind getPositionKind(void) { return PositionKind::global;}
 
 	void setChildrenChangeTime(ModificationTime time) 
 	{ 
 		particleSet.modificationTime = time;
 	}
-	ModificationTime getChildrenModificationTime(void) { return particleSet.modificationTime; }
-	void	process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime)
+
+	ModificationTime getChildrenModificationTime(void) 
+	{ 
+		return 0;
+	}
+
+	void ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime)
 	{
-		emitter->process(curTime, frameLength, modificationTime);
+		emitter->ProcessPhysic(curTime, frameLength, modificationTime);
 	}
 
 };

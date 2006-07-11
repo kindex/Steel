@@ -53,9 +53,9 @@ public:
 	// список детей
 	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
 	// возвращает количество детей
-	virtual int getGraphChildrenCount(void) { return 0; } 
+	virtual int GetGraphChildrenCount(void) { return 0; } 
 	// ребёнок с указанным номером
-	virtual GraphObject* getGraphChildren(int number) { return NULL; }
+	virtual GraphObject* GetGraphChildren(int number) { return NULL; }
 
 	// Непосредственно перед добавлением в движок вызывается 
 	virtual bool GraphBeforeInject() { return true;}
@@ -63,30 +63,27 @@ public:
 	virtual void GraphAfterRemove() {}
 
 	// вызывается перед каждой итерацией обработки. Внутри этой процедуры объект может менять некоторые свои параметры
-	virtual	void processGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
+	virtual	void ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection) {}
 
 // *** Configuration ***
 
 /*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
-	virtual aabb getFrame() = 0; // AABB of object
+//	virtual aabb getFrame() { return = 0; // AABB of object
 
 	// Интерфейс заточен под 3DS и OpenGL
 	// Следующие функции возврящяют ссылки на массивы данных (NULL if none), и должны 
 	// отвечать за хранние этих данных до следующего вызова этой функции
 	// или вызова cleanup
-	virtual bool cleanup() = 0; // при необходимости отчищает 
-	virtual Vertexes*	getVertexes() = 0; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
-	virtual Normals*	getNormals() = 0; // список нормалей в вершинам
+	virtual Vertexes*	GetVertexes() { return NULL;} // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	virtual Normals*	GetNormals() { return NULL;} // список нормалей в вершинам
 
-	virtual GLines*	getLines() = 0; // индексы вершин для линий и цвета линий (for debug)
+	virtual GLines*		GetLines() { return NULL;} // индексы вершин для линий и цвета линий (for debug)
 
 	// массив индексов вершин, которые образуют треугольники (грани) + материалы
-	virtual FaceMaterials* getFaceMaterials() = 0;
-	virtual TexCoords*	getTexCoords(int texNumber) = 0;
+	virtual FaceMaterials* GetFaceMaterials() { return NULL;}
+	virtual TexCoords*	GetTexCoords(int texNumber) { return NULL;}
 
-	virtual Lights*		getLights() = 0;
-
-	virtual	void		processGraph(v3	cameraEye, v3 cameraDirection) = 0;
+	virtual Lights*		GetLights() { return NULL;}
 };
 
 #endif

@@ -36,22 +36,16 @@ using namespace std;
 Графических элемент - это полигоны одного объекта, имеющие общий материал.
 */
 
-void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel::time time)
+void OpenGL_Engine::DrawOpenGL10(GraphObjectStorage &e, Triangles *triangles, Material *material)
 {
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-
-	float m[16]; // TODO
-	m[0] = e.matrix.data.matrix.data.m[0][0];	m[1] = e.matrix.data.matrix.data.m[1][0];	m[2] = e.matrix.data.matrix.data.m[2][0];	m[3] = 0;
-	m[4] = e.matrix.data.matrix.data.m[0][1];	m[5] = e.matrix.data.matrix.data.m[1][1];	m[6] = e.matrix.data.matrix.data.m[2][1];	m[7] = 0;
-	m[8] = e.matrix.data.matrix.data.m[0][2];	m[9] = e.matrix.data.matrix.data.m[1][2];	m[10] = e.matrix.data.matrix.data.m[2][2];	m[11] = 0;
-	m[12] = e.matrix.data.vector.x;	m[13] = e.matrix.data.vector.y;	m[14] = e.matrix.data.vector.z;	m[15] = 1;
-	glLoadMatrixf(m);
-	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
+	if(material && triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
-        TexCoords *coords = e.object->getTexCoords(0);
-		Map map = e.material->map[0]; // текущая текстура
-		 
+		total.object++;
+		total.vertex += e.vertex->data.size();
+		total.triangle += triangles->data.size();
+
+        TexCoords *coords = e.object->GetTexCoords(0);
+		Map map = material->map[0]; // текущая текстура
 	 
 		glEnable(GL_TEXTURE_2D);
 
@@ -67,20 +61,87 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 			assert(false, "Unsupported image format");
 
 
-//        glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, map.texture->getWidth(), map.texture->getHeight(),0,
-//					format,  GL_UNSIGNED_BYTE , map.texture->getBitmap());
+        glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, map.texture->getWidth(), map.texture->getHeight(),0,
+					format,  GL_UNSIGNED_BYTE , map.texture->getBitmap());
 					
         glBegin(GL_TRIANGLES);
          
-        for(int i=0; i<e.triangle->data.size(); i++)
+        for(unsigned int i=0; i<triangles->data.size(); i++)
         {
-            glTexCoord2fv(&coords->data[ e.triangle->data[i].a[0] ].x);              glVertex3fv(&e.vertex->data[ e.triangle->data[i].a[0] ].x);
-            glTexCoord2fv(&coords->data[ e.triangle->data[i].a[1] ].x);              glVertex3fv(&e.vertex->data[ e.triangle->data[i].a[1] ].x);
-            glTexCoord2fv(&coords->data[ e.triangle->data[i].a[2] ].x);              glVertex3fv(&e.vertex->data[ e.triangle->data[i].a[2] ].x);
+            glTexCoord2fv(&coords->data[ triangles->data[i].a[0] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[0] ].x);
+            glTexCoord2fv(&coords->data[ triangles->data[i].a[1] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[1] ].x);
+            glTexCoord2fv(&coords->data[ triangles->data[i].a[2] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[2] ].x);
         }
          
         glEnd();
     }
+}
+
+
+void OpenGL_Engine::DrawOpenGL10Wire(GraphObjectStorage &e, Triangles *triangles)
+{
+	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	{
+		total.object++;
+		total.vertex += e.vertex->data.size();
+		total.triangle += triangles->data.size();
+         
+        for(unsigned int i=0; i<triangles->data.size(); i++)
+        {
+	        glBegin(GL_LINE_LOOP);
+            glVertex3fv(&e.vertex->data[ triangles->data[i].a[0] ].x);
+            glVertex3fv(&e.vertex->data[ triangles->data[i].a[1] ].x);
+            glVertex3fv(&e.vertex->data[ triangles->data[i].a[2] ].x);
+		    glEnd();
+        }
+         
+    }
+}
+
+
+void OpenGL_Engine::DrawOpenGL10Lines(GraphObjectStorage &e)
+{
+	if(e.vertex && e.lines && !e.lines->empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	{
+		total.object++;
+		total.vertex += e.vertex->data.size();
+		total.triangle += e.lines->size();
+		
+		glBegin(GL_LINES);
+        for(unsigned int i=0; i < e.lines->size(); i++)
+        {
+            glVertex3fv(&e.vertex->data[ e.lines->at(i).a[0] ].x);
+            glVertex3fv(&e.vertex->data[ e.lines->at(i).a[1] ].x);
+        }
+        glEnd();
+    }
+}
+
+
+void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel::time time)
+{
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+
+	float m[16]; // TODO
+	m[0] = e.matrix.data.matrix.data.m[0][0];	m[1] = e.matrix.data.matrix.data.m[1][0];	m[2] = e.matrix.data.matrix.data.m[2][0];	m[3]  = 0;
+	m[4] = e.matrix.data.matrix.data.m[0][1];	m[5] = e.matrix.data.matrix.data.m[1][1];	m[6] = e.matrix.data.matrix.data.m[2][1];	m[7]  = 0;
+	m[8] = e.matrix.data.matrix.data.m[0][2];	m[9] = e.matrix.data.matrix.data.m[1][2];	m[10] = e.matrix.data.matrix.data.m[2][2];	m[11] = 0;
+	m[12] = e.matrix.data.vector.x;				m[13] = e.matrix.data.vector.y;				m[14] = e.matrix.data.vector.z;				m[15] = 1;
+	glLoadMatrixf(m);
+
+	if(conf->geti("drawLines"))
+		DrawOpenGL10Lines(e);
+
+	if(conf->geti("drawFace") && e.faceMaterials)
+		for(unsigned int i = 0; i < e.faceMaterials->size(); i++)
+			DrawOpenGL10(e, e.faceMaterials->at(i).triangles, e.faceMaterials->at(i).material);
+
+	if(conf->geti("drawWire") && e.faceMaterials)
+		for(unsigned int i = 0; i < e.faceMaterials->size(); i++)
+			DrawOpenGL10Wire(e, e.faceMaterials->at(i).triangles);
+
+
 	glPopMatrix();
 }
 
@@ -164,7 +225,7 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 
 				if(conf->geti("drawBump") && !light.empty() && (i==0) && !e.blend && (map.kind == MapKind::bump_map || map.kind == MapKind::color_map))
 				{
-					TexCoords *coords = e.object->getTexCoords(i);
+					TexCoords *coords = e.object->GetTexCoords(i);
 
 					int j = 0;
 
@@ -205,7 +266,7 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 					{	// загружем текстуру
 						bindTexture(map.texture); // 2D texture (auto detect from Image)
 						// загружаем тектурные координаты
-						TexCoords *coords = e.object->getTexCoords(i);
+						TexCoords *coords = e.object->GetTexCoords(i);
 						if(coords && !coords->data.empty())
 						{
 							if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
@@ -869,14 +930,15 @@ void OpenGL_Engine::drawAABB(DrawElement &e, matrix34 matrix)
 bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 {
 	// TODO repair DC 
-	int size = objects.size();
-	for(int i=0; i < size; i++)
-		prepare(objects[i], globalTime, time);
 
 	light.clear();
 	total.vertex = 0;
 	total.triangle = 0;
 	total.object = 0;
+
+	int size = objects.size();
+	for(int i=0; i < size; i++)
+		prepare(objects[i], globalTime, time);
 
 
 //	if(!ARB_multitexture_supported) 
@@ -1028,7 +1090,7 @@ OpenGL_Engine::GraphObjectStorage &OpenGL_Engine::getStorage(GraphObject *object
 
 void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::time time, matrix34 matrix, GraphObject *parent)
 {
-	object->processGraph(globalTime, time, globalFrameNumber);
+	object->ProcessGraph(globalTime, time, globalFrameNumber, camera.eye, camera.center - camera.eye);
 
 	int sid = idHash[object->getId()];
 		
@@ -1040,10 +1102,10 @@ void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::
 
 		StorageHash newChildrenId;
 
-		int count = object->getGraphChildrenCount();
+		int count = object->GetGraphChildrenCount();
 		for(int i = 0; i < count; i++) // add new + cache
 		{
-			GraphObject *child = object->getGraphChildren(i);
+			GraphObject *child = object->GetGraphChildren(i);
 			uid id = child->getId();
 			newChildrenId[id] = i;
 
@@ -1076,10 +1138,10 @@ void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::
 	}
 
 
-	int count = object->getGraphChildrenCount();
+	int count = object->GetGraphChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
-		GraphObject *child = object->getGraphChildren(i);
+		GraphObject *child = object->GetGraphChildren(i);
 		
 		prepare(child, globalTime, time);
 	}
@@ -1090,98 +1152,39 @@ void OpenGL_Engine::cacheStorageObject(GraphObjectStorage &objectStorage)
 {
 	GraphObject *object = objectStorage.object;
 
+	matrix34 object_matrix = object->getPosition(); // global 
+	PositionKind::PositionKind pos = object->getPositionKind();
+
+	objectStorage.matrix = object_matrix;
+
+/*	if(pos == PositionKind::local && parent)
+	{
+		object_matrix = parent_matrix*object_matrix;
+	}*/
+
+
 	if(objectStorage.modificationTime < object->getModificationTime())
 	{
 		objectStorage.modificationTime = object->getModificationTime();
-
-
-	}
-
-/*	if(object == NULL) return ;
-	total.object++;
-
-	matrix34 object_matrix = object->getPosition(); // global 
-
-	PositionKind::PositionKind pos = object->getPositionKind();
-	if(pos == PositionKind::local)
-	{
-		object_matrix = parent_matrix*object_matrix;
-		object->processGraph(parent_matrix.getInverse()*camera.eye, parent_matrix.getInverse()*(camera.center-camera.eye));
-	}
-	else if(pos == PositionKind::global) 
-		object->processGraph(camera.eye, (camera.center-camera.eye));
-	else
-		return false;
-
-	aabb frame = object->getFrame();
-	frame.mul(object_matrix);
+//		aabb frame = object->getFrame();
+//		frame.mul(object_matrix);
 
 // проверка, находится ли frame внутри пирамиды, которую образует угол обзора камеры. Если не попадает, то откидываем этот объект и всех его потомков
-	if(!isVisible(frame)) return false;
-	
-	GraphObject &o = *object;
-	GraphObjectList *children = o.getGraphChildrenList();
-	if(children)
-	for(unsigned int i = 0; i < children->size(); i++)
-		if(!prepare(children->at(i), object_matrix)) return false;
+//		objectStorage.visible = isVisible(frame);
 
-	FaceMaterials* m = object->getFaceMaterials();
-	Vertexes	*v = object->getVertexes();
-	Lights		*l = object->getLights();
-	Normals		*n = object->getNormals();
-	GLines		*glines = object->getLines();
+		objectStorage.faceMaterials	= object->GetFaceMaterials();
+		objectStorage.vertex		= object->GetVertexes();
+		objectStorage.normal		= object->GetNormals();
+		objectStorage.lines			= object->GetLines();
 
-	if(l != NULL)
-	{
-		for(Lights::iterator it = l->begin(); it != l->end(); it++)
-		{
-			light.push_back(*it);
-			light[light.size()-1].pos = object_matrix*v3(0,0,0);
-		}
+		Lights		*l = object->GetLights();
+		if(l)
+			for(Lights::iterator it = l->begin(); it != l->end(); it++)
+			{
+				light.push_back(*it);
+				light[light.size()-1].pos = object_matrix*v3(0,0,0);
+			}
 	}
-
-	if(v != NULL)
-		total.vertex += v->data.size();
-
-	if(m != NULL)
-	for(FaceMaterials::iterator it = (*m).begin(); it != (*m).end(); it++)
-	{
-		int c = element.size();
-		element.resize(c+1);
-		DrawElement &e = element[c];
-
-		e.object = object;
-
-		e.material = (*it).material;
-		e.triangle = it->triangles;
-		e.vertex = v;
-		e.matrix = object_matrix;
-		e.normal = n;
-		e.frame = frame;
-		e.blend = element[c].material->blend;
-		e.lines = NULL;
-
-		total.triangle += element[c].triangle->data.size();
-	}
-
-	if(glines)
-	{
-		int c = element.size();
-		element.resize(c+1);
-		DrawElement &e = element[c];
-
-		e.object = object;
-
-		e.material = NULL;
-		e.triangle = NULL;
-		e.vertex = v;
-		e.matrix = object_matrix;
-		e.normal = NULL;
-		e.frame = frame;
-		e.lines = glines;
-		e.blend = false;
-	}
-*/
 }
 
 void OpenGL_Engine::makeStorageForObject(GraphObject *object)
@@ -1230,10 +1233,10 @@ void OpenGL_Engine::deleteStorageForChildren(int sid)
 
 void OpenGL_Engine::makeStorageForChildren(GraphObject *object)
 {
-	int count = object->getGraphChildrenCount();
+	int count = object->GetGraphChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
-		GraphObject *child = object->getGraphChildren(i);
+		GraphObject *child = object->GetGraphChildren(i);
 		makeStorageForObject(child);
 		makeStorageForChildren(child);
 	}

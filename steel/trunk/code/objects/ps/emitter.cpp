@@ -9,13 +9,15 @@ void SimpleEmitter::born(Particle &particle)
 }
 
 
-void SimpleEmitter::process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime)
+void SimpleEmitter::ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime)
 {
 	if(frand() < 0.5 && set->particles.size() > 1) // delete particle
 	{
 		int n = (int)ceil(frand()*set->particles.size()); // particle number
 		set->particles[n] = set->particles.back();
 		set->particles.pop_back();
+
+		particleSystem->setChildrenChangeTime(modificationTime);
 	}
 
 	if(frand() < 0.6)  // born particle

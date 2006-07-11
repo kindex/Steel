@@ -76,7 +76,7 @@ aabb GameObjModel::getFrame()
 }
 
 
-FaceMaterials* GameObjModel::getFaceMaterials()
+FaceMaterials* GameObjModel::GetFaceMaterials()
 {
 	if(m)
 		return &faceMaterial;

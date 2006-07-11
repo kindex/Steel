@@ -50,7 +50,7 @@ bool GameObj::init(ScriptLine	&s)
 
 	position = position*rx*ry*rz*scale; // TODO: order
 
-	setVelocity(velocity(s.getv3(7), s.getv3(8).getNormalized()*s.getf(9)));
+	SetVelocity(velocity(s.getv3(7), s.getv3(8).getNormalized()*s.getf(9)));
 
 	return true;
 }
@@ -73,20 +73,20 @@ bool GameObj::init(ScriptLine	&s)
 /*velocity GameObj::getGlobalVelocity()
 {
 	if(getPositionKind() == PositionKind::global)
-		return getVelocity();
+		return GetVelocity();
 	else 
 	{
 		GameObj *p = getParent();
 		if(p)
 		{
-			velocity v = getVelocity();
+			velocity v = GetVelocity();
 			velocity g = p->getGlobalVelocity();
 			
 			v.translation = g.translation + p->getGlobalPosition().getMatrix33()*v.translation;
 			return v; // TODO
 		}
 		else
-			return getVelocity();
+			return GetVelocity();
 	}
 }*/
 
@@ -105,15 +105,15 @@ void GameObj::addChildren(GameObj *obj)
 	physicChildren.push_back((PhysicObject*)obj);
 
 	obj->attach(this);
-	string name = obj->getName();
-	if(!name.empty())
+//	string name = obj->getName();
+/*	if(!name.empty())
 	{
 		if(tag.find(name) != tag.end())
 		{
 			log_msg("error scene", string("Duplicated object id '") + name + "'");
 		}
 		tag[name] = obj;
-	}
+	}*/
 }
 
 
@@ -131,7 +131,7 @@ Sprites*	GameSprite::getSprites()
 }
 */
 
-aabb GameObjSet::getPFrame()
+/*aabb GameObjSet::getPFrame()
 {
 	aabb box;
 	box.clear();
@@ -146,4 +146,4 @@ aabb GameObjSet::getPFrame()
 		}
 	}
 	return box;
-}
+}*/

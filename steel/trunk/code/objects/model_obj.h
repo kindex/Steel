@@ -32,19 +32,17 @@ public:
 	CollisionType::CollisionType getCollisionType() { return CollisionType::polyhedra; }
 
 	void assignModel(Model *M)	{		m = M;	}
-	bool	init(ScriptLine	&s);
+	bool init(ScriptLine	&s);
 
 	aabb getFrame();
-	bool cleanup()	{	return true;		}
-	bool cleanupP()	{	return cleanup();	}
-	Vertexes*	getVertexes()
+	Vertexes*	GetVertexes()
 	{
 		if(m)
 			return &m->vertex;
 		else
 			return NULL;
 	}
-	Vertexes*	getPVertexes() { return getVertexes(); }
+	Vertexes*	getPVertexes() { return GetVertexes(); }
 	Triangles*	getTriangles()
 	{
 		if(m)
@@ -53,19 +51,19 @@ public:
 			return NULL;
 	}
 
-	Normals* getNormals()
+	Normals* GetNormals()
 	{
 		if(m)
 			return &m->normal;
 		else
 			return NULL;
 	}
-	FaceMaterials* getFaceMaterials();
-	Lights* getLights()	{		return NULL;	}
+	FaceMaterials* GetFaceMaterials();
+	Lights* GetLights()	{		return NULL;	}
 
-	TexCoords*	getTexCoords(int mapNumber)
+	TexCoords*	GetTexCoords(int mapNumber)
 	{
-		return m->getTexCoords(mapNumber);
+		return m->GetTexCoords(mapNumber);
 	}
 	Config*		getPMaterial()
 	{	

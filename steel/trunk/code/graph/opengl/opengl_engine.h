@@ -68,11 +68,10 @@ protected:
 		steel::svector<uid> children;
 
 		// *** Polyhedra ****
+		FaceMaterials *faceMaterials;
 		Vertexes	*vertex;
-		Triangles	*triangle;
 		Normals		*normal;
 
-		Material	*material;
 		GLines		*lines;
 
 		matrix34	matrix;
@@ -129,6 +128,9 @@ public:
 
 //	void process(GraphObjectStorage &e);
 	void process(GraphObjectStorage &e, steel::time globalTime, steel::time time);
+	void DrawOpenGL10(GraphObjectStorage &e, Triangles *triangles, Material *material);
+	void DrawOpenGL10Lines(GraphObjectStorage &e);
+	void DrawOpenGL10Wire(GraphObjectStorage &e, Triangles *triangles);
 	
 //	void drawFaces(DrawElement &e);
 //	void drawNormals(DrawElement &e);

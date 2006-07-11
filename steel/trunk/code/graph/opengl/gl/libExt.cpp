@@ -293,7 +293,8 @@ std::string strtr(const char *s, char a, char b)
     steel::vector<std::string> r = explode(a, s);
     for(int i = 0; i < r.size(); i++)
     {
-        res += "\n\t\t" + IntToStr(i) + ": " + r[i];
+		if(!r[i].empty())
+			res += "\n\t\t" + IntToStr(i) + ": " + r[i];
     }
     return res;
 }

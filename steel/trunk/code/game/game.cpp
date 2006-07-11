@@ -31,7 +31,7 @@ void Game::handleEventKeyDown(std::string key)
 	if(key == "n") framesToPass = 1;
 
 	if(key == "f1") physicEngine->conf->toggle("helperDrawLines");
-	if(key == "f2") graphEngine->conf->toggle("drawFill");
+	if(key == "f2") graphEngine->conf->toggle("drawFace");
 	if(key == "f3") graphEngine->conf->toggle("drawWire");
 	if(key == "f4") graphEngine->conf->toggle("drawBump");
 	if(key == "f5") graphEngine->conf->toggle("drawVertexes");
@@ -83,13 +83,13 @@ bool Game::createObject()
 		light = new GameLight;
 		light->setProcessKind(ProcessKind::none);
 
-		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
+		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->SetPosition(m);
 
 		graphEngine->inject(light);
 	}
 	else
 	{
-		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
+		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->SetPosition(m);
 	}
 
 	return true;
@@ -122,12 +122,12 @@ bool Game::createObject()
 	m = m*rm1;
 	m.setTranslation(pos.getTranslation().x*direction.getNormalized() + eye);
 
-	o->setPosition(m);
+	o->SetPosition(m);
 
-	velocity v(o->getVelocity());
+	velocity v(o->GetVelocity());
 	v.translation = direction*conf->getf("weaponSpeed") /*+ cameraSpeed*/;
 	v.rotationAxis = v3(0,0,0);
-	o->setVelocity(v);
+	o->SetVelocity(v);
 
 	return false;
 
@@ -143,7 +143,7 @@ bool Game::createObject()
 			light->setProcessKind(ProcessKind::none);
 			o->addChildren(light);
 
-			light->setPosition(matrix34::getIdentity());
+			light->SetPosition(matrix34::getIdentity());
 
 			c = new Sprite;
 			ScriptLine csc;
@@ -256,11 +256,11 @@ void Game::bind(GraphEngine *engine)
 
 	graphEngine->inject(physicHelper);
 
-	GraphObjectList *children = world->getGraphChildrenList();
-	if(children)
-	for(unsigned int i = 0; i < children->size(); i++)
+
+	int count = world->GetGraphChildrenCount();
+	for(int i = 0; i < count; i++)
 	{
-		engine->inject(children->at(i));
+		engine->inject(world->GetGraphChildren(i));
 	}
 }
 
@@ -269,7 +269,7 @@ void Game::bindPhysicEngine()
 //	if(conf->geti("drawHelper"))
 	physicEngine->bindHelper(physicHelper);
 
-	int count = world->getPhysicChildrenCount();
+	int count = world->GetPhysicChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
 		physicEngine->inject(world->getPhysicChildren(i));
@@ -297,7 +297,7 @@ void Game::draw(GraphEngine *graph)
 
 		m.loadIdentity(); m.setTranslation(eye + direction*0.01f);
 
-		crosshair->setPosition(m);
+		crosshair->SetPosition(m);
 		((Sprite*)crosshair)->setAlign(-direction);
 
 		graph->inject(crosshair);

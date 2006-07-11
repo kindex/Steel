@@ -32,19 +32,19 @@ bool TagPath::init(ScriptLine &s)
 	}
 	currentTarget = 0;
 
-	GameObj *t = parent->findChildren(target[0].id);
-	if(!t) return false;
-	setPosition(t->getPosition());
+//	GameObj *t = parent->findChildren(target[0].id);
+//	if(!t) return false;
+//	SetPosition(t->getPosition());
 
 	smooth = false;
 
 	return true;
 }
 
-void TagPath::process(steel::time curTime, steel::time frameLength, PhysicEngine *engine)
+void TagPath::ProcessPhysic(steel::time curTime, steel::time frameLength, PhysicEngine *engine)
 {
 	int cnt = target.size();
-	GameObj *t = parent->findChildren(target[currentTarget].id);
+/*	GameObj *t = parent->findChildren(target[currentTarget].id);
 	if(!t) return;
 
 	v3 curPos = getPosition().getVector();
@@ -82,4 +82,5 @@ void TagPath::process(steel::time curTime, steel::time frameLength, PhysicEngine
 	}
 	else
 		vel.translation = (tp-curPos).getNormalized()* speed;
+		*/
 }

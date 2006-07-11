@@ -27,8 +27,9 @@ f	create light
 mouse1	create sphere
 
 
-Authors:
-KindeX [Andrej Ivanov, kindex@kindex.lv, http://kindex.lv]
+Team:
+KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 Def [Alexander Papyshev, 9000gl@gmail.com]
 Kane [J. Anton, kane@mail.berlios.de]
+Kuzmi4 [Andrey Movlaiko]
 

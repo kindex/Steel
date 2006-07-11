@@ -33,9 +33,9 @@ public:
 		return pos; 
 	}
 
-	velocity	getVelocity() { return velocity(particle->velocity,v3(0,0,0));}
-	void		setVelocity(const velocity &v) { particle->velocity = v.translation;}
-	void setPosition(ObjectPosition const &newPosition) {particle->position = newPosition.getTranslation(); }
+	velocity	GetVelocity() { return velocity(particle->velocity,v3(0,0,0));}
+	void		SetVelocity(const velocity &v) { particle->velocity = v.translation;}
+	void SetPosition(ObjectPosition const &newPosition) {particle->position = newPosition.getTranslation(); }
 
 
 	ProcessKind::ProcessKind getProcessKind() { return ProcessKind::none; }
@@ -55,7 +55,7 @@ class UniPSanimator: public ParticleAnimator
 
 public:
 	bool initParticles();
-	int getPhysicChildrenCount() { return children.size(); }
+	int GetPhysicChildrenCount() { return children.size(); }
 	PhysicObject* getPhysicChildren(int i) { return children[i]; }
 
 	ModificationTime getChildrenModificationTime(void) { return set->modificationTime; }
@@ -64,9 +64,9 @@ public:
 	PositionKind::PositionKind getPositionKind() { return particleSystem->getPositionKind(); }
 	CollisionType::CollisionType getCollisionType() { return CollisionType::none; }
 
-	void setPosition(ObjectPosition const &newPosition) {}
+	void SetPosition(ObjectPosition const &newPosition) {}
 	ProcessKind::ProcessKind getProcessKind() { return ProcessKind::none; }
-	void	process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime);
+	void	ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime);
 
 	aabb		getPFrame()		{	return aabb(); } // TODO
 	bool		cleanupP()		{	return true;	}
@@ -74,8 +74,8 @@ public:
 	Triangles*	getTriangles()	{	return NULL;}
 	Config*		getPMaterial()	{	return NULL;}
 
-	velocity	getVelocity() { return velocity(v3(0,0,0),v3(0,0,0));}
-	void		setVelocity(const velocity &v) {}
+	velocity	GetVelocity() { return velocity(v3(0,0,0),v3(0,0,0));}
+	void		SetVelocity(const velocity &v) {}
 
 	float	getMass() { return 1.0f;}
 	std::string getName() { return ""; }

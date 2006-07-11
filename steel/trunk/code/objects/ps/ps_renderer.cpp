@@ -1,7 +1,7 @@
 #include "ps_renderer.h"
 #include "../../res/res_main.h"
 
-void SpriteRenderer::processGraph(v3	cameraEye, v3 cameraDirection)
+void SpriteRenderer::ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection)
 {
 	initSprites(vertex.data.size()/4, set->particles.size());
 
@@ -130,23 +130,21 @@ bool ObjectPSRenderer::initParticles()
 	return true;
 }
 
-void ObjectPSRenderer::processGraph(v3 cameraEye, v3 cameraDirection)
+void ObjectPSRenderer::ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection)
 {
 	int newSize = set->particles.size();
 	int oldSize = children.size();
 	if(newSize > oldSize)
 	{
 		children.resize(newSize);
-		childrenModel.resize(newSize);
 		for(int i = oldSize; i < newSize; i++)
 		{
-			childrenModel[i] = new GameObjModel;
-			children[i] = childrenModel[i];
+			children[i] = new GameObjModel;
 			ScriptLine line;
 
 			line.set("solid			sphere/sphere2	0,0,0	0,0,0	0.2");
-			childrenModel[i]->init(line);
-			childrenModel[i]->setPositionKind(PositionKind::global);
+			children[i]->init(line);
+			children[i]->setPositionKind(PositionKind::global);
 		}
 	}
 
@@ -154,18 +152,15 @@ void ObjectPSRenderer::processGraph(v3 cameraEye, v3 cameraDirection)
 	{
 		for(int i = newSize; i < oldSize; i++)
 		{
-			delete childrenModel[i];
+			delete children[i];
 		}
 		children.resize(newSize);
-		childrenModel.resize(newSize);
 	}
-
 
 	for(int i = 0; i < newSize; i++)
 	{
-		ObjectPosition pos = childrenModel[i]->getPosition();
+		ObjectPosition pos = children[i]->getPosition();
 		pos.setTranslation(set->particles[i]->position);
-		childrenModel[i]->setPosition(pos);
+		children[i]->SetPosition(pos);
 	}
-
 }

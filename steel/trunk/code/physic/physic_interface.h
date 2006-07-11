@@ -81,7 +81,7 @@ public:
 	// список детей
 	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
 	// возвращает количество детей
-	virtual int getPhysicChildrenCount(void) { return 0; } 
+	virtual int GetPhysicChildrenCount(void) { return 0; } 
 	// ребёнок с указанным номером
 	virtual PhysicObject* getPhysicChildren(int number) { return NULL; }
 
@@ -98,29 +98,28 @@ public:
 
 
 	// Форма объекта и способ проверки и обработки коллизий
-	virtual CollisionType::CollisionType getCollisionType() = 0; 
+	virtual CollisionType::CollisionType getCollisionType() { return CollisionType::none; }
 
 	// Положение и поворот произвольной точки объекта в локальный координатах (точка отсчёта объекта). Именно за изменения этого параметра и отвечает физический движок.
-	virtual	void setPosition(ObjectPosition const &newPosition) = 0;
+	virtual	void SetPosition(ObjectPosition const &newPosition) = 0;
 
 	// скорость
-	virtual velocity	getVelocity() = 0;
-	virtual void		setVelocity(const velocity &v) = 0;
+	virtual velocity	GetVelocity() = 0;
+	virtual void		SetVelocity(const velocity &v) = 0;
+	// масса
+	virtual	coord	getMass() = 0;
 
 
 /*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
-	virtual aabb getPFrame() = 0; // AABB of object
+//	virtual aabb getPFrame() = 0; // AABB of object
 
 	// *** Polyhedra ***
 	virtual Vertexes*	getPVertexes() { return NULL; } // список вершин (координаты относительно getPosition() и всех матриц предков)
 	// массив индексов вершин, которые образуют треугольники (грани)
 	virtual Triangles*	getTriangles() { return NULL; }
 
-	// масса
-	virtual	coord	getMass() = 0;
-
-	virtual Config* getPMaterial() = 0;
-	// эта функция вызывается, еслу другой объект трогает этот
+	virtual Config* getPMaterial() { return NULL; }
+	// эта функция вызывается, если другой объект трогает этот
 	virtual void	trigger(PhysicObject *object) {}
 };
 

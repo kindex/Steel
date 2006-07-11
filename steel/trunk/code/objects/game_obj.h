@@ -25,24 +25,6 @@
 Dummy. Объект, который имеет положение и детей, но не имеет собственной формы.
 */
 
-class GameObjDummy: public virtual GraphObject, public virtual PhysicObject
-{
-public:
-	aabb		getPFrame()		{	return getFrame(); }
-	aabb		getFrame()		{	return aabb();	}
-	bool		cleanup()		{	return true;	}
-	bool		cleanupP()		{	return cleanup();	}
-	Vertexes*	getVertexes()	{	return NULL;	}
-	Vertexes*	getPVertexes()	{	return getVertexes(); }
-	Triangles*	getTriangles()	{	return NULL;	}
-	Config*		getPMaterial()	{	return NULL;	}
-	Normals*	getNormals()	{	return NULL;	}
-	Lights*		getLights()		{	return NULL;	}
-	GLines*		getLines()		{	return NULL;	}
-	FaceMaterials* getFaceMaterials()	{	return NULL;	}
-	TexCoords*	getTexCoords(int texNumber)	{	return NULL;	}
-	CollisionType::CollisionType getCollisionType() { return CollisionType::none; }
-};
 
 class GameObj;
 typedef steel::vector<GameObj*> GameObjList;
@@ -55,18 +37,17 @@ typedef steel::vector<GameObj*> GameObjList;
 имень детей
 быть прикреплённым к родителю
 */
-class GameObj: public GameObjDummy
+class GameObj: public virtual GraphObject, public virtual PhysicObject
 {
 public:
 	GameObj			*parent;
 	
 	PhysicObjectList physicChildren;
-	steel::svector<GraphObject*> graphChildren;
+	GraphObjectList  graphChildren;
 
 	velocity	vel;
 	coord		mass;
 	ObjectPosition	position;
-	std::string		name;
 	ProcessKind::ProcessKind	processKind;
 	PositionKind::PositionKind	positionKind;
 
@@ -80,23 +61,15 @@ public:
 		processKind	= ProcessKind::none;
 		positionKind = PositionKind::local;
 	}
+
 	void setPositionKind(PositionKind::PositionKind newKind) { positionKind = newKind; }
 	PositionKind::PositionKind	getPositionKind(){	return positionKind;}
 	ProcessKind::ProcessKind	getProcessKind() { return processKind; }
 
 	void			setProcessKind(const ProcessKind::ProcessKind _kind) { processKind = _kind; }
 	virtual	bool	init(ScriptLine	&s);
-	GameObj *findChildren(std::string name)
-	{
-		if(tag.find(name) != tag.end()) return tag[name]; else return NULL;
-	}
 
-	std::string getName() { return name; }
-	void setName(std::string _name) { name = _name;}
-
-	void	trigger(PhysicObject *object) {}
-
-	void	setPosition(ObjectPosition const &newPos) { position = newPos; } 
+	void SetPosition(ObjectPosition const &newPos) { position = newPos; } 
 
 	void attach(GameObj *obj) 
 	{ 
@@ -105,26 +78,21 @@ public:
 	
 	void addChildren(GameObj *obj);
 
+	int GetPhysicChildrenCount(void)	{		return physicChildren.size();	}
 	PhysicObject* getPhysicChildren(int i)	{		return physicChildren[i];	}
-	int getPhysicChildrenCount(void)	{		return physicChildren.size();	}
 
-	GraphObjectList* getGraphChildrenList()	{		return &graphChildren;	}
+	int GetGraphChildrenCount(void)	{		return graphChildren.size();	}
+	GraphObject* GetGraphChildren(int i)	{		return graphChildren[i];	}
 
 	GameObj *getParent() { return parent; }
 
 	ObjectPosition		getPosition() {return position;}
 
 	// скорость
-	velocity	getVelocity() { return vel; }
-	void	setVelocity(velocity const &v) {vel = v; }
+	velocity	GetVelocity() { return vel; }
+	void	SetVelocity(velocity const &v) {vel = v; }
 	// масса
 	coord	getMass(){return mass;}
-
-	bool	getTarget(v3 &targetPoint, coord &speed) {return false;}
-	void	setTargetReached() {}
-
-	void	process(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
-	void	processGraph(v3	cameraEye, v3 cameraDirection) {}
 };
 
 class GameObjSet: public GameObj
@@ -152,7 +120,7 @@ class GameLight: public GameObj
 {
 public:
 
-	Lights* getLights()
+	Lights* GetLights()
 	{
 		Lights *a = new Lights(1);
 		a->at(0).intensivity = 1.0f;

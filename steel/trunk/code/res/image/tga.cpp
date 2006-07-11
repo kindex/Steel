@@ -25,7 +25,10 @@ Image* createTGA(const std::string filename)
 		return o;
 	}
 	else
+	{
+		delete o;
 		return NULL;
+	}
 }
 
 bool TGA::init(const std::string name)

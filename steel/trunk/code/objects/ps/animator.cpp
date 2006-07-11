@@ -5,7 +5,7 @@ bool UniPSanimator::initParticles()
 	return true;
 }
 
-void UniPSanimator::process(steel::time curTime, steel::time frameLength, ModificationTime _modificationTime)
+void UniPSanimator::ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime _modificationTime)
 {
 	int size = set->particles.size();
 	int oldsize = children.size();

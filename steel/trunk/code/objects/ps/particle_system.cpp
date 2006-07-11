@@ -52,8 +52,6 @@ bool ParticleSystem::init(ScriptLine	&s)
 	if(!renderer) abort_init("error res ps renderer", "Renderer class " + rendererClass + " not found");
 	if(!renderer->init(rendererConf, &particleSet,  this)) { resConfig.pop(); abort_init("error res ps renderer", "Renderer class " + rendererClass + " cannot initialize"); }
 
-	graphList.push_back(renderer);
-
 	resConfig.pop();
 	return true;
 }
@@ -83,6 +81,7 @@ void ParticleEmitter::initParticles()
 		set->particles[i] = new Particle;
 		born(*set->particles[i]);
 	}
+	particleSystem->setChildrenChangeTime(globalFrameNumber);
 }
 
 bool ParticleRenderer::init(Config *_conf, ParticleSet *_set, GraphObject *_particleSystem)

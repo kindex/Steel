@@ -125,14 +125,14 @@ bool GameGroup::load(GameObj *global)
 					obj->positionKind = PositionKind::global;
 
 //					ObjectPosition matrix = this->getGlobalPosition();
-//					obj->setPosition(matrix * obj->getPosition());
+//					obj->SetPosition(matrix * obj->getPosition());
 
-					velocity vel = obj->getVelocity();
+					velocity vel = obj->GetVelocity();
 					
 //					vel.translation = this->getGlobalVelocity().translation + (matrix*vel.translation - matrix*v3(0,0,0)); 
 					vel.translation.loadZero();
 
-					obj->setVelocity(vel);
+					obj->SetVelocity(vel);
 				}
 				global->addChildren(obj);
 			}
@@ -156,7 +156,7 @@ bool GameGroup::load(GameObj *global)
 		if(id != "" && obj)
 		{
 			tag[id] = obj;
-			obj->setName(id);
+//			obj->setName(id);
 		}
 		if(obj)
 		{

@@ -44,21 +44,21 @@ public:
 	void drawBox(const aabb box, const steel::time duration, const steel::time fade, const color4f color);
 
 // Graph
-	void		processGraph(v3	cameraEye, v3 cameraDirection);
+	void		ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection);
 
 	ObjectPosition getPosition(void) { return matrix34::getIdentity(); }
 	
 	PositionKind::PositionKind	getPositionKind() {return PositionKind::global; }
 
-	GLines*		getLines()		{	return &glines;	}
+	GLines*		GetLines()		{	return &glines;	}
 	uid			getId()			{	return 0;		}
 	aabb		getFrame()		{	return aabb(v3(-INF, -INF, -INF), v3(INF, INF, INF));	}
 	bool		cleanup()		{	return true;	}
-	Vertexes*	getVertexes()	{	return &vertex;	}
-	Normals*	getNormals()	{	return NULL;	}
-	Lights*		getLights()		{	return NULL;	}
-	FaceMaterials* getFaceMaterials()	{	return &face;	}
-	TexCoords*	getTexCoords(int texNumber)	{	return NULL;	}
+	Vertexes*	GetVertexes()	{	return &vertex;	}
+	Normals*	GetNormals()	{	return NULL;	}
+	Lights*		GetLights()		{	return NULL;	}
+	FaceMaterials* GetFaceMaterials()	{	return &face;	}
+	TexCoords*	GetTexCoords(int texNumber)	{	return NULL;	}
 
 
 };

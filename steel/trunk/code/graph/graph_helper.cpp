@@ -29,7 +29,7 @@ void GraphHelper::drawBox(const aabb box, const steel::time duration, const stee
 	boxes.push_back(BoxElement(box, time, time + fade, time + duration, color));
 }
 
-void GraphHelper::processGraph(v3	cameraEye, v3 cameraDirection)
+void GraphHelper::ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection)
 {
 /*	if(face.empty())
 	{
@@ -94,7 +94,7 @@ void GraphHelper::processGraph(v3	cameraEye, v3 cameraDirection)
 		aabb &b = it->box;
 
 		steel::svector<v3> r;
-		b.getVertexes(r);
+		b.GetVertexes(r);
 		for(int i=0;  i<8; i++)
 			vertex.data[vi + i].set(r[i]);
 
