@@ -276,7 +276,7 @@ bool OpenGL_WIN_Engine::createWindow()
 	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);		// An arrow for the cursor
 //	wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW+1);	// A white window
 //    u nas black :)
-	wndclass.lpszClassName = "SteelWindow";			// Assign the class name
+	wndclass.lpszClassName = "steel";			// Assign the class name
 
 	if(!RegisterClass(&wndclass)) 
 	{
@@ -303,7 +303,7 @@ bool OpenGL_WIN_Engine::createWindow()
 	//AdjustWindowRect( &rWindow, dwStyle, false);		// Adjust Window To True Requested Size
 
 														// Create the window
-	hWnd = CreateWindow("SteelWindow", "Steel Engine", dwStyle, 
+	hWnd = CreateWindow("steel", "Steel Engine", dwStyle, 
 		conf->geti("window.left"), conf->geti("window.top"),
 						conf->geti("window.width"), conf->geti("window.height"),
 						NULL, NULL, hInstance, NULL);

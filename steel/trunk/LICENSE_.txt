@@ -1,7 +1,0 @@
-Steel Engine License
-(C) DiVision 2006
-
-Steel engine sources can use only Steel Engine developers.
-Steel engine binaries can use anyone without modifications
-and without use in other projects.
-

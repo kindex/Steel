@@ -1,0 +1,11 @@
+Steel Engine License
+(C) DiVision 2006
+
+Steel engine sources can use only Steel Engine developers.
+Steel engine binaries can use anyone without modifications
+and without using it in other projects.
+
+This enginge comes absolutely without any warranty.
+You may use this software only on your own risk, so we do not have any responsibility.
+
+All rights reserved only for copyrighted (c) products by Division.
