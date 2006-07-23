@@ -10,7 +10,7 @@
 #define __TYPES_H__
 
 #ifdef __linux
-#include <linux/types.h>
+#include <sys/types.h>
 #endif
 
 /*

@@ -1,6 +1,7 @@
+#include "../steel.h"
 #include "../_cpp.h"
 
-#ifdef STEEL_OPENGL_WIN
+#if (STEEL_OS == OS_WIN32) && (STEEL_VIDEOSYS == OPENGL_WIN)
 
 #include "input_win.h"
 #include "../common/utils.h"
@@ -166,4 +167,3 @@ void InputWIN::process()
 
 
 #endif
-

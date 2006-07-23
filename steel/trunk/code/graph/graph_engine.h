@@ -25,7 +25,7 @@ class GraphEngine;
 class Camera
 {
 public:
-    v3 eye, center, up;
+    v3 up, eye, center;
 
 public:
     void seteye(const v3 &EYE) { eye = EYE; }
@@ -74,4 +74,3 @@ public:
 };
 
 #endif
-

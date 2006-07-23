@@ -17,8 +17,9 @@
 #define __GRAPH_OPENGL_WIN_ENGINE_H
 
 #include "../../_cpp.h"
+#include "../../steel.h"
 
-#ifdef STEEL_OPENGL_WIN
+#if STEEL_VIDEOSYS == OPENGL_WIN
 
 #include "opengl_engine.h"
 #include "../../common/logger.h"
@@ -52,5 +53,5 @@ public:
 	bool changeToWindow();
 };
 
-#endif
+#endif	// STEEL_VIDEOSYS
 #endif

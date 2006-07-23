@@ -19,7 +19,7 @@
 #include <string>
 
 #include "../graph_engine.h"
-#ifdef __linux
+#if STEEL_OS == OS_LINUX
 #include <GL/gl.h>			// Header File For The OpenGL32 Library
 #include <GL/glu.h>			// Header File For The GLu32 Library
 //#include <GL/glaux.h>		// Header File For The Glaux Library

@@ -1,0 +1,3 @@
+2006-07-22  J. Anton <kane@mail.berlios.de>
+common/utils.cpp: deleteFiles
+	Написать реализацию под Линукс.

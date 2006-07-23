@@ -174,7 +174,7 @@ T* ResCollection<T>::add(const std::string name, bool pop)
 template<class T>
 bool ResCollection<T>::remove(T* object)
 {
-#ifndef STEEL_COMPILER_DEVCPP
+#if (STEEL_COMPILER != GCC) || !defined(STEEL_COMPILER_DEVCPP)
     std::map<T*,int>::const_iterator it = resIndex.find(object);
      
 	if(it == resIndex.end())

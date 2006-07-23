@@ -1,10 +1,10 @@
 #ifndef INPUT_SDL_H
 #define INPUT_SDL_H
 
+#if STEEL_VIDEOSYS == OPENGL_SDL
+
+#include "../steel.h"
 #include "../_cpp.h"
-
-#ifdef STEEL_OPENGL_SDL
-
 #include "input.h"
 
 class InputSDL: public Input

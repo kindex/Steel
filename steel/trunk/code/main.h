@@ -18,7 +18,7 @@
 #include "_cpp.h"
 #include <string>
 
-#ifdef STEEL_COMPILER_DEVCPP
+#if (STEEL_OS == WIN32) && (STEEL_COMPILER == GCC)
 int main1(int argc, char *argv[]);
 #else
 int main(int argc, char *argv[]);

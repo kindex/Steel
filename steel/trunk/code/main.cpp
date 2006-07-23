@@ -36,7 +36,7 @@ using namespace std;
 bool test();
 std::string commandLine;
 
-#ifdef STEEL_COMPILER_DEVCPP
+#if (STEEL_COMPILER == GCC) && (STEEL_OS == OS_WIN32)
 int main1(int argc, char *argv[])
 #else
 int main(int argc, char *argv[])
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 #ifdef STEEL_OPENGL_SDL	
 	OpenGL_SDL_Engine graph;
 	InputSDL input;
-	graph.bindResColelntion(&res);
+	//graph.bindResColection(&res);
 	if(!graph.init("renderer")) return 1;
 #endif
 #ifdef STEEL_OPENGL_WIN

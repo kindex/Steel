@@ -10,8 +10,13 @@
 		System dependant entry point for Visual Studio project.
  ************************************************************/
 
+#include "steel.h"
+
+#if STEEL_OS == OS_WIN32
 #include <windows.h>
 #include <direct.h>
+#endif	// STEEL_OS
+
 #include <fstream>
 #include <string>
 
@@ -25,7 +30,9 @@
 /*extern int mainCRTStartup(void);
 */
 
-#ifdef STEEL_COMPILER_DEVCPP
+#if STEEL_OS == OS_WIN32
+
+#if STEEL_COMPILER == DEVCPP
 HINSTANCE hInstance;
 
 int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
@@ -39,10 +46,8 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 
 	return main1(0, NULL);							// Exit The Program
 }
-#endif
 
-#ifdef STEEL_COMPILER_VS8
-#ifdef STEEL_OPENGL_WIN
+#elif (STEEL_COMPILER == VS8) && (STEEL_VIDEOSYS == OPENGL_WIN)
 HINSTANCE hInstance;
 
 int APIENTRY WinMain(HINSTANCE hInstance,
@@ -54,5 +59,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	return main(0, NULL);
 }
-#endif
-#endif
+#endif	// STEEL_COMPILER && STEEL_VIDEOSYS
+
+#endif	// STEEL_OS

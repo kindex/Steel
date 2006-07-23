@@ -4,20 +4,24 @@
 // Author: Alex V. Boreskoff <alexboreskoff@mtu-net.ru>, <steps3d@narod.ru>
 //
 
+#include "../../../steel.h"
 #include "../../../_cpp.h"
 
-#ifdef  _WIN32
-    #include    <windows.h>
+#include    <GL/gl.h>
+
+#if STEEL_OS == OS_WIN32
+#include    <windows.h>
+#include    "glext.h"
+#elif STEEL_OS == OS_LINUX
+#include	<GL/glext.h>
 #endif
 
-#include    <GL/gl.h>
-#include    "glext.h"
 #include    <stdio.h>
 #include    <string.h>
 #include    <ctype.h>
 #include    <stdlib.h>
 #include    <malloc.h>
-#include    "libExt.h"
+#include    "libext.h"
 
 
                                 // multitexture functions
@@ -291,7 +295,7 @@ std::string strtr(const char *s, char a, char b)
 {
     std::string res;
     steel::vector<std::string> r = explode(a, s);
-    for(int i = 0; i < r.size(); i++)
+    for(unsigned int i = 0; i < r.size(); i++)
     {
 		if(!r[i].empty())
 			res += "\n\t\t" + IntToStr(i) + ": " + r[i];
@@ -572,4 +576,3 @@ void    printfInfo ()               // print info about card, driver, version & 
     if ( isExtensionSupported ( "GL_ARB_vertex_program" ) )
         printf ( "GL_ARB_vertex_program extension supported.\n" );
 }
-

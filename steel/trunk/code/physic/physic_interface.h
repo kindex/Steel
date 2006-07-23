@@ -27,7 +27,7 @@ namespace ProcessKind
 		custom, // сам объект определяет своё движение
 		uni // движется по универсальным законам
 	} ProcessKind;
-};
+}
 
 namespace CollisionType
 {
@@ -39,7 +39,7 @@ namespace CollisionType
 		particle, // sphere, collide with polyhedra
 		sphere
 	} CollisionType;
-};
+}
 
 namespace ShapeType
 {
@@ -124,4 +124,3 @@ public:
 };
 
 #endif
-

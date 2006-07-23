@@ -2,8 +2,9 @@
 #define INPUT_WIN_H
 
 #include "../_cpp.h"
+#include "../steel.h"
 
-#ifdef STEEL_OPENGL_WIN
+#if STEEL_VIDEOSYS == OPENGL_WIN
 
 #include "input.h"
 #include <windows.h>
@@ -24,5 +25,3 @@ public:
 
 #endif // OPENGL_WIN
 #endif // INPUT_WIN_H
-
-

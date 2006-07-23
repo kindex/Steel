@@ -17,6 +17,7 @@
 #include "math/matrix34.h"
 
 #include "common/steel_vector.h"
+#include "steel.h"
 
 // One triangle, indexes of vertexes
 struct Triangle // anti-clockwise direction (one side Triangle)
@@ -68,7 +69,7 @@ namespace PositionKind
 		local,
 		global
 	} PositionKind;
-};
+}
 
 class IdGenerator
 {
@@ -99,7 +100,7 @@ typedef int ModificationTime;
 
 extern ModificationTime globalFrameNumber;
 
-class Interface
+class Interface: public steelAbstract
 {
 protected:
 	uid id;
@@ -125,4 +126,3 @@ public:
 };
 
 #endif
-

@@ -1,14 +1,15 @@
+#include "../steel.h"
 #include "../_cpp.h"
 
-#ifdef STEEL_OPENGL_SDL
+#if STEEL_VIDEOSYS == OPENGL_SDL
 
+#include "SDL.h"
 #include "input_sdl.h"
-#include <SDL.h>
 
 void InputSDL::process()
 {
 		SDL_Event event;
-		string key;
+		std::string key;
 		if(SDL_PollEvent(&event))
 			switch(event.type)
 			{
@@ -75,6 +76,5 @@ void InputSDL::freeMouse()
 //	ShowCursor(true);			// show Mouse Pointer
 	mouseCaptured = false;
 }
-
 
 #endif

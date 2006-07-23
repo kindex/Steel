@@ -4,9 +4,10 @@
 #define timeH
 
 #include "../common/types.h"
+#include "../steel.h"
 #include <string>
 
-class Timer
+class Timer: public steelAbstract
 {
 	bool active;
     double startTime, skip, pausedTime, lastIntervalTime, curIntervalStartTime, fps;

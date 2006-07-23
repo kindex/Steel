@@ -1,4 +1,5 @@
 
+#include "../steel.h"
 #include "timer.h"
 #include "../_cpp.h"
 
@@ -43,8 +44,14 @@ std::string Timer::getfps_s()
 
 double Timer::timestamp()
 {
-	 struct _timeb a;
+	#if STEEL_OS == OS_WIN32
+	struct _timeb a;
 	_ftime(&a);
+	 
+	#elif STEEL_OS == OS_LINUX
+	struct timeb a;
+	ftime(&a);
+	#endif	// STEEL_OS
 
 	return a.millitm*0.001 + a.time;
 }

@@ -15,13 +15,14 @@
 #ifndef __GRAPH_OPENGL_SDL_ENGINE_H
 #define __GRAPH_OPENGL_SDL_ENGINE_H
 
+#include "../../steel.h"
 #include "../../_cpp.h"
 
-#ifdef STEEL_OPENGL_SDL
+#if STEEL_VIDEOSYS == OPENGL_SDL
 
 #include "opengl_engine.h"
 #include "../../common/logger.h"
-#include <SDL.h>			// Header File For SDL
+#include "SDL.h"			// Header File For SDL
 
 
 class OpenGL_SDL_Engine: public OpenGL_Engine

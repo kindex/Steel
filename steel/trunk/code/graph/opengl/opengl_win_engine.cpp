@@ -11,9 +11,10 @@
 		системно зависимые функции, такие как создание окна.
  ************************************************************/
 
+#include "../../steel.h"
 #include "../../_cpp.h"
 
-#ifdef STEEL_OPENGL_WIN
+#if STEEL_VIDEOSYS == OPENGL_WIN
 
 #include "opengl_win_engine.h"
 #include "../../input/input_win.h"

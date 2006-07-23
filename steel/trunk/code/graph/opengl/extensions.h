@@ -10,11 +10,11 @@
 #ifndef OPENGL_EXTENSIONS_H
 #define OPENGL_EXTENSIONS_H
 
+#include "../../steel.h"
 #include "../../_cpp.h"
 
-#ifdef STEEL_OS_WIN32
+#if STEEL_OS == OS_WIN32
 #include <windows.h>
-#endif
 
 #include <gl/gl.h>
 #include <gl/glu.h>
@@ -22,9 +22,13 @@
 //#define GL_GLEXT_PROTOTYPES
 #include "gl/glext.h"
 
-#ifdef STEEL_OS_WIN32
 //#include "wglext.h"
-#endif
+
+#elif STEEL_OS == OS_LINUX
+#include <GL/gl.h>
+#include <GL/glu.h>
+
+#endif	// STEEL_OS
 
 
 bool SetUpARB_multitexture();
@@ -33,7 +37,7 @@ GLuint GenerateNormalisationCubeMap();
 GLuint GenerateLightCubeMap();
 GLuint generateDistanceLinearMap();
 
-
+#if STEEL_OS == OS_WIN32
 extern bool ARB_multitexture_supported, GL_TEXTURE_CUBE_MAP_ARB_supported;
 
 extern PFNGLACTIVETEXTUREARBPROC				glActiveTextureARB;
@@ -70,6 +74,6 @@ extern PFNGLMULTITEXCOORD4IARBPROC				glMultiTexCoord4iARB;
 extern PFNGLMULTITEXCOORD4IVARBPROC				glMultiTexCoord4ivARB;
 extern PFNGLMULTITEXCOORD4SARBPROC				glMultiTexCoord4sARB;
 extern PFNGLMULTITEXCOORD4SVARBPROC				glMultiTexCoord4svARB;
-
+#endif	// STEEL_OS == OS_WIN32
 
 #endif

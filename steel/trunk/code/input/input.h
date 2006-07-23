@@ -4,6 +4,7 @@
 /* Посредник между классом Game и драйверами, которые опрашивают
 устройства ввода. Хранит события, нажатые кнопки
 */
+#include "../steel.h"
 
 #include "../res/conf/conf.h"
 
@@ -14,7 +15,7 @@ class Input;  // forward declaration, cross-use
 #include <map>
 
 
-class Input
+class Input: public steelAbstract
 {
 protected:
 	std::map<std::string, bool> keyPressed;

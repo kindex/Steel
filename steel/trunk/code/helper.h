@@ -20,6 +20,7 @@
 #ifndef __HELPER_H
 #define __HELPER_H
 
+#include "steel.h"
 #include "_cpp.h"
 
 #include "graph/types.h"
@@ -28,7 +29,7 @@
 #include "math/line.h"
 #include "math/aabb.h"
 
-class EngineHelper // Abstract Interface
+class EngineHelper: public steelAbstract // Abstract Interface
 {
 public:
 	virtual void clean() = 0;	

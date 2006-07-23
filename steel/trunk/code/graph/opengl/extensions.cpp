@@ -10,7 +10,7 @@ bool SetUpARB_multitexture()
 	//Check for support
 	char *extensionString = (char *)glGetString(GL_EXTENSIONS);
 	
-	alog.msg("opengl", string("Supported extensions: ") + extensionString);
+	log_msg("opengl", string("Supported extensions: ") + extensionString);
 
 	char *extensionName="GL_ARB_multitexture";
 
@@ -38,14 +38,14 @@ bool SetUpARB_multitexture()
 	
 	if(!ARB_multitexture_supported)
 	{
-		alog.msg("error graph opengl", "WARNING: ARB_multitexture unsupported!");
+		error("error graph opengl", "WARNING: ARB_multitexture unsupported!");
 		return false;
 	}
 
 	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 	if(!glIsEnabled(GL_TEXTURE_CUBE_MAP_ARB))
 	{
-		alog.msg("error graph opengl", "WARNING: GL_TEXTURE_CUBE_MAP_ARB unsupported!");
+		error("error graph opengl", "WARNING: GL_TEXTURE_CUBE_MAP_ARB unsupported!");
 		GL_TEXTURE_CUBE_MAP_ARB_supported = false;
 		return false;
 	}
@@ -66,6 +66,7 @@ bool SetUpARB_multitexture()
 	}
 */
 	//get function pointers
+	#if STEEL_OS == OS_WIN32
 	glActiveTextureARB			=	(PFNGLACTIVETEXTUREARBPROC)wglGetProcAddress("glActiveTextureARB");
 
 	glClientActiveTextureARB	=	(PFNGLCLIENTACTIVETEXTUREARBPROC)
@@ -134,12 +135,13 @@ bool SetUpARB_multitexture()
 									wglGetProcAddress("glMultiTexCoord4sARB");
 	glMultiTexCoord4svARB		=	(PFNGLMULTITEXCOORD4SVARBPROC)
 									wglGetProcAddress("glMultiTexCoord4svARB");
+	#endif	// STEEL_OS == OS_WIN32
 
 	return true;
 }
 
 //function pointers
-
+#if STEEL_OS == OS_WIN32
 PFNGLACTIVETEXTUREARBPROC				glActiveTextureARB				=NULL;
 PFNGLCLIENTACTIVETEXTUREARBPROC			glClientActiveTextureARB		=NULL;
 PFNGLMULTITEXCOORD1DARBPROC				glMultiTexCoord1dARB			=NULL;
@@ -174,7 +176,7 @@ PFNGLMULTITEXCOORD4IARBPROC				glMultiTexCoord4iARB			=NULL;
 PFNGLMULTITEXCOORD4IVARBPROC			glMultiTexCoord4ivARB			=NULL;
 PFNGLMULTITEXCOORD4SARBPROC				glMultiTexCoord4sARB			=NULL;
 PFNGLMULTITEXCOORD4SVARBPROC			glMultiTexCoord4svARB			=NULL;
-
+#endif	// STEEL_OS == OS_WIN32
 
 
 

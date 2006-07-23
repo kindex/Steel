@@ -31,9 +31,9 @@ public:
     TexCoords			texCoords; // Texture coordinates
     Normals				normal;    // Vertex normals
 	FaceMaterials		faceMaterial;
+	
+	std::string name;
 	float				volume;
-
-    std::string name;
 
     Model(): name(), volume(-1) { }
     void updateMaterial();

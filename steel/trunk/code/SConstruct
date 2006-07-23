@@ -1,38 +1,97 @@
-env=Environment(CPPPATH=["/usr/include/SDL"], CCFLAGS="-Wall")
-#env=Environment(CCFLAGS="-Wall")
+import sys
 
-env.Append(CCFLAGS=" -DDEBUG -g")
-#env.Append(CCFLAGS=" -O3")
+Help("""
+Build the Steel Engine: 'scons mode=...`
+Clear the built Steel Engine: 'scons -c`
+
+========
+Build mode: debug|release; default: debug
+	'debug`: build debug version, debug mode can be set
+	'release`: build the release version
+	""")
+
+env=Environment(CPPPATH=["/usr/include/SDL"], CCFLAGS="-Wall")
+
+mode=ARGUMENTS.get("mode","debug")
+if mode=="debug":
+	env.Append(CCFLAGS=" -g -DDEBUG")
+elif mode=="release":
+	env.Append(CCFLAGS=" -O3 -march=pentium4")
+	env.Append(LINKFLAGS=" -s")
+else:
+	print "Invalid mode ( debug|release )"
+	sys.exit()
 
 sources = Split("""
-	common/logger.cpp
-	graph/opengl_engine.cpp
-	graph/time.cpp
-	graph/graph_engine.cpp
-	math/matrix4x4.cpp
-	math/vector2d.cpp
-	math/vector3d.cpp
-	math/vector4d.cpp
-	math/geometry.cpp
-	math/maths.cpp
-	res/model/model.cpp
-	res/model/bones.cpp
-	res/model/_3ds.cpp
-	res/model/lightwave.cpp
-	res/image/image.cpp
-	res/image/bmp.cpp
-	res/res.cpp
-	utils.cpp
-	main.cpp
-	engine.cpp
+	./interface.cpp
+	./steel.cpp
+	./math/line.cpp
+	./math/plane.cpp
+	./math/maths.cpp
+	./math/aabb.cpp
+	./math/matrix34.cpp
+	./math/matrix33.cpp
+	./math/vector2d.cpp
+	./math/vector3d.cpp
+	./game/game.cpp
+	./input/input_sdl.cpp
+	./input/input_win.cpp
+	./input/input.cpp
+	./common/steel_vector.cpp
+	./common/logger.cpp
+	./common/utils.cpp
+	./common/timer.cpp
+	./graph/graph_helper.cpp
+	./graph/graph_engine.cpp
+	./graph/opengl/opengl_sdl_engine.cpp
+	./graph/opengl/extensions.cpp
+	./graph/opengl/ext/normalisation_cube_map.cpp
+	./graph/opengl/opengl_engine.cpp
+	./graph/opengl/gl/libext.cpp
+	./graph/opengl/opengl_win_engine.cpp
+	./test.cpp
+	./objects/custom_path.cpp
+	./objects/game_obj.cpp
+	./objects/ps/ps_renderer.cpp
+	./objects/ps/animator.cpp
+	./objects/ps/emitter.cpp
+	./objects/ps/particle_system.cpp
+	./objects/group.cpp
+	./objects/triangle.cpp
+	./objects/model_obj.cpp
+	./objects/path.cpp
+	./res/rstream.cpp
+	./res/res_main.cpp
+	./res/conf/conf.cpp
+	./res/conf/conf_text.cpp
+	./res/model/_3ds.cpp
+	./res/model/lightwave.cpp
+	./res/model/model.cpp
+	./res/model/bones.cpp
+	./res/material/material.cpp
+	./res/script/script.cpp
+	./res/script/script_text.cpp
+	./res/res.cpp
+	./res/image/image.cpp
+	./res/image/bmp.cpp
+	./res/image/tga.cpp
+	./physic/physic_engine.cpp
+	./physic/physic_engine_steel.cpp
+	./physic/pe_particle.cpp
+	
+	./main.cpp
 	""")
+
+#./physic/physic_engine_3d.cpp
 
 libs = Split("""
 	SDL
 	GL
+	glut
 	""")
 
 libpaths = Split("""
 	""")
 
-Default(env.Program("steel",sources,LIBS=libs,LIBPATH=libpaths))
+steel=env.Program("steel",sources,LIBS=libs,LIBPATH=libpaths)
+Default(steel)

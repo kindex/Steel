@@ -94,7 +94,8 @@ bool Game::createObject()
 
 	return true;
 
-	static int safe = 0;
+	// not used, Kane
+	//static int safe = 0;
 
 	if(conf->getf("weaponSpeed")<EPSILON) return false;
 
@@ -113,7 +114,8 @@ bool Game::createObject()
 	matrix34 rm1; 	rm1.loadIdentity();
 	
 //			rm1.setRotationZ(d.x, d.y);
-	float cen = direction.z;
+	// not used, Kane
+	//float cen = direction.z;
 
 	//rm1.setRotationEuler(1,0, cen, sqrt(1-cen*cen), d.x, d.y);
 
@@ -438,4 +440,3 @@ bool Game::executeCommand(std::string command)
 	else
 		return false;
 }
-

@@ -16,6 +16,7 @@
 #define GAME_OBJ_H
 
 #include "../physic/physic_interface.h"
+#include "../physic/physic_engine.h"	// Kane
 #include "../graph/graph_interface.h"
 
 #include "../res/model/model.h"

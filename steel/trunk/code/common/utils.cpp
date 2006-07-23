@@ -1,6 +1,16 @@
+
+#include "../steel.h"
 #include "utils.h"
 
+#if STEEL_OS == OS_WIN32
 #include <windows.h>
+#endif
+
+#include "errno.h"
+
+#ifdef STEEL_USE_GETTEXT
+#include <libintl.h>
+#endif
 
 using namespace std;
 
@@ -55,9 +65,9 @@ steel::vector<string> explode(char delimiter, const std::string s)
 
 		string* T = NULL;
 
-		int x = errno;
+		//int x = errno;
 		T = (string*)realloc(T, 32);
-		int y = errno;
+		//int y = errno;
 
 		res.push_back(s.substr(last, start - last - 1));
 	}
@@ -100,11 +110,21 @@ void splitPath(std::string fullpath, std::string &path, std::string &filename)
 void deleteFile(std::string dir, std::string file)
 {
 	if(file.substr(0,1) != ".")
+		#if STEEL_OS == OS_WIN32
 		DeleteFile( (dir + "\\" + file).c_str());
+		#elif STEEL_OS == OS_LINUX
+		if ( unlink((dir+"/"+file).c_str())==-1 )
+			#ifdef STEEL_USE_GETTEXT
+			error(_("Failed to delete a file")+" "+dir+"/"+file,strerror(errno));
+			#else	// STEEL_USE_GETTEXT
+			error("Failed to delete a file "+dir+"/"+file,strerror(errno));
+			#endif	// STEEL_USE_GETTEXT
+		#endif	// STEEL_OS
 }
 
 void deleteFiles(string dir, string mask)
 {
+	#if STEEL_OS == OS_WIN32
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
 
@@ -116,6 +136,10 @@ void deleteFiles(string dir, string mask)
 	deleteFile(dir, FindFileData.cFileName);
     while (FindNextFile(hFind, &FindFileData) != 0) 
 		deleteFile(dir, FindFileData.cFileName);
-      
-    FindClose(hFind);
+	
+	FindClose(hFind);
+	
+	#elif STEEL_OS == OS_LINUX
+	// TODO
+	#endif	// STEEL_OS
 }
