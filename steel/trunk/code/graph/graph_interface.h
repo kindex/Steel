@@ -53,9 +53,9 @@ public:
 	// список детей
 	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
 	// возвращает количество детей
-	virtual int GetGraphChildrenCount(void) { return 0; } 
+	virtual int getGraphChildrenCount(void) { return 0; } 
 	// ребёнок с указанным номером
-	virtual GraphObject* GetGraphChildren(int number) { return NULL; }
+	virtual GraphObject* getGraphChildren(int number) { return NULL; }
 
 	// Непосредственно перед добавлением в движок вызывается 
 	virtual bool GraphBeforeInject() { return true;}
@@ -74,16 +74,16 @@ public:
 	// Следующие функции возврящяют ссылки на массивы данных (NULL if none), и должны 
 	// отвечать за хранние этих данных до следующего вызова этой функции
 	// или вызова cleanup
-	virtual Vertexes*	GetVertexes() { return NULL;} // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
-	virtual Normals*	GetNormals() { return NULL;} // список нормалей в вершинам
+	virtual Vertexes*	getVertexes() { return NULL;} // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	virtual Normals*	getNormals() { return NULL;} // список нормалей в вершинам
 
-	virtual GLines*		GetLines() { return NULL;} // индексы вершин для линий и цвета линий (for debug)
+	virtual GLines*		getLines() { return NULL;} // индексы вершин для линий и цвета линий (for debug)
 
 	// массив индексов вершин, которые образуют треугольники (грани) + материалы
-	virtual FaceMaterials* GetFaceMaterials() { return NULL;}
-	virtual TexCoords*	GetTexCoords(int texNumber) { return NULL;}
+	virtual FaceMaterials* getFaceMaterials() { return NULL;}
+	virtual TexCoords*	getTexCoords(int texNumber) { return NULL;}
 
-	virtual Lights*		GetLights() { return NULL;}
+	virtual Lights*		getLights() { return NULL;}
 };
 
 #endif

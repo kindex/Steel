@@ -34,7 +34,7 @@ bool TagPath::init(ScriptLine &s)
 
 //	GameObj *t = parent->findChildren(target[0].id);
 //	if(!t) return false;
-//	SetPosition(t->getPosition());
+//	setPosition(t->getPosition());
 
 	smooth = false;
 

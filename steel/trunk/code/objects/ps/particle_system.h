@@ -91,11 +91,11 @@ class ParticleSystem: public GameObj
 public:
 	bool init(ScriptLine	&s);
 
-	int GetPhysicChildrenCount(void) { return animator?1:0; }
+	int getPhysicChildrenCount(void) { return animator?1:0; }
 	PhysicObject* getPhysicChildren(int i) { return animator; }
 
-	int GetGraphChildrenCount(void) { return renderer?1:0; }
-	GraphObject* GetGraphChildren(int i) { return renderer; }
+	int getGraphChildrenCount(void) { return renderer?1:0; }
+	GraphObject* getGraphChildren(int i) { return renderer; }
 
 
 	PositionKind::PositionKind getPositionKind(void) { return PositionKind::global;}

@@ -27,7 +27,7 @@ struct aabb3 // AABB 3D
 	aabb3(const v3 point): min(point), max(point) {}
 	bool empty() const { return min.x>max.x + EPSILON || min.y>max.y + EPSILON || min.z>max.z + EPSILON;  }
 	void clear();
-	void GetVertexes(steel::svector<v3> &dest) const;
+	void getVertexes(steel::svector<v3> &dest) const;
 
     void merge(const v3 point);
     void merge(const aabb3 &second);

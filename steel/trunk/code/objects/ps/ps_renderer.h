@@ -33,18 +33,18 @@ public:
 	bool initParticles();
 
 
-	Vertexes*	GetVertexes() { return &vertex; }
-	FaceMaterials* GetFaceMaterials() { return &face; }
-	Normals*	GetNormals() { return &normal; }
-	TexCoords*	GetTexCoords(int texNumber) { return &texCoords; }
+	Vertexes*	getVertexes() { return &vertex; }
+	FaceMaterials* getFaceMaterials() { return &face; }
+	Normals*	getNormals() { return &normal; }
+	TexCoords*	getTexCoords(int texNumber) { return &texCoords; }
 
 	aabb getFrame();
 
 	ObjectPosition getPosition() { return particleSystem->getPosition(); }
 	PositionKind::PositionKind getPositionKind() { return PositionKind::global; }
 	bool cleanup() { return true;}
-	GLines*	GetLines(){ return NULL; }
-	Lights*	GetLights() { return NULL;}
+	GLines*	getLines(){ return NULL; }
+	Lights*	getLights() { return NULL;}
 
 	void ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection);
 };
@@ -58,22 +58,22 @@ protected:
 public:
 	bool initParticles();
 	
-	int GetGraphChildrenCount(void) { return children.size(); }
-	GraphObject* GetGraphChildren(int i) { return children[i]; }
+	int getGraphChildrenCount(void) { return children.size(); }
+	GraphObject* getGraphChildren(int i) { return children[i]; }
 	ModificationTime getChildrenModificationTime(void) { return set->modificationTime; }
 
-	Vertexes*	GetVertexes() { return NULL; }
-	FaceMaterials* GetFaceMaterials() { return NULL; }
-	Normals*	GetNormals() { return NULL; }
-	TexCoords*	GetTexCoords(int texNumber) { return NULL; }
+	Vertexes*	getVertexes() { return NULL; }
+	FaceMaterials* getFaceMaterials() { return NULL; }
+	Normals*	getNormals() { return NULL; }
+	TexCoords*	getTexCoords(int texNumber) { return NULL; }
 
 	aabb getFrame() { return aabb(); } // TODO
 
 	ObjectPosition getPosition() { return particleSystem->getPosition(); }
 	PositionKind::PositionKind getPositionKind() { return PositionKind::global; }
 	bool cleanup() { return true;}
-	GLines*	GetLines(){ return NULL; }
-	Lights*	GetLights() { return NULL;}
+	GLines*	getLines(){ return NULL; }
+	Lights*	getLights() { return NULL;}
 
 	void ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection);
 };
@@ -84,18 +84,18 @@ class DummyPSRenderer: public ParticleRenderer
 protected:
 public:
 	bool initParticles() { return true; }
-	Vertexes*	GetVertexes() { return NULL; }
-	FaceMaterials* GetFaceMaterials() { return NULL; }
-	Normals*	GetNormals() { return NULL; }
-	TexCoords*	GetTexCoords(int texNumber) { return NULL; }
+	Vertexes*	getVertexes() { return NULL; }
+	FaceMaterials* getFaceMaterials() { return NULL; }
+	Normals*	getNormals() { return NULL; }
+	TexCoords*	getTexCoords(int texNumber) { return NULL; }
 
 	aabb getFrame() { return aabb(); } // TODO
 
 	ObjectPosition getPosition() { return particleSystem->getPosition(); }
 	PositionKind::PositionKind getPositionKind() { return PositionKind::global; }
 	bool cleanup() { return true;}
-	GLines*	GetLines(){ return NULL; }
-	Lights*	GetLights() { return NULL;}
+	GLines*	getLines(){ return NULL; }
+	Lights*	getLights() { return NULL;}
 };
 
 

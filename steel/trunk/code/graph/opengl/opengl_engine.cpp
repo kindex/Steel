@@ -44,7 +44,7 @@ void OpenGL_Engine::DrawOpenGL10(GraphObjectStorage &e, Triangles *triangles, Ma
 		total.vertex += e.vertex->data.size();
 		total.triangle += triangles->data.size();
 
-        TexCoords *coords = e.object->GetTexCoords(0);
+        TexCoords *coords = e.object->getTexCoords(0);
 		Map map = material->map[0]; // текуща€ текстура
 	 
 		glEnable(GL_TEXTURE_2D);
@@ -225,7 +225,7 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 
 				if(conf->geti("drawBump") && !light.empty() && (i==0) && !e.blend && (map.kind == MapKind::bump_map || map.kind == MapKind::color_map))
 				{
-					TexCoords *coords = e.object->GetTexCoords(i);
+					TexCoords *coords = e.object->getTexCoords(i);
 
 					int j = 0;
 
@@ -266,7 +266,7 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 					{	// загружем текстуру
 						bindTexture(map.texture); // 2D texture (auto detect from Image)
 						// загружаем тектурные координаты
-						TexCoords *coords = e.object->GetTexCoords(i);
+						TexCoords *coords = e.object->getTexCoords(i);
 						if(coords && !coords->data.empty())
 						{
 							if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
@@ -1102,10 +1102,10 @@ void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::
 
 		StorageHash newChildrenId;
 
-		int count = object->GetGraphChildrenCount();
+		int count = object->getGraphChildrenCount();
 		for(int i = 0; i < count; i++) // add new + cache
 		{
-			GraphObject *child = object->GetGraphChildren(i);
+			GraphObject *child = object->getGraphChildren(i);
 			uid id = child->getId();
 			newChildrenId[id] = i;
 
@@ -1138,10 +1138,10 @@ void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::
 	}
 
 
-	int count = object->GetGraphChildrenCount();
+	int count = object->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
-		GraphObject *child = object->GetGraphChildren(i);
+		GraphObject *child = object->getGraphChildren(i);
 		
 		prepare(child, globalTime, time);
 	}
@@ -1172,12 +1172,12 @@ void OpenGL_Engine::cacheStorageObject(GraphObjectStorage &objectStorage)
 // проверка, находитс€ ли frame внутри пирамиды, которую образует угол обзора камеры. ≈сли не попадает, то откидываем этот объект и всех его потомков
 //		objectStorage.visible = isVisible(frame);
 
-		objectStorage.faceMaterials	= object->GetFaceMaterials();
-		objectStorage.vertex		= object->GetVertexes();
-		objectStorage.normal		= object->GetNormals();
-		objectStorage.lines			= object->GetLines();
+		objectStorage.faceMaterials	= object->getFaceMaterials();
+		objectStorage.vertex		= object->getVertexes();
+		objectStorage.normal		= object->getNormals();
+		objectStorage.lines			= object->getLines();
 
-		Lights		*l = object->GetLights();
+		Lights		*l = object->getLights();
 		if(l)
 			for(Lights::iterator it = l->begin(); it != l->end(); it++)
 			{
@@ -1233,10 +1233,10 @@ void OpenGL_Engine::deleteStorageForChildren(int sid)
 
 void OpenGL_Engine::makeStorageForChildren(GraphObject *object)
 {
-	int count = object->GetGraphChildrenCount();
+	int count = object->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
-		GraphObject *child = object->GetGraphChildren(i);
+		GraphObject *child = object->getGraphChildren(i);
 		makeStorageForObject(child);
 		makeStorageForChildren(child);
 	}

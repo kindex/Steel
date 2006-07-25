@@ -50,15 +50,15 @@ public:
 	
 	PositionKind::PositionKind	getPositionKind() {return PositionKind::global; }
 
-	GLines*		GetLines()		{	return &glines;	}
+	GLines*		getLines()		{	return &glines;	}
 	uid			getId()			{	return 0;		}
 	aabb		getFrame()		{	return aabb(v3(-INF, -INF, -INF), v3(INF, INF, INF));	}
 	bool		cleanup()		{	return true;	}
-	Vertexes*	GetVertexes()	{	return &vertex;	}
-	Normals*	GetNormals()	{	return NULL;	}
-	Lights*		GetLights()		{	return NULL;	}
-	FaceMaterials* GetFaceMaterials()	{	return &face;	}
-	TexCoords*	GetTexCoords(int texNumber)	{	return NULL;	}
+	Vertexes*	getVertexes()	{	return &vertex;	}
+	Normals*	getNormals()	{	return NULL;	}
+	Lights*		getLights()		{	return NULL;	}
+	FaceMaterials* getFaceMaterials()	{	return &face;	}
+	TexCoords*	getTexCoords(int texNumber)	{	return NULL;	}
 
 
 };

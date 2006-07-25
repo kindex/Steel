@@ -70,7 +70,7 @@ public:
 	void			setProcessKind(const ProcessKind::ProcessKind _kind) { processKind = _kind; }
 	virtual	bool	init(ScriptLine	&s);
 
-	void SetPosition(ObjectPosition const &newPos) { position = newPos; } 
+	void setPosition(ObjectPosition const &newPos) { position = newPos; } 
 
 	void attach(GameObj *obj) 
 	{ 
@@ -79,19 +79,19 @@ public:
 	
 	void addChildren(GameObj *obj);
 
-	int GetPhysicChildrenCount(void)	{		return physicChildren.size();	}
+	int getPhysicChildrenCount(void)	{		return physicChildren.size();	}
 	PhysicObject* getPhysicChildren(int i)	{		return physicChildren[i];	}
 
-	int GetGraphChildrenCount(void)	{		return graphChildren.size();	}
-	GraphObject* GetGraphChildren(int i)	{		return graphChildren[i];	}
+	int getGraphChildrenCount(void)	{		return graphChildren.size();	}
+	GraphObject* getGraphChildren(int i)	{		return graphChildren[i];	}
 
 	GameObj *getParent() { return parent; }
 
 	ObjectPosition		getPosition() {return position;}
 
 	// скорость
-	velocity	GetVelocity() { return vel; }
-	void	SetVelocity(velocity const &v) {vel = v; }
+	velocity	getVelocity() { return vel; }
+	void	setVelocity(velocity const &v) {vel = v; }
 	// масса
 	coord	getMass(){return mass;}
 };
@@ -121,7 +121,7 @@ class GameLight: public GameObj
 {
 public:
 
-	Lights* GetLights()
+	Lights* getLights()
 	{
 		Lights *a = new Lights(1);
 		a->at(0).intensivity = 1.0f;

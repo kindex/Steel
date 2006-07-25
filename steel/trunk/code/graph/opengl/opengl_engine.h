@@ -18,6 +18,8 @@
 
 #include <string>
 
+#include "../../steel.h"
+
 #include "../graph_engine.h"
 #if STEEL_OS == OS_LINUX
 #include <GL/gl.h>			// Header File For The OpenGL32 Library

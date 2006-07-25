@@ -94,7 +94,7 @@ void GraphHelper::ProcessGraph(steel::time curTime, steel::time frameLength, Mod
 		aabb &b = it->box;
 
 		steel::svector<v3> r;
-		b.GetVertexes(r);
+		b.getVertexes(r);
 		for(int i=0;  i<8; i++)
 			vertex.data[vi + i].set(r[i]);
 

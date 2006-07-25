@@ -50,7 +50,7 @@ bool GameObj::init(ScriptLine	&s)
 
 	position = position*rx*ry*rz*scale; // TODO: order
 
-	SetVelocity(velocity(s.getv3(7), s.getv3(8).getNormalized()*s.getf(9)));
+	setVelocity(velocity(s.getv3(7), s.getv3(8).getNormalized()*s.getf(9)));
 
 	return true;
 }
@@ -73,20 +73,20 @@ bool GameObj::init(ScriptLine	&s)
 /*velocity GameObj::getGlobalVelocity()
 {
 	if(getPositionKind() == PositionKind::global)
-		return GetVelocity();
+		return getVelocity();
 	else 
 	{
 		GameObj *p = getParent();
 		if(p)
 		{
-			velocity v = GetVelocity();
+			velocity v = getVelocity();
 			velocity g = p->getGlobalVelocity();
 			
 			v.translation = g.translation + p->getGlobalPosition().getMatrix33()*v.translation;
 			return v; // TODO
 		}
 		else
-			return GetVelocity();
+			return getVelocity();
 	}
 }*/
 

@@ -35,14 +35,14 @@ public:
 	bool init(ScriptLine	&s);
 
 	aabb getFrame();
-	Vertexes*	GetVertexes()
+	Vertexes*	getVertexes()
 	{
 		if(m)
 			return &m->vertex;
 		else
 			return NULL;
 	}
-	Vertexes*	getPVertexes() { return GetVertexes(); }
+	Vertexes*	getPVertexes() { return getVertexes(); }
 	Triangles*	getTriangles()
 	{
 		if(m)
@@ -51,19 +51,19 @@ public:
 			return NULL;
 	}
 
-	Normals* GetNormals()
+	Normals* getNormals()
 	{
 		if(m)
 			return &m->normal;
 		else
 			return NULL;
 	}
-	FaceMaterials* GetFaceMaterials();
-	Lights* GetLights()	{		return NULL;	}
+	FaceMaterials* getFaceMaterials();
+	Lights* getLights()	{		return NULL;	}
 
-	TexCoords*	GetTexCoords(int mapNumber)
+	TexCoords*	getTexCoords(int mapNumber)
 	{
-		return m->GetTexCoords(mapNumber);
+		return m->getTexCoords(mapNumber);
 	}
 	Config*		getPMaterial()
 	{	

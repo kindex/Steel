@@ -19,7 +19,7 @@
 }
 */
 
-TexCoords	*Model::GetTexCoords(int texNumber)
+TexCoords	*Model::getTexCoords(int texNumber)
 {
 	return &texCoords;
 }

@@ -111,7 +111,7 @@ public:
 
 	// Object unique identifier
 	virtual uid								getId()				{ return id; }
-	// Положение и поворот произвольной точки объекта в локальных или глобальных координатах (точка отсчёта объекта).
+	// Местоположение и поворот произвольной точки объекта в локальных или глобальных координатах (точка отсчёта объекта).
 	virtual	ObjectPosition					getPosition(void) = 0;
 	// Система координат: локальная относительно родителя или глобальная
 	virtual PositionKind::PositionKind		getPositionKind(void) { return PositionKind::local; }

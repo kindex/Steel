@@ -11,7 +11,7 @@ PrivateResource=steel_private.rc
 ResourceIncludes=
 MakeIncludes=
 Compiler=_@@_
-CppCompiler=-DSTEEL_COMPILER_DEVCPP_@@_-DSTEEL_OS_WIN32_@@_-DSTEEL_OPENGL_WIN_@@_
+CppCompiler=-DSTEEL_COMPILER_DEVCPP_@@_-DSTEEL_OS_WIN32_@@_-DSTEEL_OPENGL_WIN_@@_-DSTEEL_OS=OS_WIN32_@@_
 Linker=-lopengl32 -lglu32 -lglaux -lkernel32 -luser32 -lgdi32 _@@_
 IsCpp=1
 Icon=

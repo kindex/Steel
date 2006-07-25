@@ -161,6 +161,6 @@ void ObjectPSRenderer::ProcessGraph(steel::time curTime, steel::time frameLength
 	{
 		ObjectPosition pos = children[i]->getPosition();
 		pos.setTranslation(set->particles[i]->position);
-		children[i]->SetPosition(pos);
+		children[i]->setPosition(pos);
 	}
 }

@@ -96,7 +96,7 @@ bool OpenGL_SDL_Engine::createWindow()
 		return false;
 	}
 	
-    //steel::log.out("Video mode has been set!\n" \
+    log_msh("graph opegl sdl", "Video mode has been set!\n" \
     	"\tResolution: %dx%dx%d\n" \
     	"\tVideo memory: %dK\n" \
     	"\tHardware surface: %s\n" \

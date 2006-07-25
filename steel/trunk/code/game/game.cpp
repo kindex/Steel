@@ -83,13 +83,13 @@ bool Game::createObject()
 		light = new GameLight;
 		light->setProcessKind(ProcessKind::none);
 
-		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->SetPosition(m);
+		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
 
 		graphEngine->inject(light);
 	}
 	else
 	{
-		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->SetPosition(m);
+		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
 	}
 
 	return true;
@@ -124,12 +124,12 @@ bool Game::createObject()
 	m = m*rm1;
 	m.setTranslation(pos.getTranslation().x*direction.getNormalized() + eye);
 
-	o->SetPosition(m);
+	o->setPosition(m);
 
-	velocity v(o->GetVelocity());
+	velocity v(o->getVelocity());
 	v.translation = direction*conf->getf("weaponSpeed") /*+ cameraSpeed*/;
 	v.rotationAxis = v3(0,0,0);
-	o->SetVelocity(v);
+	o->setVelocity(v);
 
 	return false;
 
@@ -145,7 +145,7 @@ bool Game::createObject()
 			light->setProcessKind(ProcessKind::none);
 			o->addChildren(light);
 
-			light->SetPosition(matrix34::getIdentity());
+			light->setPosition(matrix34::getIdentity());
 
 			c = new Sprite;
 			ScriptLine csc;
@@ -259,10 +259,10 @@ void Game::bind(GraphEngine *engine)
 	graphEngine->inject(physicHelper);
 
 
-	int count = world->GetGraphChildrenCount();
+	int count = world->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
-		engine->inject(world->GetGraphChildren(i));
+		engine->inject(world->getGraphChildren(i));
 	}
 }
 
@@ -271,7 +271,7 @@ void Game::bindPhysicEngine()
 //	if(conf->geti("drawHelper"))
 	physicEngine->bindHelper(physicHelper);
 
-	int count = world->GetPhysicChildrenCount();
+	int count = world->getPhysicChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
 		physicEngine->inject(world->getPhysicChildren(i));
@@ -299,7 +299,7 @@ void Game::draw(GraphEngine *graph)
 
 		m.loadIdentity(); m.setTranslation(eye + direction*0.01f);
 
-		crosshair->SetPosition(m);
+		crosshair->setPosition(m);
 		((Sprite*)crosshair)->setAlign(-direction);
 
 		graph->inject(crosshair);

@@ -7,14 +7,15 @@
 #include "../../../steel.h"
 #include "../../../_cpp.h"
 
-#include    <GL/gl.h>
-
 #if STEEL_OS == OS_WIN32
 #include    <windows.h>
+#include    <GL/gl.h>
 #include    "glext.h"
 #elif STEEL_OS == OS_LINUX
+#include    <GL/gl.h>
 #include	<GL/glext.h>
 #endif
+
 
 #include    <stdio.h>
 #include    <string.h>
