@@ -51,7 +51,7 @@ void PhysicEngineSteel::makeStorageForObject(PhysicObject *object)
 	objectStorage.modificationTime = -1;
 	objectStorage.childrenModificationTime = -1;
 
-	if(objectStorage.collisionType == CollisionType::particle)
+	if(objectStorage.collisionType == COLLISION_PARTICLE)
 	{
 		particleSet.push_back(storageId);
 		objectStorage.partiecleSetId = particleSet.size()-1;
@@ -60,7 +60,7 @@ void PhysicEngineSteel::makeStorageForObject(PhysicObject *object)
 
 void PhysicEngineSteel::deleteStorageForObject(int sid)
 {
-	if(storage[sid].collisionType == CollisionType::particle)
+	if(storage[sid].collisionType == COLLISION_PARTICLE)
 	{
 		storage[particleSet.back()].partiecleSetId = storage[sid].partiecleSetId;
 		particleSet[storage[sid].partiecleSetId] = particleSet.back();
@@ -107,7 +107,7 @@ void PhysicEngineSteel::cacheStorageObject(PhysicObjectStorage &objectStorage)
 
 		objectStorage.material = object->getPMaterial();
 
-		if(objectStorage.collisionType == CollisionType::particle)
+		if(objectStorage.collisionType == COLLISION_PARTICLE)
 		{
 			objectStorage.spring_r0			= objectStorage.material->getf("spring_r0");
 			objectStorage.spring_k			= objectStorage.material->getf("spring_k");

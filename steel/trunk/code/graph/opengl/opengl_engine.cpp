@@ -53,10 +53,10 @@ void OpenGL_Engine::DrawOpenGL10(GraphObjectStorage &e, Triangles *triangles, Ma
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		int format;
-		if(map.texture->getFormat() == ImageFormat::rgb) format = GL_RGB; 
+		if(map.texture->getFormat() == IMAGE_RGB) format = GL_RGB; 
 		else
-		if(map.texture->getFormat() == ImageFormat::normal) format = GL_RGB; 
-		else if(map.texture->getFormat() == ImageFormat::rgba) format = GL_RGBA;
+		if(map.texture->getFormat() == IMAGE_NORMAL) format = GL_RGB; 
+		else if(map.texture->getFormat() == IMAGE_RGBA) format = GL_RGBA;
 		else
 			assert(false, "Unsupported image format");
 
@@ -214,16 +214,16 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 				{
 					switch(map.mode)
 					{
-						case MapMode::mul: 	mode = GL_MODULATE; break;
-						case MapMode::add:  mode = GL_ADD; break; // TODO: GL_ADD_SIGNED_ARB ??
-						case MapMode::blend: mode = GL_BLEND; break;
+						case TEXTURE_BLEND_MODE_MUL: 	mode = GL_MODULATE; break;
+						case TEXTURE_BLEND_MODE_ADD:  mode = GL_ADD; break; // TODO: GL_ADD_SIGNED_ARB ??
+						case TEXTURE_BLEND_MODE_BLEND: mode = GL_BLEND; break;
 					}
 				}
 
 				if(glActiveTextureARB)
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 
-				if(conf->geti("drawBump") && !light.empty() && (i==0) && !e.blend && (map.kind == MapKind::bump_map || map.kind == MapKind::color_map))
+				if(conf->geti("drawBump") && !light.empty() && (i==0) && !e.blend && (map.kind == TEXTURE_FORMAT_BUMP_MAP || map.kind == TEXTURE_FORMAT_COLOR_MAP))
 				{
 					TexCoords *coords = e.object->getTexCoords(i);
 
@@ -234,7 +234,7 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 					uid bufId = objectIdGenerator.genUid();
 					buffersToDelete.push_back(bufId);
 
-					if(map.kind == MapKind::bump_map)
+					if(map.kind == TEXTURE_FORMAT_BUMP_MAP)
 					{
 						drawBump(e, coords, e.matrix, light[j].pos, bufId, curTexArb, map.texture);
 						curTexArb +=2;
@@ -262,7 +262,7 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 				}
 				else
 				{
-					if(conf->geti("drawTexture") && map.kind == MapKind::color_map) // обычная текстура
+					if(conf->geti("drawTexture") && map.kind == TEXTURE_FORMAT_COLOR_MAP) // обычная текстура
 					{	// загружем текстуру
 						bindTexture(map.texture); // 2D texture (auto detect from Image)
 						// загружаем тектурные координаты
@@ -279,7 +279,7 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 						}
 					}
 					
-					if(conf->geti("drawReflect") && map.kind == MapKind::env) // карта отражения
+					if(conf->geti("drawReflect") && map.kind == TEXTURE_FORMAT_ENV) // карта отражения
 					{ // загружаем текстуру
 						glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
 						glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
@@ -295,7 +295,7 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 
 					}
 
-					if(map.kind == MapKind::color) // цвет RGBA
+					if(map.kind == TEXTURE_FORMAT_COLOR) // цвет RGBA
 						glColor4f(map.color.r, map.color.g, map.color.b, map.color.a);
 
 					curTexArb++;
@@ -306,15 +306,15 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 			{
 				glEnable(GL_BLEND);
 				
-				if(m->map[0].kind == MapKind::color_map && m->map[0].texture->getBpp() == 24) // RGB
+				if(m->map[0].kind == TEXTURE_FORMAT_COLOR_MAP && m->map[0].texture->getBpp() == 24) // RGB
 				{
-					if(m->map[0].mode == MapMode::add)	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
-					if(m->map[0].mode == MapMode::mul)	glBlendFunc(GL_DST_COLOR, GL_ZERO);
+					if(m->map[0].mode == TEXTURE_BLEND_MODE_ADD)	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
+					if(m->map[0].mode == TEXTURE_BLEND_MODE_MUL)	glBlendFunc(GL_DST_COLOR, GL_ZERO);
 				}else
 //				if(m->map[0].texture->getBpp() == 32) // Alpha
 				{
-					if(m->map[0].mode == MapMode::add)	glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_DST_ALPHA); // ?
-					if(m->map[0].mode == MapMode::mul)	glBlendFunc(GL_DST_ALPHA, GL_ZERO);
+					if(m->map[0].mode == TEXTURE_BLEND_MODE_ADD)	glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_DST_ALPHA); // ?
+					if(m->map[0].mode == TEXTURE_BLEND_MODE_MUL)	glBlendFunc(GL_DST_ALPHA, GL_ZERO);
 				}
 //				glDepthFunc(GL_LESS);
 				glDepthMask(GL_FALSE);
@@ -346,7 +346,7 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 		{
 			glPushAttrib(GL_ALL_ATTRIB_BITS);
 
-			if(e.material && !e.material->map.empty() &&e.material->map[0].kind == MapKind::color) // цвет RGBA
+			if(e.material && !e.material->map.empty() &&e.material->map[0].kind == TEXTURE_FORMAT_COLOR) // цвет RGBA
 					glColor4f(e.material->map[0].color.r, e.material->map[0].color.g, e.material->map[0].color.b, e.material->map[0].color.a);
 			else
 				glColor4f(1,1,1,1);
@@ -433,11 +433,11 @@ bool OpenGL_Engine::bindTexture(Image *image)
 	{
 		switch(image->getKind())
 		{
-			case ImageKind::image2d:
+			case IMAGE_2D:
 				glEnable(GL_TEXTURE_2D);
 				glBindTexture(GL_TEXTURE_2D, buf.glid);
 				break;
-			case ImageKind::cube:
+			case IMAGE_CUBE:
 				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
 				break;
@@ -451,15 +451,15 @@ bool OpenGL_Engine::bindTexture(Image *image)
 		glGenTextures(1, &buf.glid);
 
 		int format;
-		if(image->getFormat() == ImageFormat::rgb) format = GL_RGB; 
+		if(image->getFormat() == IMAGE_RGB) format = GL_RGB; 
 		else
-		if(image->getFormat() == ImageFormat::normal) format = GL_RGB; 
-		else if(image->getFormat() == ImageFormat::rgba) format = GL_RGBA;
+		if(image->getFormat() == IMAGE_NORMAL) format = GL_RGB; 
+		else if(image->getFormat() == IMAGE_RGBA) format = GL_RGBA;
 		else return false;
 
 		switch(image->getKind())
 		{
-			case ImageKind::image2d:
+			case IMAGE_2D:
 				glEnable(GL_TEXTURE_2D);
 				glBindTexture(GL_TEXTURE_2D, buf.glid);
 
@@ -470,7 +470,7 @@ bool OpenGL_Engine::bindTexture(Image *image)
 				glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
 					format,  GL_UNSIGNED_BYTE , image->getBitmap());
 				break;
-			case ImageKind::cube:
+			case IMAGE_CUBE:
 				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
 
@@ -1153,11 +1153,11 @@ void OpenGL_Engine::cacheStorageObject(GraphObjectStorage &objectStorage)
 	GraphObject *object = objectStorage.object;
 
 	matrix34 object_matrix = object->getPosition(); // global 
-	PositionKind::PositionKind pos = object->getPositionKind();
+	PositionKind pos = object->getPositionKind();
 
 	objectStorage.matrix = object_matrix;
 
-/*	if(pos == PositionKind::local && parent)
+/*	if(pos == POSITION_LOCAL && parent)
 	{
 		object_matrix = parent_matrix*object_matrix;
 	}*/

@@ -6,39 +6,33 @@
 #include "../script/script.h"
 #include "../../graph/types.h"
 
-namespace MapMode
+//namespace MapMode
+typedef	enum
 {
-	typedef	enum
-	{
-		none,
-		replace,
-		add,
-		mul,
-		blend
-	} map_mode;
-}
+	TEXTURE_BLEND_MODE_NONE,
+	TEXTURE_BLEND_MODE_REPLACE,
+	TEXTURE_BLEND_MODE_ADD,
+	TEXTURE_BLEND_MODE_MUL,
+	TEXTURE_BLEND_MODE_BLEND
+} TextureBlendMode;
 
-namespace MapKind
+typedef	enum
 {
-	typedef	enum
-	{
-		none,
-		color_map,
-		color,
-		env,
-		normal_map,
-		bump_map,
-		diffuse_lights // procedure texture
-	} tex_kind;
-}
+	TEXTURE_FORMAT_NONE,
+	TEXTURE_FORMAT_COLOR_MAP,
+	TEXTURE_FORMAT_COLOR,
+	TEXTURE_FORMAT_ENV,
+	TEXTURE_FORMAT_NORMAL_MAP,
+	TEXTURE_FORMAT_BUMP_MAP
+} TextureFormat;
 
 class Map
 {
 public:
 	Image *texture;
 
-	MapMode::map_mode	mode;
-	MapKind::tex_kind	kind;
+	TextureBlendMode	mode;
+	TextureFormat	kind;
 	color4f				color;
 	// color
 	// mode

@@ -21,10 +21,10 @@ void SpriteRenderer::ProcessGraph(steel::time curTime, steel::time frameLength, 
 //pos Ц положение спрайта
 		switch(align)
 		{
-			case SpriteAlign::screen: dir = -cameraDirection; break;
-			case SpriteAlign::camera: dir = cameraEye - pos; break;
-			case SpriteAlign::z: dir = cameraEye - pos; dir.z = 0; break;
-			case SpriteAlign::custom: dir = customAlign; break;
+			case SPRITE_ALIGN_SCREEN: dir = -cameraDirection; break;
+			case SPRITE_ALIGN_CAMERA: dir = cameraEye - pos; break;
+			case SPRITE_ALIGN_Z: dir = cameraEye - pos; dir.z = 0; break;
+			case SPRITE_ALIGN_CUSTOM: dir = customAlign; break;
 		}
 
 		dir.normalize();
@@ -108,14 +108,14 @@ bool SpriteRenderer::initParticles()
 	if(!(m = resMaterial.add(conf->gets("material")))) abort_init("res ps renderer", "Cannot find material " + conf->gets("material"));
 
 	std::string salign = conf->gets("align", "screen"); // align;
-	if(salign == "screen")	align = SpriteAlign::screen; else
-	if(salign == "z")		align = SpriteAlign::z; else
-	if(salign == "camera")	align = SpriteAlign::camera;
+	if(salign == "screen")	align = SPRITE_ALIGN_SCREEN; else
+	if(salign == "z")		align = SPRITE_ALIGN_Z; else
+	if(salign == "camera")	align = SPRITE_ALIGN_CAMERA;
 	else 
 	{
 		customAlign = conf->getv3("align", v3(1,0,0));
 		if(customAlign.getSquaredLengthd()<EPSILON2)	return false;
-		align = SpriteAlign::custom;
+		align = SPRITE_ALIGN_CUSTOM;
 	}
 
 	initSprites();
@@ -144,7 +144,7 @@ void ObjectPSRenderer::ProcessGraph(steel::time curTime, steel::time frameLength
 
 			line.set("solid			sphere/sphere2	0,0,0	0,0,0	0.2");
 			children[i]->init(line);
-			children[i]->setPositionKind(PositionKind::global);
+			children[i]->setPositionKind(POSITION_GLOBAL);
 		}
 	}
 

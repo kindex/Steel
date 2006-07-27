@@ -45,7 +45,7 @@ bool GameGroup::init(ScriptLine	&s)
 
 bool GameGroup::load(GameObj *global)
 {
-	if(!parent) positionKind = PositionKind::global;
+	if(!parent) positionKind = POSITION_GLOBAL;
 
 	Script *s = resScript.add(conf);
 	if(!s)
@@ -76,35 +76,35 @@ bool GameGroup::load(GameObj *global)
 		// Vxyz (вектор) - скорость (default 0 0 0) - толька для uni
 
 		// Solid model object, cannot move
-		CHECK_KIND("solid", GameObjModel, ProcessKind::none);
+		CHECK_KIND("solid", GameObjModel, PROCESS_NONE);
 		// Model object, move & collision detection
-		CHECK_KIND("uni", GameObjModel, ProcessKind::uni);
+		CHECK_KIND("uni", GameObjModel, PROCESS_UNI);
 
 		// Triangle
-		CHECK_KIND("solid_trg", GameTriangleObj, ProcessKind::none);
-		CHECK_KIND("uni_trg", GameTriangleObj, ProcessKind::uni);
+		CHECK_KIND("solid_trg", GameTriangleObj, PROCESS_NONE);
+		CHECK_KIND("uni_trg", GameTriangleObj, PROCESS_UNI);
 
 		// метка в простнанстве, не рисуется
-		CHECK_KIND("tag", GameTag, ProcessKind::none);
+		CHECK_KIND("tag", GameTag, PROCESS_NONE);
 		// источник освещения
-		CHECK_KIND("light", GameLight, ProcessKind::none);
+		CHECK_KIND("light", GameLight, PROCESS_NONE);
 
 		//"ps"		parent	id	CONF	X	Y	Z	Angle	Scale
-		CHECK_KIND("ps", ParticleSystem, ProcessKind::custom);
+		CHECK_KIND("ps", ParticleSystem, PROCESS_CUSTOM);
 		
 		//"include"	parent	id	CONF	X	Y	Z	Angle	Scale
-		CHECK_KIND("include", GameGroup, ProcessKind::none);
+		CHECK_KIND("include", GameGroup, PROCESS_NONE);
 		// "sprite"	parent	id	MATERIAL	X	Y	Z	ALIGN	Scale(Sprite Size)
 		// ALIGN =  (z|camera|screen|X,Y,Z), default screen
 		// z - спарйт выровнен вертикально (в локальной системе координат) и повёрнут к камере
 		// camera - смотрит врегда в центр камеры
 		// screen - стороны выровнены по сторонам экрана
 		// X,Y,Z - вектор, указывающий направление спрайта (не зависит от положения камеры)
-//		CHECK_KIND("sprite", Sprite, ProcessKind::none);
+//		CHECK_KIND("sprite", Sprite, PROCESS_NONE);
 		
 		// объект, который движется по своим законам
 		// TODO правила движения - дифур
-		CHECK_KIND("custom", CustomPath, ProcessKind::custom);
+		CHECK_KIND("custom", CustomPath, PROCESS_CUSTOM);
 
 		// путь по контрольным точкам
 		//"path"		id	{tag	speed	smooth}
@@ -113,16 +113,16 @@ bool GameGroup::load(GameObj *global)
 		// tag - id объекта
 		// speed - скорость движения к следующей метке. Если траектория не должны быть зацикленной, то можно указать скорость 0 - тогда движение остановится
 		// smooth - радиус закругления для перехода к следующей метке, плано интерполируются скорости
-		CHECK_KIND("path", TagPath, ProcessKind::custom);
+		CHECK_KIND("path", TagPath, PROCESS_CUSTOM);
 
 
 		if(obj)
 		{
-			if(obj->getProcessKind() == ProcessKind::uni)
+			if(obj->getProcessKind() == PROCESS_UNI)
 			{
-				if(obj->getPositionKind() == PositionKind::local)
+				if(obj->getPositionKind() == POSITION_LOCAL)
 				{ // TODO
-					obj->positionKind = PositionKind::global;
+					obj->positionKind = POSITION_GLOBAL;
 
 //					ObjectPosition matrix = this->getGlobalPosition();
 //					obj->setPosition(matrix * obj->getPosition());

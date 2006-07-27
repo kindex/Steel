@@ -49,8 +49,8 @@ public:
 	velocity	vel;
 	coord		mass;
 	ObjectPosition	position;
-	ProcessKind::ProcessKind	processKind;
-	PositionKind::PositionKind	positionKind;
+	ProcessKind	processKind;
+	PositionKind	positionKind;
 
 protected:
 	std::map<std::string, GameObj*>	tag;
@@ -59,15 +59,15 @@ public:
 	GameObj()
 	{
 		parent	= false;
-		processKind	= ProcessKind::none;
-		positionKind = PositionKind::local;
+		processKind	= PROCESS_NONE;
+		positionKind = POSITION_LOCAL;
 	}
 
-	void setPositionKind(PositionKind::PositionKind newKind) { positionKind = newKind; }
-	PositionKind::PositionKind	getPositionKind(){	return positionKind;}
-	ProcessKind::ProcessKind	getProcessKind() { return processKind; }
+	void setPositionKind(PositionKind newKind) { positionKind = newKind; }
+	PositionKind	getPositionKind(){	return positionKind;}
+	ProcessKind	getProcessKind() { return processKind; }
 
-	void			setProcessKind(const ProcessKind::ProcessKind _kind) { processKind = _kind; }
+	void			setProcessKind(const ProcessKind _kind) { processKind = _kind; }
 	virtual	bool	init(ScriptLine	&s);
 
 	void setPosition(ObjectPosition const &newPos) { position = newPos; } 

@@ -29,7 +29,7 @@ protected:
 public:
 	GameObjModel()	{ 		m = NULL; conf = NULL;	}
 
-	CollisionType::CollisionType getCollisionType() { return CollisionType::polyhedra; }
+	CollisionType getCollisionType() { return COLLISION_POLYHEDRA; }
 
 	void assignModel(Model *M)	{		m = M;	}
 	bool init(ScriptLine	&s);

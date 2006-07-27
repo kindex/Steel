@@ -25,11 +25,11 @@ bool Material::init(string name, const std::string dir)
 	{
 		string sMode = conf->gets(i, 0);
 		Map m;
-		m.mode = MapMode::none;
-		if(sMode == "")	m.mode = MapMode::replace;
-		if(sMode == "+")m.mode = MapMode::add;
-		if(sMode == "*")m.mode = MapMode::mul;
-		if(sMode == "blend")m.mode = MapMode::blend;
+		m.mode = TEXTURE_BLEND_MODE_NONE;
+		if(sMode == "")	m.mode = TEXTURE_BLEND_MODE_REPLACE;
+		if(sMode == "+")m.mode = TEXTURE_BLEND_MODE_ADD;
+		if(sMode == "*")m.mode = TEXTURE_BLEND_MODE_MUL;
+		if(sMode == "blend")m.mode = TEXTURE_BLEND_MODE_BLEND;
 
 		string kind = conf->gets(i, 1);
 		string file = conf->gets(i, 2);
@@ -42,7 +42,7 @@ bool Material::init(string name, const std::string dir)
 
 			if(m.texture)
 			{
-				m.kind = MapKind::color_map;
+				m.kind = TEXTURE_FORMAT_COLOR_MAP;
 				map.push_back(m);
 			}
 		}
@@ -54,7 +54,7 @@ bool Material::init(string name, const std::string dir)
 
 			if(m.texture)
 			{
-				m.kind = MapKind::bump_map;
+				m.kind = TEXTURE_FORMAT_BUMP_MAP;
 				map.push_back(m);
 			}
 		}
@@ -66,14 +66,14 @@ bool Material::init(string name, const std::string dir)
 
 			if(m.texture)
 			{
-				m.kind = MapKind::env;
+				m.kind = TEXTURE_FORMAT_ENV;
 				map.push_back(m);
 			}
 		}
 		if(kind == "color")
 		{
 			m.texture = NULL;
-			m.kind = MapKind::color;
+			m.kind = TEXTURE_FORMAT_COLOR;
 			m.color.set(conf->getf(i, 2, 0.0f), conf->getf(i, 3, 0.0f), conf->getf(i, 4, 0.0f), conf->getf(i, 5, 1.0f));
 			map.push_back(m);
 		}
@@ -84,7 +84,7 @@ bool Material::init(string name, const std::string dir)
 		return false;
 	}
 
-	blend = map[0].mode != MapMode::replace;
+	blend = map[0].mode != TEXTURE_BLEND_MODE_REPLACE;
 	resScript.pop();
 	return true;
 }

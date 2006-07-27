@@ -4,16 +4,13 @@
 #include "particle_system.h"
 #include "../model_obj.h"
 
-namespace SpriteAlign
+typedef	enum
 {
-	typedef	enum
-	{
-		camera,
-		z,
-		screen,
-		custom
-	} SpriteAlign;
-}
+	SPRITE_ALIGN_CAMERA,
+	SPRITE_ALIGN_Z,
+	SPRITE_ALIGN_SCREEN,
+	SPRITE_ALIGN_CUSTOM
+} SpriteAlign;
 
 // система - модель из множества полигонов - спрайтов
 class SpriteRenderer: public ParticleRenderer
@@ -25,7 +22,7 @@ protected:
 	TexCoords	texCoords;
 	Normals		normal;
 	v3			eye;
-	SpriteAlign::SpriteAlign	align;
+	SpriteAlign	align;
 	v3			customAlign;
 public:
 	void initSprites();
@@ -41,7 +38,7 @@ public:
 	aabb getFrame();
 
 	ObjectPosition getPosition() { return particleSystem->getPosition(); }
-	PositionKind::PositionKind getPositionKind() { return PositionKind::global; }
+	PositionKind getPositionKind() { return POSITION_GLOBAL; }
 	bool cleanup() { return true;}
 	GLines*	getLines(){ return NULL; }
 	Lights*	getLights() { return NULL;}
@@ -70,7 +67,7 @@ public:
 	aabb getFrame() { return aabb(); } // TODO
 
 	ObjectPosition getPosition() { return particleSystem->getPosition(); }
-	PositionKind::PositionKind getPositionKind() { return PositionKind::global; }
+	PositionKind getPositionKind() { return POSITION_GLOBAL; }
 	bool cleanup() { return true;}
 	GLines*	getLines(){ return NULL; }
 	Lights*	getLights() { return NULL;}
@@ -92,7 +89,7 @@ public:
 	aabb getFrame() { return aabb(); } // TODO
 
 	ObjectPosition getPosition() { return particleSystem->getPosition(); }
-	PositionKind::PositionKind getPositionKind() { return PositionKind::global; }
+	PositionKind getPositionKind() { return POSITION_GLOBAL; }
 	bool cleanup() { return true;}
 	GLines*	getLines(){ return NULL; }
 	Lights*	getLights() { return NULL;}

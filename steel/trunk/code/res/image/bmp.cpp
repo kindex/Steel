@@ -182,8 +182,8 @@ int r;
           bitmap[i*bpl + j*3 + 2] = r ;
         }
      }
-		kind	= ImageKind::image2d;
-		format	= ImageFormat::rgb;
+		kind	= IMAGE_2D;
+		format	= IMAGE_RGB;
 
      break;
 //   case 8:

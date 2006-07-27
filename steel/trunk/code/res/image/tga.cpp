@@ -55,9 +55,9 @@ bool TGA::init(const std::string name)
 
 	f.read(bitmap, bitmapSize);	// Does The Image Size Match The Memory Reserved?
 
-	if(bpp==32) format = ImageFormat::rgba;
-	if(bpp==24) format = ImageFormat::rgb;
-	kind = ImageKind::image2d;
+	if(bpp==32) format = IMAGE_RGBA;
+	if(bpp==24) format = IMAGE_RGB;
+	kind = IMAGE_2D;
 
 	int ByPP = bpp/8;
 

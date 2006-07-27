@@ -14,7 +14,6 @@ ResCollection<Material> resMaterial;
 ResCollection<Script> resScript;
 
 
-
 // Image filename:
 // name[.cube][.normal|.height][.bmp|.tga]
 
@@ -34,13 +33,13 @@ Image *createImageFormat(const std::string filename)
 	if(r = createBitmap(filename))	return r;
 	if(r = createBitmap(filename + ".normal"))	
 	{
-		((Image*)r)->setFormat(ImageFormat::normal);
+		((Image*)r)->setFormat(IMAGE_NORMAL);
 		return r;
 	}
 	if(r = createBitmap(filename + ".height"))
 	{
 		((Image*)r)->convertFromHeightMapToNormalMap();
-		((Image*)r)->setFormat(ImageFormat::normal);
+		((Image*)r)->setFormat(IMAGE_NORMAL);
 		return r;
 	}
 
@@ -56,7 +55,7 @@ Image *createImage(const std::string filename, const std::string base)
 	// try to load cubemap
 	if(r = createImageFormat(base + "/" + filename + ".cube"))
 	{
-		((Image*)r)->setKind(ImageKind::cube);
+		((Image*)r)->setKind(IMAGE_CUBE);
 		return r;
 	}
 	return NULL;

@@ -12,9 +12,9 @@ public:
 	UniParticle(Particle *_particle, Config *_conf) { particle = _particle; conf = _conf;}
 	void setParticle(Particle *_particle) { particle = _particle; }
 
-	CollisionType::CollisionType getCollisionType() 
+	CollisionType getCollisionType() 
 	{ 
-		return CollisionType::particle; 
+		return COLLISION_PARTICLE; 
 	}
 	
 	float getMass()
@@ -22,7 +22,7 @@ public:
 		return conf->getf("mass");
 	}
 
-	PositionKind::PositionKind	getPositionKind(){	return PositionKind::global;}
+	PositionKind	getPositionKind(){	return POSITION_GLOBAL;}
 	Config* getPMaterial() { return conf; }
 
 	ObjectPosition getPosition()
@@ -38,7 +38,7 @@ public:
 	void setPosition(ObjectPosition const &newPosition) {particle->position = newPosition.getTranslation(); }
 
 
-	ProcessKind::ProcessKind getProcessKind() { return ProcessKind::none; }
+	ProcessKind getProcessKind() { return PROCESS_NONE; }
 
 
 	aabb		getPFrame()		{	return aabb(); } // TODO
@@ -61,11 +61,11 @@ public:
 	ModificationTime getChildrenModificationTime(void) { return set->modificationTime; }
 
 	ObjectPosition getPosition() { return particleSystem->getPosition(); }
-	PositionKind::PositionKind getPositionKind() { return particleSystem->getPositionKind(); }
-	CollisionType::CollisionType getCollisionType() { return CollisionType::none; }
+	PositionKind getPositionKind() { return particleSystem->getPositionKind(); }
+	CollisionType getCollisionType() { return COLLISION_NONE; }
 
 	void setPosition(ObjectPosition const &newPosition) {}
-	ProcessKind::ProcessKind getProcessKind() { return ProcessKind::none; }
+	ProcessKind getProcessKind() { return PROCESS_NONE; }
 	void	ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime);
 
 	aabb		getPFrame()		{	return aabb(); } // TODO

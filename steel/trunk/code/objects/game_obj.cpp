@@ -17,15 +17,15 @@
 #include "game_obj.h"
 using namespace std;
 
-/*void GameObj::setPositionKind(const PositionKind::PositionKind newKind)
+/*void GameObj::setPositionKind(const PositionKind newKind)
 {
-	PositionKind::PositionKind oldKind = getPositionKind();
+	PositionKind oldKind = getPositionKind();
 	if(oldKind == newKind) return;
-	if(newKind == PositionKind::global && oldKind == PositionKind::local)
+	if(newKind == POSITION_GLOBAL && oldKind == POSITION_LOCAL)
 	{
 //		position = getGlobalPosition();
 		vel = getGlobalVelocity();
-		positionKind = PositionKind::global;
+		positionKind = POSITION_GLOBAL;
 	}
 	else
 	{} // TODO
@@ -58,7 +58,7 @@ bool GameObj::init(ScriptLine	&s)
 
 /*ObjectPosition	GameObj::getGlobalPosition()
 {
-	if(getPositionKind() == PositionKind::global)
+	if(getPositionKind() == POSITION_GLOBAL)
 		return getPosition();
 	else 
 	{
@@ -72,7 +72,7 @@ bool GameObj::init(ScriptLine	&s)
 
 /*velocity GameObj::getGlobalVelocity()
 {
-	if(getPositionKind() == PositionKind::global)
+	if(getPositionKind() == POSITION_GLOBAL)
 		return getVelocity();
 	else 
 	{

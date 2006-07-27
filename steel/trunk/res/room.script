@@ -13,7 +13,7 @@ solid			wall/wall1	0,20,-1
 solid			wall/wall1	0,-20,-1
 solid			wall/floor	0,0,-20.5
 
-;ps			particle_system/ps	0,0,2
+ps			particle_system/ps	0,0,2
 
 
 

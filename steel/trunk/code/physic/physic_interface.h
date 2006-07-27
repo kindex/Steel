@@ -19,37 +19,22 @@
 #include "../math/vector3d.h"
 #include "../res/conf/conf.h"
 
-namespace ProcessKind
+typedef enum
 {
-	typedef enum
-	{
-		none,
-		custom, // сам объект определяет своё движение
-		uni // движется по универсальным законам
-	} ProcessKind;
-}
+	PROCESS_NONE,
+	PROCESS_CUSTOM, // сам объект определяет своё движение
+	PROCESS_UNI // движется по универсальным законам
+} ProcessKind;
 
-namespace CollisionType
+typedef enum
 {
-	typedef enum
-	{
-		none,
-		polyhedra,
-		trigger,
-		particle, // sphere, collide with polyhedra
-		sphere
-	} CollisionType;
-}
+	COLLISION_NONE,
+	COLLISION_POLYHEDRA,
+	COLLISION_TRIGGER,
+	COLLISION_PARTICLE, // sphere, collide with polyhedra
+	COLLISION_SPHERE
+} CollisionType;
 
-namespace ShapeType
-{
-	typedef enum
-	{
-		none,
-		poly,
-		sphere
-	} ShapeType;
-}
 
 struct velocity
 {
@@ -98,7 +83,7 @@ public:
 
 
 	// Форма объекта и способ проверки и обработки коллизий
-	virtual CollisionType::CollisionType getCollisionType() { return CollisionType::none; }
+	virtual CollisionType getCollisionType() { return COLLISION_NONE; }
 
 	// Положение и поворот произвольной точки объекта в локальный координатах (точка отсчёта объекта). Именно за изменения этого параметра и отвечает физический движок.
 	virtual	void setPosition(ObjectPosition const &newPosition) = 0;

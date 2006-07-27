@@ -98,7 +98,7 @@ public:
 	GraphObject* getGraphChildren(int i) { return renderer; }
 
 
-	PositionKind::PositionKind getPositionKind(void) { return PositionKind::global;}
+	PositionKind getPositionKind(void) { return POSITION_GLOBAL;}
 
 	void setChildrenChangeTime(ModificationTime time) 
 	{ 

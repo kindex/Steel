@@ -44,7 +44,7 @@ protected:
 		uid objectId;
 		int storageId; // индекс этой структуры (кеша) в массиве stroage
 		PhysicObject *object; // ссылка на объект
-		CollisionType::CollisionType collisionType;
+		CollisionType collisionType;
 
 		// время последнего изменения объекта. Если отлично от того, что возвращает PhysicObject::getModificationTime(), то надо обновить кеш.
 		ModificationTime modificationTime, childrenModificationTime;

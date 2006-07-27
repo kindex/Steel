@@ -81,7 +81,7 @@ bool Game::createObject()
 	if(!light)
 	{
 		light = new GameLight;
-		light->setProcessKind(ProcessKind::none);
+		light->setProcessKind(PROCESS_NONE);
 
 		matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
 
@@ -104,7 +104,7 @@ bool Game::createObject()
 	GameObj *o = new GameObjModel;
 	o->init(line);
 	
-	o->setProcessKind(ProcessKind::uni);
+	o->setProcessKind(PROCESS_UNI);
 
 	matrix34 m = o->getPosition();
 
@@ -141,8 +141,8 @@ bool Game::createObject()
 		{
 			lightTag = c;
 			light = new GameLight;
-			light->setPositionKind(PositionKind::local);
-			light->setProcessKind(ProcessKind::none);
+			light->setPositionKind(POSITION_LOCAL);
+			light->setProcessKind(PROCESS_NONE);
 			o->addChildren(light);
 
 			light->setPosition(matrix34::getIdentity());
@@ -151,7 +151,7 @@ bool Game::createObject()
 			ScriptLine csc;
 			csc.set(conf->gets("lightSprite"));
 			c->init(csc);
-			c->setPositionKind(PositionKind::local);
+			c->setPositionKind(POSITION_LOCAL);
 			o->addChildren(c);
 		}
 
@@ -351,7 +351,7 @@ bool Game::init(string _conf, Input *_input, std::string params)
 	}
 
 	world = new GameGroup();
-	world->setProcessKind(ProcessKind::none);
+	world->setProcessKind(PROCESS_NONE);
 	
 //	Interface::global, 
 	world->conf = conf->gets("script");

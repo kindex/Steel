@@ -61,15 +61,12 @@ struct Triangles: public BufferedElement
 typedef matrix34 ObjectPosition;
 
 // “ип положени€ объекта: local Ц относительно родитил€, global Ц в глобальной системе координат.
-namespace PositionKind
+typedef enum
 {
-	typedef enum
-	{
-		none,
-		local,
-		global
-	} PositionKind;
-}
+	POSITION_NONE,
+	POSITION_LOCAL,
+	POSITION_GLOBAL
+} PositionKind;
 
 class IdGenerator
 {
@@ -114,7 +111,7 @@ public:
 	// ћестоположение и поворот произвольной точки объекта в локальных или глобальных координатах (точка отсчЄта объекта).
 	virtual	ObjectPosition					getPosition(void) = 0;
 	// —истема координат: локальна€ относительно родител€ или глобальна€
-	virtual PositionKind::PositionKind		getPositionKind(void) { return PositionKind::local; }
+	virtual PositionKind		getPositionKind(void) { return POSITION_LOCAL; }
 
 	// когда мен€лс€ список детей
 	virtual ModificationTime getChildrenModificationTime(void) { return modificationTime; }

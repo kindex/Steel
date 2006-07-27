@@ -15,28 +15,22 @@
 
 #include "../res.h"
 
-namespace ImageKind
+typedef enum 
 {
-	typedef enum 
-	{
-		none,
-		image1d,
-		image2d,
-		image3d,
-		cube // 6 images in one (+X, -X, +Y, -Y, +Z, -Z)
-	} ImageKind;
-}
+	IMAGE_DIMENSION_NONE,
+	IMAGE_1D,
+	IMAGE_2D,
+	IMAGE_3D,
+	IMAGE_CUBE // 6 images in one (+X, -X, +Y, -Y, +Z, -Z)
+} ImageDimension;
 
-namespace ImageFormat
+typedef enum
 {
-	typedef enum
-	{
-		none,
-		rgb,   // 24
-		rgba,  // 32
-		normal // rgb = xyz
-	} ImageFormat;
-}
+	IMAGE_FORMAT_NONE,
+	IMAGE_RGB,   // 24
+	IMAGE_RGBA,  // 32
+	IMAGE_NORMAL // rgb = xyz
+} ImageFormat;
 
 class Image: public Res
 {
@@ -46,11 +40,11 @@ protected:
 public:
 
 protected:
-	ImageKind::ImageKind		kind;
-	ImageFormat::ImageFormat	format;
+	ImageDimension		kind;
+	ImageFormat	format;
 public:
 
-	Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; kind = ImageKind::none; format =ImageFormat::none; }
+	Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; kind = IMAGE_DIMENSION_NONE; format = IMAGE_FORMAT_NONE; }
     ~Image() { unload(); }
 
     bool unload() 
@@ -79,10 +73,10 @@ public:
 
 	void convertFromHeightMapToNormalMap();
 
-	ImageKind::ImageKind	getKind() { return kind; }
-	void setKind(ImageKind::ImageKind _kind) { kind = _kind; }
-	ImageFormat::ImageFormat	getFormat() { return format; }
-	void setFormat(ImageFormat::ImageFormat _format) { format = _format; }
+	ImageDimension	getKind() { return kind; }
+	void setKind(ImageDimension _kind) { kind = _kind; }
+	ImageFormat	getFormat() { return format; }
+	void setFormat(ImageFormat _format) { format = _format; }
 };
 
 #endif

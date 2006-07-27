@@ -40,8 +40,8 @@ void GraphHelper::ProcessGraph(steel::time curTime, steel::time frameLength, Mod
 		face[0].material->id = 0;
 
 		face[0].material->map[0].color.set(0.0f, 1.0f, 0.0f, 0.5f);
-		face[0].material->map[0].kind = MapKind::color;
-		face[0].material->map[0].mode = MapMode::replace;
+		face[0].material->map[0].kind = TEXTURE_FORMAT_COLOR;
+		face[0].material->map[0].mode = TEXTURE_BLEND_MODE_REPLACE;
 	}
 */
 	vertex.changed = true;
