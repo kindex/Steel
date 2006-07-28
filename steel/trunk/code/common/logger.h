@@ -43,7 +43,7 @@
 #define cassert(expression)	{	int __[(expression)?1:0];	}
 
 // именно этим макросом надо выводить все временные отладочные сообщения в лог файл.
-#define debug(message)	log_msg("debug", message)
+#define debug(message)	log_msg("debug", (message))
 
 void _log_msg(std::string keywords, std::string message);
 

@@ -13,8 +13,11 @@ void SimpleEmitter::ProcessPhysic(steel::time curTime, steel::time frameLength, 
 {
 	if(frand() < 0.5 && set->particles.size() > 1) // delete particle
 	{
-		int n = (int)ceil(frand()*set->particles.size()); // particle number
-		set->particles[n] = set->particles.back();
+		int dieId = (int)floor(frand()*set->particles.size()); // particle number
+
+		delete set->particles[dieId];
+
+		set->particles[dieId] = set->particles.back();
 		set->particles.pop_back();
 
 		particleSystem->setChildrenChangeTime(modificationTime);

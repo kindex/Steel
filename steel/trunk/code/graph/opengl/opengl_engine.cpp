@@ -15,6 +15,7 @@
 
 #include "opengl_engine.h"
 #include "opengl_10.h"
+#include "opengl_11.h"
 
 #include <iostream>
 
@@ -339,93 +340,6 @@ bool OpenGL_Engine::isVisible(aabb box)
 }
 
 
-bool OpenGL_Engine::bindTexture(Image *image)
-{
-	if(image == NULL) return false;
-
-	uid	id = image->getId();
-
-	bool loaded = false;
-	if(buffer.find(id) != buffer.end())
-		loaded = buffer[id].loaded;
-
-	OpenGLBuffer &buf = buffer[id];
-
-	if(loaded)
-	{
-		switch(image->getKind())
-		{
-			case IMAGE_2D:
-				glEnable(GL_TEXTURE_2D);
-				glBindTexture(GL_TEXTURE_2D, buf.glid);
-				break;
-			case IMAGE_CUBE:
-				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
-				break;
-		}
-
-		buf.lastUsedTime = time;
-		buf.usedCnt++;
-	}
-	else
-	{
-		glGenTextures(1, &buf.glid);
-
-		int format;
-		if(image->getFormat() == IMAGE_RGB) format = GL_RGB; 
-		else
-		if(image->getFormat() == IMAGE_NORMAL) format = GL_RGB; 
-		else if(image->getFormat() == IMAGE_RGBA) format = GL_RGBA;
-		else return false;
-
-		switch(image->getKind())
-		{
-			case IMAGE_2D:
-				glEnable(GL_TEXTURE_2D);
-				glBindTexture(GL_TEXTURE_2D, buf.glid);
-
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-
-				glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
-					format,  GL_UNSIGNED_BYTE , image->getBitmap());
-				break;
-			case IMAGE_CUBE:
-				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
-
-				int w = image->getWidth();
-				int h = image->getHeight();
-				int bpp = image->getBpp()/8;
-
-				if(w*6 != h) return false; // 6 images in one
-
-				for(int i=0; i<6; i++)
-				{
-					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i,	0, 
-						GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image->getBitmap() + w*w*bpp*i);
-				}
-
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-				break;
-		}
-
-		buf.loaded = true;
-		buf.loadCnt++;
-		buf.kind = OpenGLBuffer::image;
-		buf.lastUsedTime = time;
-		buf.usedCnt++;
-	}
-	return true;
-}
 
 void OpenGL_Engine::cleanBuffer(uid bufId)
 {
@@ -954,14 +868,29 @@ bool OpenGL_Engine::init(std::string _conf)
 
 	initExtensions();
 
-	DrawFill = DrawFill_OpenGL10;
-	DrawWire = DrawWire_OpenGL10;
-	DrawLines = DrawLines_OpenGL10;
+	string version = conf->gets("OpenGL_Version", "1.0");
+	
+	log_msg("graph opengl","Using OpenGL renderer version: " + version);
+
+	if(version == "1.0")
+	{
+		DrawFill = DrawFill_OpenGL10;
+		DrawWire = DrawWire_OpenGL10;
+		DrawLines = DrawLines_OpenGL10;
+	}
+
+	if(version == "1.1")
+	{
+		DrawFill = DrawFill_OpenGL11;
+		DrawWire = DrawWire_OpenGL11;
+		DrawLines = DrawLines_OpenGL11;
+	}
+
 
 //	SetUpARB_multitexture();
 	
 	normalisationCubeMap	= generateNormalisationCubeMap();
-	zeroNormal = resImage.add( "zero");
+	zeroNormal = resImage.add("zero");
 	if(!zeroNormal)
 	{
 		log_msg("error graph res", "Zero normal map not found");
