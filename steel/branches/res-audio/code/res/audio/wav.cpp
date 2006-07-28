@@ -24,19 +24,21 @@ bool WAV::load(const std::string &fileName)
     ALuint BufID = 0;
 
 	// check file existance
-    ifstream a(fileName.c_str());
+	ifstream a(fileName.c_str());
     if (!a.is_open()) 
 		return false;
     a.close();
 
 		// maybe here extractExtension() function
 
-
+/*
 	string Ext;
 	if (Ext != "WAV")
 	{
 		return false;
+
 	}
+*/
     
     itsFileName = fileName;
 

@@ -146,6 +146,8 @@ int main(int argc, char *argv[])
 // ******************* MAIN LOOP ************************
 	input.freeMouse();
 
+	destroyOpenAL();
+
 	graph.deinit();
 	steel::log.close();
 	return 0;

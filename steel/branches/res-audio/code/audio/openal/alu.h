@@ -4,6 +4,11 @@
 #define ALUAPI
 #define ALUAPIENTRY __cdecl
 
+#define BUFFERSIZE 48000
+#define FRACTIONBITS 14
+#define FRACTIONMASK ((1L<<FRACTIONBITS)-1)
+#define OUTPUTCHANNELS 2
+
 #include "altypes.h"
 
 #ifdef __cplusplus

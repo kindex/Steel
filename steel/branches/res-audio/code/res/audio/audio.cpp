@@ -1,5 +1,9 @@
 #include "audio.h"
 
+TBuf buffers;
+//ALCdevice *pDevice;
+//ALCcontext *pContext;
+
 Audio::Audio()
 {
     for (int i = 0; i < 3; i++)

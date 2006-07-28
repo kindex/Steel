@@ -621,6 +621,10 @@
 				Name="audio"
 				>
 				<File
+					RelativePath=".\audio\openal_engine.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\audio\openal_engine.h"
 					>
 				</File>
@@ -632,7 +636,19 @@
 						>
 					</File>
 					<File
-						RelativePath=".\audio\openal\alut.h"
+						RelativePath=".\audio\openal\alc.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audio\openal\alctypes.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audio\openal\altypes.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audio\openal\alu.h"
 						>
 					</File>
 				</Filter>

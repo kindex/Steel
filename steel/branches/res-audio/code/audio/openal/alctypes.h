@@ -59,12 +59,6 @@ typedef unsigned int ALCsizei;
 /** ALC void type */
 typedef void ALCvoid;
 
-/** ALC device type */
-typedef ALCvoid *ALCdevice;
-
-/** ALC context type */
-typedef ALCvoid *ALCcontext;
-
 /** ALC enumerations. */
 typedef int ALCenum;
 
@@ -109,7 +103,7 @@ typedef int ALCenum;
  * This can be an incompatible ALenum, object ID,
  *  and/or function.
  */
-#define ALC_ILLEGAL_ENUM						 0xA003
+#define ALC_INVALID_ENUM						 0xA003
 
 /** 
  * Illegal value passed as an argument to an AL call.
@@ -124,7 +118,7 @@ typedef int ALCenum;
 #define ALC_OUT_OF_MEMORY                        0xA005
 
 #ifdef __cplusplus
-};
+}
 #endif
 
 #endif

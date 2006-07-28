@@ -135,14 +135,6 @@ typedef int ALenum;
 #define AL_LOOPING                               0x1007
 
 /**
- * Indicate the rolloff factor for the source.
- * Type: ALfloat
- * Range:    [0.0 - ]
- * Default:  1.0
- */
-#define AL_ROLLOFF_FACTOR                        0x1008
-
-/**
  * Indicate the buffer to provide sound samples. 
  * Type: ALuint.
  * Range: any valid Buffer id.
@@ -161,28 +153,6 @@ typedef int ALenum;
  *  is effectively disabled.
  */
 #define AL_GAIN                                  0x100A
-
-/**
- * Indicate the gain (volume amplification) applied. 
- * Type:     ALfloat.
- * Range:    ]0.0-  ]
- * A value of 1.0 means un-attenuated/unchanged.
- * Each division by 2 equals an attenuation of -6dB.
- * Each multiplicaton with 2 equals an amplification of +6dB.
- * A value of 0.0 is meaningless with respect to a logarithmic
- *  scale; it is interpreted as zero volume - the channel
- *  is effectively disabled.
- */
-#define AL_CONE_OUTER_GAIN                       0x100B
-
-/* byte offset into source (in canon format).  -1 if source
- * is not playing.  Don't set this, get this.
- *
- * Type:     ALfloat
- * Range:    [0.0 - ]
- * Default:  1.0
- */
-#define AL_REFERENCE_DISTANCE                    0x100C
 
 /**
  * Indicate minimum source attenuation.
@@ -205,12 +175,49 @@ typedef int ALenum;
  */
 #define AL_ORIENTATION                           0x100F
 
+/* byte offset into source (in canon format).  -1 if source
+ * is not playing.  Don't set this, get this.
+ *
+ * Type:     ALfloat
+ * Range:    [0.0 - ]
+ * Default:  1.0
+ */
+#define AL_REFERENCE_DISTANCE                    0x1020
+
+ /**
+ * Indicate the rolloff factor for the source.
+ * Type: ALfloat
+ * Range:    [0.0 - ]
+ * Default:  1.0
+ */
+#define AL_ROLLOFF_FACTOR                        0x1021
+
+/**
+ * Indicate the gain (volume amplification) applied. 
+ * Type:     ALfloat.
+ * Range:    ]0.0-  ]
+ * A value of 1.0 means un-attenuated/unchanged.
+ * Each division by 2 equals an attenuation of -6dB.
+ * Each multiplicaton with 2 equals an amplification of +6dB.
+ * A value of 0.0 is meaningless with respect to a logarithmic
+ *  scale; it is interpreted as zero volume - the channel
+ *  is effectively disabled.
+ */
+#define AL_CONE_OUTER_GAIN                       0x1022
+
 /** 
  * Specify the maximum distance.
  * Type:	 ALfloat
  * Range:	 [0.0 - ]
  */
-#define AL_MAX_DISTANCE                          0x1010
+#define AL_MAX_DISTANCE                          0x1023
+
+/**
+ * Specify the channel mask. (Creative)
+ * Type:	 ALuint
+ * Range:	 [0 - 255]
+ */
+#define AL_CHANNEL_MASK							 0x3000
 
 /**
  * Source state information
@@ -251,8 +258,8 @@ typedef int ALenum;
  * Not supported for public use (yet).
  */
 #define AL_UNUSED                                0x2010
-#define AL_QUEUED                                0x2011
-#define AL_CURRENT                               0x2012
+#define AL_PENDING                               0x2011
+#define AL_PROCESSED                             0x2012
 
 /** Errors: No Error. */
 #define AL_NO_ERROR                              AL_FALSE
@@ -307,12 +314,12 @@ typedef int ALenum;
 /**
  * Distance model.  Default AL_INVERSE_DISTANCE_CLAMPED
  */
-#define AL_DISTANCE_MODEL                        0xC002
+#define AL_DISTANCE_MODEL                        0xD000
 
 /** Distance models. */
 
-#define AL_INVERSE_DISTANCE                      0xD000
-#define AL_INVERSE_DISTANCE_CLAMPED              0xD001
+#define AL_INVERSE_DISTANCE                      0xD001
+#define AL_INVERSE_DISTANCE_CLAMPED              0xD002
  
  /**
  * enables

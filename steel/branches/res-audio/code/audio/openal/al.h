@@ -20,7 +20,6 @@
  *  Boston, MA  02111-1307, USA.
  * Or go to http://www.gnu.org/copyleft/lgpl.html
  */
-
 #include "altypes.h"
 
 #ifdef __cplusplus
@@ -28,7 +27,7 @@ extern "C" {
 #endif
 
 #ifdef _WIN32
- #ifdef _LIB
+ #ifdef _OPENAL32LIB
   #define ALAPI __declspec(dllexport)
  #else
   #define ALAPI __declspec(dllimport)
@@ -36,6 +35,11 @@ extern "C" {
  #define ALAPIENTRY __cdecl
  #define AL_CALLBACK
 #else
+ #ifdef TARGET_OS_MAC
+  #if TARGET_OS_MAC
+   #pragma export on
+  #endif
+ #endif
  #define ALAPI
  #define ALAPIENTRY __cdecl
  #define AL_CALLBACK
@@ -169,7 +173,7 @@ ALAPI ALvoid	ALAPIENTRY alGenSources( ALsizei n, ALuint* sources );
 ALAPI ALvoid	ALAPIENTRY alDeleteSources( ALsizei n, ALuint* sources );
 
 /** Verify a handle is a valid Source. */ 
-ALAPI ALboolean ALAPIENTRY alIsSource( ALuint source ); 
+ALAPI ALboolean ALAPIENTRY alIsSource( ALuint id ); 
 
 /** Set an integer parameter for a Source object. */
 ALAPI ALvoid	ALAPIENTRY alSourcei( ALuint source, ALenum param, ALint value ); 
@@ -180,6 +184,7 @@ ALAPI ALvoid	ALAPIENTRY alSourcefv( ALuint source, ALenum param, ALfloat* values
 /** Get an integer parameter for a Source object. */
 ALAPI ALvoid	ALAPIENTRY alGetSourcei( ALuint source,  ALenum param, ALint* value );
 ALAPI ALvoid	ALAPIENTRY alGetSourcef( ALuint source,  ALenum param, ALfloat* value );
+ALAPI ALvoid	ALAPIENTRY alGetSource3f( ALuint source,  ALenum param, ALfloat* v1, ALfloat* v2, ALfloat* v3 );
 ALAPI ALvoid	ALAPIENTRY alGetSourcefv( ALuint source, ALenum param, ALfloat* values );
 
 ALAPI ALvoid	ALAPIENTRY alSourcePlayv( ALsizei n, ALuint *sources );
@@ -471,6 +476,12 @@ ALAPI ALvoid	ALAPIENTRY (*alDopplerFactor)( ALfloat value );
 ALAPI ALvoid	ALAPIENTRY (*alDopplerVelocity)( ALfloat value );
 
 #endif /* AL_NO_PROTOTYPES */
+
+#ifdef TARGET_OS_MAC
+ #if TARGET_OS_MAC
+  #pragma export off
+ #endif
+#endif
 
 #ifdef __cplusplus
 }

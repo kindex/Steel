@@ -4,23 +4,34 @@
 #include "altypes.h"
 #include "alctypes.h"
 
-#ifdef _WIN32
- #ifdef _LIB
-  #define ALCAPI __declspec(dllexport)
- #else
-  #define ALCAPI __declspec(dllimport)
- #endif
- #define ALCAPIENTRY __cdecl
-#else
- #define ALCAPI
- #define ALCAPIENTRY __cdecl
-#endif
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef AL_NO_PROTOTYPES
+#ifdef _WIN32
+ #ifdef _OPENAL32LIB
+  #define ALCAPI __declspec(dllexport)
+ #else
+  #define ALCAPI __declspec(dllimport)
+ #endif
+
+ typedef struct ALCdevice_struct ALCdevice;
+ typedef struct ALCcontext_struct ALCcontext;
+
+ #define ALCAPIENTRY __cdecl
+#else
+ #ifdef TARGET_OS_MAC
+  #if TARGET_OS_MAC
+   #pragma export on
+  #endif
+ #endif
+ #define ALCAPI
+ #define ALCAPIENTRY __cdecl
+#endif
+
+
+
+#ifndef ALC_NO_PROTOTYPES
 
 ALCAPI ALCubyte*  ALCAPIENTRY alcGetString(ALCdevice *device,ALCenum param);
 ALCAPI ALCvoid    ALCAPIENTRY alcGetIntegerv(ALCdevice *device,ALCenum param,ALCsizei size,ALCint *data);
@@ -34,7 +45,6 @@ ALCAPI ALCvoid	  ALCAPIENTRY alcProcessContext(ALCcontext *context);
 ALCAPI ALCcontext*ALCAPIENTRY alcGetCurrentContext(ALCvoid);
 ALCAPI ALCdevice* ALCAPIENTRY alcGetContextsDevice(ALCcontext *context);
 ALCAPI ALCvoid	  ALCAPIENTRY alcSuspendContext(ALCcontext *context);
-ALCAPI ALCvoid    ALCAPIENTRY alcUpdateContext(ALCcontext *context);
 ALCAPI ALCvoid    ALCAPIENTRY alcDestroyContext(ALCcontext *context);
 
 ALCAPI ALCenum	  ALCAPIENTRY alcGetError(ALCdevice *device);
@@ -57,7 +67,6 @@ ALCAPI ALCvoid	  ALCAPIENTRY (*alcProcessContext)(ALCcontext *context);
 ALCAPI ALCcontext*ALCAPIENTRY (*alcGetCurrentContext)(ALCvoid);
 ALCAPI ALCdevice* ALCAPIENTRY (*alcGetContextsDevice)(ALCcontext *context);
 ALCAPI ALCvoid	  ALCAPIENTRY (*alcSuspendContext)(ALCcontext *context);
-ALCAPI ALCvoid    ALCAPIENTRY (*alcUpdateContext)(ALCcontext *context);
 ALCAPI ALCvoid    ALCAPIENTRY (*alcDestroyContext)(ALCcontext *context);
 
 ALCAPI ALCenum	  ALCAPIENTRY (*alcGetError)(ALCdevice *device);
@@ -68,8 +77,14 @@ ALCAPI ALCenum	  ALCAPIENTRY (*alcGetEnumValue)(ALCdevice *device,ALCubyte *enum
 
 #endif /* AL_NO_PROTOTYPES */
 
+#ifdef TARGET_OS_MAC
+ #if TARGET_OS_MAC
+  #pragma export off
+ #endif
+#endif
+
 #ifdef __cplusplus
-};
+}
 #endif
 
 #endif

@@ -5,25 +5,29 @@
 
 #include "../../audio/openal_engine.h"
 
+/*
 #include <string>
 #include <iostream>
 #include <windows.h>
 #include <fstream>
 #include <map>
+*/
 
-using namespace std;
+//using namespace std;
 
+/*
 typedef struct
 {
     unsigned int ID;
-    string fileName;
+	string fileName;
     unsigned int Rate;
     unsigned int Format;
 } SndInfo;
 
 typedef map<ALuint, SndInfo> TBuf;
 
-TBuf buffers;
+extern TBuf buffers;
+*/
 //ALCdevice *pDevice;
 //ALCcontext *pContext;
 
@@ -42,6 +46,8 @@ public:
     float pitch;
     
     unsigned int sndBuffer;
+
+	//bool load(const std::string &fileName);
     
 //private:    
     ALuint itsSourceID;
