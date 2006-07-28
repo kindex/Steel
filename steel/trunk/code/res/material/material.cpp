@@ -24,7 +24,7 @@ bool Material::init(string name, const std::string dir)
 	for(int i=0; i<lines; i++)
 	{
 		string sMode = conf->gets(i, 0);
-		Map m;
+		Texture m;
 		m.mode = TEXTURE_BLEND_MODE_NONE;
 		if(sMode == "")	m.mode = TEXTURE_BLEND_MODE_REPLACE;
 		if(sMode == "+")m.mode = TEXTURE_BLEND_MODE_ADD;
@@ -91,7 +91,7 @@ bool Material::init(string name, const std::string dir)
 
 Material::~Material()
 {
-	for(steel::vector<Map>::iterator it = map.begin(); it != map.end(); it++)
+	for(steel::vector<Texture>::iterator it = map.begin(); it != map.end(); it++)
 	{
 		if(it->texture) resImage.remove(it->texture);
 	}

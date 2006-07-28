@@ -46,7 +46,7 @@ protected:
 	StorageHash idHash;
 
 public:
-	struct TotalInfo
+	struct GraphTotalInfo
 	{
 		int vertex, triangle, object, global;
 	} total;

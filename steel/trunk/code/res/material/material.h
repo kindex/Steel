@@ -26,7 +26,7 @@ typedef	enum
 	TEXTURE_FORMAT_BUMP_MAP
 } TextureFormat;
 
-class Map
+class Texture
 {
 public:
 	Image *texture;
@@ -44,7 +44,7 @@ class Material: public Res
 public:
 	Script* conf;
 	bool	blend;
-	steel::vector<Map> map;
+	steel::vector<Texture> map;
 
 	bool init(std::string _conf, const std::string dir);
 

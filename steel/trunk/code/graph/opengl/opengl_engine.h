@@ -56,6 +56,7 @@ protected:
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image *zeroNormal;
 
+public:
 	struct GraphObjectStorage // множество треугольников одного материала
 	{
 		// инентификатор объекта (uid)
@@ -85,9 +86,14 @@ protected:
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 	};
 
+protected:
 	// data, to store collected information
 	steel::vector<GraphObjectStorage> storage;
 
+// procedure variables
+	void (*DrawFill)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void (*DrawLines)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (*DrawWire)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 
 	typedef
 		steel::vector<v3>
@@ -114,6 +120,8 @@ protected:
 	 steel::time time;
 
 public:
+	OpenGL_Engine(): DrawFill(NULL), DrawLines(NULL), DrawWire(NULL)  {}
+
 	void processCamera();
 	bool init(std::string _conf);
 	bool process(steel::time globalTime, steel::time time);
@@ -130,9 +138,6 @@ public:
 
 //	void process(GraphObjectStorage &e);
 	void process(GraphObjectStorage &e, steel::time globalTime, steel::time time);
-	void DrawOpenGL10(GraphObjectStorage &e, Triangles *triangles, Material *material);
-	void DrawOpenGL10Lines(GraphObjectStorage &e);
-	void DrawOpenGL10Wire(GraphObjectStorage &e, Triangles *triangles);
 	
 //	void drawFaces(DrawElement &e);
 //	void drawNormals(DrawElement &e);

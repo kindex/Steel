@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=116
+UnitCount=118
 Type=0
 Ver=1
 ObjFiles=
@@ -1188,9 +1188,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit117]
-FileName=physic\physic_engine_steel.h
+FileName=graph\opengl\opengl_10.cpp
 CompileCpp=1
-Folder=physic
+Folder=graph/opengl
 Compile=1
 Link=1
 Priority=1000
@@ -1198,9 +1198,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit118]
-FileName=game\ps\ps_renderer.h
+FileName=graph\opengl\opengl_10.h
 CompileCpp=1
-Folder=game/ps
+Folder=graph/opengl
 Compile=1
 Link=1
 Priority=1000

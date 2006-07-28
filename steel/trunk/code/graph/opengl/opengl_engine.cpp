@@ -14,6 +14,7 @@
  ************************************************************/
 
 #include "opengl_engine.h"
+#include "opengl_10.h"
 
 #include <iostream>
 
@@ -36,86 +37,7 @@ using namespace std;
 Графических элемент - это полигоны одного объекта, имеющие общий материал.
 */
 
-void OpenGL_Engine::DrawOpenGL10(GraphObjectStorage &e, Triangles *triangles, Material *material)
-{
-	if(material && triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
-	{
-		total.object++;
-		total.vertex += e.vertex->data.size();
-		total.triangle += triangles->data.size();
 
-        TexCoords *coords = e.object->getTexCoords(0);
-		Map map = material->map[0]; // текущая текстура
-	 
-		glEnable(GL_TEXTURE_2D);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		int format;
-		if(map.texture->getFormat() == IMAGE_RGB) format = GL_RGB; 
-		else
-		if(map.texture->getFormat() == IMAGE_NORMAL) format = GL_RGB; 
-		else if(map.texture->getFormat() == IMAGE_RGBA) format = GL_RGBA;
-		else
-			assert(false, "Unsupported image format");
-
-
-        glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, map.texture->getWidth(), map.texture->getHeight(),0,
-					format,  GL_UNSIGNED_BYTE , map.texture->getBitmap());
-					
-        glBegin(GL_TRIANGLES);
-         
-        for(unsigned int i=0; i<triangles->data.size(); i++)
-        {
-            glTexCoord2fv(&coords->data[ triangles->data[i].a[0] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[0] ].x);
-            glTexCoord2fv(&coords->data[ triangles->data[i].a[1] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[1] ].x);
-            glTexCoord2fv(&coords->data[ triangles->data[i].a[2] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[2] ].x);
-        }
-         
-        glEnd();
-    }
-}
-
-
-void OpenGL_Engine::DrawOpenGL10Wire(GraphObjectStorage &e, Triangles *triangles)
-{
-	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
-	{
-		total.object++;
-		total.vertex += e.vertex->data.size();
-		total.triangle += triangles->data.size();
-         
-        for(unsigned int i=0; i<triangles->data.size(); i++)
-        {
-	        glBegin(GL_LINE_LOOP);
-            glVertex3fv(&e.vertex->data[ triangles->data[i].a[0] ].x);
-            glVertex3fv(&e.vertex->data[ triangles->data[i].a[1] ].x);
-            glVertex3fv(&e.vertex->data[ triangles->data[i].a[2] ].x);
-		    glEnd();
-        }
-         
-    }
-}
-
-
-void OpenGL_Engine::DrawOpenGL10Lines(GraphObjectStorage &e)
-{
-	if(e.vertex && e.lines && !e.lines->empty() && !e.vertex->data.empty())// если есть полигоны и вершины
-	{
-		total.object++;
-		total.vertex += e.vertex->data.size();
-		total.triangle += e.lines->size();
-		
-		glBegin(GL_LINES);
-        for(unsigned int i=0; i < e.lines->size(); i++)
-        {
-            glVertex3fv(&e.vertex->data[ e.lines->at(i).a[0] ].x);
-            glVertex3fv(&e.vertex->data[ e.lines->at(i).a[1] ].x);
-        }
-        glEnd();
-    }
-}
 
 
 void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel::time time)
@@ -130,16 +52,16 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 	m[12] = e.matrix.data.vector.x;				m[13] = e.matrix.data.vector.y;				m[14] = e.matrix.data.vector.z;				m[15] = 1;
 	glLoadMatrixf(m);
 
-	if(conf->geti("drawLines"))
-		DrawOpenGL10Lines(e);
+	if(conf->geti("drawLines") && DrawLines)
+		DrawLines(e, total);
 
-	if(conf->geti("drawFace") && e.faceMaterials)
+	if(conf->geti("drawFace") && e.faceMaterials && DrawFill)
 		for(unsigned int i = 0; i < e.faceMaterials->size(); i++)
-			DrawOpenGL10(e, e.faceMaterials->at(i).triangles, e.faceMaterials->at(i).material);
+			DrawFill(e, e.faceMaterials->at(i).triangles, e.faceMaterials->at(i).material, total);
 
-	if(conf->geti("drawWire") && e.faceMaterials)
+	if(conf->geti("drawWire") && e.faceMaterials && DrawWire)
 		for(unsigned int i = 0; i < e.faceMaterials->size(); i++)
-			DrawOpenGL10Wire(e, e.faceMaterials->at(i).triangles);
+			DrawWire(e, e.faceMaterials->at(i).triangles, total);
 
 
 	glPopMatrix();
@@ -199,7 +121,7 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 			// идём по всем картам
 			for(int i=0; i<texCount; i++)
 			{
-				Map map = m->map[i]; // текущая текстура
+				Texture map = m->map[i]; // текущая текстура
 
 				if(glActiveTextureARB)
 				{
@@ -1031,6 +953,10 @@ bool OpenGL_Engine::init(std::string _conf)
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 	initExtensions();
+
+	DrawFill = DrawFill_OpenGL10;
+	DrawWire = DrawWire_OpenGL10;
+	DrawLines = DrawLines_OpenGL10;
 
 //	SetUpARB_multitexture();
 	
