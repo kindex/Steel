@@ -1,6 +1,19 @@
 #include "wav.h"
 
-Audio * LoadWavFile(const std::string &fileName)
+
+Audio *createWAV(const std::string &fileName)
+{
+	WAV *o = new WAV;
+	if (o->load(fileName))
+	{
+		return o;
+	}
+	else
+		return 0;	// NULL
+}
+
+
+bool WAV::load(const std::string &fileName)
 {
     SndInfo buffer;
     ALenum format;
@@ -9,12 +22,29 @@ Audio * LoadWavFile(const std::string &fileName)
     ALsizei freq;
     ALboolean loop;
     ALuint BufID = 0;
+
+	// check file existance
+    ifstream a(fileName.c_str());
+    if (!a.is_open()) 
+		return false;
+    a.close();
+
+		// maybe here extractExtension() function
+
+
+	string Ext;
+	if (Ext != "WAV")
+	{
+		return false;
+	}
     
+    itsFileName = fileName;
+
     // fill buffer struct
     buffer.fileName = fileName;
     
     // check for existance of sound
-    for (TBuf::iterator i = Buffers.begin(); i ! = Buffers.end(); i++)
+    for (TBuf::iterator i = buffers.begin(); i != buffers.end(); i++)
     {
         if (i->second.fileName == fileName) 
             BufID = i->first;
@@ -32,42 +62,33 @@ Audio * LoadWavFile(const std::string &fileName)
 //        if (!CheckALError()) return false;
 
         buffer.Format = format;
-        burref.Rate = freq;
+        buffer.Rate = freq;
         
         // fill buffer
-        alBufferData(format, data, size, freq);
+		alBufferData(buffer.ID, format, data, size, freq);
 //        if (!CheckALError()) return false;
 
-        Buffers[buffer.ID] = buffer;        
+		// unload wav file
+		alutUnloadWAV(format, data, size, freq);
+//        if (!CheckALError()) return false;
+
+        buffers[buffer.ID] = buffer;        
     }
     else
-        buffer = buffer[BufID];
-        
-    alSourcei(itsSourceID, AL_BUFFER, buffer.ID);
-    sndBuffer = buffer.ID;
+	        buffer = buffers[BufID];
     
-    return true;        // MUST RETURN AUDIO RES
-}
-
-bool WAV::Open(const std::string &fileName, bool looped, bool streamed)
-{
-    // check file existance
-    ifstream a(name.c_str());
-    if (!a.is_open()) return false;
-    a.close();
-    
-    itsFileName = name;
-    
-    itsLooped = Looped;
-    
-    // create source
+	// create source
     alGenSources(1, &itsSourceID);
 //    if (!CheckALError()) return false;
 
     alSourcef(itsSourceID, AL_PITCH, pitch);
     alSourcef(itsSourceID, AL_GAIN, gain);
-    alSourcefv(itsSourceID, AL_POSITION, itsPos);
-    alSourcefv(itsSourceID, AL_VELOCITY, itsVel);
-    alSourcei(itsSourceID, AL_LOOPING, itsLooped);
+    alSourcefv(itsSourceID, AL_POSITION, itsPosition);
+    alSourcefv(itsSourceID, AL_VELOCITY, itsVelocity);
+    alSourcei(itsSourceID, AL_LOOPING, isLooped);
 
+    alSourcei(itsSourceID, AL_BUFFER, buffer.ID);
+    sndBuffer = buffer.ID;
+    
+    return true;
 }

@@ -4,7 +4,7 @@ Audio::Audio()
 {
     for (int i = 0; i < 3; i++)
     {
-        itsPos[i] = itsVel[i] = 0.0f;
+        itsPosition[i] = itsVelocity[i] = 0.0f;
     }
     itsFileName = " ";
     gain = 1.0f;

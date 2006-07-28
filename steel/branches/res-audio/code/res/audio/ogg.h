@@ -5,6 +5,7 @@
 
 class OGG : public Audio
 {
+public:
 };
 
 #endif

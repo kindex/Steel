@@ -93,8 +93,8 @@ bool registerResources()
 	resMaterial.registerResLoader(createClass<Material, Material>);	resMaterial.setId("material");
 	resConfig.registerResLoader(createClass<ConfigText, Config>);	resConfig.setId("config");
 	resScript.registerResLoader(createClass<ScriptText, Script>);	resScript.setId("script");
-	resAudio.registerResLoader(createClass<Audio, WAV>);            resAudio.setId("audio");
-	resAudio.registerResLoader(createClass<Audio, OGG>);            resAudio.setId("audio");
+//	resAudio.registerResLoader(createClass<Audio, WAV>);            resAudio.setId("audio");
+//	resAudio.registerResLoader(createClass<Audio, OGG>);            resAudio.setId("audio");
 
 	return true;
 }

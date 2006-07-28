@@ -3,6 +3,16 @@
 
 #include "../res.h"
 
+#include "../../audio/openal_engine.h"
+
+#include <string>
+#include <iostream>
+#include <windows.h>
+#include <fstream>
+#include <map>
+
+using namespace std;
+
 typedef struct
 {
     unsigned int ID;
@@ -11,15 +21,21 @@ typedef struct
     unsigned int Format;
 } SndInfo;
 
+typedef map<ALuint, SndInfo> TBuf;
+
+TBuf buffers;
+//ALCdevice *pDevice;
+//ALCcontext *pContext;
+
 class Audio : public Res
 {
 public:    
     Audio();
     ~Audio();
     
-    ALfloat itsVel[3];
-    ALfloat itsPos[3];
-    bool itsLooped;
+    ALfloat itsVelocity[3];
+    ALfloat itsPosition[3];
+    bool isLooped;
     std::string itsFileName;
     
     float gain;
@@ -27,7 +43,7 @@ public:
     
     unsigned int sndBuffer;
     
-private:    
+//private:    
     ALuint itsSourceID;
 //    bool LoadWavFile(const std::string &fileName);
 };
