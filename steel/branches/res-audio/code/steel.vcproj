@@ -170,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib "
+				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib openal32.lib alut.lib"
 				ShowProgress="0"
 				OutputFile="..\build.debug/steel.exe"
 				Version="1.0.0.1"
@@ -596,6 +596,10 @@
 					Name="audio"
 					>
 					<File
+						RelativePath=".\res\audio\audio.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\res\audio\audio.h"
 						>
 					</File>
@@ -616,6 +620,22 @@
 			<Filter
 				Name="audio"
 				>
+				<File
+					RelativePath=".\audio\openal_engine.h"
+					>
+				</File>
+				<Filter
+					Name="openal"
+					>
+					<File
+						RelativePath=".\audio\openal\al.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audio\openal\alut.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="common"
