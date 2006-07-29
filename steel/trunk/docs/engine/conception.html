@@ -179,7 +179,7 @@ table.MsoTableGrid
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="2050"/>
+ <o:shapedefaults v:ext="edit" spidmax="3074"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -190,82 +190,73 @@ table.MsoTableGrid
 
 <div class=Section1>
 
-<h1>Концепция <span class=SpellE>Steel</span> <span class=SpellE>Engine</span></h1>
+<h1>Концепция <span class=SpellE>Steel</span> <span class=SpellE>Engine</span>
+(Идея)</h1>
 
-<h3>Аудитория</h3>
+<p><span class=SpellE>Steel</span> <span class=SpellE>Engine</span> (система) является
+продуктом, предназначенным в основном для создания трёхмерных компьютерных игр.
+<span lang=EN-US style='mso-ansi-language:EN-US'>Steel</span><span lang=EN-US> </span>символизируется
+с блестящим и крепким металлом, <span lang=EN-US style='mso-ansi-language:EN-US'>cold</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>steel</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>rail</span><span
+lang=EN-US> </span>– основа для всего железнодорожного движения.</p>
 
-<p>Документ предназначен для использования командой разработчиков <span
-class=SpellE>Steel</span> <span class=SpellE>Engine</span>, игр на основе этого
-движка, а также для руководства T-NAME.</p>
+<p>Система в определённой степени универсальна, при минимальных изменениях может
+использоваться для различных целей: от быстрых динамичных расчетов в компьютерных
+играх до точных расчетов динамики для научного моделирования.</p>
 
-<h3>Идея проекта</h3>
+<p>В основе такой системы лежит понятие движка. Движок – это заменяемая часть,
+которая занимается обработкой переданных ей объектов. Объект не должен уметь
+себя рисовать – он только должен уметь рассказывать движку, как он выглядит. А
+движок уже сам решает, как рисовать объект, рисовать ли вообще, как накладывать
+тени от других объектов, используя все современные достижения графических
+ускорителей<span class=GramE>.</span> Иерархия объектов позволяет быстро и
+удобно добавлять новую функциональность, не меняя архитектуры движка.</p>
 
-<p><span class=SpellE>Steel</span> <span class=SpellE>Engine</span> является
-продуктом, предназначенным для создания компьютерных игр имеющих <span
-style='background:yellow;mso-highlight:yellow'>вид</span> <span
-style='background:yellow;mso-highlight:yellow'>сбоку</span>. Основными частями <span
-class=SpellE>Steel</span> <span class=SpellE>Engine</span> являются
-непосредственно сам движок игры, обеспечивающий общение между миром игры и
-игроком, <span style='background:yellow;mso-highlight:yellow'>а также редактор,
-с помощью которого <span class=SpellE>геймдизайнеры</span> создают игровое
-пространство.</span></p>
+<p>В системе присутствует 3 движка: <span class=GramE>графический</span> (<span
+lang=EN-US style='mso-ansi-language:EN-US'>graph</span>), физический (<span
+lang=EN-US style='mso-ansi-language:EN-US'>physic</span>) и звуковой (<span
+lang=EN-US style='mso-ansi-language:EN-US'>audio</span>). Можно комбинировать
+различные объекты (в комплекте системы), добиваясь нужной функциональности. Например,
+можно на лету изменить отображение системы частиц со спрайтов <span
+class=GramE>на</span> полигональное.</p>
 
-<p>Как уже было сказано выше, движок <span class=SpellE>Steel</span> <span
-class=SpellE>Engine</span> является программным продуктом, организующим общение
-между миром игры и игроком. Он использует игровые ресурсы, созданные <span
-class=SpellE>геймдизайнерами</span> для моделирования игрового пространства и
-состоит из двух частей – базы (<span class=SpellE>base</span>) и дополнительной
-части.</p>
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>Graph</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Engine</span><span
+lang=EN-US> </span>использует все достижения современных <span class=SpellE>видеоускорителей</span>:
+динамическое освещение, <span class=SpellE>шейдеры</span>, тени, туман. Можно
+запустить сразу 2 <span class=SpellE>рендерера</span> в двух окнах.</p>
 
-<p><span class=SpellE>Base</span> является системой основных модулей и отвечает
-за графику, физику, звук, управление, организацию хранения ресурсов и сеть. <span
-class=SpellE>Base</span> должна быть достаточно гибкая, так как в последствии
-предполагается её эволюционное развитие. Также она при минимальных изменениях
-(или даже без таковых) может служить основой для создания других движков,
-графических демонстраций и программ моделирования различных процессов, например
-таких, как прослеживание пути рентгеновских лучей.</p>
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>Physic</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Engine</span><span
+lang=EN-US> </span>обрабатывает движения полигональных тел, шаров и частиц. Физическая
+форма объекта не зависит от <span class=GramE>графической</span>. Объекты движутся
+по заранее просчитанной траектории или по универсальным физическим законам. Объекты
+могут деформироваться или разрушаться.<span lang=EN-US style='mso-ansi-language:
+EN-US'><o:p></o:p></span></p>
 
-<p><span style='background:yellow;mso-highlight:yellow'>Дополнительная часть
-движка не может существовать без <span class=GramE>базовой</span>. При
-использовании <span class=SpellE>Steel</span> <span class=SpellE>Engine</span>
-в различных проектах, эта часть может подвергаться достаточно сильным
-изменениям или же может быть полностью переписана. По умолчанию она соответствует
-игровому проекту <span class=SpellE>Gerda</span> &amp; <span class=SpellE>Kay</span>.
-В этой части движка присутствует физическая модель игрового пространства, <span
-class=GramE>представляющая из себя</span> хранение и обработку всех объектов в
-этом пространстве (<span class=SpellE>юниты</span>, пули, стены, погодные
-эффекты, визуальные системы частиц). В основе физического моделирования <span
-class=SpellE>Steel</span> <span class=SpellE>Engine</span> лежит многослойная
-двумерная реалистичная физическая модель. Кроме этого, в дополнительной части
-содержится AI (<span class=SpellE>Artificial</span> <span class=SpellE>Intelligence</span>,
-<span class=SpellE>искуственный</span> интеллект). AI – это способность живых,
-или любых других мыслящих объектов (<span class=SpellE>юнитов</span>)
-реалистично (по правилам игры) достигать своей цели, реагировать на
-обстоятельства и действия игрока с целью помешать или помочь ему что-то
-сделать, или же просто выжить. Также в этой части присутствуют и другие модули,
-<span class=GramE>например</span> такие как модуль позволяющий создать
-пользовательский игровой интерфейс.</span></p>
+<p>Множество готовых игровых объектов позволяют достичь высокого уровня реализма:
+пыль, искры.</p>
 
-<p><span style='background:yellow;mso-highlight:yellow'>Редактор <span
-class=SpellE>Steel</span> <span class=SpellE>Engine</span> предназначен для
-создания и редактирования некоторых ресурсов игры, а также непосредственно для
-сборки готовой игры. Для создания распространённых типов ресурсов (звуки,
-текстуры, некоторые 3D модели) необходимо будет воспользоваться готовыми
-редакторами (<span class=GramE>например</span> <span class=SpellE>Adobe</span> <span
-class=SpellE>PhotoShop</span>, 3DS <span class=SpellE>Max</span>), в свою
-очередь такие специфичные типы ресурсов, как уровень игры, будет создаваться в
-самом редакторе. Редактор должен иметь возможность изменять большинство
-параметров, <span style='mso-shading:white'>поддерживаемых движком и <span
-class=GramE>позволять <span class=SpellE>геймдизайнерам</span> создавать игру
-не вдаваясь</span> в его реализацию.</span></span></p>
+<p>Из консоли можно на ходу менять различные параметры всех игровых объектов. Встроенный
+<span class=SpellE>скриптовый</span> язык позволяет удобно управлять поведением
+объектов, без изменения <span class=SpellE>исходников</span> игры.</p>
+
+<p>Каждая игра является надстройкой движка, определяя правила поведения и взаимоотношения
+объектов. Сюда относится также искусственный интеллект.</p>
+
+<p>Созданная система будут служить основой для современной компьютерной игры.
+Благодаря расширяемой структуре программы можно вводить новые возможности и
+альтернативные алгоритмы, обеспечивающие большую реалистичность или
+производительность.</p>
+
+<p><o:p>&nbsp;</o:p></p>
 
 <h3>Составители</h3>
 
 <p>Андрей Иванов (<span class=SpellE>KindeX</span>)</p>
 
 <p>Александр <span class=SpellE>Папышев</span> (<span class=SpellE>Def</span>)</p>
-
-<p>Дмитрий Федоров (<span class=SpellE>fdf</span>)</p>
 
 <p><o:p>&nbsp;</o:p></p>
 
