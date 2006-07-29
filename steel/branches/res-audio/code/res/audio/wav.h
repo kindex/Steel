@@ -6,9 +6,7 @@
 class WAV : public Audio
 {
 public:
-    bool load(const std::string &fileName/*, bool looped, bool streamed*/);
+    bool init(const std::string name, const std::string dir);
 };
-
-Audio *createWAV(const std::string &fileName);
 
 #endif

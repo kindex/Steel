@@ -19,15 +19,15 @@
 #include "common/logger.h"
 
 #include "res/audio/wav.h"
+#include "res/res_main.h"
 #include "audio/openal_engine.h"
 
 bool test()
 {
-	WAV *tSnd = new WAV;
 	if (!initializeOpenAL())
 		return false;
 
-	tSnd->load("test.wav");	
+	Audio *tSnd = resAudio.add("audio/stereo");
 
 	alSourcePlay(tSnd->itsSourceID);
 
