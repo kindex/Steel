@@ -869,10 +869,30 @@ bool OpenGL_Engine::init(std::string _conf)
 	log_msg("graph opengl", "Version: " + (string)(const char *)glGetString(GL_VERSION));
 	log_msg("graph opengl", "Vendor: " + (string)(const char *)glGetString(GL_VENDOR));
 
+	string openglVersions = (const char *)glGetString(GL_VERSION);
+	int openglVersioni;
+	
+	if(openglVersions.length() >= 3)
+		openglVersioni = (openglVersions[0] - '0')*10 + (openglVersions[2] - '0');
+	else
+	{
+		log_msg("graph opengl error", "Could not detect OpenGL version. Using 1.0");
+		openglVersioni = 10;
+	}
+
+	log_msg("graph opengl", "Detected OpenGL version code: " + IntToStr(openglVersioni));
+
 	initExtensions();
 
-	string version = conf->gets("OpenGL_Version", "1.0");
+	string version = conf->gets("OpenGL_Version");
 	
+	if(version.empty())// if version is not set in config, then autodetect it
+	{
+		if(openglVersioni < 11) version = "1.0";
+		else
+			version = "1.1";
+	}
+
 	log_msg("graph opengl", "Using OpenGL renderer version: " + version);
 
 	if(version == "1.0")
