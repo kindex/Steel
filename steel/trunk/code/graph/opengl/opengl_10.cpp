@@ -27,8 +27,16 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image *image)
 	else
 		assert(false, "Unsupported image format");
 
+	int width = image->getWidth();
+	int heigth = image->getHeight();
+	if((width & (width - 1) )!= 0)
+		log_msg("graph opengl res error", "Texture width is not power of 2 ("+ IntToStr(width) + ")");
+	if((heigth & (heigth - 1)) != 0)
+		log_msg("graph opengl res error", "Texture heigth is not power of 2 ("+ IntToStr(heigth) + ")");
+
     glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
 				format,  GL_UNSIGNED_BYTE , image->getBitmap());
+	return true;
 }
 
 void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)

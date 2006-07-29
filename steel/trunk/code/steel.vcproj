@@ -799,6 +799,14 @@
 							>
 						</File>
 						<File
+							RelativePath=".\graph\opengl\gl\libext.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\graph\opengl\gl\libext.h"
+							>
+						</File>
+						<File
 							RelativePath=".\graph\opengl\gl\wglext.h"
 							>
 						</File>
