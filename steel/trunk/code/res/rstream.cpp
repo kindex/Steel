@@ -1,4 +1,5 @@
 #include "rstream.h"
+#include "../common/logger.h"
 
 #include <fstream>
 #include <string>

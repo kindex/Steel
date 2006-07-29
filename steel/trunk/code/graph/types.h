@@ -49,12 +49,15 @@ public:
 class GLine // al-a triangle
 {
 public:
-	int a[2]; // vertex indexes
-	color4f color; // line color
+	unsigned int a[2]; // vertex indexes
 	void set(const int A, const int B) { a[0] = A; a[1] = B; }
 };
 
-typedef steel::vector<GLine> GLines;
+struct GLines
+{
+	steel::vector<GLine> index;
+	steel::vector<color4f> color; // line color
+};
 
 typedef Vertexes	Normals;
 

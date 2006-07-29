@@ -249,7 +249,7 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
 
 	resStack.push(baseDirectory);
 
-	log_msg("res " + id, "Loading " + baseDirectory + "/" + name);
+	log_msg("res" + id, "Loading " + baseDirectory + "/" + name);
 
     int s = classes.size();
 	for(int i = 0; i < s; i++)
@@ -278,7 +278,7 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
 
 		return obj;
 	}
-	log_msg("res error " + id, "Failed " + baseDirectory + "/" + name);
+	log_msg("res error" + id, "Failed " + baseDirectory + "/" + name);
 	if(pop) resStack.pop();
 
 	return NULL;

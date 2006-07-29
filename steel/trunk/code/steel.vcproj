@@ -744,15 +744,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\graph\opengl\opengl_10.h"
-						>
-					</File>
-					<File
 						RelativePath=".\graph\opengl\opengl_11.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\graph\opengl\opengl_11.h"
 						>
 					</File>
 					<File
@@ -787,19 +779,27 @@
 							>
 						</File>
 						<File
-							RelativePath=".\graph\opengl\gl\libExt.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\graph\opengl\gl\libExt.h"
-							>
-						</File>
-						<File
 							RelativePath=".\graph\opengl\ext\normalisation_cube_map.cpp"
 							>
 						</File>
 						<File
 							RelativePath=".\graph\opengl\ext\normalisation_cube_map.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="gl"
+						>
+						<File
+							RelativePath=".\graph\opengl\gl\glext.h"
+							>
+						</File>
+						<File
+							RelativePath=".\graph\opengl\gl\glxext.h"
+							>
+						</File>
+						<File
+							RelativePath=".\graph\opengl\gl\wglext.h"
 							>
 						</File>
 					</Filter>

@@ -53,7 +53,8 @@ void GraphHelper::ProcessGraph(steel::time curTime, steel::time frameLength, Mod
 
 	vertex.data.resize(vectors.size()*4 + lines.size()*2 + boxes.size()*8);
 //	face[0].triangles.data.resize(vectors.size());
-	glines.resize(vectors.size()*3 + lines.size() + boxes.size()*12);
+	glines.index.resize(vectors.size()*3 + lines.size() + boxes.size()*12);
+	glines.color.resize(glines.index.size());
 
 	int vi = 0;
 	int li = 0;
@@ -66,12 +67,12 @@ void GraphHelper::ProcessGraph(steel::time curTime, steel::time frameLength, Mod
 		vertex.data[vi + 2].set(it->line.base + it->line.a*0.8f + b);
 		vertex.data[vi + 3].set(it->line.base + it->line.a*0.8f - b);
 
-		glines[li + 0].a[0] = vi + 0;
-		glines[li + 0].a[1] = vi + 1;
-		glines[li + 1].a[0] = vi + 1;
-		glines[li + 1].a[1] = vi + 2;
-		glines[li + 2].a[0] = vi + 1;
-		glines[li + 2].a[1] = vi + 3;
+		glines.index[li + 0].a[0] = vi + 0;
+		glines.index[li + 0].a[1] = vi + 1;
+		glines.index[li + 1].a[0] = vi + 1;
+		glines.index[li + 1].a[1] = vi + 2;
+		glines.index[li + 2].a[0] = vi + 1;
+		glines.index[li + 2].a[1] = vi + 3;
 
 		vi += 4;
 		li += 3;
@@ -82,8 +83,8 @@ void GraphHelper::ProcessGraph(steel::time curTime, steel::time frameLength, Mod
 		vertex.data[vi + 0].set(it->line.base);
 		vertex.data[vi + 1].set(it->line.base + it->line.a);
 
-		glines[li + 0].a[0] = vi + 0;
-		glines[li + 0].a[1] = vi + 1;
+		glines.index[li + 0].a[0] = vi + 0;
+		glines.index[li + 0].a[1] = vi + 1;
 
 		vi += 2;
 		li += 1;
@@ -98,7 +99,7 @@ void GraphHelper::ProcessGraph(steel::time curTime, steel::time frameLength, Mod
 		for(int i=0;  i<8; i++)
 			vertex.data[vi + i].set(r[i]);
 
-#define GSET(n, a, b)	glines[li + n].set(vi + a, vi + b);
+#define GSET(n, a, b)	glines.index[li + n].set(vi + a, vi + b);
 
 		GSET(0, 0, 1);
 		GSET(1, 2, 3);

@@ -10,20 +10,11 @@
 		Функции для рендерига объектов на OpenGL 1.1.
 		Используется glVertexPointer и BindTexture
  ************************************************************/
-#include "opengl_10.h"
+#include "opengl_engine.h"
 #include "gl/libext.h"
 
-struct OpenGL_ImageBuffer
-{
-	GLuint	glid;
-	int		usedCnt, loadCnt;
-	steel::time lastUsedTime;
-	bool	loaded;
-};
 
-std::map<uid, OpenGL_ImageBuffer> imageBuffer;
-
-bool bindTexture_OpenGL11(Image *image)
+bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 {
 	if(image == NULL) return false;
 
@@ -111,7 +102,7 @@ bool bindTexture_OpenGL11(Image *image)
 }
 
 
-void DrawFill_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawFill_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material && triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
@@ -124,7 +115,7 @@ void DrawFill_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangle
         TexCoords *coords = e.object->getTexCoords(0);
 		Texture map = material->map[0]; // текущая текстура
 
-		bindTexture_OpenGL11(map.texture);
+		(this->*BindTexture)(map.texture);
 					
 		glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
@@ -136,7 +127,7 @@ void DrawFill_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangle
 	}
 }
 
-void DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
 {
 	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
@@ -149,15 +140,27 @@ void DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangle
 
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
 
-		//Draw All
 		glDrawElements(GL_TRIANGLES, triangles->data.size()*3/*A,b,c*/, GL_UNSIGNED_INT, &triangles->data.front().a[0]);
 
-		glDisableClientState(GL_VERTEX_ARRAY);
 		glPopAttrib();
 	}
 }
 
-void DrawLines_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
 {
-	// TODO
+	if(e.vertex && e.lines && !e.lines->index.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	{
+		total.object++;
+		total.vertex += e.vertex->data.size();
+		total.triangle += e.lines->index.size();
+		
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+		// TODO color
+		glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
+
+		glDrawElements(GL_LINES, e.lines->index.size()*2, GL_UNSIGNED_INT, &e.lines->index.front().a[0]);
+
+		glPopAttrib();
+    }
 }

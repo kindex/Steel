@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <vector>
 
-//#define STEEL_VECTOR
+#define STEEL_VECTOR
 
 
 namespace steel

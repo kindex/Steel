@@ -56,6 +56,18 @@ protected:
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image *zeroNormal;
 
+
+	struct OpenGL_ImageBuffer
+	{
+		GLuint	glid;
+		int		usedCnt, loadCnt;
+		steel::time lastUsedTime;
+		bool	loaded;
+	};
+
+	std::map<uid, OpenGL_ImageBuffer> imageBuffer;
+
+
 public:
 	struct GraphObjectStorage // множество треугольников одного материала
 	{
@@ -90,10 +102,24 @@ protected:
 	// data, to store collected information
 	steel::vector<GraphObjectStorage> storage;
 
-// procedure variables
-	void (*DrawFill)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
-	void (*DrawLines)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
-	void (*DrawWire)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	// procedure variables
+	bool (OpenGL_Engine::*BindTexture)(Image *image);
+	void (OpenGL_Engine::*DrawFill)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+
+	// OpenGL 1.0
+	bool BindTexture_OpenGL10(Image *image);
+	void DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void DrawWire_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void DrawLines_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+
+	// OpenGL 1.1
+	bool BindTexture_OpenGL11(Image *image);
+	void DrawFill_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void DrawLines_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+
 
 	typedef
 		steel::vector<v3>
@@ -120,7 +146,7 @@ protected:
 	 steel::time time;
 
 public:
-	OpenGL_Engine(): DrawFill(NULL), DrawLines(NULL), DrawWire(NULL)  {}
+	OpenGL_Engine(): DrawFill(NULL), DrawLines(NULL), DrawWire(NULL), BindTexture(NULL)  {}
 
 	void processCamera();
 	bool init(std::string _conf);
@@ -159,7 +185,6 @@ public:
 
 //	GLuint getCubeMap(std::string imageName);
 
-	bool bindTexture(Image *image);
 	template<class Class> bool bind(Class *v, int mode, int mode2, int elCnt);
 	void cleanBuffer(uid bufId);
 /*	bool bindTexCoords(MapCoord *coord);
@@ -175,7 +200,7 @@ public:
 	void deleteStorageForChildren(int sid);
 
 	// овновл€юет место дл€ хранени€ дополнительной инормации (storage, кеш объекта) - дл€ одного объекта
-	void cacheStorageObject(GraphObjectStorage &objectStorage);
+	virtual void cacheStorageObject(GraphObjectStorage &objectStorage);
 
 };
 

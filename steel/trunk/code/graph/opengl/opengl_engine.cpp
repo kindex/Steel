@@ -14,8 +14,6 @@
  ************************************************************/
 
 #include "opengl_engine.h"
-#include "opengl_10.h"
-#include "opengl_11.h"
 
 #include <iostream>
 
@@ -54,15 +52,15 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 	glLoadMatrixf(m);
 
 	if(conf->geti("drawLines") && DrawLines)
-		DrawLines(e, total);
+		(this->*DrawLines)(e, total);
 
 	if(conf->geti("drawFace") && e.faceMaterials && DrawFill)
 		for(unsigned int i = 0; i < e.faceMaterials->size(); i++)
-			DrawFill(e, e.faceMaterials->at(i).triangles, e.faceMaterials->at(i).material, total);
+			(this->*DrawFill)(e, e.faceMaterials->at(i).triangles, e.faceMaterials->at(i).material, total);
 
 	if(conf->geti("drawWire") && e.faceMaterials && DrawWire)
 		for(unsigned int i = 0; i < e.faceMaterials->size(); i++)
-			DrawWire(e, e.faceMaterials->at(i).triangles, total);
+			(this->*DrawWire)(e, e.faceMaterials->at(i).triangles, total);
 
 
 	glPopMatrix();
@@ -866,26 +864,32 @@ bool OpenGL_Engine::init(std::string _conf)
 	
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
+
+	log_msg("graph opengl", "Renderer: " + (string)(const char *)glGetString(GL_RENDERER));
+	log_msg("graph opengl", "Version: " + (string)(const char *)glGetString(GL_VERSION));
+	log_msg("graph opengl", "Vendor: " + (string)(const char *)glGetString(GL_VENDOR));
+
 	initExtensions();
 
 	string version = conf->gets("OpenGL_Version", "1.0");
 	
-	log_msg("graph opengl","Using OpenGL renderer version: " + version);
+	log_msg("graph opengl", "Using OpenGL renderer version: " + version);
 
 	if(version == "1.0")
 	{
-		DrawFill = DrawFill_OpenGL10;
-		DrawWire = DrawWire_OpenGL10;
-		DrawLines = DrawLines_OpenGL10;
+		BindTexture = &OpenGL_Engine::BindTexture_OpenGL10;
+		DrawFill = &OpenGL_Engine::DrawFill_OpenGL10;
+		DrawWire = &OpenGL_Engine::DrawWire_OpenGL10;
+		DrawLines = &OpenGL_Engine::DrawLines_OpenGL10;
 	}
 
 	if(version == "1.1")
 	{
-		DrawFill = DrawFill_OpenGL11;
-		DrawWire = DrawWire_OpenGL11;
-		DrawLines = DrawLines_OpenGL11;
+		BindTexture = &OpenGL_Engine::BindTexture_OpenGL11;
+		DrawFill = &OpenGL_Engine::DrawFill_OpenGL11;
+		DrawWire = &OpenGL_Engine::DrawWire_OpenGL11;
+		DrawLines = &OpenGL_Engine::DrawLines_OpenGL11;
 	}
-
 
 //	SetUpARB_multitexture();
 	
