@@ -865,9 +865,9 @@ bool OpenGL_Engine::init(std::string _conf)
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 
-	log_msg("graph opengl", "Renderer: " + (string)(const char *)glGetString(GL_RENDERER));
-	log_msg("graph opengl", "Version: " + (string)(const char *)glGetString(GL_VERSION));
-	log_msg("graph opengl", "Vendor: " + (string)(const char *)glGetString(GL_VENDOR));
+	log_msg("graph opengl opengl_info", "Renderer: " + (string)(const char *)glGetString(GL_RENDERER));
+	log_msg("graph opengl opengl_info", "Version: " + (string)(const char *)glGetString(GL_VERSION));
+	log_msg("graph opengl opengl_info", "Vendor: " + (string)(const char *)glGetString(GL_VENDOR));
 
 	string openglVersions = (const char *)glGetString(GL_VERSION);
 	int openglVersioni;
@@ -876,13 +876,14 @@ bool OpenGL_Engine::init(std::string _conf)
 		openglVersioni = (openglVersions[0] - '0')*10 + (openglVersions[2] - '0');
 	else
 	{
-		log_msg("graph opengl error", "Could not detect OpenGL version. Using 1.0");
+		log_msg("graph opengl error opengl_info", "Could not detect OpenGL version. Using 1.0");
 		openglVersioni = 10;
 	}
 
-	log_msg("graph opengl", "Detected OpenGL version code: " + IntToStr(openglVersioni));
+	log_msg("graph opengl opengl_info", "Detected OpenGL version code: " + IntToStr(openglVersioni));
 
-	initExtensions();
+	OpenGL_ExtensionsInit();
+	OpenGL_ExtensionsPrintfInfo();
 
 	string version = conf->gets("OpenGL_Version");
 	
@@ -893,7 +894,7 @@ bool OpenGL_Engine::init(std::string _conf)
 			version = "1.1";
 	}
 
-	log_msg("graph opengl", "Using OpenGL renderer version: " + version);
+	log_msg("graph opengl opengl_info", "Using OpenGL renderer version: " + version);
 
 	if(version == "1.0")
 	{

@@ -25,11 +25,12 @@
     #include    <GL/glxext.h>
 #endif
 
-bool    isExtensionSupported ( const char * ext );
-void    assertExtensionsSupported ( const char * extList );
-void    initExtensions       ();
-void    printfInfo           ();                // print info about card, driver, version & etc
+bool OpenGL_ExtensionsIsSupported(const char *ext);
+//void OpenGL_ExtensionsInitAssertExtensions(const char *extList);
+void OpenGL_ExtensionsInit();
+void OpenGL_ExtensionsPrintfInfo();
 
+extern bool OPENGL_EXTENSION_MULTITEXTURE;
 
 #ifdef  _WIN32
 extern  PFNGLACTIVETEXTUREARBPROC               glActiveTextureARB;

@@ -29,5 +29,8 @@ void splitPath(std::string fullpath, std::string &path, std::string &filename);
 void deleteFiles(std::string dir, std::string mask);
 void deleteFile(std::string dir, std::string file);
 
+// Change all a symbols in string s to symbol b
+std::string strtr(const char *s, char a, char b);
+
 
 #endif

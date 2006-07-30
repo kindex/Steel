@@ -427,7 +427,7 @@ table.MsoTableGrid
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="6146"/>
+ <o:shapedefaults v:ext="edit" spidmax="7170"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -453,14 +453,14 @@ class=GramE>на</span> несколько логических частей:</p>
 <h2><span class=SpellE>Core</span></h2>
 
 <p style='margin-bottom:0cm;margin-bottom:.0001pt'>Отвечает за связь,
-инициализацию модулей, <span class=SpellE>multithreading</span>. Передаёт <span
-class=SpellE>упраление</span> движку для обработки мира игры на короткое время.</p>
+инициализацию модулей, <span class=SpellE>multithreading</span>. Передаёт управление
+движку для обработки мира игры на короткое время.</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo2;
 tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=GramE>з</span>ациклившаяся часть движка не должна повесить весь движок.</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>зациклившаяся
+часть движка не должна повесить весь движок.</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo2;
@@ -505,6 +505,12 @@ margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level2 
 tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>права
 <span class=SpellE>скрипта</span> (права доступа)</p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level2 lfo2;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>в
+лог выводится информация о системе</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo2;
@@ -623,19 +629,68 @@ style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>Объект
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
 tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>12.<span
 style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>Минимальная
-функциональность на <span class=SpellE><span lang=EN-US style='mso-ansi-language:
-EN-US'>nVidia</span></span><span lang=EN-US> </span><span lang=EN-US
-style='mso-ansi-language:EN-US'>TNT</span> 2, средняя на <span class=SpellE><span
-lang=EN-US style='mso-ansi-language:EN-US'>GeForce</span></span> 2 и полная на <span
-class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>GeForce</span></span>
-6.</p>
+функциональность на <span lang=EN-US style='mso-ansi-language:EN-US'>OpenGL</span>
+1.1, средняя на <span lang=EN-US style='mso-ansi-language:EN-US'>OpenGL</span>
+1.3 и полная на <span lang=EN-US style='mso-ansi-language:EN-US'>OpenGL</span><span
+lang=EN-US> </span>2.0</p>
 
-<p style='margin-bottom:0cm;margin-bottom:.0001pt'><span class=SpellE><span
-lang=EN-US style='mso-ansi-language:EN-US'>GeForce</span></span><span
-lang=EN-US style='mso-ansi-language:EN-US'> 6800 – OpenGL 1.5<o:p></o:p></span></p>
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>13.<span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>текстуры</p>
 
-<p style='margin-bottom:0cm;margin-bottom:.0001pt'><span lang=EN-US
-style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>программно
+генерируемые</p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>анимированные
+(<span class=SpellE>видеотекстуры</span>)</p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>преломление
+изображения (стекло, огонь)</p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>мониторы
+с изображением с камер (<span lang=EN-US style='mso-ansi-language:EN-US'>render</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>to</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>texture</span>)</p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>14.<span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>изменение
+разрешения экрана на лету</p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
+class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>fullscreen</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'> to window mode</span></p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>выставление
+<span lang=EN-US style='mso-ansi-language:EN-US'>refresh rate</span></p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>15.<span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>Всевозможные
+настройки графики (сглаживание, <span class=SpellE><span lang=EN-US
+style='mso-ansi-language:EN-US'>antialiasing</span></span>, <span lang=EN-US
+style='mso-ansi-language:EN-US'>etc</span>)</p>
 
 <h2><span class=SpellE>Physic</span> <span class=SpellE>Engine</span></h2>
 
@@ -652,25 +707,25 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Свободное
 падение</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Движение
 по заранее просчитанной траектории (по рельсам)</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Придание
 ускорения телам</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Неподвижные
 объекты (пол, стены)</p>
 
@@ -735,8 +790,8 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
 tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=GramE>д</span>омены коллизий</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>домены
+коллизий</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
@@ -886,6 +941,12 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 class=SpellE>ogg</span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
+tab-stops:list 108.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>загрузка
+только нужной части звука</p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level2 lfo10;
 tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
@@ -938,6 +999,16 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 tab-stops:list 53.4pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>полигональная
 модель, универсальная физика</p>
+
+<p style='margin-left:89.4pt;text-indent:-18.0pt;mso-list:l3 level2 lfo12;
+tab-stops:list 89.4pt'><![if !supportLists]><span style='mso-list:Ignore'>a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>изменяемое
+количество детей</p>
+
+<p style='margin-left:89.4pt;text-indent:-18.0pt;mso-list:l3 level2 lfo12;
+tab-stops:list 89.4pt'><![if !supportLists]><span style='mso-list:Ignore'>b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>изменяемая
+форма и количество полигонов</p>
 
 <p style='margin-left:53.4pt;text-indent:-18.0pt;mso-list:l3 level1 lfo12;
 tab-stops:list 53.4pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span

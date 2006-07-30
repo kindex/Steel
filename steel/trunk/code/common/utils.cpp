@@ -143,3 +143,15 @@ void deleteFiles(string dir, string mask)
 	// TODO
 	#endif	// STEEL_OS
 }
+
+std::string strtr(const char *s, char a, char b)
+{
+	std::string res;
+	steel::vector<std::string> r = explode(a, s);
+	for(unsigned int i = 0; i < r.size(); i++)
+	{
+		if(!r[i].empty())
+			res += "\n\t\t" + IntToStr(i) + ": " + r[i];
+	}
+	return res;
+}

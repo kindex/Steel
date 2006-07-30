@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 
 
 	deleteFiles("..\\log", "*.log");
-	//logFilter.set("error debug -res -script");
+	logFilter.set("-opengl_info");
 
 	steel::log.open("../steel.log");
 

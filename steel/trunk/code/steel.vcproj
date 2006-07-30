@@ -177,7 +177,7 @@
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				IgnoreAllDefaultLibraries="false"
-				IgnoreDefaultLibraryNames=""
+				IgnoreDefaultLibraryNames="MSVCRT"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\build.debug/steel.pdb"
 				GenerateMapFile="true"
@@ -745,6 +745,14 @@
 					</File>
 					<File
 						RelativePath=".\graph\opengl\opengl_11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\graph\opengl\opengl_13.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\graph\opengl\opengl_15.cpp"
 						>
 					</File>
 					<File
