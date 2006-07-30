@@ -113,11 +113,11 @@ void deleteFile(std::string dir, std::string file)
 		#if STEEL_OS == OS_WIN32
 		DeleteFile( (dir + "\\" + file).c_str());
 		#elif STEEL_OS == OS_LINUX
-		if ( unlink((dir+"/"+file).c_str())==-1 )
+		if ( unlink((dir + "/" + file).c_str())==-1 )
 			#ifdef STEEL_USE_GETTEXT
-			error(_("Failed to delete a file")+" "+dir+"/"+file,strerror(errno));
+			error(_("Failed to delete a file ") + dir + "/" + file,strerror(errno));
 			#else	// STEEL_USE_GETTEXT
-			error("Failed to delete a file "+dir+"/"+file,strerror(errno));
+			error("Failed to delete a file " + dir + "/" + file,strerror(errno));
 			#endif	// STEEL_USE_GETTEXT
 		#endif	// STEEL_OS
 }

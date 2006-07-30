@@ -9,7 +9,7 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
-#ifdef __linux
+#if STEEL_OS == OS_LINUX
 #include <sys/types.h>
 #endif
 
@@ -46,6 +46,7 @@ unsigned int steelFlag32_t;
 */ 
 typedef
 unsigned long int steelAngle_t;
+
 /*
 	Коды ошибок
 */
@@ -59,7 +60,8 @@ enum
 	SE_INV_FMT,		//	неверный формат
 	SE_SDL_VQUERY,	//	неудачный запрос к SDL
 	SE_SDL_VIDEO,	//	не удалось создать видео режим
-	SE_SDL_INIT		//	ошибка инициализации библиотеки SDL
-}	steelError_t;
+	SE_SDL_INIT,	//	ошибка инициализации библиотеки SDL
+	SE_OGL_INIT		//	ошибка инициализации OpenGL
+}	SteelError;
 
 #endif

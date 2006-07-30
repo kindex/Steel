@@ -98,14 +98,29 @@
 /*
 	Абстрактный класс, от которого наследуются все классы в проекте
 */
-class steelAbstract
+#define steelAbstract SteelAbstract
+class SteelAbstract
 {
 public:
-	steelAbstract( void ) {}
-	virtual ~steelAbstract( void ) {}
-	steelError_t getError( void ) { return lastError; }
+	SteelAbstract( void ) {}
+	virtual ~SteelAbstract( void ) {}
+	SteelError getError( void ) { return lastError; }
+	
 protected:
-	steelError_t lastError;
+	void setError( SteelError errorCode ) { lastError = errorCode; }
+	
+private:
+	SteelError lastError;
 };
+
+#define steelPushError( errorCode ) \
+{ \
+	setError(errorCode); \
+	return false; \
+}
+
+#ifdef STEEL_USE_GETTEXT
+	#define _( msgid ) gettext(msgid)
+#endif
 
 #endif

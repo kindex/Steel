@@ -8,8 +8,8 @@
     License:
         Steel Engine License
     Description:
-		Часть графического движока OpenGL, которая реализует
-		системно зависимые функции, такие как создание окна.
+		Г—Г Г±ГІГј ГЈГ°Г ГґГЁГ·ГҐГ±ГЄГ®ГЈГ® Г¤ГўГЁГ¦Г®ГЄГ  OpenGL, ГЄГ®ГІГ®Г°Г Гї Г°ГҐГ Г«ГЁГ§ГіГҐГІ
+		Г±ГЁГ±ГІГҐГ¬Г­Г® Г§Г ГўГЁГ±ГЁГ¬Г»ГҐ ГґГіГ­ГЄГ¶ГЁГЁ, ГІГ ГЄГЁГҐ ГЄГ ГЄ Г±Г®Г§Г¤Г Г­ГЁГҐ Г®ГЄГ­Г .
  ************************************************************/
 
 #include "../../steel.h"
@@ -33,11 +33,11 @@ bool OpenGL_SDL_Engine::createWindow()
 	if (SDL_Init(SDL_INIT_VIDEO)<0)
 	{
 		#ifdef STEEL_USE_GETTEXT
-		error("SDL",std::string(_("SDL initialization has failed:"))+" "+SDL_GetError());
+		error("SDL",std::string(_("SDL initialization has failed: "))+SDL_GetError());
 		#else
 		error("SDL",std::string("SDL initialization has failed: ")+SDL_GetError());
 		#endif
-		lastError = SE_SDL_INIT;
+		setError(SE_SDL_INIT);
 		return false;
 	}
 
@@ -48,11 +48,11 @@ bool OpenGL_SDL_Engine::createWindow()
 	if ( !videoInfo )
 	{
 		#ifdef STEEL_USE_GETTEXT
-		error("SDL",std::string(_("Video query has failed:"))+" "+SDL_GetError());
+		error("SDL",std::string(_("Video query has failed: "))+SDL_GetError());
 		#else
 		error("SDL",std::string("Video query has failed: ")+SDL_GetError());
 		#endif
-		lastError = SE_SDL_VQUERY;
+		setError(SE_SDL_VQUERY);
 		SDL_Quit();
 		return false;
 	}
@@ -64,9 +64,6 @@ bool OpenGL_SDL_Engine::createWindow()
 
 	if(conf->geti("fullscreen"))
 		videoFlags |= SDL_FULLSCREEN;
-
-//	videoFlags |= SDL_OPENGLBLIT;
-//	videoFlags|=SDL_RESIZABLE;
 	
 	if ( videoInfo->hw_available )
 		videoFlags |= SDL_HWSURFACE;
@@ -76,27 +73,54 @@ bool OpenGL_SDL_Engine::createWindow()
 	if ( videoInfo->blit_hw )
 		videoFlags |= SDL_HWACCEL;
 	
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,   1 );
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE,   8 ); // min 8bit red
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8 ); // min 8bit green
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,  8 ); // min 8bit blue	
-	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
+	if ( (SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1 ) == -1) ||
+		(SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8) == -1) ||
+		(SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8) == -1) ||
+    	(SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8) == -1) ||
+		(SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32) == -1) )
+		//(SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32) == -1) ) СЃ СЌС‚РёРј РЅРµ СЂР°Р±РѕС‚Р°РµС‚..
+	{
+		#ifdef STEEL_USE_GETTEXT
+		error("SDL",std::string(_("Setting the GL attribute has failed: "))+SDL_GetError());
+		#else
+		error("SDL",std::string("Setting the GL attribute has failed: ")+SDL_GetError());
+		#endif
+		setError(SE_OGL_INIT);
+		SDL_Quit();
+		return false;
+	}
 
 	surface = SDL_SetVideoMode(conf->geti("window.width"), conf->geti("window.height"), conf->geti("screen.depth"), videoFlags);
 	if ( !surface )
 	{
 		#ifdef STEEL_USE_GETTEXT
-		error("SDL",std::string(_("Setting the video mode has failed:"))+" "+SDL_GetError());
+		error("SDL",std::string(_("Setting the video mode has failed: "))+SDL_GetError());
 		#else
 		error("SDL",std::string("Setting the video mode has failed: ")+SDL_GetError());
 		#endif
-		lastError = SE_SDL_VIDEO;
+		setError(SE_SDL_VIDEO);
 		SDL_Quit();
 		return false;
 	}
 	
-    log_msh("graph opegl sdl", "Video mode has been set!\n" \
+	#ifdef STEEL_USE_GETTEXT
+	log_msg("graph opegl sdl", std::string(_("Video mode has been set!\n"))+ \
+    	_("\tResolution: ")+ \
+			IntToStr(conf->geti("window.width"))+"x"+ \
+			IntToStr(conf->geti("window.height"))+"x"+ \
+			IntToStr(conf->geti("screen.depth"))+"\n"+ \
+    	_("\tVideo memory: ") + IntToStr(videoInfo->video_mem) + "K\n"+ \
+    	_("\tHardware surface: ") + (videoInfo->hw_available?_("yes"):_("no")) + "\n"+ \
+    	_("\tWindow manager: ") + (videoInfo->wm_available?_("yes"):_("no")) + "\n" + \
+    	_("\tHardware blits: ") + (videoInfo->blit_hw?_("yes"):_("no")) + "\n" + \
+    	_("\tHardware colourkey blits: ") + (videoInfo->blit_hw_CC?_("yes"):_("no")) + "\n" + \
+    	_("\tHardware alpha blits: ") + (videoInfo->blit_hw_A?_("yes"):_("no")) + "\n" + \
+    	_("\tSoftware blits: ") + (videoInfo->blit_sw?_("yes"):_("no")) + "\n" + \
+    	_("\tSoftware colourkey blits: ") + (videoInfo->blit_sw_CC?_("yes"):_("no")) + "\n" + \
+    	_("\tSoftware alpha blits: ") + (videoInfo->blit_sw_A?_("yes"):_("no")) + "\n" + \
+    	_("\tAccelerated colour fills: ") + (videoInfo->blit_fill?_("yes"):_("no")) + "\n");
+	#else
+    /*log_msg("graph opegl sdl", "Video mode has been set!\n" \
     	"\tResolution: %dx%dx%d\n" \
     	"\tVideo memory: %dK\n" \
     	"\tHardware surface: %s\n" \
@@ -117,7 +141,8 @@ bool OpenGL_SDL_Engine::createWindow()
     	videoInfo->blit_sw?"yes":"no", \
     	videoInfo->blit_sw_CC?"yes":"no", \
     	videoInfo->blit_sw_A?"yes":"no", \
-    	videoInfo->blit_fill?"yes":"no");
+    	videoInfo->blit_fill?"yes":"no");*/
+	#endif
 	
 	return true;
 }

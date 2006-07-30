@@ -146,7 +146,7 @@ protected:
 	 steel::time time;
 
 public:
-	OpenGL_Engine(): DrawFill(NULL), DrawLines(NULL), DrawWire(NULL), BindTexture(NULL)  {}
+	OpenGL_Engine(): BindTexture(NULL), DrawFill(NULL), DrawLines(NULL), DrawWire(NULL) {}
 
 	void processCamera();
 	bool init(std::string _conf);

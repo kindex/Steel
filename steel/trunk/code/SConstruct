@@ -16,11 +16,15 @@ mode=ARGUMENTS.get("mode","debug")
 if mode=="debug":
 	env.Append(CCFLAGS=" -g -DDEBUG")
 elif mode=="release":
-	env.Append(CCFLAGS=" -O3 -march=pentium4")
+	env.Append(CCFLAGS=" -O3")
 	env.Append(LINKFLAGS=" -s")
 else:
 	print "Invalid mode ( debug|release )"
 	sys.exit()
+
+uses=ARGUMENTS.get("uses","gettext")
+if "gettext" in uses:
+	env.Append(CCFLAGS=" -DSTEEL_USE_GETTEXT")
 
 sources = Split("""
 	./interface.cpp
@@ -49,6 +53,8 @@ sources = Split("""
 	./graph/opengl/opengl_engine.cpp
 	./graph/opengl/gl/libext.cpp
 	./graph/opengl/opengl_win_engine.cpp
+	./graph/opengl/opengl_10.cpp
+	./graph/opengl/opengl_11.cpp
 	./test.cpp
 	./objects/custom_path.cpp
 	./objects/game_obj.cpp
@@ -78,11 +84,8 @@ sources = Split("""
 	./physic/physic_engine.cpp
 	./physic/physic_engine_steel.cpp
 	./physic/pe_particle.cpp
-	
 	./main.cpp
 	""")
-
-#./physic/physic_engine_3d.cpp
 
 libs = Split("""
 	SDL

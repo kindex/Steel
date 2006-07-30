@@ -848,7 +848,7 @@ bool OpenGL_Engine::init(std::string _conf)
 
 	if (!createWindow())
 	{
-		lastError = getError();
+		//lastError = getError();
 		return false;
 	}
 
