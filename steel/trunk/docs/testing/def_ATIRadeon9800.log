@@ -1,0 +1,152 @@
+>>>>>>>>>>>>>>>>
+Started Logging
+00:00.092 Command Line: ''					[ core ]
+00:00.108   Loading /renderer					[ resconfig ]
+00:00.125   OK /renderer					[ res config ]
+00:00.280 Video mode has been set! (792x573x32)			[ opengl graph ]
+00:00.280 Renderer: RADEON 9800 Pro x86/MMX/3DNow!/SSE		[ graph opengl ]
+00:00.280 Version: 2.0.5396 WinXP Release			[ graph opengl ]
+00:00.280 Vendor: ATI Technologies Inc.				[ graph opengl ]
+00:00.296 Supported WGL extensions: 
+		0: WGL_ARB_extensions_string
+		1: WGL_ARB_make_current_read
+		2: WGL_ARB_multisample
+		3: WGL_ARB_pbuffer
+		4: WGL_ARB_pixel_format
+		5: WGL_ARB_render_texture
+		6: WGL_ATI_pixel_format_float
+		7: WGL_EXT_extensions_string
+		8: WGL_EXT_swap_control
+		9: WGL_ATI_render_texture_rectangle	[ graph opengl ]
+00:00.296 Supported GL extensions: 
+		0: GL_ARB_multitexture
+		1: GL_EXT_texture_env_add
+		2: GL_EXT_compiled_vertex_array
+		3: GL_S3_s3tc
+		4: GL_ARB_depth_texture
+		5: GL_ARB_fragment_program
+		6: GL_ARB_fragment_program_shadow
+		7: GL_ARB_fragment_shader
+		8: GL_ARB_multisample
+		9: GL_ARB_occlusion_query
+		10: GL_ARB_point_parameters
+		11: GL_ARB_point_sprite
+		12: GL_ARB_shader_objects
+		13: GL_ARB_shading_language_100
+		14: GL_ARB_shadow
+		15: GL_ARB_shadow_ambient
+		16: GL_ARB_texture_border_clamp
+		17: GL_ARB_texture_compression
+		18: GL_ARB_texture_cube_map
+		19: GL_ARB_texture_env_add
+		20: GL_ARB_texture_env_combine
+		21: GL_ARB_texture_env_crossbar
+		22: GL_ARB_texture_env_dot3
+		23: GL_ARB_texture_mirrored_repeat
+		24: GL_ARB_transpose_matrix
+		25: GL_ARB_vertex_blend
+		26: GL_ARB_vertex_buffer_object
+		27: GL_ARB_vertex_program
+		28: GL_ARB_vertex_shader
+		29: GL_ARB_window_pos
+		30: GL_ARB_draw_buffers
+		31: GL_ATI_draw_buffers
+		32: GL_ATI_element_array
+		33: GL_ATI_envmap_bumpmap
+		34: GL_ATI_fragment_shader
+		35: GL_ATI_map_object_buffer
+		36: GL_ATI_separate_stencil
+		37: GL_ATI_texture_env_combine3
+		38: GL_ATI_texture_float
+		39: GL_ATI_texture_mirror_once
+		40: GL_ATI_vertex_array_object
+		41: GL_ATI_vertex_attrib_array_object
+		42: GL_ATI_vertex_streams
+		43: GL_ATIX_texture_env_combine3
+		44: GL_ATIX_texture_env_route
+		45: GL_ATIX_vertex_shader_output_point_size
+		46: GL_EXT_abgr
+		47: GL_EXT_bgra
+		48: GL_EXT_blend_color
+		49: GL_EXT_blend_func_separate
+		50: GL_EXT_blend_minmax
+		51: GL_EXT_blend_subtract
+		52: GL_EXT_clip_volume_hint
+		53: GL_EXT_draw_range_elements
+		54: GL_EXT_fog_coord
+		55: GL_EXT_framebuffer_object
+		56: GL_EXT_multi_draw_arrays
+		57: GL_EXT_packed_pixels
+		58: GL_EXT_point_parameters
+		59: GL_EXT_rescale_normal
+		60: GL_EXT_secondary_color
+		61: GL_EXT_separate_specular_color
+		62: GL_EXT_shadow_funcs
+		63: GL_EXT_stencil_wrap
+		64: GL_EXT_texgen_reflection
+		65: GL_EXT_texture3D
+		66: GL_EXT_texture_compression_s3tc
+		67: GL_EXT_texture_cube_map
+		68: GL_EXT_texture_edge_clamp
+		69: GL_EXT_texture_env_combine
+		70: GL_EXT_texture_env_dot3
+		71: GL_EXT_texture_filter_anisotropic
+		72: GL_EXT_texture_lod_bias
+		73: GL_EXT_texture_mirror_clamp
+		74: GL_EXT_texture_object
+		75: GL_EXT_texture_rectangle
+		76: GL_EXT_vertex_array
+		77: GL_EXT_vertex_shader
+		78: GL_HP_occlusion_test
+		79: GL_NV_blend_square
+		80: GL_NV_occlusion_query
+		81: GL_NV_texgen_reflection
+		82: GL_SGI_color_matrix
+		83: GL_SGIS_generate_mipmap
+		84: GL_SGIS_multitexture
+		85: GL_SGIS_texture_border_clamp
+		86: GL_SGIS_texture_edge_clamp
+		87: GL_SGIS_texture_lod
+		88: GL_SUN_multi_draw_arrays
+		89: GL_WIN_swap_hint
+		90: WGL_EXT_extensions_string
+		91: WGL_EXT_swap_control	[ graph opengl ]
+00:00.296 Using OpenGL renderer version: 1.1			[ graph opengl ]
+00:00.437   Loading /zero					[ resimage ]
+00:00.437   OK /zero						[ res image ]
+00:00.437 OpenGL engine has been initialized!			[ opengl graph ]
+00:00.437   Loading /input					[ resconfig ]
+00:00.437   OK /input						[ res config ]
+00:00.437   Loading /game					[ resconfig ]
+00:00.452   OK /game						[ res config ]
+00:00.452 ExecScript: ''					[ console ]
+00:00.452   Loading /room.script				[ resscript ]
+00:00.452   OK /room.script					[ res script ]
+00:00.452 1 Lines						[ game script ]
+00:00.452 Added object 'ps:' to group space			[ game script ]
+00:00.452   Loading particle_system/ps				[ resconfig ]
+00:00.452   OK particle_system/ps				[ res config ]
+00:00.452     Loading particle_system/emitter			[ resconfig ]
+00:00.452     OK particle_system/emitter			[ res config ]
+00:00.452     Loading particle_system/renderer			[ resconfig ]
+00:00.452     OK particle_system/renderer			[ res config ]
+00:00.452     Loading particle_system/animator			[ resconfig ]
+00:00.452     OK particle_system/animator			[ res config ]
+00:00.452   Loading /physic					[ resconfig ]
+00:00.467   OK /physic						[ res config ]
+00:00.467 Entering main loop					[ core ]
+00:00.483   Loading sphere/sphere2				[ resconfig ]
+00:00.500   OK sphere/sphere2					[ res config ]
+00:00.500     Loading sphere/sphere2m				[ resmodel ]
+00:00.500       Loading sphere/sphere				[ resmaterial ]
+00:00.500         Loading sphere/sphere.mat			[ resscript ]
+00:00.500         OK sphere/sphere.mat				[ res script ]
+00:00.500           Loading sphere/warn				[ resimage ]
+00:00.500           OK sphere/warn				[ res image ]
+00:00.500       OK sphere/sphere				[ res material ]
+00:00.500     OK sphere/sphere2m				[ res model ]
+00:00.592 Main loop: first frame passed				[ core ]
+00:28.718 Exit from main loop					[ core ]
+00:28.718 OpenGL engine has been stopped!			[ opengl graph ]
+00:28.718 Finished Logging
+00:28.718 <<<<<<<<<<<<<<<<
