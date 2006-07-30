@@ -1,0 +1,57 @@
+>>>>>>>>>>>>>>>>
+Started Logging
+00:00.105 Video mode has been set! (792x573x32)         [ opengl graph ]
+00:00.109 Renderer: RIVA TNT2/AGP/SSE2              [ graph opengl ]
+00:00.109 Version: 1.4.1                    [ graph opengl ]
+00:00.112 Vendor: NVIDIA Corporation                [ graph opengl ]
+00:00.112 Detected OpenGL version code: 14          [ graph opengl ]
+00:00.116 Supported WGL extensions: 
+        0: WGL_ARB_buffer_region
+        1: WGL_ARB_extensions_string
+        2: WGL_ARB_pbuffer
+        3: WGL_ARB_pixel_format
+        4: WGL_EXT_extensions_string
+        5: WGL_EXT_swap_control [ graph opengl ]
+00:00.116 Supported GL extensions: 
+        0: GL_ARB_imaging
+        1: GL_ARB_multitexture
+        2: GL_ARB_point_parameters
+        3: GL_ARB_texture_env_add
+        4: GL_ARB_texture_mirrored_repeat
+        5: GL_ARB_transpose_matrix
+        6: GL_ARB_vertex_buffer_object
+        7: GL_ARB_window_pos
+        8: GL_EXT_texture_env_add
+        9: GL_EXT_abgr
+        10: GL_EXT_bgra
+        11: GL_EXT_compiled_vertex_array
+        12: GL_EXT_draw_range_elements
+        13: GL_EXT_fog_coord
+        14: GL_EXT_multi_draw_arrays
+        15: GL_EXT_packed_pixels
+        16: GL_EXT_point_parameters
+        17: GL_EXT_rescale_normal
+        18: GL_EXT_secondary_color
+        19: GL_EXT_separate_specular_color
+        20: GL_EXT_stencil_wrap
+        21: GL_EXT_texture_edge_clamp
+        22: GL_EXT_texture_env_combine
+        23: GL_EXT_texture_lod_bias
+        24: GL_EXT_texture_object
+        25: GL_EXT_vertex_array
+        26: GL_IBM_rasterpos_clip
+        27: GL_IBM_texture_mirrored_repeat
+        28: GL_KTX_buffer_region
+        29: GL_NV_blend_square
+        30: GL_NV_fog_distance
+        31: GL_NV_packed_depth_stencil
+        32: GL_NV_texgen_reflection
+        33: GL_NV_texture_env_combine4
+        34: GL_SGIS_multitexture
+        35: GL_SUN_slice_accum
+        36: GL_WIN_swap_hint
+        37: WGL_EXT_swap_control    [ graph opengl ]
+00:00.121 WGL_ARB_render_texture not supported          [ error graph opengl ]
+00:00.121 Using OpenGL renderer version: 1.1            [ graph opengl ]
+00:00.136 OpenGL engine has been initialized!           [ opengl graph ]
+00:00.703 OpenGL engine has been stopped!           [ opengl graph ]
