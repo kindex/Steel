@@ -29,10 +29,10 @@ typedef	enum
 class Texture
 {
 public:
-	Image *texture;
+	Image *image;
 
 	TextureBlendMode	mode;
-	TextureFormat	kind;
+	TextureFormat		format;
 	color4f				color;
 	// color
 	// mode
@@ -44,7 +44,7 @@ class Material: public Res
 public:
 	Script* conf;
 	bool	blend;
-	steel::vector<Texture> map;
+	steel::vector<Texture> texture;
 
 	bool init(std::string _conf, const std::string dir);
 

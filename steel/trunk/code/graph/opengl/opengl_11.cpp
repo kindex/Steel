@@ -110,20 +110,17 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 }
 
 
-void OpenGL_Engine::DrawFill_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+// нарисовать множество полигонов с указанным материалом
+void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
 {
-	if(material && triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 
-		total.object++;
 		total.vertex += e.vertex->data.size();
 		total.triangle += triangles->data.size();
 
         TexCoords *coords = e.object->getTexCoords(0);
-		Texture map = material->map[0]; // текущая текстура
-
-		(this->*BindTexture)(map.texture);
 					
 		glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());	glEnableClientState(GL_VERTEX_ARRAY);

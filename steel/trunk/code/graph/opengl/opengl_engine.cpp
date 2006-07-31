@@ -33,10 +33,7 @@ using namespace std;
 /*
 Сердце Графического движка.
 Отвечает за вывод графичесткого элемента.
-Графических элемент - это полигоны одного объекта, имеющие общий материал.
 */
-
-
 
 
 void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel::time time)
@@ -51,9 +48,6 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 	m[12] = e.matrix.data.vector.x;				m[13] = e.matrix.data.vector.y;				m[14] = e.matrix.data.vector.z;				m[15] = 1;
 	glLoadMatrixf(m);
 
-	if(conf->geti("drawLines") && DrawLines)
-		(this->*DrawLines)(e, total);
-
 	if(conf->geti("drawFace") && e.faceMaterials && DrawFill)
 		for(unsigned int i = 0; i < e.faceMaterials->size(); i++)
 			(this->*DrawFill)(e, e.faceMaterials->at(i).triangles, e.faceMaterials->at(i).material, total);
@@ -62,270 +56,22 @@ void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel
 		for(unsigned int i = 0; i < e.faceMaterials->size(); i++)
 			(this->*DrawWire)(e, e.faceMaterials->at(i).triangles, total);
 
+	if(conf->geti("drawLines") && DrawLines)
+		(this->*DrawLines)(e, total);
+
+	if(conf->geti("drawNormals") && DrawNormals)
+		(this->*DrawNormals)(e, total);
+
+	if(conf->geti("drawVertexes") && DrawVertexes)
+		(this->*DrawVertexes)(e, total);
+
+	if(conf->geti("drawAABB") && DrawAABB)
+		(this->*DrawAABB)(e, total);
 
 	glPopMatrix();
 }
 
 
-/*void OpenGL_Engine::drawElement(GraphObjectStorage &e)
-{
-//  загружает матрицу преобразрвания для объекта (перенос, масштаб, поворот) в глобальых координатах
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-
-	float m[16]; // TODO
-	m[0] = e.matrix.data.matrix.data.m[0][0];	m[1] = e.matrix.data.matrix.data.m[1][0];	m[2] = e.matrix.data.matrix.data.m[2][0];	m[3] = 0;
-	m[4] = e.matrix.data.matrix.data.m[0][1];	m[5] = e.matrix.data.matrix.data.m[1][1];	m[6] = e.matrix.data.matrix.data.m[2][1];	m[7] = 0;
-	m[8] = e.matrix.data.matrix.data.m[0][2];	m[9] = e.matrix.data.matrix.data.m[1][2];	m[10] = e.matrix.data.matrix.data.m[2][2];	m[11] = 0;
-	m[12] = e.matrix.data.vector.x;	m[13] = e.matrix.data.vector.y;	m[14] = e.matrix.data.vector.z;	m[15] = 1;
-	glLoadMatrixf(m);
-
-	steel::vector<uid> buffersToDelete;
-
-	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
-	{
-		Material *m = e.material; // получаем материал
-		if(m != NULL  && conf->geti("drawFill", 1))
-		{
-			glPushAttrib(GL_ALL_ATTRIB_BITS);
-			// загружаем вершины объекта
-
-			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
-			{
-				glVertexPointer(3, GL_FLOAT, 0, 0);
-			}
-			else
-			{
-				glEnable(GL_VERTEX_ARRAY);
-				glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());
-			}
-
-			// загружаем нормали объекта
-			if(e.normal && !e.normal->data.empty())
-			{
-				if(bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
-				{
-					glNormalPointer(GL_FLOAT, 0, 0);
-				}
-				else
-				{
-					glEnable(GL_NORMAL_ARRAY);
-					glNormalPointer(GL_FLOAT, 0, &e.normal->data[0]);
-				}
-			}
-
-			int texCount = m->map.size();
-
-			int curTexArb = 0;
-			// идём по всем картам
-			for(int i=0; i<texCount; i++)
-			{
-				Texture map = m->map[i]; // текущая текстура
-
-				if(glActiveTextureARB)
-				{
-					glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-					glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-				}
-				else if(curTexArb>0) break;
-
-				// режим мультитекстурирования
-				GLint mode = GL_REPLACE;
-				if(i>0)
-				{
-					switch(map.mode)
-					{
-						case TEXTURE_BLEND_MODE_MUL: 	mode = GL_MODULATE; break;
-						case TEXTURE_BLEND_MODE_ADD:  mode = GL_ADD; break; // TODO: GL_ADD_SIGNED_ARB ??
-						case TEXTURE_BLEND_MODE_BLEND: mode = GL_BLEND; break;
-					}
-				}
-
-				if(glActiveTextureARB)
-					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-
-				if(conf->geti("drawBump") && !light.empty() && (i==0) && !e.blend && (map.kind == TEXTURE_FORMAT_BUMP_MAP || map.kind == TEXTURE_FORMAT_COLOR_MAP))
-				{
-					TexCoords *coords = e.object->getTexCoords(i);
-
-					int j = 0;
-
-					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-					uid bufId = objectIdGenerator.genUid();
-					buffersToDelete.push_back(bufId);
-
-					if(map.kind == TEXTURE_FORMAT_BUMP_MAP)
-					{
-						drawBump(e, coords, e.matrix, light[j].pos, bufId, curTexArb, map.texture);
-						curTexArb +=2;
-					}
-					else
-					{
-						drawBump(e, coords, e.matrix, light[j].pos, bufId, curTexArb, zeroNormal);
-						glActiveTextureARB(GL_TEXTURE2_ARB + curTexArb);
-						glClientActiveTextureARB(GL_TEXTURE2_ARB + curTexArb);
-						glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-						bindTexture(map.texture); // 2D texture (auto detect from Image)
-						if(coords && !coords->data.empty())
-						{
-							if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
-								glTexCoordPointer(2, GL_FLOAT, 0,0);
-							else
-							{
-								glEnable(GL_TEXTURE_COORD_ARRAY);
-								glTexCoordPointer(2, GL_FLOAT, 0, &coords->data[0]);
-							}
-						}
-						curTexArb += 3;
-					}
-
-				}
-				else
-				{
-					if(conf->geti("drawTexture") && map.kind == TEXTURE_FORMAT_COLOR_MAP) // обычная текстура
-					{	// загружем текстуру
-						bindTexture(map.texture); // 2D texture (auto detect from Image)
-						// загружаем тектурные координаты
-						TexCoords *coords = e.object->getTexCoords(i);
-						if(coords && !coords->data.empty())
-						{
-							if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
-								glTexCoordPointer(2, GL_FLOAT, 0,0);
-							else
-							{
-								glEnable(GL_TEXTURE_COORD_ARRAY);
-								glTexCoordPointer(2, GL_FLOAT, 0, &coords->data[0]);
-							}
-						}
-					}
-					
-					if(conf->geti("drawReflect") && map.kind == TEXTURE_FORMAT_ENV) // карта отражения
-					{ // загружаем текстуру
-						glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-						glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-						bindTexture(map.texture); // Cube texture (auto detect from Image)
-
-						uid bufId = objectIdGenerator.genUid();
-						buffersToDelete.push_back(bufId);
-						drawReflect(e, e.matrix, camera.eye, bufId);
-
-						// TODO: в этом месте тектурные координаты должны генерированться сами
-						//  шейдером или еще чем-либо
-//						drawBump(e, coords, e.matrix, light[j].pos, bufId);
-
-					}
-
-					if(map.kind == TEXTURE_FORMAT_COLOR) // цвет RGBA
-						glColor4f(map.color.r, map.color.g, map.color.b, map.color.a);
-
-					curTexArb++;
-				}
-			}
-
-			if(e.blend)
-			{
-				glEnable(GL_BLEND);
-				
-				if(m->map[0].kind == TEXTURE_FORMAT_COLOR_MAP && m->map[0].texture->getBpp() == 24) // RGB
-				{
-					if(m->map[0].mode == TEXTURE_BLEND_MODE_ADD)	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
-					if(m->map[0].mode == TEXTURE_BLEND_MODE_MUL)	glBlendFunc(GL_DST_COLOR, GL_ZERO);
-				}else
-//				if(m->map[0].texture->getBpp() == 32) // Alpha
-				{
-					if(m->map[0].mode == TEXTURE_BLEND_MODE_ADD)	glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_DST_ALPHA); // ?
-					if(m->map[0].mode == TEXTURE_BLEND_MODE_MUL)	glBlendFunc(GL_DST_ALPHA, GL_ZERO);
-				}
-//				glDepthFunc(GL_LESS);
-				glDepthMask(GL_FALSE);
-			}
-// -------------------------------------------------------------------------------
-			// загружаем и ресуем треугольники
-			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
-			{
-				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
-			}
-			else
-				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data.front());
-
-// -------------------------------------------------------------------------------
-
-			// откат настроек
-			glPopAttrib();
-
-			while(curTexArb >= 0)
-			{
-				glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-				glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-				curTexArb--;
-			}
-		}
-
-		if(conf->geti("drawWire"))
-		{
-			glPushAttrib(GL_ALL_ATTRIB_BITS);
-
-			if(e.material && !e.material->map.empty() &&e.material->map[0].kind == TEXTURE_FORMAT_COLOR) // цвет RGBA
-					glColor4f(e.material->map[0].color.r, e.material->map[0].color.g, e.material->map[0].color.b, e.material->map[0].color.a);
-			else
-				glColor4f(1,1,1,1);
-
-			// загружаем вершины объекта
-			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
-			{
-				glVertexPointer(3, GL_FLOAT, 0, 0);
-			}
-			else
-			{
-				glEnable(GL_VERTEX_ARRAY);
-				glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data[0]);
-			}
-			glPolygonMode(GL_FRONT, GL_LINE);  		// Draw Polygons As Wireframes
-			glPolygonMode(GL_BACK, GL_LINE); 
-			glDepthFunc(GL_LEQUAL); // For blending
-
-			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
-			{
-				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
-			}
-			else
-				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data[0]);
-
-			glPolygonMode(GL_FRONT, GL_FILL);  
-
-			glPopAttrib ();
-		}
-	}
-
-	if(e.lines && e.vertex && !e.vertex->data.empty() && !e.lines->empty())
-	{
-		glColor4f(1,1,1,1);
-		glBegin(GL_LINES);
-
-		int i = 0;
-		for(GLines::iterator it = e.lines->begin(); it != e.lines->end(); it++)
-		{
-			glVertex3fv(e.vertex->data[it->a[0]].get3fv());
-			glVertex3fv(e.vertex->data[it->a[1]].get3fv());
-		}
-		glEnd();
-	}
-
-	if(conf->geti("drawNormals", 0))
-		drawNormals(e);
-	
-	if(conf->geti("drawVertexes", 0))
-		drawVertexes(e);
-
-	if(conf->geti("drawAABB", 0))
-		drawAABB(e, e.matrix);
-	glPopMatrix();
-
-	for(steel::vector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
-		cleanBuffer(*it);
-}*/
 
 bool OpenGL_Engine::isVisible(aabb box)
 {
@@ -336,79 +82,6 @@ bool OpenGL_Engine::isVisible(aabb box)
 	return box.intersect(aabb(v3(-1.1,-1.1,0), v3(1.1,1.1,2)));*/
 	return true;
 }
-
-
-
-void OpenGL_Engine::cleanBuffer(uid bufId)
-{
-	glDeleteBuffersARB(1, &buffer[bufId].glid);
-	buffer.erase(bufId);
-}
-
-template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, int elCnt)
-{
-	if(v == NULL) return false;
-
-	if(glGenBuffersARB) // Vertex Buffer Object supportd
-	{
-		uid	id = v->getId();
-		if(id == 0) 
-		{
-			if(mode)glEnableClientState(mode);
-			glBindBufferARB(mode2, 0);
-			return false;
-		}
-
-		bool loaded = false;
-		if(buffer.find(id) != buffer.end())
-			loaded = buffer[id].loaded;
-
-		OpenGLBuffer &buf = buffer[id];
-
-		if(loaded)
-		{
-			glBindBufferARB(mode2, buf.glid);
-			if(v->changed)
-			{
-				glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->data.size(), &v->data.front());
-				buf.loadCnt++;
-			}
-
-			if(mode)glEnableClientState(mode);
-
-			buf.lastUsedTime = time;
-			buf.usedCnt++;
-//			buf.temp = false;
-		}
-		else
-		{
-			glGenBuffersARB(1, &buf.glid);
-
-			if(mode) glEnableClientState ( mode );
-			glBindBufferARB(mode2, buf.glid);
-
-			GLenum usage = GL_STATIC_DRAW;
-			if(v->changed)
-				usage = GL_STREAM_DRAW;
-			glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
-	
-			buf.loaded = true;
-			buf.loadCnt++;
-			if(mode2 == GL_ARRAY_BUFFER_ARB)
-				buf.kind = OpenGLBuffer::array;
-			if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
-				buf.kind = OpenGLBuffer::index;
-
-//			buf.temp = false;
-			buf.lastUsedTime = time;
-			buf.usedCnt++;
-		}
-		return true;
-	}  
-	else
-		return false;
-}
-
 
 /*void OpenGL_Engine::cleanCache()
 {
@@ -422,344 +95,6 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 		}
 	}
 }*/
-
-v3 getstangent(v2 A, v3 B, v3 N, v2 S)
-{
-    A.normalize();
-//    Vector2 S(1.0, 0.0); // Os teksturnih koordinat OX
-    float sina = A.pseudoscalarProduct(S); // Vect mull
-    float cosa = A.dotProduct(S); // skalarnoe
-    // a - ugon mezhdu S i A
-    // esli v normalnom prostranstve povernut' vektor B na ugol -a (minus a), to mipolu4im vektor napravlennij v storonu uveli4enija koordinati S (sTangent)
-
-//    return B.rotate(N, sina, cosa);
-
-    matrix33 M;
-    M.setRotationAxis(sina, cosa, v3(N.x, N.y, N.z)); // povernut' na ang v ploskoti perpedukularnoj N
-
-    v3 V(B.x, B.y, B.z), R;
-    R = M*V;
-    v3 Res(R.x, R.y, R.z);
-    Res.normalize();
-    return Res;
-
-}
-
-/*
-void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, Triangles const *triangle, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent)
-{ // TODO: mem cleanup
-	int id = vertex->getId();
-	
-	if(!vertex->wasChanged() && id>0 && tangentSpaceCache.find(id) != tangentSpaceCache.end())
-	{
-		*sTangent = tangentSpaceCache[id].s;
-		*tTangent = tangentSpaceCache[id].t;
-		return;
-	}
-
-	if(!vertex || !mapcoord || mapcoord->data.empty()) return;
-
-    unsigned int size = vertex->data.size();
-//    tangentSpaceLight.resize(s); // TODO
-
-	v3List *S, *T;
-	S = new v3List(size);
-	T = new v3List(size);
-	v3List &s = *S;
-	v3List &t = *T;
-	
-    for (unsigned int i=0; i<size; i++)
-    {
-        s[i].loadZero();
-        t[i].loadZero();
-    }
-
-    for (unsigned int i=0; i<triangle->data.size(); i++)
-    {
-        int a = triangle->data[i].a[0];
-        int b = triangle->data[i].a[1];
-        int c = triangle->data[i].a[2];
-        int e, f; // from e to f
-
-		v2 me;
-		v3  ve, ne;
-
-        e = a;
-        // vertex a (vector ab)
-		me = mapcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
-
-        f = b;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-        // vertex a (vector ac)
-        f = c;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-        f = b;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
-        f = c;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
-
-        e = b;
-		me = mapcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
-        f = a;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-        f = c;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-        f = a;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
-        f = c;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
-
-        e = c;
-		me = mapcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
-        f = a;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-        f = b;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-        f = a;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
-        f = b;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
-    }
-    for (unsigned int i=0; i<size; i++)
-    {
-        s[i].normalize();
-        t[i].normalize();
-    }
-	
-	*sTangent = S;
-	*tTangent = T;
-	if(id > 0)
-	{
-		tangentSpaceCache[id].s = S;
-		tangentSpaceCache[id].t = T;
-	}
-};
-
-void OpenGL_Engine::genTangentSpaceLight(steel::vector<v3> const &sTangent, steel::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
-{
-	matrix34 inverseModelMatrix;
-    inverseModelMatrix = matrix.getInverse();
-
-	v3 objectLightPosition = inverseModelMatrix*light;
-
-	v3List &tl = tangentSpaceLight;
-
-    // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
-    for (unsigned int i=0; i<vertex.data.size(); i++)
-    {
-		v3 lightVector =  objectLightPosition - vertex.data[i];
-		tl[i].x = sTangent[i].dotProduct(lightVector); // scalar product
-		tl[i].y = tTangent[i].dotProduct(lightVector);
-		tl[i].z = normal.data[i].dotProduct(lightVector);
-		
-    }
-}
-
-
-void OpenGL_Engine::genTangentSpaceSphere(Vertexes const &vertex, Normals	const &normal, matrix34 const matrix, const v3 _camera,	v3List &tangentSpaceLight)
-{
-	matrix34 inverseModelMatrix;
-    inverseModelMatrix = matrix.getInverse();
-
-	v3 camera = inverseModelMatrix*_camera;
-
-	tangentSpaceLight.resize(vertex.data.size());
-	v3List &tl = tangentSpaceLight;
-
-    // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
-    for (unsigned int i=0; i<vertex.data.size(); i++)
-    {
-		v3 c = _camera - matrix*vertex.data[i];
-        c.normalize();
-        v3 d = (matrix*(vertex.data[i]+normal.data[i]))- matrix*vertex.data[i];
-        d.normalize(); // realnaja normal'
-
-        float pscale = c.dotProduct(d); // cos ugla mezhdu c i nermal
-
-        v3 p = d*pscale;
-
-//		tangentSpaceLight[i] = - p - p + c;
-		tl[i] = p + p - c;
-    }
-}
-
-
-void OpenGL_Engine::drawDistColor(DrawElement &e, matrix34 const matrix, v3 const light, float const distance)
-{
-	float *coords = new float[e.vertex->size()];
-
-	int i = 0;
-	for(Vertexes::iterator it = e.vertex->begin(); it != e.vertex->end(); it++)
-	{
-		float d = (light-(*it)).getLength();
-		float c = 1 - d/distance;
-		if(c<0) c = 0;
-		if(c>1) c = 1;
-		coords[i] = c;
-		i++;
-	}
-
-	glBindTexture(GL_TEXTURE_2D, distMap);
-    glEnable(GL_TEXTURE_2D);
-
-	glTexCoordPointer(1, GL_FLOAT, 0, coords);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    drawFaces(e);
-
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	delete coords;
-}
-
-
-bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix34 const matrix, v3 const light)
-{
-//	if(GL_TEXTURE_CUBE_MAP_ARB_supported)
-	{
-		v3List *sTangent, *tTangent, *tangentSpaceLight;
-
-//		getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
-//		genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
-
-	//Bind normalisation cube map to texture unit 1
-		glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-
-		glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, lightCubeMap);
-
-		glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-		drawFaces(e);
-
-		glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-		delete tangentSpaceLight;
-		return true;
-	}
-//	else
-//		return false;
-}
-
-
-void OpenGL_Engine::drawBump(DrawElement &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img)
-{
-
-	glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-	glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-
-	//Bind normalisation cube map to texture unit 1
-	glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, normalisationCubeMap);
-	glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-
-	//Send tangent space light vectors for normalisation to unit 1
-
-    tangentSpaceLightBufferedArray tangentSpaceLight;
-	tangentSpaceLight.changed = true;
-	tangentSpaceLight.id = bufId;
-	tangentSpaceLight.data.resize(e.vertex->data.size());
-
-	v3List *sTangent, *tTangent;
-
-	getTangentSpace(e.vertex, coords, e.triangle, e.normal, &sTangent, &tTangent);
-	genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, tangentSpaceLight.data);
-
-	if(bind(&tangentSpaceLight, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
-	{
-		glTexCoordPointer(3, GL_FLOAT, 0,0);
-	}
-
-	glActiveTextureARB(GL_TEXTURE1_ARB + curTexArb);
-	glClientActiveTextureARB(GL_TEXTURE1_ARB + curTexArb);
-
-	bindTexture(img);
-	if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
-	{
-		glTexCoordPointer(2, GL_FLOAT, 0,0);
-	}
-
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
-	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
-	glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_DOT3_RGB_ARB);
-	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB_ARB, GL_PREVIOUS_ARB);
-}
-
-void OpenGL_Engine::drawReflect(DrawElement &e, matrix34 const matrix, v3 const light, uid bufId)
-{
-    tangentSpaceLightBufferedArray tangentSpaceLight;
-	tangentSpaceLight.changed = true;
-	tangentSpaceLight.id = bufId;
-	tangentSpaceLight.data.resize(e.vertex->data.size());
-
-	genTangentSpaceSphere(*e.vertex, *e.normal, matrix, light, tangentSpaceLight.data);
-
-	if(bind(&tangentSpaceLight, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
-	{
-		glTexCoordPointer(3, GL_FLOAT, 0,0);
-	}
-}
-
-void OpenGL_Engine::drawNormals(DrawElement &e)
-{
-	if(e.normal)
-	{
-		glColor3f(0,0,1);
-		aabb &f = e.frame;
-		float diag = (f.max-f.min).getLength()*0.05f;
-		
-//		if(diag<EPSILON) diag = 0.01;
-
-		glBegin(GL_LINES);
-		for(unsigned int i=0; i < e.vertex->data.size(); i++)
-		{
-			v3 s = e.vertex->data[i];
-			v3 d = e.vertex->data[i] + e.normal->data[i]*diag;
-
-			glVertex3f(s.x, s.y, s.z);
-			glVertex3f(d.x, d.y, d.z);
-		}
-		glEnd();
-	}
-}
-
-void OpenGL_Engine::drawVertexes(DrawElement &e)
-{
-	glPointSize(5);
-	glColor3f(0.5,1,1);
-
-	glBegin(GL_POINTS);
-	for(unsigned int i=0; i < e.vertex->data.size(); i++)
-	{
-		v3 &s = e.vertex->data[i];
-
-		glVertex3f(s.x, s.y, s.z);
-	}
-	glEnd();
-}
-
-void OpenGL_Engine::drawAABB(DrawElement &e, matrix34 matrix)
-{
-	aabb &c = e.frame;
-
-	glColor3f(1.0f, 0.8f, 0.8f);
-
-	glPushMatrix();
-	glLoadIdentity();
-	glBegin(GL_LINES);
-
-	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.min.z);
-	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.min.z);
-	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.min.y, c.max.z);
-
-	glVertex3f(c.min.x, c.max.y, c.max.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
-	glVertex3f(c.max.x, c.min.y, c.max.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
-	glVertex3f(c.max.x, c.max.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
-
-	glVertex3f(c.min.x, c.min.y, c.max.z);	glVertex3f(c.max.x, c.min.y, c.max.z);
-	glVertex3f(c.min.x, c.max.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.min.z);
-
-	glVertex3f(c.min.x, c.min.y, c.max.z);	glVertex3f(c.min.x, c.max.y, c.max.z);
-	glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.min.z);
-
-	glVertex3f(c.min.x, c.max.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.max.z);	
-	glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.max.z);	
-
-	glEnd();
-
-	glPopMatrix();
-}
-*/
-
 
 bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 {
@@ -824,8 +159,6 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 	return true;
 }
 
-
-
 bool OpenGL_Engine::init(std::string _conf)
 {
 	if(!(conf = resConfig.add(_conf)))
@@ -885,46 +218,42 @@ bool OpenGL_Engine::init(std::string _conf)
 	OpenGL_ExtensionsInit();
 	OpenGL_ExtensionsPrintfInfo();
 
-	string version = conf->gets("OpenGL_Version");
+	int version = conf->geti("OpenGL_Version", 0);
 	
-	if(version.empty())// if version is not set in config, then autodetect it
+	if(version == 0)// if version is not set in config, then autodetect it
 	{
-		if(openglVersioni < 11) version = "1.0";
+		if(openglVersioni < 11) version = 10;
 		else
-			version = "1.1";
+			version = 11;
 	}
 
-	log_msg("graph opengl opengl_info", "Using OpenGL renderer version: " + version);
+	log_msg("graph opengl opengl_info", "Using OpenGL renderer version: " + IntToStr(version));
 
-	if(version == "1.0")
-	{
-		BindTexture = &OpenGL_Engine::BindTexture_OpenGL10;
-		DrawFill = &OpenGL_Engine::DrawFill_OpenGL10;
-		DrawWire = &OpenGL_Engine::DrawWire_OpenGL10;
-		DrawLines = &OpenGL_Engine::DrawLines_OpenGL10;
-	}
+	BindTexture = &OpenGL_Engine::BindTexture_OpenGL10;
+	DrawFill = &OpenGL_Engine::DrawFill_OpenGL10;
+	DrawTriangles = &OpenGL_Engine::DrawTriangles_OpenGL10;
+	DrawWire = &OpenGL_Engine::DrawWire_OpenGL10;
+	DrawLines = &OpenGL_Engine::DrawLines_OpenGL10;
+	DrawNormals = &OpenGL_Engine::DrawNormals_OpenGL10;
+	DrawVertexes = &OpenGL_Engine::DrawVertexes_OpenGL10;
+	DrawAABB = &OpenGL_Engine::DrawAABB_OpenGL10;
 
-	if(version == "1.1")
+	if(version >= 11)
 	{
 		BindTexture = &OpenGL_Engine::BindTexture_OpenGL11;
-		DrawFill = &OpenGL_Engine::DrawFill_OpenGL11;
+		DrawTriangles = &OpenGL_Engine::DrawTriangles_OpenGL11;
 		DrawWire = &OpenGL_Engine::DrawWire_OpenGL11;
 		DrawLines = &OpenGL_Engine::DrawLines_OpenGL11;
 	}
 
-//	SetUpARB_multitexture();
-	
-	normalisationCubeMap	= generateNormalisationCubeMap();
+/*	normalisationCubeMap	= generateNormalisationCubeMap();
 	zeroNormal = resImage.add("zero");
 	if(!zeroNormal)
 	{
 		log_msg("error graph res", "Zero normal map not found");
 		return false;
 	}
-
-	//lightCubeMap			= GenerateLightCubeMap();
-	//distMap					= generateDistanceLinearMap();
-
+*/
 	log_msg("opengl graph", "OpenGL engine has been initialized!");
 
 	setCaption("Steel Engine");
@@ -936,7 +265,7 @@ bool OpenGL_Engine::init(std::string _conf)
 
 bool OpenGL_Engine::deinit()
 {
-	log_msg("opengl graph","OpenGL engine has been stopped!");
+	log_msg("opengl graph", "OpenGL engine has been stopped!");
 	return true;
 }
 

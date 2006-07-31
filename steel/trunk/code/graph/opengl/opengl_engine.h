@@ -105,18 +105,26 @@ protected:
 	// procedure variables
 	bool (OpenGL_Engine::*BindTexture)(Image *image);
 	void (OpenGL_Engine::*DrawFill)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawNormals)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawVertexes)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawAABB)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.0
 	bool BindTexture_OpenGL10(Image *image);
 	void DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void DrawWire_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void DrawLines_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void DrawNormals_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void DrawVertexes_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void DrawAABB_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.1
 	bool BindTexture_OpenGL11(Image *image);
-	void DrawFill_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void DrawLines_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
 
@@ -146,7 +154,16 @@ protected:
 	 steel::time time;
 
 public:
-	OpenGL_Engine(): BindTexture(NULL), DrawFill(NULL), DrawLines(NULL), DrawWire(NULL) {}
+	OpenGL_Engine(): 
+		BindTexture(NULL), 
+		DrawFill(NULL), 
+		DrawTriangles(NULL),
+		DrawLines(NULL), 
+		DrawWire(NULL), 
+		DrawNormals(NULL),
+		DrawVertexes(NULL),
+		DrawAABB(NULL) 
+		{}
 
 	void processCamera();
 	bool init(std::string _conf);

@@ -13,4 +13,334 @@
  ************************************************************/
 
 #include "opengl_engine.h"
+#include "gl/libext.h"
 
+/*void OpenGL_Engine::drawElement(GraphObjectStorage &e)
+{
+//  загружает матрицу преобразрвания для объекта (перенос, масштаб, поворот) в глобальых координатах
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+
+	float m[16]; // TODO
+	m[0] = e.matrix.data.matrix.data.m[0][0];	m[1] = e.matrix.data.matrix.data.m[1][0];	m[2] = e.matrix.data.matrix.data.m[2][0];	m[3] = 0;
+	m[4] = e.matrix.data.matrix.data.m[0][1];	m[5] = e.matrix.data.matrix.data.m[1][1];	m[6] = e.matrix.data.matrix.data.m[2][1];	m[7] = 0;
+	m[8] = e.matrix.data.matrix.data.m[0][2];	m[9] = e.matrix.data.matrix.data.m[1][2];	m[10] = e.matrix.data.matrix.data.m[2][2];	m[11] = 0;
+	m[12] = e.matrix.data.vector.x;	m[13] = e.matrix.data.vector.y;	m[14] = e.matrix.data.vector.z;	m[15] = 1;
+	glLoadMatrixf(m);
+
+	steel::vector<uid> buffersToDelete;
+
+	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
+	{
+		Material *m = e.material; // получаем материал
+		if(m != NULL  && conf->geti("drawFill", 1))
+		{
+			glPushAttrib(GL_ALL_ATTRIB_BITS);
+			// загружаем вершины объекта
+
+			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+			{
+				glVertexPointer(3, GL_FLOAT, 0, 0);
+			}
+			else
+			{
+				glEnable(GL_VERTEX_ARRAY);
+				glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());
+			}
+
+			// загружаем нормали объекта
+			if(e.normal && !e.normal->data.empty())
+			{
+				if(bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+				{
+					glNormalPointer(GL_FLOAT, 0, 0);
+				}
+				else
+				{
+					glEnable(GL_NORMAL_ARRAY);
+					glNormalPointer(GL_FLOAT, 0, &e.normal->data[0]);
+				}
+			}
+
+			int texCount = m->map.size();
+
+			int curTexArb = 0;
+			// идём по всем картам
+			for(int i=0; i<texCount; i++)
+			{
+				Texture map = m->map[i]; // текущая текстура
+
+				if(glActiveTextureARB)
+				{
+					glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+					glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+				}
+				else if(curTexArb>0) break;
+
+				// режим мультитекстурирования
+				GLint mode = GL_REPLACE;
+				if(i>0)
+				{
+					switch(map.mode)
+					{
+						case TEXTURE_BLEND_MODE_MUL: 	mode = GL_MODULATE; break;
+						case TEXTURE_BLEND_MODE_ADD:  mode = GL_ADD; break; // TODO: GL_ADD_SIGNED_ARB ??
+						case TEXTURE_BLEND_MODE_BLEND: mode = GL_BLEND; break;
+					}
+				}
+
+				if(glActiveTextureARB)
+					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+
+				if(conf->geti("drawBump") && !light.empty() && (i==0) && !e.blend && (map.kind == TEXTURE_FORMAT_BUMP_MAP || map.kind == TEXTURE_FORMAT_COLOR_MAP))
+				{
+					TexCoords *coords = e.object->getTexCoords(i);
+
+					int j = 0;
+
+					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+					uid bufId = objectIdGenerator.genUid();
+					buffersToDelete.push_back(bufId);
+
+					if(map.kind == TEXTURE_FORMAT_BUMP_MAP)
+					{
+						drawBump(e, coords, e.matrix, light[j].pos, bufId, curTexArb, map.texture);
+						curTexArb +=2;
+					}
+					else
+					{
+						drawBump(e, coords, e.matrix, light[j].pos, bufId, curTexArb, zeroNormal);
+						glActiveTextureARB(GL_TEXTURE2_ARB + curTexArb);
+						glClientActiveTextureARB(GL_TEXTURE2_ARB + curTexArb);
+						glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+						bindTexture(map.texture); // 2D texture (auto detect from Image)
+						if(coords && !coords->data.empty())
+						{
+							if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+								glTexCoordPointer(2, GL_FLOAT, 0,0);
+							else
+							{
+								glEnable(GL_TEXTURE_COORD_ARRAY);
+								glTexCoordPointer(2, GL_FLOAT, 0, &coords->data[0]);
+							}
+						}
+						curTexArb += 3;
+					}
+
+				}
+				else
+				{
+					if(conf->geti("drawTexture") && map.kind == TEXTURE_FORMAT_COLOR_MAP) // обычная текстура
+					{	// загружем текстуру
+						bindTexture(map.texture); // 2D texture (auto detect from Image)
+						// загружаем тектурные координаты
+						TexCoords *coords = e.object->getTexCoords(i);
+						if(coords && !coords->data.empty())
+						{
+							if(bind(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+								glTexCoordPointer(2, GL_FLOAT, 0,0);
+							else
+							{
+								glEnable(GL_TEXTURE_COORD_ARRAY);
+								glTexCoordPointer(2, GL_FLOAT, 0, &coords->data[0]);
+							}
+						}
+					}
+					
+					if(conf->geti("drawReflect") && map.kind == TEXTURE_FORMAT_ENV) // карта отражения
+					{ // загружаем текстуру
+						glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+						glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+						bindTexture(map.texture); // Cube texture (auto detect from Image)
+
+						uid bufId = objectIdGenerator.genUid();
+						buffersToDelete.push_back(bufId);
+						drawReflect(e, e.matrix, camera.eye, bufId);
+
+						// TODO: в этом месте тектурные координаты должны генерированться сами
+						//  шейдером или еще чем-либо
+//						drawBump(e, coords, e.matrix, light[j].pos, bufId);
+
+					}
+
+					if(map.kind == TEXTURE_FORMAT_COLOR) // цвет RGBA
+						glColor4f(map.color.r, map.color.g, map.color.b, map.color.a);
+
+					curTexArb++;
+				}
+			}
+
+			if(e.blend)
+			{
+				glEnable(GL_BLEND);
+				
+				if(m->map[0].kind == TEXTURE_FORMAT_COLOR_MAP && m->map[0].texture->getBpp() == 24) // RGB
+				{
+					if(m->map[0].mode == TEXTURE_BLEND_MODE_ADD)	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
+					if(m->map[0].mode == TEXTURE_BLEND_MODE_MUL)	glBlendFunc(GL_DST_COLOR, GL_ZERO);
+				}else
+//				if(m->map[0].texture->getBpp() == 32) // Alpha
+				{
+					if(m->map[0].mode == TEXTURE_BLEND_MODE_ADD)	glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_DST_ALPHA); // ?
+					if(m->map[0].mode == TEXTURE_BLEND_MODE_MUL)	glBlendFunc(GL_DST_ALPHA, GL_ZERO);
+				}
+//				glDepthFunc(GL_LESS);
+				glDepthMask(GL_FALSE);
+			}
+// -------------------------------------------------------------------------------
+			// загружаем и ресуем треугольники
+			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
+			{
+				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+			}
+			else
+				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data.front());
+
+// -------------------------------------------------------------------------------
+
+			// откат настроек
+			glPopAttrib();
+
+			while(curTexArb >= 0)
+			{
+				glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+				glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				curTexArb--;
+			}
+		}
+
+		if(conf->geti("drawWire"))
+		{
+			glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+			if(e.material && !e.material->map.empty() &&e.material->map[0].kind == TEXTURE_FORMAT_COLOR) // цвет RGBA
+					glColor4f(e.material->map[0].color.r, e.material->map[0].color.g, e.material->map[0].color.b, e.material->map[0].color.a);
+			else
+				glColor4f(1,1,1,1);
+
+			// загружаем вершины объекта
+			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+			{
+				glVertexPointer(3, GL_FLOAT, 0, 0);
+			}
+			else
+			{
+				glEnable(GL_VERTEX_ARRAY);
+				glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data[0]);
+			}
+			glPolygonMode(GL_FRONT, GL_LINE);  		// Draw Polygons As Wireframes
+			glPolygonMode(GL_BACK, GL_LINE); 
+			glDepthFunc(GL_LEQUAL); // For blending
+
+			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
+			{
+				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+			}
+			else
+				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data[0]);
+
+			glPolygonMode(GL_FRONT, GL_FILL);  
+
+			glPopAttrib ();
+		}
+	}
+
+	if(e.lines && e.vertex && !e.vertex->data.empty() && !e.lines->empty())
+	{
+		glColor4f(1,1,1,1);
+		glBegin(GL_LINES);
+
+		int i = 0;
+		for(GLines::iterator it = e.lines->begin(); it != e.lines->end(); it++)
+		{
+			glVertex3fv(e.vertex->data[it->a[0]].get3fv());
+			glVertex3fv(e.vertex->data[it->a[1]].get3fv());
+		}
+		glEnd();
+	}
+
+	if(conf->geti("drawNormals", 0))
+		drawNormals(e);
+	
+	if(conf->geti("drawVertexes", 0))
+		drawVertexes(e);
+
+	if(conf->geti("drawAABB", 0))
+		drawAABB(e, e.matrix);
+	glPopMatrix();
+
+	for(steel::vector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
+		cleanBuffer(*it);
+}*/
+
+void OpenGL_Engine::cleanBuffer(uid bufId)
+{
+	glDeleteBuffersARB(1, &buffer[bufId].glid);
+	buffer.erase(bufId);
+}
+
+template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, int elCnt)
+{
+	if(v == NULL) return false;
+
+	if(glGenBuffersARB) // Vertex Buffer Object supportd
+	{
+		uid	id = v->getId();
+		if(id == 0) 
+		{
+			if(mode)glEnableClientState(mode);
+			glBindBufferARB(mode2, 0);
+			return false;
+		}
+
+		bool loaded = false;
+		if(buffer.find(id) != buffer.end())
+			loaded = buffer[id].loaded;
+
+		OpenGLBuffer &buf = buffer[id];
+
+		if(loaded)
+		{
+			glBindBufferARB(mode2, buf.glid);
+			if(v->changed)
+			{
+				glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->data.size(), &v->data.front());
+				buf.loadCnt++;
+			}
+
+			if(mode)glEnableClientState(mode);
+
+			buf.lastUsedTime = time;
+			buf.usedCnt++;
+//			buf.temp = false;
+		}
+		else
+		{
+			glGenBuffersARB(1, &buf.glid);
+
+			if(mode) glEnableClientState ( mode );
+			glBindBufferARB(mode2, buf.glid);
+
+			GLenum usage = GL_STATIC_DRAW;
+			if(v->changed)
+				usage = GL_STREAM_DRAW;
+			glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
+	
+			buf.loaded = true;
+			buf.loadCnt++;
+			if(mode2 == GL_ARRAY_BUFFER_ARB)
+				buf.kind = OpenGLBuffer::array;
+			if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
+				buf.kind = OpenGLBuffer::index;
+
+//			buf.temp = false;
+			buf.lastUsedTime = time;
+			buf.usedCnt++;
+		}
+		return true;
+	}  
+	else
+		return false;
+}

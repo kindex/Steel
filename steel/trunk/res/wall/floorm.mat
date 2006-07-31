@@ -19,3 +19,4 @@
 
 	bump	tex/cs_floor2_1_local
 *	color_map	tex/floor2
++	color	1	0	0	1

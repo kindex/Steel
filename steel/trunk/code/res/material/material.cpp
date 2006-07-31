@@ -19,7 +19,7 @@ bool Material::init(string name, const std::string dir)
 		return false;
 	}
 
-	map.clear();
+	texture.clear();
 
 	for(int i=0; i<lines; i++)
 	{
@@ -36,64 +36,64 @@ bool Material::init(string name, const std::string dir)
 
 		if(kind == "color_map")
 		{
-			m.texture = resImage.add( file);
-			if(!m.texture)
-				m.texture = resImage.add( dir + "/" + file);
+			m.image = resImage.add( file);
+			if(!m.image)
+				m.image = resImage.add( dir + "/" + file);
 
-			if(m.texture)
+			if(m.image)
 			{
-				m.kind = TEXTURE_FORMAT_COLOR_MAP;
-				map.push_back(m);
+				m.format = TEXTURE_FORMAT_COLOR_MAP;
+				texture.push_back(m);
 			}
 		}
 		if(kind == "bump")
 		{
-			m.texture = resImage.add( file);
-			if(!m.texture)
-				m.texture = resImage.add( dir + "/" + file);
+			m.image = resImage.add( file);
+			if(!m.image)
+				m.image = resImage.add( dir + "/" + file);
 
-			if(m.texture)
+			if(m.image)
 			{
-				m.kind = TEXTURE_FORMAT_BUMP_MAP;
-				map.push_back(m);
+				m.format = TEXTURE_FORMAT_BUMP_MAP;
+				texture.push_back(m);
 			}
 		}
 		if(kind == "env")
 		{
-			m.texture = resImage.add( file);
-			if(!m.texture)
-				m.texture = resImage.add( dir + "/" + file);
+			m.image = resImage.add( file);
+			if(!m.image)
+				m.image = resImage.add( dir + "/" + file);
 
-			if(m.texture)
+			if(m.image)
 			{
-				m.kind = TEXTURE_FORMAT_ENV;
-				map.push_back(m);
+				m.format = TEXTURE_FORMAT_ENV;
+				texture.push_back(m);
 			}
 		}
 		if(kind == "color")
 		{
-			m.texture = NULL;
-			m.kind = TEXTURE_FORMAT_COLOR;
+			m.image = NULL;
+			m.format = TEXTURE_FORMAT_COLOR;
 			m.color.set(conf->getf(i, 2, 0.0f), conf->getf(i, 3, 0.0f), conf->getf(i, 4, 0.0f), conf->getf(i, 5, 1.0f));
-			map.push_back(m);
+			texture.push_back(m);
 		}
 	}
-	if(map.empty()) 
+	if(texture.empty()) 
 	{
 		resScript.pop();
 		return false;
 	}
 
-	blend = map[0].mode != TEXTURE_BLEND_MODE_REPLACE;
+	blend = texture[0].mode != TEXTURE_BLEND_MODE_REPLACE;
 	resScript.pop();
 	return true;
 }
 
 Material::~Material()
 {
-	for(steel::vector<Texture>::iterator it = map.begin(); it != map.end(); it++)
+	for(steel::vector<Texture>::iterator it = texture.begin(); it != texture.end(); it++)
 	{
-		if(it->texture) resImage.remove(it->texture);
+		if(it->image) resImage.remove(it->image);
 	}
 
 	resScript.remove(conf);

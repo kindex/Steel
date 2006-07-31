@@ -8,10 +8,12 @@
         Steel Engine License
     Description:
 		Функции для рендерига объектов на OpenGL 1.0
+		glBegin - glEnd
  ************************************************************/
 
 #include "opengl_engine.h"
 
+// установить текущуу текстуру
 bool OpenGL_Engine::BindTexture_OpenGL10(Image *image)
 {
 	glEnable(GL_TEXTURE_2D);
@@ -39,33 +41,93 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image *image)
 	return true;
 }
 
+// нарисовать множество полигонов с указанным материалом
 void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
-	if(material && triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	if(material)
 	{
 		total.object++;
-		total.vertex += e.vertex->data.size();
-		total.triangle += triangles->data.size();
 
-        TexCoords *coords = e.object->getTexCoords(0);
-		Texture map = material->map[0]; // текущая текстура
-	 
-		(this->*BindTexture)(map.texture);
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		int texCount = material->texture.size();
 
-        glBegin(GL_TRIANGLES);
-         
-        for(unsigned int i=0; i<triangles->data.size(); i++)
-        {
-            glTexCoord2fv(&coords->data[ triangles->data[i].a[0] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[0] ].x);
-            glTexCoord2fv(&coords->data[ triangles->data[i].a[1] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[1] ].x);
-            glTexCoord2fv(&coords->data[ triangles->data[i].a[2] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[2] ].x);
-        }
-         
-        glEnd();
-    }
+		TextureBlendMode inheritedMode = TEXTURE_BLEND_MODE_NONE, currentMode;
+
+		glDepthFunc(GL_LEQUAL);
+		for(int i=0; i<texCount; i++)
+		{
+			glPushAttrib(GL_ALL_ATTRIB_BITS);
+			Texture texture = material->texture[i]; // текущая текстура
+
+			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
+				currentMode = texture.mode;
+			else
+			{
+				currentMode = inheritedMode;
+				inheritedMode = TEXTURE_BLEND_MODE_NONE;
+			}
+
+			// skip texture
+			if(texture.format == TEXTURE_FORMAT_BUMP_MAP
+				|| texture.format == TEXTURE_FORMAT_ENV
+				|| texture.format == TEXTURE_FORMAT_NORMAL_MAP)
+			{
+				inheritedMode = currentMode;
+				continue;
+			}
+
+			// режим мультитекстурирования
+			glEnable(GL_BLEND);
+			switch(currentMode)
+			{
+				case TEXTURE_BLEND_MODE_MUL:	
+						glBlendFunc(GL_DST_COLOR, GL_ZERO);break;
+				case TEXTURE_BLEND_MODE_ADD:
+						glBlendFunc(GL_ONE, GL_ONE); break;
+//					case TEXTURE_BLEND_MODE_BLEND:	
+//							glBlendFunc(GL_ONE, GL_ONE); break;
+
+				case TEXTURE_BLEND_MODE_REPLACE: default:
+					glDisable(GL_BLEND);
+					break;
+			}
+
+			if(texture.format == TEXTURE_FORMAT_COLOR_MAP) 
+				if(BindTexture) (this->*BindTexture)(texture.image);
+
+			if(texture.format == TEXTURE_FORMAT_COLOR) 
+				glColor4fv(&texture.color.r);
+
+			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, total);
+		   	glPopAttrib();
+		}
+	   	glPopAttrib();
+	}
 }
 
+// нарисовать множество полигонов с указанным материалом
+void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
+{
+	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	{
+		total.vertex += e.vertex->data.size();
+		total.triangle += triangles->data.size();
+        TexCoords *coords = e.object->getTexCoords(0);
 
+		glBegin(GL_TRIANGLES);
+		 
+		for(unsigned int i=0; i<triangles->data.size(); i++)
+		{
+			glTexCoord2fv(&coords->data[ triangles->data[i].a[0] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[0] ].x);
+			glTexCoord2fv(&coords->data[ triangles->data[i].a[1] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[1] ].x);
+			glTexCoord2fv(&coords->data[ triangles->data[i].a[2] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[2] ].x);
+		}
+	 
+		glEnd();
+	}
+}
+
+// нарисовать множество полигонов как сетку (только рёбра)
 void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
 {
 	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
@@ -85,7 +147,7 @@ void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
     }
 }
 
-
+// нарисовать множество линий
 void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
 {
 	if(e.vertex && e.lines && !e.lines->index.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
@@ -104,3 +166,87 @@ void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Gra
         glEnd();
     }
 }
+
+// нарисовать нормали к вершинам
+void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
+{
+	if(e.normal && e.vertex && e.vertex->data.size() == e.normal->data.size())
+	{
+		glColor3f(0,0,1);
+		aabb &f = e.frame;
+		float diag = (f.max-f.min).getLength()*0.05f;
+		if(diag > 1) diag = 1.0f;		
+		if(diag<EPSILON) diag = 0.01f;
+
+		glBegin(GL_LINES);
+		for(unsigned int i=0; i < e.vertex->data.size(); i++)
+		{
+			v3 s = e.vertex->data[i];
+			v3 d = e.vertex->data[i] + e.normal->data[i]*diag;
+
+			glVertex3f(s.x, s.y, s.z);
+			glVertex3f(d.x, d.y, d.z);
+		}
+		glEnd();
+		glColor3f(1,1,1);
+	}
+}
+
+// нарисовать вершины
+void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
+{
+	if(e.vertex)
+	{
+		glPointSize(5.0f);
+		glColor3f(0.5f, 1.0f, 1.0f);
+
+		glBegin(GL_POINTS);
+		for(unsigned int i=0; i < e.vertex->data.size(); i++)
+		{
+			v3 &s = e.vertex->data[i];
+
+			glVertex3f(s.x, s.y, s.z);
+		}
+		glEnd();
+
+		glPointSize(1.0f);
+		glColor3f(1.0f, 1.0f, 1.0f);
+	}
+}
+
+// нарисовать AABB
+void OpenGL_Engine::DrawAABB_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
+{
+	aabb &c = e.frame;
+	if(c.empty()) return;
+
+	glColor3f(1.0f, 0.8f, 0.8f);
+
+	glPushMatrix();
+	glLoadIdentity();
+	glBegin(GL_LINES);
+
+	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.min.z);
+	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.min.z);
+	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.min.y, c.max.z);
+
+	glVertex3f(c.min.x, c.max.y, c.max.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
+	glVertex3f(c.max.x, c.min.y, c.max.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
+	glVertex3f(c.max.x, c.max.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
+
+	glVertex3f(c.min.x, c.min.y, c.max.z);	glVertex3f(c.max.x, c.min.y, c.max.z);
+	glVertex3f(c.min.x, c.max.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.min.z);
+
+	glVertex3f(c.min.x, c.min.y, c.max.z);	glVertex3f(c.min.x, c.max.y, c.max.z);
+	glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.min.z);
+
+	glVertex3f(c.min.x, c.max.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.max.z);	
+	glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.max.z);	
+
+	glEnd();
+
+	glPopMatrix();
+	glColor3f(1.0f, 1.0f, 1.0f);
+}
+
+

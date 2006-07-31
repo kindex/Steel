@@ -559,7 +559,7 @@ void OpenGL_ExtensionsPrintfInfo()				// print info about card, driver, version 
 		log_msg("opengl_info", "NV_register_combiners supported. Max general combiners " + IntToStr(maxCombiners));
 	}
 	else
-		log_msg("opengl_info", "NV_register_combiners");
+		log_msg("opengl_info", "No NV_register_combiners");
 
 	if(OpenGL_ExtensionsIsSupported("GL_ARB_vertex_buffer_object"))
 		log_msg("opengl_info", "VBO supported");
@@ -567,13 +567,13 @@ void OpenGL_ExtensionsPrintfInfo()				// print info about card, driver, version 
 		log_msg("opengl_info", "No VBO");
 
 	if(OpenGL_ExtensionsIsSupported("GL_NV_occlusion_query"))
-		log_msg("opengl_info", "NV_occlusion_query extension supported.");
+		log_msg("opengl_info", "NV_occlusion_query extension supported");
 
 	if(OpenGL_ExtensionsIsSupported("GL_SGIS_generate_mipmap"))
-		log_msg("opengl_info", "GL_SGIS_generate_mipmap extension supported.");
+		log_msg("opengl_info", "GL_SGIS_generate_mipmap extension supported");
 
 	if(OpenGL_ExtensionsIsSupported("GL_ARB_vertex_program"))
-		log_msg("opengl_info", "GL_ARB_vertex_program extension supported.");
+		log_msg("opengl_info", "GL_ARB_vertex_program extension supported");
 
 	const char *exts = (char*)glGetString(GL_EXTENSIONS);
 	log_msg("graph opengl opengl_info", std::string("Supported GL extensions: ") + strtr(exts, ' ', '\n' ));
