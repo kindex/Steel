@@ -23,6 +23,13 @@
 struct Triangle // anti-clockwise direction (one side Triangle)
 {
 	unsigned int a[3];
+
+	void set(unsigned int _0, unsigned int _1, unsigned int _2) 
+	{ 
+		a[0] = _0;
+		a[1] = _1;
+		a[2] = _2;
+	}
 };
 
 typedef unsigned int	uid;// уникальный идентификатор модели
@@ -109,7 +116,7 @@ public:
 	// Object unique identifier
 	virtual uid								getId()				{ return id; }
 	// Местоположение и поворот произвольной точки объекта в локальных или глобальных координатах (точка отсчёта объекта).
-	virtual	ObjectPosition					getPosition(void) = 0;
+	virtual	ObjectPosition					getPosition(void) { return matrix34::getIdentity();}
 	// Система координат: локальная относительно родителя или глобальная
 	virtual PositionKind		getPositionKind(void) { return POSITION_LOCAL; }
 

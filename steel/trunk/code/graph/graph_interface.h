@@ -48,8 +48,11 @@ typedef steel::svector<GraphObject*> GraphObjectList;
 
 class GraphObject: public Interface
 {
+protected:
+	int gInjectedCount;
 public:
 // *** Common ***
+	GraphObject(): gInjectedCount(0) {}
 	// список детей
 	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
 	// возвращает количество детей
@@ -58,9 +61,9 @@ public:
 	virtual GraphObject* getGraphChildren(int number) { return NULL; }
 
 	// Непосредственно перед добавлением в движок вызывается 
-	virtual bool GraphBeforeInject() { return true;}
+	virtual bool GraphBeforeInject() { gInjectedCount++; return true;}
 	// После удаления из движка вызывается процедура afterRemove
-	virtual void GraphAfterRemove() {}
+	virtual void GraphAfterRemove() {gInjectedCount--;}
 
 	// вызывается перед каждой итерацией обработки. Внутри этой процедуры объект может менять некоторые свои параметры
 	virtual	void ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection) {}

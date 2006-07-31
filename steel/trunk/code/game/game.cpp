@@ -19,6 +19,8 @@
 #include "../res/script/script.h"
 
 #include "../objects/model_obj.h"
+#include "../objects/combiner.h"
+#include "../objects/sphere.h"
 
 #include "../res/res_main.h"
 
@@ -80,6 +82,15 @@ bool Game::createObject()
 		physicEngine->inject(p);
 	}
 */
+
+	Combiner *obj = new Combiner;
+	obj->setGraphObject(new Sphere);
+	obj->setPosition(matrix34::CreateTranslationMatrix(v3(0, 0, 3.0f)));
+
+	graphEngine->inject(obj);
+
+	return true;
+
 	if(!light)
 	{
 		light = new GameLight;

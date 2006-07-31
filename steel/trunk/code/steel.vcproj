@@ -825,6 +825,14 @@
 				Name="objects"
 				>
 				<File
+					RelativePath=".\objects\combiner.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\objects\combiner.h"
+					>
+				</File>
+				<File
 					RelativePath=".\objects\custom_path.cpp"
 					>
 					<FileConfiguration
@@ -997,6 +1005,14 @@
 				</File>
 				<File
 					RelativePath=".\objects\path.h"
+					>
+				</File>
+				<File
+					RelativePath=".\objects\sphere.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\objects\sphere.h"
 					>
 				</File>
 				<File

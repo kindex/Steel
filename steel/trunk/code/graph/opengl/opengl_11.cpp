@@ -121,8 +121,8 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e,
 		total.triangle += triangles->data.size();
 
         TexCoords *coords = e.object->getTexCoords(0);
-					
-		glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+				
+		if(coords)	{ glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY); }
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
 
 		//Draw All

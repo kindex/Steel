@@ -118,9 +118,9 @@ void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e,
 		 
 		for(unsigned int i=0; i<triangles->data.size(); i++)
 		{
-			glTexCoord2fv(&coords->data[ triangles->data[i].a[0] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[0] ].x);
-			glTexCoord2fv(&coords->data[ triangles->data[i].a[1] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[1] ].x);
-			glTexCoord2fv(&coords->data[ triangles->data[i].a[2] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[2] ].x);
+			if(coords) glTexCoord2fv(&coords->data[ triangles->data[i].a[0] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[0] ].x);
+			if(coords) glTexCoord2fv(&coords->data[ triangles->data[i].a[1] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[1] ].x);
+			if(coords) glTexCoord2fv(&coords->data[ triangles->data[i].a[2] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[2] ].x);
 		}
 	 
 		glEnd();
@@ -195,7 +195,7 @@ void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, G
 // нарисовать вершины
 void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
 {
-	if(e.vertex)
+	if(e.vertex && !e.vertex->data.empty())
 	{
 		glPointSize(5.0f);
 		glColor3f(0.5f, 1.0f, 1.0f);
@@ -203,9 +203,7 @@ void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, 
 		glBegin(GL_POINTS);
 		for(unsigned int i=0; i < e.vertex->data.size(); i++)
 		{
-			v3 &s = e.vertex->data[i];
-
-			glVertex3f(s.x, s.y, s.z);
+			glVertex3fv(&e.vertex->data[i].x);
 		}
 		glEnd();
 

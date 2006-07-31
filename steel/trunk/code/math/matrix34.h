@@ -52,6 +52,11 @@ struct matrix34
 		return get(1,0,0, 0,1,0, 0,0,1, 0,0,0); 
 	}
 
+	inline static const matrix34	CreateTranslationMatrix(const v3 translation)
+	{ 
+		return get(1,0,0, 0,1,0, 0,0,1, translation.x, translation.y, translation.z); 
+	}
+
 
 	//binary operators
 	void operator+=(const matrix34 operand);
