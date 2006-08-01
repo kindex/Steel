@@ -3,8 +3,8 @@
 
 Sphere::Sphere()
 {
-	int height = 12;
-	int radius = 16;
+	int height = 24;
+	int radius = 32;
 
 	vertexes = new Vertexes;
 	vertexes->setId(objectIdGenerator.genUid());
@@ -59,8 +59,24 @@ Sphere::Sphere()
 	faces->at(0).triangles->setChanged(true);
 }
 
-void Sphere::ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection)
+void Sphere::ProcessGraph(const GraphEngineInfo &info)
 {
-	for(int i=0; i < vertexes->data.size(); i++)
+	for(unsigned int i=0; i < vertexes->data.size(); i++)
+	{
 		vertexes->data[i] += v3(prand()*0.001f, prand()*0.001f, prand()*0.001f);
+
+		vertexes->data[i] += vertexes->data[i]*v3(0,0,1)*0.001f*frand();
+	}
+
+	if(frand()<0.1f && !faces->at(0).triangles->data.empty())
+	{
+		DeleteTriangle((int)(frand()*faces->at(0).triangles->data.size()));
+	}
+}
+
+void Sphere::DeleteTriangle(int n)
+{
+	faces->at(0).triangles->data[n] = faces->at(0).triangles->data.back();
+	faces->at(0).triangles->data.pop_back();
+	// TODO delete vertexes
 }

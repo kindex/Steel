@@ -49,9 +49,9 @@ public:
 		if(graph) graph->GraphAfterRemove();
 	}
 
-	void ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection)
+	void ProcessGraph(const GraphEngineInfo &info)
 	{
-		if(graph) graph->ProcessGraph(curTime, frameLength, modificationTime, cameraEye, cameraDirection);
+		if(graph) graph->ProcessGraph(info);
 	}
 
 	Vertexes*	getVertexes() { return graph?graph->getVertexes():NULL; } 

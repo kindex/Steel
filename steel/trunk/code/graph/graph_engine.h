@@ -45,6 +45,7 @@ protected:
 	// отображение идентификаторов объекта на положение в массиве storage
 	StorageHash idHash;
 
+	GraphEngineInfo info;
 public:
 	struct GraphTotalInfo
 	{

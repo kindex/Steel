@@ -1,12 +1,12 @@
 #include "ps_renderer.h"
 #include "../../res/res_main.h"
 
-void SpriteRenderer::ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection)
+void SpriteRenderer::ProcessGraph(const GraphEngineInfo &info)
 {
 	initSprites(vertex.data.size()/4, set->particles.size());
 
 	v3 pos_diff = particleSystem->getPosition().getTranslation();
-	eye = cameraEye;
+	eye = info.cameraEye;
 
 	int cnt = set->particles.size();
 	for(int i=0; i<cnt; i++)
@@ -21,9 +21,9 @@ void SpriteRenderer::ProcessGraph(steel::time curTime, steel::time frameLength, 
 //pos Ц положение спрайта
 		switch(align)
 		{
-			case SPRITE_ALIGN_SCREEN: dir = -cameraDirection; break;
-			case SPRITE_ALIGN_CAMERA: dir = cameraEye - pos; break;
-			case SPRITE_ALIGN_Z: dir = cameraEye - pos; dir.z = 0; break;
+			case SPRITE_ALIGN_SCREEN: dir = -info.cameraDirection; break;
+			case SPRITE_ALIGN_CAMERA: dir = info.cameraEye - pos; break;
+			case SPRITE_ALIGN_Z: dir = info.cameraEye - pos; dir.z = 0; break;
 			case SPRITE_ALIGN_CUSTOM: dir = customAlign; break;
 		}
 
@@ -130,7 +130,7 @@ bool ObjectPSRenderer::initParticles()
 	return true;
 }
 
-void ObjectPSRenderer::ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection)
+void ObjectPSRenderer::ProcessGraph(const GraphEngineInfo &info)
 {
 	int newSize = set->particles.size();
 	int oldSize = children.size();

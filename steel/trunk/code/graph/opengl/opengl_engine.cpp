@@ -299,7 +299,14 @@ OpenGL_Engine::GraphObjectStorage &OpenGL_Engine::getStorage(GraphObject *object
 
 void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::time time, matrix34 matrix, GraphObject *parent)
 {
-	object->ProcessGraph(globalTime, time, globalFrameNumber, camera.eye, camera.center - camera.eye);
+
+	info.curTime = globalTime;
+	info.frameLength = time;
+	info.modificationTime = globalFrameNumber;
+	info.cameraEye = camera.eye;
+	info.cameraDirection = camera.center - camera.eye;
+
+	object->ProcessGraph(info);
 
 	int sid = idHash[object->getId()];
 		

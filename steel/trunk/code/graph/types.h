@@ -64,6 +64,15 @@ typedef Vertexes	Normals;
 typedef TexCoord TexCoords;
 
 
+struct GraphEngineInfo
+{
+	steel::time curTime;
+	steel::time frameLength;
+	ModificationTime modificationTime;
+	v3 cameraEye;
+	v3 cameraDirection;
+};
+
 
 
 #endif

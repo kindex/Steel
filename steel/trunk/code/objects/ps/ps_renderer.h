@@ -43,7 +43,7 @@ public:
 	GLines*	getLines(){ return NULL; }
 	Lights*	getLights() { return NULL;}
 
-	void ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection);
+	void ProcessGraph(const GraphEngineInfo &info);
 };
 
 // каждая частица - отдельная модель (объект)
@@ -72,7 +72,7 @@ public:
 	GLines*	getLines(){ return NULL; }
 	Lights*	getLights() { return NULL;}
 
-	void ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection);
+	void ProcessGraph(const GraphEngineInfo &info);
 };
 
 // ничего не рисует

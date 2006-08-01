@@ -66,7 +66,7 @@ public:
 	virtual void GraphAfterRemove() {gInjectedCount--;}
 
 	// вызывается перед каждой итерацией обработки. Внутри этой процедуры объект может менять некоторые свои параметры
-	virtual	void ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection) {}
+	virtual	void ProcessGraph(const GraphEngineInfo &info) {}
 
 // *** Configuration ***
 

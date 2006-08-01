@@ -44,7 +44,7 @@ public:
 	void drawBox(const aabb box, const steel::time duration, const steel::time fade, const color4f color);
 
 // Graph
-	void		ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection);
+	void		ProcessGraph(const GraphEngineInfo &info);
 
 	ObjectPosition getPosition(void) { return matrix34::getIdentity(); }
 	

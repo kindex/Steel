@@ -82,15 +82,6 @@ bool Game::createObject()
 		physicEngine->inject(p);
 	}
 */
-
-	Combiner *obj = new Combiner;
-	obj->setGraphObject(new Sphere);
-	obj->setPosition(matrix34::CreateTranslationMatrix(v3(0, 0, 3.0f)));
-
-	graphEngine->inject(obj);
-
-	return true;
-
 	if(!light)
 	{
 		light = new GameLight;
@@ -398,6 +389,12 @@ bool Game::init(string _conf, Input *_input, std::string params)
 	framesToPass = 0;
 	speedup = 1;
 	light = NULL;
+
+	Combiner *obj = new Combiner;
+	obj->setGraphObject(new Sphere);
+	obj->setPosition(matrix34::CreateTranslationMatrix(v3(0, 0, 3.0f)));
+
+	world->addChildren(obj);
 
 	return true;
 }

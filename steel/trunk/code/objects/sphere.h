@@ -27,7 +27,9 @@ public:
 	TexCoords*	getTexCoords(int texNumber) { return texCoords;}
 	Vertexes*	getVertexes() { return vertexes;}
 	FaceMaterials* getFaceMaterials() { return faces;}
-	void ProcessGraph(steel::time curTime, steel::time frameLength, ModificationTime modificationTime, v3	cameraEye, v3 cameraDirection);
+	void ProcessGraph(const GraphEngineInfo &info);
+
+	void DeleteTriangle(int n);
 };
 
 #endif
