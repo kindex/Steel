@@ -16,6 +16,106 @@
  ************************************************************/
 
 #include "opengl_engine.h"
+#include "gl/libext.h"
+
+
+// нарисовать множество полигонов с указанным материалом / Multitexture
+void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+{
+	if(material)
+	{
+		total.object++;
+
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		int texCount = material->texture.size();
+
+		if(texCount>0)
+		{
+			switch(material->texture[0].mode)
+			{
+				case TEXTURE_BLEND_MODE_MUL:	
+						glEnable(GL_BLEND);
+						glBlendFunc(GL_DST_COLOR, GL_ZERO);
+						break;
+				case TEXTURE_BLEND_MODE_ADD:
+						glEnable(GL_BLEND);
+						glBlendFunc(GL_ONE, GL_ONE);
+						break;
+				case TEXTURE_BLEND_MODE_REPLACE: 
+				default:
+					glDisable(GL_BLEND);
+					break;
+			}
+		}
+
+		TextureBlendMode inheritedMode = TEXTURE_BLEND_MODE_NONE, currentMode;
+		int currentTextureArb = 0;
+
+		for(int i=0; i<texCount; i++)
+		{
+			Texture texture = material->texture[i]; // текущая текстура
+
+			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
+				currentMode = texture.mode;
+			else
+			{
+				currentMode = inheritedMode;
+				inheritedMode = TEXTURE_BLEND_MODE_NONE;
+			}
+
+			// skip texture
+			if(texture.format == TEXTURE_FORMAT_BUMP_MAP
+				|| texture.format == TEXTURE_FORMAT_ENV
+				|| texture.format == TEXTURE_FORMAT_NORMAL_MAP)
+			{
+				inheritedMode = currentMode;
+				continue;
+			}
+
+			glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
+			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
+
+			// режим мультитекстурирования
+			GLint mode = GL_REPLACE;
+			if(currentTextureArb>0)
+			{
+				switch(currentMode)
+				{
+					case TEXTURE_BLEND_MODE_MUL: 	mode = GL_MODULATE; break;
+					case TEXTURE_BLEND_MODE_ADD:	mode = GL_ADD;		break; // TODO: GL_ADD_SIGNED_ARB ??
+					case TEXTURE_BLEND_MODE_BLEND:	mode = GL_BLEND;	break;
+					default: mode = GL_REPLACE;		break;
+				}
+			}
+
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+
+
+			if(texture.format == TEXTURE_FORMAT_COLOR_MAP)
+			{
+				if(BindTexture) (this->*BindTexture)(texture.image);
+
+				TexCoords *coords = e.object->getTexCoords(i);
+				assert(coords->data.size() == e.vertex->data.size(), "TexCoords.size != Vertex.size");
+				if(BindTexCoords) (this->*BindTexCoords)(coords, currentTextureArb);
+			}
+			else
+			{
+				if(BindTexCoords) (this->*BindTexCoords)(NULL, currentTextureArb);
+			}
+
+			if(texture.format == TEXTURE_FORMAT_COLOR) 
+				glColor4fv(&texture.color.r);
+
+			currentTextureArb++;
+		}
+		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
+
+	   	glPopAttrib();
+	}
+}
+
+
 
 v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 {

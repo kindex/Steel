@@ -85,10 +85,10 @@ bool OpenGL_Engine::isVisible(aabb box)
 
 /*void OpenGL_Engine::cleanCache()
 {
-	for(map<uid, OpenGLBuffer>::iterator it = buffer.begin(); it != buffer.end(); it++)
+	for(map<uid, OpenGL_Buffer>::iterator it = buffer.begin(); it != buffer.end(); it++)
 	{
 		uid id = it->first;
-		OpenGLBuffer &buf = it->second;
+		OpenGL_Buffer &buf = it->second;
 		if(buf.temp)
 		{
 
@@ -222,9 +222,7 @@ bool OpenGL_Engine::init(std::string _conf)
 	
 	if(version == 0)// if version is not set in config, then autodetect it
 	{
-		if(openglVersioni < 11) version = 10;
-		else
-			version = 11;
+		version = openglVersioni;
 	}
 
 	log_msg("graph opengl opengl_info", "Using OpenGL renderer version: " + IntToStr(version));
@@ -244,7 +242,24 @@ bool OpenGL_Engine::init(std::string _conf)
 		DrawTriangles = &OpenGL_Engine::DrawTriangles_OpenGL11;
 		DrawWire = &OpenGL_Engine::DrawWire_OpenGL11;
 		DrawLines = &OpenGL_Engine::DrawLines_OpenGL11;
+		BindTexCoords = &OpenGL_Engine::BindTexCoords_OpenGL11;
 	}
+
+	if(version >= 13)
+	{
+		if(OPENGL_EXTENSION_MULTITEXTURE)
+			DrawFill = &OpenGL_Engine::DrawFill_OpenGL13;
+	}
+
+	if(version >= 15)
+	{
+		if(OPENGL_EXTENSION_VBO)
+		{
+			DrawTriangles = &OpenGL_Engine::DrawTriangles_OpenGL15;
+			BindTexCoords = &OpenGL_Engine::BindTexCoords_OpenGL15;
+		}
+	}
+
 
 /*	normalisationCubeMap	= generateNormalisationCubeMap();
 	zeroNormal = resImage.add("zero");

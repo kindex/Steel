@@ -53,7 +53,8 @@ public:
 struct Vertexes: public BufferedElement
 {
 	steel::vector<v3> data;
-	Vertexes() {}
+
+	Vertexes(): data(0) {}
 };
 
 // массив треугольников многогранника

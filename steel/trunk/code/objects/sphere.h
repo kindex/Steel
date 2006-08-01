@@ -20,11 +20,17 @@ class Sphere: public GraphObject
 protected:
 	Vertexes *vertexes;
 	FaceMaterials *faces;
-	TexCoords *texCoords;
+	TexCoords *texCoords0, *texCoords1;
 public:
 	Sphere();
 
-	TexCoords*	getTexCoords(int texNumber) { return texCoords;}
+	TexCoords*	getTexCoords(int texNumber)
+	{
+		if(texNumber == 0)
+			return texCoords0;
+		else
+			return texCoords1;
+	}
 	Vertexes*	getVertexes() { return vertexes;}
 	FaceMaterials* getFaceMaterials() { return faces;}
 	void ProcessGraph(const GraphEngineInfo &info);

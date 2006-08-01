@@ -15,6 +15,44 @@
 #include "opengl_engine.h"
 #include "gl/libext.h"
 
+// нарисовать множество полигонов с указанным материалом / VBO
+void OpenGL_Engine::DrawTriangles_OpenGL15(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
+{
+	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	{
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+		total.vertex += e.vertex->data.size();
+		total.triangle += triangles->data.size();
+			
+//		if(coords)	{ glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY); }
+
+		if(BindVBO(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+		{
+			glVertexPointer(3, GL_FLOAT, 0, 0);
+		}
+
+		//Draw All
+		if(BindVBO(triangles, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
+		{
+			glDrawElements(GL_TRIANGLES, triangles->data.size()*3, GL_UNSIGNED_INT, 0);
+		}
+
+		glPopAttrib();
+	}
+}
+
+void OpenGL_Engine::BindTexCoords_OpenGL15(TexCoords *coords, int TextureNumber)
+{
+	if(coords)	
+	{ 
+		if(BindVBO(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+			glTexCoordPointer(2, GL_FLOAT, 0,0);
+	}
+}
+
+
+
 /*void OpenGL_Engine::drawElement(GraphObjectStorage &e)
 {
 //  загружает матрицу преобразрвания для объекта (перенос, масштаб, поворот) в глобальых координатах
@@ -277,20 +315,22 @@
 
 void OpenGL_Engine::cleanBuffer(uid bufId)
 {
-	glDeleteBuffersARB(1, &buffer[bufId].glid);
+	if(OPENGL_EXTENSION_VBO)
+		glDeleteBuffersARB(1, &buffer[bufId].glid);
+
 	buffer.erase(bufId);
 }
 
-template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, int elCnt)
+template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2, int elCnt)
 {
 	if(v == NULL) return false;
 
-	if(glGenBuffersARB) // Vertex Buffer Object supportd
+	if(OPENGL_EXTENSION_VBO) // Vertex Buffer Object supportd
 	{
 		uid	id = v->getId();
 		if(id == 0) 
 		{
-			if(mode)glEnableClientState(mode);
+			if(mode) glEnableClientState(mode);
 			glBindBufferARB(mode2, 0);
 			return false;
 		}
@@ -299,7 +339,14 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 		if(buffer.find(id) != buffer.end())
 			loaded = buffer[id].loaded;
 
-		OpenGLBuffer &buf = buffer[id];
+		OpenGL_Buffer &buf = buffer[id];
+
+		if(loaded && buf.size != v->data.size())
+		{
+			glDeleteBuffersARB(1, &buf.glid);
+			buf.loaded = false;
+			loaded = false;
+		}
 
 		if(loaded)
 		{
@@ -326,14 +373,16 @@ template<class Class> bool OpenGL_Engine::bind(Class *v, int mode, int mode2, in
 			GLenum usage = GL_STATIC_DRAW;
 			if(v->changed)
 				usage = GL_STREAM_DRAW;
+
 			glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
+			buf.size = v->data.size();
 	
 			buf.loaded = true;
 			buf.loadCnt++;
 			if(mode2 == GL_ARRAY_BUFFER_ARB)
-				buf.kind = OpenGLBuffer::array;
+				buf.kind = OpenGL_Buffer::array;
 			if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
-				buf.kind = OpenGLBuffer::index;
+				buf.kind = OpenGL_Buffer::index;
 
 //			buf.temp = false;
 			buf.lastUsedTime = time;

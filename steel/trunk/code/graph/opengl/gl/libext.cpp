@@ -32,6 +32,9 @@
 
 
 bool OPENGL_EXTENSION_MULTITEXTURE = false;
+int	OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS = 0;
+bool OPENGL_EXTENSION_VBO = false;
+
 
 // multitexture functions
 #ifdef	_WIN32
@@ -535,6 +538,10 @@ void OpenGL_ExtensionsInit()
 #endif
 
 	OPENGL_EXTENSION_MULTITEXTURE = OpenGL_ExtensionsIsSupported("GL_ARB_multitexture");
+	if(OPENGL_EXTENSION_MULTITEXTURE)
+		glGetIntegerv(GL_MAX_TEXTURE_UNITS_ARB,	&OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS);
+
+	OPENGL_EXTENSION_VBO = OpenGL_ExtensionsIsSupported("GL_ARB_vertex_buffer_object");
 
 	initialized = true;
 }

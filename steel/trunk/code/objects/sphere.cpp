@@ -11,10 +11,15 @@ Sphere::Sphere()
 	vertexes->setChanged(true);
 	vertexes->data.resize( (height+1)*radius);
 
-	texCoords = new TexCoords;
-	texCoords->setId(objectIdGenerator.genUid());
-	texCoords->setChanged(true);
-	texCoords->data.resize( (height+1)*radius);
+	texCoords0 = new TexCoords;
+	texCoords0->setId(objectIdGenerator.genUid());
+	texCoords0->setChanged(false);
+	texCoords0->data.resize( (height+1)*radius);
+
+	texCoords1 = new TexCoords;
+	texCoords1->setId(objectIdGenerator.genUid());
+	texCoords1->setChanged(false);
+	texCoords1->data.resize( (height+1)*radius);
 
 	for(int i=0; i < height+1; i++)
 	{
@@ -27,18 +32,24 @@ Sphere::Sphere()
 				(float)i/height);
 
 		for(int j=0; j < radius; j++)
-			texCoords->data[i*radius + j].set(
+			texCoords0->data[i*radius + j].set(
 				(float)j/radius,
 				(float)i/height);
+
+		for(int j=0; j < radius; j++)
+			texCoords1->data[i*radius + j].set(
+				(float)i/height,
+				(float)j/radius);
 	}
 
 	
 	faces = new FaceMaterials(1);
 
 	faces->at(0).material = resMaterial.add("sphere/sphere");
-
 	faces->at(0).triangles = new Triangles;
 	faces->at(0).triangles->data.resize(height*radius*2);
+	faces->at(0).triangles->setId(objectIdGenerator.genUid());
+	faces->at(0).triangles->setChanged(true);
 	
 	for(int i=0; i < height; i++)
 		for(int j=0; j < radius; j++)
@@ -54,9 +65,6 @@ Sphere::Sphere()
 				(i+1)*radius + j);
 
 		}
-
-	faces->at(0).triangles->setId(objectIdGenerator.genUid());
-	faces->at(0).triangles->setChanged(true);
 }
 
 void Sphere::ProcessGraph(const GraphEngineInfo &info)

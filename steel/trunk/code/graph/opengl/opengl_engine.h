@@ -32,40 +32,33 @@
 #include "gl\glaux.h"		// Header File For The Glaux Library
 #endif
 
-struct OpenGLBuffer
-{
-	typedef enum 
-	{
-		none,
-		image,
-		array,
-		index
-	} buffer_kind;
-
-	GLuint	glid;
-	int		usedCnt, loadCnt;
-	steel::time lastUsedTime;
-	bool	loaded;
-	buffer_kind kind;
-};
 
 class OpenGL_Engine: public GraphEngine
 {
 protected:
-	std::map<uid, OpenGLBuffer> buffer;
-	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
-	Image *zeroNormal;
-
-
-	struct OpenGL_ImageBuffer
+	struct OpenGL_Buffer
 	{
+		typedef enum 
+		{
+			none,
+			image,
+			array,
+			index
+		} buffer_kind;
+
+		int		size;
 		GLuint	glid;
 		int		usedCnt, loadCnt;
 		steel::time lastUsedTime;
 		bool	loaded;
+		buffer_kind kind;
 	};
 
-	std::map<uid, OpenGL_ImageBuffer> imageBuffer;
+
+
+	std::map<uid, OpenGL_Buffer> buffer;
+	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
+	Image *zeroNormal;
 
 
 public:
@@ -105,7 +98,8 @@ protected:
 	// procedure variables
 	bool (OpenGL_Engine::*BindTexture)(Image *image);
 	void (OpenGL_Engine::*DrawFill)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*BindTexCoords)(TexCoords *coords, int TextureNumber);
 	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawNormals)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
@@ -115,7 +109,7 @@ protected:
 	// OpenGL 1.0
 	bool BindTexture_OpenGL10(Image *image);
 	void DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
-	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void DrawWire_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void DrawLines_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
 	void DrawNormals_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
@@ -124,9 +118,17 @@ protected:
 
 	// OpenGL 1.1
 	bool BindTexture_OpenGL11(Image *image);
-	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void DrawLines_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void BindTexCoords_OpenGL11(TexCoords *coords, int TextureNumber);
+
+	// OpenGL 1.3
+	void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+
+	// OpenGL 1.5
+	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void BindTexCoords_OpenGL15(TexCoords *coords, int TextureNumber);
 
 
 	typedef
@@ -158,6 +160,7 @@ public:
 		BindTexture(NULL), 
 		DrawFill(NULL), 
 		DrawTriangles(NULL),
+		BindTexCoords(NULL),
 		DrawLines(NULL), 
 		DrawWire(NULL), 
 		DrawNormals(NULL),
@@ -202,7 +205,7 @@ public:
 
 //	GLuint getCubeMap(std::string imageName);
 
-	template<class Class> bool bind(Class *v, int mode, int mode2, int elCnt);
+	template<class Class> bool BindVBO(Class *v, int mode, int mode2, int elCnt);
 	void cleanBuffer(uid bufId);
 /*	bool bindTexCoords(MapCoord *coord);
 	bool bindVertexes(Vertexes *v);*/

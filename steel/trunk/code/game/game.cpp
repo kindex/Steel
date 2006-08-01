@@ -390,12 +390,11 @@ bool Game::init(string _conf, Input *_input, std::string params)
 	speedup = 1;
 	light = NULL;
 
-	Combiner *obj = new Combiner;
+/*	Combiner *obj = new Combiner;
 	obj->setGraphObject(new Sphere);
 	obj->setPosition(matrix34::CreateTranslationMatrix(v3(0, 0, 3.0f)));
-
 	world->addChildren(obj);
-
+*/
 	return true;
 }
 

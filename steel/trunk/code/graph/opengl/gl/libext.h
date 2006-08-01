@@ -31,6 +31,8 @@ void OpenGL_ExtensionsInit();
 void OpenGL_ExtensionsPrintfInfo();
 
 extern bool OPENGL_EXTENSION_MULTITEXTURE;
+extern int	OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS;
+extern bool OPENGL_EXTENSION_VBO;
 
 #ifdef  _WIN32
 extern  PFNGLACTIVETEXTUREARBPROC               glActiveTextureARB;

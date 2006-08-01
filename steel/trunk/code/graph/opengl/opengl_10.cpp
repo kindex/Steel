@@ -13,35 +13,7 @@
 
 #include "opengl_engine.h"
 
-// установить текущуу текстуру
-bool OpenGL_Engine::BindTexture_OpenGL10(Image *image)
-{
-	glEnable(GL_TEXTURE_2D);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	int format;
-	if(image->getFormat() == IMAGE_RGB) format = GL_RGB; 
-	else
-	if(image->getFormat() == IMAGE_NORMAL) format = GL_RGB; 
-	else if(image->getFormat() == IMAGE_RGBA) format = GL_RGBA;
-	else
-		assert(false, "Unsupported image format");
-
-	int width = image->getWidth();
-	int heigth = image->getHeight();
-	if((width & (width - 1) )!= 0)
-		log_msg("graph opengl res error", "Texture width is not power of 2 ("+ IntToStr(width) + ")");
-	if((heigth & (heigth - 1)) != 0)
-		log_msg("graph opengl res error", "Texture heigth is not power of 2 ("+ IntToStr(heigth) + ")");
-
-    glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
-				format,  GL_UNSIGNED_BYTE , image->getBitmap());
-	return true;
-}
-
-// нарисовать множество полигонов с указанным материалом
+// нарисовать множество полигонов с указанным материалом / Blend
 void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material)
@@ -77,17 +49,21 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
 			}
 
 			// режим мультитекстурирования
-			glEnable(GL_BLEND);
 			switch(currentMode)
 			{
 				case TEXTURE_BLEND_MODE_MUL:	
-						glBlendFunc(GL_DST_COLOR, GL_ZERO);break;
+						glEnable(GL_BLEND);
+						glBlendFunc(GL_DST_COLOR, GL_ZERO);
+						break;
 				case TEXTURE_BLEND_MODE_ADD:
-						glBlendFunc(GL_ONE, GL_ONE); break;
+						glEnable(GL_BLEND);
+						glBlendFunc(GL_ONE, GL_ONE);
+						break;
 //					case TEXTURE_BLEND_MODE_BLEND:	
 //							glBlendFunc(GL_ONE, GL_ONE); break;
 
-				case TEXTURE_BLEND_MODE_REPLACE: default:
+				case TEXTURE_BLEND_MODE_REPLACE: 
+				default:
 					glDisable(GL_BLEND);
 					break;
 			}
@@ -98,7 +74,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
 			if(texture.format == TEXTURE_FORMAT_COLOR) 
 				glColor4fv(&texture.color.r);
 
-			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, total);
+			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, e.object->getTexCoords(i),  total);
 		   	glPopAttrib();
 		}
 	   	glPopAttrib();
@@ -106,13 +82,12 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
 }
 
 // нарисовать множество полигонов с указанным материалом
-void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {
 	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
 		total.vertex += e.vertex->data.size();
 		total.triangle += triangles->data.size();
-        TexCoords *coords = e.object->getTexCoords(0);
 
 		glBegin(GL_TRIANGLES);
 		 
@@ -125,6 +100,34 @@ void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e,
 	 
 		glEnd();
 	}
+}
+
+// установить текущуу текстуру
+bool OpenGL_Engine::BindTexture_OpenGL10(Image *image)
+{
+	glEnable(GL_TEXTURE_2D);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	int format;
+	if(image->getFormat() == IMAGE_RGB) format = GL_RGB; 
+	else
+	if(image->getFormat() == IMAGE_NORMAL) format = GL_RGB; 
+	else if(image->getFormat() == IMAGE_RGBA) format = GL_RGBA;
+	else
+		assert(false, "Unsupported image format");
+
+	int width = image->getWidth();
+	int heigth = image->getHeight();
+	if((width & (width - 1) )!= 0)
+		log_msg("graph opengl res error", "Texture width is not power of 2 ("+ IntToStr(width) + ")");
+	if((heigth & (heigth - 1)) != 0)
+		log_msg("graph opengl res error", "Texture heigth is not power of 2 ("+ IntToStr(heigth) + ")");
+
+    glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
+				format,  GL_UNSIGNED_BYTE , image->getBitmap());
+	return true;
 }
 
 // нарисовать множество полигонов как сетку (только рёбра)

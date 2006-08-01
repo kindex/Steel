@@ -36,6 +36,7 @@ class GraphHelper: virtual public EngineHelper, virtual public GraphObject
 	GLines		glines;
 
 public:
+	GraphHelper(): vertex(), face(), glines(), boxes(0), lines(0), vectors(0) {}
 // Helper
 	void setTime(const steel::time _time);
 	void clean() {}

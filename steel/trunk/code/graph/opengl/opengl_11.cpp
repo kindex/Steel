@@ -13,6 +13,35 @@
 #include "opengl_engine.h"
 #include "gl/libext.h"
 
+// нарисовать множество полигонов с указанным материалом / glVertexPointer
+void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
+{
+	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	{
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+		total.vertex += e.vertex->data.size();
+		total.triangle += triangles->data.size();
+			
+		if(coords)	{ glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY); }
+		glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
+		//Draw All
+		glDrawElements(GL_TRIANGLES, triangles->data.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &triangles->data.front().a[0]);
+
+		glPopAttrib();
+	}
+}
+
+void OpenGL_Engine::BindTexCoords_OpenGL11(TexCoords *coords, int TextureNumber)
+{
+	if(coords)	
+	{ 
+		glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
+	}
+	else
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY); 
+}
 
 bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 {
@@ -21,10 +50,10 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 	uid	id = image->getId();
 
 	bool loaded = false;
-	if(imageBuffer.find(id) != imageBuffer.end())
-		loaded = imageBuffer[id].loaded;
+	if(buffer.find(id) != buffer.end())
+		loaded = buffer[id].loaded;
 
-	OpenGL_ImageBuffer &buf = imageBuffer[id];
+	OpenGL_Buffer &buf = buffer[id];
 
 	if(loaded)
 	{
@@ -110,27 +139,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 }
 
 
-// нарисовать множество полигонов с указанным материалом
-void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
-{
-	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
-	{
-		glPushAttrib(GL_ALL_ATTRIB_BITS);
 
-		total.vertex += e.vertex->data.size();
-		total.triangle += triangles->data.size();
-
-        TexCoords *coords = e.object->getTexCoords(0);
-				
-		if(coords)	{ glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY); }
-		glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
-
-		//Draw All
-		glDrawElements(GL_TRIANGLES, triangles->data.size()*3/*A,b,c*/, GL_UNSIGNED_INT, &triangles->data.front().a[0]);
-
-		glPopAttrib();
-	}
-}
 
 void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
 {
