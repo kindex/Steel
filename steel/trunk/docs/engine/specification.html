@@ -427,7 +427,7 @@ table.MsoTableGrid
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="9218"/>
+ <o:shapedefaults v:ext="edit" spidmax="10242"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -453,8 +453,8 @@ class=GramE>на</span> несколько логических частей:</p>
 <h2><span class=SpellE>Core</span></h2>
 
 <p style='margin-bottom:0cm;margin-bottom:.0001pt'>Отвечает за связь,
-инициализацию модулей, <span class=SpellE>multithreading</span>. Передаёт управление
-движку для обработки мира игры на короткое время.</p>
+инициализацию модулей, <span class=SpellE>multithreading</span>. Передаёт
+управление движку для обработки мира игры на короткое время.</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo2;
@@ -824,13 +824,15 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 изменять форму объектов (например, от попадания пули). Разделение и разрушение
 объектов</p>
 
-<h2><span class=SpellE>Audio</span> <span class=SpellE>Engine</span></h2>
+<h2><span class=SpellE>Audio</span> <span class=SpellE>Engine</span><span
+lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h2>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
 tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Многоканальный
-звук</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Звуковой
+двигатель на основе <span class=SpellE><span lang=EN-US style='mso-ansi-language:
+EN-US'>OpenAL</span></span> 1.0</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
@@ -841,14 +843,43 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
 tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>эффект
-движения</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Один
+слушатель</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
 tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>размер
-помещения и тип стен влияют на звучание</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Один
+или много источников</p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Эффект
+Доплера</p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Отражения
+звука первого порядка на основе виртуальных источников</p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>7.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Поддержка
+<span lang=EN-US style='mso-ansi-language:EN-US'>EAX 2.0</span></p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>8.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Реверберация
+на основе <span lang=EN-US style='mso-ansi-language:EN-US'>EAX 2.0</span></p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>9.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><o:p>&nbsp;</o:p></p>
 
 <p style='margin-bottom:0cm;margin-bottom:.0001pt'><o:p>&nbsp;</o:p></p>
 
@@ -993,20 +1024,20 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level1 lfo10;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>выгрузка
 неиспользуемых ресурсов</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level1 lfo10;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>все
 ресурсы идентифицируются строчкой, которая в большинстве случаев является путём
 к файлу без расширения.</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level1 lfo10;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
+tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>коллекция
 ресурсов пытается загрузить ресурс всеми доступными загрузчиками для этого типа
 ресурса</p>
