@@ -54,14 +54,6 @@ protected:
 		buffer_kind kind;
 	};
 
-
-
-	std::map<uid, OpenGL_Buffer> buffer;
-	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
-	Image *zeroNormal;
-
-
-public:
 	struct GraphObjectStorage // множество треугольников одного материала
 	{
 		// инентификатор объекта (uid)
@@ -79,6 +71,7 @@ public:
 		FaceMaterials *faceMaterials;
 		Vertexes	*vertex;
 		Normals		*normal;
+		Lights		*lights;
 
 		GLines		*lines;
 
@@ -91,15 +84,24 @@ public:
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 	};
 
-protected:
 	// data, to store collected information
 	steel::vector<GraphObjectStorage> storage;
 
+	std::map<uid, OpenGL_Buffer> buffer;
+	Lights lights;
+	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
+	Image *zeroNormal;
+
+
+protected:
 	// procedure variables
 	bool (OpenGL_Engine::*BindTexture)(Image *image);
 	void (OpenGL_Engine::*DrawFill)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*BindTexCoords)(TexCoords *coords, int TextureNumber);
+
+	void (OpenGL_Engine::*BindTexCoords)(TexCoords *coords);
+	void (OpenGL_Engine::*BindTexCoords3f)(TexCoords3f *coords);
+
 	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawNormals)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
@@ -121,24 +123,24 @@ protected:
 	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void DrawLines_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
-	void BindTexCoords_OpenGL11(TexCoords *coords, int TextureNumber);
+	void BindTexCoords_OpenGL11(TexCoords *coords);
+	void BindTexCoords3f_OpenGL11(TexCoords3f *coords);
 
 	// OpenGL 1.3
 	void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.5
 	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
-	void BindTexCoords_OpenGL15(TexCoords *coords, int TextureNumber);
+	void BindTexCoords_OpenGL15(TexCoords *coords);
+	void BindTexCoords3f_OpenGL15(TexCoords3f *coords);
 
+	// Stuff to delete
 
 	typedef
 		steel::vector<v3>
 		v3List;
 
-	struct tangentSpaceLightBufferedArray: public BufferedElement
-	{
-		v3List data;
-	} ;
+	typedef TexCoords3f tangentSpaceLightBufferedArray;
 
 
 	struct TangentSpaceCache
@@ -161,11 +163,12 @@ public:
 		DrawFill(NULL), 
 		DrawTriangles(NULL),
 		BindTexCoords(NULL),
+		BindTexCoords3f(NULL),
 		DrawLines(NULL), 
 		DrawWire(NULL), 
 		DrawNormals(NULL),
 		DrawVertexes(NULL),
-		DrawAABB(NULL) 
+		DrawAABB(NULL)
 		{}
 
 	void processCamera();
@@ -191,6 +194,12 @@ public:
 //	void drawAABB(DrawElement &e, matrix34 matrix);
 
 	
+	void drawBump(GraphObjectStorage &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img);
+	void getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, FaceMaterials *faceMaterials, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent);
+	void genTangentSpaceLight(steel::vector<v3> const &sTangent, steel::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
+	void genTangentSpaceSphere(Vertexes const &vertex, Normals	const &normal, matrix34 const matrix, const v3 _camera,	v3List &tangentSpaceLight);
+	void DrawReflect(GraphObjectStorage &e, matrix34 const matrix, v3 const light, uid bufId);
+
 //	void drawBump(DrawElement &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int texnum, Image *bump);
 //	void drawReflect(DrawElement &e, matrix34 const matrix, v3 const light, uid bufId);
 

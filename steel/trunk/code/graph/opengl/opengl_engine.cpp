@@ -100,14 +100,14 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 {
 	// TODO repair DC 
 
-	light.clear();
+	lights.clear();
 	total.vertex = 0;
 	total.triangle = 0;
 	total.object = 0;
 
 	int size = objects.size();
 	for(int i=0; i < size; i++)
-		prepare(objects[i], globalTime, time);
+		prepare(objects[i], globalTime, time); /* Update vertexes, faces, ights */
 
 
 //	if(!ARB_multitexture_supported) 
@@ -243,32 +243,33 @@ bool OpenGL_Engine::init(std::string _conf)
 		DrawWire = &OpenGL_Engine::DrawWire_OpenGL11;
 		DrawLines = &OpenGL_Engine::DrawLines_OpenGL11;
 		BindTexCoords = &OpenGL_Engine::BindTexCoords_OpenGL11;
+		BindTexCoords3f = &OpenGL_Engine::BindTexCoords3f_OpenGL11;
 	}
 
 	if(version >= 13)
 	{
-		if(OPENGL_EXTENSION_MULTITEXTURE)
+		if(GL_EXTENSION_MULTITEXTURE)
 			DrawFill = &OpenGL_Engine::DrawFill_OpenGL13;
 	}
 
 	if(version >= 15)
 	{
-		if(OPENGL_EXTENSION_VBO)
+		if(GL_EXTENSION_VBO)
 		{
 			DrawTriangles = &OpenGL_Engine::DrawTriangles_OpenGL15;
 			BindTexCoords = &OpenGL_Engine::BindTexCoords_OpenGL15;
+			BindTexCoords3f = &OpenGL_Engine::BindTexCoords3f_OpenGL15;
 		}
 	}
 
-
-/*	normalisationCubeMap	= generateNormalisationCubeMap();
+	normalisationCubeMap	= generateNormalisationCubeMap();
 	zeroNormal = resImage.add("zero");
 	if(!zeroNormal)
 	{
 		log_msg("error graph res", "Zero normal map not found");
 		return false;
 	}
-*/
+
 	log_msg("opengl graph", "OpenGL engine has been initialized!");
 
 	setCaption("Steel Engine");
@@ -368,6 +369,13 @@ void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::
 		}
 	}
 
+	if(storage[sid].lights)
+	for(Lights::const_iterator it = storage[sid].lights->begin(); it != storage[sid].lights->end(); it++)
+	{
+		lights.push_back(*it);
+		lights.back().pos = storage[sid].matrix*lights.back().pos;
+
+	}
 
 	int count = object->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
@@ -407,14 +415,11 @@ void OpenGL_Engine::cacheStorageObject(GraphObjectStorage &objectStorage)
 		objectStorage.vertex		= object->getVertexes();
 		objectStorage.normal		= object->getNormals();
 		objectStorage.lines			= object->getLines();
+		objectStorage.lights		= object->getLights();
+		objectStorage.blend			= false;
 
-		Lights		*l = object->getLights();
-		if(l)
-			for(Lights::iterator it = l->begin(); it != l->end(); it++)
-			{
-				light.push_back(*it);
-				light[light.size()-1].pos = object_matrix*v3(0,0,0);
-			}
+		if(objectStorage.normal)
+			debugi(objectStorage.normal->data.size());
 	}
 }
 

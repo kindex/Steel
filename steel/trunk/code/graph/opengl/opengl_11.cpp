@@ -23,8 +23,22 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e,
 		total.vertex += e.vertex->data.size();
 		total.triangle += triangles->data.size();
 			
-		if(coords)	{ glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY); }
-		glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
+		if(coords)	
+		{ 
+			glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		}
+
+/*		RUNTIME ERROR: glDrawElements вылезает в плохую область памяти, если передаются нормали
+		if(e.normal) // TODO check array length
+		{
+			glVertexPointer(3, GL_FLOAT, 0, &e.normal->data.front());
+			glEnableClientState(GL_NORMAL_ARRAY);
+		}
+*/
+		glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());	
+		glEnableClientState(GL_VERTEX_ARRAY);
+
 		//Draw All
 		glDrawElements(GL_TRIANGLES, triangles->data.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &triangles->data.front().a[0]);
 
@@ -32,7 +46,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e,
 	}
 }
 
-void OpenGL_Engine::BindTexCoords_OpenGL11(TexCoords *coords, int TextureNumber)
+void OpenGL_Engine::BindTexCoords_OpenGL11(TexCoords *coords)
 {
 	if(coords)	
 	{ 
@@ -42,6 +56,18 @@ void OpenGL_Engine::BindTexCoords_OpenGL11(TexCoords *coords, int TextureNumber)
 	else
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY); 
 }
+
+void OpenGL_Engine::BindTexCoords3f_OpenGL11(TexCoords3f *coords)
+{
+	if(coords)
+	{ 
+		glTexCoordPointer(3, GL_FLOAT, 0, &coords->data.front());
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	}
+	else
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
 
 bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 {
@@ -57,16 +83,21 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 
 	if(loaded)
 	{
-		switch(image->getKind())
+		switch(image->getDimension())
 		{
 			case IMAGE_2D:
 				glEnable(GL_TEXTURE_2D);
 				glBindTexture(GL_TEXTURE_2D, buf.glid);
 				break;
 			case IMAGE_CUBE:
-				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
-				break;
+				if(GL_EXTENSION_TEXTURE_CUBE_MAP)
+				{
+					glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+					glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
+					break;
+				}
+			default:
+				return false; // unsupoerted texture format
 		}
 
 //		buf.lastUsedTime = time;
@@ -86,7 +117,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 		int width = image->getWidth();
 		int heigth = image->getHeight();
 
-		switch(image->getKind())
+		switch(image->getDimension())
 		{
 			case IMAGE_2D:
 				if((width & (width - 1) )!= 0)
@@ -104,30 +135,35 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 				glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
 					format,  GL_UNSIGNED_BYTE , image->getBitmap());
 				break;
-			case IMAGE_CUBE: // TODO check extension
-				glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
-
-				int w = image->getWidth();
-				int h = image->getHeight();
-				int bpp = image->getBpp()/8;
-
-				if(w*6 != h) return false; // 6 images in one
-
-				for(int i=0; i<6; i++)
+			case IMAGE_CUBE:
+				if(GL_EXTENSION_TEXTURE_CUBE_MAP)
 				{
-					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i,	0, 
-						GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image->getBitmap() + w*w*bpp*i);
+					glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+					glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
+
+					int w = image->getWidth();
+					int h = image->getHeight();
+					int bpp = image->getBpp()/8;
+
+					if(w*6 != h) return false; // 6 images in one
+
+					for(int i=0; i<6; i++)
+					{
+						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i,	0, 
+							GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image->getBitmap() + w*w*bpp*i);
+					}
+
+					glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+					glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+					glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+					glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+					glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+					break;
 				}
-
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-				break;
+			default:
+				return false;
 		}
 
 		buf.loaded = true;

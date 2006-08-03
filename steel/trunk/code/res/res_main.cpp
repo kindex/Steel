@@ -55,7 +55,7 @@ Image *createImage(const std::string filename, const std::string base)
 	// try to load cubemap
 	if(r = createImageFormat(base + "/" + filename + ".cube"))
 	{
-		((Image*)r)->setKind(IMAGE_CUBE);
+		((Image*)r)->setDimension(IMAGE_CUBE);
 		return r;
 	}
 	return NULL;

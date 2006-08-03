@@ -118,12 +118,7 @@ bool BMP::init(const std::string name)
 	bmpBITMAPFILEHEADER fh; // file header
 	bmpBITMAPINFOHEADER ih;
 
-/*	if(sizeof(fh)!= 14) 
-	{	
-		steel::log.out("Res/Image/BMP: head struct size 14 != %d", sizeof(fh));
-		throw;
-	}
-*/
+	cassert(sizeof(fh)== 14);
 
 //	int tty2 = sizeof(ih);
 	std::string file = name;
@@ -182,7 +177,7 @@ int r;
           bitmap[i*bpl + j*3 + 2] = r ;
         }
      }
-		kind	= IMAGE_2D;
+		dimension	= IMAGE_2D;
 		format	= IMAGE_RGB;
 
      break;

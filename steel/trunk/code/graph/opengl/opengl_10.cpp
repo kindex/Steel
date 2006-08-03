@@ -74,6 +74,25 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
 			if(texture.format == TEXTURE_FORMAT_COLOR) 
 				glColor4fv(&texture.color.r);
 
+/*			if(!lights.empty())
+			{
+				glEnable(GL_LIGHTING);
+				for(unsigned int i = 0; i<lights.size() && i<GL_MAX_LIGHTS; i++)
+				{
+					glEnable(GL_LIGHT0 + i);
+					float pos[4];
+						glPushMatrix();
+						glLoadIdentity();
+					pos[0] = lights[i].pos.x;
+					pos[1] = lights[i].pos.y;
+					pos[2] = lights[i].pos.z;
+					pos[3] = 1.0f;
+					glLightfv(GL_LIGHT0 + i, GL_POSITION, (float*)pos);
+						glPopmatrix();
+				}
+			}*/
+
+
 			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, e.object->getTexCoords(i),  total);
 		   	glPopAttrib();
 		}

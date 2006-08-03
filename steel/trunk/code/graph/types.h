@@ -34,17 +34,25 @@ struct color4f
 struct Light
 {
 	v3 pos;
-	float intensivity, range;
+	color4f color;
+	float range;
 };
 
 typedef steel::vector<Light>		Lights;
 
 //	kind : 2d only
-class TexCoord: public BufferedElement
+class TexCoords: public BufferedElement
 {
 public:
 	steel::vector<v2>	data;
 };
+
+class TexCoords3f: public BufferedElement
+{
+public:
+	steel::vector<v3> data;
+};
+
 
 class GLine // al-a triangle
 {
@@ -60,9 +68,6 @@ struct GLines
 };
 
 typedef Vertexes	Normals;
-
-typedef TexCoord TexCoords;
-
 
 struct GraphEngineInfo
 {

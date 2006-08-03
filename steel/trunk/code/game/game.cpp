@@ -395,6 +395,14 @@ bool Game::init(string _conf, Input *_input, std::string params)
 	obj->setPosition(matrix34::CreateTranslationMatrix(v3(0, 0, 3.0f)));
 	world->addChildren(obj);
 */
+	light = new GameLight;
+	light->setProcessKind(PROCESS_NONE);
+
+	matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
+
+	world->addChildren(light);
+
+
 	return true;
 }
 

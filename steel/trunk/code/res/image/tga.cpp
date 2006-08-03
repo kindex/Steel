@@ -57,7 +57,7 @@ bool TGA::init(const std::string name)
 
 	if(bpp==32) format = IMAGE_RGBA;
 	if(bpp==24) format = IMAGE_RGB;
-	kind = IMAGE_2D;
+	dimension = IMAGE_2D;
 
 	int ByPP = bpp/8;
 

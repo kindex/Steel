@@ -16,7 +16,7 @@
 #include "gl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / VBO
-void OpenGL_Engine::DrawTriangles_OpenGL15(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawTriangles_OpenGL15(GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {
 	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
@@ -42,7 +42,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(OpenGL_Engine::GraphObjectStorage &e,
 	}
 }
 
-void OpenGL_Engine::BindTexCoords_OpenGL15(TexCoords *coords, int TextureNumber)
+void OpenGL_Engine::BindTexCoords_OpenGL15(TexCoords *coords)
 {
 	if(coords)	
 	{ 
@@ -51,21 +51,18 @@ void OpenGL_Engine::BindTexCoords_OpenGL15(TexCoords *coords, int TextureNumber)
 	}
 }
 
+void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
+{
+	if(coords)	
+	{ 
+		if(BindVBO(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+			glTexCoordPointer(3, GL_FLOAT, 0,0);
+	}
+}
 
 
 /*void OpenGL_Engine::drawElement(GraphObjectStorage &e)
 {
-//  загружает матрицу преобразрвания для объекта (перенос, масштаб, поворот) в глобальых координатах
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-
-	float m[16]; // TODO
-	m[0] = e.matrix.data.matrix.data.m[0][0];	m[1] = e.matrix.data.matrix.data.m[1][0];	m[2] = e.matrix.data.matrix.data.m[2][0];	m[3] = 0;
-	m[4] = e.matrix.data.matrix.data.m[0][1];	m[5] = e.matrix.data.matrix.data.m[1][1];	m[6] = e.matrix.data.matrix.data.m[2][1];	m[7] = 0;
-	m[8] = e.matrix.data.matrix.data.m[0][2];	m[9] = e.matrix.data.matrix.data.m[1][2];	m[10] = e.matrix.data.matrix.data.m[2][2];	m[11] = 0;
-	m[12] = e.matrix.data.vector.x;	m[13] = e.matrix.data.vector.y;	m[14] = e.matrix.data.vector.z;	m[15] = 1;
-	glLoadMatrixf(m);
-
 	steel::vector<uid> buffersToDelete;
 
 	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
@@ -73,33 +70,8 @@ void OpenGL_Engine::BindTexCoords_OpenGL15(TexCoords *coords, int TextureNumber)
 		Material *m = e.material; // получаем материал
 		if(m != NULL  && conf->geti("drawFill", 1))
 		{
-			glPushAttrib(GL_ALL_ATTRIB_BITS);
-			// загружаем вершины объекта
-
-			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
-			{
-				glVertexPointer(3, GL_FLOAT, 0, 0);
-			}
-			else
-			{
-				glEnable(GL_VERTEX_ARRAY);
-				glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data.front());
-			}
-
 			// загружаем нормали объекта
-			if(e.normal && !e.normal->data.empty())
-			{
-				if(bind(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
-				{
-					glNormalPointer(GL_FLOAT, 0, 0);
-				}
-				else
-				{
-					glEnable(GL_NORMAL_ARRAY);
-					glNormalPointer(GL_FLOAT, 0, &e.normal->data[0]);
-				}
-			}
-
+	
 			int texCount = m->map.size();
 
 			int curTexArb = 0;
@@ -186,21 +158,6 @@ void OpenGL_Engine::BindTexCoords_OpenGL15(TexCoords *coords, int TextureNumber)
 						}
 					}
 					
-					if(conf->geti("drawReflect") && map.kind == TEXTURE_FORMAT_ENV) // карта отражения
-					{ // загружаем текстуру
-						glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-						glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
-						bindTexture(map.texture); // Cube texture (auto detect from Image)
-
-						uid bufId = objectIdGenerator.genUid();
-						buffersToDelete.push_back(bufId);
-						drawReflect(e, e.matrix, camera.eye, bufId);
-
-						// TODO: в этом месте тектурные координаты должны генерированться сами
-						//  шейдером или еще чем-либо
-//						drawBump(e, coords, e.matrix, light[j].pos, bufId);
-
-					}
 
 					if(map.kind == TEXTURE_FORMAT_COLOR) // цвет RGBA
 						glColor4f(map.color.r, map.color.g, map.color.b, map.color.a);
@@ -315,7 +272,7 @@ void OpenGL_Engine::BindTexCoords_OpenGL15(TexCoords *coords, int TextureNumber)
 
 void OpenGL_Engine::cleanBuffer(uid bufId)
 {
-	if(OPENGL_EXTENSION_VBO)
+	if(GL_EXTENSION_VBO)
 		glDeleteBuffersARB(1, &buffer[bufId].glid);
 
 	buffer.erase(bufId);
@@ -325,7 +282,7 @@ template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2,
 {
 	if(v == NULL) return false;
 
-	if(OPENGL_EXTENSION_VBO) // Vertex Buffer Object supportd
+	if(GL_EXTENSION_VBO) // Vertex Buffer Object supportd
 	{
 		uid	id = v->getId();
 		if(id == 0) 

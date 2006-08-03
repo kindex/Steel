@@ -119,15 +119,27 @@ public:
 
 class GameLight: public GameObj
 {
+protected:
+	Lights *lights;
 public:
+	GameLight()
+	{
+		lights = new Lights(1);
+		lights->at(0).pos.set(0.0f, 0.0f, 0.0f);
+		lights->at(0).color.set(1.0f, 1.0f, 1.0f, 1.0f);
+		lights->at(0).range = 1000;
+	}
+	
+	~GameLight()
+	{
+		delete lights;
+	}
 
 	Lights* getLights()
 	{
-		Lights *a = new Lights(1);
-		a->at(0).intensivity = 1.0f;
-		a->at(0).range = 1000;
-		return a;
+		return lights;
 	}
+
 };
 
 /*

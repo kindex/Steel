@@ -39,7 +39,6 @@ class GraphEngine: public Engine
 {
 protected:
 	steel::vector<GraphObject*> objects;
-	Lights light;
 
 	typedef std::map <uid, int> StorageHash;
 	// отображение идентификаторов объекта на положение в массиве storage

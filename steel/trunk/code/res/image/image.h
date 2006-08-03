@@ -40,11 +40,11 @@ protected:
 public:
 
 protected:
-	ImageDimension		kind;
-	ImageFormat	format;
+	ImageDimension	dimension;
+	ImageFormat		format;
 public:
 
-	Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; kind = IMAGE_DIMENSION_NONE; format = IMAGE_FORMAT_NONE; }
+	Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; dimension = IMAGE_DIMENSION_NONE; format = IMAGE_FORMAT_NONE; }
     ~Image() { unload(); }
 
     bool unload() 
@@ -73,8 +73,8 @@ public:
 
 	void convertFromHeightMapToNormalMap();
 
-	ImageDimension	getKind() { return kind; }
-	void setKind(ImageDimension _kind) { kind = _kind; }
+	ImageDimension	getDimension() { return dimension; }
+	void setDimension(ImageDimension _dimension) { dimension = _dimension; }
 	ImageFormat	getFormat() { return format; }
 	void setFormat(ImageFormat _format) { format = _format; }
 };

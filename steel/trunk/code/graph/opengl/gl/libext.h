@@ -30,9 +30,11 @@ bool OpenGL_ExtensionsIsSupported(const char *ext);
 void OpenGL_ExtensionsInit();
 void OpenGL_ExtensionsPrintfInfo();
 
-extern bool OPENGL_EXTENSION_MULTITEXTURE;
-extern int	OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS;
-extern bool OPENGL_EXTENSION_VBO;
+extern bool GL_EXTENSION_MULTITEXTURE;
+extern int	GL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS;
+extern bool GL_EXTENSION_VBO;
+extern bool GL_EXTENSION_DOT3;
+extern bool GL_EXTENSION_TEXTURE_CUBE_MAP;
 
 #ifdef  _WIN32
 extern  PFNGLACTIVETEXTUREARBPROC               glActiveTextureARB;

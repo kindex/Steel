@@ -31,9 +31,11 @@
 #include <malloc.h>
 
 
-bool OPENGL_EXTENSION_MULTITEXTURE = false;
-int	OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS = 0;
-bool OPENGL_EXTENSION_VBO = false;
+bool GL_EXTENSION_MULTITEXTURE = false;
+int  GL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS = 0;
+bool GL_EXTENSION_VBO = false;
+bool GL_EXTENSION_DOT3 = false;
+bool GL_EXTENSION_TEXTURE_CUBE_MAP = false;
 
 
 // multitexture functions
@@ -537,11 +539,13 @@ void OpenGL_ExtensionsInit()
 	initLinuxExtensions ();
 #endif
 
-	OPENGL_EXTENSION_MULTITEXTURE = OpenGL_ExtensionsIsSupported("GL_ARB_multitexture");
-	if(OPENGL_EXTENSION_MULTITEXTURE)
-		glGetIntegerv(GL_MAX_TEXTURE_UNITS_ARB,	&OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS);
+	GL_EXTENSION_MULTITEXTURE = OpenGL_ExtensionsIsSupported("GL_ARB_multitexture");
+	if(GL_EXTENSION_MULTITEXTURE)
+		glGetIntegerv(GL_MAX_TEXTURE_UNITS_ARB,	&GL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS);
 
-	OPENGL_EXTENSION_VBO = OpenGL_ExtensionsIsSupported("GL_ARB_vertex_buffer_object");
+	GL_EXTENSION_VBO = OpenGL_ExtensionsIsSupported("GL_ARB_vertex_buffer_object");
+	GL_EXTENSION_DOT3 = OpenGL_ExtensionsIsSupported("GL_EXT_texture_env_dot3");
+	GL_EXTENSION_TEXTURE_CUBE_MAP = OpenGL_ExtensionsIsSupported("GL_EXT_texture_cube_map");
 
 	initialized = true;
 }

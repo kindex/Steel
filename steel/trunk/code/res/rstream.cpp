@@ -35,12 +35,12 @@ void rstream::read(void *dest, int size)
 
 bool rstream::open(std::string s, std::string ext, ios_base::openmode _Mode) 
 { 
-	std::string r = std::string("../res/") + s + (ext == ""?"":"." + ext);
+	std::string r = std::string("../data/") + s + (ext == ""?"":"." + ext);
 
 	std::ifstream::open(r.c_str(), _Mode | std::ios::in);
 	if(fail())
 	{
-		std::ifstream::open((std::string("../res/") + s).c_str(), _Mode | std::ios::in);
+		std::ifstream::open((std::string("../data/") + s).c_str(), _Mode | std::ios::in);
 		if(fail())
 			return false;
 	}

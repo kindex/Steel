@@ -27,20 +27,6 @@ std::string getext(std::string name)
 	return r;
 }
 
-
-
-
-
-/*bool Res::init(string& name)
-{
-	rstream f("../res/"+name);
-
-	if(!f.good()) return false;
-	if(!this->load(f, 0)) return false;
-	return !f.bad();
-}*/
-
-
 bool ResStack::push(std::string directory)
 {
 	if(level>100) abort_init("res error", "To many recursive res::add executions (>100)");
