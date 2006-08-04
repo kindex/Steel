@@ -417,9 +417,6 @@ void OpenGL_Engine::cacheStorageObject(GraphObjectStorage &objectStorage)
 		objectStorage.lines			= object->getLines();
 		objectStorage.lights		= object->getLights();
 		objectStorage.blend			= false;
-
-		if(objectStorage.normal)
-			debugi(objectStorage.normal->data.size());
 	}
 }
 
