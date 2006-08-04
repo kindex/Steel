@@ -3,7 +3,7 @@
 
 #include "../res.h"
 
-#include "../../audio/openal_engine.h"
+//#include "../../audio/openal_engine.h"
 
 /*
 #include <string>
@@ -13,7 +13,7 @@
 #include <map>
 */
 
-//using namespace std;
+using namespace std;
 
 /*
 typedef struct
@@ -31,27 +31,18 @@ extern TBuf buffers;
 //ALCdevice *pDevice;
 //ALCcontext *pContext;
 
+
+
+
 class Audio : public Res
 {
-public:    
-    Audio();
-    ~Audio();
-    
-    ALfloat itsVelocity[3];
-    ALfloat itsPosition[3];
-    bool isLooped;
-    std::string itsFileName;
-    
-    float gain;
-    float pitch;
-    
-    unsigned int sndBuffer;
-
-	//bool load(const std::string &fileName);
-    
-//private:    
-    ALuint itsSourceID;
-//    bool LoadWavFile(const std::string &fileName);
+public:
+	void *data;
+	char *fileName;
+	int format;
+	int size;
+	int frequency;
+	bool loop;
 };
 
 #endif

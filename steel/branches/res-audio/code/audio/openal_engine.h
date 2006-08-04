@@ -18,7 +18,7 @@
 #pragma comment(lib, "eaxguid.lib")
 
 using namespace std;
-
+/*
 typedef struct
 {
     unsigned int ID;
@@ -30,7 +30,7 @@ typedef struct
 typedef map<ALuint, SndInfo> TBuf;
 
 extern TBuf buffers;
-
+*/
 extern bool initializeOpenAL();
 extern void destroyOpenAL();
 extern void setListenerEnvironment(unsigned long environment);

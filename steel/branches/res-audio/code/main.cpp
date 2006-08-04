@@ -31,6 +31,8 @@
 
 #include "res/res_main.h"
 
+#include "audio/openal_engine.h"
+
 using namespace std;
 
 bool test();

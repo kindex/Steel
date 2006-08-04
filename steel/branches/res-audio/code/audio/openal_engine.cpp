@@ -81,8 +81,8 @@ bool initializeOpenAL()
 void destroyOpenAL()
 {
 	// clear all buffers and sources
-	for (TBuf::iterator i = buffers.begin(); i != buffers.end(); i++)
-		alDeleteBuffers(1, &i->second.ID);
+//	for (TBuf::iterator i = buffers.begin(); i != buffers.end(); i++)
+//		alDeleteBuffers(1, &i->second.ID);
 	// shut down context
 	alcMakeContextCurrent(NULL);
 	// destroy context
