@@ -121,6 +121,8 @@ private:
 
 #ifdef STEEL_USE_GETTEXT
 	#define _( msgid ) gettext(msgid)
+#else
+	#define _( msgid )
 #endif
 
 #endif

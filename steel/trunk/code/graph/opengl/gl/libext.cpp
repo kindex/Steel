@@ -272,7 +272,7 @@ bool OpenGL_ExtensionsIsSupported( const char * ext )
 	Display * display = glXGetCurrentDisplay ();
 	int		screen	= DefaultScreen		( display );
 
-	return isExtensionSupported ( ext, glXQueryExtensionsString ( display, screen ) );
+	return OpenGL_ExtensionsIsSupported ( ext, glXQueryExtensionsString ( display, screen ) );
 #endif
 }
 

@@ -53,7 +53,10 @@ void _log_msg(std::string keywords, std::string message);
 #define log_msg(keywords, message)	_log_msg(keywords, message)
 
 // именно этим макросом надо выводить сообщения в лог-файл
-#define error(keywords, message)	log_msg(keywords, message) // TODO file + line number
+#define error(keywords, message) \
+	log_msg(std::string("error ") + \
+		keywords, std::string(__FILE__) + "@" + \
+		__FUNCTION__ + ":" + IntToStr(__LINE__) + " " + message)
 
 // неудачный выход из процедуры с сообщением в лог
 #define abort_init(keywords, _msg) { log_msg(keywords, _msg); return false; }

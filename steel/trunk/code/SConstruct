@@ -55,6 +55,8 @@ sources = Split("""
 	./graph/opengl/opengl_win_engine.cpp
 	./graph/opengl/opengl_10.cpp
 	./graph/opengl/opengl_11.cpp
+	./graph/opengl/opengl_13.cpp
+	./graph/opengl/opengl_15.cpp
 	./test.cpp
 	./objects/custom_path.cpp
 	./objects/game_obj.cpp
@@ -66,6 +68,8 @@ sources = Split("""
 	./objects/triangle.cpp
 	./objects/model_obj.cpp
 	./objects/path.cpp
+	./objects/combiner.cpp
+	./objects/sphere.cpp
 	./res/rstream.cpp
 	./res/res_main.cpp
 	./res/conf/conf.cpp
@@ -86,6 +90,7 @@ sources = Split("""
 	./physic/physic_engine_steel.cpp
 	./physic/pe_particle.cpp
 	./main.cpp
+	
 	""")
 
 libs = Split("""
