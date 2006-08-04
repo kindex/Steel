@@ -36,10 +36,10 @@ void rstream::read(void *dest, int size)
 bool rstream::open(std::string s, std::string ext, ios_base::openmode _Mode) 
 { 
 	std::string r = std::string("../data/") + s + (ext == ""?"":"." + ext);
-
 	std::ifstream::open(r.c_str(), _Mode | std::ios::in);
 	if(fail())
 	{
+		// TODO эта ветка ифа не работает - не работает повторное открытие файла
 		std::ifstream::open((std::string("../data/") + s).c_str(), _Mode | std::ios::in);
 		if(fail())
 			return false;

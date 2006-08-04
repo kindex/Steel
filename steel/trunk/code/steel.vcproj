@@ -592,6 +592,22 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="text"
+					>
+					<File
+						RelativePath=".\res\text\text.h"
+						>
+					</File>
+					<File
+						RelativePath=".\res\text\text_file.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\text\text_file.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audio"

@@ -5,13 +5,15 @@
 #include "model/_3ds.h"
 #include "conf/conf_text.h"
 #include "script/script_text.h"
+#include "text/text_file.h"
 
 
-ResCollection<Config> resConfig;
-ResCollection<Image> resImage;
-ResCollection<Model> resModel;
+ResCollection<Config>	resConfig;
+ResCollection<Image>	resImage;
+ResCollection<Model>	resModel;
 ResCollection<Material> resMaterial;
-ResCollection<Script> resScript;
+ResCollection<Script>	resScript;
+ResCollection<Text>		resText;
 
 
 // Image filename:
@@ -84,11 +86,12 @@ T2* createClass(const std::string filename, const std::string base)
 
 bool registerResources()
 {
-	resImage.registerResLoader(createImage);						resImage.setId("image");
-	resModel.registerResLoader(createClass<_3DS, Model>);			resModel.setId("model");
-	resMaterial.registerResLoader(createClass<Material, Material>);	resMaterial.setId("material");
-	resConfig.registerResLoader(createClass<ConfigText, Config>);	resConfig.setId("config");
-	resScript.registerResLoader(createClass<ScriptText, Script>);	resScript.setId("script");
+	resImage.setId("image");	resImage.registerResLoader(createImage);
+	resModel.setId("model");	resModel.registerResLoader(createClass<_3DS, Model>);
+	resMaterial.setId("material");resMaterial.registerResLoader(createClass<Material, Material>);
+	resConfig.setId("config");	resConfig.registerResLoader(createClass<ConfigText, Config>);
+	resScript.setId("script");	resScript.registerResLoader(createClass<ScriptText, Script>);
+	resText.setId("text");	resText.registerResLoader(createClass<TextFile, Text>);
 
 	return true;
 }
