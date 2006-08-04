@@ -45,6 +45,7 @@
 // именно этим макросом надо выводить все временные отладочные сообщения в лог файл.
 #define debug(message)	log_msg("debug", (message))
 #define debugi(message)	log_msg("debug", IntToStr(message))
+#define debug_into(func, code) {  debug(" -> in  " + func);  code debug(" <- out " + func); }
 
 void _log_msg(std::string keywords, std::string message);
 

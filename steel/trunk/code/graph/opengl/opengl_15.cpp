@@ -32,6 +32,11 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphObjectStorage &e, Triangles *tri
 			glVertexPointer(3, GL_FLOAT, 0, 0);
 		}
 
+		if(BindVBO(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+		{
+			glNormalPointer(GL_FLOAT, 0, 0);
+		}
+
 		//Draw All
 		if(BindVBO(triangles, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
 		{

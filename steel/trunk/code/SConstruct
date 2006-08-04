@@ -81,6 +81,7 @@ sources = Split("""
 	./res/image/image.cpp
 	./res/image/bmp.cpp
 	./res/image/tga.cpp
+	./res/text/text_file.cpp
 	./physic/physic_engine.cpp
 	./physic/physic_engine_steel.cpp
 	./physic/pe_particle.cpp

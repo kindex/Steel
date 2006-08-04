@@ -105,6 +105,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 	}
 	else
 	{
+		buf.loaded = false;
 		glGenTextures(1, &buf.glid);
 
 		int format;
@@ -120,10 +121,19 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 		switch(image->getDimension())
 		{
 			case IMAGE_2D:
-				if((width & (width - 1) )!= 0)
-					log_msg("graph opengl res error", "Texture width is not power of 2 ("+ IntToStr(width) + ")");
-				if((heigth & (heigth - 1)) != 0)
-					log_msg("graph opengl res error", "Texture heigth is not power of 2 ("+ IntToStr(heigth) + ")");
+				if(!GL_EXTENSION_TEXTURE_NON2POWER)
+				{
+					if((width & (width - 1) )!= 0)
+					{
+						log_msg("graph opengl res error", "Texture width is not power of 2 ("+ IntToStr(width) + ")");
+						return false;
+					}
+					if((heigth & (heigth - 1)) != 0)
+					{
+						log_msg("graph opengl res error", "Texture heigth is not power of 2 ("+ IntToStr(heigth) + ")");
+						return false;
+					}
+				}
 
 				glEnable(GL_TEXTURE_2D);
 				glBindTexture(GL_TEXTURE_2D, buf.glid);

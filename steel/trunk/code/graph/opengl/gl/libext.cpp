@@ -36,6 +36,7 @@ int  GL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS = 0;
 bool GL_EXTENSION_VBO = false;
 bool GL_EXTENSION_DOT3 = false;
 bool GL_EXTENSION_TEXTURE_CUBE_MAP = false;
+bool GL_EXTENSION_TEXTURE_NON2POWER = false;
 
 
 // multitexture functions
@@ -544,8 +545,9 @@ void OpenGL_ExtensionsInit()
 		glGetIntegerv(GL_MAX_TEXTURE_UNITS_ARB,	&GL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS);
 
 	GL_EXTENSION_VBO = OpenGL_ExtensionsIsSupported("GL_ARB_vertex_buffer_object");
-	GL_EXTENSION_DOT3 = OpenGL_ExtensionsIsSupported("GL_EXT_texture_env_dot3");
 	GL_EXTENSION_TEXTURE_CUBE_MAP = OpenGL_ExtensionsIsSupported("GL_EXT_texture_cube_map");
+	GL_EXTENSION_DOT3 = OpenGL_ExtensionsIsSupported("GL_EXT_texture_env_dot3") && GL_EXTENSION_TEXTURE_CUBE_MAP;
+	GL_EXTENSION_TEXTURE_NON2POWER = OpenGL_ExtensionsIsSupported("GL_ARB_texture_non_power_of_two");
 
 	initialized = true;
 }

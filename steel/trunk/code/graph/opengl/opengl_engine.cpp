@@ -106,6 +106,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 	total.object = 0;
 
 	int size = objects.size();
+
 	for(int i=0; i < size; i++)
 		prepare(objects[i], globalTime, time); /* Update vertexes, faces, ights */
 
@@ -132,7 +133,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 	for(steel::vector<GraphObjectStorage>::iterator it = storage.begin(); it != storage.end(); it++)
 //		if(!it->blend)
 			process(*it, globalTime, time);
-/*		else
+	/*		else
 		{
 			it->distance = (camera.eye - it->matrix*v3(0,0,0)).getLength();
 			elementAlpha.push_back(*it);

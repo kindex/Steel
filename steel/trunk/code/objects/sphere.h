@@ -18,11 +18,12 @@
 class Sphere: public GraphObject
 {
 protected:
-	Vertexes *vertexes;
+	Vertexes *vertexes, *normals;
 	FaceMaterials *faces;
 	TexCoords *texCoords0, *texCoords1;
 public:
 	Sphere();
+	~Sphere();
 
 	TexCoords*	getTexCoords(int texNumber)
 	{
@@ -32,6 +33,7 @@ public:
 			return texCoords1;
 	}
 	Vertexes*	getVertexes() { return vertexes;}
+	Normals*	getNormals() { return normals;} // список нормалей в вершинам
 	FaceMaterials* getFaceMaterials() { return faces;}
 	void ProcessGraph(const GraphEngineInfo &info);
 

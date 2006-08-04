@@ -11,6 +11,12 @@ Sphere::Sphere()
 	vertexes->setChanged(true);
 	vertexes->data.resize( (height+1)*radius);
 
+	normals = new Normals;
+	normals->setId(objectIdGenerator.genUid());
+	normals->setChanged(true);
+	normals->data.resize( vertexes->data.size() );
+
+
 	texCoords0 = new TexCoords;
 	texCoords0->setId(objectIdGenerator.genUid());
 	texCoords0->setChanged(false);
@@ -29,7 +35,7 @@ Sphere::Sphere()
 			vertexes->data[i*radius + j].set(
 				d*(float)cos((float)j/radius*M_PI*2.0f)*0.5f,
 				d*(float)sin((float)j/radius*M_PI*2.0f)*0.5f,
-				(float)i/height);
+				(float)i/height - 0.5f);
 
 		for(int j=0; j < radius; j++)
 			texCoords0->data[i*radius + j].set(
@@ -41,7 +47,6 @@ Sphere::Sphere()
 				(float)i/height,
 				(float)j/radius);
 	}
-
 	
 	faces = new FaceMaterials(1);
 
@@ -67,6 +72,22 @@ Sphere::Sphere()
 		}
 }
 
+Sphere::~Sphere()
+{
+	delete vertexes;
+	delete normals;
+	delete texCoords0;
+	delete texCoords1;
+	for(FaceMaterials::iterator it = faces->begin(); it != faces->end(); it++)
+	{
+		delete it->triangles;
+	}
+	delete faces;
+
+	// todo delete faces
+}
+
+
 void Sphere::ProcessGraph(const GraphEngineInfo &info)
 {
 	for(unsigned int i=0; i < vertexes->data.size(); i++)
@@ -79,6 +100,10 @@ void Sphere::ProcessGraph(const GraphEngineInfo &info)
 	if(frand()<0.1f && !faces->at(0).triangles->data.empty())
 	{
 		DeleteTriangle((int)(frand()*faces->at(0).triangles->data.size()));
+	}
+	for(unsigned int i = 0; i<normals->data.size(); i++)
+	{
+		normals->data[i] = vertexes->data[i].getNormalized();
 	}
 }
 

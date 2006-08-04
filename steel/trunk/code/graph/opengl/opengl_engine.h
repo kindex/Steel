@@ -197,8 +197,6 @@ public:
 	void drawBump(GraphObjectStorage &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img);
 	void getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, FaceMaterials *faceMaterials, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent);
 	void genTangentSpaceLight(steel::vector<v3> const &sTangent, steel::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
-	void genTangentSpaceSphere(Vertexes const &vertex, Normals	const &normal, matrix34 const matrix, const v3 _camera,	v3List &tangentSpaceLight);
-	void DrawReflect(GraphObjectStorage &e, matrix34 const matrix, v3 const light, uid bufId);
 
 //	void drawBump(DrawElement &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int texnum, Image *bump);
 //	void drawReflect(DrawElement &e, matrix34 const matrix, v3 const light, uid bufId);

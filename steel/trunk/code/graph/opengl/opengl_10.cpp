@@ -12,6 +12,7 @@
  ************************************************************/
 
 #include "opengl_engine.h"
+#include "gl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / Blend
 void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
@@ -139,10 +140,19 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image *image)
 
 	int width = image->getWidth();
 	int heigth = image->getHeight();
-	if((width & (width - 1) )!= 0)
-		log_msg("graph opengl res error", "Texture width is not power of 2 ("+ IntToStr(width) + ")");
-	if((heigth & (heigth - 1)) != 0)
-		log_msg("graph opengl res error", "Texture heigth is not power of 2 ("+ IntToStr(heigth) + ")");
+	if(!GL_EXTENSION_TEXTURE_NON2POWER)
+	{
+		if((width & (width - 1) )!= 0)
+		{
+			log_msg("graph opengl res error", "Texture width is not power of 2 ("+ IntToStr(width) + ")");
+			return false;
+		}
+		if((heigth & (heigth - 1)) != 0)
+		{
+			log_msg("graph opengl res error", "Texture heigth is not power of 2 ("+ IntToStr(heigth) + ")");
+			return false;
+		}
+	}
 
     glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
 				format,  GL_UNSIGNED_BYTE , image->getBitmap());

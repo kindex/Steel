@@ -77,6 +77,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 
 			glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
+			glDisable(GL_TEXTURE_COORD_ARRAY);
 
 			// режим мультитекстурирования
 			GLint mode = GL_REPLACE;
@@ -91,10 +92,9 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 				}
 			}
 
-			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-
 			if(conf->geti("drawBump") && !lights.empty() && (i==0) && !e.blend && (texture.format == TEXTURE_FORMAT_BUMP_MAP || texture.format == TEXTURE_FORMAT_COLOR_MAP))
 			{
+				debug("bump");
 				TexCoords *coords = e.object->getTexCoords(i);
 
 				int j = 0;
@@ -121,28 +121,33 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 					(this->*BindTexCoords)(coords);
 					currentTextureArb += 3;
 				}
-
 			}
-
+			else
 			if(conf->geti("drawReflect") && texture.format == TEXTURE_FORMAT_ENV) // карта отражения
 			{ // загружаем текстуру
+				debug("refl");
+				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 				glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 				(this->*BindTexture)(texture.image); // Cube texture (auto detect from Image)
 
-				uid bufId = objectIdGenerator.genUid();
-				buffersToDelete.push_back(bufId);
-				DrawReflect(e, e.matrix, camera.eye, bufId);
+				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_NORMAL_MAP);
+                glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_NORMAL_MAP);
+                glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_NORMAL_MAP);
 
-				// TODO: в этом месте тектурные координаты должны генерированться сами
-				//  шейдером или еще чем-либо
-//						drawBump(e, coords, e.matrix, light[j].pos, bufId);
+				glEnable(GL_TEXTURE_GEN_S); 
+                glEnable(GL_TEXTURE_GEN_T); 
+                glEnable(GL_TEXTURE_GEN_R); 
+
+//                glEnable(GL_NORMALIZE);
+
 				currentTextureArb += 1;
 			}
-
-
+			else
 			if(texture.format == TEXTURE_FORMAT_COLOR_MAP)
 			{
+				debug("map");
+				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				if(BindTexture) (this->*BindTexture)(texture.image);
 
 				TexCoords *coords = e.object->getTexCoords(i);
@@ -152,6 +157,8 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 			}
 			else
 			{
+				debug("none");
+				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				if(BindTexCoords) (this->*BindTexCoords)(NULL);
 				currentTextureArb++;
 			}
@@ -160,6 +167,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 				glColor4fv(&texture.color.r);
 
 		}
+		
 		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
 
 	   	glPopAttrib();
@@ -295,34 +303,6 @@ void OpenGL_Engine::genTangentSpaceLight(steel::vector<v3> const &sTangent, stee
     }
 }
 
-
-void OpenGL_Engine::genTangentSpaceSphere(Vertexes const &vertex, Normals	const &normal, matrix34 const matrix, const v3 _camera,	v3List &tangentSpaceLight)
-{
-	matrix34 inverseModelMatrix;
-    inverseModelMatrix = matrix.getInverse();
-
-	v3 camera = inverseModelMatrix*_camera;
-
-	tangentSpaceLight.resize(vertex.data.size());
-	v3List &tl = tangentSpaceLight;
-
-    // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
-    for (unsigned int i=0; i<vertex.data.size(); i++)
-    {
-		v3 c = _camera - matrix*vertex.data[i];
-        c.normalize();
-        v3 d = (matrix*(vertex.data[i]+normal.data[i]))- matrix*vertex.data[i];
-        d.normalize(); // realnaja normal'
-
-        float pscale = c.dotProduct(d); // cos ugla mezhdu c i nermal
-
-        v3 p = d*pscale;
-
-//		tangentSpaceLight[i] = - p - p + c;
-		tl[i] = p + p - c;
-    }
-}
-
 /*
 void OpenGL_Engine::drawDistColor(DrawElement &e, matrix34 const matrix, v3 const light, float const distance)
 {
@@ -417,17 +397,5 @@ void OpenGL_Engine::drawBump(GraphObjectStorage &e, TexCoords *coords, matrix34 
 	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
 	glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_DOT3_RGB_ARB);
 	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB_ARB, GL_PREVIOUS_ARB);
-}
-
-void OpenGL_Engine::DrawReflect(GraphObjectStorage &e, matrix34 const matrix, v3 const light, uid bufId)
-{
-    tangentSpaceLightBufferedArray tangentSpaceLight;
-	tangentSpaceLight.changed = true;
-	tangentSpaceLight.id = bufId;
-	tangentSpaceLight.data.resize(e.vertex->data.size());
-
-	genTangentSpaceSphere(*e.vertex, *e.normal, matrix, light, tangentSpaceLight.data);
-
-	if(BindTexCoords3f) (this->*BindTexCoords3f)(&tangentSpaceLight);
 }
 

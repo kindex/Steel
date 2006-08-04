@@ -26,6 +26,94 @@
 
 using namespace std;
 
+
+bool Game::init(string _conf, Input *_input, std::string params)
+{
+	// Config
+	input = _input; 
+	input->setGame(this);
+	conf = resConfig.add( _conf);
+	if(!conf)
+	{
+		log_msg("error game res", string("Cannot load game config ") + _conf);
+		return false;
+	}
+	if(!executeScript(params))
+	{
+		log_msg("core error", "Cannor execute script");
+		return false;
+	}
+
+	// Init world
+	eye = v3(conf->getf("camera_eye_x", 1.0f), conf->getf("camera_eye_y", 1.0f), conf->getf("camera_eye_z", 1.0f));
+
+	v3 target = v3(conf->getf("camera_target_x"), conf->getf("camera_target_y"), conf->getf("camera_target_z"));
+
+	direction = target-eye;
+	direction.normalize();
+
+	accSpeed = conf->getf("camera_acc", 50);
+	brakeSpeed = conf->getf("camera_brakes", 200);
+
+	moveSpeed.loadZero();
+
+	if(!conf->isset("script"))
+	{
+		log_msg("error game res", "Cannot find script to init scene");
+		return false;
+	}
+
+	world = new GameGroup();
+	world->setProcessKind(PROCESS_NONE);
+	
+//	Interface::global, 
+	world->conf = conf->gets("script");
+	if(!world->load(world)) return false;
+
+// ******************* PHYSIC **************************
+	physicHelper  = new GraphHelper;
+
+//	physicEngine = new PhysicEngine3D;
+	physicEngine = new PhysicEngineSteel;
+
+	if(!physicEngine->init("physic")) return 1;
+	this->bindPhysicEngine();
+
+	g = conf->getv3("g");
+	physicEngine->setGravitation(g);
+
+// * crosshair
+//	crosshair = new Sprite;
+	
+	ScriptLine csc;
+	csc.set(conf->gets("crosshairConfig"));
+
+/*	if(!crosshair->init(csc))
+	{
+		return false;
+	}
+*/
+	_alive = true;
+	paused = conf->geti("paused", 0) == 1;
+	framesToPass = 0;
+	speedup = 1;
+	light = NULL;
+
+	Combiner *obj = new Combiner;
+	obj->setGraphObject(new Sphere);
+	obj->setPosition(matrix34::CreateTranslationMatrix(v3(0, 0, 3.0f)));
+	world->addChildren(obj);
+
+	light = new GameLight;
+	light->setProcessKind(PROCESS_NONE);
+	matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
+	world->addChildren(light);
+
+
+	return true;
+}
+
+
 void Game::handleEventKeyDown(std::string key)
 {
 	if(key == "escape") _alive = false;
@@ -318,93 +406,6 @@ void Game::draw(GraphEngine *graph)
 }
 
 
-bool Game::init(string _conf, Input *_input, std::string params)
-{
-	// Config
-	input = _input; 
-	input->setGame(this);
-	conf = resConfig.add( _conf);
-	if(!conf)
-	{
-		log_msg("error game res", string("Cannot load game config ") + _conf);
-		return false;
-	}
-	if(!executeScript(params))
-	{
-		log_msg("core error", "Cannor execute script");
-		return false;
-	}
-
-	// Init world
-	eye = v3(conf->getf("camera_eye_x", 1.0f), conf->getf("camera_eye_y", 1.0f), conf->getf("camera_eye_z", 1.0f));
-
-	v3 target = v3(conf->getf("camera_target_x"), conf->getf("camera_target_y"), conf->getf("camera_target_z"));
-
-	direction = target-eye;
-	direction.normalize();
-
-	accSpeed = conf->getf("camera_acc", 50);
-	brakeSpeed = conf->getf("camera_brakes", 200);
-
-	moveSpeed.loadZero();
-
-	if(!conf->isset("script"))
-	{
-		log_msg("error game res", "Cannot find script to init scene");
-		return false;
-	}
-
-	world = new GameGroup();
-	world->setProcessKind(PROCESS_NONE);
-	
-//	Interface::global, 
-	world->conf = conf->gets("script");
-	if(!world->load(world)) return false;
-
-// ******************* PHYSIC **************************
-	physicHelper  = new GraphHelper;
-
-//	physicEngine = new PhysicEngine3D;
-	physicEngine = new PhysicEngineSteel;
-
-	if(!physicEngine->init("physic")) return 1;
-	this->bindPhysicEngine();
-
-	g = conf->getv3("g");
-	physicEngine->setGravitation(g);
-
-// * crosshair
-//	crosshair = new Sprite;
-	
-	ScriptLine csc;
-	csc.set(conf->gets("crosshairConfig"));
-
-/*	if(!crosshair->init(csc))
-	{
-		return false;
-	}
-*/
-	_alive = true;
-	paused = conf->geti("paused", 0) == 1;
-	framesToPass = 0;
-	speedup = 1;
-	light = NULL;
-
-/*	Combiner *obj = new Combiner;
-	obj->setGraphObject(new Sphere);
-	obj->setPosition(matrix34::CreateTranslationMatrix(v3(0, 0, 3.0f)));
-	world->addChildren(obj);
-*/
-	light = new GameLight;
-	light->setProcessKind(PROCESS_NONE);
-
-	matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
-
-	world->addChildren(light);
-
-
-	return true;
-}
 
 void Game::deinit()
 {
