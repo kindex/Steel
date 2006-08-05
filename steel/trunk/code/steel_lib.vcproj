@@ -170,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="../temp/steel.lib"
+				OutputFile="../libs/steel_vc.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
