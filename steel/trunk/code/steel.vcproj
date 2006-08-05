@@ -318,7 +318,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
+			Name="code"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File

@@ -27,7 +27,7 @@
 using namespace std;
 
 
-bool Game::init(string _conf, Input *_input, std::string params)
+bool Steel::init(string _conf, Input *_input, std::string params)
 {
 	// Config
 	input = _input; 
@@ -114,7 +114,7 @@ bool Game::init(string _conf, Input *_input, std::string params)
 }
 
 
-void Game::handleEventKeyDown(std::string key)
+void Steel::handleEventKeyDown(std::string key)
 {
 	if(key == "escape") _alive = false;
 	if(key == "pause") paused = !paused;
@@ -160,7 +160,7 @@ void Game::handleEventKeyDown(std::string key)
 		createObject();
 }
 
-bool Game::createObject()
+bool Steel::createObject()
 {
 /*	Particle *p = new Particle;
 
@@ -260,7 +260,7 @@ bool Game::createObject()
 	}*/
 }
 
-void Game::processKeyboard()
+void Steel::processKeyboard()
 {
 	if(input->isMouseCaptured())
 	{
@@ -297,7 +297,7 @@ void Game::processKeyboard()
 	}
 }
 
-void Game::handleMouse(double dx, double dy)
+void Steel::handleMouse(double dx, double dy)
 {
 	direction.rotateZ((float)dx);
 
@@ -307,7 +307,7 @@ void Game::handleMouse(double dx, double dy)
 	direction.rotateAxis((float)dy, v3( -direction.y, direction.x, 0));
 }
 
-void Game::process(steel::time globalTime, steel::time time)
+void Steel::process(steel::time globalTime, steel::time time)
 {
 	processKeyboard();
 
@@ -344,7 +344,7 @@ void Game::process(steel::time globalTime, steel::time time)
 }
 */
 
-void Game::bind(GraphEngine *engine)
+void Steel::bind(GraphEngine *engine)
 {
 	graphEngine = engine;
 
@@ -358,7 +358,7 @@ void Game::bind(GraphEngine *engine)
 	}
 }
 
-void Game::bindPhysicEngine()
+void Steel::bindPhysicEngine()
 {
 //	if(conf->geti("drawHelper"))
 	physicEngine->bindHelper(physicHelper);
@@ -370,7 +370,7 @@ void Game::bindPhysicEngine()
 	}
 }
 
-void Game::draw(GraphEngine *graph)
+void Steel::draw(GraphEngine *graph)
 {
 /*	if(!input->isMouseCaptured())
 	{
@@ -407,7 +407,7 @@ void Game::draw(GraphEngine *graph)
 
 
 
-void Game::deinit()
+void Steel::deinit()
 {
 	if(physicEngine)
 	{
@@ -418,11 +418,11 @@ void Game::deinit()
 }
 
 
-void Game::handleEventKeyUp(std::string key)
+void Steel::handleEventKeyUp(std::string key)
 {
 }
 
-bool Game::executeScript(std::string script)
+bool Steel::executeScript(std::string script)
 {
 	log_msg("console", "ExecScript: '" + script + "'");
 
@@ -432,7 +432,7 @@ bool Game::executeScript(std::string script)
 	return true;
 }
 
-bool Game::executeCommand(std::string command)
+bool Steel::executeCommand(std::string command)
 {
 	if(command.empty()) return true;
 	log_msg("console", "ExecCommand: '" + command + "'");

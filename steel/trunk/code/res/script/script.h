@@ -22,7 +22,7 @@ public:
 	// вернуть всю строку начиная с n-того элемента
 //	std::string getstr(int n) { return el_s.g; }
 
-	int count() { return el_s.size(); }
+	int count() { return (int)el_s.size(); }
 
 	void set(std::string const _str) { str = _str; parse(); }
 	void parse(); // convert from str to array of string element
@@ -38,7 +38,7 @@ class Script: public Res
 protected:
 	steel::vector<ScriptLine> line;
 public:
-	int count() { return line.size(); }
+	int count() { return (int)line.size(); }
 	int count(unsigned int n) { return line[n].count(); }
 
 	std::string gets(unsigned int n, unsigned int m) { return line[n].gets(m); } 

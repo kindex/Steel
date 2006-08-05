@@ -79,10 +79,10 @@ public:
 	
 	void addChildren(GameObj *obj);
 
-	int getPhysicChildrenCount(void)	{		return physicChildren.size();	}
+	int getPhysicChildrenCount(void)	{		return (int)physicChildren.size();	}
 	PhysicObject* getPhysicChildren(int i)	{		return physicChildren[i];	}
 
-	int getGraphChildrenCount(void)	{		return graphChildren.size();	}
+	int getGraphChildrenCount(void)	{		return (int)graphChildren.size();	}
 	GraphObject* getGraphChildren(int i)	{		return graphChildren[i];	}
 
 	GameObj *getParent() { return parent; }

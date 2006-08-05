@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
 // ******************* INPUT ************************
 	if(!input.init("input")) return 1;
 // ******************* GAME *************************
-	Game game;
+	Steel game;
 
 	if(!game.init("game", &input, commandLine)) return 1;
 

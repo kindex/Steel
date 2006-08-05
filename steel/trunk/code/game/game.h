@@ -35,7 +35,18 @@ class Game; // forward declaration, cross-use
 /*
 Класс, задающий правила игры
 */
-class Game: public steelAbstract
+
+class Game
+{
+public:
+	virtual void handleEventKeyDown(std::string key) = 0;
+	virtual void handleEventKeyUp(std::string key) = 0;
+
+	virtual void handleMouse(double dx, double dy) = 0;
+};
+
+
+class Steel: public Game
 {
 protected:
 // Camera
@@ -66,7 +77,7 @@ protected:
 	GameLight	*light;
 
 public:
-	Game() { } 
+	Steel() { } 
 	bool init(std::string _conf, Input *_input, std::string params);
 	void deinit();
 
@@ -79,15 +90,16 @@ public:
 	void process(steel::time globalTime, steel::time time);
 //	int getCollisionCount() { return physicEngine->total.collisionCount; }
 
-	void handleEventKeyDown(std::string key);
-	void handleEventKeyUp(std::string key);
-
-	void handleMouse(double dx, double dy);
 	bool isAlive() {return _alive;} 
 	void setspeed(float _speed, steel::time _time) {speed = _speed; time = _time; } 
 	bool createObject();
 
 	v3	getGlobalPosition(std::string obj);
+
+	void handleEventKeyDown(std::string key);
+	void handleEventKeyUp(std::string key);
+
+	void handleMouse(double dx, double dy);
 };
 
 #endif
