@@ -18,9 +18,6 @@ LPBYTE lpData, 		// address of data buffer
 LPDWORD lpcbData 		// address of data buffer size
 );
 
-using namespace std;
-
-
 /*
  double CPUSpeed(void) 
   { 
@@ -44,7 +41,7 @@ using namespace std;
   }
 */
 
-int main() 
+int collectSystemInfo() 
 {   
   char szThis[300];
 	int pathLenght = GetModuleFileName(NULL, szThis, 300); // http://www.sources.ru/msdn/library/getmodulefilename.shtml
