@@ -1,9 +1,16 @@
-#include <conio.h> 
-#include <iostream> 
-#include <fstream>
-#include <string>
+//#include <conio.h> 
+//#include <iostream> 
+//#include <fstream>
+//#include <string>
+
+#include <stdio.h>
+
 #include <windows.h>
 #include <winbase.h>
+
+#include "system_info.h"
+#include "logger.h"
+#include "../common/utils.h"
 
 using namespace std;
 
@@ -19,7 +26,6 @@ LPDWORD lpcbData 		// address of data buffer size
 );
 
 using namespace std;
-
 
 /*
  double CPUSpeed(void) 
@@ -44,7 +50,7 @@ using namespace std;
   }
 */
 
-int main() 
+int CollectSystemInfo() 
 {   
   char szThis[300];
 	int pathLenght = GetModuleFileName(NULL, szThis, 300); // http://www.sources.ru/msdn/library/getmodulefilename.shtml
@@ -53,7 +59,10 @@ int main()
 		{
 			fullPathForCurrentApplication += szThis[i];
 		}
-	cout << "Full Path "  << fullPathForCurrentApplication << endl << endl;
+//	cout << "Full Path "  << fullPathForCurrentApplication << endl << endl;
+	log_msg("system_info",  "Full Path " + fullPathForCurrentApplication);
+
+
 
   int physicalMemoryInstelled;
   int physicalMemoryAvailable;
@@ -71,11 +80,15 @@ int main()
 	memoryUsed = physicalMemoryInstelled - physicalMemoryAvailable;
 	totalVirtualMemory = memoryStatus.dwTotalVirtual / 1024;
 
-	cout << "physicalMemoryInstelled: " << physicalMemoryInstelled << endl;
-	cout << "physicalMemoryAvailable: " << physicalMemoryAvailable << endl;
-	cout << "memoryUsed: "<< memoryUsed << endl;
-	cout << "totalMemoryWithVirtual: " << totalVirtualMemory << endl;
-    cout << endl;
+	//cout << "physicalMemoryInstelled: " << physicalMemoryInstelled << endl;
+	log_msg("system_info",  "physicalMemoryInstelled: " + IntToStr(physicalMemoryInstelled));
+	//cout << "physicalMemoryAvailable: " << physicalMemoryAvailable << endl;
+	log_msg("system_info",  "physicalMemoryAvailable" + IntToStr(physicalMemoryAvailable));
+	//cout << "memoryUsed: "<< memoryUsed << endl;
+	log_msg("system_info",  "Used: " + IntToStr(memoryUsed));
+	//cout << "totalMemoryWithVirtual: " << totalVirtualMemory << endl;
+	log_msg("system_info",  "totalMemoryWithVirtual: " + IntToStr(totalVirtualMemory));
+    //cout << endl;
 
    SYSTEM_INFO siSysInfo;
 
@@ -86,45 +99,50 @@ int main()
    // Отображаем содержимое структуры SYSTEM_INFO.
 
    printf("Hardware information: \n");
-   
-   cout << "  OEM ID: " << siSysInfo.dwOemId << endl;
+//   cout << "  OEM ID: " << siSysInfo.dwOemId << endl;
+ log_msg("system_info",  "  OEM ID: " + IntToStr(siSysInfo.dwOemId));
 
-   cout << "  Number of processors: " << siSysInfo.dwNumberOfProcessors << endl;
+//   cout << "  Number of processors: " << siSysInfo.dwNumberOfProcessors << endl;
+ log_msg("system_info",  "  Number of processors: " + IntToStr(siSysInfo.dwNumberOfProcessors));
 
-   cout << "  Page size:  " << siSysInfo.dwPageSize << endl;  
+//   cout << "  Page size:  " << siSysInfo.dwPageSize << endl;  
+ log_msg("system_info",  "  Page size:  " + IntToStr(siSysInfo.dwPageSize));
 
-   cout << "  Processor type: " << siSysInfo.dwProcessorType << endl;
+//   cout << "  Processor type: " << siSysInfo.dwProcessorType << endl;
+ log_msg("system_info",  "  Processor type: " + IntToStr(siSysInfo.dwProcessorType));
 
- 
-   cout << "  Minimum application address: 0x" << siSysInfo.lpMinimumApplicationAddress << endl;
+//   cout << "  Minimum application address: 0x" << siSysInfo.lpMinimumApplicationAddress << endl;
+ log_msg("system_info",  "  Minimum application address: 0x" + IntToStr(siSysInfo.lpMinimumApplicationAddress));
 
-   cout << "  Maximum application address: 0x" << siSysInfo.lpMaximumApplicationAddress << endl;
-
+//   cout << "  Maximum application address: 0x" << siSysInfo.lpMaximumApplicationAddress << endl;
+ log_msg("system_info",  "  Maximum application address: 0x" + IntToStr(siSysInfo.lpMaximumApplicationAddress));
   
    LPTSTR lpszSystemInfo;      // указатель на строку, в которой
                                // будет информация о системе.
    DWORD cchBuff = 256;        // длина имени компьютера или
                                // пользователя.
    TCHAR tchBuffer[BUFSIZE];   // буфер для строки.
-
    lpszSystemInfo = tchBuffer;
 
    // Получаем и отображаем имя компьютера.
    if( GetComputerName(lpszSystemInfo, &cchBuff) )
-   cout << " Computer name:  " << lpszSystemInfo << endl;
+   //cout << " Computer name:  " << lpszSystemInfo << endl;
+   log_msg("system_info",  " Computer name:  " + string(lpszSystemInfo));
    
    // Получаем и отображаем имя пользователя.
    if( GetUserName(lpszSystemInfo, &cchBuff) )
-   cout << " User name:  " << lpszSystemInfo << endl;
-    
+   //cout << " User name:  " << lpszSystemInfo << endl;
+   log_msg("system_info",  " User name:  " + string(lpszSystemInfo));
+
    // Получаем и отображаем системную директорию.
    if( GetSystemDirectory(lpszSystemInfo, MAX_PATH+1) )
-	cout << " System directory:  " << lpszSystemInfo << endl;
+   //cout << " System directory:  " << lpszSystemInfo << endl;
+   log_msg("system_info",  " System directory:  " + string(lpszSystemInfo));
    
    // Получаем и отображаем директорию Windows.
    if( GetWindowsDirectory(lpszSystemInfo, MAX_PATH+1) )
-	   cout << " Windows directory:  " << lpszSystemInfo << endl;
-                   
-   getch(); 
+   //cout << " Windows directory:  " << lpszSystemInfo << endl;
+   log_msg("system_info",  " Windows directory:  " + string(lpszSystemInfo));
+                 
    return 0; 
 }  

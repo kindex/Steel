@@ -637,6 +637,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\common\system_info.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\common\system_info.h"
+					>
+				</File>
+				<File
 					RelativePath=".\common\timer.cpp"
 					>
 				</File>
