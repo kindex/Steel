@@ -28,6 +28,7 @@
 #include "common/timer.h"
 
 #include "common/system_info.h"
+#include "common/win_info.h"
 
 #include "game/game.h"
 #include "common/utils.h"
@@ -56,6 +57,7 @@ int main(int argc, char *argv[])
 	log_msg("core", "Command Line: '" + commandLine + "'");
 	
 	CollectSystemInfo();
+	DetectWindowsVersion();
 // ******************** RES ************************
 	registerResources();
 
