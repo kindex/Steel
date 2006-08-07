@@ -10,7 +10,7 @@
 
 #include "system_info.h"
 #include "logger.h"
-#include "../common/utils.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -112,10 +112,10 @@ int CollectSystemInfo()
  log_msg("system_info",  "  Processor type: " + IntToStr(siSysInfo.dwProcessorType));
 
 //   cout << "  Minimum application address: 0x" << siSysInfo.lpMinimumApplicationAddress << endl;
- log_msg("system_info",  "  Minimum application address: 0x" + IntToStr(siSysInfo.lpMinimumApplicationAddress));
+//  log_msg("system_info",  "  Minimum application address: 0x" + IntToStr(siSysInfo.lpMinimumApplicationAddress));
 
 //   cout << "  Maximum application address: 0x" << siSysInfo.lpMaximumApplicationAddress << endl;
- log_msg("system_info",  "  Maximum application address: 0x" + IntToStr(siSysInfo.lpMaximumApplicationAddress));
+// log_msg("system_info",  "  Maximum application address: 0x" + IntToStr(siSysInfo.lpMaximumApplicationAddress));
   
    LPTSTR lpszSystemInfo;      // указатель на строку, в которой
                                // будет информация о системе.

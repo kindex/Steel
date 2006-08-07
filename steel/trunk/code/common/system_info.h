@@ -1,5 +1,5 @@
-#ifndef __UTILS_H
-#define __UTILS_H
+#ifndef COMMON__SYSTEM_INFO_H
+#define COMMON__SYSTEM_INFO_H
 
 int CollectSystemInfo();
 
