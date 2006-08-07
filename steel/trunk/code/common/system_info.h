@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: System Info
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2006
 	Authors:
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
 	License:
@@ -12,6 +12,6 @@
 #ifndef COMMON__SYSTEM_INFO_H
 #define COMMON__SYSTEM_INFO_H
 
-int CollectSystemInfo();
+int CollectSystemInfo(void);
 
-#endif 
+#endif

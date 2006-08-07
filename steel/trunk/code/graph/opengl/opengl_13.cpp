@@ -94,7 +94,6 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 
 			if(conf->geti("drawBump") && !lights.empty() && (i==0) && !e.blend && (texture.format == TEXTURE_FORMAT_BUMP_MAP || texture.format == TEXTURE_FORMAT_COLOR_MAP))
 			{
-				debug("bump");
 				TexCoords *coords = e.object->getTexCoords(i);
 
 				int j = 0;
@@ -125,7 +124,6 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 			else
 			if(conf->geti("drawReflect") && texture.format == TEXTURE_FORMAT_ENV) // карта отражения
 			{ // загружаем текстуру
-				debug("refl");
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 				glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
@@ -146,7 +144,6 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 			else
 			if(texture.format == TEXTURE_FORMAT_COLOR_MAP)
 			{
-				debug("map");
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				if(BindTexture) (this->*BindTexture)(texture.image);
 
@@ -157,7 +154,6 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 			}
 			else
 			{
-				debug("none");
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				if(BindTexCoords) (this->*BindTexCoords)(NULL);
 				currentTextureArb++;

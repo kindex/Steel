@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: System Info
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2006
 	Authors:
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
 	License:
@@ -9,7 +9,6 @@
     Description:
 		Модуль определения необходимых параметров системы.
  ************************************************************/
-#include <stdio.h>
 
 #include <windows.h>
 #include <winbase.h>
@@ -18,17 +17,15 @@
 #include "logger.h"
 #include "utils.h"
 
-using namespace std;
-
 #define BUFSIZE 1024
 
 LONG RegQueryValueEx(
-HKEY hKey, 			// handle to key to query
-LPTSTR lpValueName, 	// address of name of value to query
-LPDWORD lpReserved, 	// reserved
-LPDWORD lpType, 		// address of buffer for value type
-LPBYTE lpData, 		// address of data buffer
-LPDWORD lpcbData 		// address of data buffer size
+	HKEY hKey, 			// handle to key to query
+	LPTSTR lpValueName, 	// address of name of value to query
+	LPDWORD lpReserved, 	// reserved
+	LPDWORD lpType, 		// address of buffer for value type
+	LPBYTE lpData, 		// address of data buffer
+	LPDWORD lpcbData 		// address of data buffer size
 );
 
 using namespace std;
@@ -56,28 +53,26 @@ using namespace std;
   }
 */
 
-int CollectSystemInfo() 
+int CollectSystemInfo(void) 
 {   
-  char szThis[300];
+	char szThis[300];
 	int pathLenght = GetModuleFileName(NULL, szThis, 300); // http://www.sources.ru/msdn/library/getmodulefilename.shtml
-  string fullPathForCurrentApplication;
-    for (int i=0; i < pathLenght; i++)
-		{
-			fullPathForCurrentApplication += szThis[i];
-		}
+	string fullPathForCurrentApplication;
+	for (int i=0; i < pathLenght; i++)
+	{
+		fullPathForCurrentApplication += szThis[i];
+	}
 //	cout << "Full Path "  << fullPathForCurrentApplication << endl << endl;
-	log_msg("system_info",  "Full Path " + fullPathForCurrentApplication);
+	log_msg("system_info",  "Full Path '" + fullPathForCurrentApplication + "'");
 
-
-
-  int physicalMemoryInstelled;
-  int physicalMemoryAvailable;
-  int memoryUsed;
-  int totalVirtualMemory;
+	int physicalMemoryInstelled;
+	int physicalMemoryAvailable;
+	int memoryUsed;
+	int totalVirtualMemory;
 	
-    MEMORYSTATUS memoryStatus;
+	MEMORYSTATUS memoryStatus;
 	
-	memset (&memoryStatus, sizeof (MEMORYSTATUS), 0);
+	memset(&memoryStatus, sizeof (MEMORYSTATUS), 0);
 	memoryStatus.dwLength = sizeof (MEMORYSTATUS);
 
 	GlobalMemoryStatus (&memoryStatus);
@@ -96,26 +91,24 @@ int CollectSystemInfo()
 	log_msg("system_info",  "total Memory Virtual: " + IntToStr(totalVirtualMemory));
     //cout << endl;
 
-   SYSTEM_INFO siSysInfo;
+	SYSTEM_INFO siSysInfo;
 
    // Копируем информацию о железе в структуру SYSTEM_INFO.
 
-   GetSystemInfo(&siSysInfo);
+	GetSystemInfo(&siSysInfo);
 
    // Отображаем содержимое структуры SYSTEM_INFO.
-
-   printf("Hardware information: \n");
 //   cout << "  OEM ID: " << siSysInfo.dwOemId << endl;
- log_msg("system_info",  "  OEM ID: " + IntToStr(siSysInfo.dwOemId));
+	log_msg("system_info", "OEM ID: " + IntToStr(siSysInfo.dwOemId));
 
 //   cout << "  Number of processors: " << siSysInfo.dwNumberOfProcessors << endl;
- log_msg("system_info",  "  Number of processors: " + IntToStr(siSysInfo.dwNumberOfProcessors));
+	log_msg("system_info", "Number of processors: " + IntToStr(siSysInfo.dwNumberOfProcessors));
 
 //   cout << "  Page size:  " << siSysInfo.dwPageSize << endl;  
- log_msg("system_info",  "  Page size:  " + IntToStr(siSysInfo.dwPageSize));
+	log_msg("system_info", "Page size:  " + IntToStr(siSysInfo.dwPageSize));
 
 //   cout << "  Processor type: " << siSysInfo.dwProcessorType << endl;
- log_msg("system_info",  "  Processor type: " + IntToStr(siSysInfo.dwProcessorType));
+	log_msg("system_info", "Processor type: " + IntToStr(siSysInfo.dwProcessorType));
 
 //   cout << "  Minimum application address: 0x" << siSysInfo.lpMinimumApplicationAddress << endl;
 //  log_msg("system_info",  "  Minimum application address: 0x" + IntToStr(siSysInfo.lpMinimumApplicationAddress));
@@ -133,22 +126,22 @@ int CollectSystemInfo()
    // Получаем и отображаем имя компьютера.
    if( GetComputerName(lpszSystemInfo, &cchBuff) )
    //cout << " Computer name:  " << lpszSystemInfo << endl;
-   log_msg("system_info",  " Computer name:  " + string(lpszSystemInfo));
+   log_msg("system_info",  "Computer name:  " + string(lpszSystemInfo));
    
    // Получаем и отображаем имя пользователя.
    if( GetUserName(lpszSystemInfo, &cchBuff) )
    //cout << " User name:  " << lpszSystemInfo << endl;
-   log_msg("system_info",  " User name:  " + string(lpszSystemInfo));
+   log_msg("system_info",  "User name:  " + string(lpszSystemInfo));
 
    // Получаем и отображаем системную директорию.
    if( GetSystemDirectory(lpszSystemInfo, MAX_PATH+1) )
    //cout << " System directory:  " << lpszSystemInfo << endl;
-   log_msg("system_info",  " System directory:  " + string(lpszSystemInfo));
+   log_msg("system_info",  "System directory:  " + string(lpszSystemInfo));
    
    // Получаем и отображаем директорию Windows.
    if( GetWindowsDirectory(lpszSystemInfo, MAX_PATH+1) )
    //cout << " Windows directory:  " << lpszSystemInfo << endl;
-   log_msg("system_info",  " Windows directory:  " + string(lpszSystemInfo));
+   log_msg("system_info",  "Windows directory:  " + string(lpszSystemInfo));
                  
    return 0; 
-}  
+}
