@@ -5,6 +5,7 @@
     Authors:
         * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [J. Anton, kane@mail.berlios.de]
+		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
     License:
         Steel Engine License
     Description:
@@ -15,6 +16,7 @@
 #include "utils.h"
 
 #include <time.h>
+#include <Windows.h>
 #include <map>
 
 using namespace std;
@@ -33,7 +35,14 @@ bool Logger::open(std::string filename)
 	opened = true;
 
 	f << ">>>>>>>>>>>>>>>>" << endl;
-	f << "Started Logging" << endl;
+	f << "Started Logging @ [ ";
+
+	//Def
+	//read SystemTime
+	//This is Systesm Time Insertion Into Log File Header
+	SYSTEMTIME sm;
+	GetLocalTime(&sm);
+	f << sm.wYear << "-" << sm.wMonth << "-"<<  sm.wDay << " "<< sm.wHour << ":"<<sm.wMinute << ":"<< sm.wSecond << ":"<< sm.wMilliseconds << " ]"<< endl;
 
 	return true;
 }
