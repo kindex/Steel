@@ -1,8 +1,14 @@
-//#include <conio.h> 
-//#include <iostream> 
-//#include <fstream>
-//#include <string>
-
+/*id*********************************************************
+	Unit: System Info
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
+	License:
+        Steel Engine License
+    Description:
+		Модуль определения необходимых параметров системы.
+ ************************************************************/
 #include <stdio.h>
 
 #include <windows.h>
@@ -81,13 +87,13 @@ int CollectSystemInfo()
 	totalVirtualMemory = memoryStatus.dwTotalVirtual / 1024;
 
 	//cout << "physicalMemoryInstelled: " << physicalMemoryInstelled << endl;
-	log_msg("system_info",  "physicalMemoryInstelled: " + IntToStr(physicalMemoryInstelled));
+	log_msg("system_info",  "physical Memory Instelled: " + IntToStr(physicalMemoryInstelled));
 	//cout << "physicalMemoryAvailable: " << physicalMemoryAvailable << endl;
-	log_msg("system_info",  "physicalMemoryAvailable" + IntToStr(physicalMemoryAvailable));
+	log_msg("system_info",  "physical Memory Available: " + IntToStr(physicalMemoryAvailable));
 	//cout << "memoryUsed: "<< memoryUsed << endl;
-	log_msg("system_info",  "Used: " + IntToStr(memoryUsed));
+	log_msg("system_info",  "total Memory Used: " + IntToStr(memoryUsed));
 	//cout << "totalMemoryWithVirtual: " << totalVirtualMemory << endl;
-	log_msg("system_info",  "totalMemoryWithVirtual: " + IntToStr(totalVirtualMemory));
+	log_msg("system_info",  "total Memory Virtual: " + IntToStr(totalVirtualMemory));
     //cout << endl;
 
    SYSTEM_INFO siSysInfo;

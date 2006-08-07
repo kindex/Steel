@@ -3,8 +3,8 @@
     Part of: Steel engine
     (C) DiVision, 2004-2006
     Authors:
-		* kindex [Andrey Ivanov]
-        * def [Alexander Papyshev]
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+        * Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
     Description:
 		Основа систем частиц
 ************************************************************/
