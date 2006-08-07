@@ -26,6 +26,8 @@
 #include "common/logger.h"
 #include "common/timer.h"
 
+#include "common/system_info.h"
+
 #include "game/game.h"
 #include "common/utils.h"
 
@@ -51,6 +53,8 @@ int main(int argc, char *argv[])
 	steel::log.open("../steel.log");
 
 	log_msg("core", "Command Line: '" + commandLine + "'");
+	
+	CollectSystemInfo();
 // ******************** RES ************************
 	registerResources();
 
@@ -90,6 +94,7 @@ int main(int argc, char *argv[])
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
 	log_msg("core", "Entering main loop");
+	
 	bool first = true;
 	steel::time	lastFrameTime = timer.total();
 
