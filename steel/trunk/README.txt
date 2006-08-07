@@ -1,4 +1,4 @@
-(C) DiVision: KindeX 2006
+(C) DiVision 2006
 Steel Engine Demo [1.0.14.137]
 http://steel.kindex.lv:82/
 
