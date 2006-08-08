@@ -13,30 +13,42 @@
 #include "openal/alut.h"
 #include "openal/eax.h"
 
+#include "audio_engine.h"
+
 //#pragma comment(lib, "openal32.lib")
 //#pragma comment(lib, "alut.lib")
 #pragma comment(lib, "eaxguid.lib")
 
 using namespace std;
-/*
-typedef struct
+
+class AL_Source : public Source
 {
-    unsigned int ID;
-	string fileName;
-    unsigned int Rate;
-    unsigned int Format;
-} SndInfo;
+public:
+	AL_Source(Audio * sound);
+	Audio * sound;
+//private:
+	ALuint buffer;
+	ALuint source;
+};
 
-typedef map<ALuint, SndInfo> TBuf;
 
-extern TBuf buffers;
-*/
+class AL_Listener : public Listener
+{
+};
+
+
 extern bool initializeOpenAL();
 extern void destroyOpenAL();
 extern void setListenerEnvironment(unsigned long environment);
 
 extern ALboolean CheckALCError();
 extern ALboolean CheckALError();
+
+void soundPlay(AL_Source &sound);
+extern void soundClose(AL_Source &sound);
+extern void soundStop(AL_Source &sound);
+extern void soundUpdate(AL_Source &sound);
+
 
 
 #endif

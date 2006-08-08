@@ -3,34 +3,8 @@
 
 #include "../res.h"
 
-//#include "../../audio/openal_engine.h"
-
-/*
-#include <string>
-#include <iostream>
-#include <windows.h>
-#include <fstream>
-#include <map>
-*/
 
 using namespace std;
-
-/*
-typedef struct
-{
-    unsigned int ID;
-	string fileName;
-    unsigned int Rate;
-    unsigned int Format;
-} SndInfo;
-
-typedef map<ALuint, SndInfo> TBuf;
-
-extern TBuf buffers;
-*/
-//ALCdevice *pDevice;
-//ALCcontext *pContext;
-
 
 
 

@@ -20,15 +20,31 @@
 
 #include "res/audio/wav.h"
 #include "res/res_main.h"
+
 #include "audio/openal_engine.h"
 
 bool test()
 {
+
 	if (!initializeOpenAL())
 		return false;
 
-	Audio *tSnd = resAudio.add("audio/stereo");
+	//Audio *tSnd = resAudio.add("audio/stereo");
 
+	AL_Source *source1 = new AL_Source(resAudio.add("audio/rain"));
+	AL_Source *source2 = new AL_Source(resAudio.add("audio/thunder"));
+
+	source1->setLooped(true);
+	source2->setLooped(true);
+	source1->setPosition(-5.0f, 0.0f, 0.0f);
+	soundUpdate(*source1);
+	source2->setPosition(5.0f, 0.0f, 0.0f);
+	soundUpdate(*source2);
+
+	soundPlay(*source1);
+	soundPlay(*source2);
+
+/*
 	ALuint buffer;
 	ALuint source;
 
@@ -67,5 +83,6 @@ bool test()
 	alSourcePlay(source);
 
 	//destroyOpenAL();
+*/
 	return true;
 }
