@@ -29,11 +29,11 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 		total.object++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
-		int texCount = material->texture.size();
+		int texCount = material->getTextureCount();
 
 		if(texCount>0)
 		{
-			switch(material->texture[0].mode)
+			switch(material->getTexture(0)->mode)
 			{
 				case TEXTURE_BLEND_MODE_MUL:	
 						glEnable(GL_BLEND);
@@ -56,7 +56,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 		// TODO check OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS
 		for(int i=0; i<texCount; i++)
 		{
-			Texture texture = material->texture[i]; // текущая текстура
+			const Texture &texture = *material->getTexture(i); // текущая текстура
 
 			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
 				currentMode = texture.mode;

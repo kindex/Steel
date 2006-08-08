@@ -22,7 +22,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
 		total.object++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
-		int texCount = material->texture.size();
+		int texCount = material->getTextureCount();
 
 		TextureBlendMode inheritedMode = TEXTURE_BLEND_MODE_NONE, currentMode;
 
@@ -30,7 +30,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
 		for(int i=0; i<texCount; i++)
 		{
 			glPushAttrib(GL_ALL_ATTRIB_BITS);
-			Texture texture = material->texture[i]; // текущая текстура
+			const Texture &texture = *material->getTexture(i); // текущая текстура
 
 			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
 				currentMode = texture.mode;

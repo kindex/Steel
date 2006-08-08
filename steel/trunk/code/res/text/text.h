@@ -15,12 +15,14 @@ class Text: public Res
 {
 protected:
 	char *text;
+	int length;
 	TextFormat format;
 
 public:
-	Text(): text(NULL) {}
-	char *getText() const { return text; }
-	~Text() { if(text) delete [] text; }
+	Text(void): text(NULL), length(0) {}
+	char *getText(void) const { return text; }
+	int getLength(void) const { return length; }
+	~Text(void) { if(text) delete [] text; }
 };
 
 #endif

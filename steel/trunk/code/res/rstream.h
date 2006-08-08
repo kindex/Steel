@@ -26,13 +26,17 @@ Resourse input file stream
 */
 class rstream: public std::ifstream
 {
+protected:
+	bool failed;
+
 public:
-	rstream() {}
+	rstream(void): failed(true) {}
 	rstream(std::string s, std::string ext = "", ios_base::openmode _Mode = std::ios::binary) 
 	{ 
 		open(s, ext, _Mode);
 	}
-
+	
+	bool fail(void) { return failed || std::ifstream::fail(); }
 	bool open(std::string s, std::string ext = "", ios_base::openmode _Mode = std::ios::binary);
 
 	void read(void *dest, int size);

@@ -263,6 +263,13 @@ bool OpenGL_Engine::init(std::string _conf)
 		}
 	}
 
+	if(version >= 20)
+	{
+		if(GL_EXTENSION_GLSL)
+			DrawFill = &OpenGL_Engine::DrawFill_OpenGL20;
+	}
+
+
 	normalisationCubeMap	= generateNormalisationCubeMap();
 	zeroNormal = resImage.add("zero");
 	if(!zeroNormal)

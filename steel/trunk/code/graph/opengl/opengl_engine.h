@@ -32,6 +32,7 @@
 #include "gl\glaux.h"		// Header File For The Glaux Library
 #endif
 
+#include "opengl_glsl.h"
 
 class OpenGL_Engine: public GraphEngine
 {
@@ -43,7 +44,8 @@ protected:
 			none,
 			image,
 			array,
-			index
+			index,
+			shader
 		} buffer_kind;
 
 		int		size;
@@ -52,6 +54,7 @@ protected:
 		steel::time lastUsedTime;
 		bool	loaded;
 		buffer_kind kind;
+		char	*object;
 	};
 
 	struct GraphObjectStorage // множество треугольников одного материала
@@ -88,6 +91,7 @@ protected:
 	steel::vector<GraphObjectStorage> storage;
 
 	std::map<uid, OpenGL_Buffer> buffer;
+
 	Lights lights;
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image *zeroNormal;
@@ -133,6 +137,11 @@ protected:
 	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void BindTexCoords_OpenGL15(TexCoords *coords);
 	void BindTexCoords3f_OpenGL15(TexCoords3f *coords);
+
+	// OpenGL 2.0
+	void DrawFill_OpenGL20(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	bool BindShader(Material *shader);
+
 
 	// Stuff to delete
 

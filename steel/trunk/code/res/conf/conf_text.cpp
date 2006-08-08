@@ -8,9 +8,9 @@ using namespace std;
 
 bool ConfigText::init(const std::string name, const std::string dir)
 {
-	std::string file = dir + "/" + name + ".conf";
+	std::string file = dir + "/" + name;
 
-	rstream f(file); // no binary acces, only text
+	rstream f(file, "conf"); // no binary acces, only text
 	if(!f.good()) 
 	{
 		log_msg("res conf error", "Cannot open file " + file);

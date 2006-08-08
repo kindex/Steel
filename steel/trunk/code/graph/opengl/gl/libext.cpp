@@ -37,6 +37,17 @@ bool GL_EXTENSION_VBO = false;
 bool GL_EXTENSION_DOT3 = false;
 bool GL_EXTENSION_TEXTURE_CUBE_MAP = false;
 bool GL_EXTENSION_TEXTURE_NON2POWER = false;
+bool GL_EXTENSION_GLSL = false;
+
+
+int GL_EXTENSION_MAX_VERTEX_UNIFORM_COMPONENTS;
+int GL_EXTENSION_MAX_VERTEX_ATTRIBS;
+int GL_EXTENSION_MAX_TEXTURE_IMAGE_UNITS;
+int GL_EXTENSION_MAX_VERTEX_TEXTURE_IMAGE_UNITS;
+int GL_EXTENSION_MAX_COMBINED_TEXTURE_IMAGE_UNITS;
+int GL_EXTENSION_MAX_VARYING_FLOATS;
+int GL_EXTENSION_MAX_FRAGMENT_UNIFORM_COMPONENTS;
+int GL_EXTENSION_MAX_TEXTURE_COORDS;
 
 
 // multitexture functions
@@ -549,6 +560,24 @@ void OpenGL_ExtensionsInit()
 	GL_EXTENSION_DOT3 = OpenGL_ExtensionsIsSupported("GL_EXT_texture_env_dot3") && GL_EXTENSION_TEXTURE_CUBE_MAP;
 	GL_EXTENSION_TEXTURE_NON2POWER = OpenGL_ExtensionsIsSupported("GL_ARB_texture_non_power_of_two");
 
+	GL_EXTENSION_GLSL = 
+		OpenGL_ExtensionsIsSupported("GL_ARB_shading_language_100") &&
+		OpenGL_ExtensionsIsSupported("GL_ARB_shader_objects") &&
+		OpenGL_ExtensionsIsSupported("GL_ARB_vertex_shader") &&
+		OpenGL_ExtensionsIsSupported("GL_ARB_fragment_shader");
+
+	if(GL_EXTENSION_GLSL)
+	{
+		glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS_ARB, &GL_EXTENSION_MAX_VERTEX_UNIFORM_COMPONENTS);
+	    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS_ARB, &GL_EXTENSION_MAX_VERTEX_ATTRIBS);
+	    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS_ARB, &GL_EXTENSION_MAX_TEXTURE_IMAGE_UNITS);
+		glGetIntegerv(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB, &GL_EXTENSION_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+	    glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB, &GL_EXTENSION_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+	    glGetIntegerv(GL_MAX_VARYING_FLOATS_ARB, &GL_EXTENSION_MAX_VARYING_FLOATS);
+		glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS_ARB, &GL_EXTENSION_MAX_FRAGMENT_UNIFORM_COMPONENTS);
+		glGetIntegerv(GL_MAX_TEXTURE_COORDS_ARB, &GL_EXTENSION_MAX_TEXTURE_COORDS);
+	}
+
 	initialized = true;
 }
 
@@ -587,6 +616,32 @@ void OpenGL_ExtensionsPrintfInfo()				// print info about card, driver, version 
 
 	if(OpenGL_ExtensionsIsSupported("GL_ARB_vertex_program"))
 		log_msg("opengl_info", "GL_ARB_vertex_program extension supported");
+
+
+	if(GL_EXTENSION_GLSL)
+	{
+		log_msg("opengl_info", "GLSL supported");
+		const char *slVer = (const char *) glGetString ( GL_SHADING_LANGUAGE_VERSION_ARB );
+
+		if ( glGetError() != GL_NO_ERROR )
+			log_msg("opengl_info", "GLSL version: 1.051");
+		else
+			log_msg("opengl_info", std::string("GLSL version: ") + slVer);
+
+		log_msg("opengl_info", "MAX_VERTEX_UNIFORM_COMPONENTS: " + IntToStr(GL_EXTENSION_MAX_VERTEX_UNIFORM_COMPONENTS));
+		log_msg("opengl_info", "MAX_VERTEX_ATTRIBS: " + IntToStr(GL_EXTENSION_MAX_VERTEX_ATTRIBS));
+		log_msg("opengl_info", "MAX_TEXTURE_IMAGE_UNITS: " + IntToStr(GL_EXTENSION_MAX_TEXTURE_IMAGE_UNITS));
+		log_msg("opengl_info", "MAX_VERTEX_TEXTURE_IMAGE_UNITS: " + IntToStr(GL_EXTENSION_MAX_VERTEX_TEXTURE_IMAGE_UNITS));
+		log_msg("opengl_info", "MAX_COMBINED_TEXTURE_IMAGE_UNITS: " + IntToStr(GL_EXTENSION_MAX_COMBINED_TEXTURE_IMAGE_UNITS));
+		log_msg("opengl_info", "MAX_VARYING_FLOATS: " + IntToStr(GL_EXTENSION_MAX_VARYING_FLOATS));
+		log_msg("opengl_info", "MAX_FRAGMENT_UNIFORM_COMPONENTS: " + IntToStr(GL_EXTENSION_MAX_FRAGMENT_UNIFORM_COMPONENTS));
+		log_msg("opengl_info", "MAX_TEXTURE_COORDS: " + IntToStr(GL_EXTENSION_MAX_TEXTURE_COORDS));
+
+
+	}
+	else
+		log_msg("opengl_info", "No GLSL");
+
 
 	const char *exts = (char*)glGetString(GL_EXTENSIONS);
 	log_msg("graph opengl opengl_info", std::string("Supported GL extensions: ") + strtr(exts, ' ', '\n' ));

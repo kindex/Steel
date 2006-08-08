@@ -1,0 +1,156 @@
+/*id*********************************************************
+    Unit: OpenGL Engine / GLSL
+    Part of: Steel engine
+    (C) DiVision, 2004-2006
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    License:
+        Steel Engine License
+    Description:
+		GLSL шейдёры
+ ************************************************************/
+#include "opengl_glsl.h"
+#include "../../res/res_main.h"
+
+bool GLSL::init(Material *_material)
+{
+	if(!GL_EXTENSION_GLSL) return false;
+
+	material = _material;
+	conf = material->getConfig();
+
+	resStack.push(material->getDirectory());
+
+	vertexShader = resText.add(conf->gets("vertexShader"));
+	if(vertexShader == NULL) 
+	{
+		resStack.pop();
+		return false;
+	}
+	fragmentShader = resText.add(conf->gets("fragmentShader"));
+	if(fragmentShader == NULL)
+	{
+		resStack.pop();
+		return false;
+	}
+
+	resStack.pop();
+
+	programId = glCreateProgramObjectARB();
+	if(isError()) return false;
+
+    vertexShaderId = glCreateShaderObjectARB (GL_VERTEX_SHADER_ARB);
+   	if(!LoadShader(vertexShaderId, vertexShader))
+        return false;
+    glAttachObjectARB(programId, vertexShaderId);
+
+    fragmentShaderId = glCreateShaderObjectARB (GL_FRAGMENT_SHADER_ARB);
+   	if(!LoadShader(fragmentShaderId, fragmentShader))
+        return false;
+    glAttachObjectARB(programId, fragmentShaderId);
+
+
+    GLint   linked;
+    glLinkProgramARB(programId);
+
+	if(isError())
+		return false;
+
+    glGetObjectParameterivARB(programId, GL_OBJECT_LINK_STATUS_ARB, &linked);
+
+    loadLog(programId);
+
+    if(!linked)
+        return false;
+
+	return true;
+}
+
+bool GLSL::LoadShader(GLuint shader, Text *text)
+{
+	const char *body = (const char *) text->getText();
+    int			len  = text->getLength();
+    GLint       compileStatus;
+
+    glShaderSourceARB(shader, 1, &body,  &len);
+
+                                        // compile the particle vertex shader, and print out
+    glCompileShaderARB(shader);
+
+    if (isError())              // check for OpenGL errors
+        return false;
+
+    glGetObjectParameterivARB(shader, GL_OBJECT_COMPILE_STATUS_ARB, &compileStatus);
+
+//    loadLog ( shader );
+
+    return compileStatus != 0;
+}
+
+
+bool GLSL::isError()
+{
+ 	GLenum  glErr   = glGetError();
+
+    if ( glErr == GL_NO_ERROR )
+    	return false;
+
+    log_msg("opengl glsl error", (const char *) gluErrorString (glErr));		// XXX: what about gluErrorString errors ?
+
+    return true;
+}
+
+GLSL::~GLSL()
+{
+	if(programId) glDeleteObjectARB(programId);                   // it will also detach shaders
+	if(vertexShaderId) glDeleteObjectARB(vertexShaderId);
+	if(fragmentShaderId) glDeleteObjectARB(fragmentShaderId);
+}
+
+void GLSL::loadLog(GLuint object)
+{
+    int         logLength     = 0;
+    int         charsWritten  = 0;
+    GLcharARB   buffer [2048];
+    GLcharARB * infoLog;
+
+    glGetObjectParameterivARB ( object, GL_OBJECT_INFO_LOG_LENGTH_ARB, &logLength );
+
+    if(isError())          // check for OpenGL errors
+        return;
+
+    if(logLength < 1 )
+        return;
+                                    // try to avoid allocating buffer
+    if ( logLength > sizeof ( buffer ) )
+    {
+        infoLog = (GLcharARB*) malloc ( logLength );
+
+        if ( infoLog == NULL )
+        {
+            error("opengl glsl error", "Could not allocate log buffer");
+
+            return;
+        }
+    }
+    else
+        infoLog = buffer;
+
+    glGetInfoLogARB ( object, logLength, &charsWritten, infoLog );
+
+	if(strlen(infoLog)>0)
+		log_msg("opengl glsl info", infoLog);
+
+    if ( infoLog != buffer )
+        free ( infoLog );
+}
+
+void GLSL::bind(void)
+{
+	glUseProgramObjectARB(programId);
+}
+
+void GLSL::unbind(void)
+{
+	glUseProgramObjectARB(0);
+}

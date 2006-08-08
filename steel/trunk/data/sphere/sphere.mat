@@ -1,3 +1,11 @@
-	env	/image/env/tsccity
+#BlendMode format file,color
+
+format0=env
+image0=/image/env/tsccity
+
+vertexShader=/none.vsh
+fragmentShader=/none.fsh
+
+;	env	
 ;	color_map	warn
 ;+	color_map	warn

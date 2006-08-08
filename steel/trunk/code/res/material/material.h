@@ -3,7 +3,7 @@
 
 #include "../image/image.h"
 #include "../conf/conf.h"
-#include "../script/script.h"
+//#include "../script/script.h"
 #include "../../graph/types.h"
 
 //namespace MapMode
@@ -41,14 +41,23 @@ public:
 
 class Material: public Res
 {
-public:
-	Script* conf;
-	bool	blend;
+protected:
+	Config *conf;
+	bool	blend, shader;
 	steel::vector<Texture> texture;
+	std::string directory;
+
+public:
+	Material(): conf(NULL) {}
+	~Material();
 
 	bool init(std::string _conf, const std::string dir);
+	Texture *getTexture(int number) { return &texture[number]; }
+	int getTextureCount(void) const { return texture.size();}
+	bool isShader(void) { return shader; }
+	Config *getConfig(void)  { return conf; };
+	std::string getDirectory(void) { return directory;}
 
-	~Material();
 };
 
 #endif

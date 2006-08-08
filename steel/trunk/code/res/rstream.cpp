@@ -4,6 +4,8 @@
 #include <fstream>
 #include <string>
 
+using namespace std;
+
 //TEMP
 #define bufsize 1024
 char buf[bufsize];
@@ -35,14 +37,24 @@ void rstream::read(void *dest, int size)
 
 bool rstream::open(std::string s, std::string ext, ios_base::openmode _Mode) 
 { 
-	std::string r = std::string("../data/") + s + (ext == ""?"":"." + ext);
-	std::ifstream::open(r.c_str(), _Mode | std::ios::in);
-	if(fail())
+	ifstream f1, f2;
+
+	string name = std::string("../data/") + s + (ext == ""?"":"." + ext);
+
+	f1.open(name.c_str(), _Mode | std::ios::in);
+	if(f1.fail())
 	{
-		// TODO эта ветка ифа не работает - не работает повторное открытие файла
-		std::ifstream::open((std::string("../data/") + s).c_str(), _Mode | std::ios::in);
-		if(fail())
+		name = std::string("../data/") + s;
+		f2.open(name.c_str(), _Mode | std::ios::in);
+		if(f2.fail()) 
+		{
+			failed = true;
 			return false;
+		}
 	}
+
+	std::ifstream::open(name.c_str(), _Mode | std::ios::in);
+
+	failed = false;
 	return true;
 }

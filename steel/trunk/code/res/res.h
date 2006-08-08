@@ -35,6 +35,7 @@ protected:
 	int level;
 	std::stack<std::string> stack;
 
+public:
 	bool	push(std::string directory);
 	bool	pushFullPath(std::string path)
 	{
@@ -55,8 +56,7 @@ protected:
 	template<class T>
 	friend class ResCollection;
 
-public:
-		ResStack(): level(0) {}
+	ResStack(): level(0) {}
 };
 extern ResStack resStack;
 
