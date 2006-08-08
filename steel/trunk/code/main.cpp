@@ -57,8 +57,12 @@ int main(int argc, char *argv[])
 	log_msg("core", "Command Line: '" + commandLine + "'");
 	
 	CollectSystemInfo();
-	DetectWindowsVersion();
-// ******************** RES ************************
+
+	#if STEEL_OS == OS_WIN32
+		DetectWindowsVersion();
+	#endif
+
+	// ******************** RES ************************
 	registerResources();
 
 	if(!test())

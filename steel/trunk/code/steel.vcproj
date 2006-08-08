@@ -664,6 +664,14 @@
 					RelativePath=".\common\utils.h"
 					>
 				</File>
+				<File
+					RelativePath=".\common\win_info.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\common\win_info.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="game"

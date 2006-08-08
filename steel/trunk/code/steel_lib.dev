@@ -1,7 +1,7 @@
 [Project]
 FileName=steel_lib.dev
 Name=Steel lib
-UnitCount=129
+UnitCount=131
 Type=2
 Ver=1
 ObjFiles=
@@ -1329,6 +1329,26 @@ BuildCmd=
 
 [Unit129]
 FileName=common\system_info.h
+CompileCpp=1
+Folder=common
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit130]
+FileName=common\win_info.cpp
+CompileCpp=1
+Folder=common
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit131]
+FileName=common\win_info.h
 CompileCpp=1
 Folder=common
 Compile=1
