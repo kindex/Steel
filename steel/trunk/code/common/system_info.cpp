@@ -53,7 +53,7 @@ using namespace std;
   }
 */
 
-int CollectSystemInfo(void) 
+void CollectSystemInfo(void)
 {   
 	char szThis[300];
 	int pathLenght = GetModuleFileName(NULL, szThis, 300); // http://www.sources.ru/msdn/library/getmodulefilename.shtml
@@ -142,6 +142,4 @@ int CollectSystemInfo(void)
    if( GetWindowsDirectory(lpszSystemInfo, MAX_PATH+1) )
    //cout << " Windows directory:  " << lpszSystemInfo << endl;
    log_msg("system_info",  "Windows directory:  " + string(lpszSystemInfo));
-                 
-   return 0; 
 }
