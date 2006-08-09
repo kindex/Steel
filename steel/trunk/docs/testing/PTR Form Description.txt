@@ -1,0 +1,102 @@
+/*id*********************************************************
+	Unit: testing
+	Part of: Testing
+	(C) DiVision, 2004-2006
+	Authors:
+		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
+	File history:
+		[2006-08-09 19:41:46] Def: File Creation.
+    Description:
+		This file contains PTR form field detailed description.
+ ************************************************************/
+
+PTR.
+Универсальная форма официальных запросов. 
+Назовем, ее, условно, Problem Report Form или Problem Tracking Report. 
+Последнее - международное понятие, сокращенно, - PTR.
+
+Итак, описание формы.
+
+FROM
+	от кого (тут определяется автор)
+TO
+	кому (тут определяется ответственное лицо)
+
+Number: XXXX
+	Номер (порядкрвый) в ОБЩЕМ регистре.
+
+Detected Date: <date problem detected>
+
+Problem type: (question, defect, feature request)
+	Тип проблемы. Здесь описывается тип проблемы, которую надо решить или зарегестрировать.
+	Как правило, есть 3 основных типа -
+	question - вопрос. 
+		(Вопрос не простой, а приоритетный вопрос высокого уровня, на который быстро не ответишь.)
+		  Пример - Если проект работает под Linux, а на Sony Playstation 3 будет Linux, 
+		будет ли там идти Steel после перекомпиляции?
+	defect - дефект или ошибка. В программе или документации.
+	feature request - появилась какая-то идея относительно проекта. 
+		По идее, это запрос на именения архитектуры программы или интерфейса.
+
+
+Status: (Current status of problem - review, assigned, developing, testing, retesting delayed, 
+	development delayed, closed, cancelled etc.)
+
+	Статус проблемы. Это надо для отслеживания эволюции проблемы. Статус проблемы 
+	может менять только: автор, ответственное лицо, и особые люди - Главные программеры, 
+	тестеры и так далее. К крупных организациях Главные от остальнах отличаются в 
+	основном только	тем, что они Ответственные за свои полномочия. 
+	Пример - feature request вызвавший Critical PTR, реализованный без ведома Kindexa, 
+	потому, что Kindex во время не изменил его статус.
+
+Resolution: (corrected, code verified, implementation must be changed etc. 
+		Usualy the same information is provided in status change comments
+		so could leave without it)
+	Почему был изменен статус.
+
+Detected in Product: <Product Name>  Build # <build/commit> 
+	По поводу какого проекта открывается PTR.
+
+Functional zone: <functional part of application>
+	Зона в приложении. Зоны ДОЛЖНЫ быть заранее определены.
+	Logger, Загрузка ресурсов и так далее.
+
+Environment: <machine name or environment name>
+	Linux/Windows/Windows 95.
+ 
+Summary: <short description of problem>
+	Краткое описание порблемы. Из этого описания ВСЕ должно быть ЯСНО!
+	Это - целое исскуство, в Exigene на курсах тестеров учат в основном писать Summary.
+	Пример - Вылетает steel.exe ВСЕ осталное - в Problem Detailed Decription.
+
+Severity: Critical, Fatal, High, Medium, Low
+	Серьезность проблемы. Приоритет. Осторожно с этим параметром.
+	Critical - убивает систему
+	Fatal - вылетает все приложение
+	Следующие 3 параметра зависят от документации.
+	High - не вылетает, но что-то серьезное не работает. Например, ничего не выводит на экран.
+	Medium - Все вроде работает, но есть хорошо видимые проблемы. Выводит на экран, но все одного цвета.
+	Low - Самый низкий приоритет. Пример - если закончилась оператива (и виртуальная тоже), 
+		и на фоне Архивирует 10 WinRAR-ов, то пропадает текстура неба, когда прыгаешь 
+		с 10% здоровья на крыше Зеленого КАМАЗА.
+
+Problem Repeatable: <yes or no>  ( could live without it )
+	Постоянно или нет, повторяется эта ошибка.
+	  
+
+Problem Detailed Decription:
+	ДЕТАЛЬНОЕ описание проблемы. Хорошее описание - практчески алгоритм на Basic'e с ЛОГАМИ и СКРИНШОТАМИ.
+
+//Detected in Phase: <project start, requirements, design, coding, documetation, testing, deployment, post-delievery>
+	 
+Verification type: <acceptance, documentation, installation, integration, regression, system>  
+	Type of testing revealed the defect
+	Говоря по-русски - Каким РАКОМ ты нашел эту ошибку. Описане в 1-2-3 предложениях.
+
+Problem due date: <date when problem should be solved>
+	 
+Status due date: <date when current problem status should be changed> 
+
+Status Change History:
+ <who>:[when DATE TEME]:Status:Description.
+	

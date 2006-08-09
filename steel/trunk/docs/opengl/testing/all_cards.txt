@@ -1,4 +1,19 @@
-This file contains all accessible PCs.
+/*id*********************************************************
+	Unit: testing
+	Part of: Testing
+	(C) DiVision, 2004-2006
+	Authors:
+		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
+	File history:
+		[date Time] File Creation.
+		[2006-08-09 18:08:15] Последние изменения - Def. Добавлен этот Header.
+    Description:
+		This file contains all accessible graphics Accelerators.
+	 Format:
+		<name or location> <PC SHORT description> <[Time and/or date, when record inserted]>
+			Next: Three strings from <trunk\log\opengl_info.log>, which must contain
+			Renderer: Version: and Vendor:
+ ************************************************************/
 
 Using Remote Desktop connection
 	Renderer: GDI Generic
@@ -14,6 +29,11 @@ Def Primary PC [2006-07-29 14:42:35]
 	Renderer: RADEON 9800 Pro x86/MMX/3DNow!/SSE
 	Version: 2.0.5396 WinXP Release
 	Vendor: ATI Technologies Inc.
+
+Kuzmi4 Primary PC [2006-08-09 17:59:16]
+	Renderer: GeForce2 GTS/AGP/SSE/3DNOW!	
+	Version: 1.5.3
+	Vendor: NVIDIA Corporation
 
 Ormr Ulfarson [2006-07-29 21:20:00] 
 	Renderer: RADEON X300 x86/MMX/3DNow!/SSE2
