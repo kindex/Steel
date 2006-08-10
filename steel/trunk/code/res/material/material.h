@@ -1,12 +1,23 @@
+/*id*******************************************************************************
+    Unit: Res Material
+    Part of: Steel engine
+    (C) DiVision, 2006
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    License:
+        Steel Engine License
+    Description:
+        ћолуль дл€ загрузки и хранени€ материала
+**************************************************************************************/
+
 #ifndef __RES__MATERIAL_H
 #define __RES__MATERIAL_H
 
 #include "../image/image.h"
 #include "../conf/conf.h"
-//#include "../script/script.h"
 #include "../../graph/types.h"
 
-//namespace MapMode
+//тип смешивани€ двух текстур
 typedef	enum
 {
 	TEXTURE_BLEND_MODE_NONE,
@@ -16,6 +27,7 @@ typedef	enum
 	TEXTURE_BLEND_MODE_BLEND
 } TextureBlendMode;
 
+// фрмат текстуры
 typedef	enum
 {
 	TEXTURE_FORMAT_NONE,
@@ -26,6 +38,7 @@ typedef	enum
 	TEXTURE_FORMAT_BUMP_MAP
 } TextureFormat;
 
+// одна текстура. »пользуетс€ при мультитекстутированию
 class Texture
 {
 public:
@@ -34,11 +47,10 @@ public:
 	TextureBlendMode	mode;
 	TextureFormat		format;
 	color4f				color;
-	// color
-	// mode
-	// shader
 };
 
+// материал задаЄт множество текстур и типы их наложени€
+// или шейдеры дл€ рендеринга моделей
 class Material: public Res
 {
 protected:
@@ -48,14 +60,21 @@ protected:
 	std::string directory;
 
 public:
-	Material(): conf(NULL) {}
-	~Material();
+	Material(void): conf(NULL) {}
+	~Material(void);
 
+	// загружает материал из *.mat файла
 	bool init(std::string _conf, const std::string dir);
+	// получить текстуру с номером number
 	Texture *getTexture(int number) { return &texture[number]; }
+	// получить количество текстур
 	int getTextureCount(void) const { return texture.size();}
+	// указана ли в конфиге материала шейдер дл€ рендеринга
 	bool isShader(void) { return shader; }
-	Config *getConfig(void)  { return conf; };
+	// получить час конфиг
+	const Config *getConfig(void) const { return conf; };
+	// директори€, откуда был загружен материал. 
+	// Ќужна дл€ относительного отсчЄта файлов, указанных в конфиге
 	std::string getDirectory(void) { return directory;}
 
 };

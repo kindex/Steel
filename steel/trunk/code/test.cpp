@@ -17,9 +17,11 @@
 
 #include "_cpp.h"
 #include "common/logger.h"
+#include "res/res_main.h"
 
 bool test()
 {
+	Text *t = resText.add("a.txt");
 
 	return true;
 }

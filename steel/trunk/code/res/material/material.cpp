@@ -1,3 +1,14 @@
+/*id*******************************************************************************
+    Unit: Res Material
+    Part of: Steel engine
+    (C) DiVision, 2006
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    License:
+        Steel Engine License
+    Description:
+        ћолуль дл€ загрузки и хранени€ материала
+**************************************************************************************/
 #include "material.h"
 #include "../res_main.h"
 #include "../../common/utils.h"
@@ -35,7 +46,6 @@ bool Material::init(string name, const std::string dir)
 		if(format == "color_map")
 		{
 			m.image = resImage.add(conf->gets("image" + IntToStr(i)));
-//			if(!m.image)m.image = resImage.add(dir + "/" + file);
 
 			if(m.image)
 			{
@@ -46,8 +56,6 @@ bool Material::init(string name, const std::string dir)
 		if(format == "bump")
 		{
 			m.image = resImage.add(conf->gets("image" + IntToStr(i)));
-//			if(!m.image)m.image = resImage.add( dir + "/" + file);
-
 			if(m.image)
 			{
 				m.format = TEXTURE_FORMAT_BUMP_MAP;

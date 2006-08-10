@@ -3,43 +3,48 @@
 #include "../../common/utils.h"
 using namespace std;
 
-string Config::gets(string key, string _default)
+const string Config::gets(const string key, const string _default) const
 {
-	if(var_s.find(key) != var_s.end())
-		return var_s[key];
+	std::map<std::string, std::string>::const_iterator it;
+	if((it=var_s.find(key)) != var_s.end())
+		return it->second;
 	else
 		return _default;
 }
 
-double Config::getd(string key, double _default)
+double Config::getd(const string key, const double _default) const
 {
-	if(var_f.find(key) != var_f.end())
-		return var_f[key];
+	std::map<std::string, double>::const_iterator it;
+	if((it=var_f.find(key)) != var_f.end())
+		return it->second;
 	else
 		return _default;
 }
 
 
-float Config::getf(string key, float _default)
+float Config::getf(string key, float _default) const
 {
-	if(var_f.find(key) != var_f.end())
-		return (float)var_f[key];
+	std::map<std::string, double>::const_iterator it;
+	if((it=var_f.find(key)) != var_f.end())
+		return (float)it->second;
 	else
 		return _default;
 }
 
-int Config::geti(string key, int _default)
+int Config::geti(string key, int _default) const
 {
-	if(var_f.find(key) != var_f.end())
-		return (int)var_f[key];
+	std::map<std::string, double>::const_iterator it;
+	if((it=var_f.find(key)) != var_f.end())
+		return (int)it->second;
 	else
 		return _default;
 }
 
-v3 Config::getv3(string key, v3 _default)
+v3 Config::getv3(string key, v3 _default) const
 {
-	if(var_v3.find(key) != var_v3.end())
-		return var_v3[key];
+	std::map<std::string, v3>::const_iterator it;
+	if((it=var_v3.find(key)) != var_v3.end())
+		return it->second;
 	else
 		return _default;
 }

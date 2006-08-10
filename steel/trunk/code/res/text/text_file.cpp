@@ -1,3 +1,14 @@
+/*id*******************************************************************************
+    Unit: Res Text
+    Part of: Steel engine
+    (C) DiVision, 2006
+    Authors:
+        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+    License:
+        Steel Engine License
+    Description:
+        Молуль для рагрузки текста из текстового файла
+**************************************************************************************/
 #include "text_file.h"
 #include "../../common/logger.h"
 #include "../../common/utils.h"
@@ -25,12 +36,13 @@ bool TextFile::init(const std::string name, const std::string dir)
 	length = size;
 	pbuf->pubseekpos (0,ios::in);
 	// allocate memory to contain file data
-	text = new char[size];
+	text = new unsigned char[size + 1];
 	// get file data  
-	pbuf->sgetn (text, size);
+	pbuf->sgetn((char*)text, size);
 	f.close();
  
 	format = TEXT_ASCII;
+	text[length] = '\0';
 
 	return true;
 }

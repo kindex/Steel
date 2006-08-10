@@ -22,13 +22,13 @@ public:
 	void setup(std::string key, double value);
 	void setDefault(std::string key, std::string value);
 
-	std::string gets(std::string key, std::string _default = "");
-	float		getf(std::string key, float _default = 0.0);
-	double		getd(std::string key, double _default = 0.0);
-	int			geti(std::string key, int	_default = 0);
-	v3			getv3(std::string key, v3 _default = v3(0,0,0));
+	const std::string gets(const std::string key, const std::string _default = "") const;
+	float		getf(const std::string key, const float _default = 0.0) const;
+	double getd(const std::string key, const double _default = 0.0) const;
+	int			geti(const std::string key, const int	_default = 0) const;
+	v3			getv3(const std::string key, const v3 _default = v3(0,0,0)) const;
 
 	bool isset(std::string key) { return var_s.find(key) != var_s.end(); }
-	bool unload();
+	bool unload(void);
 };
 #endif
