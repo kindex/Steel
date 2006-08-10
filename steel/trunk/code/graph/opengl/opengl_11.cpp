@@ -69,7 +69,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL11(TexCoords3f *coords)
 }
 
 
-bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
+bool OpenGL_Engine::BindTexture_OpenGL11(Image *image, bool enable)
 {
 	if(image == NULL) return false;
 
@@ -86,13 +86,13 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 		switch(image->getDimension())
 		{
 			case IMAGE_2D:
-				glEnable(GL_TEXTURE_2D);
+				if(enable) glEnable(GL_TEXTURE_2D);
 				glBindTexture(GL_TEXTURE_2D, buf.glid);
 				break;
 			case IMAGE_CUBE:
 				if(GL_EXTENSION_TEXTURE_CUBE_MAP)
 				{
-					glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+					if(enable) glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 					glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
 					break;
 				}
@@ -135,7 +135,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 					}
 				}
 
-				glEnable(GL_TEXTURE_2D);
+				if(enable) glEnable(GL_TEXTURE_2D);
 				glBindTexture(GL_TEXTURE_2D, buf.glid);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -148,7 +148,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image)
 			case IMAGE_CUBE:
 				if(GL_EXTENSION_TEXTURE_CUBE_MAP)
 				{
-					glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+					if(enable) glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 					glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
 
 					int w = image->getWidth();

@@ -1,10 +1,15 @@
 #BlendMode format file,color
 
-format0=env
-image0=/image/env/tsccity
+format0=color_map
+image0=/wall/tex/floor2
 
-vertexShader=/none.vsh
-fragmentShader=/none.fsh
+format1=color_map
+image1=warn
+mode1=*
+
+;****** Shader ******
+vertexShader=test.vsh
+fragmentShader=test.fsh
 
 ;	env	
 ;	color_map	warn

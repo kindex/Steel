@@ -17,5 +17,15 @@
 ;*	color_map	skel_wall
 ;	color_map	smile
 
-	bump	tex/cs_floor2_1_local
-*	color_map	tex/floor2
+format0=color_map
+image0=tex/floor2
+
+format1=color_map
+image1=tex/cs_floor2_1_local
+
+
+vertexShader=/sphere/test.vsh
+fragmentShader=/sphere/test.fsh
+
+;	bump	tex/cs_floor2_1_local
+;*	color_map	tex/floor2

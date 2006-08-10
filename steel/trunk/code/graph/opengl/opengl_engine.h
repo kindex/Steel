@@ -99,7 +99,7 @@ protected:
 
 protected:
 	// procedure variables
-	bool (OpenGL_Engine::*BindTexture)(Image *image);
+	bool (OpenGL_Engine::*BindTexture)(Image *image, bool enable);
 	void (OpenGL_Engine::*DrawFill)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 
@@ -113,7 +113,7 @@ protected:
 	void (OpenGL_Engine::*DrawAABB)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.0
-	bool BindTexture_OpenGL10(Image *image);
+	bool BindTexture_OpenGL10(Image *image, bool enable);
 	void DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
 	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void DrawWire_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
@@ -123,7 +123,7 @@ protected:
 	void DrawAABB_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.1
-	bool BindTexture_OpenGL11(Image *image);
+	bool BindTexture_OpenGL11(Image *image, bool enable);
 	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void DrawLines_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
@@ -140,8 +140,7 @@ protected:
 
 	// OpenGL 2.0
 	void DrawFill_OpenGL20(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
-	bool BindShader(Material *shader);
-
+	GLSL *BindShader(Material *shader);
 
 	// Stuff to delete
 

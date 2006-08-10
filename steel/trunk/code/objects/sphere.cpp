@@ -3,8 +3,8 @@
 
 Sphere::Sphere()
 {
-	int height = 24;
-	int radius = 32;
+	int height = 12;
+	int radius = 16;
 
 	vertexes = new Vertexes;
 	vertexes->setId(objectIdGenerator.genUid());

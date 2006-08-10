@@ -41,12 +41,15 @@ bool GLSL::init(Material *_material)
 
     vertexShaderId = glCreateShaderObjectARB (GL_VERTEX_SHADER_ARB);
    	if(!LoadShader(vertexShaderId, vertexShader))
-        return false;
+	{
+		loadLog(programId);
+		return false;
+	}
     glAttachObjectARB(programId, vertexShaderId);
 
     fragmentShaderId = glCreateShaderObjectARB (GL_FRAGMENT_SHADER_ARB);
    	if(!LoadShader(fragmentShaderId, fragmentShader))
-        return false;
+		return false;
     glAttachObjectARB(programId, fragmentShaderId);
 
 
@@ -153,4 +156,123 @@ void GLSL::bind(void)
 void GLSL::unbind(void)
 {
 	glUseProgramObjectARB(0);
+}
+
+
+bool GLSL::setTexture(const char *name, int texNum)
+{
+	int loc = glGetUniformLocationARB(programId, name);
+	if(loc != -1)
+	{
+		glUniform1iARB(loc, texNum);
+		return true;
+	}
+	else
+		return false;
+}
+
+
+bool    GLSL :: setUniformVector ( const char * name, const v3& value )
+{
+    int loc = glGetUniformLocationARB ( programId, name );
+
+    if ( loc < 0 )
+        return false;
+
+    glUniform3fvARB ( loc, 1, value );
+
+    return true;
+}
+
+bool    GLSL :: setUniformVector  ( int loc, const v3& value )
+{
+    glUniform3fvARB ( loc, 1, value );
+
+    return true;
+}
+
+bool    GLSL :: setUniformVector ( const char * name, const v2& value )
+{
+    int loc = glGetUniformLocationARB ( programId, name );
+
+    if ( loc < 0 )
+        return false;
+
+    glUniform2fvARB ( loc, 1, value );
+
+    return true;
+}
+
+bool    GLSL :: setUniformVector  ( int loc, const v2& value )
+{
+    glUniform2fvARB ( loc, 1, value );
+
+    return true;
+}
+
+bool    GLSL :: setUniformFloat ( const char * name, float value )
+{
+    int loc = glGetUniformLocationARB ( programId, name );
+
+    if ( loc < 0 )
+        return false;
+
+    glUniform1fARB ( loc, value );
+
+    return true;
+}
+
+bool    GLSL :: setUniformFloat ( int loc, float value )
+{
+    glUniform1fARB ( loc, value );
+
+    return true;
+}
+
+bool    GLSL :: setUniformInt ( const char * name, int value )
+{
+    int loc = glGetUniformLocationARB ( programId, name );
+
+    if ( loc < 0 )
+        return false;
+
+    glUniform1iARB ( loc, value );
+
+    return true;
+}
+
+bool    GLSL :: setUniformInt ( int loc, int value )
+{
+    glUniform1iARB ( loc, value );
+
+    return true;
+}
+
+bool    GLSL :: setUniformMatrix  ( const char * name, float value [16] )
+{
+    int loc = glGetUniformLocationARB ( programId, name );
+
+    if ( loc < 0 )
+        return false;
+
+    glUniformMatrix4fvARB ( loc, 1, GL_FALSE, value );
+
+    return true;
+}
+
+bool    GLSL :: setUniformMatrix  ( const char * name, const matrix33& value )
+{
+    int loc = glGetUniformLocationARB ( programId, name );
+
+    if ( loc < 0 )
+        return false;
+
+	glUniformMatrix3fvARB ( loc, 1, GL_FALSE, &value.data.a[0] );
+
+    return true;
+}
+
+int     GLSL :: locForUniformName ( const char * name )
+{
+    return glGetUniformLocationARB ( programId, name );
 }

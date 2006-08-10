@@ -70,7 +70,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
 			}
 
 			if(texture.format == TEXTURE_FORMAT_COLOR_MAP) 
-				if(BindTexture) (this->*BindTexture)(texture.image);
+				if(BindTexture) (this->*BindTexture)(texture.image, true);
 
 			if(texture.format == TEXTURE_FORMAT_COLOR) 
 				glColor4fv(&texture.color.r);
@@ -123,9 +123,9 @@ void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e,
 }
 
 // установить текущуу текстуру
-bool OpenGL_Engine::BindTexture_OpenGL10(Image *image)
+bool OpenGL_Engine::BindTexture_OpenGL10(Image *image, bool enable)
 {
-	glEnable(GL_TEXTURE_2D);
+	if(enable) glEnable(GL_TEXTURE_2D);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

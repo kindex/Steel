@@ -115,7 +115,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 					glClientActiveTextureARB(GL_TEXTURE2_ARB + currentTextureArb);
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 					
-					(this->*BindTexture)(texture.image); // 2D texture (auto detect from Image)
+					(this->*BindTexture)(texture.image, true); // 2D texture (auto detect from Image)
 
 					(this->*BindTexCoords)(coords);
 					currentTextureArb += 3;
@@ -127,7 +127,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 				glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
-				(this->*BindTexture)(texture.image); // Cube texture (auto detect from Image)
+				(this->*BindTexture)(texture.image, true); // Cube texture (auto detect from Image)
 
 				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_NORMAL_MAP);
                 glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_NORMAL_MAP);
@@ -145,7 +145,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 			if(texture.format == TEXTURE_FORMAT_COLOR_MAP)
 			{
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-				if(BindTexture) (this->*BindTexture)(texture.image);
+				if(BindTexture) (this->*BindTexture)(texture.image, true);
 
 				TexCoords *coords = e.object->getTexCoords(i);
 				assert(coords->data.size() == e.vertex->data.size(), "TexCoords.size != Vertex.size");
@@ -385,7 +385,7 @@ void OpenGL_Engine::drawBump(GraphObjectStorage &e, TexCoords *coords, matrix34 
 
 	glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb + 1);
 	glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb + 1);
-	(this->*BindTexture)(img);
+	(this->*BindTexture)(img, true);
 
 	if(BindTexCoords) (this->*BindTexCoords)(coords);
 	
