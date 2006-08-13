@@ -67,9 +67,6 @@ ALboolean CheckALError()
 bool initializeOpenAL()
 {
 	log_msg("openal init", "Initializing OpenAL...");
-	ALfloat listenerPosition[] = { 0.0f, 0.0f, 0.0f };
-	ALfloat listenerVelocity[] = { 0.0f, 0.0f, 0.0f };
-	ALfloat listenerOrientation[] = { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f };
 
 	// open default sound device
 	log_msg("openal init", "Opening default sound device...");
@@ -94,11 +91,6 @@ bool initializeOpenAL()
 
 	alcMakeContextCurrent(pContext);
 
-	// set listener properties
-	alListenerfv(AL_POSITION, listenerPosition);
-	alListenerfv(AL_VELOCITY, listenerVelocity);
-	alListenerfv(AL_ORIENTATION, listenerOrientation);
-
 	log_msg("openal init", "OpenAL has been initialized!");
 
 /*
@@ -120,8 +112,8 @@ bool initializeOpenAL()
 		//std::cout << "\nEAX problems.\n";
         return false;
 	}
-/**/
 	log_msg("openal init", "EAX 2.0 has been initialized!");
+/**/
 	return true;
 }
 
@@ -156,7 +148,16 @@ extern void setListenerEnvironment(unsigned long environment)
 	}
 }
 
-void soundPlay(AL_Source &sound)
+
+extern void updateListener(Listener &listener)
+{
+	alListenerfv(AL_POSITION, listener.getPosition());
+	alListenerfv(AL_VELOCITY, listener.getVelocity());
+	alListenerfv(AL_ORIENTATION, listener.getOrientation());
+}
+
+
+extern void soundPlay(AL_Source &sound)
 {
 	alSourcePlay(sound.source);
 }

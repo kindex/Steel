@@ -621,6 +621,10 @@
 				Name="audio"
 				>
 				<File
+					RelativePath=".\audio\audio_engine.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\audio\audio_engine.h"
 					>
 				</File>

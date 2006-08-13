@@ -31,11 +31,13 @@ public:
 	ALuint source;
 };
 
-
+/*
 class AL_Listener : public Listener
 {
 };
+*/
 
+//extern void updateListener(Listener);				//??????????????????????????????????????????????????
 
 extern bool initializeOpenAL();
 extern void destroyOpenAL();
@@ -44,7 +46,9 @@ extern void setListenerEnvironment(unsigned long environment);
 extern ALboolean CheckALCError();
 extern ALboolean CheckALError();
 
-void soundPlay(AL_Source &sound);
+extern void updateListener(Listener &listener);
+
+extern void soundPlay(AL_Source &sound);
 extern void soundClose(AL_Source &sound);
 extern void soundStop(AL_Source &sound);
 extern void soundUpdate(AL_Source &sound);

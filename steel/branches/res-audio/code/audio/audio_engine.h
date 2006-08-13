@@ -7,6 +7,19 @@ class AudioEngine;
 
 class Listener
 {
+public:
+	Listener();
+	~Listener() {};
+	void setPosition(float x, float y, float z) { position[0] = x; position[1] = y; position[2] = z; }
+	void setVelocity(float x, float y, float z) { velocity[0] = x; velocity[1] = y; velocity[2] = z; }
+	void setOrientation(v3 at, v3 up) {};
+	v3 getPosition() { return position; }
+	v3 getVelocity() { return velocity; }
+	float *getOrientation() { return orientation; }
+private:
+	v3 position;
+	v3 velocity;
+	float orientation[6];
 };
 
 
