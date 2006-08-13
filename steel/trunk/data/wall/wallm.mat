@@ -23,5 +23,5 @@ format1=color_map
 image1=tex/tr_ceiling_3_s
 
 ;+	color_map	tex/tr_ceiling_3_s
-vertexShader=/sphere/test.vsh
-fragmentShader=/sphere/test.fsh
+vertexShader=/sphere/lighting.vsh
+fragmentShader=/sphere/lighting.fsh

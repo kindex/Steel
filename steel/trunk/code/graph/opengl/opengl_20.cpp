@@ -68,6 +68,13 @@ void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphObjectStorage &e, Tria
 			program->setUniformVector("camera_eye", camera.eye);
 			program->setUniformVector("camera_dir", (camera.center - camera.eye).getNormalized());
 
+			for(unsigned int i = 0; i < lights.size(); i++)
+			{
+				std::string pos("light[" + IntToStr(i)+"].position");
+				program->setUniformVector(pos.c_str(), lights[i].position);
+			}
+
+
 			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
 
 			program->unbind();

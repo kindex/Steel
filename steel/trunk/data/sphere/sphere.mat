@@ -8,8 +8,8 @@ image1=warn
 mode1=*
 
 ;****** Shader ******
-vertexShader=test.vsh
-fragmentShader=test.fsh
+vertexShader=lighting.vsh
+fragmentShader=lighting.fsh
 
 ;	env	
 ;	color_map	warn

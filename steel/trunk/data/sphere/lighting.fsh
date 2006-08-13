@@ -10,19 +10,21 @@ uniform	vec3 camera_eye;
 
 varying	vec3 p;
 
+uniform struct
+{
+vec3 position;
+} light[10];
 
 void main (void)
 {
 	vec3	v = normalize(p - camera_eye);
 	vec3	v2 = normalize ( v );
 
-	float k = clamp(1.5*pow(dot(v2, camera_dir), 16.0), 0.0, 1.0);
+	float dist = clamp(1.0-distance(p, light[0].position)*0.01, 0.0, 1.0);
+//	float len = clamp(1.0-distance(p, light[0].position)*0.03, 0.0, 1.0);
 
 
-	gl_FragColor.rgb = mix(
-		texture2D(image1, gl_TexCoord[1].xy).rgb,
-		texture2D(image0, gl_TexCoord[0].xy).rgb,
-		k);
+	gl_FragColor.rgb = dist*texture2D(image0, gl_TexCoord[0].xy).rgb;
 
 //	gl_FragColor.rgb = v3;
 

@@ -381,8 +381,7 @@ void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::
 	for(Lights::const_iterator it = storage[sid].lights->begin(); it != storage[sid].lights->end(); it++)
 	{
 		lights.push_back(*it);
-		lights.back().pos = storage[sid].matrix*lights.back().pos;
-
+		lights.back().position = storage[sid].matrix*lights.back().position;
 	}
 
 	int count = object->getGraphChildrenCount();

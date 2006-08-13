@@ -33,9 +33,10 @@ struct color4f
 
 struct Light
 {
-	v3 pos;
+	v3 position;
 	color4f color;
-	float range;
+	float distance, intensivity;
+	// cube map, orientation
 };
 
 typedef steel::vector<Light>		Lights;

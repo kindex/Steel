@@ -85,7 +85,7 @@ bool GLSL::LoadShader(GLuint shader, Text *text)
 
     glGetObjectParameterivARB(shader, GL_OBJECT_COMPILE_STATUS_ARB, &compileStatus);
 
-//    loadLog ( shader );
+    loadLog(shader);
 
     return compileStatus != 0;
 }
