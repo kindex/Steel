@@ -134,12 +134,12 @@ void CollectSystemInfo(void)
 	lpszSystemInfo4 = tchBuffer;
 
    // Получаем и отображаем имя компьютера.
-   if( GetComputerName(lpszSystemInfo1, &cchBuff) )
+   if( GetComputerName(lpszSystemInfo1, &cchBuff2) )
    //cout << " Computer name:  " << lpszSystemInfo << endl;
    log_msg("system_info",  "Computer name:  " + string(lpszSystemInfo1));
    
    // Получаем и отображаем имя пользователя.
-   if( GetUserName(lpszSystemInfo2, &cchBuff) )
+   if( GetUserName(lpszSystemInfo2, &cchBuff2) )
    //cout << " User name:  " << lpszSystemInfo << endl;
    log_msg("system_info",  "User name:  " + string(lpszSystemInfo2));
 
