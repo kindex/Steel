@@ -1,3 +1,18 @@
+/*id*********************************************************
+	Unit: OpenAL Engine
+	Part of: Steel Engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
+	License:
+		Steel Engine License
+	File history:
+		[2006.07.28 11:13:16] Kuzmi4: File Creation.
+    Description:
+		Звуковой движок.
+ ************************************************************/
+
+
 #ifndef __OPENAL_ENGINE_H
 #define __OPENAL_ENGINE_H
 

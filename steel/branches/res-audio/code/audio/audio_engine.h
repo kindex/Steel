@@ -1,3 +1,17 @@
+/*id*********************************************************
+	Unit: Audio Engine
+	Part of: Steel Engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
+	License:
+		Steel Engine License
+	File history:
+		[2006.07.30 00:03:09] Kuzmi4: File Creation.
+    Description:
+		Звуковой движок.
+ ************************************************************/
+
 #ifndef __AUDIO_ENGINE_H
 #define __AUDIO_ENGINE_H
 
