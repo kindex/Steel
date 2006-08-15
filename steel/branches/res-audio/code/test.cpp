@@ -45,7 +45,7 @@ bool test()
 	source2->setLooped(true);
 	source1->setPosition(0.0f, 0.0f, 0.0f);
 	soundUpdate(*source1);
-	source2->setPosition(10.0f, 0.0f, 0.0f);
+	source2->setPosition(-10.0f, 0.0f, 0.0f);
 	soundUpdate(*source2);
 
 	soundPlay(*source1);
