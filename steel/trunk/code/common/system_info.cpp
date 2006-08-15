@@ -116,30 +116,40 @@ void CollectSystemInfo(void)
 //   cout << "  Maximum application address: 0x" << siSysInfo.lpMaximumApplicationAddress << endl;
 // log_msg("system_info",  "  Maximum application address: 0x" + IntToStr(siSysInfo.lpMaximumApplicationAddress));
   
-   LPTSTR lpszSystemInfo;      // указатель на строку, в которой
+   LPTSTR lpszSystemInfo1;      // указатель на строку, в которой
                                // будет информация о системе.
-   DWORD cchBuff = 256;        // длина имени компьютера или
+   LPTSTR lpszSystemInfo2;
+   LPTSTR lpszSystemInfo3;
+   LPTSTR lpszSystemInfo4;
+
+   DWORD cchBuff = 256;
+   DWORD cchBuff2 = 128;  // длина имени компьютера или
                                // пользователя.
-   TCHAR tchBuffer[BUFSIZE];   // буфер для строки.
-   lpszSystemInfo = tchBuffer;
+   TCHAR tchBuffer[BUFSIZE];
+   TCHAR tchBuffer2[512];   // буфер для строки.
+
+    lpszSystemInfo1 = tchBuffer2;
+	lpszSystemInfo2 = tchBuffer2;
+	lpszSystemInfo3 = tchBuffer;
+	lpszSystemInfo4 = tchBuffer;
 
    // Получаем и отображаем имя компьютера.
-   if( GetComputerName(lpszSystemInfo, &cchBuff) )
+   if( GetComputerName(lpszSystemInfo1, &cchBuff) )
    //cout << " Computer name:  " << lpszSystemInfo << endl;
-   log_msg("system_info",  "Computer name:  " + string(lpszSystemInfo));
+   log_msg("system_info",  "Computer name:  " + string(lpszSystemInfo1));
    
    // Получаем и отображаем имя пользователя.
-   if( GetUserName(lpszSystemInfo, &cchBuff) )
+   if( GetUserName(lpszSystemInfo2, &cchBuff) )
    //cout << " User name:  " << lpszSystemInfo << endl;
-   log_msg("system_info",  "User name:  " + string(lpszSystemInfo));
+   log_msg("system_info",  "User name:  " + string(lpszSystemInfo2));
 
    // Получаем и отображаем системную директорию.
-   if( GetSystemDirectory(lpszSystemInfo, MAX_PATH+1) )
+   if( GetSystemDirectory(lpszSystemInfo3, MAX_PATH+1) )
    //cout << " System directory:  " << lpszSystemInfo << endl;
-   log_msg("system_info",  "System directory:  " + string(lpszSystemInfo));
+   log_msg("system_info",  "System directory:  " + string(lpszSystemInfo3));
    
    // Получаем и отображаем директорию Windows.
-   if( GetWindowsDirectory(lpszSystemInfo, MAX_PATH+1) )
+   if( GetWindowsDirectory(lpszSystemInfo4, MAX_PATH+1) )
    //cout << " Windows directory:  " << lpszSystemInfo << endl;
-   log_msg("system_info",  "Windows directory:  " + string(lpszSystemInfo));
+   log_msg("system_info",  "Windows directory:  " + string(lpszSystemInfo4));
 }
