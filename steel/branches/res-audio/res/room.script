@@ -20,14 +20,13 @@ solid			wall/floor	0,0,-20.5
 ;solid			wall/wall1	0,20,-1
 ;solid			wall/wall1	0,-20,-1
 ;solid			wall/floor	0,0,-20.5
->>>>>>> .r237
 
-<<<<<<< .mine
-solid			sphere/sphere2		0,0,0
-=======
-;solid			sphere/sphere2		-50,0,0
-;solid2			sphere/sphere2		50,0,0
-
-solid			box/box2	0,0,0
-solid			box/box2	10,0,0
->>>>>>> .r237
+solid			box/box1	1,0,0
+solid			box/box2	2,0,0
+solid			box/box3	3,0,0
+solid			box/box4	4,0,0
+solid			box/box5	5,0,0
+solid			box/box6	6,0,0
+solid			box/box7	7,0,0
+solid			box/box8	8,0,0
+solid			box/box0	-10,0,0
