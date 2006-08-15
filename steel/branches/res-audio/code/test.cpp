@@ -38,11 +38,14 @@ bool test()
 	AL_Source *source1 = new AL_Source(resAudio.add("audio/rain"));
 	AL_Source *source2 = new AL_Source(resAudio.add("audio/thunder"));
 
+	//alSourcef(source1->source, AL_ROLLOFF_FACTOR, 0.0f);
+	//alSourcef(source2->source, AL_ROLLOFF_FACTOR, 0.0f);
+
 	source1->setLooped(true);
 	source2->setLooped(true);
-	source1->setPosition(-5.0f, 0.0f, 0.0f);
+	source1->setPosition(0.0f, 0.0f, 0.0f);
 	soundUpdate(*source1);
-	source2->setPosition(5.0f, 0.0f, 0.0f);
+	source2->setPosition(10.0f, 0.0f, 0.0f);
 	soundUpdate(*source2);
 
 	soundPlay(*source1);

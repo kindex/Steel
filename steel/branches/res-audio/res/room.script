@@ -6,15 +6,28 @@
 
 
 //KIND	parent	id	CONF		X,Y,Z		Angle		Scale	Vx,Vy,Vz
+<<<<<<< .mine
+;solid			wall/wall1	20,0,-1
+;solid			wall/wall1	-20,0,-1
+;solid			wall/ceil	0,0,15
+;solid			wall/wall1	0,20,-1
+;solid			wall/wall1	0,-20,-1
+solid			wall/floor	0,0,-20.5
+=======
 ;solid			wall/wall1	20,0,-1
 ;solid			wall/wall1	-20,0,-1
 ;solid			wall/ceil	0,0,15
 ;solid			wall/wall1	0,20,-1
 ;solid			wall/wall1	0,-20,-1
 ;solid			wall/floor	0,0,-20.5
+>>>>>>> .r237
 
+<<<<<<< .mine
+solid			sphere/sphere2		0,0,0
+=======
 ;solid			sphere/sphere2		-50,0,0
 ;solid2			sphere/sphere2		50,0,0
 
 solid			box/box2	0,0,0
 solid			box/box2	10,0,0
+>>>>>>> .r237
