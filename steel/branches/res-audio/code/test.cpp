@@ -25,9 +25,13 @@
 
 bool test()
 {
-
 	if (!initializeOpenAL())
 		return false;
+
+	//Listener *listener = new Listener();
+	//updateListener(*listener);
+	//listener->setOrientation(v3(0.0f, 0.0f, -1.0f), v3(0.0f, 1.0f, 0.0f));
+	//updateListener(*listener);
 
 	//Audio *tSnd = resAudio.add("audio/stereo");
 

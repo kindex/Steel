@@ -629,6 +629,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\audio\audio_interface.h"
+					>
+				</File>
+				<File
 					RelativePath=".\audio\openal_engine.cpp"
 					>
 				</File>

@@ -153,7 +153,9 @@ extern void updateListener(Listener &listener)
 {
 	alListenerfv(AL_POSITION, listener.getPosition());
 	alListenerfv(AL_VELOCITY, listener.getVelocity());
-	alListenerfv(AL_ORIENTATION, listener.getOrientation());
+	float orientation[] = { listener.getOrientationAt().x, listener.getOrientationAt().y, listener.getOrientationAt().z, 
+								   listener.getOrientationUp().x, listener.getOrientationUp().y, listener.getOrientationUp().z};
+	alListenerfv(AL_ORIENTATION, orientation);
 }
 
 

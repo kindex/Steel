@@ -277,6 +277,12 @@ void Game::bindPhysicEngine()
 	}
 }
 
+void Game::score(Listener *listener)
+{
+	listener->setPosition(eye.x, eye.y, eye.z);
+	updateListener(*listener);
+}
+
 void Game::draw(GraphEngine *graph)
 {
 /*	if(!input->isMouseCaptured())
@@ -303,10 +309,11 @@ void Game::draw(GraphEngine *graph)
 
 		graph->inject(crosshair);
 	}*/
-
+	
 	graph->camera.setup(eye, direction);
 	graph->processCamera();
 	graph->process();
+	
 
 //	if(conf->geti("crosshair"))
 //		graph->remove(crosshair);

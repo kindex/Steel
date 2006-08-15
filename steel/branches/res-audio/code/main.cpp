@@ -89,6 +89,8 @@ int main(int argc, char *argv[])
 
 	game.bind(&graph);
 
+	Listener *listener = new Listener();
+
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
 	log_msg("core", "Entering main loop");
@@ -119,6 +121,7 @@ int main(int argc, char *argv[])
 		}
 
 		game.draw(&graph);
+		game.score(listener);
 
 		timer.incframe();
 

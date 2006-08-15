@@ -1,6 +1,7 @@
 #ifndef __AUDIO_ENGINE_H
 #define __AUDIO_ENGINE_H
 
+#include "../engine.h"
 #include "../res/audio/audio.h"
 
 class AudioEngine;
@@ -12,14 +13,18 @@ public:
 	~Listener() {};
 	void setPosition(float x, float y, float z) { position[0] = x; position[1] = y; position[2] = z; }
 	void setVelocity(float x, float y, float z) { velocity[0] = x; velocity[1] = y; velocity[2] = z; }
-	void setOrientation(v3 at, v3 up) {};
+	void setOrientation(v3 at, v3 up) { atVect = at; upVect = up; }
 	v3 getPosition() { return position; }
 	v3 getVelocity() { return velocity; }
-	float *getOrientation() { return orientation; }
+	//float *getOrientation() { return orientation; }
+	v3 getOrientationAt() { return atVect; }
+	v3 getOrientationUp() { return upVect; }
 private:
 	v3 position;
 	v3 velocity;
-	float orientation[6];
+	//float orientation[6];
+	v3 atVect;
+	v3 upVect;
 };
 
 
@@ -47,12 +52,18 @@ private:
 	float pitch;
 };
 
-/*
+
 class AudioEngine : public Engine
 {
 public:
 	Listener listener;
+
+//	virtual bool inject(AudioInterface *object);
+
+	virtual bool process() = 0;
+
+	bool clear();
 };
-*/
+
 
 #endif
