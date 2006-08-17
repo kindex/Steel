@@ -12,6 +12,7 @@
 #ifndef COMMON__WIN_INFO_H
 #define COMMON__WIN_INFO_H
 
+#include "../steel.h"
 #if STEEL_OS == OS_WIN32
 	void DetectWindowsVersion(void);
 #endif

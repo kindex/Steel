@@ -12,6 +12,11 @@
 #ifndef COMMON__SYSTEM_INFO_H
 #define COMMON__SYSTEM_INFO_H
 
+#include "../steel.h"
+#if STEEL_OS == OS_WIN32
 void CollectSystemInfo(void);
+#else
+#define CollectSystemInfo() ;
+#endif
 
 #endif

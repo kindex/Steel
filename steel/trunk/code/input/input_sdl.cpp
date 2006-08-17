@@ -33,15 +33,21 @@ void InputSDL::process()
 					break;
 
 				case SDL_MOUSEMOTION:
-					if(!firstMouse && (event.motion.xrel != lastdx || event.motion.yrel != lastdy))
+					cx = event.motion.x;
+					cy = event.motion.y;
+					lastdx = event.motion.xrel;
+					lastdy = event.motion.yrel;
+					/*if(!firstMouse && (event.motion.xrel != lastdx || event.motion.yrel != lastdy))
 					{
 						mx = event.motion.x;
 						my = event.motion.y;
 
-						SDL_WarpMouse(cx, cy);
+						//SDL_WarpMouse(cx, cy);
 				
 						lastdx = cx - mx;
 						lastdy = cy - my;
+						cx = mx;
+						cy = my;
 
 						game->handleMouse(lastdx, -lastdy);
 					}
@@ -50,14 +56,14 @@ void InputSDL::process()
 						lastdx = 0;
 						lastdy = 0;
 					}
-					firstMouse = false;
+					firstMouse = false;*/
 					break;
 	
 			}
-	if(mouseCaptured && focused)
+	/*if(mouseCaptured && focused)
 	{
 		SDL_WarpMouse(cx, cy);
-	}
+	}*/
 }
 
 
@@ -68,7 +74,7 @@ void InputSDL::captureMouse()
 	lastdx = 0;
 	lastdy = 0;
 
-	SDL_WarpMouse(cx, cy);
+	//SDL_WarpMouse(cx, cy);
 }
 
 void InputSDL::freeMouse()

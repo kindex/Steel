@@ -172,8 +172,8 @@ public:
 		DrawTriangles(NULL),
 		BindTexCoords(NULL),
 		BindTexCoords3f(NULL),
-		DrawLines(NULL), 
-		DrawWire(NULL), 
+		DrawWire(NULL),
+		DrawLines(NULL),  
 		DrawNormals(NULL),
 		DrawVertexes(NULL),
 		DrawAABB(NULL)

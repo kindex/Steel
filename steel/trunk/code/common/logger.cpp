@@ -12,11 +12,15 @@
 		Ëמד-פאיכ
  ************************************************************/
 
+#include "../steel.h"
 #include "logger.h"
 #include "utils.h"
 
-#include <time.h>
+#if STEEL_OS == OS_WIN32
 #include <Windows.h>
+#endif
+
+#include <time.h>
 #include <map>
 
 using namespace std;
@@ -40,9 +44,16 @@ bool Logger::open(std::string filename)
 	//Def
 	//read SystemTime
 	//This is Systesm Time Insertion Into Log File Header
+	#if STEEL_OS == OS_WIN32
 	SYSTEMTIME sm;
 	GetLocalTime(&sm);
 	f << sm.wYear << "-" << sm.wMonth << "-"<<  sm.wDay << " "<< sm.wHour << ":"<<sm.wMinute << ":"<< sm.wSecond << ":"<< sm.wMilliseconds << " ]"<< endl;
+	#elif STEEL_OS == OS_LINUX
+	time_t sm = ::time(NULL);
+	struct tm *tm = localtime(&sm);
+	f << tm->tm_mday << "." << tm->tm_mon << "." << 1900+tm->tm_year << " " \
+		<< tm->tm_hour << ":" << tm->tm_min << ":" << tm->tm_sec << "]" << endl;
+	#endif
 
 	return true;
 }
@@ -185,5 +196,3 @@ bool LogFilter::check(std::string keywords)
 }
 
 LogFilter logFilter;
-
-

@@ -9,6 +9,7 @@
     Description:
 		Модуль определения версии Windows.
  ************************************************************/
+#include "../steel.h"
 
 #if STEEL_OS == OS_WIN32
 	#include <windows.h>

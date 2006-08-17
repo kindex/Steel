@@ -103,8 +103,6 @@ bool OpenGL_SDL_Engine::createWindow()
     	_("\tSoftware alpha blits: ") + (videoInfo->blit_sw_A?_("yes"):_("no")) + "\n" + \
     	_("\tAccelerated colour fills: ") + (videoInfo->blit_fill?_("yes"):_("no")) + "\n");
 	
-	error("graph sdl", "test message");
-	
 	return true;
 }
 

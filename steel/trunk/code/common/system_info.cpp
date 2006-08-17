@@ -10,6 +10,9 @@
 		Модуль определения необходимых параметров системы.
  ************************************************************/
 
+#include "../steel.h"
+
+#if STEEL_OS == OS_WIN32
 #include <windows.h>
 #include <winbase.h>
 
@@ -153,3 +156,4 @@ void CollectSystemInfo(void)
    //cout << " Windows directory:  " << lpszSystemInfo << endl;
    log_msg("system_info",  "Windows directory:  " + string(lpszSystemInfo4));
 }
+#endif	// STEEL_OS

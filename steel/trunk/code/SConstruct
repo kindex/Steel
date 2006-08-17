@@ -1,13 +1,16 @@
 import sys
 
 Help("""
-Build the Steel Engine: 'scons mode=...`
+Build the Steel Engine: 'scons mode=... uses=...`
 Clear the built Steel Engine: 'scons -c`
 
 ========
 Build mode: debug|release; default: debug
 	'debug`: build debug version, debug mode can be set
 	'release`: build the release version
+
+Using feachures: gettext; default: gettext
+	'gettext`: enable the support of GETTEXT library
 	""")
 
 env=Environment(CPPPATH=["/usr/include/SDL"], CCFLAGS="-Wall")
@@ -45,6 +48,8 @@ sources = Split("""
 	./common/logger.cpp
 	./common/utils.cpp
 	./common/timer.cpp
+	./common/system_info.cpp
+	./common/win_info.cpp
 	./graph/graph_helper.cpp
 	./graph/graph_engine.cpp
 	./graph/opengl/opengl_sdl_engine.cpp
@@ -57,6 +62,8 @@ sources = Split("""
 	./graph/opengl/opengl_11.cpp
 	./graph/opengl/opengl_13.cpp
 	./graph/opengl/opengl_15.cpp
+	./graph/opengl/opengl_20.cpp
+	./graph/opengl/opengl_glsl.cpp
 	./test.cpp
 	./objects/custom_path.cpp
 	./objects/game_obj.cpp
@@ -84,19 +91,20 @@ sources = Split("""
 	./res/res.cpp
 	./res/image/image.cpp
 	./res/image/bmp.cpp
+	./res/image/png.cpp
 	./res/image/tga.cpp
 	./res/text/text_file.cpp
 	./physic/physic_engine.cpp
 	./physic/physic_engine_steel.cpp
 	./physic/pe_particle.cpp
 	./main.cpp
-	
 	""")
 
 libs = Split("""
 	SDL
 	GL
 	glut
+	png
 	""")
 
 libpaths = Split("""

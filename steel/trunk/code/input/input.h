@@ -15,7 +15,7 @@ class Input;  // forward declaration, cross-use
 #include <map>
 
 
-class Input: public steelAbstract
+class Input: public SteelAbstract
 {
 protected:
 	std::map<std::string, bool> keyPressed;
