@@ -1,0 +1,40 @@
+=====================
+= Test Sound Config =
+=====================
+
+name (== id)
+file
+type	ambient / source	(1/0)
+pich
+gain
+load	streamed / loaded	(1/0)
+
+loop	looping / nonlooping	(1/0)
+
++ all parameters
+
+=======================================================
+
+
+<
+name	ambient_room
+file	res/audio/room.wav
+tyoe	ambient
+pitch	1.0
+gain	1.0
+load	loaded
+loop	looping
+>
+
+<
+name	ambient_room
+file	res/audio/room.wav
+type	ambient
+pitch	1.0
+gain	1.0
+load	0
+loop	1
+>
+
+ambient_room	res/audio/room.wav	ambient	1.0	1.0	loaded	looping	
+ambient_room	res/audio/room.wav	ambient	1.0	1.0	0	1

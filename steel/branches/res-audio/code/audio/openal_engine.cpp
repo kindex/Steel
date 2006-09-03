@@ -23,8 +23,8 @@ EAXGet m_EAXGet;
 
 //========================================================================
 // classes
-
-AL_Source::AL_Source(Audio * sound)
+/*
+void AL_Source::initialize(Audio * sound)
 {
 	setVelocity(0.0f, 0.0f, 0.0f);
 	setPosition(0.0f, 0.0f, 0.0f);
@@ -46,7 +46,7 @@ AL_Source::AL_Source(Audio * sound)
     alSourcefv(source, AL_VELOCITY, getVelocity()	);
 	alSourcei (source, AL_LOOPING,  isLooped()		);
 };
-
+*/
 
 //====================================================================
 // extern functions
@@ -173,28 +173,54 @@ extern void updateListener(Listener &listener)
 }
 
 
-extern void soundPlay(AL_Source &sound)
+extern void soundPlay(Source &sound)
 {
 	alSourcePlay(sound.source);
 }
 
-extern void soundClose(AL_Source &sound)
+extern void soundClose(Source &sound)
 {
 	alSourceStop(sound.source);
 	if (alIsSource(sound.source))
 		alDeleteSources(1, &sound.source);
 }
 
-extern void soundStop(AL_Source &sound)
+extern void soundStop(Source &sound)
 {
 	alSourceStop(sound.source);
 }
 
-extern void soundUpdate(AL_Source &sound)
+extern void soundUpdate(Source &sound)
 {
 	alSourcef (sound.source, AL_PITCH,    sound.getPitch()	);
     alSourcef (sound.source, AL_GAIN,     sound.getGain()		);
     alSourcefv(sound.source, AL_POSITION, sound.getPosition()	);
     alSourcefv(sound.source, AL_VELOCITY, sound.getVelocity()	);
 	alSourcei (sound.source, AL_LOOPING,  sound.isLooped()	);
+}
+
+
+
+// from audio_engine.h
+Source::Source(Audio *sound)
+{
+	setVelocity(0.0f, 0.0f, 0.0f);
+	setPosition(0.0f, 0.0f, 0.0f);
+	setGain(1.0f);
+	setPitch(1.0f);
+	setLooped(false);
+
+	alGenBuffers(1, &buffer);
+	alBufferData(buffer, sound->format, sound->data, sound->size, sound->frequency);
+	if (sound->data)
+		free(sound->data);
+	alGenSources(1, &source);
+
+	alSourcei (source, AL_BUFFER,   buffer			);
+
+    alSourcef (source, AL_PITCH,    getPitch()		);
+    alSourcef (source, AL_GAIN,     getGain()		);
+    alSourcefv(source, AL_POSITION, getPosition()	);
+    alSourcefv(source, AL_VELOCITY, getVelocity()	);
+	alSourcei (source, AL_LOOPING,  isLooped()		);
 }

@@ -277,7 +277,7 @@ void Game::bindPhysicEngine()
 	}
 }
 
-void Game::score(Listener *listener)
+void Game::insonify(Listener *listener)
 {
 	listener->setPosition(eye.x, eye.y, eye.z);
 	updateListener(*listener);

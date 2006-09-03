@@ -15,8 +15,13 @@
 #ifndef __AUDIO_ENGINE_H
 #define __AUDIO_ENGINE_H
 
+#include <vector>
 #include "../engine.h"
 #include "../res/audio/audio.h"
+//#include "openal_engine.h"
+#include "../res/audio/audio_config.h"
+#include "../res/res_main.h"
+//#include "openal_engine.h"
 
 class AudioEngine;
 
@@ -45,9 +50,11 @@ private:
 class Source
 {
 public:
-	//Source();
+	Source() {};
+	Source(Audio *sound);
 	//float getPosition(short i) { return position[i]; }
 	//float getVelocity(short i) { return velocity[i]; }
+
 	v3 getPosition() { return position; }
 	float *getVelocity() { return velocity; }
 	float getGain() const { return gain; }
@@ -58,6 +65,18 @@ public:
 	void setGain(float newGain) { gain = newGain; }
 	void setPitch(float newPitch) { pitch = newPitch; }
 	void setLooped(bool newLoop) { isLoop = newLoop; }
+
+	// from OpenAL_Source
+	Audio *sound;
+	unsigned int source;		// unsigned int
+	unsigned int buffer;		// unsigned int
+
+	std::string fileName;
+	std::string name;		// == id
+	std::string type;
+	std::string load;
+	//std::string loop;
+
 private:
 	float velocity[3];
 	v3 position;
@@ -70,13 +89,19 @@ private:
 class AudioEngine : public Engine
 {
 public:
+	AudioEngine() {}
+	void setConfig();
+	void loadSources();
+
+	bool init(std::string _conf) { return true ;}
+	virtual bool clear() { return true; } 
+	virtual bool deinit() { return true; } 
+
+//============================
+
 	Listener listener;
-
-//	virtual bool inject(AudioInterface *object);
-
-	virtual bool process() = 0;
-
-	bool clear();
+	std::vector<AudioConfig> config;		// audio configs
+	std::vector<Source> sources;
 };
 
 

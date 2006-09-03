@@ -26,7 +26,8 @@ class Audio : public Res
 {
 public:
 	void *data;
-	char *fileName;
+	std::string fileName;
+	//char *fileName;
 	int format;
 	int size;
 	int frequency;

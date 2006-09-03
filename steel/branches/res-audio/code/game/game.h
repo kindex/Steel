@@ -79,7 +79,7 @@ public:
 	void bindPhysicEngine();
 	void draw(GraphEngine *engine);
 
-	void score(Listener *listener);
+	void insonify(Listener *listener);
 
 	void process(steel::time globalTime, steel::time time);
 //	int getCollisionCount() { return physicEngine->total.collisionCount; }

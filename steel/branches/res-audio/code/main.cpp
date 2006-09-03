@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 		}
 
 		game.draw(&graph);
-		game.score(listener);
+		game.insonify(listener);
 
 		timer.incframe();
 

@@ -35,15 +35,18 @@
 #pragma comment(lib, "eaxguid.lib")
 
 using namespace std;
-
+/*
 class AL_Source : public Source
 {
 public:
-	AL_Source(Audio * sound);
-	Audio * sound;
+	//AL_Source(Audio * sound);
+
+	Audio *sound;
 //private:
 	ALuint buffer;
 	ALuint source;
+
+	std::string name;	// == id
 };
 
 /*
@@ -54,6 +57,11 @@ class AL_Listener : public Listener
 
 //extern void updateListener(Listener);				//??????????????????????????????????????????????????
 
+class OpenALEngine : public AudioEngine
+{
+};
+
+
 extern bool initializeOpenAL();
 extern void destroyOpenAL();
 extern void setListenerEnvironment(unsigned long environment);
@@ -63,10 +71,10 @@ extern ALboolean CheckALError();
 
 extern void updateListener(Listener &listener);
 
-extern void soundPlay(AL_Source &sound);
-extern void soundClose(AL_Source &sound);
-extern void soundStop(AL_Source &sound);
-extern void soundUpdate(AL_Source &sound);
+extern void soundPlay(Source &sound);
+extern void soundClose(Source &sound);
+extern void soundStop(Source &sound);
+extern void soundUpdate(Source &sound);
 
 
 
