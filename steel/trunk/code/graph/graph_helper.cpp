@@ -1,4 +1,5 @@
 #include "graph_helper.h"
+#include "../common/steel_vector.h"
 
 void GraphHelper::setTime(const steel::time _time) 
 {
@@ -78,7 +79,7 @@ void GraphHelper::ProcessGraph(const GraphEngineInfo &info)
 		li += 3;
 	}
 
-	for(vector<LineElement>::iterator it = lines.begin(); it != lines.end(); it++)
+	for(steel::vector<LineElement>::iterator it = lines.begin(); it != lines.end(); it++)
 	{
 		vertex.data[vi + 0].set(it->line.base);
 		vertex.data[vi + 1].set(it->line.base + it->line.a);
@@ -90,7 +91,7 @@ void GraphHelper::ProcessGraph(const GraphEngineInfo &info)
 		li += 1;
 	}
 
-	for(vector<BoxElement>::iterator it = boxes.begin(); it != boxes.end(); it++)
+	for(steel::vector<BoxElement>::iterator it = boxes.begin(); it != boxes.end(); it++)
 	{
 		aabb &b = it->box;
 

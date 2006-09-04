@@ -13,7 +13,7 @@ Using feachures: gettext; default: gettext
 	'gettext`: enable the support of GETTEXT library
 	""")
 
-env=Environment(CPPPATH=["/usr/include/SDL"], CCFLAGS="-Wall")
+env=Environment(CPPPATH=["/usr/include/SDL"], CCFLAGS="-Wall -DSTEEL_COMPILER=0 -DSTEEL_OPENGL_API=0 -DSTEEL_OS=0")
 
 mode=ARGUMENTS.get("mode","debug")
 if mode=="debug":

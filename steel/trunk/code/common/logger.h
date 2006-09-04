@@ -1,23 +1,25 @@
-/*id*********************************************************
-    Unit: logger
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+﻿/*id*********************************************************
+	File: common/logger.h
+	Unit: logger
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [J. Anton, kane@mail.berlios.de]
-    License:
-        Steel Engine License
-    Description:
+	License:
+		Steel Engine License
+	Description:
 		Лог-файл
  ************************************************************/
 
 #ifndef __LOGGER_H__
 #define __LOGGER_H__
 
-#include "timer.h"
-
 #include <string>
 #include <fstream>
+
+#include "../steel.h"
+#include "timer.h"
 #include "steel_vector.h"
 
 #undef assert
@@ -67,8 +69,11 @@ void _log_msg(std::string keywords, std::string message);
 class Logger
 {
 protected:
+	// открыт ли файл для вывода сообщений
 	bool opened;
+	// файл, в который выводятся сообщения
 	std::fstream f;
+	// уровень вложенности сообщений
 	int level;
 
 public:
@@ -89,8 +94,8 @@ public:
 
 	// вывод без ключевых слов
 	void out(std::string str);
-	void push() { level++;}
-	void pop(){ level--;}
+	void push(void) { level++;}
+	void pop(void){ level--;}
 	void setLevel(int _level) { level = _level; }
 	int getLevel(void) { return level;}
 };
@@ -104,6 +109,15 @@ namespace steel
 	extern Logger log;
 }
 
+
+/* 
+	LogFilter отвечает за отсеивание лишних сообщений в главном лог-файле. 
+	Фильтр – это набор ключевых слов, отледённый пробелами. 
+	Правила фильтра проверябтся посдедовательно. Если с сообщении есть ключевое слово 
+	из фильтра, то оно выводиться, если же фильтр начинается с -, то отбрасывается. 
+	Например, если фильтр “error -info”, то будут выводиться все сообщения с error, 
+	а если error нет, то будут отбрасываться все сообщения с info
+*/
 class LogFilter
 {
 private:
@@ -112,15 +126,15 @@ private:
 		std::string keyword;
 		bool action;
 	};
-	steel::vector<filterItem> filters;
+	svector<filterItem> filters;
 
 public:
+	// установить фильтр
 	void set(std::string filter);
+	// пропускает ли этот фильтр набор клювевый фраз
 	bool check(std::string keywords);
 };
 
 extern LogFilter logFilter;
-
-
 
 #endif

@@ -1,36 +1,48 @@
+﻿/*id*********************************************************
+	File: common/utils.h
+	Unit: utils
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Всевозможные полезные функции
+ ************************************************************/
 #ifndef __UTILS_H
 #define __UTILS_H
 
-#include "../_cpp.h"
+#include "../steel.h"
 #include "../math/vector3d.h"
 #include <string>
 #include "steel_vector.h"
 
-//Returns random value [0..1)
+// random float number in interval [0..1)
 float frand();
-//Returns random value [-0.5..+0.5)
+// random float number in interval [-0.5..+0.5)
 float prand();
-
-// string to v3, string format X,Y,Z
+// convert string to v3 (vector components are devided with ',' [X,Y,Z])
 v3	stov3(std::string s);
-
+// convert float number into string
 std::string FloatToStr(double a);
+// convert integer into string
 std::string IntToStr(int a);
 
-// split string into vector
-steel::vector<std::string> explode(char delimiter, const std::string s);
-// unsplit vector to string
-std::string implode(const char delimiter, const steel::vector<std::string> elements);
+// split string into array of strings with delimiter
+void explode(char delimiter, const std::string s, svector<std::string> &result);
+// concat array of string into one string
+std::string implode(const char delimiter, const svector<std::string> elements);
 
+// вернуть диреторию, в которой находится файл (выбросить имя файла из полного пути)
 std::string getPath(std::string fullpath);
-
+// split full path to path + filename
 void splitPath(std::string fullpath, std::string &path, std::string &filename);
-
+// delete file in directory
 void deleteFiles(std::string dir, std::string mask);
+// delete all files in directory with mask
 void deleteFile(std::string dir, std::string file);
-
-// Change all a symbols in string s to symbol b
+// translate all chars a to b into string s
 std::string strtr(const char *s, char a, char b);
-
 
 #endif

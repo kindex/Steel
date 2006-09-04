@@ -1,15 +1,17 @@
-/*id*********************************************************
-    Unit: objects/model
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Статическая модель, котоаря рисуется и движется
+п»ї/*id*********************************************************
+	File: objects/model_obj.cpp
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		РЎС‚Р°С‚РёС‡РµСЃРєР°СЏ РјРѕРґРµР»СЊ, РєРѕС‚РѕР°СЂСЏ СЂРёСЃСѓРµС‚СЃСЏ Рё РґРІРёР¶РµС‚СЃСЏ
  ************************************************************/
 
+#include "../steel.h"
 #include "model_obj.h"
 #include "../common/utils.h"
 #include "../res/res_main.h"

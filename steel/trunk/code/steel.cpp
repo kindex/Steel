@@ -1,12 +1,13 @@
-/*id*********************************************************
-    Unit: core
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+﻿/*id*********************************************************
+	File: steel.cpp
+	Unit: core
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
 		System dependant entry point for Visual Studio project.
  ************************************************************/
 
@@ -21,10 +22,10 @@
 #include <string>
 
 #include "main.h"
-#include "_cpp.h"
 
 
-//#define OPENGL_WIN
+
+//#define OPENGL_WINAPI
 
 
 /*extern int mainCRTStartup(void);
@@ -32,7 +33,7 @@
 
 #if STEEL_OS == OS_WIN32
 
-#if STEEL_COMPILER == DEVCPP
+#if STEEL_COMPILER == COMPILTER_DEVCPP
 HINSTANCE hInstance;
 
 int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
@@ -47,7 +48,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 	return main1(0, NULL);							// Exit The Program
 }
 
-#elif (STEEL_COMPILER == VS8) && (STEEL_VIDEOSYS == OPENGL_WIN)
+#elif (STEEL_COMPILER == COMPILER_VS8) && (STEEL_OPENGL_API == OPENGL_WINAPI)
 HINSTANCE hInstance;
 
 int APIENTRY WinMain(HINSTANCE hInstance,
@@ -59,6 +60,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	return main(0, NULL);
 }
-#endif	// STEEL_COMPILER && STEEL_VIDEOSYS
+#endif	// STEEL_COMPILER && STEEL_OPENGL_API
 
 #endif	// STEEL_OS

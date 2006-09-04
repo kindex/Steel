@@ -1,3 +1,17 @@
+﻿/*id*********************************************************
+	File: objects/sphere.cpp
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Многогранник с изменяемой формой и количеством полигонов
+ ************************************************************/
+
+#include "../steel.h"
 #include "sphere.h"
 #include "../res/res_main.h"
 

@@ -1,12 +1,12 @@
 /*id*********************************************************
-    Unit: OpenGL Engine / GLSL
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	Unit: OpenGL Engine / GLSL
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
 		GLSL шейдёры
  ************************************************************/
 

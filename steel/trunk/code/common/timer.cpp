@@ -1,7 +1,18 @@
-
+﻿/*id*********************************************************
+	File: common/timer.cpp
+	Unit: Timer
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Секундомер. Засекает время, считает промежутки времени.
+		Высчитывает FPS.
+ ************************************************************/
 #include "../steel.h"
 #include "timer.h"
-#include "../_cpp.h"
 
 #include <sys/timeb.h>
 #include <time.h>

@@ -1,5 +1,17 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+п»ї/*id**********************************************************
+	File: common/steel_vector.h
+	Unit: vector
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		РђРЅР°Р»РѕРі std::vector
+ ************************************************************/
+#ifndef __STEEL_VECTOR_H__
+#define __STEEL_VECTOR_H__
 
 /*public ref class DebuggerVisualizerAttribute sealed : public Attribute
 {
@@ -8,8 +20,7 @@
 #include <stdlib.h>
 #include <vector>
 
-#define STEEL_VECTOR
-
+#include "../steel.h"
 
 namespace steel
 {
@@ -43,15 +54,15 @@ namespace steel
 template <typename T>
 class svector
 {
-	size_t _count;// Количество используемых эелементов
-	T *data;  // динамический массив для хранения данных
-	size_t _size; // Размер массива
+	size_t _count;// РљРѕР»РёС‡РµСЃС‚РІРѕ РёСЃРїРѕР»СЊР·СѓРµРјС‹С… СЌРµР»РµРјРµРЅС‚РѕРІ
+	T *data;  // РґРёРЅР°РјРёС‡РµСЃРєРёР№ РјР°СЃСЃРёРІ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С…
+	size_t _size; // Р Р°Р·РјРµСЂ РјР°СЃСЃРёРІР°
 
 public:
 	typedef T* iterator;
 	typedef iterator const_iterator;
 
-	svector() { _size = _count = 0; data = NULL; }
+	svector(void) { _size = _count = 0; data = NULL; }
 /*	svector(const svector &original)
 	{ 
 		free(data);
@@ -94,17 +105,17 @@ public:
 			data = (T*)realloc(data, _size*sizeof(T));
 		}
 
-		if(oldCount<_count)
+		if(oldCount < _count)
 		{
 //			memset((char*)data + oldCount*sizeof(T), 0, (_count - oldCount)*sizeof(T));
-			for(size_t i = oldCount; i<_count; i++)
+			for(size_t i = oldCount; i < _count; i++)
 			{
 				new (&data[i]) T();
 			}
 		}
 		if(oldCount > _count)
 		{
-			for(size_t i = _count + 1; i <= oldCount; i++)
+			for(size_t i = _count; i < oldCount; i++)
 			{
 				data[i].~T();
 			}
@@ -113,21 +124,21 @@ public:
 
 	}
 	
-	void clear()
+	void clear(void)
 	{
 		resize(0);
 		pack();
 	}
 
-	size_t size() const { return _count; }
-	size_t capacity() const { return _size; }
-	bool empty() const { return _count==0; }
+	size_t size(void) const { return _count; }
+	size_t capacity(void) const { return _size; }
+	bool empty(void) const { return _count==0; }
 
 	T&operator[](size_t i)	{		return data[i];	}
 	const T&operator[](size_t i) const	{		return data[i];	}
 	T& at(size_t i)	{		return data[i];	}
 
-	void pack()
+	void pack(void)
 	{
 		if(_count < _size)
 		{
@@ -142,29 +153,27 @@ public:
 		data[_count-1] = newItem;
 	}
 	
-	T pop_back()
+	void pop_back(void)
 	{
-		T result = data[_count-1];
 		resize(_count - 1);
-		return result;
 	}
 
-	iterator begin() const
+	iterator begin(void) const
 	{ 
 		if(_count == 0)
 			return NULL;
 		else
 			return data; 
 	}
-	iterator end() const
+	iterator end(void) const
 	{ 
 		if(_count == 0)
 			return NULL;
 		else
 			return data + _count;
 	}
-	T &back()	{		return data[_count-1];	}
-	T &front()	{		return data[0];	}
+	T &back(void)	{		return data[_count-1];	}
+	T &front(void)	{		return data[0];	}
 	void erase(iterator it)
 	{
 		int move = ((data + _count -1) - it)*sizeof(T);
@@ -176,9 +185,11 @@ public:
 	}
 
 };
-#endif
+#endif // STEEL_VECTOR
 
 
 }
 
-#endif
+#endif // __STEEL_VECTOR_H__
+
+using steel::svector;

@@ -1,11 +1,14 @@
-/*id*********************************************************
-    Unit: math/matrix4x4
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    Description:
-		Class declaration for a 3x4 matrix
+п»ї/*id*********************************************************
+	File: math/matrix33.cpp
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Class declaration for a 3x3 matrix
 ************************************************************/
 
 #include "matrix33.h"
@@ -198,7 +201,7 @@ void matrix33::getInverse(matrix33 &res) const
 
 	if(det != 0)
 	{
-		// алгебраические дополнения
+		// Р°Р»РіРµР±СЂР°РёС‡РµСЃРєРёРµ РґРѕРїРѕР»РЅРµРЅРёСЏ
 		float m00 =  m[1][1]*m[2][2] - m[1][2]*m[2][1];
 		float m01 = -m[0][1]*m[2][2] + m[2][1]*m[0][2];
 		float m02 =  m[0][1]*m[1][2] - m[1][1]*m[0][2];

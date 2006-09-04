@@ -1,13 +1,13 @@
 /*id*********************************************************
-    Unit: Res-Image [Resources - Images - BMP (RGB bitmap)]
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	Unit: Res-Image [Resources - Images - BMP (RGB bitmap)]
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* NeHe Lesson 32 [nehe.gamedev.net, 2001]
-    License:
-        Steel Engine License
-    Description:
+	License:
+		Steel Engine License
+	Description:
 		Класс для загрузки TGA-файла в класс Image
  ************************************************************/
 

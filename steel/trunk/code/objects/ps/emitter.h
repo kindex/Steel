@@ -1,15 +1,15 @@
-/*id*********************************************************
-    Unit: particle_system
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
+п»ї/*id*********************************************************
+	File: objects/ps/emitter.h
+	Unit: particle_system
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
-    License:
-        Steel Engine License
-    Description:
-		Steel Версия физического движка. 
-	Обрабатывает движение только частиц.
+	License:
+		Steel Engine License
+	Description:
+		РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Рё СѓС‚РёР»РёР·Р°С†РёСЏ С‡Р°СЃС‚РёС† РІ СЃРёСЃС‚РµРјРµ
 ************************************************************/
 #ifndef __PARICLE_SYSTEM__EMITTER_H
 #define __PARICLE_SYSTEM__EMITTER_H
@@ -19,9 +19,8 @@
 class SimpleEmitter: public ParticleEmitter
 {
 public:
-	void born(Particle &particle); // создать частицу
+	void born(Particle &particle); // СЃРѕР·РґР°С‚СЊ С‡Р°СЃС‚РёС†Сѓ
 	void ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime);
-
 };
 
 #endif

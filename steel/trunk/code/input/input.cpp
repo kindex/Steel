@@ -1,3 +1,16 @@
+﻿/*id*********************************************************
+	File: input/input.cpp
+	Unit: input
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Абстрактный класс обработчика ввода с клавиатуры и мыши
+ ************************************************************/
+
 #include "input.h"
 #include "../res/res_main.h"
 

@@ -1,13 +1,14 @@
-/*id*********************************************************
+п»ї/*id*********************************************************
+	File: common/win_info.h
 	Unit: Windows Info
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
 	License:
-        Steel Engine License
-    Description:
-		Модуль определения версии Windows.
+		Steel Engine License
+	Description:
+		РњРѕРґСѓР»СЊ РѕРїСЂРµРґРµР»РµРЅРёСЏ РІРµСЂСЃРёРё Windows.
  ************************************************************/
 #ifndef COMMON__WIN_INFO_H
 #define COMMON__WIN_INFO_H

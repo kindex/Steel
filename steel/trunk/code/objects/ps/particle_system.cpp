@@ -1,17 +1,19 @@
-/*id*********************************************************
-    Unit: particle_system
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
+п»ї/*id*********************************************************
+	File: objects/ps/particle_system.cpp
+	Unit: particle_system
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
-    License:
-        Steel Engine License
-    Description:
-		Steel Версия физического движка. 
-	Обрабатывает движение только частиц.
+	License:
+		Steel Engine License
+	Description:
+		РћСЃРЅРѕРІР° СЃРёСЃС‚РµРј С‡Р°СЃС‚РёС†. Р‘Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ, РєРѕС‚РѕСЂС‹Рµ РєРѕРјРїРѕРЅСѓРµС‚
+		РЅРµСЃРєРѕР»СЊРєРѕ СЂРµР°Р»РёР·Р°С†РёР№ СЌРјРёС‚РµСЂР°, Р°РЅРёРјР°С‚РѕСЂР° Рё СЂРµРЅРґРµСЂРµСЂР° РґР»СЏ
+		СЃРёСЃС‚РµРј С‡Р°СЃС‚РёС†.
 ************************************************************/
-#include "../../_cpp.h"
+#include "../../steel.h"
 
 #include "particle_system.h"
 #include "emitter.h"
@@ -69,7 +71,7 @@ bool ParticleSystem::init(ScriptLine	&s)
 	return true;
 }
 
-void ParticleEmitter::kill(int i) // убить частицу с номером i
+void ParticleEmitter::kill(int i) // СѓР±РёС‚СЊ С‡Р°СЃС‚РёС†Сѓ СЃ РЅРѕРјРµСЂРѕРј i
 {
 
 }

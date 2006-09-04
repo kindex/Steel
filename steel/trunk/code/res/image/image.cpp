@@ -1,12 +1,12 @@
 /*id*********************************************************
-    Unit: Res-Image [Resources - Images (RGB bitmap)]
-    Part of: Steel engine Res unit
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	Unit: Res-Image [Resources - Images (RGB bitmap)]
+	Part of: Steel engine Res unit
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
 		 ласс дл€ хранени€ изображени€ в виде RGB (без загрузки)
  ************************************************************/
 

@@ -1,12 +1,13 @@
 /*id*********************************************************
-    Unit: core
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	File: interface.h
+	Unit: core
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
 		Предок для интерфейтов объектов, которые имеют положение
 		(глобальную, локальную систему координат)
 ************************************************************/
@@ -43,9 +44,9 @@ public:
 	// уникальный идентификатор для массива данных
 	uid		id;
 public:
-	uid		getId() const { return id; }
+	uid		getId(void) const { return id; }
 	void	setId(uid _id) { id = _id; changed = false; }
-	bool	wasChanged() const { return changed; }
+	bool	wasChanged(void) const { return changed; }
 	void	setChanged(bool _changed) {changed = _changed; }
 };
 
@@ -81,8 +82,8 @@ class IdGenerator
 protected:
 	uid freeId;
 public:
-	IdGenerator() { freeId = 1; }
-	uid genUid();
+	IdGenerator(void) { freeId = 1; }
+	uid genUid(void);
 };
 
 extern IdGenerator objectIdGenerator;
@@ -105,17 +106,17 @@ typedef int ModificationTime;
 
 extern ModificationTime globalFrameNumber;
 
-class Interface: public steelAbstract
+class Interface
 {
 protected:
 	uid id;
 	ModificationTime modificationTime;
 public:
 	// дефолтовый конструктор присваюивает уникальный идентификатор.
-	Interface() { id = objectIdGenerator.genUid(); modificationTime = 0; }
+	Interface(void) { id = objectIdGenerator.genUid(); modificationTime = 0; }
 
 	// Object unique identifier
-	virtual uid								getId()				{ return id; }
+	virtual uid								getId(void)				{ return id; }
 	// Местоположение и поворот произвольной точки объекта в локальных или глобальных координатах (точка отсчёта объекта).
 	virtual	ObjectPosition					getPosition(void) { return matrix34::getIdentity();}
 	// Система координат: локальная относительно родителя или глобальная

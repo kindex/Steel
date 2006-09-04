@@ -1,3 +1,17 @@
+﻿/*id*********************************************************
+	File: objects/triangle.cpp
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Програмно создаваемый треугольник
+ ************************************************************/
+
+#include "../steel.h"
 #include "triangle.h"
 #include "../res/res_main.h"
 

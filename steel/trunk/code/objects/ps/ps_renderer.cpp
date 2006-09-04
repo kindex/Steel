@@ -1,15 +1,15 @@
-/*id*********************************************************
-    Unit: particle_system
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
+п»ї/*id*********************************************************
+	File: objects/ps/ps_renderer.cpp
+	Unit: particle_system
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
-    License:
-        Steel Engine License
-    Description:
-		Steel Версия физического движка. 
-	Обрабатывает движение только частиц.
+	License:
+		Steel Engine License
+	Description:
+		РќРµСЃРєРѕР»СЊРєРѕ РІР°СЂРёР°РЅС‚РѕРІ СЂРµРЅРґРµСЂРµСЂР° РґР»СЏ СЃРёСЃС‚РµРјС‹ С‡Р°СЃС‚РёС†
 ************************************************************/
 #include "ps_renderer.h"
 #include "../../res/res_main.h"
@@ -28,10 +28,10 @@ void SpriteRenderer::ProcessGraph(const GraphEngineInfo &info)
 		v3 pos = set->particles[i]->position - pos_diff;
 
 		v3 dir;
-//В зависимости от типа выравнивания рассчитываем перпендикуляр к плоскости спрайта (dir).
-//cameraDirection – ось камеры
-//cameraEye – положение камеры
-//pos – положение спрайта
+//Р’ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РёРїР° РІС‹СЂР°РІРЅРёРІР°РЅРёСЏ СЂР°СЃСЃС‡РёС‚С‹РІР°РµРј РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂ Рє РїР»РѕСЃРєРѕСЃС‚Рё СЃРїСЂР°Р№С‚Р° (dir).
+//cameraDirection вЂ“ РѕСЃСЊ РєР°РјРµСЂС‹
+//cameraEye вЂ“ РїРѕР»РѕР¶РµРЅРёРµ РєР°РјРµСЂС‹
+//pos вЂ“ РїРѕР»РѕР¶РµРЅРёРµ СЃРїСЂР°Р№С‚Р°
 		switch(align)
 		{
 			case SPRITE_ALIGN_SCREEN: dir = -info.cameraDirection; break;
@@ -41,20 +41,20 @@ void SpriteRenderer::ProcessGraph(const GraphEngineInfo &info)
 		}
 
 		dir.normalize();
-		// per1 и per2 - это направляющие сторон спрайта
-		v3 per1(-dir.y, dir.x, 0); // перендикуляр к dir
+		// per1 Рё per2 - СЌС‚Рѕ РЅР°РїСЂР°РІР»СЏСЋС‰РёРµ СЃС‚РѕСЂРѕРЅ СЃРїСЂР°Р№С‚Р°
+		v3 per1(-dir.y, dir.x, 0); // РїРµСЂРµРЅРґРёРєСѓР»СЏСЂ Рє dir
 		per1.normalize();
-		v3 per2 = dir.vectorProduct(per1); // перпендикуляр к dir и per1
-		per1 *= set->particles[i]->size; // умножаем на размер спарйта
+		v3 per2 = dir.vectorProduct(per1); // РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂ Рє dir Рё per1
+		per1 *= set->particles[i]->size; // СѓРјРЅРѕР¶Р°РµРј РЅР° СЂР°Р·РјРµСЂ СЃРїР°СЂР№С‚Р°
 		per2 *= set->particles[i]->size;
 
-		// углы спарйта
+		// СѓРіР»С‹ СЃРїР°СЂР№С‚Р°
 		vertex.data[i4 + 0]  = pos + per1 - per2;
 		vertex.data[i4 + 1]  = pos + -per1 - per2;
 		vertex.data[i4 + 2]  = pos + -per1 + per2;
 		vertex.data[i4 + 3]  = pos + per1 + per2;
 
-		// нормали к углам спарйта
+		// РЅРѕСЂРјР°Р»Рё Рє СѓРіР»Р°Рј СЃРїР°СЂР№С‚Р°
 		normal.data[i4 + 0] = dir;
 		normal.data[i4 + 1] = dir;
 		normal.data[i4 + 2] = dir;

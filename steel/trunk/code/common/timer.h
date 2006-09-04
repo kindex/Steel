@@ -1,35 +1,48 @@
-//---------------------------------------------------------------------------
+п»ї/*id*********************************************************
+	File: common/timer.h
+	Unit: Timer
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		РЎРµРєСѓРЅРґРѕРјРµСЂ. Р—Р°СЃРµРєР°РµС‚ РІСЂРµРјСЏ, СЃС‡РёС‚Р°РµС‚ РїСЂРѕРјРµР¶СѓС‚РєРё РІСЂРµРјРµРЅРё.
+		Р’С‹СЃС‡РёС‚С‹РІР°РµС‚ FPS.
+ ************************************************************/
 
-#ifndef timeH
-#define timeH
+#ifndef __TIMER_H__
+#define __TIMER_H__
+
+#include "../steel.h"
 
 #include "../common/types.h"
-#include "../steel.h"
 #include <string>
 
-class Timer: public steelAbstract
+class Timer
 {
 	bool active;
     double startTime, skip, pausedTime, lastIntervalTime, curIntervalStartTime, fps;
 	int frameCnt, lastIntervalFrameCnt, curIntervalFrameCnt, totalFrames;
 
 public:
-// Время в секундах от момента clear, исключая промежутки между pause и resume
-	steel::time total() 
+// Р’СЂРµРјСЏ РІ СЃРµРєСѓРЅРґР°С… РѕС‚ РјРѕРјРµРЅС‚Р° clear, РёСЃРєР»СЋС‡Р°СЏ РїСЂРѕРјРµР¶СѓС‚РєРё РјРµР¶РґСѓ pause Рё resume
+	steel::time total(void) 
 	{ 
 		return (steel::time)((timestamp() - startTime) - skip);
 	}
 
-// Абсолютное время
-	virtual double timestamp(); 
-// Обнулить таймер
-	virtual void start();
-	virtual void pause()
+// РђР±СЃРѕР»СЋС‚РЅРѕРµ РІСЂРµРјСЏ
+	virtual double timestamp(void);
+// РћР±РЅСѓР»РёС‚СЊ С‚Р°Р№РјРµСЂ
+	virtual void start(void);
+	virtual void pause(void)
 	{
 		active		= false;
 		pausedTime = timestamp();
 	}
-	virtual void resume()
+	virtual void resume(void)
 	{
 		if(!active)
 		{
@@ -37,15 +50,13 @@ public:
 			skip	+= (timestamp() - pausedTime);
 		}
 	}
-// Сообщение таймеру о том, что кадр был обработан и следует обновить FPS
-	virtual void incframe();
-// Вернуть текушее количество кадров в секунду (FPS)
-	virtual steel::time getfps();
-	virtual std::string getfps_s();
-
+// РЎРѕРѕР±С‰РµРЅРёРµ С‚Р°Р№РјРµСЂСѓ Рѕ С‚РѕРј, С‡С‚Рѕ РєР°РґСЂ Р±С‹Р» РѕР±СЂР°Р±РѕС‚Р°РЅ Рё СЃР»РµРґСѓРµС‚ РѕР±РЅРѕРІРёС‚СЊ FPS
+	virtual void incframe(void);
+// Р’РµСЂРЅСѓС‚СЊ С‚РµРєСѓС€РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РєР°РґСЂРѕРІ РІ СЃРµРєСѓРЅРґСѓ (FPS)
+	virtual steel::time getfps(void);
+	virtual std::string getfps_s(void);
 };
 
 extern Timer globalTimer;
 
-//---------------------------------------------------------------------------
 #endif

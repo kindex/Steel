@@ -1,15 +1,15 @@
-/*id*********************************************************
-    Unit: particle_system
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
+п»ї/*id*********************************************************
+	File: objects/ps/animator.cpp
+	Unit: particle_system
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
-    License:
-        Steel Engine License
-    Description:
-		Steel Версия физического движка. 
-	Обрабатывает движение только частиц.
+	License:
+		Steel Engine License
+	Description:
+		РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРІРёР¶РµРЅРёРµ С‡Р°СЃС‚РёС† РІ СЃРёСЃС‚РµРјРµ.
 ************************************************************/
 #include "animator.h"
 

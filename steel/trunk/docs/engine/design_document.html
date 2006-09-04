@@ -1,10 +1,10 @@
-<html xmlns:v="urn:schemas-microsoft-com:vml"
+п»ї<html xmlns:v="urn:schemas-microsoft-com:vml"
 xmlns:o="urn:schemas-microsoft-com:office:office"
 xmlns:w="urn:schemas-microsoft-com:office:word"
 xmlns="http://www.w3.org/TR/REC-html40">
 
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=windows-1251">
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 11">
 <meta name=Originator content="Microsoft Word 11">
@@ -21,6 +21,7 @@ w\:* {behavior:url(#default#VML);}
 <title>Steel Engine: design document</title>
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
+  <w:Zoom>110</w:Zoom>
   <w:SpellingState>Clean</w:SpellingState>
   <w:GrammarState>Clean</w:GrammarState>
   <w:ValidateAgainstSchemas/>
@@ -293,7 +294,7 @@ div.Section1
 	mso-list-template-ids:1418075520 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
 @list l0:level1
 	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
+	mso-level-text:п‚·;
 	mso-level-tab-stop:92.7pt;
 	mso-level-number-position:left;
 	margin-left:92.7pt;
@@ -337,7 +338,7 @@ div.Section1
 	mso-list-template-ids:-1920847426 68747265 68747267 68747269 68747265 68747267 68747269 68747265 68747267 68747269;}
 @list l1:level1
 	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
+	mso-level-text:п‚·;
 	mso-level-tab-stop:92.7pt;
 	mso-level-number-position:left;
 	margin-left:92.7pt;
@@ -462,7 +463,7 @@ table.MsoTableGrid
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="10242"/>
+ <o:shapedefaults v:ext="edit" spidmax="13314"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -473,80 +474,78 @@ table.MsoTableGrid
 
 <div class=Section1>
 
-<h1><a name="_Toc142999567">Дизайн Документ</a></h1>
+<h1><a name="_Toc142999567">Р”РёР·Р°Р№РЅ Р”РѕРєСѓРјРµРЅС‚</a></h1>
 
-<h2><a name="_Toc142999568">О документе</a></h2>
+<h2><a name="_Toc142999568">Рћ РґРѕРєСѓРјРµРЅС‚Рµ</a></h2>
 
-<p>В этом документе отображается процесс разработки <span lang=EN-US
+<p>Р’ СЌС‚РѕРј РґРѕРєСѓРјРµРЅС‚Рµ РѕС‚РѕР±СЂР°Р¶Р°РµС‚СЃСЏ РїСЂРѕС†РµСЃСЃ СЂР°Р·СЂР°Р±РѕС‚РєРё <span lang=EN-US
 style='mso-ansi-language:EN-US'>Steel</span><span lang=EN-US> </span><span
-lang=EN-US style='mso-ansi-language:EN-US'>Engine</span>, интерфейсы модулей,
-объяснения выбранных решений. Структура документа совпадает со структурой
-движка. В квадратных скобочках пишется автор.</p>
+lang=EN-US style='mso-ansi-language:EN-US'>Engine</span>, РёРЅС‚РµСЂС„РµР№СЃС‹ РјРѕРґСѓР»РµР№,
+РѕР±СЉСЏСЃРЅРµРЅРёСЏ РІС‹Р±СЂР°РЅРЅС‹С… СЂРµС€РµРЅРёР№. РЎС‚СЂСѓРєС‚СѓСЂР° РґРѕРєСѓРјРµРЅС‚Р° СЃРѕРІРїР°РґР°РµС‚ СЃРѕ СЃС‚СЂСѓРєС‚СѓСЂРѕР№
+РґРІРёР¶РєР°. Р’ РєРІР°РґСЂР°С‚РЅС‹С… СЃРєРѕР±РѕС‡РєР°С… РїРёС€РµС‚СЃСЏ Р°РІС‚РѕСЂ.</p>
 
-<p>Всё что <span class=GramE>описано в этом документе в определённой степени
-проработано</span>, и не будет меняться кардинально.</p>
+<p>Р’СЃС‘ С‡С‚Рѕ <span class=GramE>РѕРїРёСЃР°РЅРѕ РІ СЌС‚РѕРј РґРѕРєСѓРјРµРЅС‚Рµ РІ РѕРїСЂРµРґРµР»С‘РЅРЅРѕР№ СЃС‚РµРїРµРЅРё
+РїСЂРѕСЂР°Р±РѕС‚Р°РЅРѕ</span>, Рё РЅРµ Р±СѓРґРµС‚ РјРµРЅСЏС‚СЊСЃСЏ РєР°СЂРґРёРЅР°Р»СЊРЅРѕ.</p>
 
-<p>В документе должны присутствовать:</p>
-
-<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
-tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
-mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
-style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]>Текущее состояние движка</p>
+<p>Р’ РґРѕРєСѓРјРµРЅС‚Рµ РґРѕР»Р¶РЅС‹ РїСЂРёСЃСѓС‚СЃС‚РІРѕРІР°С‚СЊ:</p>
 
 <p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
-style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]>Предыдущее состояние и причиной отказа</p>
+style='mso-list:Ignore'>В·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>РўРµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РґРІРёР¶РєР°</p>
 
 <p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
-style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]>Идеи по дальнейшему улучшению (TODO)</p>
+style='mso-list:Ignore'>В·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>РџСЂРµРґС‹РґСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ Рё РїСЂРёС‡РёРЅРѕР№ РѕС‚РєР°Р·Р°</p>
+
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'><span
+style='mso-list:Ignore'>В·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>РРґРµРё РїРѕ РґР°Р»СЊРЅРµР№С€РµРјСѓ СѓР»СѓС‡С€РµРЅРёСЋ (TODO)</p>
 
 <p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:yellow;
-mso-highlight:yellow'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mso-highlight:yellow'><span style='mso-list:Ignore'>В·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span style='background:yellow;mso-highlight:
-yellow'>Непонятные момоенты и объяснения<o:p></o:p></span></p>
+yellow'>РќРµРїРѕРЅСЏС‚РЅС‹Рµ РјРѕРјРѕРµРЅС‚С‹ Рё РѕР±СЉСЏСЃРЅРµРЅРёСЏ<o:p></o:p></span></p>
 
 <p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:red;
-mso-highlight:red'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span style='background:red;mso-highlight:red'>То,
-что присутствует, но должно быть удалено<o:p></o:p></span></p>
+mso-highlight:red'><span style='mso-list:Ignore'>В·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:red;mso-highlight:red'>РўРѕ,
+С‡С‚Рѕ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚, РЅРѕ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ СѓРґР°Р»РµРЅРѕ<o:p></o:p></span></p>
 
 <p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
-mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mso-highlight:silver'><span style='mso-list:Ignore'>В·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span style='background:silver;mso-highlight:
-silver'>Недописанные части<o:p></o:p></span></p>
+silver'>РќРµРґРѕРїРёСЃР°РЅРЅС‹Рµ С‡Р°СЃС‚Рё<o:p></o:p></span></p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<h1><a name="_Toc142999569">Содержание</a></h1>
+<h1><a name="_Toc142999569">РЎРѕРґРµСЂР¶Р°РЅРёРµ</a></h1>
 
 <p class=MsoToc1 style='tab-stops:right dotted 467.25pt'><!--[if supportFields]><span
 style='mso-element:field-begin'></span><span
-style='mso-spacerun:yes'> </span>TOC \o &quot;1-3&quot; \h \z \u <span
+style='mso-spacerun:yes'>В </span>TOC \o &quot;1-3&quot; \h \z \u <span
 style='mso-element:field-separator'></span><![endif]--><span
-class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999567">Дизайн
-Документ<span style='color:windowtext;display:none;mso-hide:screen;text-decoration:
+class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999567">Р”РёР·Р°Р№РЅ
+Р”РѕРєСѓРјРµРЅС‚<span style='color:windowtext;display:none;mso-hide:screen;text-decoration:
 none;text-underline:none'><span style='mso-tab-count:1 dotted'>.. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999567 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999567 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>1</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>1<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500360037000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -555,37 +554,33 @@ style='font-size:12.0pt;text-transform:none;font-weight:normal;mso-no-proof:
 yes'><o:p></o:p></span></p>
 
 <p class=MsoToc2><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
-href="#_Toc142999568">О документе<span style='color:windowtext;display:none;
+href="#_Toc142999568">Рћ РґРѕРєСѓРјРµРЅС‚Рµ<span style='color:windowtext;display:none;
 mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999568 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999568 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>1</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>1<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500360038000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc1 style='tab-stops:right dotted 467.25pt'><span
-class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999569">Содержание<span
+class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999569">РЎРѕРґРµСЂР¶Р°РЅРёРµ<span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999569 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999569 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>1</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>1<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500360039000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -599,14 +594,12 @@ lang=EN-US style='mso-ansi-language:EN-US'>Steel Engine</span><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999570 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999570 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>2</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>2<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500370030000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -615,70 +608,62 @@ style='font-size:12.0pt;text-transform:none;font-weight:normal;mso-no-proof:
 yes'><o:p></o:p></span></p>
 
 <p class=MsoToc2><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
-href="#_Toc142999571"><span lang=EN-US style='mso-ansi-language:EN-US'>Object</span><span
-lang=EN-US> </span>(<span lang=EN-US style='mso-ansi-language:EN-US'>interface</span>.<span
-lang=EN-US style='mso-ansi-language:EN-US'>h</span>)<span style='color:windowtext;
+href="#_Toc142999571"><span lang=EN-US style='mso-ansi-language:EN-US'>Object </span>(<span
+lang=EN-US style='mso-ansi-language:EN-US'>interface</span>.<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span>)<span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'> </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF _Toc142999571
+\h </span><span style='color:windowtext;text-decoration:none;text-underline:
+none'><span style='display:none;mso-hide:screen'><span style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999571 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>3</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>3<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500370031000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc2><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
 href="#_Toc142999572"><span lang=EN-US style='background:silver;mso-highlight:
-silver;mso-ansi-language:EN-US'>Engine</span><span lang=EN-US style='background:
-silver;mso-highlight:silver'> </span><span style='background:silver;mso-highlight:
-silver'>(</span><span lang=EN-US style='background:silver;mso-highlight:silver;
-mso-ansi-language:EN-US'>engine</span><span style='background:silver;
-mso-highlight:silver'>.</span><span lang=EN-US style='background:silver;
-mso-highlight:silver;mso-ansi-language:EN-US'>h</span><span style='background:
-silver;mso-highlight:silver'>)</span><span style='color:windowtext;display:
-none;mso-hide:screen;text-decoration:none;text-underline:none'><span
+silver;mso-ansi-language:EN-US'>Engine </span><span style='background:silver;
+mso-highlight:silver'>(</span><span lang=EN-US style='background:silver;
+mso-highlight:silver;mso-ansi-language:EN-US'>engine</span><span
+style='background:silver;mso-highlight:silver'>.</span><span lang=EN-US
+style='background:silver;mso-highlight:silver;mso-ansi-language:EN-US'>h</span><span
+style='background:silver;mso-highlight:silver'>)</span><span style='color:windowtext;
+display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'> </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999572 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999572 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>3</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>3<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500370032000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc2><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
 href="#_Toc142999573"><span lang=EN-US style='mso-ansi-language:EN-US'>Physic
 Engine</span><span style='color:windowtext;display:none;mso-hide:screen;
 text-decoration:none;text-underline:none'><span style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999573 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999573 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>3</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>3<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500370033000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc3><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
 href="#_Toc142999574"><span lang=EN-US style='mso-ansi-language:EN-US'>Physic
@@ -686,14 +671,11 @@ Object</span> [<span lang=EN-US style='mso-ansi-language:EN-US'>kindex</span>]<s
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF _Toc142999574
+\h </span><span style='color:windowtext;text-decoration:none;text-underline:
+none'><span style='display:none;mso-hide:screen'><span style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999574 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>4</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>4<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500370034000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -706,14 +688,12 @@ Engine</span> [<span lang=EN-US style='mso-ansi-language:EN-US'>kindex</span>]<s
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999575 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999575 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>5</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>5<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500370035000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -725,14 +705,12 @@ href="#_Toc142999576"><span lang=EN-US style='mso-ansi-language:EN-US'>Particle
 System</span><span style='color:windowtext;display:none;mso-hide:screen;
 text-decoration:none;text-underline:none'><span style='mso-tab-count:1 dotted'>.. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999576 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999576 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>6</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>6<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500370036000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -740,21 +718,19 @@ style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
 style='font-size:12.0pt;font-style:normal;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc3><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
-href="#_Toc142999577"><span style='background:silver;mso-highlight:silver'>Модульность
+href="#_Toc142999577"><span style='background:silver;mso-highlight:silver'>РњРѕРґСѓР»СЊРЅРѕСЃС‚СЊ
 [</span><span lang=EN-US style='background:silver;mso-highlight:silver;
 mso-ansi-language:EN-US'>kindex</span><span style='background:silver;
 mso-highlight:silver'>]</span><span style='color:windowtext;display:none;
 mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999577 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999577 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>6</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>6<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500370037000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -767,14 +743,12 @@ lang=EN-US style='mso-ansi-language:EN-US'>Resource Collection (res/res.h)</span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'> </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999578 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999578 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>6</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>6<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500370038000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -787,90 +761,80 @@ href="#_Toc142999579"><span lang=EN-US style='mso-ansi-language:EN-US'>ResCollec
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>.. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999579 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999579 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>7</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>7<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500370039000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc2><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
 href="#_Toc142999580"><span lang=EN-US style='mso-ansi-language:EN-US'>rstream</span><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>.. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999580 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999580 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>8</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>8<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500380030000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc2><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
 href="#_Toc142999581"><span lang=EN-US style='mso-ansi-language:EN-US'>objectIdGenerator</span><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999581 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999581 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>8</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>8<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500380031000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc2><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
 href="#_Toc142999582"><span lang=EN-US style='mso-ansi-language:EN-US'>Res</span><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999582 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999582 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>8</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>8<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500380032000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc3><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
 href="#_Toc142999583"><span lang=EN-US style='mso-ansi-language:EN-US'>Text</span><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'> </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999583 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999583 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>8</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>8<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500380033000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -883,14 +847,12 @@ silver;mso-ansi-language:EN-US'>Config</span><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999584 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999584 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>8</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>8<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500380034000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -903,14 +865,12 @@ silver;mso-ansi-language:EN-US'>Image</span><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999585 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999585 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>8</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>8<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500380035000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -923,14 +883,12 @@ silver;mso-ansi-language:EN-US'>Model</span><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'> </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999586 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999586 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>8</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>8<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500380036000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -942,14 +900,12 @@ href="#_Toc142999587"><span lang=EN-US style='mso-ansi-language:EN-US'>Material<
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'> </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999587 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999587 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>8</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>8<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500380037000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -961,14 +917,12 @@ href="#_Toc142999588">.<span lang=EN-US style='mso-ansi-language:EN-US'>mat
 format</span><span style='color:windowtext;display:none;mso-hide:screen;
 text-decoration:none;text-underline:none'><span style='mso-tab-count:1 dotted'> </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999588 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999588 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>9</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>9<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500380038000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -981,14 +935,12 @@ silver;mso-ansi-language:EN-US'>Script</span><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'> </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999589 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999589 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>9</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>9<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500380039000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -996,19 +948,17 @@ style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
 style='font-size:12.0pt;font-style:normal;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc1 style='tab-stops:right dotted 467.25pt'><span
-class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999590">Базовые<span
-style='mso-ansi-language:EN-US'> </span>типы<span style='mso-ansi-language:
-EN-US'> </span>данных<span style='color:windowtext;display:none;mso-hide:screen;
+class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999590">Р‘Р°Р·РѕРІС‹Рµ<span
+style='mso-ansi-language:EN-US'> </span>С‚РёРїС‹<span style='mso-ansi-language:
+EN-US'> </span>РґР°РЅРЅС‹С…<span style='color:windowtext;display:none;mso-hide:screen;
 text-decoration:none;text-underline:none'><span style='mso-tab-count:1 dotted'>.. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999590 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999590 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>10</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>10<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500390030000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1021,14 +971,12 @@ href="#_Toc142999591"><span lang=EN-US style='mso-ansi-language:EN-US'>uid</span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999591 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999591 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>10</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>10<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500390031000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1040,14 +988,12 @@ href="#_Toc142999592">PositionKind<span style='color:windowtext;display:none;
 mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999592 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999592 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>10</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>10<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500390032000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1059,19 +1005,17 @@ href="#_Toc142999593"><span lang=EN-US style='mso-ansi-language:EN-US'>Math</spa
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>.. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999593 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999593 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>10</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>10<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500390033000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc3><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
 href="#_Toc142999594"><span lang=EN-US style='mso-ansi-language:EN-US'>v</span>3
@@ -1081,14 +1025,12 @@ style='mso-ansi-language:EN-US'>h</span>)<span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999594 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999594 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>10</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>10<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500390034000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1103,14 +1045,12 @@ style='mso-ansi-language:EN-US'>h</span>)<span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999595 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999595 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>10</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>10<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500390035000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1122,14 +1062,12 @@ href="#_Toc142999596">matrix33<span style='color:windowtext;display:none;
 mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999596 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999596 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>10</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>10<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500390036000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1141,14 +1079,12 @@ href="#_Toc142999597">matrix34<span style='color:windowtext;display:none;
 mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999597 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999597 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>11</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>11<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500390037000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1160,14 +1096,12 @@ href="#_Toc142999598"><span lang=EN-US style='mso-ansi-language:EN-US'>ObjectPos
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999598 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999598 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>11</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>11<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500390038000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1175,18 +1109,16 @@ style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
 style='font-size:12.0pt;font-style:normal;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc1 style='tab-stops:right dotted 467.25pt'><span
-class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999599">Глобальные
-переменные<span style='color:windowtext;display:none;mso-hide:screen;
+class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999599">Р“Р»РѕР±Р°Р»СЊРЅС‹Рµ
+РїРµСЂРµРјРµРЅРЅС‹Рµ<span style='color:windowtext;display:none;mso-hide:screen;
 text-decoration:none;text-underline:none'><span style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999599 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999599 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>11</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>11<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003500390039000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1195,61 +1127,55 @@ style='font-size:12.0pt;text-transform:none;font-weight:normal;mso-no-proof:
 yes'><o:p></o:p></span></p>
 
 <p class=MsoToc2><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
-href="#_Toc142999600">Переменные<span style='color:windowtext;display:none;
+href="#_Toc142999600">РџРµСЂРµРјРµРЅРЅС‹Рµ<span style='color:windowtext;display:none;
 mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999600 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999600 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>12</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>12<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003600300030000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc2><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
-href="#_Toc142999601">Директивы<span style='color:windowtext;display:none;
+href="#_Toc142999601">Р”РёСЂРµРєС‚РёРІС‹<span style='color:windowtext;display:none;
 mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-tab-count:1 dotted'>.. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999601 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999601 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>12</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>12<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003600300031000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc2><span class=MsoHyperlink><span style='mso-no-proof:yes'><a
-href="#_Toc142999602">Пространство<span style='mso-ansi-language:EN-US'> </span>имён<span
+href="#_Toc142999602">РџСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ<span style='mso-ansi-language:EN-US'> </span>РёРјС‘РЅ<span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>.. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999602 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999602 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>12</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>12<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003600300032000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
 style='mso-element:field-end'></span></span><![endif]--></a></span></span><span
-style='font-size:12.0pt;font-variant:normal !important;mso-no-proof:yes'><o:p></o:p></span></p>
+style='font-size:12.0pt;mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p class=MsoToc1 style='tab-stops:right dotted 467.25pt'><span
 class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999603"><span
@@ -1257,14 +1183,12 @@ lang=EN-US style='mso-ansi-language:EN-US'>Logger (common/logger.h)</span><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'> </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999603 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999603 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>12</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>12<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003600300033000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1273,18 +1197,16 @@ style='font-size:12.0pt;text-transform:none;font-weight:normal;mso-no-proof:
 yes'><o:p></o:p></span></p>
 
 <p class=MsoToc1 style='tab-stops:right dotted 467.25pt'><span
-class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999604">Структура
-каталогов<span style='color:windowtext;display:none;mso-hide:screen;text-decoration:
+class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999604">РЎС‚СЂСѓРєС‚СѓСЂР°
+РєР°С‚Р°Р»РѕРіРѕРІ<span style='color:windowtext;display:none;mso-hide:screen;text-decoration:
 none;text-underline:none'><span style='mso-tab-count:1 dotted'>.. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999604 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999604 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>13</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>13<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003600300034000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1293,18 +1215,16 @@ style='font-size:12.0pt;text-transform:none;font-weight:normal;mso-no-proof:
 yes'><o:p></o:p></span></p>
 
 <p class=MsoToc1 style='tab-stops:right dotted 467.25pt'><span
-class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999605">Составители<span
+class=MsoHyperlink><span style='mso-no-proof:yes'><a href="#_Toc142999605">РЎРѕСЃС‚Р°РІРёС‚РµР»Рё<span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
 text-underline:none'><span style='mso-tab-count:1 dotted'>.. </span></span><!--[if supportFields]><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'><span style='mso-element:field-begin'></span></span><span
+text-underline:none'><span style='mso-element:field-begin'></span> PAGEREF
+_Toc142999605 \h </span><span style='color:windowtext;text-decoration:none;
+text-underline:none'><span style='display:none;mso-hide:screen'><span
+style='mso-element:field-separator'></span></span></span><![endif]--><span
 style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'> PAGEREF _Toc142999605 \h </span><span style='color:windowtext;
-display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
-style='mso-element:field-separator'></span></span><![endif]--><span
-style='color:windowtext;display:none;mso-hide:screen;text-decoration:none;
-text-underline:none'>13</span><span style='color:windowtext;display:none;
-mso-hide:screen;text-decoration:none;text-underline:none'><!--[if gte mso 9]><xml>
+text-underline:none'>13<!--[if gte mso 9]><xml>
  <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F0054006F0063003100340032003900390039003600300035000000</w:data>
 </xml><![endif]--></span><!--[if supportFields]><span style='color:windowtext;
 display:none;mso-hide:screen;text-decoration:none;text-underline:none'><span
@@ -1321,13 +1241,12 @@ Engine</span></a></h1>
 
 <p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>Steel</span><span
 lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Engine</span><span
-lang=EN-US> </span>является движком для компьютерных игр и аналогичных
-программ.</span> Основные преимущества движка в его модульной структуре и
-расширяемости.</p>
+lang=EN-US> </span>СЏРІР»СЏРµС‚СЃСЏ РґРІРёР¶РєРѕРј РґР»СЏ РєРѕРјРїСЊСЋС‚РµСЂРЅС‹С… РёРіСЂ Рё Р°РЅР°Р»РѕРіРёС‡РЅС‹С… РїСЂРѕРіСЂР°РјРј.</span>
+РћСЃРЅРѕРІРЅС‹Рµ РїСЂРµРёРјСѓС‰РµСЃС‚РІР° РґРІРёР¶РєР° РІ РµРіРѕ РјРѕРґСѓР»СЊРЅРѕР№ СЃС‚СЂСѓРєС‚СѓСЂРµ Рё СЂР°СЃС€РёСЂСЏРµРјРѕСЃС‚Рё.</p>
 
 <p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>Steel</span><span
 lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Engine</span><span
-lang=EN-US> </span>состоит из нескольких модулей.</span></p>
+lang=EN-US> </span>СЃРѕСЃС‚РѕРёС‚ РёР· РЅРµСЃРєРѕР»СЊРєРёС… РјРѕРґСѓР»РµР№.</span></p>
 
 <p align=center style='text-align:center'><!--[if gte vml 1]><v:shapetype id="_x0000_t75"
  coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe"
@@ -1356,52 +1275,51 @@ lang=EN-US> </span>состоит из нескольких модулей.</span></p>
 src="design_document_files/image002.gif" v:shapes="_x0000_i1025"><![endif]></p>
 
 <p align=center style='text-align:center'><span lang=EN-US style='mso-ansi-language:
-EN-US'>DFD </span>верхнего уровня</p>
+EN-US'>DFD </span>РІРµСЂС…РЅРµРіРѕ СѓСЂРѕРІРЅСЏ</p>
 
 <p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>main</span></span>
-(<span lang=EN-US style='mso-ansi-language:EN-US'>core</span>) получает управление
-от ОС, инициализирует все модули, в главном цикле программы поочерёдно передаёт
-управление всем частям движка. К модулю <span lang=EN-US style='mso-ansi-language:
-EN-US'>core</span><span lang=EN-US> </span>также относятся <a
-href="#_Базовые_типы_данных">базовые тиры данных</a>, <a
-href="#_Logger_(common/logger.h)">логгер</a>, консоль.</p>
+(<span lang=EN-US style='mso-ansi-language:EN-US'>core</span>) РїРѕР»СѓС‡Р°РµС‚
+СѓРїСЂР°РІР»РµРЅРёРµ РѕС‚ РћРЎ, РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РІСЃРµ РјРѕРґСѓР»Рё, РІ РіР»Р°РІРЅРѕРј С†РёРєР»Рµ РїСЂРѕРіСЂР°РјРјС‹ РїРѕРѕС‡РµСЂС‘РґРЅРѕ
+РїРµСЂРµРґР°С‘С‚ СѓРїСЂР°РІР»РµРЅРёРµ РІСЃРµРј С‡Р°СЃС‚СЏРј РґРІРёР¶РєР°. Рљ РјРѕРґСѓР»СЋ <span lang=EN-US
+style='mso-ansi-language:EN-US'>core</span><span lang=EN-US> </span>С‚Р°РєР¶Рµ
+РѕС‚РЅРѕСЃСЏС‚СЃСЏ <a href="#_Р‘Р°Р·РѕРІС‹Рµ_С‚РёРїС‹_РґР°РЅРЅС‹С…">Р±Р°Р·РѕРІС‹Рµ С‚РёСЂС‹ РґР°РЅРЅС‹С…</a>, <a
+href="#_Logger_(common/logger.h)">Р»РѕРіРіРµСЂ</a>, РєРѕРЅСЃРѕР»СЊ.</p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>Game</span><span
-lang=EN-US> </span>не является частью движка. Этот модуль содержит правила
-игры, и он индивидуален для каждого проекта, который использует движок. <span
-lang=EN-US style='mso-ansi-language:EN-US'>Game</span><span lang=EN-US> </span>управляет
-игровыми объектами и передаёт их движкам для обработки. В этом модуле должен
-быть <span lang=EN-US style='mso-ansi-language:EN-US'>AI</span>.</p>
+lang=EN-US> </span>РЅРµ СЏРІР»СЏРµС‚СЃСЏ С‡Р°СЃС‚СЊСЋ РґРІРёР¶РєР°. Р­С‚РѕС‚ РјРѕРґСѓР»СЊ СЃРѕРґРµСЂР¶РёС‚ РїСЂР°РІРёР»Р°
+РёРіСЂС‹, Рё РѕРЅ РёРЅРґРёРІРёРґСѓР°Р»РµРЅ РґР»СЏ РєР°Р¶РґРѕРіРѕ РїСЂРѕРµРєС‚Р°, РєРѕС‚РѕСЂС‹Р№ РёСЃРїРѕР»СЊР·СѓРµС‚ РґРІРёР¶РѕРє. <span
+lang=EN-US style='mso-ansi-language:EN-US'>Game</span><span lang=EN-US> </span>СѓРїСЂР°РІР»СЏРµС‚
+РёРіСЂРѕРІС‹РјРё РѕР±СЉРµРєС‚Р°РјРё Рё РїРµСЂРµРґР°С‘С‚ РёС… РґРІРёР¶РєР°Рј РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё. Р’ СЌС‚РѕРј РјРѕРґСѓР»Рµ РґРѕР»Р¶РµРЅ
+Р±С‹С‚СЊ <span lang=EN-US style='mso-ansi-language:EN-US'>AI</span>.</p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'><a
 href="#_Object_(interface.h)">Game<span style='mso-ansi-language:RU'> </span>objects</a></span><span
-lang=EN-US> </span>– это набор игровых объектов. Они определяют, как их нужно
-рисовать и куда им нужно двигаться. Часть основных объектов (модель, источник
-освещения, уровень) находиться в движке, в специфичные объекты (<span
-class=SpellE>юниты</span>, оружие) являются частью <span lang=EN-US
-style='mso-ansi-language:EN-US'>Game</span>.</p>
+lang=EN-US> </span>вЂ“ СЌС‚Рѕ РЅР°Р±РѕСЂ РёРіСЂРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ. РћРЅРё РѕРїСЂРµРґРµР»СЏСЋС‚, РєР°Рє РёС… РЅСѓР¶РЅРѕ
+СЂРёСЃРѕРІР°С‚СЊ Рё РєСѓРґР° РёРј РЅСѓР¶РЅРѕ РґРІРёРіР°С‚СЊСЃСЏ. Р§Р°СЃС‚СЊ РѕСЃРЅРѕРІРЅС‹С… РѕР±СЉРµРєС‚РѕРІ (РјРѕРґРµР»СЊ, РёСЃС‚РѕС‡РЅРёРє РѕСЃРІРµС‰РµРЅРёСЏ,
+СѓСЂРѕРІРµРЅСЊ) РЅР°С…РѕРґРёС‚СЊСЃСЏ РІ РґРІРёР¶РєРµ, РІ СЃРїРµС†РёС„РёС‡РЅС‹Рµ РѕР±СЉРµРєС‚С‹ (<span class=SpellE>СЋРЅРёС‚С‹</span>,
+РѕСЂСѓР¶РёРµ) СЏРІР»СЏСЋС‚СЃСЏ С‡Р°СЃС‚СЊСЋ <span lang=EN-US style='mso-ansi-language:EN-US'>Game</span>.</p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'><a
 href="#_Resource_Collection_(res/res.h)"><span class=SpellE>Res</span></a></span><span
-lang=EN-US> </span>– коллекция ресурсов. Модуль для хранения, загрузки и
-контроля над игровыми ресурсами, такими как: <span lang=EN-US style='mso-ansi-language:
+lang=EN-US> </span>вЂ“ РєРѕР»Р»РµРєС†РёСЏ СЂРµСЃСѓСЂСЃРѕРІ. РњРѕРґСѓР»СЊ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ, Р·Р°РіСЂСѓР·РєРё Рё
+РєРѕРЅС‚СЂРѕР»СЏ РЅР°Рґ РёРіСЂРѕРІС‹РјРё СЂРµСЃСѓСЂСЃР°РјРё, С‚Р°РєРёРјРё РєР°Рє: <span lang=EN-US style='mso-ansi-language:
 EN-US'>image</span>, <span lang=EN-US style='mso-ansi-language:EN-US'>model</span>,
-<span lang=EN-US style='mso-ansi-language:EN-US'>audio</span>. Вся работа с
-файловой системой должна происходить через этот модуль. <span class=SpellE><span
-lang=EN-US style='mso-ansi-language:EN-US'>res</span></span><span lang=EN-US> </span>является
-<span class=SpellE>глобалным</span> и используется всеми частями программы, но
-в большей степени игровыми объектами.</p>
+<span lang=EN-US style='mso-ansi-language:EN-US'>audio</span>. Р’СЃСЏ СЂР°Р±РѕС‚Р° СЃ
+С„Р°Р№Р»РѕРІРѕР№ СЃРёСЃС‚РµРјРѕР№ РґРѕР»Р¶РЅР° РїСЂРѕРёСЃС…РѕРґРёС‚СЊ С‡РµСЂРµР· СЌС‚РѕС‚ РјРѕРґСѓР»СЊ. <span class=SpellE><span
+lang=EN-US style='mso-ansi-language:EN-US'>res</span></span><span lang=EN-US> </span>СЏРІР»СЏРµС‚СЃСЏ
+<span class=SpellE>РіР»РѕР±Р°Р»РЅС‹Рј</span> Рё РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІСЃРµРјРё С‡Р°СЃС‚СЏРјРё РїСЂРѕРіСЂР°РјРјС‹, РЅРѕ
+РІ Р±РѕР»СЊС€РµР№ СЃС‚РµРїРµРЅРё РёРіСЂРѕРІС‹РјРё РѕР±СЉРµРєС‚Р°РјРё.</p>
 
 <p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>Graph</span>,
 <span lang=EN-US style='mso-ansi-language:EN-US'><a href="#_Physic_Engine">Physic</a></span>,
 <span lang=EN-US style='mso-ansi-language:EN-US'>Audio</span><span lang=EN-US> </span><span
-lang=EN-US style='mso-ansi-language:EN-US'>Engine</span><span lang=EN-US> </span>–
-это модули для обработки объектов.</span> <span class=GramE>Независимы</span>
-друг от друга и заменяемы.</p>
+lang=EN-US style='mso-ansi-language:EN-US'>Engine</span><span lang=EN-US> </span>вЂ“
+СЌС‚Рѕ РјРѕРґСѓР»Рё РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё РѕР±СЉРµРєС‚РѕРІ.</span> <span class=GramE>РќРµР·Р°РІРёСЃРёРјС‹</span>
+РґСЂСѓРі РѕС‚ РґСЂСѓРіР° Рё Р·Р°РјРµРЅСЏРµРјС‹.</p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>Input</span><span
-lang=EN-US> </span>отвечает за ввод данных с клавиатуры и мышки, и используется
-модулем <span lang=EN-US style='mso-ansi-language:EN-US'>Game</span>.</p>
+lang=EN-US> </span>РѕС‚РІРµС‡Р°РµС‚ Р·Р° РІРІРѕРґ РґР°РЅРЅС‹С… СЃ РєР»Р°РІРёР°С‚СѓСЂС‹ Рё РјС‹С€РєРё, Рё РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ
+РјРѕРґСѓР»РµРј <span lang=EN-US style='mso-ansi-language:EN-US'>Game</span>.</p>
 
 <p><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
 mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
@@ -1413,23 +1331,23 @@ style='mso-bookmark:_Toc142999571'><span lang=EN-US style='mso-ansi-language:
 EN-US'>interface</span>.</span><span style='mso-bookmark:_Toc142999571'><span
 lang=EN-US style='mso-ansi-language:EN-US'>h</span>)</span></h2>
 
-<p>Первое определение: Объект – это набор полей и методов, которые что-то
-хранят и что-то делают. Каждый объект идентифицируется адресом в памяти, по
-которому он расположен.</p>
+<p>РџРµСЂРІРѕРµ РѕРїСЂРµРґРµР»РµРЅРёРµ: РћР±СЉРµРєС‚ вЂ“ СЌС‚Рѕ РЅР°Р±РѕСЂ РїРѕР»РµР№ Рё РјРµС‚РѕРґРѕРІ, РєРѕС‚РѕСЂС‹Рµ С‡С‚Рѕ-С‚Рѕ
+С…СЂР°РЅСЏС‚ Рё С‡С‚Рѕ-С‚Рѕ РґРµР»Р°СЋС‚. РљР°Р¶РґС‹Р№ РѕР±СЉРµРєС‚ РёРґРµРЅС‚РёС„РёС†РёСЂСѓРµС‚СЃСЏ Р°РґСЂРµСЃРѕРј РІ РїР°РјСЏС‚Рё, РїРѕ
+РєРѕС‚РѕСЂРѕРјСѓ РѕРЅ СЂР°СЃРїРѕР»РѕР¶РµРЅ.</p>
 
-<p>Второе определение: [Игровой] объект – нечто, что обрабатывается движком.
-Объект имеет стандартный набор методов для общения с внешним миром. Такой набор
-методов называется интерфейсом. Каждый объект идентифицируется числом (<span
+<p>Р’С‚РѕСЂРѕРµ РѕРїСЂРµРґРµР»РµРЅРёРµ: [РРіСЂРѕРІРѕР№] РѕР±СЉРµРєС‚ вЂ“ РЅРµС‡С‚Рѕ, С‡С‚Рѕ РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚СЃСЏ РґРІРёР¶РєРѕРј.
+РћР±СЉРµРєС‚ РёРјРµРµС‚ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РЅР°Р±РѕСЂ РјРµС‚РѕРґРѕРІ РґР»СЏ РѕР±С‰РµРЅРёСЏ СЃ РІРЅРµС€РЅРёРј РјРёСЂРѕРј. РўР°РєРѕР№ РЅР°Р±РѕСЂ
+РјРµС‚РѕРґРѕРІ РЅР°Р·С‹РІР°РµС‚СЃСЏ РёРЅС‚РµСЂС„РµР№СЃРѕРј. РљР°Р¶РґС‹Р№ РѕР±СЉРµРєС‚ РёРґРµРЅС‚РёС„РёС†РёСЂСѓРµС‚СЃСЏ С‡РёСЃР»РѕРј (<span
 lang=EN-US style='mso-ansi-language:EN-US'><a href="#_uid"><span class=SpellE>uid</span></a></span>,
 <span lang=EN-US style='mso-ansi-language:EN-US'>object</span><span lang=EN-US>
 </span><span lang=EN-US style='mso-ansi-language:EN-US'>unique</span><span
 lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>identifier</span>).
-Объект не может менять свой идентификатор. Идентификатор должен быть больше
-нуля 0.</p>
+РћР±СЉРµРєС‚ РЅРµ РјРѕР¶РµС‚ РјРµРЅСЏС‚СЊ СЃРІРѕР№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ. РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ
+РЅСѓР»СЏ 0.</p>
 
-<p>Объект имеет положение в пространстве (<span lang=EN-US style='mso-ansi-language:
-EN-US'>Position</span>). Положение – это смещение, поворот и масштабирование. Положение
-задаётся матрицей <span lang=EN-US style='mso-ansi-language:EN-US'>3x4.<o:p></o:p></span></p>
+<p>РћР±СЉРµРєС‚ РёРјРµРµС‚ РїРѕР»РѕР¶РµРЅРёРµ РІ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ (<span lang=EN-US style='mso-ansi-language:
+EN-US'>Position</span>). РџРѕР»РѕР¶РµРЅРёРµ вЂ“ СЌС‚Рѕ СЃРјРµС‰РµРЅРёРµ, РїРѕРІРѕСЂРѕС‚ Рё РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёРµ.
+РџРѕР»РѕР¶РµРЅРёРµ Р·Р°РґР°С‘С‚СЃСЏ РјР°С‚СЂРёС†РµР№ <span lang=EN-US style='mso-ansi-language:EN-US'>3x4.<o:p></o:p></span></p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>Interface:<o:p></o:p></span></p>
 
@@ -1560,8 +1478,8 @@ EN-US'>Position</span>). Положение – это смещение, поворот и масштабирование. По
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>Положение и поворот произвольной
-  точки объекта в локальных или глобальных координатах (точка отсчёта объекта).</p>
+  <p style='margin-left:0cm;text-indent:0cm'>РџРѕР»РѕР¶РµРЅРёРµ Рё РїРѕРІРѕСЂРѕС‚ РїСЂРѕРёР·РІРѕР»СЊРЅРѕР№ С‚РѕС‡РєРё
+  РѕР±СЉРµРєС‚Р° РІ Р»РѕРєР°Р»СЊРЅС‹С… РёР»Рё РіР»РѕР±Р°Р»СЊРЅС‹С… РєРѕРѕСЂРґРёРЅР°С‚Р°С… (С‚РѕС‡РєР° РѕС‚СЃС‡С‘С‚Р° РѕР±СЉРµРєС‚Р°).</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes'>
@@ -1605,8 +1523,8 @@ EN-US'>Position</span>). Положение – это смещение, поворот и масштабирование. По
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>Система координат: локальная относительно
-  родителя или глобальная.</p>
+  <p style='margin-left:0cm;text-indent:0cm'>РЎРёСЃС‚РµРјР° РєРѕРѕСЂРґРёРЅР°С‚: Р»РѕРєР°Р»СЊРЅР°СЏ
+  РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЂРѕРґРёС‚РµР»СЏ РёР»Рё РіР»РѕР±Р°Р»СЊРЅР°СЏ.</p>
   </td>
  </tr>
 </table>
@@ -1624,12 +1542,12 @@ mso-highlight:silver;mso-ansi-language:EN-US'>h</span><span style='background:
 silver;mso-highlight:silver'>)</span></span><span style='background:silver;
 mso-highlight:silver'><o:p></o:p></span></h2>
 
-<p><span style='background:silver;mso-highlight:silver'>Движок – это заменяемая
-часть, которая занимается обработкой переданных ей объектов. Объект не должен
-уметь себя рисовать – он только должен уметь рассказывать движку, как он
-выглядит. А движок уже сам решает, как рисовать объект, рисовать ли вообще, как
-накладывать тени от других объектов, используя все современные достижения
-графических ускорителей.<o:p></o:p></span></p>
+<p><span style='background:silver;mso-highlight:silver'>Р”РІРёР¶РѕРє вЂ“ СЌС‚Рѕ Р·Р°РјРµРЅСЏРµРјР°СЏ
+С‡Р°СЃС‚СЊ, РєРѕС‚РѕСЂР°СЏ Р·Р°РЅРёРјР°РµС‚СЃСЏ РѕР±СЂР°Р±РѕС‚РєРѕР№ РїРµСЂРµРґР°РЅРЅС‹С… РµР№ РѕР±СЉРµРєС‚РѕРІ. РћР±СЉРµРєС‚ РЅРµ РґРѕР»Р¶РµРЅ
+СѓРјРµС‚СЊ СЃРµР±СЏ СЂРёСЃРѕРІР°С‚СЊ вЂ“ РѕРЅ С‚РѕР»СЊРєРѕ РґРѕР»Р¶РµРЅ СѓРјРµС‚СЊ СЂР°СЃСЃРєР°Р·С‹РІР°С‚СЊ РґРІРёР¶РєСѓ, РєР°Рє РѕРЅ
+РІС‹РіР»СЏРґРёС‚. Рђ РґРІРёР¶РѕРє СѓР¶Рµ СЃР°Рј СЂРµС€Р°РµС‚, РєР°Рє СЂРёСЃРѕРІР°С‚СЊ РѕР±СЉРµРєС‚, СЂРёСЃРѕРІР°С‚СЊ Р»Рё РІРѕРѕР±С‰Рµ, РєР°Рє
+РЅР°РєР»Р°РґС‹РІР°С‚СЊ С‚РµРЅРё РѕС‚ РґСЂСѓРіРёС… РѕР±СЉРµРєС‚РѕРІ, РёСЃРїРѕР»СЊР·СѓСЏ РІСЃРµ СЃРѕРІСЂРµРјРµРЅРЅС‹Рµ РґРѕСЃС‚РёР¶РµРЅРёСЏ
+РіСЂР°С„РёС‡РµСЃРєРёС… СѓСЃРєРѕСЂРёС‚РµР»РµР№.<o:p></o:p></span></p>
 
 <p><span lang=EN-US style='background:silver;mso-highlight:silver;mso-ansi-language:
 EN-US'>Abstract Interface:<o:p></o:p></span></p>
@@ -1813,27 +1731,27 @@ EN-US'>Physic Engine</span></span></h2>
 Object</span> [</a><span style='mso-bookmark:_Toc142999574'><span class=SpellE><span
 lang=EN-US style='mso-ansi-language:EN-US'>kindex</span></span>]</span></h3>
 
-<p>Любой объект, который должен обрабатываться стандартными физическими
-движками, должен поддерживать этот интерфейс (быть унаследованным от <span
+<p>Р›СЋР±РѕР№ РѕР±СЉРµРєС‚, РєРѕС‚РѕСЂС‹Р№ РґРѕР»Р¶РµРЅ РѕР±СЂР°Р±Р°С‚С‹РІР°С‚СЊСЃСЏ СЃС‚Р°РЅРґР°СЂС‚РЅС‹РјРё С„РёР·РёС‡РµСЃРєРёРјРё
+РґРІРёР¶РєР°РјРё, РґРѕР»Р¶РµРЅ РїРѕРґРґРµСЂР¶РёРІР°С‚СЊ СЌС‚РѕС‚ РёРЅС‚РµСЂС„РµР№СЃ (Р±С‹С‚СЊ СѓРЅР°СЃР»РµРґРѕРІР°РЅРЅС‹Рј РѕС‚ <span
 style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'>Physic</span><span
 lang=EN-US style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:
-EN-US;mso-no-proof:yes'>Object</span>). Объект сам отвечает за хранение всех
-параметров (конфигурация). Объект может брать парамерты из других мест,
-например коллекции ресурсов. Объект в определённых случаях может менять свои
-параметры, например скорость или форму.</p>
+EN-US;mso-no-proof:yes'>Object</span>). РћР±СЉРµРєС‚ СЃР°Рј РѕС‚РІРµС‡Р°РµС‚ Р·Р° С…СЂР°РЅРµРЅРёРµ РІСЃРµС…
+РїР°СЂР°РјРµС‚СЂРѕРІ (РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ). РћР±СЉРµРєС‚ РјРѕР¶РµС‚ Р±СЂР°С‚СЊ РїР°СЂР°РјРµСЂС‚С‹ РёР· РґСЂСѓРіРёС… РјРµСЃС‚,
+РЅР°РїСЂРёРјРµСЂ РєРѕР»Р»РµРєС†РёРё СЂРµСЃСѓСЂСЃРѕРІ. РћР±СЉРµРєС‚ РІ РѕРїСЂРµРґРµР»С‘РЅРЅС‹С… СЃР»СѓС‡Р°СЏС… РјРѕР¶РµС‚ РјРµРЅСЏС‚СЊ СЃРІРѕРё
+РїР°СЂР°РјРµС‚СЂС‹, РЅР°РїСЂРёРјРµСЂ СЃРєРѕСЂРѕСЃС‚СЊ РёР»Рё С„РѕСЂРјСѓ.</p>
 
-<p>До добавления в [физический] движок объект может как угодно менять свои
-параметры. Непосредственно перед добавлением в движок вызывается функция <span
+<p>Р”Рѕ РґРѕР±Р°РІР»РµРЅРёСЏ РІ [С„РёР·РёС‡РµСЃРєРёР№] РґРІРёР¶РѕРє РѕР±СЉРµРєС‚ РјРѕР¶РµС‚ РєР°Рє СѓРіРѕРґРЅРѕ РјРµРЅСЏС‚СЊ СЃРІРѕРё
+РїР°СЂР°РјРµС‚СЂС‹. РќРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РїРµСЂРµРґ РґРѕР±Р°РІР»РµРЅРёРµРј РІ РґРІРёР¶РѕРє РІС‹Р·С‹РІР°РµС‚СЃСЏ С„СѓРЅРєС†РёСЏ <span
 style='font-size:10.0pt;font-family:"Courier New";color:blue;mso-no-proof:yes'>bool</span><span
 style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'>
-beforeInject().</span> Объект не добавляется, если возвращается <span
-lang=EN-US style='mso-ansi-language:EN-US'>false</span>. После удаления из
-движка вызывается процедура <span style='font-size:10.0pt;font-family:"Courier New";
+beforeInject().</span> РћР±СЉРµРєС‚ РЅРµ РґРѕР±Р°РІР»СЏРµС‚СЃСЏ, РµСЃР»Рё РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ <span
+lang=EN-US style='mso-ansi-language:EN-US'>false</span>. РџРѕСЃР»Рµ СѓРґР°Р»РµРЅРёСЏ РёР·
+РґРІРёР¶РєР° РІС‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРѕС†РµРґСѓСЂР° <span style='font-size:10.0pt;font-family:"Courier New";
 color:blue;mso-no-proof:yes'>void</span><span style='font-size:10.0pt;
-font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
-удаления из движка объект как угодно может менять свою конфигурацию.</p>
+font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> РџРѕСЃР»Рµ
+СѓРґР°Р»РµРЅРёСЏ РёР· РґРІРёР¶РєР° РѕР±СЉРµРєС‚ РєР°Рє СѓРіРѕРґРЅРѕ РјРѕР¶РµС‚ РјРµРЅСЏС‚СЊ СЃРІРѕСЋ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ.</p>
 
-<p>Конфигурация объекта:</p>
+<p>РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ РѕР±СЉРµРєС‚Р°:</p>
 
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
@@ -1918,21 +1836,20 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>Форма объекта и способ проверки и
-  обработки коллизий</p>
+  <p style='margin-left:0cm;text-indent:0cm'>Р¤РѕСЂРјР° РѕР±СЉРµРєС‚Р° Рё СЃРїРѕСЃРѕР± РїСЂРѕРІРµСЂРєРё Рё
+  РѕР±СЂР°Р±РѕС‚РєРё РєРѕР»Р»РёР·РёР№</p>
   <p style='margin-left:0cm;text-indent:0cm'><span style='font-size:10.0pt;
-  font-family:"Courier New";mso-no-proof:yes'>Polyhedra – полигональное тело<o:p></o:p></span></p>
+  font-family:"Courier New";mso-no-proof:yes'>Polyhedra вЂ“ РїРѕР»РёРіРѕРЅР°Р»СЊРЅРѕРµ С‚РµР»Рѕ<o:p></o:p></span></p>
   <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='font-size:
   10.0pt;font-family:"Courier New";mso-ansi-language:EN-US;mso-no-proof:yes'>Particle</span><span
-  style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'> –
-  частица<o:p></o:p></span></p>
+  style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'> вЂ“ С‡Р°СЃС‚РёС†Р°<o:p></o:p></span></p>
   <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='font-size:
   10.0pt;font-family:"Courier New";mso-ansi-language:EN-US;mso-no-proof:yes'>Sphere</span><span
-  style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'> – шар<o:p></o:p></span></p>
+  style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'> вЂ“ С€Р°СЂ<o:p></o:p></span></p>
   <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='font-size:
   10.0pt;font-family:"Courier New";mso-ansi-language:EN-US;mso-no-proof:yes'>Trigger
-  – </span><span style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:
-  yes'>форма полигональная</span></p>
+  вЂ“ </span><span style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:
+  yes'>С„РѕСЂРјР° РїРѕР»РёРіРѕРЅР°Р»СЊРЅР°СЏ</span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:2'>
@@ -1979,9 +1896,9 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>Положение и поворот произвольной
-  точки объекта в локальный координатах (точка отсчёта объекта). Именно за
-  изменения этого параметра и отвечает физический движок.</p>
+  <p style='margin-left:0cm;text-indent:0cm'>РџРѕР»РѕР¶РµРЅРёРµ Рё РїРѕРІРѕСЂРѕС‚ РїСЂРѕРёР·РІРѕР»СЊРЅРѕР№
+  С‚РѕС‡РєРё РѕР±СЉРµРєС‚Р° РІ Р»РѕРєР°Р»СЊРЅС‹Р№ РєРѕРѕСЂРґРёРЅР°С‚Р°С… (С‚РѕС‡РєР° РѕС‚СЃС‡С‘С‚Р° РѕР±СЉРµРєС‚Р°). РРјРµРЅРЅРѕ Р·Р° РёР·РјРµРЅРµРЅРёСЏ
+  СЌС‚РѕРіРѕ РїР°СЂР°РјРµС‚СЂР° Рё РѕС‚РІРµС‡Р°РµС‚ С„РёР·РёС‡РµСЃРєРёР№ РґРІРёР¶РѕРє.</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3'>
@@ -2023,8 +1940,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>Система координат: локальная
-  относительно родителя или глобальная</p>
+  <p style='margin-left:0cm;text-indent:0cm'>РЎРёСЃС‚РµРјР° РєРѕРѕСЂРґРёРЅР°С‚: Р»РѕРєР°Р»СЊРЅР°СЏ
+  РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЂРѕРґРёС‚РµР»СЏ РёР»Рё РіР»РѕР±Р°Р»СЊРЅР°СЏ</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:4'>
@@ -2073,8 +1990,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>скорость в <span style='background:
-  yellow;mso-highlight:yellow'>локальных</span> коодринатах</p>
+  <p style='margin-left:0cm;text-indent:0cm'>СЃРєРѕСЂРѕСЃС‚СЊ РІ <span style='background:
+  yellow;mso-highlight:yellow'>Р»РѕРєР°Р»СЊРЅС‹С…</span> РєРѕРѕРґСЂРёРЅР°С‚Р°С…</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:5'>
@@ -2119,7 +2036,7 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>Список детей</p>
+  <p style='margin-left:0cm;text-indent:0cm'>РЎРїРёСЃРѕРє РґРµС‚РµР№</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:6'>
@@ -2165,8 +2082,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='background:
   red;mso-highlight:red;mso-ansi-language:EN-US'>Box</span><span
-  style='background:red;mso-highlight:red'>, в который целиком помещается
-  объект [</span><span lang=EN-US style='background:red;mso-highlight:red;
+  style='background:red;mso-highlight:red'>, РІ РєРѕС‚РѕСЂС‹Р№ С†РµР»РёРєРѕРј РїРѕРјРµС‰Р°РµС‚СЃСЏ
+  РѕР±СЉРµРєС‚ [</span><span lang=EN-US style='background:red;mso-highlight:red;
   mso-ansi-language:EN-US'>To</span><span lang=EN-US style='background:red;
   mso-highlight:red'> </span><span lang=EN-US style='background:red;mso-highlight:
   red;mso-ansi-language:EN-US'>delete</span><span style='background:red;
@@ -2211,9 +2128,9 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>писок вершин (координаты
-  отночительно <span lang=EN-US style='mso-ansi-language:EN-US'>Position</span>()
-  и всех матриц предков)</p>
+  <p style='margin-left:0cm;text-indent:0cm'>РїРёСЃРѕРє РІРµСЂС€РёРЅ (РєРѕРѕСЂРґРёРЅР°С‚С‹ РѕС‚РЅРѕС‡РёС‚РµР»СЊРЅРѕ
+  <span lang=EN-US style='mso-ansi-language:EN-US'>Position</span>() Рё РІСЃРµС…
+  РјР°С‚СЂРёС† РїСЂРµРґРєРѕРІ)</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:8'>
@@ -2255,8 +2172,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>массив индексов вершин, которые
-  образуют треугольники (грани)</p>
+  <p style='margin-left:0cm;text-indent:0cm'>РјР°СЃСЃРёРІ РёРЅРґРµРєСЃРѕРІ РІРµСЂС€РёРЅ, РєРѕС‚РѕСЂС‹Рµ
+  РѕР±СЂР°Р·СѓСЋС‚ С‚СЂРµСѓРіРѕР»СЊРЅРёРєРё (РіСЂР°РЅРё)</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:9'>
@@ -2299,10 +2216,10 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>Множество дополнительных
-  параметров типа <span lang=EN-US style='mso-ansi-language:EN-US'>float</span>,
+  <p style='margin-left:0cm;text-indent:0cm'>РњРЅРѕР¶РµСЃС‚РІРѕ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹С…
+  РїР°СЂР°РјРµС‚СЂРѕРІ С‚РёРїР° <span lang=EN-US style='mso-ansi-language:EN-US'>float</span>,
   <span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>int</span></span><span
-  lang=EN-US> </span>и <span lang=EN-US style='mso-ansi-language:EN-US'>string</span>.</p>
+  lang=EN-US> </span>Рё <span lang=EN-US style='mso-ansi-language:EN-US'>string</span>.</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:10;mso-yfti-lastrow:yes'>
@@ -2345,38 +2262,38 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p style='margin-left:0cm;text-indent:0cm'><span style='background:red;
-  mso-highlight:red'>Масса </span><span lang=EN-US style='background:red;
+  mso-highlight:red'>РњР°СЃСЃР° </span><span lang=EN-US style='background:red;
   mso-highlight:red;mso-ansi-language:EN-US'>[</span><span style='background:
-  red;mso-highlight:red'>переместить в материал</span><span lang=EN-US
+  red;mso-highlight:red'>РїРµСЂРµРјРµСЃС‚РёС‚СЊ РІ РјР°С‚РµСЂРёР°Р»</span><span lang=EN-US
   style='background:red;mso-highlight:red;mso-ansi-language:EN-US'>]<o:p></o:p></span></p>
   </td>
  </tr>
 </table>
 
-<p>Перед каждой итерацией обработки вызывается <span class=SpellE><span
+<p>РџРµСЂРµРґ РєР°Р¶РґРѕР№ РёС‚РµСЂР°С†РёРµР№ РѕР±СЂР°Р±РѕС‚РєРё РІС‹Р·С‹РІР°РµС‚СЃСЏ <span class=SpellE><span
 lang=EN-US style='mso-ansi-language:EN-US'>PhysisObject</span></span>::<span
-lang=EN-US style='mso-ansi-language:EN-US'>process</span>(). Параметры: текущее
-время, длина обрабатываемого кванта времени, номер обрабатываемого кадра.
-Внутри этой процедуры объект может менять некоторые свои параметры.</p>
+lang=EN-US style='mso-ansi-language:EN-US'>process</span>(). РџР°СЂР°РјРµС‚СЂС‹: С‚РµРєСѓС‰РµРµ
+РІСЂРµРјСЏ, РґР»РёРЅР° РѕР±СЂР°Р±Р°С‚С‹РІР°РµРјРѕРіРѕ РєРІР°РЅС‚Р° РІСЂРµРјРµРЅРё, РЅРѕРјРµСЂ РѕР±СЂР°Р±Р°С‚С‹РІР°РµРјРѕРіРѕ РєР°РґСЂР°. Р’РЅСѓС‚СЂРё
+СЌС‚РѕР№ РїСЂРѕС†РµРґСѓСЂС‹ РѕР±СЉРµРєС‚ РјРѕР¶РµС‚ РјРµРЅСЏС‚СЊ РЅРµРєРѕС‚РѕСЂС‹Рµ СЃРІРѕРё РїР°СЂР°РјРµС‚СЂС‹.</p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>Object</span><span
 lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Can</span><span
 lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Change</span><span
-lang=EN-US> </span>– может ли объект сам менять этот парамерт, находясь под
-контролем движка. <span lang=EN-US style='mso-ansi-language:EN-US'>Warn</span><span
-lang=EN-US> </span>– может менять, но при первом же вызове функции <span
+lang=EN-US> </span>вЂ“ РјРѕР¶РµС‚ Р»Рё РѕР±СЉРµРєС‚ СЃР°Рј РјРµРЅСЏС‚СЊ СЌС‚РѕС‚ РїР°СЂР°РјРµСЂС‚, РЅР°С…РѕРґСЏСЃСЊ РїРѕРґ
+РєРѕРЅС‚СЂРѕР»РµРј РґРІРёР¶РєР°. <span lang=EN-US style='mso-ansi-language:EN-US'>Warn</span><span
+lang=EN-US> </span>вЂ“ РјРѕР¶РµС‚ РјРµРЅСЏС‚СЊ, РЅРѕ РїСЂРё РїРµСЂРІРѕРј Р¶Рµ РІС‹Р·РѕРІРµ С„СѓРЅРєС†РёРё <span
 style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'>getModificationTime
-</span>должен вернуть номер кадра, когда произошло последнее <span
-class=SpellE>именение</span>.</p>
+</span>РґРѕР»Р¶РµРЅ РІРµСЂРЅСѓС‚СЊ РЅРѕРјРµСЂ РєР°РґСЂР°, РєРѕРіРґР° РїСЂРѕРёР·РѕС€Р»Рѕ РїРѕСЃР»РµРґРЅРµРµ <span
+class=SpellE>РёРјРµРЅРµРЅРёРµ</span>.</p>
 
-<p>Дети</p>
+<p>Р”РµС‚Рё</p>
 
-<p>У объекта могут быть дети. Если они находятся в локальных координатах, то
-они движутся вместе с родителем. Все дети обрабатываются физическим движком. <span
+<p>РЈ РѕР±СЉРµРєС‚Р° РјРѕРіСѓС‚ Р±С‹С‚СЊ РґРµС‚Рё. Р•СЃР»Рё РѕРЅРё РЅР°С…РѕРґСЏС‚СЃСЏ РІ Р»РѕРєР°Р»СЊРЅС‹С… РєРѕРѕСЂРґРёРЅР°С‚Р°С…, С‚Рѕ
+РѕРЅРё РґРІРёР¶СѓС‚СЃСЏ РІРјРµСЃС‚Рµ СЃ СЂРѕРґРёС‚РµР»РµРј. Р’СЃРµ РґРµС‚Рё РѕР±СЂР°Р±Р°С‚С‹РІР°СЋС‚СЃСЏ С„РёР·РёС‡РµСЃРєРёРј РґРІРёР¶РєРѕРј. <span
 class=SpellE><span style='mso-bidi-font-size:10.0pt'>getPhysicChildrenCount</span></span><span
-style='mso-bidi-font-size:10.0pt'> возвращает количество детей. <span
-class=SpellE>getPhysicChildren</span> <span class=SpellE>возвращет</span>
-ребёнка с указанным номером.<o:p></o:p></span></p>
+style='mso-bidi-font-size:10.0pt'> РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРµС‚РµР№. <span
+class=SpellE>getPhysicChildren</span> <span class=SpellE>РІРѕР·РІСЂР°С‰РµС‚</span>
+СЂРµР±С‘РЅРєР° СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РЅРѕРјРµСЂРѕРј.<o:p></o:p></span></p>
 
 <h3><a name="_Toc142999575"><span lang=EN-US style='mso-ansi-language:EN-US'>Physic</span><span
 lang=EN-US> </span></a><span style='mso-bookmark:_Toc142999575'><span
@@ -2384,23 +2301,23 @@ lang=EN-US style='mso-ansi-language:EN-US'>Engine</span> [</span><span
 style='mso-bookmark:_Toc142999575'><span class=SpellE><span lang=EN-US
 style='mso-ansi-language:EN-US'>kindex</span></span>]</span></h3>
 
-<p>У каждого объекта есть уникальный идентификатор. Движок использует этот
-идентификатор для сопоставления двух объектов в различных кадрах. </p>
+<p>РЈ РєР°Р¶РґРѕРіРѕ РѕР±СЉРµРєС‚Р° РµСЃС‚СЊ СѓРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ. Р”РІРёР¶РѕРє РёСЃРїРѕР»СЊР·СѓРµС‚ СЌС‚РѕС‚
+РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РґР»СЏ СЃРѕРїРѕСЃС‚Р°РІР»РµРЅРёСЏ РґРІСѓС… РѕР±СЉРµРєС‚РѕРІ РІ СЂР°Р·Р»РёС‡РЅС‹С… РєР°РґСЂР°С…. </p>
 
-<p>Для увеличения скорости часть информации <span class=SpellE>кешируется</span>
-в движке. В массиве <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>storage</span></span><span
-style='mso-bidi-font-size:10.0pt'> хранится <span class=SpellE>кеш</span>.<o:p></o:p></span></p>
+<p>Р”Р»СЏ СѓРІРµР»РёС‡РµРЅРёСЏ СЃРєРѕСЂРѕСЃС‚Рё С‡Р°СЃС‚СЊ РёРЅС„РѕСЂРјР°С†РёРё <span class=SpellE>РєРµС€РёСЂСѓРµС‚СЃСЏ</span>
+РІ РґРІРёР¶РєРµ. Р’ РјР°СЃСЃРёРІРµ <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>storage</span></span><span
+style='mso-bidi-font-size:10.0pt'> С…СЂР°РЅРёС‚СЃСЏ <span class=SpellE>РєРµС€</span>.<o:p></o:p></span></p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>modificationTime</span></span><span
-style='mso-bidi-font-size:10.0pt'> – время последнего изменения объекта. Если <span
-class=SpellE>PhysicObject::getModificationTime</span>() вернул более <span
-class=SpellE>поздное</span> значение, то <span class=SpellE>кеш</span> надо
-обновить. <span class=SpellE>childrenModificationTime</span> – аналогично, но
-только со списком детей.<o:p></o:p></span></p>
+style='mso-bidi-font-size:10.0pt'> вЂ“ РІСЂРµРјСЏ РїРѕСЃР»РµРґРЅРµРіРѕ РёР·РјРµРЅРµРЅРёСЏ РѕР±СЉРµРєС‚Р°. Р•СЃР»Рё <span
+class=SpellE>PhysicObject::getModificationTime</span>() РІРµСЂРЅСѓР» Р±РѕР»РµРµ <span
+class=SpellE>РїРѕР·РґРЅРѕРµ</span> Р·РЅР°С‡РµРЅРёРµ, С‚Рѕ <span class=SpellE>РєРµС€</span> РЅР°РґРѕ
+РѕР±РЅРѕРІРёС‚СЊ. <span class=SpellE>childrenModificationTime</span> вЂ“ Р°РЅР°Р»РѕРіРёС‡РЅРѕ, РЅРѕ
+С‚РѕР»СЊРєРѕ СЃРѕ СЃРїРёСЃРєРѕРј РґРµС‚РµР№.<o:p></o:p></span></p>
 
-<p><span style='mso-bidi-font-size:10.0pt'>Кроме этого есть еще <span
-class=SpellE>particleSet</span> – это множество объектов с типом обработки
-частица.</span></p>
+<p><span style='mso-bidi-font-size:10.0pt'>РљСЂРѕРјРµ СЌС‚РѕРіРѕ РµСЃС‚СЊ РµС‰Рµ <span
+class=SpellE>particleSet</span> вЂ“ СЌС‚Рѕ РјРЅРѕР¶РµСЃС‚РІРѕ РѕР±СЉРµРєС‚РѕРІ СЃ С‚РёРїРѕРј РѕР±СЂР°Р±РѕС‚РєРё
+С‡Р°СЃС‚РёС†Р°.</span></p>
 
 <p><o:p>&nbsp;</o:p></p>
 
@@ -2412,35 +2329,35 @@ class=SpellE>particleSet</span> – это множество объектов с типом обработки
 lang=EN-US> </span></a><span style='mso-bookmark:_Toc142999576'><span
 lang=EN-US style='mso-ansi-language:EN-US'>System</span></span></h3>
 
-<h3><a name="_Toc142999577"><span style='background:silver;mso-highlight:silver'>Модульность
+<h3><a name="_Toc142999577"><span style='background:silver;mso-highlight:silver'>РњРѕРґСѓР»СЊРЅРѕСЃС‚СЊ
 [</span></a><span style='mso-bookmark:_Toc142999577'><span class=SpellE><span
 lang=EN-US style='background:silver;mso-highlight:silver;mso-ansi-language:
 EN-US'>kindex</span></span><span style='background:silver;mso-highlight:silver'>]</span></span><span
 style='background:silver;mso-highlight:silver'><o:p></o:p></span></h3>
 
-<p><span style='background:silver;mso-highlight:silver'>Надо иметь возможность заменять
-следующие модули для каждой системы частиц:<o:p></o:p></span></p>
+<p><span style='background:silver;mso-highlight:silver'>РќР°РґРѕ РёРјРµС‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ
+Р·Р°РјРµРЅСЏС‚СЊ СЃР»РµРґСѓСЋС‰РёРµ РјРѕРґСѓР»Рё РґР»СЏ РєР°Р¶РґРѕР№ СЃРёСЃС‚РµРјС‹ С‡Р°СЃС‚РёС†:<o:p></o:p></span></p>
 
 <p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo4;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
-mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mso-highlight:silver'><span style='mso-list:Ignore'>В·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span style='background:silver;mso-highlight:
-silver'>Эмиттер (точечный, разброс, равномерный разброс)<o:p></o:p></span></p>
+silver'>Р­РјРёС‚С‚РµСЂ (С‚РѕС‡РµС‡РЅС‹Р№, СЂР°Р·Р±СЂРѕСЃ, СЂР°РІРЅРѕРјРµСЂРЅС‹Р№ СЂР°Р·Р±СЂРѕСЃ)<o:p></o:p></span></p>
 
 <p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo4;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
-mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mso-highlight:silver'><span style='mso-list:Ignore'>В·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span class=SpellE><span lang=EN-US
 style='background:silver;mso-highlight:silver;mso-ansi-language:EN-US'>Renderer</span></span><span
-style='background:silver;mso-highlight:silver'> (спрайты, система спрайтов,
-многогранники, <span class=SpellE>меташарики</span>)<o:p></o:p></span></p>
+style='background:silver;mso-highlight:silver'> (СЃРїСЂР°Р№С‚С‹, СЃРёСЃС‚РµРјР° СЃРїСЂР°Р№С‚РѕРІ,
+РјРЅРѕРіРѕРіСЂР°РЅРЅРёРєРё, <span class=SpellE>РјРµС‚Р°С€Р°СЂРёРєРё</span>)<o:p></o:p></span></p>
 
 <p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo4;
 tab-stops:list 92.7pt'><![if !supportLists]><span style='font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;background:silver;
-mso-highlight:silver'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mso-highlight:silver'><span style='mso-list:Ignore'>В·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span lang=EN-US style='background:silver;
 mso-highlight:silver;mso-ansi-language:EN-US'>Physic</span><span
 style='background:silver;mso-highlight:silver'><o:p></o:p></span></p>
@@ -2452,29 +2369,29 @@ style='mso-bookmark:_Toc142999578'><span lang=EN-US style='mso-ansi-language:
 EN-US'>Resource Collection (<span class=SpellE>res/res.h</span>)</span></span><span
 lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h1>
 
-<p>Существует 5 основных типов ресурсов: <span lang=EN-US style='mso-ansi-language:
+<p>РЎСѓС‰РµСЃС‚РІСѓРµС‚ 5 РѕСЃРЅРѕРІРЅС‹С… С‚РёРїРѕРІ СЂРµСЃСѓСЂСЃРѕРІ: <span lang=EN-US style='mso-ansi-language:
 EN-US;mso-no-proof:yes'>Config</span><span style='mso-no-proof:yes'>, </span><span
 lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:yes'>Image</span><span
 style='mso-no-proof:yes'>, </span><span lang=EN-US style='mso-ansi-language:
 EN-US;mso-no-proof:yes'>Model</span><span style='mso-no-proof:yes'>, </span><span
 lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:yes'>Material</span><span
 style='mso-no-proof:yes'>, </span><span lang=EN-US style='mso-ansi-language:
-EN-US;mso-no-proof:yes'>Script</span><span style='mso-no-proof:yes'>. Для
-хранения каждого типа ресурса существует своя коллекция ресурсов </span>(Соответственно
-<span class=SpellE>resConfig</span>, <span class=SpellE>resImage</span> и т.д.)</p>
+EN-US;mso-no-proof:yes'>Script</span><span style='mso-no-proof:yes'>. Р”Р»СЏ
+С…СЂР°РЅРµРЅРёСЏ РєР°Р¶РґРѕРіРѕ С‚РёРїР° СЂРµСЃСѓСЂСЃР° СЃСѓС‰РµСЃС‚РІСѓРµС‚ СЃРІРѕСЏ РєРѕР»Р»РµРєС†РёСЏ СЂРµСЃСѓСЂСЃРѕРІ </span>(РЎРѕРѕС‚РІРµС‚СЃС‚РІРµРЅРЅРѕ
+<span class=SpellE>resConfig</span>, <span class=SpellE>resImage</span> Рё С‚.Рґ.)</p>
 
-<p>Для загрузки картинки нужно указать её относительное имя без расширения.</p>
+<p>Р”Р»СЏ Р·Р°РіСЂСѓР·РєРё РєР°СЂС‚РёРЅРєРё РЅСѓР¶РЅРѕ СѓРєР°Р·Р°С‚СЊ РµС‘ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕРµ РёРјСЏ Р±РµР· СЂР°СЃС€РёСЂРµРЅРёСЏ.</p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>Image *a = <span
-class=SpellE><span class=GramE>resImage.add</span></span><span class=GramE>(</span>“dir/name”);<o:p></o:p></span></p>
+class=SpellE><span class=GramE>resImage.add</span></span><span class=GramE>(</span>вЂњdir/nameвЂќ);<o:p></o:p></span></p>
 
-<p>Коллекция попробует загрузить ресурс всеми определёнными способами по
-порядку. Для указания своего способа загрузки существует функция <span
-class=SpellE>registerResLoader</span>. Она принимает указатель <span
-class=GramE>на</span> <span class=GramE>функция</span>, которая создаёт ресурс
-по указанному имени и <span class=SpellE>дирекории</span> (точки отсчёта имён).
-В <span class=SpellE>принцыпе</span>, эта функция может и не <span
-class=SpellE>загружить</span> ресурс, а создавать его на лету.</p>
+<p>РљРѕР»Р»РµРєС†РёСЏ РїРѕРїСЂРѕР±СѓРµС‚ Р·Р°РіСЂСѓР·РёС‚СЊ СЂРµСЃСѓСЂСЃ РІСЃРµРјРё РѕРїСЂРµРґРµР»С‘РЅРЅС‹РјРё СЃРїРѕСЃРѕР±Р°РјРё РїРѕ
+РїРѕСЂСЏРґРєСѓ. Р”Р»СЏ СѓРєР°Р·Р°РЅРёСЏ СЃРІРѕРµРіРѕ СЃРїРѕСЃРѕР±Р° Р·Р°РіСЂСѓР·РєРё СЃСѓС‰РµСЃС‚РІСѓРµС‚ С„СѓРЅРєС†РёСЏ <span
+class=SpellE>registerResLoader</span>. РћРЅР° РїСЂРёРЅРёРјР°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ <span
+class=GramE>РЅР°</span> <span class=GramE>С„СѓРЅРєС†РёСЏ</span>, РєРѕС‚РѕСЂР°СЏ СЃРѕР·РґР°С‘С‚ СЂРµСЃСѓСЂСЃ
+РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ РёРјРµРЅРё Рё <span class=SpellE>РґРёСЂРµРєРѕСЂРёРё</span> (С‚РѕС‡РєРё РѕС‚СЃС‡С‘С‚Р° РёРјС‘РЅ).
+Р’ <span class=SpellE>РїСЂРёРЅС†С‹РїРµ</span>, СЌС‚Р° С„СѓРЅРєС†РёСЏ РјРѕР¶РµС‚ Рё РЅРµ <span
+class=SpellE>Р·Р°РіСЂСѓР¶РёС‚СЊ</span> СЂРµСЃСѓСЂСЃ, Р° СЃРѕР·РґР°РІР°С‚СЊ РµРіРѕ РЅР° Р»РµС‚Сѓ.</p>
 
 <p><o:p>&nbsp;</o:p></p>
 
@@ -2484,110 +2401,110 @@ lang=EN-US style='mso-ansi-language:EN-US'>(</span></span><span class=SpellE><sp
 lang=EN-US style='mso-ansi-language:EN-US'>createClass</span></span><span
 lang=EN-US style='mso-ansi-language:EN-US'>&lt;_3DS, Model&gt;);<o:p></o:p></span></p>
 
-<p>Функция <span class=SpellE>createClass</span> создаёт класс _3DS, вызывает
-его загрузчик <span class=SpellE>init</span>, устанавливает уникальный
-идентификатор и возвращает <span class=SpellE>созданынй</span> класс. В <span
-class=SpellE>registerResLoader</span> можно <span class=SpellE>передапть</span>
-и другой загрузчик. Например, <span class=SpellE>createImage</span>, <span
-class=GramE>которая</span> загружает изображения всех возможных комбинаций
-типов. Она сама ищет нужный файл по указанному параметру <span class=SpellE>name</span>.
-Остальные параметры могут быть как указанными явно, так и опущенными. </p>
+<p>Р¤СѓРЅРєС†РёСЏ <span class=SpellE>createClass</span> СЃРѕР·РґР°С‘С‚ РєР»Р°СЃСЃ _3DS, РІС‹Р·С‹РІР°РµС‚
+РµРіРѕ Р·Р°РіСЂСѓР·С‡РёРє <span class=SpellE>init</span>, СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СѓРЅРёРєР°Р»СЊРЅС‹Р№
+РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Рё РІРѕР·РІСЂР°С‰Р°РµС‚ <span class=SpellE>СЃРѕР·РґР°РЅС‹РЅР№</span> РєР»Р°СЃСЃ. Р’ <span
+class=SpellE>registerResLoader</span> РјРѕР¶РЅРѕ <span class=SpellE>РїРµСЂРµРґР°РїС‚СЊ</span>
+Рё РґСЂСѓРіРѕР№ Р·Р°РіСЂСѓР·С‡РёРє. РќР°РїСЂРёРјРµСЂ, <span class=SpellE>createImage</span>, <span
+class=GramE>РєРѕС‚РѕСЂР°СЏ</span> Р·Р°РіСЂСѓР¶Р°РµС‚ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РІСЃРµС… РІРѕР·РјРѕР¶РЅС‹С… РєРѕРјР±РёРЅР°С†РёР№
+С‚РёРїРѕРІ. РћРЅР° СЃР°РјР° РёС‰РµС‚ РЅСѓР¶РЅС‹Р№ С„Р°Р№Р» РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ РїР°СЂР°РјРµС‚СЂСѓ <span class=SpellE>name</span>.
+РћСЃС‚Р°Р»СЊРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ РјРѕРіСѓС‚ Р±С‹С‚СЊ РєР°Рє СѓРєР°Р·Р°РЅРЅС‹РјРё СЏРІРЅРѕ, С‚Р°Рє Рё РѕРїСѓС‰РµРЅРЅС‹РјРё. </p>
 
 <p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>name[</span></span><span
 lang=EN-US style='mso-ansi-language:EN-US'>.cube][.<span class=SpellE>normal|.height</span>][.<span
 class=SpellE>bmp|.tga</span>]<o:p></o:p></span></p>
 
-<p><span class=SpellE>cube</span> – кубическая текстура. 6 текстур в одной <span
-class=SpellE>сверху-вниз</span> (+X, -X, +Y, -Y, +Z, -Z)</p>
+<p><span class=SpellE>cube</span> вЂ“ РєСѓР±РёС‡РµСЃРєР°СЏ С‚РµРєСЃС‚СѓСЂР°. 6 С‚РµРєСЃС‚СѓСЂ РІ РѕРґРЅРѕР№ <span
+class=SpellE>СЃРІРµСЂС…Сѓ-РІРЅРёР·</span> (+X, -X, +Y, -Y, +Z, -Z)</p>
 
-<p><span class=SpellE>normal</span> – карта нормалей</p>
+<p><span class=SpellE>normal</span> вЂ“ РєР°СЂС‚Р° РЅРѕСЂРјР°Р»РµР№</p>
 
-<p><span class=SpellE>height</span> – карты высот. <span class=SpellE>Преобразовываетя</span>
-<span class=GramE>к <span class=SpellE>варте</span></span> нормалей</p>
+<p><span class=SpellE>height</span> вЂ“ РєР°СЂС‚С‹ РІС‹СЃРѕС‚. <span class=SpellE>РџСЂРµРѕР±СЂР°Р·РѕРІС‹РІР°РµС‚СЏ</span>
+<span class=GramE>Рє <span class=SpellE>РІР°СЂС‚Рµ</span></span> РЅРѕСЂРјР°Р»РµР№</p>
 
-<p><span class=SpellE>bmp</span>, <span class=SpellE>tga</span> – конкретные
-типы хранения изображений.</p>
+<p><span class=SpellE>bmp</span>, <span class=SpellE>tga</span> вЂ“ РєРѕРЅРєСЂРµС‚РЅС‹Рµ
+С‚РёРїС‹ С…СЂР°РЅРµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёР№.</p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<p>Передаваемое имя файла в <span class=SpellE><span lang=EN-US
+<p>РџРµСЂРµРґР°РІР°РµРјРѕРµ РёРјСЏ С„Р°Р№Р»Р° РІ <span class=SpellE><span lang=EN-US
 style='mso-ansi-language:EN-US'>resImage</span></span>.<span lang=EN-US
-style='mso-ansi-language:EN-US'>add</span>(“<span lang=EN-US style='mso-ansi-language:
-EN-US'>dir</span>/<span lang=EN-US style='mso-ansi-language:EN-US'>name</span>”)
-<span class=SpellE>указываетя</span> относительно текущей директории в
-коллекции. Текущая директория меняется при рекурсивном вызове загрузчиков.
-Например, <span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>config</span></span>
+style='mso-ansi-language:EN-US'>add</span>(вЂњ<span lang=EN-US style='mso-ansi-language:
+EN-US'>dir</span>/<span lang=EN-US style='mso-ansi-language:EN-US'>name</span>вЂќ)
+<span class=SpellE>СѓРєР°Р·С‹РІР°РµС‚СЏ</span> РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ С‚РµРєСѓС‰РµР№ РґРёСЂРµРєС‚РѕСЂРёРё РІ
+РєРѕР»Р»РµРєС†РёРё. РўРµРєСѓС‰Р°СЏ РґРёСЂРµРєС‚РѕСЂРёСЏ РјРµРЅСЏРµС‚СЃСЏ РїСЂРё СЂРµРєСѓСЂСЃРёРІРЅРѕРј РІС‹Р·РѕРІРµ Р·Р°РіСЂСѓР·С‡РёРєРѕРІ.
+РќР°РїСЂРёРјРµСЂ, <span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>config</span></span>
 -&gt; <span lang=EN-US style='mso-ansi-language:EN-US'>model</span> -&gt; <span
 lang=EN-US style='mso-ansi-language:EN-US'>material</span> -&gt; <span
-lang=EN-US style='mso-ansi-language:EN-US'>image</span>. То есть, имя файла
-указывается относительно директории предыдущего загруженного ресурса. Имя может
-содержать директории (<span lang=EN-US style='mso-ansi-language:EN-US'>dir</span>/<span
+lang=EN-US style='mso-ansi-language:EN-US'>image</span>. РўРѕ РµСЃС‚СЊ, РёРјСЏ С„Р°Р№Р»Р°
+СѓРєР°Р·С‹РІР°РµС‚СЃСЏ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РґРёСЂРµРєС‚РѕСЂРёРё РїСЂРµРґС‹РґСѓС‰РµРіРѕ Р·Р°РіСЂСѓР¶РµРЅРЅРѕРіРѕ СЂРµСЃСѓСЂСЃР°. РРјСЏ РјРѕР¶РµС‚
+СЃРѕРґРµСЂР¶Р°С‚СЊ РґРёСЂРµРєС‚РѕСЂРёРё (<span lang=EN-US style='mso-ansi-language:EN-US'>dir</span>/<span
 lang=EN-US style='mso-ansi-language:EN-US'>file</span>, ../<span lang=EN-US
 style='mso-ansi-language:EN-US'>dir</span>/<span lang=EN-US style='mso-ansi-language:
-EN-US'>file</span>). Можно указать абсолютный путь к ресурсу – для того надо
-начать путь <span lang=EN-US style='mso-ansi-language:EN-US'>c</span> /.
-Максимальная глубина вложенности рекурсивных вызовов – 100. Для первого вызовы
-текущей директорией является <span lang=EN-US style='mso-ansi-language:EN-US'><a
-href="#_Структура_каталогов"><span class=SpellE>res</span></a></span> (корень
-ресурсов). Полное имя ресурса – имя относительно корня.</p>
+EN-US'>file</span>). РњРѕР¶РЅРѕ СѓРєР°Р·Р°С‚СЊ Р°Р±СЃРѕР»СЋС‚РЅС‹Р№ РїСѓС‚СЊ Рє СЂРµСЃСѓСЂСЃСѓ вЂ“ РґР»СЏ С‚РѕРіРѕ РЅР°РґРѕ
+РЅР°С‡Р°С‚СЊ РїСѓС‚СЊ <span lang=EN-US style='mso-ansi-language:EN-US'>c</span> /.
+РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РіР»СѓР±РёРЅР° РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё СЂРµРєСѓСЂСЃРёРІРЅС‹С… РІС‹Р·РѕРІРѕРІ вЂ“ 100. Р”Р»СЏ РїРµСЂРІРѕРіРѕ РІС‹Р·РѕРІС‹
+С‚РµРєСѓС‰РµР№ РґРёСЂРµРєС‚РѕСЂРёРµР№ СЏРІР»СЏРµС‚СЃСЏ <span lang=EN-US style='mso-ansi-language:EN-US'><a
+href="#_РЎС‚СЂСѓРєС‚СѓСЂР°_РєР°С‚Р°Р»РѕРіРѕРІ"><span class=SpellE>res</span></a></span> (РєРѕСЂРµРЅСЊ
+СЂРµСЃСѓСЂСЃРѕРІ). РџРѕР»РЅРѕРµ РёРјСЏ СЂРµСЃСѓСЂСЃР° вЂ“ РёРјСЏ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РєРѕСЂРЅСЏ.</p>
 
-<p>У процедуры <span lang=EN-US style='mso-ansi-language:EN-US'>add</span> есть
-второй параметр типа <span class=SpellE><span lang=EN-US style='mso-ansi-language:
-EN-US'>bool</span></span>. Если он равняется <span lang=EN-US style='mso-ansi-language:
-EN-US'>false</span>, то после загрузки ресурса текущая директория не
-восстанавливается и надо это делать вручную с помощью вызова <span lang=EN-US
-style='mso-ansi-language:EN-US'>pop</span>.</p>
+<p>РЈ РїСЂРѕС†РµРґСѓСЂС‹ <span lang=EN-US style='mso-ansi-language:EN-US'>add</span> РµСЃС‚СЊ
+РІС‚РѕСЂРѕР№ РїР°СЂР°РјРµС‚СЂ С‚РёРїР° <span class=SpellE><span lang=EN-US style='mso-ansi-language:
+EN-US'>bool</span></span>. Р•СЃР»Рё РѕРЅ СЂР°РІРЅСЏРµС‚СЃСЏ <span lang=EN-US style='mso-ansi-language:
+EN-US'>false</span>, С‚Рѕ РїРѕСЃР»Рµ Р·Р°РіСЂСѓР·РєРё СЂРµСЃСѓСЂСЃР° С‚РµРєСѓС‰Р°СЏ РґРёСЂРµРєС‚РѕСЂРёСЏ РЅРµ РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ
+Рё РЅР°РґРѕ СЌС‚Рѕ РґРµР»Р°С‚СЊ РІСЂСѓС‡РЅСѓСЋ СЃ РїРѕРјРѕС‰СЊСЋ РІС‹Р·РѕРІР° <span lang=EN-US style='mso-ansi-language:
+EN-US'>pop</span>.</p>
 
-<p>Удаление ресурсов происходит с помощью функции <span lang=EN-US
+<p>РЈРґР°Р»РµРЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ РїСЂРѕРёСЃС…РѕРґРёС‚ СЃ РїРѕРјРѕС‰СЊСЋ С„СѓРЅРєС†РёРё <span lang=EN-US
 style='mso-ansi-language:EN-US'>remove</span>(<span lang=EN-US
 style='mso-ansi-language:EN-US'>string</span><span lang=EN-US> </span><span
 class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>FullName</span></span>).
-У каждого ресурса есть количество ссылок, которые ссылаются на него (<span
-lang=EN-US style='mso-ansi-language:EN-US'>links</span>) – сколько раз его
-хотели загрузить. При запросе на загрузку ресурса с уже существующим именем
-ресурс не загружается, а возвращается уже загруженный из коллекции и
-увеличивается количество ссылок. При вызове <span lang=EN-US style='mso-ansi-language:
-EN-US'>remove</span><span lang=EN-US> </span>количество ссылок уменьшается. Если
-ссылок больше нет (=0), то ресурс удаляется физически (Вызывается его
-деструктор).</p>
+РЈ РєР°Р¶РґРѕРіРѕ СЂРµСЃСѓСЂСЃР° РµСЃС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃСЃС‹Р»РѕРє, РєРѕС‚РѕСЂС‹Рµ СЃСЃС‹Р»Р°СЋС‚СЃСЏ РЅР° РЅРµРіРѕ (<span
+lang=EN-US style='mso-ansi-language:EN-US'>links</span>) вЂ“ СЃРєРѕР»СЊРєРѕ СЂР°Р· РµРіРѕ
+С…РѕС‚РµР»Рё Р·Р°РіСЂСѓР·РёС‚СЊ. РџСЂРё Р·Р°РїСЂРѕСЃРµ РЅР° Р·Р°РіСЂСѓР·РєСѓ СЂРµСЃСѓСЂСЃР° СЃ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРј РёРјРµРЅРµРј
+СЂРµСЃСѓСЂСЃ РЅРµ Р·Р°РіСЂСѓР¶Р°РµС‚СЃСЏ, Р° РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ СѓР¶Рµ Р·Р°РіСЂСѓР¶РµРЅРЅС‹Р№ РёР· РєРѕР»Р»РµРєС†РёРё Рё
+СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃСЃС‹Р»РѕРє. РџСЂРё РІС‹Р·РѕРІРµ <span lang=EN-US style='mso-ansi-language:
+EN-US'>remove</span><span lang=EN-US> </span>РєРѕР»РёС‡РµСЃС‚РІРѕ СЃСЃС‹Р»РѕРє СѓРјРµРЅСЊС€Р°РµС‚СЃСЏ.
+Р•СЃР»Рё СЃСЃС‹Р»РѕРє Р±РѕР»СЊС€Рµ РЅРµС‚ (=0), С‚Рѕ СЂРµСЃСѓСЂСЃ СѓРґР°Р»СЏРµС‚СЃСЏ С„РёР·РёС‡РµСЃРєРё (Р’С‹Р·С‹РІР°РµС‚СЃСЏ РµРіРѕ
+РґРµСЃС‚СЂСѓРєС‚РѕСЂ).</p>
 
-<p>Итого, ресурсы надо освобождать, иначе они до завершения программы будут в
-коллекции. Внутри коллекции не могут дублироваться полные имена, но могут быть
-два файла с одинаковым именем, но в разных директориях. Кроме того, в двух
-разных коллекциях могут находиться два ресурса с одинаковыми полными именами.
-Это достигается благодаря тому, что имена ресурсов хранятся без расширений.
-Можно без проблем изменить формат хранения ресурса (другое расширение) без
-изменения ссылок на него. То есть, в директории могут быть файлы <span
+<p>РС‚РѕРіРѕ, СЂРµСЃСѓСЂСЃС‹ РЅР°РґРѕ РѕСЃРІРѕР±РѕР¶РґР°С‚СЊ, РёРЅР°С‡Рµ РѕРЅРё РґРѕ Р·Р°РІРµСЂС€РµРЅРёСЏ РїСЂРѕРіСЂР°РјРјС‹ Р±СѓРґСѓС‚ РІ
+РєРѕР»Р»РµРєС†РёРё. Р’РЅСѓС‚СЂРё РєРѕР»Р»РµРєС†РёРё РЅРµ РјРѕРіСѓС‚ РґСѓР±Р»РёСЂРѕРІР°С‚СЊСЃСЏ РїРѕР»РЅС‹Рµ РёРјРµРЅР°, РЅРѕ РјРѕРіСѓС‚ Р±С‹С‚СЊ
+РґРІР° С„Р°Р№Р»Р° СЃ РѕРґРёРЅР°РєРѕРІС‹Рј РёРјРµРЅРµРј, РЅРѕ РІ СЂР°Р·РЅС‹С… РґРёСЂРµРєС‚РѕСЂРёСЏС…. РљСЂРѕРјРµ С‚РѕРіРѕ, РІ РґРІСѓС…
+СЂР°Р·РЅС‹С… РєРѕР»Р»РµРєС†РёСЏС… РјРѕРіСѓС‚ РЅР°С…РѕРґРёС‚СЊСЃСЏ РґРІР° СЂРµСЃСѓСЂСЃР° СЃ РѕРґРёРЅР°РєРѕРІС‹РјРё РїРѕР»РЅС‹РјРё РёРјРµРЅР°РјРё.
+Р­С‚Рѕ РґРѕСЃС‚РёРіР°РµС‚СЃСЏ Р±Р»Р°РіРѕРґР°СЂСЏ С‚РѕРјСѓ, С‡С‚Рѕ РёРјРµРЅР° СЂРµСЃСѓСЂСЃРѕРІ С…СЂР°РЅСЏС‚СЃСЏ Р±РµР· СЂР°СЃС€РёСЂРµРЅРёР№.
+РњРѕР¶РЅРѕ Р±РµР· РїСЂРѕР±Р»РµРј РёР·РјРµРЅРёС‚СЊ С„РѕСЂРјР°С‚ С…СЂР°РЅРµРЅРёСЏ СЂРµСЃСѓСЂСЃР° (РґСЂСѓРіРѕРµ СЂР°СЃС€РёСЂРµРЅРёРµ) Р±РµР·
+РёР·РјРµРЅРµРЅРёСЏ СЃСЃС‹Р»РѕРє РЅР° РЅРµРіРѕ. РўРѕ РµСЃС‚СЊ, РІ РґРёСЂРµРєС‚РѕСЂРёРё РјРѕРіСѓС‚ Р±С‹С‚СЊ С„Р°Р№Р»С‹ <span
 lang=EN-US style='mso-ansi-language:EN-US'>model</span>.3<span class=SpellE><span
-lang=EN-US style='mso-ansi-language:EN-US'>ds</span></span><span lang=EN-US> </span>и
+lang=EN-US style='mso-ansi-language:EN-US'>ds</span></span><span lang=EN-US> </span>Рё
 <span lang=EN-US style='mso-ansi-language:EN-US'>model</span>.<span lang=EN-US
-style='mso-ansi-language:EN-US'>bmp</span>, ресурсы будут в двух коллекциях, и
-их имена будут <span lang=EN-US style='mso-ansi-language:EN-US'>model</span>.</p>
+style='mso-ansi-language:EN-US'>bmp</span>, СЂРµСЃСѓСЂСЃС‹ Р±СѓРґСѓС‚ РІ РґРІСѓС… РєРѕР»Р»РµРєС†РёСЏС…, Рё
+РёС… РёРјРµРЅР° Р±СѓРґСѓС‚ <span lang=EN-US style='mso-ansi-language:EN-US'>model</span>.</p>
 
 <h2><a name="_Toc142999579"></a><span class=SpellE><span style='mso-bookmark:
 _Toc142999579'><span lang=EN-US style='mso-ansi-language:EN-US'>ResCollection</span></span></span><span
 style='mso-bookmark:_Toc142999579'></span></h2>
 
-<p>Модуль для хранения, загрузки и контроля над игровыми ресурсами, такими как:
+<p>РњРѕРґСѓР»СЊ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ, Р·Р°РіСЂСѓР·РєРё Рё РєРѕРЅС‚СЂРѕР»СЏ РЅР°Рґ РёРіСЂРѕРІС‹РјРё СЂРµСЃСѓСЂСЃР°РјРё, С‚Р°РєРёРјРё РєР°Рє:
 <span lang=EN-US style='mso-ansi-language:EN-US'>image</span>, <span
 lang=EN-US style='mso-ansi-language:EN-US'>model</span>, <span lang=EN-US
-style='mso-ansi-language:EN-US'>audio</span>. Главный класс <span class=SpellE><span
-lang=EN-US style='mso-ansi-language:EN-US'>ResCollection</span></span> получает
-запросы на загрузку ресурсов, обрабатывает их, исключает дублирование ресурсов.</p>
+style='mso-ansi-language:EN-US'>audio</span>. Р“Р»Р°РІРЅС‹Р№ РєР»Р°СЃСЃ <span class=SpellE><span
+lang=EN-US style='mso-ansi-language:EN-US'>ResCollection</span></span> РїРѕР»СѓС‡Р°РµС‚
+Р·Р°РїСЂРѕСЃС‹ РЅР° Р·Р°РіСЂСѓР·РєСѓ СЂРµСЃСѓСЂСЃРѕРІ, РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РёС…, РёСЃРєР»СЋС‡Р°РµС‚ РґСѓР±Р»РёСЂРѕРІР°РЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ.</p>
 
 <p><span class=SpellE><span class=GramE><span lang=EN-US style='mso-ansi-language:
-EN-US'>ResCollection</span></span></span><span class=GramE><span lang=EN-US> </span>является
-шаблоном и может хранить любых потомков класса-параметра.</span></p>
+EN-US'>ResCollection</span></span></span><span class=GramE><span lang=EN-US> </span>СЏРІР»СЏРµС‚СЃСЏ
+С€Р°Р±Р»РѕРЅРѕРј Рё РјРѕР¶РµС‚ С…СЂР°РЅРёС‚СЊ Р»СЋР±С‹С… РїРѕС‚РѕРјРєРѕРІ РєР»Р°СЃСЃР°-РїР°СЂР°РјРµС‚СЂР°.</span></p>
 
-<p>Поля:</p>
+<p>РџРѕР»СЏ:</p>
 
-<p><span class=SpellE>string</span> <span class=SpellE>id</span> – строковой
-идентификатор коллекции (<span class=SpellE>image</span>, <span class=SpellE>model</span>)</p>
+<p><span class=SpellE>string</span> <span class=SpellE>id</span> вЂ“ СЃС‚СЂРѕРєРѕРІРѕР№
+РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєРѕР»Р»РµРєС†РёРё (<span class=SpellE>image</span>, <span class=SpellE>model</span>)</p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>vector</span></span><span
 style='mso-bidi-font-size:10.0pt'>&lt;<span class=SpellE>ResStorage</span>&gt; <span
-class=SpellE>data</span> – массив хранимых ресурсов и дополнительная информация
-к каждому ресурсу.<o:p></o:p></span></p>
+class=SpellE>data</span> вЂ“ РјР°СЃСЃРёРІ С…СЂР°РЅРёРјС‹С… СЂРµСЃСѓСЂСЃРѕРІ Рё РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ
+Рє РєР°Р¶РґРѕРјСѓ СЂРµСЃСѓСЂСЃСѓ.<o:p></o:p></span></p>
 
 <p><span style='mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
 
@@ -2595,29 +2512,29 @@ class=SpellE>data</span> – массив хранимых ресурсов и дополнительная информация
 style='mso-bidi-font-size:10.0pt'>:<o:p></o:p></span></p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>object</span></span><span
-style='mso-bidi-font-size:10.0pt'> - ссылка на ресурс<o:p></o:p></span></p>
+style='mso-bidi-font-size:10.0pt'> - СЃСЃС‹Р»РєР° РЅР° СЂРµСЃСѓСЂСЃ<o:p></o:p></span></p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>id</span></span><span
-style='mso-bidi-font-size:10.0pt'> - уникальный идентификатор ресурса<o:p></o:p></span></p>
+style='mso-bidi-font-size:10.0pt'> - СѓРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЂРµСЃСѓСЂСЃР°<o:p></o:p></span></p>
 
-<p><span class=SpellE>links</span> – количество ссылок на этот ресурс. При
-добавлении дублируемого ресурса счётчик увеличивается на 1. При удалении -<span
-style='mso-spacerun:yes'>  </span>уменьшается на 1. Если количество ссылок
-становится равным 1, то ресурс удаляется из коллекции<span class=GramE>.</span>
-(<span class=GramE>а</span>налогично <span class=SpellE>Linux</span> ext2fs).</p>
+<p><span class=SpellE>links</span> вЂ“ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃСЃС‹Р»РѕРє РЅР° СЌС‚РѕС‚ СЂРµСЃСѓСЂСЃ. РџСЂРё
+РґРѕР±Р°РІР»РµРЅРёРё РґСѓР±Р»РёСЂСѓРµРјРѕРіРѕ СЂРµСЃСѓСЂСЃР° СЃС‡С‘С‚С‡РёРє СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ РЅР° 1. РџСЂРё СѓРґР°Р»РµРЅРёРё -<span
+style='mso-spacerun:yes'>В  </span>СѓРјРµРЅСЊС€Р°РµС‚СЃСЏ РЅР° 1. Р•СЃР»Рё РєРѕР»РёС‡РµСЃС‚РІРѕ СЃСЃС‹Р»РѕРє
+СЃС‚Р°РЅРѕРІРёС‚СЃСЏ СЂР°РІРЅС‹Рј 1, С‚Рѕ СЂРµСЃСѓСЂСЃ СѓРґР°Р»СЏРµС‚СЃСЏ РёР· РєРѕР»Р»РµРєС†РёРё<span class=GramE>.</span>
+(<span class=GramE>Р°</span>РЅР°Р»РѕРіРёС‡РЅРѕ <span class=SpellE>Linux</span> ext2fs).</p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>name</span></span><span
-style='mso-bidi-font-size:10.0pt'> – полное имя ресурса.<o:p></o:p></span></p>
+style='mso-bidi-font-size:10.0pt'> вЂ“ РїРѕР»РЅРѕРµ РёРјСЏ СЂРµСЃСѓСЂСЃР°.<o:p></o:p></span></p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<p><span class=SpellE>index</span> – отображение полных имён ресурсов на индекс
-в массиве <span class=SpellE>data</span>. Для увеличения скорости поиска по
-имени.</p>
+<p><span class=SpellE>index</span> вЂ“ РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РїРѕР»РЅС‹С… РёРјС‘РЅ СЂРµСЃСѓСЂСЃРѕРІ РЅР° РёРЅРґРµРєСЃ
+РІ РјР°СЃСЃРёРІРµ <span class=SpellE>data</span>. Р”Р»СЏ СѓРІРµР»РёС‡РµРЅРёСЏ СЃРєРѕСЂРѕСЃС‚Рё РїРѕРёСЃРєР° РїРѕ
+РёРјРµРЅРё.</p>
 
-<p><span class=SpellE>resIndex</span> – отображение указателя ресурса на индекс
-в массиве <span class=SpellE>data</span>. Для увеличения скорости удаления
-ресурса по ссылке на него.</p>
+<p><span class=SpellE>resIndex</span> вЂ“ РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ СѓРєР°Р·Р°С‚РµР»СЏ СЂРµСЃСѓСЂСЃР° РЅР° РёРЅРґРµРєСЃ
+РІ РјР°СЃСЃРёРІРµ <span class=SpellE>data</span>. Р”Р»СЏ СѓРІРµР»РёС‡РµРЅРёСЏ СЃРєРѕСЂРѕСЃС‚Рё СѓРґР°Р»РµРЅРёСЏ
+СЂРµСЃСѓСЂСЃР° РїРѕ СЃСЃС‹Р»РєРµ РЅР° РЅРµРіРѕ.</p>
 
 <p><o:p>&nbsp;</o:p></p>
 
@@ -2625,14 +2542,14 @@ style='mso-bidi-font-size:10.0pt'> – полное имя ресурса.<o:p></o:p></span></p>
 
 <p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>operator</span>[</span>],
 <span lang=EN-US style='mso-ansi-language:EN-US'>get</span><span
-style='mso-spacerun:yes'>  </span>- Вернуть ресурс по полному имени</p>
+style='mso-spacerun:yes'>В  </span>- Р’РµСЂРЅСѓС‚СЊ СЂРµСЃСѓСЂСЃ РїРѕ РїРѕР»РЅРѕРјСѓ РёРјРµРЅРё</p>
 
 <p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>add</span></span>
-- Добавить ресурс по имени и типу, если ресурса еще нет в коллекции</p>
+- Р”РѕР±Р°РІРёС‚СЊ СЂРµСЃСѓСЂСЃ РїРѕ РёРјРµРЅРё Рё С‚РёРїСѓ, РµСЃР»Рё СЂРµСЃСѓСЂСЃР° РµС‰Рµ РЅРµС‚ РІ РєРѕР»Р»РµРєС†РёРё</p>
 
-<p><span class=SpellE>remove</span> - удалить ресурс</p>
+<p><span class=SpellE>remove</span> - СѓРґР°Р»РёС‚СЊ СЂРµСЃСѓСЂСЃ</p>
 
-<p><span class=SpellE>pop</span> – описание выше</p>
+<p><span class=SpellE>pop</span> вЂ“ РѕРїРёСЃР°РЅРёРµ РІС‹С€Рµ</p>
 
 <p><o:p>&nbsp;</o:p></p>
 
@@ -2640,39 +2557,39 @@ style='mso-spacerun:yes'>  </span>- Вернуть ресурс по полному имени</p>
 style='mso-bookmark:_Toc142999580'><span lang=EN-US style='mso-ansi-language:
 EN-US'>rstream</span></span></span></span><span style='mso-bookmark:_Toc142999580'></span></h2>
 
-<p>Вся работа с файловой системой должна происходить через этот класс. Он
-отвечает за чтение файла из файловой системы или архивов. Интерфейс класса
-совместим с <span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>fstream</span></span>.</p>
+<p>Р’СЃСЏ СЂР°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРІРѕР№ СЃРёСЃС‚РµРјРѕР№ РґРѕР»Р¶РЅР° РїСЂРѕРёСЃС…РѕРґРёС‚СЊ С‡РµСЂРµР· СЌС‚РѕС‚ РєР»Р°СЃСЃ. РћРЅ
+РѕС‚РІРµС‡Р°РµС‚ Р·Р° С‡С‚РµРЅРёРµ С„Р°Р№Р»Р° РёР· С„Р°Р№Р»РѕРІРѕР№ СЃРёСЃС‚РµРјС‹ РёР»Рё Р°СЂС…РёРІРѕРІ. РРЅС‚РµСЂС„РµР№СЃ РєР»Р°СЃСЃР°
+СЃРѕРІРјРµСЃС‚РёРј СЃ <span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>fstream</span></span>.</p>
 
 <h2><a name="_Toc142999581"></a><span class=SpellE><span class=GramE><span
 style='mso-bookmark:_Toc142999581'><span lang=EN-US style='mso-ansi-language:
 EN-US'>objectIdGenerator</span></span></span></span><span style='mso-bookmark:
 _Toc142999581'></span></h2>
 
-<p>Этот класс отвечает за генерирование уникальных идентификаторов для всех
-объектов (сродни <span lang=EN-US style='mso-ansi-language:EN-US'>sequence</span><span
-lang=EN-US> </span>в <span class=SpellE><span lang=EN-US style='mso-ansi-language:
+<p>Р­С‚РѕС‚ РєР»Р°СЃСЃ РѕС‚РІРµС‡Р°РµС‚ Р·Р° РіРµРЅРµСЂРёСЂРѕРІР°РЅРёРµ СѓРЅРёРєР°Р»СЊРЅС‹С… РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ РґР»СЏ РІСЃРµС…
+РѕР±СЉРµРєС‚РѕРІ (СЃСЂРѕРґРЅРё <span lang=EN-US style='mso-ansi-language:EN-US'>sequence</span><span
+lang=EN-US> </span>РІ <span class=SpellE><span lang=EN-US style='mso-ansi-language:
 EN-US'>PostgreSQL</span></span>).</p>
 
 <h2><a name="_Toc142999582"></a><span class=SpellE><span style='mso-bookmark:
 _Toc142999582'><span lang=EN-US style='mso-ansi-language:EN-US'>Res</span></span></span><span
 style='mso-bookmark:_Toc142999582'></span></h2>
 
-<p><span style='mso-no-proof:yes'>Класс - храниель и рагрузчик одного ресурса.
-Хранение - стандартизовано для каждого типа ресурса. Загруска - для каждого
-типа может быть несколько классов для загрузки. От этого класса наследуются
-классы для хранения ресурсов для каждого типа (image, model). В них реализуется
-деструктор, который уничтожает структуры, созданные при загрузке. От них
-наследуются загрузчики, которые переопределяют метод init. init загружает
-ресурс или генерирует по строковому идентификатору.<o:p></o:p></span></p>
+<p><span style='mso-no-proof:yes'>РљР»Р°СЃСЃ - С…СЂР°РЅРёРµР»СЊ Рё СЂР°РіСЂСѓР·С‡РёРє РѕРґРЅРѕРіРѕ СЂРµСЃСѓСЂСЃР°.
+РҐСЂР°РЅРµРЅРёРµ - СЃС‚Р°РЅРґР°СЂС‚РёР·РѕРІР°РЅРѕ РґР»СЏ РєР°Р¶РґРѕРіРѕ С‚РёРїР° СЂРµСЃСѓСЂСЃР°. Р—Р°РіСЂСѓСЃРєР° - РґР»СЏ РєР°Р¶РґРѕРіРѕ
+С‚РёРїР° РјРѕР¶РµС‚ Р±С‹С‚СЊ РЅРµСЃРєРѕР»СЊРєРѕ РєР»Р°СЃСЃРѕРІ РґР»СЏ Р·Р°РіСЂСѓР·РєРё. РћС‚ СЌС‚РѕРіРѕ РєР»Р°СЃСЃР° РЅР°СЃР»РµРґСѓСЋС‚СЃСЏ
+РєР»Р°СЃСЃС‹ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ РєР°Р¶РґРѕРіРѕ С‚РёРїР° (image, model). Р’ РЅРёС… СЂРµР°Р»РёР·СѓРµС‚СЃСЏ
+РґРµСЃС‚СЂСѓРєС‚РѕСЂ, РєРѕС‚РѕСЂС‹Р№ СѓРЅРёС‡С‚РѕР¶Р°РµС‚ СЃС‚СЂСѓРєС‚СѓСЂС‹, СЃРѕР·РґР°РЅРЅС‹Рµ РїСЂРё Р·Р°РіСЂСѓР·РєРµ. РћС‚ РЅРёС…
+РЅР°СЃР»РµРґСѓСЋС‚СЃСЏ Р·Р°РіСЂСѓР·С‡РёРєРё, РєРѕС‚РѕСЂС‹Рµ РїРµСЂРµРѕРїСЂРµРґРµР»СЏСЋС‚ РјРµС‚РѕРґ init. init Р·Р°РіСЂСѓР¶Р°РµС‚
+СЂРµСЃСѓСЂСЃ РёР»Рё РіРµРЅРµСЂРёСЂСѓРµС‚ РїРѕ СЃС‚СЂРѕРєРѕРІРѕРјСѓ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂСѓ.<o:p></o:p></span></p>
 
 <h3><a name="_Toc142999583"><span lang=EN-US style='mso-ansi-language:EN-US;
 mso-no-proof:yes'>Text</span></a><span style='mso-no-proof:yes'><o:p></o:p></span></h3>
 
-<p>Это самый простой тип ресурса.</p>
+<p>Р­С‚Рѕ СЃР°РјС‹Р№ РїСЂРѕСЃС‚РѕР№ С‚РёРї СЂРµСЃСѓСЂСЃР°.</p>
 
-<p><span class=GramE>Предназначен</span> для хранения текста. Загружает текст
-из текстового файла. Внутренне представление – <span lang=EN-US
+<p><span class=GramE>РџСЂРµРґРЅР°Р·РЅР°С‡РµРЅ</span> РґР»СЏ С…СЂР°РЅРµРЅРёСЏ С‚РµРєСЃС‚Р°. Р—Р°РіСЂСѓР¶Р°РµС‚ С‚РµРєСЃС‚
+РёР· С‚РµРєСЃС‚РѕРІРѕРіРѕ С„Р°Р№Р»Р°. Р’РЅСѓС‚СЂРµРЅРЅРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ вЂ“ <span lang=EN-US
 style='mso-ansi-language:EN-US'>unsigned</span><span lang=EN-US> </span><span
 lang=EN-US style='mso-ansi-language:EN-US'>char</span><span lang=EN-US> </span>*.(<span
 lang=EN-US style='mso-ansi-language:EN-US'>ASCII</span>)</p>
@@ -2682,14 +2599,14 @@ style='mso-ansi-language:RU'> </span><span lang=EN-US>char</span><span
 style='mso-ansi-language:RU'> *</span><span lang=EN-US>getText</span><span
 style='mso-ansi-language:RU'>(</span><span lang=EN-US>void</span><span
 style='mso-ansi-language:RU'>) </span><span lang=EN-US>const</span><span
-style='mso-ansi-language:RU'> – сам текст в виде </span><span lang=EN-US>z</span><span
+style='mso-ansi-language:RU'> вЂ“ СЃР°Рј С‚РµРєСЃС‚ РІ РІРёРґРµ </span><span lang=EN-US>z</span><span
 style='mso-ansi-language:RU'>-</span><span lang=EN-US>terminated</span><span
 lang=EN-US style='mso-ansi-language:RU'> </span><span lang=EN-US>string</span><span
-style='mso-ansi-language:RU'> (в конце /0)<o:p></o:p></span></p>
+style='mso-ansi-language:RU'> (РІ РєРѕРЅС†Рµ /0)<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>int getLength(void) const – </span><span
-style='mso-ansi-language:RU'>длина</span> <span style='mso-ansi-language:RU'>текста</span>
-<span style='mso-ansi-language:RU'>без</span><span lang=EN-US> /0</span></p>
+<p class=code><span lang=EN-US>int getLength(void) const вЂ“ </span><span
+style='mso-ansi-language:RU'>РґР»РёРЅР°</span> <span style='mso-ansi-language:RU'>С‚РµРєСЃС‚Р°</span>
+<span style='mso-ansi-language:RU'>Р±РµР·</span><span lang=EN-US> /0</span></p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:yes'><o:p>&nbsp;</o:p></span></p>
 
@@ -2709,29 +2626,29 @@ style='background:silver;mso-highlight:silver;mso-no-proof:yes'><o:p></o:p></spa
 <h3><a name="_Toc142999587"><span lang=EN-US style='mso-ansi-language:EN-US;
 mso-no-proof:yes'>Material</span></a><span style='mso-no-proof:yes'><o:p></o:p></span></h3>
 
-<p><span style='mso-no-proof:yes'>Материал задаёт множество текстур и типы их
-наложения или шейдеры для рендеринга моделей. Загружает файлы формата </span><span
+<p><span style='mso-no-proof:yes'>РњР°С‚РµСЂРёР°Р» Р·Р°РґР°С‘С‚ РјРЅРѕР¶РµСЃС‚РІРѕ С‚РµРєСЃС‚СѓСЂ Рё С‚РёРїС‹ РёС… РЅР°Р»РѕР¶РµРЅРёСЏ
+РёР»Рё С€РµР№РґРµСЂС‹ РґР»СЏ СЂРµРЅРґРµСЂРёРЅРіР° РјРѕРґРµР»РµР№. Р—Р°РіСЂСѓР¶Р°РµС‚ С„Р°Р№Р»С‹ С„РѕСЂРјР°С‚Р° </span><span
 lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:yes'>mat</span><span
 style='mso-no-proof:yes'>.<o:p></o:p></span></p>
 
-<p><span style='background:yellow;mso-highlight:yellow;mso-no-proof:yes'>Множество
-текстур тспользуется только в тех ренерерах, которые не используют щейдеры.</span><span
+<p><span style='background:yellow;mso-highlight:yellow;mso-no-proof:yes'>РњРЅРѕР¶РµСЃС‚РІРѕ
+С‚РµРєСЃС‚СѓСЂ С‚СЃРїРѕР»СЊР·СѓРµС‚СЃСЏ С‚РѕР»СЊРєРѕ РІ С‚РµС… СЂРµРЅРµСЂРµСЂР°С…, РєРѕС‚РѕСЂС‹Рµ РЅРµ РёСЃРїРѕР»СЊР·СѓСЋС‚ С‰РµР№РґРµСЂС‹.</span><span
 style='mso-no-proof:yes'><o:p></o:p></span></p>
 
-<p><span style='mso-no-proof:yes'>Существует 3 рендерера:<o:p></o:p></span></p>
+<p><span style='mso-no-proof:yes'>РЎСѓС‰РµСЃС‚РІСѓРµС‚ 3 СЂРµРЅРґРµСЂРµСЂР°:<o:p></o:p></span></p>
 
 <p style='margin-left:74.7pt;text-indent:-18.0pt;mso-list:l2 level1 lfo6;
 tab-stops:list 74.7pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
 EN-US;mso-no-proof:yes'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span style='mso-no-proof:yes'>используя </span><span
+</span></span></span><![endif]><span style='mso-no-proof:yes'>РёСЃРїРѕР»СЊР·СѓСЏ </span><span
 lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:yes'>blend<o:p></o:p></span></p>
 
 <p style='margin-left:74.7pt;text-indent:-18.0pt;mso-list:l2 level1 lfo6;
 tab-stops:list 74.7pt'><![if !supportLists]><span style='mso-no-proof:yes'><span
 style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US;
-mso-no-proof:yes'>multitexture</span><span style='mso-no-proof:yes'>, минимум 2
-текстуры<o:p></o:p></span></p>
+mso-no-proof:yes'>multitexture</span><span style='mso-no-proof:yes'>, РјРёРЅРёРјСѓРј 2
+С‚РµРєСЃС‚СѓСЂС‹<o:p></o:p></span></p>
 
 <p style='margin-left:74.7pt;text-indent:-18.0pt;mso-list:l2 level1 lfo6;
 tab-stops:list 74.7pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
@@ -2743,15 +2660,15 @@ mso-no-proof:yes'>shader<o:p></o:p></span></p>
 style='mso-bookmark:_Toc142999588'><span lang=EN-US style='mso-ansi-language:
 EN-US;mso-no-proof:yes'>mat format</span></span><span style='mso-no-proof:yes'><o:p></o:p></span></h3>
 
-<p><span style='mso-no-proof:yes'>Номера текстур – целые неотрицательные числа.
-Первая текстура имеет номер 0.<o:p></o:p></span></p>
+<p><span style='mso-no-proof:yes'>РќРѕРјРµСЂР° С‚РµРєСЃС‚СѓСЂ вЂ“ С†РµР»С‹Рµ РЅРµРѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Рµ С‡РёСЃР»Р°.
+РџРµСЂРІР°СЏ С‚РµРєСЃС‚СѓСЂР° РёРјРµРµС‚ РЅРѕРјРµСЂ 0.<o:p></o:p></span></p>
 
 <p><span style='mso-no-proof:yes'>format</span><span lang=EN-US
 style='mso-ansi-language:EN-US;mso-no-proof:yes'>N</span><span lang=EN-US
-style='mso-no-proof:yes'> </span><span style='mso-no-proof:yes'>определяет тип
-тестуры (</span><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
+style='mso-no-proof:yes'> </span><span style='mso-no-proof:yes'>РѕРїСЂРµРґРµР»СЏРµС‚ С‚РёРї
+С‚РµСЃС‚СѓСЂС‹ (</span><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
 yes'>N</span><span lang=EN-US style='mso-no-proof:yes'> </span><span
-style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
+style='mso-no-proof:yes'>вЂ“ РЅРѕРјРµСЂ С‚РµРєСЃС‚СѓСЂС‹).<o:p></o:p></span></p>
 
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
@@ -2761,19 +2678,19 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
   <td width=217 valign=top style='width:163.0pt;border:solid windowtext 1.0pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p align=center style='margin-left:0cm;text-align:center;text-indent:0cm'><span
-  style='mso-no-proof:yes'>Константа в коде<o:p></o:p></span></p>
+  style='mso-no-proof:yes'>РљРѕРЅСЃС‚Р°РЅС‚Р° РІ РєРѕРґРµ<o:p></o:p></span></p>
   </td>
   <td width=106 valign=top style='width:79.6pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p align=center style='margin-left:0cm;text-align:center;text-indent:0cm'><span
-  style='mso-no-proof:yes'>В конфиге<o:p></o:p></span></p>
+  style='mso-no-proof:yes'>Р’ РєРѕРЅС„РёРіРµ<o:p></o:p></span></p>
   </td>
   <td width=588 valign=top style='width:441.0pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p align=center style='margin-left:0cm;text-align:center;text-indent:0cm'><span
-  style='mso-no-proof:yes'>Описание<o:p></o:p></span></p>
+  style='mso-no-proof:yes'>РћРїРёСЃР°РЅРёРµ<o:p></o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
@@ -2796,7 +2713,7 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>отсутствует<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚<o:p></o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:2'>
@@ -2821,10 +2738,10 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>2</span><span
   lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:yes'>D</span><span
-  style='mso-no-proof:yes'>-текстура, двумерные текстурные координаты генерирует
-  объект. В </span><span lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:
-  yes'>imageN</span><span lang=EN-US style='mso-no-proof:yes'> </span><span
-  style='mso-no-proof:yes'>указывается двумерная текстура.<o:p></o:p></span></p>
+  style='mso-no-proof:yes'>-С‚РµРєСЃС‚СѓСЂР°, РґРІСѓРјРµСЂРЅС‹Рµ С‚РµРєСЃС‚СѓСЂРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹
+  РіРµРЅРµСЂРёСЂСѓРµС‚ РѕР±СЉРµРєС‚. Р’ </span><span lang=EN-US style='mso-ansi-language:EN-US;
+  mso-no-proof:yes'>imageN</span><span lang=EN-US style='mso-no-proof:yes'> </span><span
+  style='mso-no-proof:yes'>СѓРєР°Р·С‹РІР°РµС‚СЃСЏ РґРІСѓРјРµСЂРЅР°СЏ С‚РµРєСЃС‚СѓСЂР°.<o:p></o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3'>
@@ -2846,10 +2763,10 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>цвет</span><span
+  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>С†РІРµС‚</span><span
   style='mso-ansi-language:EN-US;mso-no-proof:yes'> </span><span
-  style='mso-no-proof:yes'>в</span><span style='mso-ansi-language:EN-US;
-  mso-no-proof:yes'> </span><span style='mso-no-proof:yes'>формате</span><span
+  style='mso-no-proof:yes'>РІ</span><span style='mso-ansi-language:EN-US;
+  mso-no-proof:yes'> </span><span style='mso-no-proof:yes'>С„РѕСЂРјР°С‚Рµ</span><span
   lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:yes'> rgba<o:p></o:p></span></p>
   </td>
  </tr>
@@ -2872,11 +2789,11 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>кубическая
-  карта отражений. Трёхмерные тектырные координаты генерирует движок или
-  указанный шейдер. В </span><span lang=EN-US style='mso-ansi-language:EN-US;
-  mso-no-proof:yes'>imageN </span><span style='mso-no-proof:yes'>указывается
-  кубическая текстура.<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>РєСѓР±РёС‡РµСЃРєР°СЏ
+  РєР°СЂС‚Р° РѕС‚СЂР°Р¶РµРЅРёР№. РўСЂС‘С…РјРµСЂРЅС‹Рµ С‚РµРєС‚С‹СЂРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ РіРµРЅРµСЂРёСЂСѓРµС‚ РґРІРёР¶РѕРє РёР»Рё
+  СѓРєР°Р·Р°РЅРЅС‹Р№ С€РµР№РґРµСЂ. Р’ </span><span lang=EN-US style='mso-ansi-language:EN-US;
+  mso-no-proof:yes'>imageN </span><span style='mso-no-proof:yes'>СѓРєР°Р·С‹РІР°РµС‚СЃСЏ
+  РєСѓР±РёС‡РµСЃРєР°СЏ С‚РµРєСЃС‚СѓСЂР°.<o:p></o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:5'>
@@ -2901,7 +2818,7 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p style='margin-left:0cm;text-indent:0cm'><span style='background:yellow;
-  mso-highlight:yellow;mso-no-proof:yes'>кубическая крта неба. Аналогично </span><span
+  mso-highlight:yellow;mso-no-proof:yes'>РєСѓР±РёС‡РµСЃРєР°СЏ РєСЂС‚Р° РЅРµР±Р°. РђРЅР°Р»РѕРіРёС‡РЅРѕ </span><span
   lang=EN-US style='background:yellow;mso-highlight:yellow;mso-ansi-language:
   EN-US;mso-no-proof:yes'>env</span><span style='background:yellow;mso-highlight:
   yellow;mso-no-proof:yes'>.<o:p></o:p></span></p>
@@ -2927,7 +2844,7 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p style='margin-left:0cm;text-indent:0cm'><span style='background:yellow;
-  mso-highlight:yellow;mso-no-proof:yes'>карта нормалей задаётся также как и </span><span
+  mso-highlight:yellow;mso-no-proof:yes'>РєР°СЂС‚Р° РЅРѕСЂРјР°Р»РµР№ Р·Р°РґР°С‘С‚СЃСЏ С‚Р°РєР¶Рµ РєР°Рє Рё </span><span
   lang=EN-US style='background:yellow;mso-highlight:yellow;mso-ansi-language:
   EN-US;mso-no-proof:yes'>color</span><span style='background:yellow;
   mso-highlight:yellow;mso-no-proof:yes'>_</span><span lang=EN-US
@@ -2972,20 +2889,20 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
   <td width=213 valign=top style='width:159.5pt;border:solid windowtext 1.0pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p><span style='mso-no-proof:yes'>Константа в коде</span><span lang=EN-US
+  <p><span style='mso-no-proof:yes'>РљРѕРЅСЃС‚Р°РЅС‚Р° РІ РєРѕРґРµ</span><span lang=EN-US
   style='mso-ansi-language:EN-US;mso-no-proof:yes'><o:p></o:p></span></p>
   </td>
   <td width=213 valign=top style='width:159.5pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p align=center style='margin-left:0cm;text-align:center;text-indent:0cm'><span
-  style='mso-no-proof:yes'>В конфиге</span><span lang=EN-US style='mso-ansi-language:
+  style='mso-no-proof:yes'>Р’ РєРѕРЅС„РёРіРµ</span><span lang=EN-US style='mso-ansi-language:
   EN-US;mso-no-proof:yes'><o:p></o:p></span></p>
   </td>
   <td width=213 valign=top style='width:159.55pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>Описание<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>РћРїРёСЃР°РЅРёРµ<o:p></o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
@@ -3044,8 +2961,8 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>сложение
-  двух<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>СЃР»РѕР¶РµРЅРёРµ
+  РґРІСѓС…<o:p></o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:4'>
@@ -3065,7 +2982,7 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>перемножение<o:p></o:p></span></p>
+  <p style='margin-left:0cm;text-indent:0cm'><span style='mso-no-proof:yes'>РїРµСЂРµРјРЅРѕР¶РµРЅРёРµ<o:p></o:p></span></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
@@ -3091,14 +3008,14 @@ style='mso-no-proof:yes'>– номер текстуры).<o:p></o:p></span></p>
  </tr>
 </table>
 
-<p><span style='background:yellow;mso-highlight:yellow;mso-no-proof:yes'>Дополнительно
-к этому указываются текстуры и параметры, спользуемые шейдером. Например, кто
-генерирует текстурные коодринаты, передавать ли время и т.д. <o:p></o:p></span></p>
+<p><span style='background:yellow;mso-highlight:yellow;mso-no-proof:yes'>Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ
+Рє СЌС‚РѕРјСѓ СѓРєР°Р·С‹РІР°СЋС‚СЃСЏ С‚РµРєСЃС‚СѓСЂС‹ Рё РїР°СЂР°РјРµС‚СЂС‹, СЃРїРѕР»СЊР·СѓРµРјС‹Рµ С€РµР№РґРµСЂРѕРј. РќР°РїСЂРёРјРµСЂ, РєС‚Рѕ
+РіРµРЅРµСЂРёСЂСѓРµС‚ С‚РµРєСЃС‚СѓСЂРЅС‹Рµ РєРѕРѕРґСЂРёРЅР°С‚С‹, РїРµСЂРµРґР°РІР°С‚СЊ Р»Рё РІСЂРµРјСЏ Рё С‚.Рґ. <o:p></o:p></span></p>
 
 <p><span lang=EN-US style='background:yellow;mso-highlight:yellow;mso-ansi-language:
 EN-US;mso-no-proof:yes'>TODO</span><span lang=EN-US style='background:yellow;
 mso-highlight:yellow;mso-no-proof:yes'> </span><span style='background:yellow;
-mso-highlight:yellow;mso-no-proof:yes'>описать определение этих параметров.</span><span
+mso-highlight:yellow;mso-no-proof:yes'>РѕРїРёСЃР°С‚СЊ РѕРїСЂРµРґРµР»РµРЅРёРµ СЌС‚РёС… РїР°СЂР°РјРµС‚СЂРѕРІ.</span><span
 style='mso-no-proof:yes'><o:p></o:p></span></p>
 
 <p><span style='mso-no-proof:yes'><o:p>&nbsp;</o:p></span></p>
@@ -3110,10 +3027,10 @@ EN-US;mso-no-proof:yes'><o:p></o:p></span></h3>
 
 <p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
 
-<h1><a name="_Toc142999590"></a><a name="_Базовые_типы_данных"></a><span
-style='mso-bookmark:_Toc142999590'>Базовые</span><span style='mso-bookmark:
-_Toc142999590'><span style='mso-ansi-language:EN-US'> </span>типы</span><span
-style='mso-bookmark:_Toc142999590'><span style='mso-ansi-language:EN-US'> </span>данных</span><span
+<h1><a name="_Toc142999590"></a><a name="_Р‘Р°Р·РѕРІС‹Рµ_С‚РёРїС‹_РґР°РЅРЅС‹С…"></a><span
+style='mso-bookmark:_Toc142999590'>Р‘Р°Р·РѕРІС‹Рµ</span><span style='mso-bookmark:
+_Toc142999590'><span style='mso-ansi-language:EN-US'> </span>С‚РёРїС‹</span><span
+style='mso-bookmark:_Toc142999590'><span style='mso-ansi-language:EN-US'> </span>РґР°РЅРЅС‹С…</span><span
 style='mso-bookmark:_Toc142999590'></span><span lang=EN-US style='mso-ansi-language:
 EN-US'><o:p></o:p></span></h1>
 
@@ -3125,17 +3042,17 @@ style='mso-bookmark:_Toc142999591'></span></h3>
 <p><span class=SpellE><span class=GramE><span lang=EN-US style='mso-ansi-language:
 EN-US'>uid</span></span></span> (<span lang=EN-US style='mso-ansi-language:
 EN-US'>unique</span><span lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:
-EN-US'>identifier</span>) – идентификатор объекта или ресурса, положительное
-целое число (<span lang=EN-US style='mso-ansi-language:EN-US'>unsigned</span><span
+EN-US'>identifier</span>) вЂ“ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РѕР±СЉРµРєС‚Р° РёР»Рё СЂРµСЃСѓСЂСЃР°, РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ
+С†РµР»РѕРµ С‡РёСЃР»Рѕ (<span lang=EN-US style='mso-ansi-language:EN-US'>unsigned</span><span
 lang=EN-US> </span><span class=SpellE><span lang=EN-US style='mso-ansi-language:
-EN-US'>int</span></span>). У двух разных объектов должны быть различные
-идентификаторы.</p>
+EN-US'>int</span></span>). РЈ РґРІСѓС… СЂР°Р·РЅС‹С… РѕР±СЉРµРєС‚РѕРІ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ СЂР°Р·Р»РёС‡РЅС‹Рµ
+РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹.</p>
 
-<p>За генерацию уникальных идентификаторов отвечает класс <span class=SpellE>IdGenerator</span>
+<p>Р—Р° РіРµРЅРµСЂР°С†РёСЋ СѓРЅРёРєР°Р»СЊРЅС‹С… РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ РѕС‚РІРµС‡Р°РµС‚ РєР»Р°СЃСЃ <span class=SpellE>IdGenerator</span>
 (<span lang=EN-US style='mso-ansi-language:EN-US'>interface</span>.<span
-lang=EN-US style='mso-ansi-language:EN-US'>h</span>). Для каждого типа объектов
-существует свой идентификатор. Для <a href="#_Object">игровых объектов</a><span
-style='mso-spacerun:yes'>  </span>- <span class=SpellE>objectIdGenerator</span>.</p>
+lang=EN-US style='mso-ansi-language:EN-US'>h</span>). Р”Р»СЏ РєР°Р¶РґРѕРіРѕ С‚РёРїР° РѕР±СЉРµРєС‚РѕРІ
+СЃСѓС‰РµСЃС‚РІСѓРµС‚ СЃРІРѕР№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ. Р”Р»СЏ <a href="#_Object">РёРіСЂРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ</a><span
+style='mso-spacerun:yes'>В  </span>- <span class=SpellE>objectIdGenerator</span>.</p>
 
 <h3><a name="_Toc142999592"></a><a name="_PositionKind"></a><span
 style='mso-bookmark:_Toc142999592'><span style='mso-no-proof:yes'>PositionKind</span></span><span
@@ -3145,9 +3062,9 @@ style='mso-no-proof:yes'><o:p></o:p></span></h3>
 lang=EN-US>local</span><span style='mso-ansi-language:RU'>, </span><span
 lang=EN-US>global</span><span style='mso-ansi-language:RU'> }<o:p></o:p></span></p>
 
-<p>Тип положения объекта: <span lang=EN-US style='mso-ansi-language:EN-US'>local</span><span
-lang=EN-US> </span>– относительно родителя, <span lang=EN-US style='mso-ansi-language:
-EN-US'>global</span><span lang=EN-US> </span>– в глобальной системе координат.</p>
+<p>РўРёРї РїРѕР»РѕР¶РµРЅРёСЏ РѕР±СЉРµРєС‚Р°: <span lang=EN-US style='mso-ansi-language:EN-US'>local</span><span
+lang=EN-US> </span>вЂ“ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЂРѕРґРёС‚РµР»СЏ, <span lang=EN-US style='mso-ansi-language:
+EN-US'>global</span><span lang=EN-US> </span>вЂ“ РІ РіР»РѕР±Р°Р»СЊРЅРѕР№ СЃРёСЃС‚РµРјРµ РєРѕРѕСЂРґРёРЅР°С‚.</p>
 
 <p class=code><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
 
@@ -3155,7 +3072,7 @@ EN-US'>global</span><span lang=EN-US> </span>– в глобальной системе координат.</
 style='mso-bookmark:_Toc142999593'><span lang=EN-US style='mso-ansi-language:
 EN-US'>Math</span></span></h2>
 
-<p>Основные геометрические типы данных хранятся в директории <span lang=EN-US
+<p>РћСЃРЅРѕРІРЅС‹Рµ РіРµРѕРјРµС‚СЂРёС‡РµСЃРєРёРµ С‚РёРїС‹ РґР°РЅРЅС‹С… С…СЂР°РЅСЏС‚СЃСЏ РІ РґРёСЂРµРєС‚РѕСЂРёРё <span lang=EN-US
 style='mso-ansi-language:EN-US'>math</span>. </p>
 
 <h3><a name="_Toc142999594"></a><a name="_v3_(vector3d.h)"></a><span
@@ -3166,50 +3083,50 @@ style='mso-bookmark:_Toc142999594'><span lang=EN-US style='mso-ansi-language:
 EN-US'>d</span>.</span><span style='mso-bookmark:_Toc142999594'><span
 lang=EN-US style='mso-ansi-language:EN-US'>h</span>)</span></h3>
 
-<p>Используется для хранения трёхмерного вектора, положения точки в
-пространстве, направляющих прямых, нормалей к плоскостям и т.д.</p>
+<p>РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ С‚СЂС‘С…РјРµСЂРЅРѕРіРѕ РІРµРєС‚РѕСЂР°, РїРѕР»РѕР¶РµРЅРёСЏ С‚РѕС‡РєРё РІ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ,
+РЅР°РїСЂР°РІР»СЏСЋС‰РёС… РїСЂСЏРјС‹С…, РЅРѕСЂРјР°Р»РµР№ Рє РїР»РѕСЃРєРѕСЃС‚СЏРј Рё С‚.Рґ.</p>
 
-<p>Содержит 3 поля: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>float</span></span><span
+<p>РЎРѕРґРµСЂР¶РёС‚ 3 РїРѕР»СЏ: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>float</span></span><span
 style='mso-bidi-font-size:10.0pt'> <span class=SpellE>x</span>, <span
 class=SpellE>y</span>, <span class=SpellE>z</span>;</span></p>
 
-<p>Конструкторы: </p>
+<p>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹: </p>
 
-<p><span style='mso-bidi-font-size:10.0pt'>v3() – не инициализирует ничего (для
-повышения производительности)<o:p></o:p></span></p>
+<p><span style='mso-bidi-font-size:10.0pt'>v3() вЂ“ РЅРµ РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РЅРёС‡РµРіРѕ (РґР»СЏ
+РїРѕРІС‹С€РµРЅРёСЏ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЊРЅРѕСЃС‚Рё)<o:p></o:p></span></p>
 
 <p><span lang=EN-US style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'>v3(float
 x, float y, float z)<o:p></o:p></span></p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
 
-<p>Чтение и запись полей осуществляется по их именам. Кроме <span class=GramE>того</span>
-доступен <span class=SpellE>operator</span>[](<span class=SpellE>int</span> <span
-class=SpellE>i</span>) для доступа к полям: 0 - <span class=SpellE>x</span>, 1
-- <span class=SpellE>y</span>, 2 – <span class=SpellE>z</span></p>
+<p>Р§С‚РµРЅРёРµ Рё Р·Р°РїРёСЃСЊ РїРѕР»РµР№ РѕСЃСѓС‰РµСЃС‚РІР»СЏРµС‚СЃСЏ РїРѕ РёС… РёРјРµРЅР°Рј. РљСЂРѕРјРµ <span class=GramE>С‚РѕРіРѕ</span>
+РґРѕСЃС‚СѓРїРµРЅ <span class=SpellE>operator</span>[](<span class=SpellE>int</span> <span
+class=SpellE>i</span>) РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РїРѕР»СЏРј: 0 - <span class=SpellE>x</span>, 1
+- <span class=SpellE>y</span>, 2 вЂ“ <span class=SpellE>z</span></p>
 
-<p>Инициализация: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>loadZero</span></span><span
+<p>РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>loadZero</span></span><span
 style='mso-bidi-font-size:10.0pt'>(), <span class=SpellE>loadOne</span>()<o:p></o:p></span></p>
 
-<p>И множество полезных операторов: векторное и скалярное произведение, + - * /
+<p>Р РјРЅРѕР¶РµСЃС‚РІРѕ РїРѕР»РµР·РЅС‹С… РѕРїРµСЂР°С‚РѕСЂРѕРІ: РІРµРєС‚РѕСЂРЅРѕРµ Рё СЃРєР°Р»СЏСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ, + - * /
 </p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>operator==</span></span><span
-style='mso-bidi-font-size:10.0pt'> и <span class=SpellE>operator!=</span>
-сравнивают ве</span>к<span style='mso-bidi-font-size:10.0pt'>тора по</span>
-компонентам.</p>
+style='mso-bidi-font-size:10.0pt'> Рё <span class=SpellE>operator!=</span>
+СЃСЂР°РІРЅРёРІР°СЋС‚ РІРµ</span>Рє<span style='mso-bidi-font-size:10.0pt'>С‚РѕСЂР° РїРѕ</span>
+РєРѕРјРїРѕРЅРµРЅС‚Р°Рј.</p>
 
-<p>Полезные<span style='mso-ansi-language:EN-US'> </span>функции<span
+<p>РџРѕР»РµР·РЅС‹Рµ<span style='mso-ansi-language:EN-US'> </span>С„СѓРЅРєС†РёРё<span
 lang=EN-US style='mso-ansi-language:EN-US'>: </span><span lang=EN-US
 style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'>getLength, normalize,
 getNormalized, getSquaredLength<o:p></o:p></span></p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'><span
-style='mso-spacerun:yes'> </span><o:p></o:p></span></p>
+style='mso-spacerun:yes'>В </span><o:p></o:p></span></p>
 
-<p>Кроме <span class=GramE>того</span> <span class=SpellE>доступена</span>
-упрощенная версия v3 без конструктора. v3simple. Можно использовать только
-тогда, когда нельзя использовать v3 (например, в <span class=SpellE>union</span>).</p>
+<p>РљСЂРѕРјРµ <span class=GramE>С‚РѕРіРѕ</span> <span class=SpellE>РґРѕСЃС‚СѓРїРµРЅР°</span>
+СѓРїСЂРѕС‰РµРЅРЅР°СЏ РІРµСЂСЃРёСЏ v3 Р±РµР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°. v3simple. РњРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С‚РѕР»СЊРєРѕ
+С‚РѕРіРґР°, РєРѕРіРґР° РЅРµР»СЊР·СЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ v3 (РЅР°РїСЂРёРјРµСЂ, РІ <span class=SpellE>union</span>).</p>
 
 <h3><a name="_Toc142999595"><span lang=EN-US style='mso-ansi-language:EN-US'>v</span>2
 (</a><span style='mso-bookmark:_Toc142999595'><span lang=EN-US
@@ -3218,49 +3135,49 @@ _Toc142999595'><span lang=EN-US style='mso-ansi-language:EN-US'>d</span>.</span>
 style='mso-bookmark:_Toc142999595'><span lang=EN-US style='mso-ansi-language:
 EN-US'>h</span>)</span></h3>
 
-<p>Полностью аналогичен классу <span lang=EN-US style='mso-ansi-language:EN-US'><a
+<p>РџРѕР»РЅРѕСЃС‚СЊСЋ Р°РЅР°Р»РѕРіРёС‡РµРЅ РєР»Р°СЃСЃСѓ <span lang=EN-US style='mso-ansi-language:EN-US'><a
 href="#_v3_(vector3d.h)">v<span lang=RU style='mso-ansi-language:RU'>3</span></a></span>.
-Реже используется и поэтому может не содержать все функции, которые есть в <span
-lang=EN-US style='mso-ansi-language:EN-US'>v</span>3. При необходимости можно
-добавить их.</p>
+Р РµР¶Рµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ Рё РїРѕСЌС‚РѕРјСѓ РјРѕР¶РµС‚ РЅРµ СЃРѕРґРµСЂР¶Р°С‚СЊ РІСЃРµ С„СѓРЅРєС†РёРё, РєРѕС‚РѕСЂС‹Рµ РµСЃС‚СЊ РІ <span
+lang=EN-US style='mso-ansi-language:EN-US'>v</span>3. РџСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё РјРѕР¶РЅРѕ
+РґРѕР±Р°РІРёС‚СЊ РёС….</p>
 
 <h3><a name="_Toc142999596"></a><a name="_matrix33"></a><span style='mso-bookmark:
 _Toc142999596'>matrix33</span></h3>
 
-<p>Квадратная матрица 3x3. Используется как матрица преобразования координат.</p>
+<p>РљРІР°РґСЂР°С‚РЅР°СЏ РјР°С‚СЂРёС†Р° 3x3. РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РєР°Рє РјР°С‚СЂРёС†Р° РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РєРѕРѕСЂРґРёРЅР°С‚.</p>
 
-<p>Содержит 3 строчки по 3 числа в каждой. Доступ к полям осуществляется по
-имени. 9 чисел доступны двумя способами: как одномерный массив из 9ти элементов
-и как двумерный массив 3x3 (первый индекс – номер строки).</p>
+<p>РЎРѕРґРµСЂР¶РёС‚ 3 СЃС‚СЂРѕС‡РєРё РїРѕ 3 С‡РёСЃР»Р° РІ РєР°Р¶РґРѕР№. Р”РѕСЃС‚СѓРї Рє РїРѕР»СЏРј РѕСЃСѓС‰РµСЃС‚РІР»СЏРµС‚СЃСЏ РїРѕ
+РёРјРµРЅРё. 9 С‡РёСЃРµР» РґРѕСЃС‚СѓРїРЅС‹ РґРІСѓРјСЏ СЃРїРѕСЃРѕР±Р°РјРё: РєР°Рє РѕРґРЅРѕРјРµСЂРЅС‹Р№ РјР°СЃСЃРёРІ РёР· 9С‚Рё СЌР»РµРјРµРЅС‚РѕРІ
+Рё РєР°Рє РґРІСѓРјРµСЂРЅС‹Р№ РјР°СЃСЃРёРІ 3x3 (РїРµСЂРІС‹Р№ РёРЅРґРµРєСЃ вЂ“ РЅРѕРјРµСЂ СЃС‚СЂРѕРєРё).</p>
 
-<p>Нет конструктора, так как этот класс используется в <span class=SpellE>union</span>.</p>
+<p>РќРµС‚ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°, С‚Р°Рє РєР°Рє СЌС‚РѕС‚ РєР»Р°СЃСЃ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ <span class=SpellE>union</span>.</p>
 
-<p>Инициализаторы: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>loadIdentity</span></span><span
-style='mso-bidi-font-size:10.0pt'> (единичная матрица), <span class=SpellE>loadZero</span>
-(нулевая матрица).<o:p></o:p></span></p>
+<p>РРЅРёС†РёР°Р»РёР·Р°С‚РѕСЂС‹: <span class=SpellE><span style='mso-bidi-font-size:10.0pt'>loadIdentity</span></span><span
+style='mso-bidi-font-size:10.0pt'> (РµРґРёРЅРёС‡РЅР°СЏ РјР°С‚СЂРёС†Р°), <span class=SpellE>loadZero</span>
+(РЅСѓР»РµРІР°СЏ РјР°С‚СЂРёС†Р°).<o:p></o:p></span></p>
 
-<p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>Пергруженные</span></span><span
-style='mso-bidi-font-size:10.0pt'> операторы: + - * /<o:p></o:p></span></p>
+<p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>РџРµСЂРіСЂСѓР¶РµРЅРЅС‹Рµ</span></span><span
+style='mso-bidi-font-size:10.0pt'> РѕРїРµСЂР°С‚РѕСЂС‹: + - * /<o:p></o:p></span></p>
 
 <p><span style='mso-bidi-font-size:10.0pt'>matrix33 <span class=SpellE>operator</span>*(matrix33
-<span class=SpellE>operand</span>) перемножает 2 матрицы. Из первой берутся
-строки, из второй столбцы.<o:p></o:p></span></p>
+<span class=SpellE>operand</span>) РїРµСЂРµРјРЅРѕР¶Р°РµС‚ 2 РјР°С‚СЂРёС†С‹. РР· РїРµСЂРІРѕР№ Р±РµСЂСѓС‚СЃСЏ
+СЃС‚СЂРѕРєРё, РёР· РІС‚РѕСЂРѕР№ СЃС‚РѕР»Р±С†С‹.<o:p></o:p></span></p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>setRotation</span></span><span
 style='mso-bidi-font-size:10.0pt'>[X, Y, Z, <span class=SpellE>Axis</span>]
-делают матрицу матрицей поворота вдоль указанной оси на указанный угол в
-радианах. </span></p>
+РґРµР»Р°СЋС‚ РјР°С‚СЂРёС†Сѓ РјР°С‚СЂРёС†РµР№ РїРѕРІРѕСЂРѕС‚Р° РІРґРѕР»СЊ СѓРєР°Р·Р°РЅРЅРѕР№ РѕСЃРё РЅР° СѓРєР°Р·Р°РЅРЅС‹Р№ СѓРіРѕР» РІ
+СЂР°РґРёР°РЅР°С…. </span></p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>setScale</span></span><span
-style='mso-bidi-font-size:10.0pt'> – делает матрицу масштабирования</span></p>
+style='mso-bidi-font-size:10.0pt'> вЂ“ РґРµР»Р°РµС‚ РјР°С‚СЂРёС†Сѓ РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёСЏ</span></p>
 
 <p><span class=SpellE><span style='mso-bidi-font-size:10.0pt'>getInverse</span></span><span
-style='mso-bidi-font-size:10.0pt'> – возвращает обратную матрицу<o:p></o:p></span></p>
+style='mso-bidi-font-size:10.0pt'> вЂ“ РІРѕР·РІСЂР°С‰Р°РµС‚ РѕР±СЂР°С‚РЅСѓСЋ РјР°С‚СЂРёС†Сѓ<o:p></o:p></span></p>
 
 <p><span style='mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></p>
 
-<p><span style='mso-bidi-font-size:10.0pt'>Примеры использования: изменения
-системы координат<o:p></o:p></span></p>
+<p><span style='mso-bidi-font-size:10.0pt'>РџСЂРёРјРµСЂС‹ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ: РёР·РјРµРЅРµРЅРёСЏ
+СЃРёСЃС‚РµРјС‹ РєРѕРѕСЂРґРёРЅР°С‚<o:p></o:p></span></p>
 
 <p class=code><span lang=EN-US>matrix</span><span style='mso-ansi-language:
 RU'>33 </span><span lang=EN-US>a</span><span style='mso-ansi-language:RU'>,</span><span
@@ -3273,13 +3190,13 @@ style='mso-ansi-language:RU'>;<o:p></o:p></span></p>
 
 <p class=code><span lang=EN-US>c</span><span style='mso-ansi-language:RU'> = </span><span
 lang=EN-US>a</span><span style='mso-ansi-language:RU'>*</span><span lang=EN-US>b</span><span
-style='mso-ansi-language:RU'>; <span style='color:green'>// должна получиться единичная
-матрица<o:p></o:p></span></span></p>
+style='mso-ansi-language:RU'>; <span style='color:green'>// РґРѕР»Р¶РЅР° РїРѕР»СѓС‡РёС‚СЊСЃСЏ
+РµРґРёРЅРёС‡РЅР°СЏ РјР°С‚СЂРёС†Р°<o:p></o:p></span></span></p>
 
 <p class=code><span lang=EN-US>v</span><span style='mso-ansi-language:RU'>3(1,2,3)*</span><span
 lang=EN-US>a</span><span style='mso-ansi-language:RU'>; <span style='color:
-green'>// вектор (1,2,3) повернутый на 1 радиан в положительном направлении
-вдоль оси </span></span><span lang=EN-US style='color:green'>X</span><span
+green'>// РІРµРєС‚РѕСЂ (1,2,3) РїРѕРІРµСЂРЅСѓС‚С‹Р№ РЅР° 1 СЂР°РґРёР°РЅ РІ РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРј РЅР°РїСЂР°РІР»РµРЅРёРё
+РІРґРѕР»СЊ РѕСЃРё </span></span><span lang=EN-US style='color:green'>X</span><span
 style='color:green;mso-ansi-language:RU'><o:p></o:p></span></p>
 
 <p class=code><span lang=EN-US>b.setRotationY(2);</span></p>
@@ -3288,32 +3205,32 @@ style='color:green;mso-ansi-language:RU'><o:p></o:p></span></p>
 
 <p class=code><span lang=EN-US>v</span><span style='mso-ansi-language:RU'>3(1,2,3)*</span><span
 lang=EN-US>c</span><span style='mso-ansi-language:RU'>; <span style='color:
-green'>// вектор (1,2,3) повернутый на 1 радиан в положительном направлении
-вдоль оси </span></span><span lang=EN-US style='color:green'>X</span><span
-style='color:green;mso-ansi-language:RU'>, и после этого еще на 2 радиана вдоль
-оси </span><span lang=EN-US style='color:green'>Y</span><span style='color:
+green'>// РІРµРєС‚РѕСЂ (1,2,3) РїРѕРІРµСЂРЅСѓС‚С‹Р№ РЅР° 1 СЂР°РґРёР°РЅ РІ РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРј РЅР°РїСЂР°РІР»РµРЅРёРё
+РІРґРѕР»СЊ РѕСЃРё </span></span><span lang=EN-US style='color:green'>X</span><span
+style='color:green;mso-ansi-language:RU'>, Рё РїРѕСЃР»Рµ СЌС‚РѕРіРѕ РµС‰Рµ РЅР° 2 СЂР°РґРёР°РЅР° РІРґРѕР»СЊ
+РѕСЃРё </span><span lang=EN-US style='color:green'>Y</span><span style='color:
 green;mso-ansi-language:RU'><o:p></o:p></span></p>
 
 <h3><a name="_Toc142999597"></a><a name="_matrix34"></a><span style='mso-bookmark:
 _Toc142999597'>matrix34</span></h3>
 
-<p>Матрица из трёх строк и четырёх столбцов. Служит эмуляцией матрицы 4x4, к
-которой нижняя строка равна (0,0,0,1). Интерфейс аналогичен <a href="#_matrix33">matrix33</a>.
-matrix34 состоит из matrix33 (первые 3 колонки) и v3 (четвертая колонка)</p>
+<p>РњР°С‚СЂРёС†Р° РёР· С‚СЂС‘С… СЃС‚СЂРѕРє Рё С‡РµС‚С‹СЂС‘С… СЃС‚РѕР»Р±С†РѕРІ. РЎР»СѓР¶РёС‚ СЌРјСѓР»СЏС†РёРµР№ РјР°С‚СЂРёС†С‹ 4x4, Рє
+РєРѕС‚РѕСЂРѕР№ РЅРёР¶РЅСЏСЏ СЃС‚СЂРѕРєР° СЂР°РІРЅР° (0,0,0,1). РРЅС‚РµСЂС„РµР№СЃ Р°РЅР°Р»РѕРіРёС‡РµРЅ <a href="#_matrix33">matrix33</a>.
+matrix34 СЃРѕСЃС‚РѕРёС‚ РёР· matrix33 (РїРµСЂРІС‹Рµ 3 РєРѕР»РѕРЅРєРё) Рё v3 (С‡РµС‚РІРµСЂС‚Р°СЏ РєРѕР»РѕРЅРєР°)</p>
 
 <p><span lang=EN-US style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'>setTranslation
-</span><span style='mso-bidi-font-size:10.0pt'>и</span><span lang=EN-US
+</span><span style='mso-bidi-font-size:10.0pt'>Рё</span><span lang=EN-US
 style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'> getTranslation </span><span
-style='mso-bidi-font-size:10.0pt'>работают</span><span style='mso-bidi-font-size:
-10.0pt;mso-ansi-language:EN-US'> </span><span style='mso-bidi-font-size:10.0pt'>с</span><span
+style='mso-bidi-font-size:10.0pt'>СЂР°Р±РѕС‚Р°СЋС‚</span><span style='mso-bidi-font-size:
+10.0pt;mso-ansi-language:EN-US'> </span><span style='mso-bidi-font-size:10.0pt'>СЃ</span><span
 style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'> </span><span
-style='mso-bidi-font-size:10.0pt'>вектором</span><span lang=EN-US
+style='mso-bidi-font-size:10.0pt'>РІРµРєС‚РѕСЂРѕРј</span><span lang=EN-US
 style='mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US'>. </span><span
-style='mso-bidi-font-size:10.0pt'>Эти функции делают матрицу переноса.</span></p>
+style='mso-bidi-font-size:10.0pt'>Р­С‚Рё С„СѓРЅРєС†РёРё РґРµР»Р°СЋС‚ РјР°С‚СЂРёС†Сѓ РїРµСЂРµРЅРѕСЃР°.</span></p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<p>Примеры использования: изменения системы координат</p>
+<p>РџСЂРёРјРµСЂС‹ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ: РёР·РјРµРЅРµРЅРёСЏ СЃРёСЃС‚РµРјС‹ РєРѕРѕСЂРґРёРЅР°С‚</p>
 
 <p class=code><span lang=EN-US>matrix</span><span style='mso-ansi-language:
 RU'>34 </span><span lang=EN-US>a</span><span style='mso-ansi-language:RU'>,</span><span
@@ -3335,25 +3252,25 @@ style='mso-ansi-language:RU'>;<o:p></o:p></span></p>
 <p class=code><span lang=EN-US>v</span><span style='mso-ansi-language:RU'>3 </span><span
 lang=EN-US>result</span><span style='mso-ansi-language:RU'> = </span><span
 lang=EN-US>c</span><span style='mso-ansi-language:RU'>*</span><span lang=EN-US>v</span><span
-style='mso-ansi-language:RU'>3(0,0,0); <span style='color:green'>// должно
-получиться (1,1,0)<o:p></o:p></span></span></p>
+style='mso-ansi-language:RU'>3(0,0,0); <span style='color:green'>// РґРѕР»Р¶РЅРѕ
+РїРѕР»СѓС‡РёС‚СЊСЃСЏ (1,1,0)<o:p></o:p></span></span></p>
 
 <h3><a name="_Toc142999598"><span lang=EN-US style='mso-ansi-language:EN-US;
 mso-no-proof:yes'>ObjectPosition</span></a><span style='mso-no-proof:yes'><o:p></o:p></span></h3>
 
-<p>Синоним <span lang=EN-US style='mso-ansi-language:EN-US'><a href="#_matrix34">matrix<span
+<p>РЎРёРЅРѕРЅРёРј <span lang=EN-US style='mso-ansi-language:EN-US'><a href="#_matrix34">matrix<span
 lang=RU style='mso-ansi-language:RU'>34</span></a></span></p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<h1><a name="_Toc142999599">Глобальные переменные</a></h1>
+<h1><a name="_Toc142999599">Р“Р»РѕР±Р°Р»СЊРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ</a></h1>
 
-<h2><a name="_Toc142999600">Переменные</a></h2>
+<h2><a name="_Toc142999600">РџРµСЂРµРјРµРЅРЅС‹Рµ</a></h2>
 
 <p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>Logger</span><span
 lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'><a
 href="#_Logger_(common/logger.h)">steel<span lang=RU style='mso-ansi-language:
-RU'>::</span>log</a></span> - через него следует выводить все сообщения.</span></p>
+RU'>::</span>log</a></span> - С‡РµСЂРµР· РЅРµРіРѕ СЃР»РµРґСѓРµС‚ РІС‹РІРѕРґРёС‚СЊ РІСЃРµ СЃРѕРѕР±С‰РµРЅРёСЏ.</span></p>
 
 <p><o:p>&nbsp;</o:p></p>
 
@@ -3364,46 +3281,46 @@ lang=EN-US style='background:silver;mso-highlight:silver;mso-ansi-language:
 EN-US'>objectIdGenerator</span></span>, <span class=SpellE><span lang=EN-US
 style='mso-ansi-language:EN-US'>globalTimer</span></span></p>
 
-<h2><a name="_Toc142999601">Директивы</a></h2>
+<h2><a name="_Toc142999601">Р”РёСЂРµРєС‚РёРІС‹</a></h2>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL</span>_<span
-lang=EN-US style='mso-ansi-language:EN-US'>OS</span>_<span lang=EN-US
-style='mso-ansi-language:EN-US'>WIN</span>32 – определена, если проект
-компилируется для <span lang=EN-US style='mso-ansi-language:EN-US'>WIN</span>32
-платформы</p>
+lang=EN-US style='mso-ansi-language:EN-US'>OS</span><span lang=EN-US> </span>вЂ“
+РѕС‚РІРµС‡Р°РµС‚ Р·Р° РєРѕРјРїРёР»СЏС†РёСЋ РґР»СЏ РїРѕРґ РѕРїСЂРµРґРµР»С‘РЅРЅСѓСЋ РћРЎ<span lang=EN-US
+style='mso-ansi-language:EN-US'> (OS_WIN32, OS_LINUX)<o:p></o:p></span></p>
 
-<p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL</span>_<span
-lang=EN-US style='mso-ansi-language:EN-US'>OPENGL</span>_<span lang=EN-US
-style='mso-ansi-language:EN-US'>WIN</span><span lang=EN-US> </span>–
-определена, если проект использует создание окна средствами <span lang=EN-US
-style='mso-ansi-language:EN-US'>Windows</span></p>
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL_COMPILER вЂ“ </span>СЃРѕРґРµСЂР¶РёС‚<span
+style='mso-ansi-language:EN-US'> </span>РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ<span style='mso-ansi-language:
+EN-US'> </span>РєРѕРјРїРёР»СЏС‚РѕСЂР°<span lang=EN-US style='mso-ansi-language:EN-US'>
+(COMPILER _VS8, COMPILER _GCC, COMPILER _DEVCPP)<o:p></o:p></span></p>
 
-<p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL</span>_<span
-lang=EN-US style='mso-ansi-language:EN-US'>OPENGL</span>_<span lang=EN-US
-style='mso-ansi-language:EN-US'>SDL</span><span lang=EN-US> </span>–
-определена, если проект использует создание окна средствами <span lang=EN-US
-style='mso-ansi-language:EN-US'>SDL</span></p>
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL_OPENGL_API вЂ“ </span>СЃРѕРґРµСЂР¶РёС‚<span
+style='mso-ansi-language:EN-US'> </span>РёРЅС„РѕСЂРјР°С†РёСЋ<span style='mso-ansi-language:
+EN-US'> </span>Рѕ<span style='mso-ansi-language:EN-US'> </span>СЃРїРѕСЃРѕР±Рµ<span
+style='mso-ansi-language:EN-US'> </span>СЃРѕР·РґР°РЅРёСЏ<span style='mso-ansi-language:
+EN-US'> </span>РѕРєРЅР°<span style='mso-ansi-language:EN-US'> </span>РґР»СЏ<span
+lang=EN-US style='mso-ansi-language:EN-US'> OpenGL (OPENGL_WINAPI, OPENGL_SQL)<o:p></o:p></span></p>
 
-<p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL</span>_<span
-lang=EN-US style='mso-ansi-language:EN-US'>COMPILER</span>_<span lang=EN-US
-style='mso-ansi-language:EN-US'>VS</span>8 – определена, если проект
-компилируется компилятором <span lang=EN-US style='mso-ansi-language:EN-US'>Microsoft</span><span
-lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Visual</span><span
-lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Studio</span><span
-lang=EN-US> </span>8 (2005)</p>
-
-<p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL</span>_<span
-lang=EN-US style='mso-ansi-language:EN-US'>COMPILER</span>_<span lang=EN-US
-style='mso-ansi-language:EN-US'>DEVCPP</span><span lang=EN-US> </span>–
-определена, если проект компилируется компилятором <span lang=EN-US
-style='mso-ansi-language:EN-US'>Dev</span>-<span lang=EN-US style='mso-ansi-language:
-EN-US'>C</span>++</p>
+<p>Р­С‚Рё РґРёСЂРµРєС‚РёРІС‹ РІС‹СЃС‚Р°РІР»СЏСЋС‚СЃСЏ РІ РїСЂРѕРµРєС‚РЅС‹С… С„Р°Р№Р»Р°С… РєР°Рє РїР°СЂР°РјРµС‚СЂС‹ РєРѕРјРїРёР»СЏС‚РѕСЂР° (-<span
+lang=EN-US style='mso-ansi-language:EN-US'>D</span>), Р° РЅРµ РѕРїСЂРµРґРµР»СЏСЋС‚СЃСЏ РІРЅСѓС‚СЂРё
+РєРѕРґР°.</p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<h2><a name="_Toc142999602"><span style='mso-no-proof:yes'>Пространство</span></a><span
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL</span>_<span
+lang=EN-US style='mso-ansi-language:EN-US'>VECTOR</span> - РѕРїСЂРµРґРµР»РµРЅР°, РєРѕРіРґР° <span
+class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>svector</span></span><span
+lang=EN-US> </span>РёСЃРїРѕР»СЊР·СѓРµС‚ СЂРµР°Р»РёР·Р°С†РёСЋ <span lang=EN-US style='mso-ansi-language:
+EN-US'>steel</span>::<span lang=EN-US style='mso-ansi-language:EN-US'>vector</span><span
+lang=EN-US> </span>(<span lang=EN-US style='mso-ansi-language:EN-US'>common</span>/<span
+lang=EN-US style='mso-ansi-language:EN-US'>steel</span>_<span lang=EN-US
+style='mso-ansi-language:EN-US'>vector</span>.<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span>), РёРЅР°С‡Рµ РёСЃРїРѕР»СЊР·СѓРµС‚ <span lang=EN-US
+style='mso-ansi-language:EN-US'>std</span>::<span lang=EN-US style='mso-ansi-language:
+EN-US'>vector</span></p>
+
+<h2><a name="_Toc142999602"><span style='mso-no-proof:yes'>РџСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ</span></a><span
 style='mso-bookmark:_Toc142999602'><span style='mso-ansi-language:EN-US;
-mso-no-proof:yes'> </span><span style='mso-no-proof:yes'>имён</span></span><span
+mso-no-proof:yes'> </span><span style='mso-no-proof:yes'>РёРјС‘РЅ</span></span><span
 style='mso-bookmark:_Toc142999602'></span><span lang=EN-US style='mso-ansi-language:
 EN-US;mso-no-proof:yes'><o:p></o:p></span></h2>
 
@@ -3416,92 +3333,91 @@ style='mso-bookmark:_Toc142999603'><span lang=EN-US style='mso-ansi-language:
 EN-US'>Logger (common/<span class=SpellE>logger.h</span>)</span></span><span
 lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h1>
 
-<p>Стандартный способ сообщения информации пользователю – через <span
+<p>РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ СЃРїРѕСЃРѕР± СЃРѕРѕР±С‰РµРЅРёСЏ РёРЅС„РѕСЂРјР°С†РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ вЂ“ С‡РµСЂРµР· <span
 lang=EN-US style='mso-ansi-language:EN-US'>class</span><span lang=EN-US> </span><span
-lang=EN-US style='mso-ansi-language:EN-US'>Logger</span>. Существует глобальный
-экземпляр класса <span lang=EN-US style='mso-ansi-language:EN-US'>steel</span>::<span
-lang=EN-US style='mso-ansi-language:EN-US'>log</span>, через который следует
-выводить все сообщения. <span class=SpellE>Лоррег</span> использует глобальный
-таймер, который отсчитывает время от момента запуска программы. </p>
+lang=EN-US style='mso-ansi-language:EN-US'>Logger</span>. РЎСѓС‰РµСЃС‚РІСѓРµС‚ РіР»РѕР±Р°Р»СЊРЅС‹Р№
+СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° <span lang=EN-US style='mso-ansi-language:EN-US'>steel</span>::<span
+lang=EN-US style='mso-ansi-language:EN-US'>log</span>, С‡РµСЂРµР· РєРѕС‚РѕСЂС‹Р№ СЃР»РµРґСѓРµС‚ РІС‹РІРѕРґРёС‚СЊ
+РІСЃРµ СЃРѕРѕР±С‰РµРЅРёСЏ. <span class=SpellE>Р›РѕСЂСЂРµРі</span> РёСЃРїРѕР»СЊР·СѓРµС‚ РіР»РѕР±Р°Р»СЊРЅС‹Р№ С‚Р°Р№РјРµСЂ,
+РєРѕС‚РѕСЂС‹Р№ РѕС‚СЃС‡РёС‚С‹РІР°РµС‚ РІСЂРµРјСЏ РѕС‚ РјРѕРјРµРЅС‚Р° Р·Р°РїСѓСЃРєР° РїСЂРѕРіСЂР°РјРјС‹. </p>
 
-<p>Все сообщения выводятся в файл <span lang=EN-US style='mso-ansi-language:
+<p>Р’СЃРµ СЃРѕРѕР±С‰РµРЅРёСЏ РІС‹РІРѕРґСЏС‚СЃСЏ РІ С„Р°Р№Р» <span lang=EN-US style='mso-ansi-language:
 EN-US'>steel</span>.<span lang=EN-US style='mso-ansi-language:EN-US'>log</span></p>
 
 <p style='margin-left:74.7pt;text-indent:0cm'><span class=codeChar><span
 lang=EN-US>log_msg(string keywords, string message)<o:p></o:p></span></span></p>
 
-<p>Добавление сообщения в файл, перед текстом ставится время от начала открытия
-<span class=SpellE>лог-файла</span>. <span class=SpellE><span class=GramE><span
+<p>Р”РѕР±Р°РІР»РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ РІ С„Р°Р№Р», РїРµСЂРµРґ С‚РµРєСЃС‚РѕРј СЃС‚Р°РІРёС‚СЃСЏ РІСЂРµРјСЏ РѕС‚ РЅР°С‡Р°Р»Р° РѕС‚РєСЂС‹С‚РёСЏ
+<span class=SpellE>Р»РѕРі-С„Р°Р№Р»Р°</span>. <span class=SpellE><span class=GramE><span
 lang=EN-US style='mso-ansi-language:EN-US'>Str</span></span></span><span
-lang=EN-US> </span>– текст сообщения. <span class=GramE><span lang=EN-US
-style='mso-ansi-language:EN-US'>keywords</span></span><span lang=EN-US> </span>–
-ключевые слова для быстрого поиска и отсеивания нужных записей в логе. Ключевые
-слова отделяются пробелом. Обычно ключевое слово это имя модуля или функции,
-откуда пришло сообщение.</p>
+lang=EN-US> </span>вЂ“ С‚РµРєСЃС‚ СЃРѕРѕР±С‰РµРЅРёСЏ. <span class=GramE><span lang=EN-US
+style='mso-ansi-language:EN-US'>keywords</span></span><span lang=EN-US> </span>вЂ“
+РєР»СЋС‡РµРІС‹Рµ СЃР»РѕРІР° РґР»СЏ Р±С‹СЃС‚СЂРѕРіРѕ РїРѕРёСЃРєР° Рё РѕС‚СЃРµРёРІР°РЅРёСЏ РЅСѓР¶РЅС‹С… Р·Р°РїРёСЃРµР№ РІ Р»РѕРіРµ. РљР»СЋС‡РµРІС‹Рµ
+СЃР»РѕРІР° РѕС‚РґРµР»СЏСЋС‚СЃСЏ РїСЂРѕР±РµР»РѕРј. РћР±С‹С‡РЅРѕ РєР»СЋС‡РµРІРѕРµ СЃР»РѕРІРѕ СЌС‚Рѕ РёРјСЏ РјРѕРґСѓР»СЏ РёР»Рё С„СѓРЅРєС†РёРё,
+РѕС‚РєСѓРґР° РїСЂРёС€Р»Рѕ СЃРѕРѕР±С‰РµРЅРёРµ.</p>
 
-<p>Дополнительно к главному <span class=SpellE>лог-файлу</span> создаются лог
-файлы в директории <span lang=EN-US style='mso-ansi-language:EN-US'>log</span><span
-lang=EN-US> </span>для каждого ключевого слова. В начале работы программы все
-дополнительные лог фалы стираются.</p>
+<p>Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ Рє РіР»Р°РІРЅРѕРјСѓ <span class=SpellE>Р»РѕРі-С„Р°Р№Р»Сѓ</span> СЃРѕР·РґР°СЋС‚СЃСЏ Р»РѕРі
+С„Р°Р№Р»С‹ РІ РґРёСЂРµРєС‚РѕСЂРёРё <span lang=EN-US style='mso-ansi-language:EN-US'>log</span><span
+lang=EN-US> </span>РґР»СЏ РєР°Р¶РґРѕРіРѕ РєР»СЋС‡РµРІРѕРіРѕ СЃР»РѕРІР°. Р’ РЅР°С‡Р°Р»Рµ СЂР°Р±РѕС‚С‹ РїСЂРѕРіСЂР°РјРјС‹ РІСЃРµ
+РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ Р»РѕРі С„Р°Р»С‹ СЃС‚РёСЂР°СЋС‚СЃСЏ.</p>
 
-<p><span style='mso-no-proof:yes'>LogFilter отвечает за отсеивание лишних
-сообщений в главном лог-файле. Фильтр – это набор ключевых слов, отледённый
-пробелами. Правила фильтра проверябтся посдедовательно. Если с сообщении есть
-ключевое слово из фильтра, то оно выводиться, если же фильтр начинается с -, то
-отбрасывается. Например, если фильтр “error -info”, то будут выводиться все
-сообщения с error, а если error нет, то будут отбрасываться все сообщения с
-info.</span></p>
+<p><span style='mso-no-proof:yes'>LogFilter РѕС‚РІРµС‡Р°РµС‚ Р·Р° РѕС‚СЃРµРёРІР°РЅРёРµ Р»РёС€РЅРёС…
+СЃРѕРѕР±С‰РµРЅРёР№ РІ РіР»Р°РІРЅРѕРј Р»РѕРі-С„Р°Р№Р»Рµ. Р¤РёР»СЊС‚СЂ вЂ“ СЌС‚Рѕ РЅР°Р±РѕСЂ РєР»СЋС‡РµРІС‹С… СЃР»РѕРІ, РѕС‚Р»РµРґС‘РЅРЅС‹Р№
+РїСЂРѕР±РµР»Р°РјРё. РџСЂР°РІРёР»Р° С„РёР»СЊС‚СЂР° РїСЂРѕРІРµСЂСЏР±С‚СЃСЏ РїРѕСЃРґРµРґРѕРІР°С‚РµР»СЊРЅРѕ. Р•СЃР»Рё СЃ СЃРѕРѕР±С‰РµРЅРёРё РµСЃС‚СЊ
+РєР»СЋС‡РµРІРѕРµ СЃР»РѕРІРѕ РёР· С„РёР»СЊС‚СЂР°, С‚Рѕ РѕРЅРѕ РІС‹РІРѕРґРёС‚СЊСЃСЏ, РµСЃР»Рё Р¶Рµ С„РёР»СЊС‚СЂ РЅР°С‡РёРЅР°РµС‚СЃСЏ СЃ -, С‚Рѕ
+РѕС‚Р±СЂР°СЃС‹РІР°РµС‚СЃСЏ. РќР°РїСЂРёРјРµСЂ, РµСЃР»Рё С„РёР»СЊС‚СЂ вЂњerror -infoвЂќ, С‚Рѕ Р±СѓРґСѓС‚ РІС‹РІРѕРґРёС‚СЊСЃСЏ РІСЃРµ СЃРѕРѕР±С‰РµРЅРёСЏ
+СЃ error, Р° РµСЃР»Рё error РЅРµС‚, С‚Рѕ Р±СѓРґСѓС‚ РѕС‚Р±СЂР°СЃС‹РІР°С‚СЊСЃСЏ РІСЃРµ СЃРѕРѕР±С‰РµРЅРёСЏ СЃ info.</span></p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<p>Кроме этого определены макросы:</p>
+<p>РљСЂРѕРјРµ СЌС‚РѕРіРѕ РѕРїСЂРµРґРµР»РµРЅС‹ РјР°РєСЂРѕСЃС‹:</p>
 
 <p><span class=codeChar><span lang=EN-US>assert</span></span><span
 class=codeChar><span style='mso-ansi-language:RU'>(</span><span lang=EN-US>expression</span></span><span
 class=codeChar><span style='mso-ansi-language:RU'>, </span><span lang=EN-US>message</span></span><span
-class=codeChar><span style='mso-ansi-language:RU'>)</span></span> – проверка
-истинности выражения <span class=SpellE>expression</span> во время выполнения
-программы. Если <span class=SpellE>expression</span> не выполняется, то
-выводится сообщение в файл и вызывается <span class=SpellE>throw</span>.</p>
+class=codeChar><span style='mso-ansi-language:RU'>)</span></span> вЂ“ РїСЂРѕРІРµСЂРєР°
+РёСЃС‚РёРЅРЅРѕСЃС‚Рё РІС‹СЂР°Р¶РµРЅРёСЏ <span class=SpellE>expression</span> РІРѕ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ
+РїСЂРѕРіСЂР°РјРјС‹. Р•СЃР»Рё <span class=SpellE>expression</span> РЅРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ, С‚Рѕ
+РІС‹РІРѕРґРёС‚СЃСЏ СЃРѕРѕР±С‰РµРЅРёРµ РІ С„Р°Р№Р» Рё РІС‹Р·С‹РІР°РµС‚СЃСЏ <span class=SpellE>throw</span>.</p>
 
 <p><span class=GramE><span class=codeChar><span lang=EN-US>cassert</span></span><span
 class=codeChar><span style='mso-ansi-language:RU'>(</span><span lang=EN-US>expression</span></span><span
-class=codeChar><span style='mso-ansi-language:RU'>)</span></span> – проверка
-условия во время компиляции.</span> Если условие не выполняется, то компиляция
-прерывается с ошибкой «<span class=SpellE><span style='mso-bidi-font-size:8.0pt'>cannot</span></span><span
+class=codeChar><span style='mso-ansi-language:RU'>)</span></span> вЂ“ РїСЂРѕРІРµСЂРєР°
+СѓСЃР»РѕРІРёСЏ РІРѕ РІСЂРµРјСЏ РєРѕРјРїРёР»СЏС†РёРё.</span> Р•СЃР»Рё СѓСЃР»РѕРІРёРµ РЅРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ, С‚Рѕ РєРѕРјРїРёР»СЏС†РёСЏ
+РїСЂРµСЂС‹РІР°РµС‚СЃСЏ СЃ РѕС€РёР±РєРѕР№ В«<span class=SpellE><span style='mso-bidi-font-size:8.0pt'>cannot</span></span><span
 style='mso-bidi-font-size:8.0pt'> <span class=SpellE>allocate</span> <span
 class=SpellE>an</span> <span class=SpellE>array</span> <span class=SpellE>of</span>
-<span class=SpellE>constant</span> <span class=SpellE>size</span> 0»<o:p></o:p></span></p>
+<span class=SpellE>constant</span> <span class=SpellE>size</span> 0В»<o:p></o:p></span></p>
 
 <p><span class=GramE><span class=codeChar><span lang=EN-US>debug</span></span><span
 class=codeChar><span style='mso-ansi-language:RU'>(</span><span lang=EN-US>message</span></span><span
-class=codeChar><span style='mso-ansi-language:RU'>)</span></span> – именно этим
-макросом надо выводить все временные отладочные сообщения в лог файл.</span></p>
+class=codeChar><span style='mso-ansi-language:RU'>)</span></span> вЂ“ РёРјРµРЅРЅРѕ СЌС‚РёРј
+РјР°РєСЂРѕСЃРѕРј РЅР°РґРѕ РІС‹РІРѕРґРёС‚СЊ РІСЃРµ РІСЂРµРјРµРЅРЅС‹Рµ РѕС‚Р»Р°РґРѕС‡РЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ РІ Р»РѕРі С„Р°Р№Р».</span></p>
 
 <p><span class=codeChar><span lang=EN-US>log</span></span><span class=codeChar><span
 style='mso-ansi-language:RU'>_</span><span lang=EN-US>msg</span></span><span
 class=codeChar><span style='mso-ansi-language:RU'>(</span><span lang=EN-US>keywords</span></span><span
 class=codeChar><span style='mso-ansi-language:RU'>, </span><span lang=EN-US>message</span></span><span
-class=codeChar><span style='mso-ansi-language:RU'>)</span></span> – именно этим
-макросом надо выводить сообщения в лог-файл</p>
+class=codeChar><span style='mso-ansi-language:RU'>)</span></span> вЂ“ РёРјРµРЅРЅРѕ СЌС‚РёРј
+РјР°РєСЂРѕСЃРѕРј РЅР°РґРѕ РІС‹РІРѕРґРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёСЏ РІ Р»РѕРі-С„Р°Р№Р»</p>
 
 <p><span class=codeChar><span lang=EN-US>abort</span></span><span
 class=codeChar><span style='mso-ansi-language:RU'>_</span><span lang=EN-US>init</span></span><span
 class=codeChar><span style='mso-ansi-language:RU'>(</span><span lang=EN-US>keywords</span></span><span
 class=codeChar><span style='mso-ansi-language:RU'>, </span><span lang=EN-US>message</span></span><span
-class=codeChar><span style='mso-ansi-language:RU'>)</span></span> – неудачный
-выход из процедуры с сообщением в лог</p>
+class=codeChar><span style='mso-ansi-language:RU'>)</span></span> вЂ“ РЅРµСѓРґР°С‡РЅС‹Р№
+РІС‹С…РѕРґ РёР· РїСЂРѕС†РµРґСѓСЂС‹ СЃ СЃРѕРѕР±С‰РµРЅРёРµРј РІ Р»РѕРі</p>
 
 <p><o:p>&nbsp;</o:p></p>
 
-<h1><a name="_Toc142999604"></a><a name="_Структура_каталогов"></a><span
-style='mso-bookmark:_Toc142999604'>Структура каталогов</span><span
+<h1><a name="_Toc142999604"></a><a name="_РЎС‚СЂСѓРєС‚СѓСЂР°_РєР°С‚Р°Р»РѕРіРѕРІ"></a><span
+style='mso-bookmark:_Toc142999604'>РЎС‚СЂСѓРєС‚СѓСЂР° РєР°С‚Р°Р»РѕРіРѕРІ</span><span
 style='mso-bookmark:_Toc142999604'></span><span lang=EN-US style='mso-ansi-language:
 EN-US'><o:p></o:p></span></h1>
 
-<p><a href="#_Resource_Collection_(res/res.h)">ссылки</a></p>
+<p><a href="#_Resource_Collection_(res/res.h)">СЃСЃС‹Р»РєРё</a></p>
 
-<h1><a name="_Toc142999605">Составители</a></h1>
+<h1><a name="_Toc142999605">РЎРѕСЃС‚Р°РІРёС‚РµР»Рё</a></h1>
 
 <p><span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>KindeX</span></span></p>
 

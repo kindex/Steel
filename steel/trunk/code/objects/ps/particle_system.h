@@ -1,12 +1,15 @@
-/*id*********************************************************
-    Unit: particle_system
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
+п»ї/*id*********************************************************
+	File: objects/ps/particle_system.h
+	Unit: particle_system
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-        * Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
-    Description:
-		Основа систем частиц
+		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
+	Description:
+		РћСЃРЅРѕРІР° СЃРёСЃС‚РµРј С‡Р°СЃС‚РёС†. Р‘Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ, РєРѕС‚РѕСЂС‹Рµ РєРѕРјРїРѕРЅСѓРµС‚
+		РЅРµСЃРєРѕР»СЊРєРѕ СЂРµР°Р»РёР·Р°С†РёР№ СЌРјРёС‚РµСЂР°, Р°РЅРёРјР°С‚РѕСЂР° Рё СЂРµРЅРґРµСЂРµСЂР° РґР»СЏ
+		СЃРёСЃС‚РµРј С‡Р°СЃС‚РёС†.
 ************************************************************/
 
 #ifndef __PARTICLE_SYSTEM_H
@@ -18,7 +21,7 @@
 class ParticleSystem;
 class ParticleEmitter;
 
-// одна частица
+// РѕРґРЅР° С‡Р°СЃС‚РёС†Р°
 struct Particle
 {
 	v3 position;
@@ -26,7 +29,7 @@ struct Particle
 	float size;
 };
 
-// множество частиц
+// РјРЅРѕР¶РµСЃС‚РІРѕ С‡Р°СЃС‚РёС†
 struct ParticleSet
 {
 	float countScale;
@@ -45,20 +48,20 @@ protected:
 public:
 };
 
-// класс для создания новых частиц
+// РєР»Р°СЃСЃ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РЅРѕРІС‹С… С‡Р°СЃС‚РёС†
 class ParticleEmitter: public ParticleProcessor
 {
 protected:
 	ParticleSystem *particleSystem;
 public:
 	virtual bool init(Config *_conf, ParticleSet *_set, ParticleSystem *_particleSystem);
-	virtual void initParticles();
-	virtual void born(Particle &particle) = 0; // создать частицу
-	virtual void kill(int i); // убить частицу с номером i
+	virtual void initParticles(void);
+	virtual void born(Particle &particle) = 0; // СЃРѕР·РґР°С‚СЊ С‡Р°СЃС‚РёС†Сѓ
+	virtual void kill(int i); // СѓР±РёС‚СЊ С‡Р°СЃС‚РёС†Сѓ СЃ РЅРѕРјРµСЂРѕРј i
 	virtual void ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) = 0;
 };
 
-// класс для рисования: множество спрайтов, набор объектов, меташарики
+// РєР»Р°СЃСЃ РґР»СЏ СЂРёСЃРѕРІР°РЅРёСЏ: РјРЅРѕР¶РµСЃС‚РІРѕ СЃРїСЂР°Р№С‚РѕРІ, РЅР°Р±РѕСЂ РѕР±СЉРµРєС‚РѕРІ, РјРµС‚Р°С€Р°СЂРёРєРё
 class ParticleRenderer: public GraphObject, public ParticleProcessor
 {
 protected:
@@ -66,20 +69,20 @@ protected:
 
 public:
 	virtual bool init(Config *_conf, ParticleSet *_set, GraphObject *_particleSystem);
-	virtual bool initParticles() = 0;
+	virtual bool initParticles(void) = 0;
 };
 
-// класс, который анимирует частицы
+// РєР»Р°СЃСЃ, РєРѕС‚РѕСЂС‹Р№ Р°РЅРёРјРёСЂСѓРµС‚ С‡Р°СЃС‚РёС†С‹
 class ParticleAnimator: public PhysicObject, public ParticleProcessor
 {
 protected:
 	ParticleSystem *particleSystem;
 public:
 	virtual bool init(Config *_conf, ParticleSet *_set, ParticleSystem *_particleSystem);
-	virtual bool initParticles() = 0;
+	virtual bool initParticles(void) = 0;
 };
 
-// система чатиц
+// СЃРёСЃС‚РµРјР° С‡Р°С‚РёС†
 class ParticleSystem: public GameObj
 {
 	Config *conf, *emitterConf, *rendererConf, *animatorConf;

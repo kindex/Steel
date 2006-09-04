@@ -1,8 +1,21 @@
-#ifndef INPUT_H
-#define INPUT_H
+п»ї/*id*********************************************************
+	File: input/input.h
+	Unit: input
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		РђР±СЃС‚СЂР°РєС‚РЅС‹Р№ РєР»Р°СЃСЃ РѕР±СЂР°Р±РѕС‚С‡РёРєР° РІРІРѕРґР° СЃ РєР»Р°РІРёР°С‚СѓСЂС‹ Рё РјС‹С€Рё
+ ************************************************************/
 
-/* Посредник между классом Game и драйверами, которые опрашивают
-устройства ввода. Хранит события, нажатые кнопки
+#ifndef __INPUT_H__
+#define __INPUT_H__
+
+/* РџРѕСЃСЂРµРґРЅРёРє РјРµР¶РґСѓ РєР»Р°СЃСЃРѕРј Game Рё РґСЂР°Р№РІРµСЂР°РјРё, РєРѕС‚РѕСЂС‹Рµ РѕРїСЂР°С€РёРІР°СЋС‚
+СѓСЃС‚СЂРѕР№СЃС‚РІР° РІРІРѕРґР°. РҐСЂР°РЅРёС‚ СЃРѕР±С‹С‚РёСЏ, РЅР°Р¶Р°С‚С‹Рµ РєРЅРѕРїРєРё
 */
 #include "../steel.h"
 
@@ -15,7 +28,7 @@ class Input;  // forward declaration, cross-use
 #include <map>
 
 
-class Input: public SteelAbstract
+class Input
 {
 protected:
 	std::map<std::string, bool> keyPressed;
@@ -31,13 +44,13 @@ public:
 	void setGame(Game *_game) { game = _game; }
 
 	bool isPressed(std::string key);
-	bool isAlive() { return alive; }
-	virtual void captureMouse() = 0;
-	virtual void freeMouse() = 0;
-	virtual void process() = 0;
+	bool isAlive(void) { return alive; }
+	virtual void captureMouse(void) = 0;
+	virtual void freeMouse(void) = 0;
+	virtual void process(void) = 0;
 	virtual void getMouseDelta(double &dx, double &dy);
 	virtual void setMouseCenter(int _cx, int _cy) { cx = _cx; cy = _cy; }
-	bool isMouseCaptured() { return mouseCaptured; }
+	bool isMouseCaptured(void) { return mouseCaptured; }
 };
 
-#endif
+#endif // __INPUT_H__

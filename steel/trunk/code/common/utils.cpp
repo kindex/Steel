@@ -1,3 +1,16 @@
+﻿/*id*********************************************************
+	File: common/utils.cpp
+	Unit: utils
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Всевозможные полезные функции
+
+ ************************************************************/
 
 #include "../steel.h"
 #include "utils.h"
@@ -14,25 +27,29 @@
 
 using namespace std;
 
+// random float number in interval [0..1)
 float frand()
 {
 	return (float) rand() / (float) RAND_MAX;
 }
 
+// random float number in interval [-0.5..+0.5)
 float prand()
 {
 	return (float) rand() / (float) RAND_MAX - 0.5f;
 }
 
-
+// convert string to v3 (vector components are devided with ',' [X,Y,Z])
 v3	stov3(string s)
 {
-	steel::vector<string> v = explode(',', s);
+	svector<string> v;
+	explode(',', s, v);
 	v.resize(3);
 	v3 r((float)atof(v[0].c_str()), (float)atof(v[1].c_str()), (float)atof(v[2].c_str()));
 	return r;
 }
 
+// convert float number into string
 string FloatToStr(double a)
 {
     char s[32];
@@ -40,6 +57,7 @@ string FloatToStr(double a)
     return string(s);
 }
 
+// convert integer into string
 string IntToStr(int a)
 {
     char s[32];
@@ -48,11 +66,11 @@ string IntToStr(int a)
     return string(s);
 }
 
-steel::vector<string> explode(char delimiter, const std::string s)
+// split string into array of strings with delimiter
+void explode(char delimiter, const std::string s, svector<string> &res)
 {
-	steel::vector<string> res;
 	string::size_type last, start = 0, len = s.length();
-	while(start<=len)
+	while(start <= len)
 	{
 		last = start;
 		start = s.find(delimiter, start);
@@ -62,7 +80,6 @@ steel::vector<string> explode(char delimiter, const std::string s)
 		else
 			start++;
 
-
 		string* T = NULL;
 
 		//int x = errno;
@@ -71,16 +88,15 @@ steel::vector<string> explode(char delimiter, const std::string s)
 
 		res.push_back(s.substr(last, start - last - 1));
 	}
-	return res;
 }
 
-
-string implode(const char delimiter, const steel::vector<std::string> elements)
+// concat array of string into one string
+string implode(const char delimiter, const svector<std::string> elements)
 {
 	if(elements.empty()) return "";
 
 	string res;
-	steel::vector<string>::const_iterator it = elements.begin();
+	svector<string>::const_iterator it = elements.begin();
 	res = *it;
 	it++;
 	for(; it != elements.end(); it++)
@@ -91,22 +107,27 @@ string implode(const char delimiter, const steel::vector<std::string> elements)
 	return res;
 }
 
+// вернуть диреторию, в которой находится файл (выбросить имя файла из полного пути)
 std::string getPath(std::string fullpath)
 {
-	steel::vector<std::string> path = explode('/', fullpath);
+	svector<std::string> path;
+	explode('/', fullpath, path);
 	path.pop_back();
 
 	return  implode('/', path);
 }
 
+// split full path to path + filename
 void splitPath(std::string fullpath, std::string &path, std::string &filename)
 {
-	steel::vector<std::string> apath = explode('/', fullpath);
+	svector<std::string> apath;
+	explode('/', fullpath, apath);
 	filename = apath.back();
 	apath.pop_back();
 	path = implode('/', apath);
 }
 
+// delete file in directory
 void deleteFile(std::string dir, std::string file)
 {
 	if(file.substr(0,1) != ".")
@@ -118,6 +139,8 @@ void deleteFile(std::string dir, std::string file)
 		#endif	// STEEL_OS
 }
 
+
+// delete all files in directory with mask
 void deleteFiles(string dir, string mask)
 {
 	#if STEEL_OS == OS_WIN32
@@ -140,10 +163,12 @@ void deleteFiles(string dir, string mask)
 	#endif	// STEEL_OS
 }
 
+// translate all chars a to b into string s
 std::string strtr(const char *s, char a, char b)
 {
 	std::string res;
-	steel::vector<std::string> r = explode(a, s);
+	svector<std::string> r;
+	explode(a, s, r);
 	for(unsigned int i = 0; i < r.size(); i++)
 	{
 		if(!r[i].empty())

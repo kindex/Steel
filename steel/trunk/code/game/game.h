@@ -1,15 +1,16 @@
-/*id*********************************************************
-    Unit: game
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Этот юнит является дополнением к steel engine и служит
-		примером использования движка. В этом юните задаются правила игры
-		или графической демки.
+п»ї/*id*********************************************************
+	File: game/game.h
+	Unit: game
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Р­С‚РѕС‚ СЋРЅРёС‚ СЏРІР»СЏРµС‚СЃСЏ РґРѕРїРѕР»РЅРµРЅРёРµРј Рє steel engine Рё СЃР»СѓР¶РёС‚
+		РїСЂРёРјРµСЂРѕРј РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РґРІРёР¶РєР°. Р’ СЌС‚РѕРј СЋРЅРёС‚Рµ Р·Р°РґР°СЋС‚СЃСЏ РїСЂР°РІРёР»Р° РёРіСЂС‹
+		РёР»Рё РіСЂР°С„РёС‡РµСЃРєРѕР№ РґРµРјРєРё.
  ************************************************************/
 
 #ifndef GAME_H
@@ -33,19 +34,19 @@ class Game; // forward declaration, cross-use
 #include <map>
 
 /*
-Класс, задающий правила игры
+РљР»Р°СЃСЃ, Р·Р°РґР°СЋС‰РёР№ РїСЂР°РІРёР»Р° РёРіСЂС‹
 */
 
 class Game
 {
 public:
+	// РІРёСЂС‚СѓР°Р»СЊРЅС‹Рµ РѕР±СЂР°Р±РѕС‚С‡РёРєРё РєР»Р°РІРёР°С‚СѓСЂС‹ Рё РјС‹С€РєРё
 	virtual void handleEventKeyDown(std::string key) = 0;
 	virtual void handleEventKeyUp(std::string key) = 0;
-
 	virtual void handleMouse(double dx, double dy) = 0;
 };
 
-
+// РєР»Р°СЃСЃ РґР»СЏ СЂР°Р·СЂР°Р±РѕС‚РєРё Рё С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ РґРІРёР¶РєР°
 class Steel: public Game
 {
 protected:
@@ -54,7 +55,7 @@ protected:
 	v3 g;
 	float speedup, speed;
 	steel::time time;
-	coord accSpeed, brakeSpeed;
+	float accSpeed, brakeSpeed;
 	v3 moveSpeed;
 
 	bool _alive, paused;
@@ -77,22 +78,22 @@ protected:
 	GameLight	*light;
 
 public:
-	Steel() { } 
+	Steel(void) { } 
 	bool init(std::string _conf, Input *_input, std::string params);
-	void deinit();
+	void deinit(void);
 
 	bool executeScript(std::string script);
 	bool executeCommand(std::string command);
 
 	void bind(GraphEngine *engine);
-	void bindPhysicEngine();
+	void bindPhysicEngine(void);
 	void draw(GraphEngine *engine);
 	void process(steel::time globalTime, steel::time time);
 //	int getCollisionCount() { return physicEngine->total.collisionCount; }
 
 	bool isAlive() {return _alive;} 
 	void setspeed(float _speed, steel::time _time) {speed = _speed; time = _time; } 
-	bool createObject();
+	bool createObject(void);
 
 	v3	getGlobalPosition(std::string obj);
 

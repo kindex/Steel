@@ -1,28 +1,30 @@
-/*id*********************************************************
-    Unit: objects/path
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Path. Метка, которя движется по траектории от объекта к объекту.
+п»ї/*id*********************************************************
+	File: objects/path.h
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Path. РњРµС‚РєР°, РєРѕС‚РѕСЂСЏ РґРІРёР¶РµС‚СЃСЏ РїРѕ С‚СЂР°РµРєС‚РѕСЂРёРё РѕС‚ РѕР±СЉРµРєС‚Р° Рє РѕР±СЉРµРєС‚Сѓ.
 ************************************************************/
 
 #ifndef __GAME_TAG_H
 #define __GAME_TAG_H
 
+#include "../steel.h"
 #include "game_obj.h"
 
 struct PathTarget
 {
 	std::string id;
-	coord	speed, smooth;
+	float	speed, smooth;
 };
 
 /*
-Path. Метка, которя движется по траектории от объекта к объекту.
+Path. РњРµС‚РєР°, РєРѕС‚РѕСЂСЏ РґРІРёР¶РµС‚СЃСЏ РїРѕ С‚СЂР°РµРєС‚РѕСЂРёРё РѕС‚ РѕР±СЉРµРєС‚Р° Рє РѕР±СЉРµРєС‚Сѓ.
 */
 class TagPath: public GameObjSet
 {

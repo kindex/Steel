@@ -13,6 +13,30 @@
 #include "../../common/types.h"
 #include "model.h"
 
+// TODO: change types
+/*
+	Промежуток времени (миллисекунды)
+*/
+typedef
+unsigned int steelTimeM_t;
+/*
+	Кадры
+*/
+typedef
+unsigned int steelFrame_t;
+/*
+	Поле флагов (32 бита)
+*/
+typedef
+unsigned int steelFlag32_t;
+
+/*
+	Угол (0 = 0 градусов, 2^32-1 -> 360-0 градусам)
+*/ 
+typedef
+unsigned long int steelAngle_t;
+
+
 /*
 	Форматы переходов в анимации
 */

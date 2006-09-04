@@ -1,13 +1,14 @@
-/*id*********************************************************
+п»ї/*id*********************************************************
+	File: common/win_info.cpp
 	Unit: Windows Info
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
 	License:
-        Steel Engine License
-    Description:
-		Модуль определения версии Windows.
+		Steel Engine License
+	Description:
+		РњРѕРґСѓР»СЊ РѕРїСЂРµРґРµР»РµРЅРёСЏ РІРµСЂСЃРёРё Windows.
  ************************************************************/
 #include "../steel.h"
 
@@ -16,8 +17,6 @@
 	#include <winbase.h>
 	#include <winnt.h>
 	
-
-
 #undef VER_PLATFORM_WIN32s
 #undef VER_PLATFORM_WIN32_WINDOWS
 #undef VER_PLATFORM_WIN32_NT

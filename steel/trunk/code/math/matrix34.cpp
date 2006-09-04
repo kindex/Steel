@@ -1,12 +1,13 @@
-/*id*********************************************************
-    Unit: math/matrix4x4
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+﻿/*id*********************************************************
+	File: math/matrix34.cpp
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
-        Steel Engine License
-    Description:
+		Steel Engine License
+	Description:
 		Class declaration for a 3x4 matrix
 ************************************************************/
 

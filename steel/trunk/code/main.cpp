@@ -1,4 +1,5 @@
-/*id*********************************************************
+п»ї/*id*********************************************************
+	File: main.cpp
 	Unit: core
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
@@ -7,47 +8,43 @@
 		* Kane [J. Anton, kane@mail.berlios.de]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
 	License:
-        Steel Engine License
-    Description:
-		main() создайт игровые классы, коллеццию ресурсов, загружет 
-		плагины, содержит главный цикл игры.
+		Steel Engine License
+	Description:
+		main() СЃРѕР·РґР°Р№С‚ РёРіСЂРѕРІС‹Рµ РєР»Р°СЃСЃС‹, РєРѕР»Р»РµС†С†РёСЋ СЂРµСЃСѓСЂСЃРѕРІ, Р·Р°РіСЂСѓР¶РµС‚ 
+		РїР»Р°РіРёРЅС‹, СЃРѕРґРµСЂР¶РёС‚ РіР»Р°РІРЅС‹Р№ С†РёРєР» РёРіСЂС‹.
  ************************************************************/
 
-#include "_cpp.h"
+#include "steel.h"
 
-#ifdef STEEL_OPENGL_SDL	
+#if STEEL_OPENGL_API==OPENGL_SDL
 	#include "graph/opengl/opengl_sdl_engine.h"
 	#include "input/input_sdl.h"
 #endif
-#ifdef STEEL_OPENGL_WIN
+#if STEEL_OPENGL_API==OPENGL_WINAPI	
 	#include "graph/opengl/opengl_win_engine.h"
 	#include "input/input_win.h"
 #endif
 
 #include "common/logger.h"
 #include "common/timer.h"
-
 #include "common/system_info.h"
 #include "common/win_info.h"
-
 #include "game/game.h"
 #include "common/utils.h"
-
 #include "res/res_main.h"
+#include "main.h"
 
 using namespace std;
 
-bool test();
 std::string commandLine;
 
-#if (STEEL_COMPILER == GCC) && (STEEL_OS == OS_WIN32)
+#if (STEEL_COMPILER == COMPILER_GCC) && (STEEL_OS == OS_WIN32)
 int main1(int argc, char *argv[])
 #else
 int main(int argc, char *argv[])
 #endif
 {
 	globalTimer.start(); globalFrameNumber = 1;
-
 
 	deleteFiles("..\\log", "*.log");
 	logFilter.set("-opengl_info");
@@ -77,13 +74,13 @@ int main(int argc, char *argv[])
 	float speed = 0.01f; // 100 FPS
 
 // ******************* GRAPH ************************
-#ifdef STEEL_OPENGL_SDL	
+#if STEEL_OPENGL_API == OPENGL_SDL
 	OpenGL_SDL_Engine graph;
 	InputSDL input;
 	//graph.bindResColection(&res);
 	if(!graph.init("renderer")) return 1;
 #endif
-#ifdef STEEL_OPENGL_WIN
+#if STEEL_OPENGL_API == OPENGL_WINAPI
 	OpenGL_WIN_Engine graph;
 	InputWIN input;
 	if(!graph.init("renderer", &input)) return 1;

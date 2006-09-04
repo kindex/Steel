@@ -1,12 +1,12 @@
 /*id*********************************************************
-    Unit: 3D PhysicEngine Steel
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
+	Unit: 3D PhysicEngine Steel
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	License:
+		Steel Engine License
+	Description:
 		Steel Версия физического движка. 
 		Обрабатывает движение частиц, полигональных тел и шаров.
 		Поддерживает ирерархию объектов, кеширует информацию об	объектах.

@@ -1,12 +1,14 @@
-/*id*********************************************************
-    Unit: math/plane
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+п»ї/*id*********************************************************
+	File: math/plane.h
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
-        Steel Engine License
-    Description:
+		Steel Engine License
+	Description:
+
 		Plane, Triangle
 ************************************************************/
 
@@ -18,30 +20,30 @@
 
 struct Plane;
 
-// пересекает ли плоскость прямую
+// РїРµСЂРµСЃРµРєР°РµС‚ Р»Рё РїР»РѕСЃРєРѕСЃС‚СЊ РїСЂСЏРјСѓСЋ
 bool isCross(const Plane a, const Line b, float &k);
 
-// пересекает ли треугольник прямую
+// РїРµСЂРµСЃРµРєР°РµС‚ Р»Рё С‚СЂРµСѓРіРѕР»СЊРЅРёРє РїСЂСЏРјСѓСЋ
 bool isCrossTrgLine(const Plane a, const Line b, float &k);
 
-// Находится ли точка между лучами (base + a*t) и (base + b*t)
+// РќР°С…РѕРґРёС‚СЃСЏ Р»Рё С‚РѕС‡РєР° РјРµР¶РґСѓ Р»СѓС‡Р°РјРё (base + a*t) Рё (base + b*t)
 bool isBetween(const v3 point, const v3 base, const v3 a, const v3 b);
 
-// находится ли внутри призмы с основанием a и высотой d
-// точка p
+// РЅР°С…РѕРґРёС‚СЃСЏ Р»Рё РІРЅСѓС‚СЂРё РїСЂРёР·РјС‹ СЃ РѕСЃРЅРѕРІР°РЅРёРµРј a Рё РІС‹СЃРѕС‚РѕР№ d
+// С‚РѕС‡РєР° p
 bool pointInPrism(const Plane a, const v3 d, v3 p);
 
-// Пересекает ли движущаяся линия (a:direction) отрезок (b.base + b.a*k)
+// РџРµСЂРµСЃРµРєР°РµС‚ Р»Рё РґРІРёР¶СѓС‰Р°СЏСЃСЏ Р»РёРЅРёСЏ (a:direction) РѕС‚СЂРµР·РѕРє (b.base + b.a*k)
 bool crossMLineLine(const Line a, const v3 direction, const Line b, float &k);
 
-// находятся ли точка по правую сторону от плоскости
+// РЅР°С…РѕРґСЏС‚СЃСЏ Р»Рё С‚РѕС‡РєР° РїРѕ РїСЂР°РІСѓСЋ СЃС‚РѕСЂРѕРЅСѓ РѕС‚ РїР»РѕСЃРєРѕСЃС‚Рё
 bool byRightSide(const v3 point, const Plane a);
 
-/* Плоскость: base + a*s + b*t
- base - точка остчёта (нижний угол)
- a,b - напрявляющие двух векторов этой плоскости
+/* РџР»РѕСЃРєРѕСЃС‚СЊ: base + a*s + b*t
+ base - С‚РѕС‡РєР° РѕСЃС‚С‡С‘С‚Р° (РЅРёР¶РЅРёР№ СѓРіРѕР»)
+ a,b - РЅР°РїСЂСЏРІР»СЏСЋС‰РёРµ РґРІСѓС… РІРµРєС‚РѕСЂРѕРІ СЌС‚РѕР№ РїР»РѕСЃРєРѕСЃС‚Рё
 
- Для треугольника
+ Р”Р»СЏ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°
  0<= t <=1
  0<= s <=1
  0<= t+s <=1
@@ -50,7 +52,7 @@ struct Plane
 {
 	v3 base, a, b;
 
-	Plane() {}
+	Plane(void) {}
 	Plane(v3 _base, v3 _a, v3 _b): base(_base), a(_a), b(_b) {}
 	v3 point(const float s, const float t) const { return base + a*s + b*t; }
 

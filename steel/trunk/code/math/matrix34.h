@@ -1,12 +1,13 @@
-/*id*********************************************************
-    Unit: math/matrix4x4
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+﻿/*id*********************************************************
+	File: math/matrix34.h
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
-        Steel Engine License
-    Description:
+		Steel Engine License
+	Description:
 		Class declaration for a 3x4 matrix
 		3 Rows x 4 Columns
 		| 0 1 2 x |
@@ -47,7 +48,7 @@ struct matrix34
 		return t;
 	}
 
-	inline static const matrix34	getIdentity() 
+	inline static const matrix34	getIdentity(void)
 	{ 
 		return get(1,0,0, 0,1,0, 0,0,1, 0,0,0); 
 	}

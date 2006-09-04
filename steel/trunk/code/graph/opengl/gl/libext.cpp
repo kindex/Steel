@@ -12,7 +12,6 @@
  ************************************************************/
 
 #include "../../../steel.h"
-#include "../../../_cpp.h"
 
 #if STEEL_OS == OS_WIN32
 #include <windows.h>
@@ -25,11 +24,13 @@
 
 #include "libext.h"
 
-#include <string.h>
+#include <string>
 #include <ctype.h>
 #include <stdlib.h>
 #include <malloc.h>
 
+#include "../../../common/logger.h"
+#include "../../../common/utils.h"
 
 bool GL_EXTENSION_MULTITEXTURE = false;
 int  GL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS = 0;

@@ -1,14 +1,15 @@
 /*id*********************************************************
-    Unit: core
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	File: engine.h
+	Unit: core
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [J. Anton, kane@mail.berlios.de]
 		* Bond [Andrey Bondarenko]
-    License:
-        Steel Engine License
-    Description:
+	License:
+		Steel Engine License
+	Description:
 		Класс Interface - прототип класса, от которого должны наследоваться 
 		классы, которые должны обрабатываться классом Engine.
 		Класс Engine (движок) через функцию inject() получает объекты, которые
@@ -29,17 +30,17 @@
 
 #include <string>
 
-class Engine: public steelAbstract
+class Engine
 {
 protected:
 	EngineHelper	*helper;
 public:
 	Config			*conf;
 
-	virtual ~Engine() {}
+	virtual ~Engine(void) {}
 	virtual bool init(std::string _conf) = 0; // initialization
 
-	virtual bool clear() = 0; 
+	virtual bool clear(void) = 0; 
 //	protottype: virtual bool inject(Interface *object) { return false; }; // add object to process by engine
 //	virtual	bool remove(Interface *object);
 //	virtual bool process() = 0; // add object to process by engine

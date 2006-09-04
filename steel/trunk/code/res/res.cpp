@@ -1,12 +1,12 @@
 /*id*********************************************************
-    Unit: Res [Resources]
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	Unit: Res [Resources]
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
         Молуль для хранения, загрузки игровых ресурсов и 
 		контроля над ними. 
 ************************************************************/

@@ -1,18 +1,20 @@
-/*id*********************************************************
-    Unit: objects/sphere
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Многогранник с изменяемой формой и количеством полигонов
+п»ї/*id*********************************************************
+	File: objects/sphere.h
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		РњРЅРѕРіРѕРіСЂР°РЅРЅРёРє СЃ РёР·РјРµРЅСЏРµРјРѕР№ С„РѕСЂРјРѕР№ Рё РєРѕР»РёС‡РµСЃС‚РІРѕРј РїРѕР»РёРіРѕРЅРѕРІ
  ************************************************************/
 
 #ifndef __OBJECTS_SPHERE_H
 #define __OBJECTS_SPHERE_H
 
+#include "../steel.h"
 #include "../graph/graph_interface.h"
 
 class Sphere: public GraphObject
@@ -22,8 +24,8 @@ protected:
 	FaceMaterials *faces;
 	TexCoords *texCoords0, *texCoords1;
 public:
-	Sphere();
-	~Sphere();
+	Sphere(void);
+	~Sphere(void);
 
 	TexCoords*	getTexCoords(int texNumber)
 	{
@@ -32,9 +34,9 @@ public:
 		else
 			return texCoords1;
 	}
-	Vertexes*	getVertexes() { return vertexes;}
-	Normals*	getNormals() { return normals;} // список нормалей в вершинам
-	FaceMaterials* getFaceMaterials() { return faces;}
+	Vertexes*	getVertexes(void) { return vertexes;}
+	Normals*	getNormals(void) { return normals;} // СЃРїРёСЃРѕРє РЅРѕСЂРјР°Р»РµР№ РІ РІРµСЂС€РёРЅР°Рј
+	FaceMaterials* getFaceMaterials(void) { return faces;}
 	void ProcessGraph(const GraphEngineInfo &info);
 
 	void DeleteTriangle(int n);

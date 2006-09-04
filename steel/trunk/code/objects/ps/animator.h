@@ -1,15 +1,15 @@
-/*id*********************************************************
-    Unit: particle_system
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
+ï»¿/*id*********************************************************
+	File: objects/ps/animator.h
+	Unit: particle_system
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
-    License:
-        Steel Engine License
-    Description:
-		Steel Âåðñèÿ ôèçè÷åñêîãî äâèæêà. 
-	Îáðàáàòûâàåò äâèæåíèå òîëüêî ÷àñòèö.
+	License:
+		Steel Engine License
+	Description:
+		ÐžÐ±Ñ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°ÐµÑ‚ Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ðµ Ñ‡Ð°ÑÑ‚Ð¸Ñ† Ð² ÑÐ¸ÑÑ‚ÐµÐ¼Ðµ.
 ************************************************************/
 #ifndef __PARTICLE_SYSTEM__ANIMATOR_H
 #define __PARTICLE_SYSTEM__ANIMATOR_H
@@ -30,15 +30,15 @@ public:
 		return COLLISION_PARTICLE; 
 	}
 	
-	float getMass()
+	float getMass(void)
 	{
 		return conf->getf("mass");
 	}
 
-	PositionKind	getPositionKind(){	return POSITION_GLOBAL;}
-	Config* getPMaterial() { return conf; }
+	PositionKind	getPositionKind(void){	return POSITION_GLOBAL;}
+	Config* getPMaterial(void) { return conf; }
 
-	ObjectPosition getPosition()
+	ObjectPosition getPosition(void)
 	{ 
 		ObjectPosition pos;
 		pos.loadIdentity();
@@ -46,20 +46,16 @@ public:
 		return pos; 
 	}
 
-	velocity	getVelocity() { return velocity(particle->velocity,v3(0,0,0));}
+	velocity	getVelocity(void) { return velocity(particle->velocity,v3(0,0,0));}
 	void		setVelocity(const velocity &v) { particle->velocity = v.translation;}
 	void setPosition(ObjectPosition const &newPosition) {particle->position = newPosition.getTranslation(); }
 
+	ProcessKind getProcessKind(void) { return PROCESS_NONE; }
 
-	ProcessKind getProcessKind() { return PROCESS_NONE; }
-
-
-	aabb		getPFrame()		{	return aabb(); } // TODO
-	bool		cleanupP()		{	return true;	}
-	Vertexes*	getPVertexes()	{	return NULL;}
-	Triangles*	getTriangles()	{	return NULL;}
-
-	std::string getName() { return ""; }
+	aabb		getPFrame(void)		{	return aabb(); } // TODO
+	bool		cleanupP(void)		{	return true;	}
+	Vertexes*	getPVertexes(void)	{	return NULL;}
+	Triangles*	getTriangles(void)	{	return NULL;}
 };
 
 class UniPSanimator: public ParticleAnimator
@@ -67,31 +63,30 @@ class UniPSanimator: public ParticleAnimator
 	steel::svector<UniParticle*> children;
 
 public:
-	bool initParticles();
-	int getPhysicChildrenCount() { return children.size(); }
+	bool initParticles(void);
+	int getPhysicChildrenCount(void) { return children.size(); }
 	PhysicObject* getPhysicChildren(int i) { return children[i]; }
 
 	ModificationTime getChildrenModificationTime(void) { return set->modificationTime; }
 
-	ObjectPosition getPosition() { return particleSystem->getPosition(); }
-	PositionKind getPositionKind() { return particleSystem->getPositionKind(); }
-	CollisionType getCollisionType() { return COLLISION_NONE; }
+	ObjectPosition getPosition(void) { return particleSystem->getPosition(); }
+	PositionKind getPositionKind(void) { return particleSystem->getPositionKind(); }
+	CollisionType getCollisionType(void) { return COLLISION_NONE; }
 
 	void setPosition(ObjectPosition const &newPosition) {}
-	ProcessKind getProcessKind() { return PROCESS_NONE; }
+	ProcessKind getProcessKind(void) { return PROCESS_NONE; }
 	void	ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime);
 
-	aabb		getPFrame()		{	return aabb(); } // TODO
-	bool		cleanupP()		{	return true;	}
-	Vertexes*	getPVertexes()	{	return NULL;}
-	Triangles*	getTriangles()	{	return NULL;}
-	Config*		getPMaterial()	{	return NULL;}
+	aabb		getPFrame(void)		{	return aabb(); } // TODO
+	bool		cleanupP(void)		{	return true;	}
+	Vertexes*	getPVertexes(void)	{	return NULL;}
+	Triangles*	getTriangles(void)	{	return NULL;}
+	Config*		getPMaterial(void)	{	return NULL;}
 
-	velocity	getVelocity() { return velocity(v3(0,0,0),v3(0,0,0));}
+	velocity	getVelocity(void) { return velocity(v3(0,0,0),v3(0,0,0));}
 	void		setVelocity(const velocity &v) {}
 
-	float	getMass() { return 1.0f;}
-	std::string getName() { return ""; }
+	float	getMass(void) { return 1.0f;}
 };
 
 #endif

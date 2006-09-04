@@ -1,7 +1,19 @@
-#include "../steel.h"
-#include "../_cpp.h"
+﻿/*id*********************************************************
+	File: input/input_win.cpp
+	Unit: input
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Обработчика ввода с клавиатуры и мыши, используя Windows API
+ ************************************************************/
 
-#if (STEEL_OS == OS_WIN32) && (STEEL_VIDEOSYS == OPENGL_WIN)
+#include "../steel.h"
+
+#if STEEL_OPENGL_API == OPENGL_WINAPI
 
 #include "input_win.h"
 #include "../common/utils.h"

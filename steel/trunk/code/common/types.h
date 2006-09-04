@@ -1,20 +1,27 @@
-/***************************************************************************
- *            types.h
- *
- *  Fri Feb 17 10:29:46 2006
- *  Copyright  2006  J. Anton
- *  kane@mail.berlios.de
- ****************************************************************************/
+/*id*********************************************************
+	File: common/timer.h
+	Unit: Timer
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* Kane [J. Anton, kane@mail.berlios.de]
+	License:
+		Steel Engine License
+	Description:
+		Базовые типы
+ ************************************************************/
 
-#ifndef __TYPES_H__
-#define __TYPES_H__
+#ifndef __COMMON_TYPES_H__
+#define __COMMON_TYPES_H__
+
+#include "../steel.h"
 
 /*
 	Целочисленные типы данных
 */
 typedef unsigned int uint;
 
-#if STEEL_OS == OS_LINUX
+#if STEEL_OS==OS_LINUX
 #include <sys/types.h>
 typedef int8_t int8;
 typedef u_int8_t uint8;
@@ -45,31 +52,8 @@ namespace steel
 typedef float time; // time interval
 }
 
-typedef float coord;
 typedef float steelLength_t;
 
-/*
-	Промежуток времени (миллисекунды)
-*/
-typedef
-unsigned int steelTimeM_t;
-
-/*
-	Кадры
-*/
-typedef
-unsigned int steelFrame_t;
-/*
-	Поле флагов (32 бита)
-*/
-typedef
-unsigned int steelFlag32_t;
-
-/*
-	Угол (0 = 0 градусов, 2^32-1 -> 360-0 градусам)
-*/ 
-typedef
-unsigned long int steelAngle_t;
 
 /*
 	Коды ошибок

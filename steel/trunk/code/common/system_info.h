@@ -1,13 +1,14 @@
-/*id*********************************************************
+п»ї/*id*********************************************************
+	File: common/system_info.h
 	Unit: System Info
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
 	License:
-        Steel Engine License
-    Description:
-		Модуль определения необходимых параметров системы.
+		Steel Engine License
+	Description:
+		РњРѕРґСѓР»СЊ РѕРїСЂРµРґРµР»РµРЅРёСЏ РЅРµРѕР±С…РѕРґРёРјС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ СЃРёСЃС‚РµРјС‹.
  ************************************************************/
 #ifndef COMMON__SYSTEM_INFO_H
 #define COMMON__SYSTEM_INFO_H

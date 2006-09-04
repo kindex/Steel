@@ -1,19 +1,20 @@
-/*id*********************************************************
-    Unit: math/plane
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+п»ї/*id*********************************************************
+	File: math/plane.cpp
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
-        Steel Engine License
-    Description:
+		Steel Engine License
+	Description:
 		Plane, Triangle
 ************************************************************/
 
 #include "plane.h"
 
 /*
-Находится ли точка между лучами (base + a*t) и (base + b*t)
+РќР°С…РѕРґРёС‚СЃСЏ Р»Рё С‚РѕС‡РєР° РјРµР¶РґСѓ Р»СѓС‡Р°РјРё (base + a*t) Рё (base + b*t)
 */
 bool isBetween(v3 point, const v3 base, const v3 a, const v3 b)
 {
@@ -42,8 +43,8 @@ bool isCross(const Plane a, const Line b, float &k)
 	return true;
 }
 
-// пересекает ли прямая (b.base + b.a*k) тругольник
-// если да, то возвращается k
+// РїРµСЂРµСЃРµРєР°РµС‚ Р»Рё РїСЂСЏРјР°СЏ (b.base + b.a*k) С‚СЂСѓРіРѕР»СЊРЅРёРє
+// РµСЃР»Рё РґР°, С‚Рѕ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ k
 bool isCrossTrgLine(const Plane a, const Line b, float &k)
 {
 	if(!isCross(a, b, k)) return false;
@@ -77,7 +78,7 @@ bool pointInPrism(const Plane a, const v3 d, v3 p)
 	return c1 && c2 && c3 && c4 && c5;
 }
 
-// Пересекает ли движущаяся линия (a:direction) отрезок (b.base + b.a*k)
+// РџРµСЂРµСЃРµРєР°РµС‚ Р»Рё РґРІРёР¶СѓС‰Р°СЏСЃСЏ Р»РёРЅРёСЏ (a:direction) РѕС‚СЂРµР·РѕРє (b.base + b.a*k)
 bool crossMLineLine(const Line a, const v3 direction, const Line b, float &k)
 { 
 	Plane p(a.base, a.a, direction);

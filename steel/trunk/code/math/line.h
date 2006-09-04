@@ -1,12 +1,13 @@
-/*id*********************************************************
-    Unit: math/line
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+п»ї/*id*********************************************************
+	File: math/line.h
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
-        Steel Engine License
-    Description:
+		Steel Engine License
+	Description:
 		Line, LineSement
 ************************************************************/
 
@@ -15,26 +16,26 @@
 
 #include "vector3d.h"
 
-/* множество точек - отрезок, прямая
+/* РјРЅРѕР¶РµСЃС‚РІРѕ С‚РѕС‡РµРє - РѕС‚СЂРµР·РѕРє, РїСЂСЏРјР°СЏ
  base + t*b
- 0<=t<=1 - для отрезка
- t - любой - для прямой
- base - точка остчёта (нижний угол)
- b - напрявляющaя */
+ 0<=t<=1 - РґР»СЏ РѕС‚СЂРµР·РєР°
+ t - Р»СЋР±РѕР№ - РґР»СЏ РїСЂСЏРјРѕР№
+ base - С‚РѕС‡РєР° РѕСЃС‚С‡С‘С‚Р° (РЅРёР¶РЅРёР№ СѓРіРѕР»)
+ b - РЅР°РїСЂСЏРІР»СЏСЋС‰aСЏ */
 
 struct Line3 // Line 3D
 {	v3	base, a;
 
-	Line3() {}
+	Line3(void) {}
 	Line3(v3 _base, v3 _a): base(_base), a(_a) {}
 	v3 point(const float s) const  { return base + a*s; }
 };
 
 typedef Line3 Line;
 
-// пересечение двух линий
+// РїРµСЂРµСЃРµС‡РµРЅРёРµ РґРІСѓС… Р»РёРЅРёР№
 bool isCross(const Line a, const Line b, float &t, float &s);
-// мы уверены, что прямые пересекаются. 
+// РјС‹ СѓРІРµСЂРµРЅС‹, С‡С‚Рѕ РїСЂСЏРјС‹Рµ РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ. 
 bool isCrossFast(const Line a, const Line b, float &s);
 
 inline bool isCross(const Line a, const Line b);

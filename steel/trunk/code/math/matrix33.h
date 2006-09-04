@@ -1,13 +1,14 @@
-/*id*********************************************************
-    Unit: math/matrix3x3
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+п»ї/*id*********************************************************
+	File: math/matrix33.h
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
-        Steel Engine License
-    Description:
-		Class declaration for a 3x4 matrix
+		Steel Engine License
+	Description:
+		Class declaration for a 3x3 matrix
 		3 Rows x 3 Columns
 		| 0 1 2 |
 		| 3 4 5 |
@@ -58,7 +59,7 @@ struct matrix33
 	inline matrix33 operator/(const float operand) const	{ matrix33 m = *this; m /= operand; return m; }
 
 
-	// делают матрицу матрицей поворота вдоль указанной оси на указанный угол в радианах
+	// РґРµР»Р°СЋС‚ РјР°С‚СЂРёС†Сѓ РјР°С‚СЂРёС†РµР№ РїРѕРІРѕСЂРѕС‚Р° РІРґРѕР»СЊ СѓРєР°Р·Р°РЅРЅРѕР№ РѕСЃРё РЅР° СѓРєР°Р·Р°РЅРЅС‹Р№ СѓРіРѕР» РІ СЂР°РґРёР°РЅР°С…
 	inline void setRotationX(const float angle) { setRotationX(sin(angle), cos(angle)); }
 	void setRotationX(const float sin, const float cos);
 	inline void setRotationY(const float angle) { setRotationY(sin(angle), cos(angle)); }
@@ -69,10 +70,10 @@ struct matrix33
 	inline void setRotationAxis(const float angle, const v3 axis)	{		setRotationAxis(sin(angle), sin(angle), axis);	}
 	void setRotationAxis(const float sinAngle, const float cosAngle, const v3 axis);
 
-	// setScale – делает матрицу масштабирования
+	// setScale вЂ“ РґРµР»Р°РµС‚ РјР°С‚СЂРёС†Сѓ РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёСЏ
 	void setScale(const v3 scale);
 
-	// возвращает обратнрую матрицу
+	// РІРѕР·РІСЂР°С‰Р°РµС‚ РѕР±СЂР°С‚РЅСЂСѓСЋ РјР°С‚СЂРёС†Сѓ
 	matrix33 getInverse(void) const
 	{
 		matrix33 temp;

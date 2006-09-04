@@ -1,12 +1,13 @@
-/*id*********************************************************
-    Unit: math/line
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+п»ї/*id*********************************************************
+	File: math/line.cpp
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
-        Steel Engine License
-    Description:
+		Steel Engine License
+	Description:
 		Line, LineSement
 ************************************************************/
 
@@ -18,7 +19,7 @@ bool isCross(const Line a, const Line b, float &t, float &s)
 	// s = ((a.base-b.base)*a.b*)&(b.b*a.b) / (b.b x a.b)^2
 	v3 bbxab = (b.a*a.a);
 	double len2 = bbxab.getSquaredLengthd();
-	if(len2<EPSILON2) return false; // линии параллельны
+	if(len2<EPSILON2) return false; // Р»РёРЅРёРё РїР°СЂР°Р»Р»РµР»СЊРЅС‹
 	
 	s = (((a.base - b.base)*a.a)&bbxab / (float)len2);
 
@@ -26,13 +27,13 @@ bool isCross(const Line a, const Line b, float &t, float &s)
 
 	v3 p_abase = (p-a.base);
 	v3 col = p_abase*a.a;
-	if(col.getSquaredLengthd()>EPSILON2) return false; // точка пересечения не лежит на первой прямой - прямые не перескаются
+	if(col.getSquaredLengthd()>EPSILON2) return false; // С‚РѕС‡РєР° РїРµСЂРµСЃРµС‡РµРЅРёСЏ РЅРµ Р»РµР¶РёС‚ РЅР° РїРµСЂРІРѕР№ РїСЂСЏРјРѕР№ - РїСЂСЏРјС‹Рµ РЅРµ РїРµСЂРµСЃРєР°СЋС‚СЃСЏ
 
 	t = (p_abase & a.a) / (a.a & a.a);
 
 	return true;
 }
-// мы уверены, что прямые пересекаются
+// РјС‹ СѓРІРµСЂРµРЅС‹, С‡С‚Рѕ РїСЂСЏРјС‹Рµ РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ
 bool isCrossFast(const Line a, const Line b, float &s)
 {
 	// a.base + a.b*t = b.base + b.b*s

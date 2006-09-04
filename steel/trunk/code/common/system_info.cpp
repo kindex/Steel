@@ -1,13 +1,14 @@
-/*id*********************************************************
+п»ї/*id*********************************************************
+	File: common/system_info.cpp
 	Unit: System Info
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
 	License:
-        Steel Engine License
-    Description:
-		Модуль определения необходимых параметров системы.
+		Steel Engine License
+	Description:
+		РњРѕРґСѓР»СЊ РѕРїСЂРµРґРµР»РµРЅРёСЏ РЅРµРѕР±С…РѕРґРёРјС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ СЃРёСЃС‚РµРјС‹.
  ************************************************************/
 
 #include "../steel.h"
@@ -96,11 +97,11 @@ void CollectSystemInfo(void)
 
 	SYSTEM_INFO siSysInfo;
 
-   // Копируем информацию о железе в структуру SYSTEM_INFO.
+   // РљРѕРїРёСЂСѓРµРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р¶РµР»РµР·Рµ РІ СЃС‚СЂСѓРєС‚СѓСЂСѓ SYSTEM_INFO.
 
 	GetSystemInfo(&siSysInfo);
 
-   // Отображаем содержимое структуры SYSTEM_INFO.
+   // РћС‚РѕР±СЂР°Р¶Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ СЃС‚СЂСѓРєС‚СѓСЂС‹ SYSTEM_INFO.
 //   cout << "  OEM ID: " << siSysInfo.dwOemId << endl;
 	log_msg("system_info", "OEM ID: " + IntToStr(siSysInfo.dwOemId));
 
@@ -119,39 +120,39 @@ void CollectSystemInfo(void)
 //   cout << "  Maximum application address: 0x" << siSysInfo.lpMaximumApplicationAddress << endl;
 // log_msg("system_info",  "  Maximum application address: 0x" + IntToStr(siSysInfo.lpMaximumApplicationAddress));
   
-   LPTSTR lpszSystemInfo1;      // указатель на строку, в которой
-                               // будет информация о системе.
+   LPTSTR lpszSystemInfo1;      // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЃС‚СЂРѕРєСѓ, РІ РєРѕС‚РѕСЂРѕР№
+                               // Р±СѓРґРµС‚ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃРёСЃС‚РµРјРµ.
    LPTSTR lpszSystemInfo2;
    LPTSTR lpszSystemInfo3;
    LPTSTR lpszSystemInfo4;
 
    DWORD cchBuff = 256;
-   DWORD cchBuff2 = 128;  // длина имени компьютера или
-                               // пользователя.
+   DWORD cchBuff2 = 128;  // РґР»РёРЅР° РёРјРµРЅРё РєРѕРјРїСЊСЋС‚РµСЂР° РёР»Рё
+                               // РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
    TCHAR tchBuffer[BUFSIZE];
-   TCHAR tchBuffer2[512];   // буфер для строки.
+   TCHAR tchBuffer2[512];   // Р±СѓС„РµСЂ РґР»СЏ СЃС‚СЂРѕРєРё.
 
     lpszSystemInfo1 = tchBuffer2;
 	lpszSystemInfo2 = tchBuffer2;
 	lpszSystemInfo3 = tchBuffer;
 	lpszSystemInfo4 = tchBuffer;
 
-   // Получаем и отображаем имя компьютера.
+   // РџРѕР»СѓС‡Р°РµРј Рё РѕС‚РѕР±СЂР°Р¶Р°РµРј РёРјСЏ РєРѕРјРїСЊСЋС‚РµСЂР°.
    if( GetComputerName(lpszSystemInfo1, &cchBuff) )
    //cout << " Computer name:  " << lpszSystemInfo << endl;
    log_msg("system_info",  "Computer name:  " + string(lpszSystemInfo1));
    
-   // Получаем и отображаем имя пользователя.
+   // РџРѕР»СѓС‡Р°РµРј Рё РѕС‚РѕР±СЂР°Р¶Р°РµРј РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
    if( GetUserName(lpszSystemInfo2, &cchBuff2) )
    //cout << " User name:  " << lpszSystemInfo << endl;
    log_msg("system_info",  "User name:  " + string(lpszSystemInfo2));
 
-   // Получаем и отображаем системную директорию.
+   // РџРѕР»СѓС‡Р°РµРј Рё РѕС‚РѕР±СЂР°Р¶Р°РµРј СЃРёСЃС‚РµРјРЅСѓСЋ РґРёСЂРµРєС‚РѕСЂРёСЋ.
    if( GetSystemDirectory(lpszSystemInfo3, MAX_PATH+1) )
    //cout << " System directory:  " << lpszSystemInfo << endl;
    log_msg("system_info",  "System directory:  " + string(lpszSystemInfo3));
    
-   // Получаем и отображаем директорию Windows.
+   // РџРѕР»СѓС‡Р°РµРј Рё РѕС‚РѕР±СЂР°Р¶Р°РµРј РґРёСЂРµРєС‚РѕСЂРёСЋ Windows.
    if( GetWindowsDirectory(lpszSystemInfo4, MAX_PATH+1) )
    //cout << " Windows directory:  " << lpszSystemInfo << endl;
    log_msg("system_info",  "Windows directory:  " + string(lpszSystemInfo4));

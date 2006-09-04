@@ -1,17 +1,19 @@
-/*id*********************************************************
-    Unit: objects/combiner
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Êîìïîíîâùèê ãðàôè÷åñêèõ è ôèçè÷åñêèõ îáúåêòîâ.
-		Ïîçâîëÿåò â îäíîì îáúåêòå (combiner) îáúåäèíÿòü ñâîéñòâà
-		îäíîãî ôèçè÷åñêîãî îáúåêòà è îäíîãî ãðàôè÷åñêîãî.
+ï»¿/*id*********************************************************
+	File: objects/combiner.h
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		ÐšÐ¾Ð¼Ð¿Ð¾Ð½Ð¾Ð²Ñ‰Ð¸Ðº Ð³Ñ€Ð°Ñ„Ð¸Ñ‡ÐµÑÐºÐ¸Ñ… Ð¸ Ñ„Ð¸Ð·Ð¸Ñ‡ÐµÑÐºÐ¸Ñ… Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð².
+		ÐŸÐ¾Ð·Ð²Ð¾Ð»ÑÐµÑ‚ Ð² Ð¾Ð´Ð½Ð¾Ð¼ Ð¾Ð±ÑŠÐµÐºÑ‚Ðµ (combiner) Ð¾Ð±ÑŠÐµÐ´Ð¸Ð½ÑÑ‚ÑŒ ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð°
+		Ð¾Ð´Ð½Ð¾Ð³Ð¾ Ñ„Ð¸Ð·Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ð¸ Ð¾Ð´Ð½Ð¾Ð³Ð¾ Ð³Ñ€Ð°Ñ„Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾.
  ************************************************************/
 
+#include "../steel.h"
 #include "game_obj.h"
 
 class Combiner: public GameObj
@@ -20,7 +22,7 @@ protected:
 	GraphObject *graph;
 	PhysicObject *physic;
 public:
-	Combiner(): graph(NULL), physic(NULL) {}
+	Combiner(void): graph(NULL), physic(NULL) {}
 
 	virtual void setGraphObject(GraphObject *_graph)
 	{ // TODO check error (if graph was already set)
@@ -36,14 +38,14 @@ public:
 	}
 
 // ********** GRAPH *********
-	bool GraphBeforeInject()
+	bool GraphBeforeInject(void)
 	{ 
 		if(graph) 
 			if(!graph->GraphBeforeInject()) return false;
 		return GameObj::GraphBeforeInject();
 	}
 
-	void GraphAfterRemove()
+	void GraphAfterRemove(void)
 	{
 		GameObj::GraphAfterRemove();
 		if(graph) graph->GraphAfterRemove();
@@ -54,16 +56,16 @@ public:
 		if(graph) graph->ProcessGraph(info);
 	}
 
-	Vertexes*	getVertexes() { return graph?graph->getVertexes():NULL; } 
-	Normals*	getNormals() { return graph?graph->getNormals():NULL; } // ñïèñîê íîðìàëåé â âåðøèíàì
+	Vertexes*	getVertexes(void) { return graph?graph->getVertexes():NULL; } 
+	Normals*	getNormals(void) { return graph?graph->getNormals():NULL; } // ÑÐ¿Ð¸ÑÐ¾Ðº Ð½Ð¾Ñ€Ð¼Ð°Ð»ÐµÐ¹ Ð² Ð²ÐµÑ€ÑˆÐ¸Ð½Ð°Ð¼
 
-	GLines*		getLines() { return graph?graph->getLines():NULL;} // èíäåêñû âåðøèí äëÿ ëèíèé è öâåòà ëèíèé (for debug)
+	GLines*		getLines(void) { return graph?graph->getLines():NULL;} // Ð¸Ð½Ð´ÐµÐºÑÑ‹ Ð²ÐµÑ€ÑˆÐ¸Ð½ Ð´Ð»Ñ Ð»Ð¸Ð½Ð¸Ð¹ Ð¸ Ñ†Ð²ÐµÑ‚Ð° Ð»Ð¸Ð½Ð¸Ð¹ (for debug)
 
-	// ìàññèâ èíäåêñîâ âåðøèí, êîòîðûå îáðàçóþò òðåóãîëüíèêè (ãðàíè) + ìàòåðèàëû
-	FaceMaterials* getFaceMaterials() { return graph?graph->getFaceMaterials():NULL;}
+	// Ð¼Ð°ÑÑÐ¸Ð² Ð¸Ð½Ð´ÐµÐºÑÐ¾Ð² Ð²ÐµÑ€ÑˆÐ¸Ð½, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð¾Ð±Ñ€Ð°Ð·ÑƒÑŽÑ‚ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ¸ (Ð³Ñ€Ð°Ð½Ð¸) + Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ð°Ð»Ñ‹
+	FaceMaterials* getFaceMaterials(void) { return graph?graph->getFaceMaterials():NULL;}
 	TexCoords*	getTexCoords(int texNumber) { return graph?graph->getTexCoords(texNumber):NULL;}
 
-	Lights*		getLights() { return graph?graph->getLights():NULL;}
+	Lights*		getLights(void) { return graph?graph->getLights():NULL;}
 
 // ********** PHYSIC *************
 // TODO

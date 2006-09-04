@@ -1,12 +1,12 @@
 /*id*********************************************************
-    Unit: Res-Modele [3D mesh]
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	Unit: Res-Modele [3D mesh]
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
 		 ласс дл€ хранени€ модели в виде многогранника
  ************************************************************/
 

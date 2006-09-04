@@ -1,13 +1,14 @@
-/*id*********************************************************
-    Unit: math/vector3d
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+﻿/*id*********************************************************
+	File: math/vector2d.cpp
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
-        Steel Engine License
-    Description:
-		Class declaration for a 3d vector
+		Steel Engine License
+	Description:
+		Class declaration for a 2d vector
 ************************************************************/
 
 #include "maths.h"

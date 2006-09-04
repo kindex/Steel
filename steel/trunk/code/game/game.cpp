@@ -1,16 +1,19 @@
-/*id*********************************************************
-    Unit: game
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Этот юнит является дополнением к steel engine и служит
-		примером использования движка. В этом юните задаются правила игры
-		или графической демки.
+п»ї/*id*********************************************************
+	File: game/game.cpp
+	Unit: game
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Р­С‚РѕС‚ СЋРЅРёС‚ СЏРІР»СЏРµС‚СЃСЏ РґРѕРїРѕР»РЅРµРЅРёРµРј Рє steel engine Рё СЃР»СѓР¶РёС‚
+		РїСЂРёРјРµСЂРѕРј РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РґРІРёР¶РєР°. Р’ СЌС‚РѕРј СЋРЅРёС‚Рµ Р·Р°РґР°СЋС‚СЃСЏ РїСЂР°РІРёР»Р° РёРіСЂС‹
+		РёР»Рё РіСЂР°С„РёС‡РµСЃРєРѕР№ РґРµРјРєРё.
  ************************************************************/
+
+#include "../steel.h"
 
 #include "game.h"
 #include "../common/logger.h"
@@ -426,8 +429,9 @@ bool Steel::executeScript(std::string script)
 {
 	log_msg("console", "ExecScript: '" + script + "'");
 
-	steel::vector<string> lines = explode(';', script);
-	for(steel::vector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
+	svector<string> lines;
+	explode(';', script, lines);
+	for(svector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
 		if(!executeCommand(*it)) return false;
 	return true;
 }
@@ -439,9 +443,11 @@ bool Steel::executeCommand(std::string command)
 
 	// var=value
 
-	steel::vector<string> token = explode('=', command);
+	svector<string> token;
+	explode('=', command, token);
 	if(token.size() != 2) return false;
-	steel::vector<string> var = explode('.', token[0]);
+	svector<string> var;
+	explode('.', token[0], var);
 	if(var.size() == 1)
 	{
 		conf->setup(var[0], token[1]);

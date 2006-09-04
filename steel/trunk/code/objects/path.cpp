@@ -1,20 +1,22 @@
-/*id*********************************************************
-    Unit: objects/path
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Path. Ìåòêà, êîòîðÿ äâèæåòñÿ ïî òðàåêòîðèè îò îáúåêòà ê îáúåêòó.
+ï»¿/*id*********************************************************
+	File: objects/path.cpp
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Path. ÐœÐµÑ‚ÐºÐ°, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ Ð´Ð²Ð¸Ð¶ÐµÑ‚ÑÑ Ð¿Ð¾ Ñ‚Ñ€Ð°ÐµÐºÑ‚Ð¾Ñ€Ð¸Ð¸ Ð¾Ñ‚ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ðº Ð¾Ð±ÑŠÐµÐºÑ‚Ñƒ.
  ************************************************************/
 
+#include "../steel.h"
 #include "path.h"
 
 /*
-Äëÿ èíèöèàëèçàöèè äîëæåí áûòü ïðîèíèöèàëèçèðîâàí
-ïðåäîê è ïåðâàÿ öåëü.
+Ð”Ð»Ñ Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð±Ñ‹Ñ‚ÑŒ Ð¿Ñ€Ð¾Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€Ð¾Ð²Ð°Ð½
+Ð¿Ñ€ÐµÐ´Ð¾Ðº Ð¸ Ð¿ÐµÑ€Ð²Ð°Ñ Ñ†ÐµÐ»ÑŒ.
 */
 
 bool TagPath::init(ScriptLine &s)
@@ -50,8 +52,8 @@ void TagPath::ProcessPhysic(steel::time curTime, steel::time frameLength, Physic
 	v3 curPos = getPosition().getVector();
 	v3 tp = t->getPosition().getVector();
 
-	coord speed = target[currentTarget].speed;
-	coord dst = (tp - curPos).getLength();
+	float speed = target[currentTarget].speed;
+	float dst = (tp - curPos).getLength();
 
 	if(dst < frameLength*speed)
 	{
@@ -69,7 +71,7 @@ void TagPath::ProcessPhysic(steel::time curTime, steel::time frameLength, Physic
 	{
 		GameObj *n = parent->findChildren(target[(currentTarget + 1)%cnt].id);
 		if(!n) return;
-		coord k = (float)((curTime - smoothStart) / smoothLen);
+		float k = (float)((curTime - smoothStart) / smoothLen);
 
 		if(k>=1)
 		{

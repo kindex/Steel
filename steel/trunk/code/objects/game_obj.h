@@ -1,20 +1,22 @@
-/*id*********************************************************
-    Unit: objects
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Этот юнит является дополнением к steel engine и служит
-		примером использования движка. В этом юните задаются 
-		игровые объекты.
+п»ї/*id*********************************************************
+	File: objects/game_obj.h
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Р­С‚РѕС‚ СЋРЅРёС‚ СЏРІР»СЏРµС‚СЃСЏ РґРѕРїРѕР»РЅРµРЅРёРµРј Рє steel engine Рё СЃР»СѓР¶РёС‚
+		РїСЂРёРјРµСЂРѕРј РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РґРІРёР¶РєР°. Р’ СЌС‚РѕРј СЋРЅРёС‚Рµ Р·Р°РґР°СЋС‚СЃСЏ 
+		РёРіСЂРѕРІС‹Рµ РѕР±СЉРµРєС‚С‹.
  ************************************************************/
 
 #ifndef GAME_OBJ_H
 #define GAME_OBJ_H
 
+#include "../steel.h"
 #include "../physic/physic_interface.h"
 #include "../physic/physic_engine.h"	// Kane
 #include "../graph/graph_interface.h"
@@ -23,7 +25,7 @@
 #include "../res/script/script.h"
 
 /*
-Dummy. Объект, который имеет положение и детей, но не имеет собственной формы.
+Dummy. РћР±СЉРµРєС‚, РєРѕС‚РѕСЂС‹Р№ РёРјРµРµС‚ РїРѕР»РѕР¶РµРЅРёРµ Рё РґРµС‚РµР№, РЅРѕ РЅРµ РёРјРµРµС‚ СЃРѕР±СЃС‚РІРµРЅРЅРѕР№ С„РѕСЂРјС‹.
 */
 
 
@@ -31,12 +33,12 @@ class GameObj;
 typedef steel::vector<GameObj*> GameObjList;
 
 /*
-Игровой объект, который может:
-имеет положение
-рисоваться в игре
-двигаться
-имень детей
-быть прикреплённым к родителю
+РРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚, РєРѕС‚РѕСЂС‹Р№ РјРѕР¶РµС‚:
+РёРјРµРµС‚ РїРѕР»РѕР¶РµРЅРёРµ
+СЂРёСЃРѕРІР°С‚СЊСЃСЏ РІ РёРіСЂРµ
+РґРІРёРіР°С‚СЊСЃСЏ
+РёРјРµРЅСЊ РґРµС‚РµР№
+Р±С‹С‚СЊ РїСЂРёРєСЂРµРїР»С‘РЅРЅС‹Рј Рє СЂРѕРґРёС‚РµР»СЋ
 */
 class GameObj: public virtual GraphObject, public virtual PhysicObject
 {
@@ -47,7 +49,7 @@ public:
 	GraphObjectList  graphChildren;
 
 	velocity	vel;
-	coord		mass;
+	float		mass;
 	ObjectPosition	position;
 	ProcessKind	processKind;
 	PositionKind	positionKind;
@@ -64,8 +66,8 @@ public:
 	}
 
 	void setPositionKind(PositionKind newKind) { positionKind = newKind; }
-	PositionKind	getPositionKind(){	return positionKind;}
-	ProcessKind	getProcessKind() { return processKind; }
+	PositionKind	getPositionKind(void){	return positionKind;}
+	ProcessKind	getProcessKind(void) { return processKind; }
 
 	void			setProcessKind(const ProcessKind _kind) { processKind = _kind; }
 	virtual	bool	init(ScriptLine	&s);
@@ -87,24 +89,24 @@ public:
 
 	GameObj *getParent() { return parent; }
 
-	ObjectPosition		getPosition() {return position;}
+	ObjectPosition		getPosition(void) {return position;}
 
-	// скорость
-	velocity	getVelocity() { return vel; }
+	// СЃРєРѕСЂРѕСЃС‚СЊ
+	velocity	getVelocity(void) { return vel; }
 	void	setVelocity(velocity const &v) {vel = v; }
-	// масса
-	coord	getMass(){return mass;}
+	// РјР°СЃСЃР°
+	float	getMass(void){return mass;}
 };
 
 class GameObjSet: public GameObj
 {
 public:
-	aabb getPFrame();
+	aabb getPFrame(void);
 };
 
 
 /*
-Метка (tag). Служит точкой отсчёта для других объектов (своих детей)
+РњРµС‚РєР° (tag). РЎР»СѓР¶РёС‚ С‚РѕС‡РєРѕР№ РѕС‚СЃС‡С‘С‚Р° РґР»СЏ РґСЂСѓРіРёС… РѕР±СЉРµРєС‚РѕРІ (СЃРІРѕРёС… РґРµС‚РµР№)
 */
 class GameTag: public GameObj
 {
@@ -114,7 +116,7 @@ public:
 
 
 /*
-Источник освещения.
+РСЃС‚РѕС‡РЅРёРє РѕСЃРІРµС‰РµРЅРёСЏ.
 */
 
 class GameLight: public GameObj
@@ -122,7 +124,7 @@ class GameLight: public GameObj
 protected:
 	Lights *lights;
 public:
-	GameLight()
+	GameLight(void)
 	{
 		lights = new Lights(1);
 		lights->at(0).position.set(0.0f, 0.0f, 0.0f);
@@ -131,12 +133,12 @@ public:
 		lights->at(0).intensivity = 1;
 	}
 	
-	~GameLight()
+	~GameLight(void)
 	{
 		delete lights;
 	}
 
-	Lights* getLights()
+	Lights* getLights(void)
 	{
 		return lights;
 	}
@@ -144,9 +146,9 @@ public:
 };
 
 /*
-Контейнер для других объектов.
-Разделяет всё пространство на домены коллизий и
-отсекает невидимые объекты.
+РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ РґСЂСѓРіРёС… РѕР±СЉРµРєС‚РѕРІ.
+Р Р°Р·РґРµР»СЏРµС‚ РІСЃС‘ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РЅР° РґРѕРјРµРЅС‹ РєРѕР»Р»РёР·РёР№ Рё
+РѕС‚СЃРµРєР°РµС‚ РЅРµРІРёРґРёРјС‹Рµ РѕР±СЉРµРєС‚С‹.
 */
 /*class GameDomain: public GameObjDummy
 {

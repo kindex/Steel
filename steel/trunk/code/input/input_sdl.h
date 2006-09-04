@@ -1,9 +1,22 @@
+﻿/*id*********************************************************
+	File: input/input_sdl.h
+	Unit: input
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Обработчика ввода с клавиатуры и мыши, используя SDL
+ ************************************************************/
+
 #ifndef INPUT_SDL_H
 #define INPUT_SDL_H
 
 #include "../steel.h"
 
-#if STEEL_VIDEOSYS == OPENGL_SDL
+#if STEEL_OPENGL_API == OPENGL_SDL
 
 #include "../_cpp.h"
 #include "input.h"
@@ -14,9 +27,9 @@ protected:
 	//int sx, sy, mx, my;
 	//bool firstMouse;
 public:
-	void process();
-	void captureMouse();
-	void freeMouse();
+	void process(void);
+	void captureMouse(void);
+	void freeMouse(void);
 
 	bool init(std::string _conf)
 	{ 

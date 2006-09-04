@@ -1,12 +1,12 @@
 /*id*******************************************************************************
-    Unit: Res [Resources]
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	Unit: Res [Resources]
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
         Молуль для хранения, загрузки игровых ресурсов и контроля над ними. 
 	Parts:
 		res.cpp
@@ -16,14 +16,16 @@
 #ifndef __RES_H
 #define __RES_H
 
-#include "../interface.h"
-#include "../common/types.h"
-#include "../steel.h"
-#include "../_cpp.h"
-
 #include <map>
 #include <string>
 #include <stack>
+
+#include "../steel.h"
+#include "../interface.h"
+#include "../common/types.h"
+#include "../common/utils.h"
+#include "../common/logger.h"
+
 
 // Собирает полное имя файла относительно директории. Если имя файла начинается с /, то имя файла считается уже полным
 std::string getFullPath(std::string filename, std::string directory);

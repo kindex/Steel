@@ -1,19 +1,20 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-//	Maths.h
-//	Include maths headers
-//	You may use this code however you wish, but if you do, please credit me and
-//	provide a link to my website in a readme file or similar
-//	Downloaded from: www.paulsprojects.net
-//	Created:	20th July 2002
-//	Modified:	17th December 2002	-	Removed QUATERNION
-//////////////////////////////////////////////////////////////////////////////////////////	
+﻿/*id*********************************************************
+	File: math/maths.h
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Полезные математические функции функции
+ *****************************************************************/
 
 #ifndef __MATH_MATH_H
 #define __MATH_MATH_H
 
 #include <math.h>
-
-
 
 //VC++ math.h (and others) do not define M_PI
 #ifndef M_PI
@@ -30,7 +31,6 @@
 #ifndef EPSILON2
 #define EPSILON2 1.0e-10
 #endif
-
 
 #ifndef INF
 #define INF 1.0e+12f

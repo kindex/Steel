@@ -1,12 +1,13 @@
-/*id*********************************************************
-    Unit: math/vector3d
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+п»ї/*id*********************************************************
+	File: math/vector3d.h
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
-        Steel Engine License
-    Description:
+		Steel Engine License
+	Description:
 		Class declaration for a 3d vector
 ************************************************************/
 
@@ -29,7 +30,7 @@ struct v3simple
 	{
 		return ((float*)(&x))[i];
 	}
-	operator v3() const;
+	operator v3(void) const;
 
 	static inline v3simple get(float X, float Y, float Z) { v3simple temp; temp.x = X; temp.y = Y; temp.z = Z;  return temp; }
 	static inline v3simple get(float *v) { v3simple temp; temp.x = v[0]; temp.y = v[1]; temp.z = v[2];  return temp; }
@@ -53,7 +54,7 @@ struct v3
 	//member variables
 	float x, y, z;
 	//constructors
-	inline v3(void)	{} // не инициализирует ничего (для повышения производительности)
+	inline v3(void)	{} // РЅРµ РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РЅРёС‡РµРіРѕ (РґР»СЏ РїРѕРІС‹С€РµРЅРёСЏ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЊРЅРѕСЃС‚Рё)
 	inline v3(float X, float Y, float Z)	{ x = X; y = Y; z = Z; }
 
 	inline void set(float X, float Y, float Z) {	x = X;	y = Y;	z = Z;	}
@@ -66,11 +67,11 @@ struct v3
 	static inline v3 get(float X, float Y, float Z) { v3 temp; temp.x = X; temp.y = Y; temp.z = Z;  return temp; }
 	static inline v3 get(float *v) { v3 temp; temp.x = v[0]; temp.y = v[1]; temp.z = v[2];  return temp; }
 
-	inline float getX() const {return x;}	//public accessor functions
-	inline float getY() const {return y;}	//inline, const
-	inline float getZ() const {return z;}
+	inline float getX(void) const {return x;}	//public accessor functions
+	inline float getY(void) const {return y;}	//inline, const
+	inline float getZ(void) const {return z;}
 
-	// доступ к полям: 0 - x, 1 - y, 2 - z
+	// РґРѕСЃС‚СѓРї Рє РїРѕР»СЏРј: 0 - x, 1 - y, 2 - z
 	float& operator[](int i)
 	{
 		return ((float*)(&x))[i];
@@ -94,8 +95,8 @@ struct v3
 	inline float dotProduct(const v3 & A) const	{	return x*A.x + y*A.y + z*A.z;	}
 	inline float operator&(const v3 a) const		{	return dotProduct(a);	}
 
-	void normalize();
-	v3 getNormalized() const;
+	void normalize(void);
+	v3 getNormalized(void) const;
 	
 	inline float getLength() const
 	{	return (float)sqrt(((double)x*(double)x)+((double)y*(double)y)+((double)z*(double)z));	}
@@ -119,8 +120,8 @@ struct v3
 	v3 getRotatedAxis(double angle, const v3 & axis) const;
 
 	//pack to [0,1] for color
-	void packTo01();
-	v3 getPackedTo01() const;
+	void packTo01(void);
+	v3 getPackedTo01(void) const;
 
 	//linear interpolate
 	v3 lerp(const v3 & v2, float factor) const

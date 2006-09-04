@@ -1,12 +1,12 @@
 /*id*********************************************************
-    Unit: PhysicEngine
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	Unit: PhysicEngine
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
 		Физический джижок - интерфейс двигающегося объекта
  ************************************************************/
 
@@ -92,7 +92,7 @@ public:
 	virtual velocity	getVelocity() = 0;
 	virtual void		setVelocity(const velocity &v) = 0;
 	// масса
-	virtual	coord	getMass() = 0;
+	virtual	float	getMass() = 0;
 
 
 /*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/

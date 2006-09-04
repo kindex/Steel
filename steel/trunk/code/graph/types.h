@@ -1,14 +1,14 @@
 /*id*********************************************************
-    Unit: GraphEngine
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	Unit: GraphEngine
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [J. Anton, kane@mail.berlios.de]
 		* Bond [Andrey Bondarenko]
-    License:
-        Steel Engine License
-    Description:
+	License:
+		Steel Engine License
+	Description:
 		Графический джижок - базовые графические типы
  ************************************************************/
 #ifndef __GRAPH__TYPES_H

@@ -1,12 +1,12 @@
 /*id*********************************************************
-    Unit: GraphEngine - OpenGL Engine WIN API
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	Unit: GraphEngine - OpenGL Engine WIN API
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
 		Часть графического движока OpenGL, которая реализует
 		системно зависимые функции, такие как создание окна.
  ************************************************************/
@@ -16,10 +16,9 @@
 #ifndef __GRAPH_OPENGL_WIN_ENGINE_H
 #define __GRAPH_OPENGL_WIN_ENGINE_H
 
-#include "../../_cpp.h"
 #include "../../steel.h"
 
-#if STEEL_VIDEOSYS == OPENGL_WIN
+#if STEEL_OPENGL_API == OPENGL_WINAPI
 
 #include "opengl_engine.h"
 #include "../../common/logger.h"
@@ -53,5 +52,5 @@ public:
 	bool changeToWindow();
 };
 
-#endif	// STEEL_VIDEOSYS
+#endif	// STEEL_OPENGL_API
 #endif

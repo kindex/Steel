@@ -1,18 +1,20 @@
-/*id*********************************************************
-    Unit: logger
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+Ôªø/*id*********************************************************
+	File: common/logger.cpp
+	Unit: logger
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [J. Anton, kane@mail.berlios.de]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
-    License:
-        Steel Engine License
-    Description:
-		ÀÓ„-Ù‡ÈÎ
+	License:
+		Steel Engine License
+	Description:
+		–õ–æ–≥-—Ñ–∞–π–ª
  ************************************************************/
 
 #include "../steel.h"
+
 #include "logger.h"
 #include "utils.h"
 
@@ -141,8 +143,9 @@ map<string, Logger*> loggers;
 
 void _log_msg(string keywords, string message)
 {
-	steel::vector<string> keys = explode(' ', keywords);
-	for(steel::vector<string>::iterator it = keys.begin(); it != keys.end(); it++)
+	svector<string> keys;
+	explode(' ', keywords, keys);
+	for(svector<string>::iterator it = keys.begin(); it != keys.end(); it++)
 	{
 		string key = *it;
 		if(loggers.find(key) == loggers.end())
@@ -159,8 +162,9 @@ void _log_msg(string keywords, string message)
 
 void LogFilter::set(std::string filter)
 {
-	steel::vector<string> keys = explode(' ', filter);
-	for(steel::vector<string>::iterator it = keys.begin(); it!= keys.end(); it++)
+	svector<string> keys;
+	explode(' ', filter, keys);
+	for(svector<string>::iterator it = keys.begin(); it!= keys.end(); it++)
 	{
 		filterItem item;
 
@@ -182,11 +186,12 @@ void LogFilter::set(std::string filter)
 
 bool LogFilter::check(std::string keywords)
 {
-	steel::vector<string> keys = explode(' ', keywords);
+	svector<string> keys;
+	explode(' ', keywords, keys);
 
-	for(steel::vector<filterItem>::iterator it = filters.begin(); it!= filters.end(); it++)
+	for(svector<filterItem>::iterator it = filters.begin(); it!= filters.end(); it++)
 	{
-		for(steel::vector<string>::iterator jt = keys.begin(); jt!= keys.end(); jt++)
+		for(svector<string>::iterator jt = keys.begin(); jt!= keys.end(); jt++)
 			if(it->keyword == *jt)
 			{
 				return it->action;

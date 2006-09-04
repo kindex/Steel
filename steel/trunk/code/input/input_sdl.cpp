@@ -1,7 +1,19 @@
-#include "../steel.h"
-#include "../_cpp.h"
+﻿/*id*********************************************************
+	File: input/input_sdl.h
+	Unit: input
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Обработчика ввода с клавиатуры и мыши, используя SDL
+ ************************************************************/
 
-#if STEEL_VIDEOSYS == OPENGL_SDL
+#include "../steel.h"
+
+#if STEEL_OPENGL_API == OPENGL_SDL
 
 #include "SDL.h"
 #include "input_sdl.h"

@@ -1,23 +1,25 @@
-/*id*********************************************************
-    Unit: objects/model
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Статическая модель, котоаря рисуется и движется
+п»ї/*id*********************************************************
+	File: objects/model_obj.h
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		РЎС‚Р°С‚РёС‡РµСЃРєР°СЏ РјРѕРґРµР»СЊ, РєРѕС‚РѕР°СЂСЏ СЂРёСЃСѓРµС‚СЃСЏ Рё РґРІРёР¶РµС‚СЃСЏ
  ************************************************************/
 
 #ifndef __GAME_MODEL_OBJ_H
 #define __GAME_MODEL_OBJ_H
 
+#include "../steel.h"
 #include "game_obj.h"
 
 /*
-Рисуемый объект, GraphMesh и PhysicMesh берутся из модели
-Может иметь детей.
+Р РёСЃСѓРµРјС‹Р№ РѕР±СЉРµРєС‚, GraphMesh Рё PhysicMesh Р±РµСЂСѓС‚СЃСЏ РёР· РјРѕРґРµР»Рё
+РњРѕР¶РµС‚ РёРјРµС‚СЊ РґРµС‚РµР№.
 */
 class GameObjModel: public GameObj
 {

@@ -1,12 +1,13 @@
-/*id*********************************************************
-    Unit: math/aabb
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+﻿/*id*********************************************************
+	File: math/aabb.h
+	Unit: math
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
-        Steel Engine License
-    Description:
+		Steel Engine License
+	Description:
 		AABB (Axis-Aligned bounding box)
 ************************************************************/
 
@@ -22,11 +23,11 @@ struct aabb3 // AABB 3D
 {
 	v3 min, max;
 
-	aabb3() { clear(); }
+	aabb3(void) { clear(); }
 	aabb3(const v3 _min, const v3 _max): min(_min), max(_max) {}
 	aabb3(const v3 point): min(point), max(point) {}
-	bool empty() const { return min.x>max.x + EPSILON || min.y>max.y + EPSILON || min.z>max.z + EPSILON;  }
-	void clear();
+	bool empty(void) const { return min.x>max.x + EPSILON || min.y>max.y + EPSILON || min.z>max.z + EPSILON;  }
+	void clear(void);
 	void getVertexes(steel::svector<v3> &dest) const;
 
     void merge(const v3 point);

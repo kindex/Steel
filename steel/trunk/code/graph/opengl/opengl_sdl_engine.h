@@ -1,13 +1,13 @@
 /*id*********************************************************
-    Unit: GraphEngine - OpenGL Engine SDL
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	Unit: GraphEngine - OpenGL Engine SDL
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [J. Anton, kane@mail.berlios.de]
-    License:
-        Steel Engine License
-    Description:
+	License:
+		Steel Engine License
+	Description:
 		Часть графического движока OpenGL, которая реализует
 		системно зависимые функции, такие как создание окна.
  ************************************************************/
@@ -18,7 +18,7 @@
 #include "../../steel.h"
 #include "../../_cpp.h"
 
-#if STEEL_VIDEOSYS == OPENGL_SDL
+#if STEEL_OPENGL_API == OPENGL_SDL
 
 #include "opengl_engine.h"
 #include "../../common/logger.h"

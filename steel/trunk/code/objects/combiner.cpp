@@ -1,16 +1,18 @@
-/*id*********************************************************
-    Unit: objects/combiner
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Компоновщик графических и физических объектов.
-		Позволяет в одном объекте (combiner) объединять свойства
-		одного физического объекта и одного графического.
+п»ї/*id*********************************************************
+	File: objects/combiner.cpp
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		РљРѕРјРїРѕРЅРѕРІС‰РёРє РіСЂР°С„РёС‡РµСЃРєРёС… Рё С„РёР·РёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ.
+		РџРѕР·РІРѕР»СЏРµС‚ РІ РѕРґРЅРѕРј РѕР±СЉРµРєС‚Рµ (combiner) РѕР±СЉРµРґРёРЅСЏС‚СЊ СЃРІРѕР№СЃС‚РІР°
+		РѕРґРЅРѕРіРѕ С„РёР·РёС‡РµСЃРєРѕРіРѕ РѕР±СЉРµРєС‚Р° Рё РѕРґРЅРѕРіРѕ РіСЂР°С„РёС‡РµСЃРєРѕРіРѕ.
  ************************************************************/
 
+#include "../steel.h"
 #include "combiner.h"
 

@@ -1,17 +1,19 @@
-/*id*********************************************************
-    Unit: objects
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
-		Этот юнит является дополнением к steel engine и служит
-		примером использования движка. В этом юните задаются 
-		игровые объекты.
+п»ї/*id*********************************************************
+	File: objects/game_obj.cpp
+	Unit: objects
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Р­С‚РѕС‚ СЋРЅРёС‚ СЏРІР»СЏРµС‚СЃСЏ РґРѕРїРѕР»РЅРµРЅРёРµРј Рє steel engine Рё СЃР»СѓР¶РёС‚
+		РїСЂРёРјРµСЂРѕРј РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РґРІРёР¶РєР°. Р’ СЌС‚РѕРј СЋРЅРёС‚Рµ Р·Р°РґР°СЋС‚СЃСЏ 
+		РёРіСЂРѕРІС‹Рµ РѕР±СЉРµРєС‚С‹.
  ************************************************************/
 
+#include "../steel.h"
 #include "../common/logger.h"
 #include "../common/utils.h"
 #include "game_obj.h"
@@ -117,7 +119,7 @@ void GameObj::addChildren(GameObj *obj)
 }
 
 
-/*GameSprite::GameSprite(coord width, std::string material)
+/*GameSprite::GameSprite(float width, std::string material)
 {
 	sprites.resize(1);
 	sprites[0].pos		= v3(0, 0, 0);

@@ -1,12 +1,12 @@
 /*id*******************************************************************************
-    Unit: Res Text
-    Part of: Steel engine
-    (C) DiVision, 2006
-    Authors:
-        * KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	Unit: Res Text
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
         Молуль для рагрузки текста из текстового файла
 **************************************************************************************/
 #ifndef __RES__TEXT_FILE_H

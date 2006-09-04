@@ -1,15 +1,15 @@
-/*id*********************************************************
-    Unit: particle_system
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
+ï»¿/*id*********************************************************
+	File: objects/ps/ps_renderer.cpp
+	Unit: particle_system
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
-    License:
-        Steel Engine License
-    Description:
-		Steel Âåðñèÿ ôèçè÷åñêîãî äâèæêà. 
-	Îáðàáàòûâàåò äâèæåíèå òîëüêî ÷àñòèö.
+	License:
+		Steel Engine License
+	Description:
+		ÐÐµÑÐºÐ¾Ð»ÑŒÐºÐ¾ Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð¾Ð² Ñ€ÐµÐ½Ð´ÐµÑ€ÐµÑ€Ð° Ð´Ð»Ñ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹ Ñ‡Ð°ÑÑ‚Ð¸Ñ†
 ************************************************************/
 #ifndef __PARICLE_SYSTEM__RENDERER_H
 #define __PARICLE_SYSTEM__RENDERER_H
@@ -25,7 +25,7 @@ typedef	enum
 	SPRITE_ALIGN_CUSTOM
 } SpriteAlign;
 
-// ñèñòåìà - ìîäåëü èç ìíîæåñòâà ïîëèãîíîâ - ñïðàéòîâ
+// ÑÐ¸ÑÑ‚ÐµÐ¼Ð° - Ð¼Ð¾Ð´ÐµÐ»ÑŒ Ð¸Ð· Ð¼Ð½Ð¾Ð¶ÐµÑÑ‚Ð²Ð° Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ð¾Ð² - ÑÐ¿Ñ€Ð°Ð¹Ñ‚Ð¾Ð²
 class SpriteRenderer: public ParticleRenderer
 {
 protected:
@@ -38,28 +38,28 @@ protected:
 	SpriteAlign	align;
 	v3			customAlign;
 public:
-	void initSprites();
+	void initSprites(void);
 	void initSprites(int begin, int end);
-	bool initParticles();
+	bool initParticles(void);
 
 
-	Vertexes*	getVertexes() { return &vertex; }
+	Vertexes*	getVertexes(void) { return &vertex; }
 	FaceMaterials* getFaceMaterials() { return &face; }
-	Normals*	getNormals() { return &normal; }
+	Normals*	getNormals(void) { return &normal; }
 	TexCoords*	getTexCoords(int texNumber) { return &texCoords; }
 
 	aabb getFrame();
 
-	ObjectPosition getPosition() { return particleSystem->getPosition(); }
-	PositionKind getPositionKind() { return POSITION_GLOBAL; }
-	bool cleanup() { return true;}
-	GLines*	getLines(){ return NULL; }
-	Lights*	getLights() { return NULL;}
+	ObjectPosition getPosition(void) { return particleSystem->getPosition(); }
+	PositionKind getPositionKind(void) { return POSITION_GLOBAL; }
+	bool cleanup(void) { return true;}
+	GLines*	getLines(void){ return NULL; }
+	Lights*	getLights(void) { return NULL;}
 
 	void ProcessGraph(const GraphEngineInfo &info);
 };
 
-// êàæäàÿ ÷àñòèöà - îòäåëüíàÿ ìîäåëü (îáúåêò)
+// ÐºÐ°Ð¶Ð´Ð°Ñ Ñ‡Ð°ÑÑ‚Ð¸Ñ†Ð° - Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½Ð°Ñ Ð¼Ð¾Ð´ÐµÐ»ÑŒ (Ð¾Ð±ÑŠÐµÐºÑ‚)
 class ObjectPSRenderer: public ParticleRenderer
 {
 protected:
@@ -72,41 +72,40 @@ public:
 	GraphObject* getGraphChildren(int i) { return children[i]; }
 	ModificationTime getChildrenModificationTime(void) { return set->modificationTime; }
 
-	Vertexes*	getVertexes() { return NULL; }
-	FaceMaterials* getFaceMaterials() { return NULL; }
-	Normals*	getNormals() { return NULL; }
+	Vertexes*	getVertexes(void) { return NULL; }
+	FaceMaterials* getFaceMaterials(void) { return NULL; }
+	Normals*	getNormals(void) { return NULL; }
 	TexCoords*	getTexCoords(int texNumber) { return NULL; }
 
-	aabb getFrame() { return aabb(); } // TODO
+	aabb getFrame(void) { return aabb(); } // TODO
 
-	ObjectPosition getPosition() { return particleSystem->getPosition(); }
-	PositionKind getPositionKind() { return POSITION_GLOBAL; }
-	bool cleanup() { return true;}
-	GLines*	getLines(){ return NULL; }
-	Lights*	getLights() { return NULL;}
+	ObjectPosition getPosition(void) { return particleSystem->getPosition(); }
+	PositionKind getPositionKind(void) { return POSITION_GLOBAL; }
+	bool cleanup(void) { return true;}
+	GLines*	getLines(void){ return NULL; }
+	Lights*	getLights(void) { return NULL;}
 
 	void ProcessGraph(const GraphEngineInfo &info);
 };
 
-// íè÷åãî íå ðèñóåò
+// Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ Ñ€Ð¸ÑÑƒÐµÑ‚
 class DummyPSRenderer: public ParticleRenderer
 {
 protected:
 public:
-	bool initParticles() { return true; }
-	Vertexes*	getVertexes() { return NULL; }
-	FaceMaterials* getFaceMaterials() { return NULL; }
-	Normals*	getNormals() { return NULL; }
+	bool initParticles(void) { return true; }
+	Vertexes*	getVertexes(void) { return NULL; }
+	FaceMaterials* getFaceMaterials(void) { return NULL; }
+	Normals*	getNormals(void) { return NULL; }
 	TexCoords*	getTexCoords(int texNumber) { return NULL; }
 
-	aabb getFrame() { return aabb(); } // TODO
+	aabb getFrame(void) { return aabb(); } // TODO
 
-	ObjectPosition getPosition() { return particleSystem->getPosition(); }
-	PositionKind getPositionKind() { return POSITION_GLOBAL; }
-	bool cleanup() { return true;}
-	GLines*	getLines(){ return NULL; }
-	Lights*	getLights() { return NULL;}
+	ObjectPosition getPosition(void) { return particleSystem->getPosition(); }
+	PositionKind getPositionKind(void) { return POSITION_GLOBAL; }
+	bool cleanup(void) { return true;}
+	GLines*	getLines(void){ return NULL; }
+	Lights*	getLights(void) { return NULL;}
 };
-
 
 #endif

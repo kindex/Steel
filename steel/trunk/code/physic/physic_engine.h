@@ -1,12 +1,12 @@
 /*id*********************************************************
-    Unit: 3D PhysicEngine
-    Part of: Steel engine
-    (C) DiVision, 2004-2006
-    Authors:
+	Unit: 3D PhysicEngine
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
-        Steel Engine License
-    Description:
+	License:
+		Steel Engine License
+	Description:
 		Абстрактный физический движок
 		Обрабатывает движение объектов.
 		Поддерживает ирерархию объектов, кеширует информацию об	объектах.
