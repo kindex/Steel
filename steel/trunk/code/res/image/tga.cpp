@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: Res-Image [Resources - Images - BMP (RGB bitmap)]
+	File: res/image/tga.cpp
+	Unit: res/image
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,9 +8,10 @@
 	License:
 		Steel Engine License
 	Description:
-		Класс для загрузки BMP-файла в класс Image
+		РљР»Р°СЃСЃ РґР»СЏ Р·Р°РіСЂСѓР·РєРё BMP-С„Р°Р№Р»Р° РІ РєР»Р°СЃСЃ Image
  ************************************************************/
 
+#include "../../steel.h"
 #include "tga.h"
 #include "../../common/logger.h"
 #include "../rstream.h"

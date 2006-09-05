@@ -1,4 +1,17 @@
+/*id*********************************************************
+	File: res/conf/conf.cpp
+	Unit: res/conf
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Класс для хранения настроек
+ ************************************************************/
 
+#include "../../steel.h"
 #include "conf.h"
 #include "../../common/utils.h"
 using namespace std;

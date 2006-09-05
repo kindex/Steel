@@ -8,6 +8,8 @@
         Steel Engine License
     Description:
 		Kinematics, Collision Detection and Collision Reaction
+	TODO
+		delete file
  ************************************************************/
 
 #include "physic_engine_3d.h"
@@ -17,8 +19,8 @@
 
 #define CONTACT_EPSILON (0.01f)
 
-// Сердце физического движка
-// обрабатывает движение одного объекта в указанный промежуток времени
+// РЎРµСЂРґС†Рµ С„РёР·РёС‡РµСЃРєРѕРіРѕ РґРІРёР¶РєР°
+// РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРІРёР¶РµРЅРёРµ РѕРґРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° РІ СѓРєР°Р·Р°РЅРЅС‹Р№ РїСЂРѕРјРµР¶СѓС‚РѕРє РІСЂРµРјРµРЅРё
 
 bool PhysicEngine3D::moveObject(PhysicInterface &o, v3 oldPos, v3 dir /*global*/, float &processedTime)
 {
@@ -59,7 +61,7 @@ bool PhysicEngine3D::moveObject(PhysicInterface &o, v3 oldPos, v3 dir /*global*/
 			if(cnt ==0 && helper) // draw collision
 				helper->drawVector(Line(collision.point, collision.normal.getNormalized()*0.1f), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
 			processedTime = 0;
-			return true; // движение закончено - объект столкнулся с дургим объектом повторно
+			return true; // РґРІРёР¶РµРЅРёРµ Р·Р°РєРѕРЅС‡РµРЅРѕ - РѕР±СЉРµРєС‚ СЃС‚РѕР»РєРЅСѓР»СЃСЏ СЃ РґСѓСЂРіРёРј РѕР±СЉРµРєС‚РѕРј РїРѕРІС‚РѕСЂРЅРѕ
 		}
 	}
 	else
@@ -97,7 +99,7 @@ bool PhysicEngine3D::rotateObject(PhysicInterface &o, matrix34 oldMatrix, v3 rot
 			return false;
 		}
 		else
-			return true; // движение закончено - объект столкнулся с дургим обхектом повторно
+			return true; // РґРІРёР¶РµРЅРёРµ Р·Р°РєРѕРЅС‡РµРЅРѕ - РѕР±СЉРµРєС‚ СЃС‚РѕР»РєРЅСѓР»СЃСЏ СЃ РґСѓСЂРіРёРј РѕР±С…РµРєС‚РѕРј РїРѕРІС‚РѕСЂРЅРѕ
 		return true;
 	}
 	else
@@ -108,8 +110,8 @@ bool PhysicEngine3D::rotateObject(PhysicInterface &o, matrix34 oldMatrix, v3 rot
 
 }
 
-// обрабатывает движение одного объекта и его потомков
-// если была коллизия, то двигает тело еще раз после коллизии (5 раз)
+// РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРІРёР¶РµРЅРёРµ РѕРґРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° Рё РµРіРѕ РїРѕС‚РѕРјРєРѕРІ
+// РµСЃР»Рё Р±С‹Р»Р° РєРѕР»Р»РёР·РёСЏ, С‚Рѕ РґРІРёРіР°РµС‚ С‚РµР»Рѕ РµС‰Рµ СЂР°Р· РїРѕСЃР»Рµ РєРѕР»Р»РёР·РёРё (5 СЂР°Р·)
 bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::time time)
 {
 	ProcessKind::ProcessKind kind = o.getProcessKind();
@@ -210,7 +212,7 @@ bool PhysicEngine3D::process(PhysicInterface &o, steel::time globalTime, steel::
 	return true;
 }
 
-// обрабатывает движение всех объектов
+// РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРІРёР¶РµРЅРёРµ РІСЃРµС… РѕР±СЉРµРєС‚РѕРІ
 bool PhysicEngine3D::process(steel::time globalTime, steel::time time)
 {
 	if(helper) // draw velocity
@@ -335,7 +337,7 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 //	v3 v2 = V2.translation;
 	v3 v2 = getSpeed(*collision.b, collision.point);
 
-// энергия
+// СЌРЅРµСЂРіРёСЏ
 	float rk = 0;
 	
 	float Tmin = v2.getSquaredLength() + rk*V2.rotationAxis.getSquaredLength();
@@ -358,7 +360,7 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 	v3 v1sr = v1 - t*v1t;
 	v3 v2sr = v2 - t*v2t;
 
-	v3 v12sr = v1sr - v2sr; // относительная скорость в точке удара
+	v3 v12sr = v1sr - v2sr; // РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РІ С‚РѕС‡РєРµ СѓРґР°СЂР°
 
 	float friction = 1 - clamp(aconf->getf("friction", 0.0f) + bconf->getf("friction", 0.0f));
 	float min_friction = aconf->getf("min_friction", 0.0f) + bconf->getf("min_friction", 0.0f);
@@ -370,7 +372,7 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 
 	float u1t = v2t - v1t; 
 //	float u1t = T - v1sr.getSquaredLength();
-	v3 u1a = v1sr + t*u1t; // линейная скорость в точке удара
+	v3 u1a = v1sr + t*u1t; // Р»РёРЅРµР№РЅР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РІ С‚РѕС‡РєРµ СѓРґР°СЂР°
 	v3 u1b = v2;
 
 	u1a.x = u1b.x*(1-energySave) + u1a.x*energySave;
@@ -389,8 +391,8 @@ bool PhysicEngine3D::collisionReactionUniNone(const Collision collision)
 		v3 pb = center + (center - collision.point)*0.5f + normal*sqrt(3.0f)/2;
 		v3 pc = center + (center - collision.point)*0.5f - normal*sqrt(3.0f)/2;
 
-		v3 u1b = getSpeed(*collision.a, pb); // линейная скорость в противоположной точке
-		v3 u1c = getSpeed(*collision.a, pc); // линейная скорость в противоположной точке
+		v3 u1b = getSpeed(*collision.a, pb); // Р»РёРЅРµР№РЅР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РІ РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅРѕР№ С‚РѕС‡РєРµ
+		v3 u1c = getSpeed(*collision.a, pc); // Р»РёРЅРµР№РЅР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РІ РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅРѕР№ С‚РѕС‡РєРµ
 
 		helper->drawLine(Line(pa, pb-pa), 0,0, v4());
 		helper->drawLine(Line(pa, pc-pa), 0,0, v4());
@@ -470,7 +472,7 @@ bool PhysicEngine3D::collisionReactionUniUni(const Collision collision)
 //	v12sr *= friction;
 //	if(v12sr.getLength()<min_friction) v12sr.loadZero();
 
-	// квадратное уравнение (16)
+	// РєРІР°РґСЂР°С‚РЅРѕРµ СѓСЂР°РІРЅРµРЅРёРµ (16)
 	float A = m2*m2/m1 + m2;
 	float B = -2*It*m2/m1;
 	float C = It*It/m1 + m1*V1sr*V1sr + m2*V2sr*V2sr - E;
@@ -502,8 +504,8 @@ bool PhysicEngine3D::collisionReactionUniUni(const Collision collision)
 	return true;
 }
 
-// Check for collision между одним объектом и другим (и всеми его детьми)
-// родитель не сталкивается с детьми
+// Check for collision РјРµР¶РґСѓ РѕРґРЅРёРј РѕР±СЉРµРєС‚РѕРј Рё РґСЂСѓРіРёРј (Рё РІСЃРµРјРё РµРіРѕ РґРµС‚СЊРјРё)
+// СЂРѕРґРёС‚РµР»СЊ РЅРµ СЃС‚Р°Р»РєРёРІР°РµС‚СЃСЏ СЃ РґРµС‚СЊРјРё
 void PhysicEngine3D::collisionDetection(PhysicInterface &a, PhysicInterface &b, v3 distance, Collision &collision, PhysicInterface *clip)
 {
 	if(&a == &b || &b == clip) return ;
@@ -539,7 +541,7 @@ void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &a, PhysicInterf
 }
 
 
-// Check for collision между одним объектом и всеми
+// Check for collision РјРµР¶РґСѓ РѕРґРЅРёРј РѕР±СЉРµРєС‚РѕРј Рё РІСЃРµРјРё
 void PhysicEngine3D::collisionDetection(PhysicInterface &o, v3 distance, Collision &collision, PhysicInterface *clip)
 {
 	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
@@ -551,7 +553,7 @@ void PhysicEngine3D::collisionDetection(PhysicInterface &o, v3 distance, Collisi
 		collisionDetection(**it, distance, collision, clip);
 }
 
-// Check for collision между одним объектом и всеми
+// Check for collision РјРµР¶РґСѓ РѕРґРЅРёРј РѕР±СЉРµРєС‚РѕРј Рё РІСЃРµРјРё
 void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &o, const matrix34 rotation, Collision &collision, PhysicInterface *clip)
 {
 	for(steel::vector<PhysicInterface*>::iterator it = object.begin(); it != object.end(); it++)
@@ -564,7 +566,7 @@ void PhysicEngine3D::collisionDetectionRotation(PhysicInterface &o, const matrix
 }
 
 
-// пересечение отрезка (движущейся точки) и треугольника
+// РїРµСЂРµСЃРµС‡РµРЅРёРµ РѕС‚СЂРµР·РєР° (РґРІРёР¶СѓС‰РµР№СЃСЏ С‚РѕС‡РєРё) Рё С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°
 void PhysicEngine3D::checkCollisionMVertexTrg(const v3 point, const v3 direction, const Plane b, Collision &collision)
 {
 	float k;
@@ -579,7 +581,7 @@ void PhysicEngine3D::checkCollisionMVertexTrg(const v3 point, const v3 direction
 			{
 				collision.time = k;
 				collision.point = cpoint;
-				collision.normal = b.a*b.b; //нормаль к треугольнику
+				collision.normal = b.a*b.b; //РЅРѕСЂРјР°Р»СЊ Рє С‚СЂРµСѓРіРѕР»СЊРЅРёРєСѓ
 			}
 		}
 	}
@@ -598,7 +600,7 @@ void PhysicEngine3D::checkCollisionMTrgVertex(const Plane a, const v3 direction,
 		{
 			collision.time = newTime;
 			collision.point = point;
-			collision.normal = a.a*a.b; //нормаль к треугольнику
+			collision.normal = a.a*a.b; //РЅРѕСЂРјР°Р»СЊ Рє С‚СЂРµСѓРіРѕР»СЊРЅРёРєСѓ
 		}
 //		isCross(a, Line(point, -direction), newTime);
 	}
@@ -733,21 +735,21 @@ void PhysicEngine3D::checkCollisionRLineTrg2up(const Line a, v3 d1, v3 d2, const
 	checkCollisionRLineLine2up(a, d1, d2, Line(b.base + b.a, b.b-b.a), collision);
 }
 
-// пересечение движущегося треугольника (призма) с треугольником
-// 1. вершина - грань
-// 2. грань - вершина
-// 3. ребро - ребро
+// РїРµСЂРµСЃРµС‡РµРЅРёРµ РґРІРёР¶СѓС‰РµРіРѕСЃСЏ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР° (РїСЂРёР·РјР°) СЃ С‚СЂРµСѓРіРѕР»СЊРЅРёРєРѕРј
+// 1. РІРµСЂС€РёРЅР° - РіСЂР°РЅСЊ
+// 2. РіСЂР°РЅСЊ - РІРµСЂС€РёРЅР°
+// 3. СЂРµР±СЂРѕ - СЂРµР±СЂРѕ
 bool PhysicEngine3D::checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Collision &collision, PhysicInterface &aobj, PhysicInterface &bobj)
 {
 	Collision start = collision;
 
-// 1. вершина - грань
+// 1. РІРµСЂС€РёРЅР° - РіСЂР°РЅСЊ
 	checkCollisionMVertexTrg(a.base      , direction, b, collision);
 	checkCollisionMVertexTrg(a.base + a.a, direction, b, collision);
 	checkCollisionMVertexTrg(a.base + a.b, direction, b, collision);
 
-// 2. грань - вершина
-// точки b.base, b.base + b.a, b.base + b.b
+// 2. РіСЂР°РЅСЊ - РІРµСЂС€РёРЅР°
+// С‚РѕС‡РєРё b.base, b.base + b.a, b.base + b.b
 /*	checkCollisionMVertexTrg(b.base, -direction, a, collision);
 	checkCollisionMVertexTrg(b.base + b.a, -direction, a, collision);
 	checkCollisionMVertexTrg(b.base + b.b, -direction, a, collision);*/
@@ -756,7 +758,7 @@ bool PhysicEngine3D::checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Colli
 	checkCollisionMTrgVertex(a, direction, b.base + b.a, collision);
 	checkCollisionMTrgVertex(a, direction, b.base + b.b, collision);
 
-// 3. ребро - ребро
+// 3. СЂРµР±СЂРѕ - СЂРµР±СЂРѕ
 	checkCollisionMLineTrg(Line(a.base, a.a), direction, b, collision);
 	checkCollisionMLineTrg(Line(a.base, a.b), direction, b, collision);
 	checkCollisionMLineTrg(Line(a.base + a.a, a.b - a.a), direction, b, collision);
@@ -777,10 +779,10 @@ bool PhysicEngine3D::checkCollisionMTrgTrg(Plane a, v3 direction, Plane b, Colli
 }
 
 
-// пересечение врашающегося треугольника с треугольником
-// 1. вершина - грань
-// 2. грань - вершина
-// 3. ребро - ребро
+// РїРµСЂРµСЃРµС‡РµРЅРёРµ РІСЂР°С€Р°СЋС‰РµРіРѕСЃСЏ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР° СЃ С‚СЂРµСѓРіРѕР»СЊРЅРёРєРѕРј
+// 1. РІРµСЂС€РёРЅР° - РіСЂР°РЅСЊ
+// 2. РіСЂР°РЅСЊ - РІРµСЂС€РёРЅР°
+// 3. СЂРµР±СЂРѕ - СЂРµР±СЂРѕ
 bool PhysicEngine3D::checkCollisionRTrgTrg(Plane a, v3 d1, v3 d2, v3 d3, Plane b, Collision &collision)
 {
 	v3 normal = a.a*a.b; int cnt = 0;
@@ -788,12 +790,12 @@ bool PhysicEngine3D::checkCollisionRTrgTrg(Plane a, v3 d1, v3 d2, v3 d3, Plane b
 	bool u2 = (normal&d2)>0; if(u2) cnt++;
 	bool u3 = (normal&d3)>0; if(u3) cnt++;
 
-// 1. вершина - грань
+// 1. РІРµСЂС€РёРЅР° - РіСЂР°РЅСЊ
 	if(u1) checkCollisionMVertexTrg(a.base      , d1, b, collision);
 	if(u2) checkCollisionMVertexTrg(a.base + a.a, d2, b, collision);
 	if(u3) checkCollisionMVertexTrg(a.base + a.b, d3, b, collision);
 
-	// 2. грань - вершина
+	// 2. РіСЂР°РЅСЊ - РІРµСЂС€РёРЅР°
 	Plane na;
 	v3 nd1, nd2, nd3;
 	if(cnt==1)
@@ -855,7 +857,7 @@ bool PhysicEngine3D::checkCollisionRTrgTrg(Plane a, v3 d1, v3 d2, v3 d3, Plane b
 		checkCollisionRTrgVertex3up(a, d1, d2, d3, b.base + b.b, collision);
 	}
 
-	// 3. ребро - ребро
+	// 3. СЂРµР±СЂРѕ - СЂРµР±СЂРѕ
 /*	if(u1 && u2) checkCollisionRLineTrg2up(Line(a.base, a.a), d1, d2, b, collision);
 	if(u1 && !u2) checkCollisionRLineTrg1up(Line(a.base, a.a), d1, d2, b, collision);
 	if(!u1 && u2) checkCollisionRLineTrg1up(Line(a.base + a.a, -a.a), d2, d1, b, collision);
@@ -897,13 +899,13 @@ bool PhysicEngine3D::checkCollisionRTrgTrg(Plane a, v3 d1, v3 d2, v3 d3, Plane b
 }
 
 
-// проверяет коллизию между движушимся телом а
-// и неподвижным телом b. Тело а движется на расстояние distance
-// функция возвращает самую первую во ремени коллизию
+// РїСЂРѕРІРµСЂСЏРµС‚ РєРѕР»Р»РёР·РёСЋ РјРµР¶РґСѓ РґРІРёР¶СѓС€РёРјСЃСЏ С‚РµР»РѕРј Р°
+// Рё РЅРµРїРѕРґРІРёР¶РЅС‹Рј С‚РµР»РѕРј b. РўРµР»Рѕ Р° РґРІРёР¶РµС‚СЃСЏ РЅР° СЂР°СЃСЃС‚РѕСЏРЅРёРµ distance
+// С„СѓРЅРєС†РёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ СЃР°РјСѓСЋ РїРµСЂРІСѓСЋ РІРѕ СЂРµРјРµРЅРё РєРѕР»Р»РёР·РёСЋ
 bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInterface &b, Collision &collision)
 {
-	// каждый треугольник движущегося тела при движении образует призму
-	// проверяем пересечение этой призмы со всеми треугольниками второго тела
+	// РєР°Р¶РґС‹Р№ С‚СЂРµСѓРіРѕР»СЊРЅРёРє РґРІРёР¶СѓС‰РµРіРѕСЃСЏ С‚РµР»Р° РїСЂРё РґРІРёР¶РµРЅРёРё РѕР±СЂР°Р·СѓРµС‚ РїСЂРёР·РјСѓ
+	// РїСЂРѕРІРµСЂСЏРµРј РїРµСЂРµСЃРµС‡РµРЅРёРµ СЌС‚РѕР№ РїСЂРёР·РјС‹ СЃРѕ РІСЃРµРјРё С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°РјРё РІС‚РѕСЂРѕРіРѕ С‚РµР»Р°
 	aabb newframe1 = a.getPFrame();	newframe1.mul(a.getGlobalPosition());	newframe1.add(distance);
 	aabb newframe2 = b.getPFrame();	newframe2.mul(b.getGlobalPosition());
 
@@ -933,7 +935,7 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 		at.base = matrix * v->data[it->a[0]];
 		at.a	= matrix * v->data[it->a[1]] - at.base;
 		at.b	= matrix * v->data[it->a[2]] - at.base;
-		if( ((at.a*at.b) & distance) > 0) // треугольник движется вперёд
+		if( ((at.a*at.b) & distance) > 0) // С‚СЂРµСѓРіРѕР»СЊРЅРёРє РґРІРёР¶РµС‚СЃСЏ РІРїРµСЂС‘Рґ
 		{
 			aabb aabb1(at.base, at.base);
 			aabb1.add(at.a);
@@ -969,13 +971,13 @@ bool PhysicEngine3D::checkCollision(PhysicInterface &a, v3 distance, PhysicInter
 }
 
 
-// проверяет коллизию между врашающимя телом а
-// и неподвижным телом b. 
-// функция возвращает самую первую во ремени коллизию
+// РїСЂРѕРІРµСЂСЏРµС‚ РєРѕР»Р»РёР·РёСЋ РјРµР¶РґСѓ РІСЂР°С€Р°СЋС‰РёРјСЏ С‚РµР»РѕРј Р°
+// Рё РЅРµРїРѕРґРІРёР¶РЅС‹Рј С‚РµР»РѕРј b. 
+// С„СѓРЅРєС†РёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ СЃР°РјСѓСЋ РїРµСЂРІСѓСЋ РІРѕ СЂРµРјРµРЅРё РєРѕР»Р»РёР·РёСЋ
 bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix34 rot, PhysicInterface &b, Collision &collision)
 {
-	// каждый треугольник движущегося тела при движении образует призму
-	// проверяем пересечение этой призмы со всеми треугольниками второго тела
+	// РєР°Р¶РґС‹Р№ С‚СЂРµСѓРіРѕР»СЊРЅРёРє РґРІРёР¶СѓС‰РµРіРѕСЃСЏ С‚РµР»Р° РїСЂРё РґРІРёР¶РµРЅРёРё РѕР±СЂР°Р·СѓРµС‚ РїСЂРёР·РјСѓ
+	// РїСЂРѕРІРµСЂСЏРµРј РїРµСЂРµСЃРµС‡РµРЅРёРµ СЌС‚РѕР№ РїСЂРёР·РјС‹ СЃРѕ РІСЃРµРјРё С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°РјРё РІС‚РѕСЂРѕРіРѕ С‚РµР»Р°
 	aabb newframe1(a.getPFrame());		newframe1.mul(a.getGlobalPosition());
 	aabb newframe1b(newframe1);	newframe1.mul(rot);	
 	newframe1.merge(newframe1b);
@@ -1027,7 +1029,7 @@ bool PhysicEngine3D::checkCollisionRotation(PhysicInterface &a, const matrix34 r
 			(normal & d3) > 0
 		)
 			
-			// треугольник движется вперёд
+			// С‚СЂРµСѓРіРѕР»СЊРЅРёРє РґРІРёР¶РµС‚СЃСЏ РІРїРµСЂС‘Рґ
 		{
 
 			bool ok = false;
@@ -1142,7 +1144,7 @@ bool PhysicEngine3D::checkInvariant(PhysicInterface &a, PhysicInterface &b, Phys
 	return true;
 }
 
-// пересекаются или находятся внутри
+// РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ РёР»Рё РЅР°С…РѕРґСЏС‚СЃСЏ РІРЅСѓС‚СЂРё
 bool PhysicEngine3D::crossModelModel(PhysicInterface &a, PhysicInterface &b)
 {
 	Vertexes *v1 = a.getPVertexes();
@@ -1157,11 +1159,11 @@ bool PhysicEngine3D::crossModelModel(PhysicInterface &a, PhysicInterface &b)
 	return false;
 }
 
-// пересекаются контуры
+// РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ РєРѕРЅС‚СѓСЂС‹
 bool PhysicEngine3D::intersectModelModel(PhysicInterface &a, PhysicInterface &b)
 {
-	// каждый треугольник движущегося тела при движении образует призму
-	// проверяем пересечение этой призмы со всеми треугольниками второго тела
+	// РєР°Р¶РґС‹Р№ С‚СЂРµСѓРіРѕР»СЊРЅРёРє РґРІРёР¶СѓС‰РµРіРѕСЃСЏ С‚РµР»Р° РїСЂРё РґРІРёР¶РµРЅРёРё РѕР±СЂР°Р·СѓРµС‚ РїСЂРёР·РјСѓ
+	// РїСЂРѕРІРµСЂСЏРµРј РїРµСЂРµСЃРµС‡РµРЅРёРµ СЌС‚РѕР№ РїСЂРёР·РјС‹ СЃРѕ РІСЃРµРјРё С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°РјРё РІС‚РѕСЂРѕРіРѕ С‚РµР»Р°
 	aabb newframe1 = a.getPFrame();	newframe1.mul(a.getGlobalPosition());
 	aabb newframe2 = b.getPFrame();	newframe2.mul(b.getGlobalPosition());
 
@@ -1231,7 +1233,7 @@ bool PhysicEngine3D::intersectLineTrg(Line a, Plane b)
 }
 
 
-// точка находится внутри
+// С‚РѕС‡РєР° РЅР°С…РѕРґРёС‚СЃСЏ РІРЅСѓС‚СЂРё
 bool PhysicEngine3D::crossPointModel(v3 point, PhysicInterface &a)
 {
 	Triangles *t = a.getTriangles();	

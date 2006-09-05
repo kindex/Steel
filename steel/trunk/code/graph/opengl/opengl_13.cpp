@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: GraphEngine - OpenGL Engine
+	File: graph/opengl/opengl_13.cpp
+	Unit: opengl
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Функции для рендерига объектов на OpenGL 1.3
+		Р¤СѓРЅРєС†РёРё РґР»СЏ СЂРµРЅРґРµСЂРёРіР° РѕР±СЉРµРєС‚РѕРІ РЅР° OpenGL 1.3
 
 		Multitexture
 		Bump mapping
@@ -15,11 +16,12 @@
 		Compressed Textures
  ************************************************************/
 
+#include "../../steel.h"
 #include "opengl_engine.h"
 #include "gl/libext.h"
 
 
-// нарисовать множество полигонов с указанным материалом / Multitexture
+// РЅР°СЂРёСЃРѕРІР°С‚СЊ РјРЅРѕР¶РµСЃС‚РІРѕ РїРѕР»РёРіРѕРЅРѕРІ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РјР°С‚РµСЂРёР°Р»РѕРј / Multitexture
 void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material && GL_EXTENSION_MULTITEXTURE)
@@ -56,7 +58,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 		// TODO check OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS
 		for(int i=0; i<texCount; i++)
 		{
-			const Texture &texture = *material->getTexture(i); // текущая текстура
+			const Texture &texture = *material->getTexture(i); // С‚РµРєСѓС‰Р°СЏ С‚РµРєСЃС‚СѓСЂР°
 
 			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
 				currentMode = texture.mode;
@@ -79,7 +81,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 			glDisable(GL_TEXTURE_COORD_ARRAY);
 
-			// режим мультитекстурирования
+			// СЂРµР¶РёРј РјСѓР»СЊС‚РёС‚РµРєСЃС‚СѓСЂРёСЂРѕРІР°РЅРёСЏ
 			GLint mode = GL_REPLACE;
 			if(currentTextureArb>0)
 			{
@@ -122,8 +124,8 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 				}
 			}
 			else
-			if(conf->geti("drawReflect") && texture.format == TEXTURE_FORMAT_ENV) // карта отражения
-			{ // загружаем текстуру
+			if(conf->geti("drawReflect") && texture.format == TEXTURE_FORMAT_ENV) // РєР°СЂС‚Р° РѕС‚СЂР°Р¶РµРЅРёСЏ
+			{ // Р·Р°РіСЂСѓР¶Р°РµРј С‚РµРєСЃС‚СѓСЂСѓ
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 				glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);

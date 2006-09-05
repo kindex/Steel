@@ -1,6 +1,20 @@
+/*id*********************************************************
+	File: res/conf/conf.h
+	Unit: res/conf
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Класс для хранения настроек
+ ************************************************************/
+
 #ifndef __RES__CONF_H
 #define __RES__CONF_H
 
+#include "../../steel.h"
 #include "../res.h"
 #include <string>
 #include <map>

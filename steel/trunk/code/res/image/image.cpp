@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: Res-Image [Resources - Images (RGB bitmap)]
+	File: res/image/image.cpp
+	Unit: res/image
 	Part of: Steel engine Res unit
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,9 +8,10 @@
 	License:
 		Steel Engine License
 	Description:
-		Класс для хранения изображения в виде RGB (без загрузки)
+		РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РІ РІРёРґРµ RGB (Р±РµР· Р·Р°РіСЂСѓР·РєРё)
  ************************************************************/
 
+#include "../../steel.h"
 #include "image.h"
 #include "../../math/maths.h"
 

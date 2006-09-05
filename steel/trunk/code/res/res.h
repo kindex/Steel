@@ -1,7 +1,8 @@
 /*id*******************************************************************************
-	Unit: Res [Resources]
+	File: res/res.h
+	Unit: res
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2003-2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
@@ -10,17 +11,18 @@
         Молуль для хранения, загрузки игровых ресурсов и контроля над ними. 
 	Parts:
 		res.cpp
-		В поддиректория хранятся классы для загрузки и хранения всех типов ресурсов.
+		В поддиректориях хранятся классы для загрузки и хранения всех типов ресурсов.
 **************************************************************************************/
 
 #ifndef __RES_H
 #define __RES_H
 
+#include "../steel.h"
+
 #include <map>
 #include <string>
 #include <stack>
 
-#include "../steel.h"
 #include "../interface.h"
 #include "../common/types.h"
 #include "../common/utils.h"
@@ -78,7 +80,7 @@ protected:
 public:
 //	virtual bool init(const std::string name, const std::string dir) = 0;
 
-	uid	getId() { return resId; }
+	uid	getId(void) { return resId; }
 	void setId(uid id) { resId = id; }
 };
 
@@ -96,7 +98,7 @@ template<class T>
 class ResCollection
 {
 public:
-	ResCollection() {}
+	ResCollection(void) {}
 
 	inline T* operator[] (const std::string& name);// Вернуть ресурс по полному имени
 	inline T* get(const std::string& name) { return operator[](name); }  // Вернуть ресурс по полному имени
@@ -109,7 +111,7 @@ public:
 	bool remove(T* object);
 
 	// У процедуры add есть второй параметр типа bool. Если он равняется false, то после загрузки ресурса текущая директория не восстанавливается и надо это делать вручную с помощью вызова pop.
-	void pop() { resStack.pop(); }
+	void pop(void) { resStack.pop(); }
 
 
 protected:
@@ -176,7 +178,7 @@ T* ResCollection<T>::add(const std::string name, bool pop)
 template<class T>
 bool ResCollection<T>::remove(T* object)
 {
-#if (STEEL_COMPILER != GCC) || !defined(STEEL_COMPILER_DEVCPP)
+#if STEEL_COMPILER == COMPILER_VS8
     std::map<T*,int>::const_iterator it = resIndex.find(object);
      
 	if(it == resIndex.end())

@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: GraphEngine - OpenGL Engine - OpenGL extensions
+	File: graph/opengl/gl/libext.cpp
+	Unit: opengl ext
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:

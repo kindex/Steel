@@ -11,7 +11,7 @@ PrivateResource=steel_private.rc
 ResourceIncludes=
 MakeIncludes=
 Compiler=_@@_
-CppCompiler=-DSTEEL_COMPILER=2_@@_-DSTEEL_OS=1_@@_-DSTEEL_OPENGL_API=1
+CppCompiler=-DSTEEL_COMPILER=0_@@_-DSTEEL_OS=1_@@_-DSTEEL_OPENGL_API=1
 Linker=-lopengl32 -lglu32 -lglaux -lkernel32 -luser32 -lgdi32 _@@_
 IsCpp=1
 Icon=
@@ -428,7 +428,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit44]
-FileName=res\model\_3ds.cpp
+FileName=res\model\3ds.cpp
 CompileCpp=1
 Folder=res/model
 Compile=1
@@ -438,7 +438,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit45]
-FileName=res\model\_3ds.h
+FileName=res\model\3ds.h
 CompileCpp=1
 Folder=res/model
 Compile=1
@@ -1368,16 +1368,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit133]
-FileName=graph\opengl\opengl_20.cpp
-CompileCpp=1
-Folder=graph/opengl
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit134]
 FileName=graph\opengl\opengl_20.cpp
 CompileCpp=1
 Folder=graph/opengl

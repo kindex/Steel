@@ -1,4 +1,4 @@
-﻿/*id*********************************************************
+/*id*********************************************************
 	File: objects/ps/particle_system.cpp
 	Unit: particle_system
 	Part of: Steel engine

@@ -1,4 +1,4 @@
-﻿/*id*********************************************************
+/*id*********************************************************
 	File: steel.cpp
 	Unit: core
 	Part of: Steel engine
@@ -33,7 +33,7 @@
 
 #if STEEL_OS == OS_WIN32
 
-#if STEEL_COMPILER == COMPILTER_DEVCPP
+#if STEEL_COMPILER == COMPILER_GCC
 HINSTANCE hInstance;
 
 int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance

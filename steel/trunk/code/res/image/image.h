@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: Res-Image [Resources - Images (RGB bitmap)]
+	File: res/image/image.h
+	Unit: res/image
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,12 +8,13 @@
 	License:
 		Steel Engine License
 	Description:
-		Класс для хранения изображения в виде RGB (без загрузки)
+		РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РІ РІРёРґРµ RGB (Р±РµР· Р·Р°РіСЂСѓР·РєРё)
  ************************************************************/
 
 #ifndef __RES_IMAGE_H
 #define __RES_IMAGE_H
 
+#include "../../steel.h"
 #include "../res.h"
 
 typedef enum 
@@ -44,10 +46,10 @@ protected:
 	ImageFormat		format;
 public:
 
-	Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; dimension = IMAGE_DIMENSION_NONE; format = IMAGE_FORMAT_NONE; }
-    ~Image() { unload(); }
+	Image(void): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; dimension = IMAGE_DIMENSION_NONE; format = IMAGE_FORMAT_NONE; }
+    ~Image(void) { unload(); }
 
-    bool unload() 
+    bool unload(void)
 	{
 		if (bitmap != NULL)
 			delete bitmap;
@@ -58,24 +60,24 @@ public:
 
     bool createImage(int WIDTH, int HEIGHT, int BPP);
 
-    void flipV(); // perevernut' Vertikalno |
-    void flipH(); // perevernut' <->
+    void flipV(void); // perevernut' Vertikalno |
+    void flipH(void); // perevernut' <->
 
     void putpixel		(float x, float y, float r, float g, float b);
     void putpixelalfa	(float x, float y, float r, float g, float b, float alfa);
     void putpixeladd	(float x, float y, float r, float g, float b);
     void clear			(float r, float g, float b);
 
-	int getWidth()	{ return width; }
-	int getHeight()	{ return height; }
-	int getBpp()	{ return bpp; }
-	unsigned char* getBitmap() { return bitmap; }
+	int getWidth(void)	{ return width; }
+	int getHeight(void)	{ return height; }
+	int getBpp(void)	{ return bpp; }
+	unsigned char* getBitmap(void) { return bitmap; }
 
-	void convertFromHeightMapToNormalMap();
+	void convertFromHeightMapToNormalMap(void);
 
-	ImageDimension	getDimension() { return dimension; }
+	ImageDimension	getDimension(void) { return dimension; }
 	void setDimension(ImageDimension _dimension) { dimension = _dimension; }
-	ImageFormat	getFormat() { return format; }
+	ImageFormat	getFormat(void) { return format; }
 	void setFormat(ImageFormat _format) { format = _format; }
 };
 

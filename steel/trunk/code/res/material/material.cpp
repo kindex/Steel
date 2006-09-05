@@ -1,5 +1,6 @@
 /*id*******************************************************************************
-	Unit: Res Material
+	File: res/material/material.cpp
+	Unit: res/material
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
@@ -7,8 +8,10 @@
 	License:
 		Steel Engine License
 	Description:
-        Молуль для загрузки и хранения материала
+        РњРѕР»СѓР»СЊ РґР»СЏ Р·Р°РіСЂСѓР·РєРё Рё С…СЂР°РЅРµРЅРёСЏ РјР°С‚РµСЂРёР°Р»Р°
 **************************************************************************************/
+
+#include "../../steel.h"
 #include "material.h"
 #include "../res_main.h"
 #include "../../common/utils.h"

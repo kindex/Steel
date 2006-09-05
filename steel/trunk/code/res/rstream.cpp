@@ -1,3 +1,17 @@
+/*id*******************************************************************************
+	File: res/rstream.cpp
+	Unit: rstream
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+        Класс и интерфейсом ifstream для загрузки игровых ресурсов
+**************************************************************************************/
+
+#include "../steel.h"
 #include "rstream.h"
 #include "../common/logger.h"
 

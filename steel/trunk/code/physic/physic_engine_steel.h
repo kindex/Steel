@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: 3D PhysicEngine Steel
+	File: physic/physic_engine.h
+	Unit: steel physic engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,25 +8,26 @@
 	License:
 		Steel Engine License
 	Description:
-		Steel Версия физического движка. 
-		Обрабатывает движение частиц, полигональных тел и шаров.
-		Поддерживает ирерархию объектов, кеширует информацию об	объектах.
+		Steel Р’РµСЂСЃРёСЏ С„РёР·РёС‡РµСЃРєРѕРіРѕ РґРІРёР¶РєР°. 
+		РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРІРёР¶РµРЅРёРµ С‡Р°СЃС‚РёС†, РїРѕР»РёРіРѕРЅР°Р»СЊРЅС‹С… С‚РµР» Рё С€Р°СЂРѕРІ.
+		РџРѕРґРґРµСЂР¶РёРІР°РµС‚ РёСЂРµСЂР°СЂС…РёСЋ РѕР±СЉРµРєС‚РѕРІ, РєРµС€РёСЂСѓРµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР±	РѕР±СЉРµРєС‚Р°С….
 ************************************************************/
 
 #ifndef PHYSIC_ENGINE_PS_H
 #define PHYSIC_ENGINE_PS_H
 
+#include "../steel.h"
 #include "physic_engine.h"
 
 #include "../common/steel_vector.h"
 
-// hash_map include (различные файлы, так как hash_map не входит в стандарт С++)
+// hash_map include (СЂР°Р·Р»РёС‡РЅС‹Рµ С„Р°Р№Р»С‹, С‚Р°Рє РєР°Рє hash_map РЅРµ РІС…РѕРґРёС‚ РІ СЃС‚Р°РЅРґР°СЂС‚ РЎ++)
 /*
-#ifdef STEEL_COMPILER_VS8
+#if STEEL_COMPILER== ... VS8
 	#include <hash_map>
 #endif
 
-#ifdef STEEL_COMPILER_DEVCPP
+#ifdef STEEL_COMPILER==...DEVCPP
 	#include <ext/hash_map>
 #endif
 */
@@ -37,22 +39,22 @@ class PhysicEngineSteel: public PhysicEngine
 protected:
 	bool helperDrawLines;
 
-	// кеш объекта
+	// РєРµС€ РѕР±СЉРµРєС‚Р°
 	struct PhysicObjectStorage
 	{
-		// инентификатор объекта (uid)
+		// РёРЅРµРЅС‚РёС„РёРєР°С‚РѕСЂ РѕР±СЉРµРєС‚Р° (uid)
 		uid objectId;
-		int storageId; // индекс этой структуры (кеша) в массиве stroage
-		PhysicObject *object; // ссылка на объект
+		int storageId; // РёРЅРґРµРєСЃ СЌС‚РѕР№ СЃС‚СЂСѓРєС‚СѓСЂС‹ (РєРµС€Р°) РІ РјР°СЃСЃРёРІРµ stroage
+		PhysicObject *object; // СЃСЃС‹Р»РєР° РЅР° РѕР±СЉРµРєС‚
 		CollisionType collisionType;
 
-		// время последнего изменения объекта. Если отлично от того, что возвращает PhysicObject::getModificationTime(), то надо обновить кеш.
+		// РІСЂРµРјСЏ РїРѕСЃР»РµРґРЅРµРіРѕ РёР·РјРµРЅРµРЅРёСЏ РѕР±СЉРµРєС‚Р°. Р•СЃР»Рё РѕС‚Р»РёС‡РЅРѕ РѕС‚ С‚РѕРіРѕ, С‡С‚Рѕ РІРѕР·РІСЂР°С‰Р°РµС‚ PhysicObject::getModificationTime(), С‚Рѕ РЅР°РґРѕ РѕР±РЅРѕРІРёС‚СЊ РєРµС€.
 		ModificationTime modificationTime, childrenModificationTime;
 
-		// список детей объекта (uid)
+		// СЃРїРёСЃРѕРє РґРµС‚РµР№ РѕР±СЉРµРєС‚Р° (uid)
 		steel::svector<uid> children;
 
-		// индекс в массиве particleSet
+		// РёРЅРґРµРєСЃ РІ РјР°СЃСЃРёРІРµ particleSet
 		int partiecleSetId;
 
 		// *** Particle ***
@@ -63,36 +65,36 @@ protected:
 		Config *material;
 	};
 
-	// кеш объектов
+	// РєРµС€ РѕР±СЉРµРєС‚РѕРІ
 	steel::svector<PhysicObjectStorage> storage;
-	// множество объектов с типом обработки частица
+	// РјРЅРѕР¶РµСЃС‚РІРѕ РѕР±СЉРµРєС‚РѕРІ СЃ С‚РёРїРѕРј РѕР±СЂР°Р±РѕС‚РєРё С‡Р°СЃС‚РёС†Р°
 	steel::svector<int> particleSet;
 
 public:
 
 	PhysicObjectStorage &getStorage(PhysicObject *object);
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
+	// СЃРѕР·РґР°С‘С‚ РјРµСЃС‚Рѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РёРЅРѕСЂРјР°С†РёРё (storage, РєРµС€ РѕР±СЉРµРєС‚Р°) - РґР»СЏ РѕРґРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 	void makeStorageForObject(PhysicObject *object);
 	void deleteStorageForObject(int sid);
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
+	// СЃРѕР·РґР°С‘С‚ РјРµСЃС‚Рѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РёРЅРѕСЂРјР°С†РёРё (storage, РєРµС€ РѕР±СЉРµРєС‚Р°) - РґР»СЏ РґРµС‚РµР№ РѕР±СЉРµРєС‚Р°
 	void makeStorageForChildren(PhysicObject *object);
 	void deleteStorageForChildren(int sid);
 
-	// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
+	// РѕРІРЅРѕРІР»СЏСЋРµС‚ РјРµСЃС‚Рѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РёРЅРѕСЂРјР°С†РёРё (storage, РєРµС€ РѕР±СЉРµРєС‚Р°) - РґР»СЏ РѕРґРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 	void cacheStorageObject(PhysicObjectStorage &objectStorage);
 
-	// рекурсивно обновить информацию об объектах и их детей
+	// СЂРµРєСѓСЂСЃРёРІРЅРѕ РѕР±РЅРѕРІРёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± РѕР±СЉРµРєС‚Р°С… Рё РёС… РґРµС‚РµР№
 	void prepare(PhysicObject *object, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), PhysicObject *parent = NULL);
 
-	// обработать движение всех объектов
+	// РѕР±СЂР°Р±РѕС‚Р°С‚СЊ РґРІРёР¶РµРЅРёРµ РІСЃРµС… РѕР±СЉРµРєС‚РѕРІ
 	bool process(steel::time globalTime, steel::time time);
 
-	// обработать движение одного объекта
+	// РѕР±СЂР°Р±РѕС‚Р°С‚СЊ РґРІРёР¶РµРЅРёРµ РѕРґРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 	bool processParticle(PhysicObjectStorage &objectStorage, steel::time globalTime, steel::time time);
 
-	// рассчитать суммарно действующие силы для частицы
+	// СЂР°СЃСЃС‡РёС‚Р°С‚СЊ СЃСѓРјРјР°СЂРЅРѕ РґРµР№СЃС‚РІСѓСЋС‰РёРµ СЃРёР»С‹ РґР»СЏ С‡Р°СЃС‚РёС†С‹
 	v3 calculateForceForParticle(PhysicObjectStorage &storage);
-	// рассчитать силу взаимодействия между двумя частицами
+	// СЂР°СЃСЃС‡РёС‚Р°С‚СЊ СЃРёР»Сѓ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ РјРµР¶РґСѓ РґРІСѓРјСЏ С‡Р°СЃС‚РёС†Р°РјРё
 	v3 calculateForceForParticle(PhysicObjectStorage &storage1, PhysicObjectStorage &storage2);
 };
 

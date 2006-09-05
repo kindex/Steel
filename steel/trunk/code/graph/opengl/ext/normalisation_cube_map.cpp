@@ -1,8 +1,24 @@
+/*id*********************************************************
+	File: graph/opengl/ext/normalisation_cube_map.h
+	Unit: opengl ext
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Normalisation cube map extension
+ ************************************************************/
+
+#include "../../../steel.h"
 #include "normalisation_cube_map.h"
 #include "../../../math/vector3d.h"
 
 GLuint generateNormalisationCubeMap()
 {
+	if(!GL_EXTENSION_TEXTURE_CUBE_MAP) return 0;
+
 	GLuint t;
 
 	glGenTextures(1, &t);

@@ -1,18 +1,20 @@
 /*id*********************************************************
-	Unit: OpenGL Engine / GLSL
+	File: graph/opengl/opengl_glsl.h
+	Unit: opengl
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
 		Steel Engine License
 	Description:
-		GLSL øåéä¸ðû
+		GLSL ÑˆÐµÐ¹Ð´Ñ‘Ñ€Ñ‹
  ************************************************************/
 
 #ifndef OPENGL_GLSL_H
 #define OPENGL_GLSL_H
 
+#include "../../steel.h"
 #include "../graph_engine.h"
 #include "gl/libext.h"
 #include "../../res/text/text.h"

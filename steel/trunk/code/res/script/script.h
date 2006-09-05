@@ -1,6 +1,22 @@
+/*id*********************************************************
+	File: res/script/script.h
+	Unit: res/script
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ С‚Р°Р±Р»РёС†С‹ РЅР°СЃС‚СЂРѕРµРє
+	TODO
+		change logic or name
+ ************************************************************/
+
 #ifndef RES__SCRIPT_H
 #define RES__SCRIPT_H
 
+#include "../../steel.h"
 #include "../res.h"
 #include <string>
 
@@ -17,20 +33,20 @@ public:
 	float	getf(unsigned int n, float defaults = 0.0f);
 	v3		getv3(unsigned int n, v3 defaults = v3(0.0f, 0.0f, 0.0f));
 
-	// вернуть всю строку
+	// РІРµСЂРЅСѓС‚СЊ РІСЃСЋ СЃС‚СЂРѕРєСѓ
 	std::string getstr() { return str; }
-	// вернуть всю строку начиная с n-того элемента
+	// РІРµСЂРЅСѓС‚СЊ РІСЃСЋ СЃС‚СЂРѕРєСѓ РЅР°С‡РёРЅР°СЏ СЃ n-С‚РѕРіРѕ СЌР»РµРјРµРЅС‚Р°
 //	std::string getstr(int n) { return el_s.g; }
 
-	int count() { return (int)el_s.size(); }
+	int count(void) { return (int)el_s.size(); }
 
 	void set(std::string const _str) { str = _str; parse(); }
-	void parse(); // convert from str to array of string element
+	void parse(void); // convert from str to array of string element
 	void add(std::string s);
 };
 
 /*
-Массив строчек. Каждая строка - значения, разделённые \t
+РњР°СЃСЃРёРІ СЃС‚СЂРѕС‡РµРє. РљР°Р¶РґР°СЏ СЃС‚СЂРѕРєР° - Р·РЅР°С‡РµРЅРёСЏ, СЂР°Р·РґРµР»С‘РЅРЅС‹Рµ \t
 */
 
 class Script: public Res
@@ -38,14 +54,14 @@ class Script: public Res
 protected:
 	steel::vector<ScriptLine> line;
 public:
-	int count() { return (int)line.size(); }
+	int count(void) { return (int)line.size(); }
 	int count(unsigned int n) { return line[n].count(); }
 
 	std::string gets(unsigned int n, unsigned int m) { return line[n].gets(m); } 
 	double	getd(unsigned int n, unsigned int m) { return line[n].getd(m); } 
 	float	getf(unsigned int n, unsigned int m, float defaults = 0.0f) { return line[n].getf(m, defaults); } 
 
-	bool unload() { return true; } 
+	bool unload(void) { return true; } 
 	ScriptLine &get(unsigned int n) { return line[n]; }
 };
 

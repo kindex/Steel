@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: 3D PhysicEngine
+	File: physic/physic_engine.cpp
+	Unit: physic engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,11 +8,12 @@
 	License:
 		Steel Engine License
 	Description:
-		Абстрактный физический движок
-		Обрабатывает движение объектов.
-		Поддерживает ирерархию объектов, кеширует информацию об	объектах.
+		РђР±СЃС‚СЂР°РєС‚РЅС‹Р№ С„РёР·РёС‡РµСЃРєРёР№ РґРІРёР¶РѕРє
+		РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРІРёР¶РµРЅРёРµ РѕР±СЉРµРєС‚РѕРІ.
+		РџРѕРґРґРµСЂР¶РёРІР°РµС‚ РёСЂРµСЂР°СЂС…РёСЋ РѕР±СЉРµРєС‚РѕРІ, РєРµС€РёСЂСѓРµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР±	РѕР±СЉРµРєС‚Р°С….
 ************************************************************/
 
+#include "../steel.h"
 #include "physic_engine.h"
 #include "../res/res_main.h"
 
@@ -30,11 +32,11 @@ bool PhysicEngine::init(std::string _conf)
 
 bool PhysicEngine::inject(PhysicObject *object)
 {
-	// если объект не хочет добавляться
+	// РµСЃР»Рё РѕР±СЉРµРєС‚ РЅРµ С…РѕС‡РµС‚ РґРѕР±Р°РІР»СЏС‚СЊСЃСЏ
 	if(!object->PhysicBeforeInject()) return false;
-	// список глобальных объектов
+	// СЃРїРёСЃРѕРє РіР»РѕР±Р°Р»СЊРЅС‹С… РѕР±СЉРµРєС‚РѕРІ
 	objects.push_back(object);
-	// кешируем объект
+	// РєРµС€РёСЂСѓРµРј РѕР±СЉРµРєС‚
 	makeStorageForObject(object);
 //	cacheStroageObject(getStorage(object));
 	makeStorageForChildren(object);

@@ -1,14 +1,20 @@
-/***************************************************************************
- *            bones.h
- *
- *  Wed Feb  1 15:38:39 2006
- *  Copyright  2006  J. Anton
- *  kane@mail.berlios.de
- ****************************************************************************/
+/*id*********************************************************
+	File: res/model/bones.h
+	Unit: res/model
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* Kane [J. Anton, kane@mail.berlios.de]
+	License:
+		Steel Engine License
+	Description:
+		TODO
+ ************************************************************/
 
 #ifndef __BONES_H__
 #define __BONES_H__
 
+#include "../../steel.h"
 #include <string>
 #include "../../common/types.h"
 #include "model.h"

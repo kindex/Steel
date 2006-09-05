@@ -21,7 +21,6 @@
 //	Компиляторы (STEEL_COMPILER)
 #define COMPILER_GCC 0
 #define COMPILER_VS8 1
-#define COMPILER_DEVCPP 2
 
 //	ОС (STEEL_OS)
 #define OS_LINUX 0

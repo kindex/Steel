@@ -1,4 +1,4 @@
-﻿/*id*********************************************************
+/*id*********************************************************
 	File: main.cpp
 	Unit: core
 	Part of: Steel engine
@@ -38,7 +38,7 @@ using namespace std;
 
 std::string commandLine;
 
-#if (STEEL_COMPILER == COMPILER_GCC) && (STEEL_OS == OS_WIN32)
+#if STEEL_COMPILER == COMPILER_GCC
 int main1(int argc, char *argv[])
 #else
 int main(int argc, char *argv[])

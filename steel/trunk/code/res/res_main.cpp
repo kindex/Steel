@@ -1,8 +1,22 @@
-#include "res_main.h"
+/*id*******************************************************************************
+	File: res/res_main.cpp
+	Unit: res
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+        Создание коллекций ресурсов для каждого типа ресурса
+		и регистрации всех типов ресурсов
+**************************************************************************************/
 
+#include "../steel.h"
+#include "res_main.h"
 #include "image/bmp.h"
 #include "image/tga.h"
-#include "model/_3ds.h"
+#include "model/3ds.h"
 #include "conf/conf_text.h"
 #include "script/script_text.h"
 #include "text/text_file.h"

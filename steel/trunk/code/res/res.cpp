@@ -1,16 +1,18 @@
 /*id*********************************************************
-	Unit: Res [Resources]
+	File: res/res.cpp
+	Unit: res
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2003-2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
 		Steel Engine License
 	Description:
-        Молуль для хранения, загрузки игровых ресурсов и 
-		контроля над ними. 
+        РњРѕР»СѓР»СЊ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ, Р·Р°РіСЂСѓР·РєРё РёРіСЂРѕРІС‹С… СЂРµСЃСѓСЂСЃРѕРІ Рё 
+		РєРѕРЅС‚СЂРѕР»СЏ РЅР°Рґ РЅРёРјРё. 
 ************************************************************/
 
+#include "../steel.h"
 #include "res.h"
 #include "../common/logger.h"
 
@@ -62,7 +64,7 @@ int ResStack::getLevel(void)
 	return level;
 }
 
-// TODO: обрабатывать /../ и /./
+// TODO: РѕР±СЂР°Р±Р°С‚С‹РІР°С‚СЊ /../ Рё /./
 std::string getFullPath(std::string filename, std::string directory)
 {
 	if((!filename.empty() && filename[0] == '/'))

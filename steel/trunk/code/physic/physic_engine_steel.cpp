@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: 3D PhysicEngine Steel
+	File: physic/physic_engine.cpp
+	Unit: steel physic engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,10 +8,11 @@
 	License:
 		Steel Engine License
 	Description:
-		Steel ¬ÂÒËˇ ÙËÁË˜ÂÒÍÓ„Ó ‰‚ËÊÍ‡. 
-		Œ·‡·‡Ú˚‚‡ÂÚ ‰‚ËÊÂÌËÂ ˜‡ÒÚËˆ, ÔÓÎË„ÓÌ‡Î¸Ì˚ı ÚÂÎ Ë ¯‡Ó‚.
-		œÓ‰‰ÂÊË‚‡ÂÚ ËÂ‡ıË˛ Ó·˙ÂÍÚÓ‚, ÍÂ¯ËÛÂÚ ËÌÙÓÏ‡ˆË˛ Ó·	Ó·˙ÂÍÚ‡ı.
+		Steel –í–µ—Ä—Å–∏—è —Ñ–∏–∑–∏—á–µ—Å–∫–æ–≥–æ –¥–≤–∏–∂–∫–∞. 
+		–û–±—Ä–∞–±–∞—Ç—ã–≤–∞–µ—Ç –¥–≤–∏–∂–µ–Ω–∏–µ —á–∞—Å—Ç–∏—Ü, –ø–æ–ª–∏–≥–æ–Ω–∞–ª—å–Ω—ã—Ö —Ç–µ–ª –∏ —à–∞—Ä–æ–≤.
+		–ü–æ–¥–¥–µ—Ä–∂–∏–≤–∞–µ—Ç –∏—Ä–µ—Ä–∞—Ä—Ö–∏—é –æ–±—ä–µ–∫—Ç–æ–≤, –∫–µ—à–∏—Ä—É–µ—Ç –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏—é –æ–±	–æ–±—ä–µ–∫—Ç–∞—Ö.
 ************************************************************/
+#include "../steel.h"
 #include "physic_engine_steel.h"
 
 
@@ -215,7 +217,7 @@ bool PhysicEngineSteel::process(steel::time globalTime, steel::time time)
 
 		v3 newVelocity = objectStorage.velocity + time*frictionForce/objectStorage.mass;
 
-		if((newVelocity & objectStorage.velocity) >0) // ÒËÎ‡ ÚÂÌËˇ ÌÂ ÏÓÊÂÚ ‡Á‚ÂÌÛÚ¸ ÚÂÎÓ
+		if((newVelocity & objectStorage.velocity) >0) // —Å–∏–ª–∞ —Ç—Ä–µ–Ω–∏—è –Ω–µ –º–æ–∂–µ—Ç —Ä–∞–∑–≤–µ—Ä–Ω—É—Ç—å —Ç–µ–ª–æ
 				objectStorage.velocity = newVelocity;
 		else
 			objectStorage.velocity.loadZero();

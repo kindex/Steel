@@ -53,7 +53,6 @@ sources = Split("""
 	./graph/graph_helper.cpp
 	./graph/graph_engine.cpp
 	./graph/opengl/opengl_sdl_engine.cpp
-	./graph/opengl/extensions.cpp
 	./graph/opengl/ext/normalisation_cube_map.cpp
 	./graph/opengl/opengl_engine.cpp
 	./graph/opengl/gl/libext.cpp
@@ -81,7 +80,7 @@ sources = Split("""
 	./res/res_main.cpp
 	./res/conf/conf.cpp
 	./res/conf/conf_text.cpp
-	./res/model/_3ds.cpp
+	./res/model/3ds.cpp
 	./res/model/lightwave.cpp
 	./res/model/model.cpp
 	./res/model/bones.cpp

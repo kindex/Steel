@@ -8,6 +8,8 @@
         Steel Engine License
     Description:
 		Kinematics, Collision Detection and Collision Reaction
+	TODO
+		delete file
 ************************************************************/
 
 #ifndef PHYSIC_ENGINE_3D_H
@@ -24,11 +26,11 @@ class PhysicEngine3D: public PhysicEngine
 protected:
 	struct Collision
 	{
-		v3	normal; // плоскость, в которой произошла коллизия
-		v3	point; // точка коллизии
-		float	time; // время (от начала карда) в процентах [0..1]
+		v3	normal; // РїР»РѕСЃРєРѕСЃС‚СЊ, РІ РєРѕС‚РѕСЂРѕР№ РїСЂРѕРёР·РѕС€Р»Р° РєРѕР»Р»РёР·РёСЏ
+		v3	point; // С‚РѕС‡РєР° РєРѕР»Р»РёР·РёРё
+		float	time; // РІСЂРµРјСЏ (РѕС‚ РЅР°С‡Р°Р»Р° РєР°СЂРґР°) РІ РїСЂРѕС†РµРЅС‚Р°С… [0..1]
 		steel::time globalTime;
-		PhysicInterface *a, *b; // учатники коллизии
+		PhysicInterface *a, *b; // СѓС‡Р°С‚РЅРёРєРё РєРѕР»Р»РёР·РёРё
 		bool fake; // false collision
 		Collision() { fake = true; }
 

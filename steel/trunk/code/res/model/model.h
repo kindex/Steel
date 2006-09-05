@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: Res-Modele [3D mesh]
+	File: res/model/model.h
+	Unit: res/model
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,12 +8,13 @@
 	License:
 		Steel Engine License
 	Description:
-		Класс для хранения модели в виде многогранника
+		РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РјРѕРґРµР»Рё РІ РІРёРґРµ РјРЅРѕРіРѕРіСЂР°РЅРЅРёРєР°
  ************************************************************/
 
 #ifndef __RES__MODEL_MODEL_H
 #define __RES__MODEL_MODEL_H
 
+#include "../../steel.h"
 #include "../res.h"
 #include "../../math/vector2d.h"
 #include "../../math/vector3d.h"
@@ -35,26 +37,26 @@ public:
 	std::string name;
 	float				volume;
 
-    Model(): name(), volume(-1) { }
-    void updateMaterial();
-    void updateNormals();
-	void updateAABB();
-    void updateTangentSpace();
-    void update()
+    Model(void): name(), volume(-1) { }
+    void updateMaterial(void);
+    void updateNormals(void);
+	void updateAABB(void);
+    void updateTangentSpace(void);
+    void update(void)
     {
         updateNormals();
         updateMaterial();
         updateTangentSpace();
     }
-    void updatetangentSpaceLight();
-    void updateReflectCoords();
+    void updatetangentSpaceLight(void);
+    void updateReflectCoords(void);
     void updateSphereMap(v3 &center);
     int duplicateVertex(int src, v3 newnormal);
 
-	void generateNormals();
+	void generateNormals(void);
 	TexCoords	*getTexCoords(int mapNumber);
-	float calculateVolume(); // вычислить объём
-	float getVolume(); // вычислить объём
+	float calculateVolume(void); // РІС‹С‡РёСЃР»РёС‚СЊ РѕР±СЉС‘Рј
+	float getVolume(void); // РІС‹С‡РёСЃР»РёС‚СЊ РѕР±СЉС‘Рј
 };
 
 #endif

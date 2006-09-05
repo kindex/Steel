@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: GraphEngine
+	File: graph/graph_engine.h
+	Unit: graph engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -8,15 +9,16 @@
 	License:
 		Steel Engine License
 	Description:
-		Графический джижок. Получет трехмерный объект в виде 3d-mesh
-		и потомки графического движка (OpenGL_Engine) занимаются
-		отображением этого объекта на экране, расчётом динамического
-		освещения, инициализацией граф. режима.
+		Р“СЂР°С„РёС‡РµСЃРєРёР№ РґР¶РёР¶РѕРє. РџРѕР»СѓС‡РµС‚ С‚СЂРµС…РјРµСЂРЅС‹Р№ РѕР±СЉРµРєС‚ РІ РІРёРґРµ 3d-mesh
+		Рё РїРѕС‚РѕРјРєРё РіСЂР°С„РёС‡РµСЃРєРѕРіРѕ РґРІРёР¶РєР° (OpenGL_Engine) Р·Р°РЅРёРјР°СЋС‚СЃСЏ
+		РѕС‚РѕР±СЂР°Р¶РµРЅРёРµРј СЌС‚РѕРіРѕ РѕР±СЉРµРєС‚Р° РЅР° СЌРєСЂР°РЅРµ, СЂР°СЃС‡С‘С‚РѕРј РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ
+		РѕСЃРІРµС‰РµРЅРёСЏ, РёРЅРёС†РёР°Р»РёР·Р°С†РёРµР№ РіСЂР°С„. СЂРµР¶РёРјР°.
  ************************************************************/
 
 #ifndef __GRAPH_ENGINE_H
 #define __GRAPH_ENGINE_H
 
+#include "../steel.h"
 #include "../res/conf/conf.h"
 #include "graph_interface.h"
 
@@ -28,11 +30,11 @@ public:
     v3 up, eye, center;
 
 public:
+	Camera(void);
+
     void seteye(const v3 &EYE) { eye = EYE; }
     void setcenter(const v3 &CENTER) { center = CENTER; }
 	void setup(const v3 &EYE, const v3 &DIR);
-
-	Camera();
 };
 
 class GraphEngine: public Engine
@@ -41,7 +43,7 @@ protected:
 	steel::vector<GraphObject*> objects;
 
 	typedef std::map <uid, int> StorageHash;
-	// отображение идентификаторов объекта на положение в массиве storage
+	// РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ РѕР±СЉРµРєС‚Р° РЅР° РїРѕР»РѕР¶РµРЅРёРµ РІ РјР°СЃСЃРёРІРµ storage
 	StorageHash idHash;
 
 	GraphEngineInfo info;
@@ -63,12 +65,12 @@ public:
 	// Draw colelcted information. May be called few times without recollection information
 	virtual bool isVisible(aabb box) = 0;
 	// Clear collected information
-	bool clear();
+	bool clear(void);
 	
-		// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
+		// СЃРѕР·РґР°С‘С‚ РјРµСЃС‚Рѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РёРЅРѕСЂРјР°С†РёРё (storage, РєРµС€ РѕР±СЉРµРєС‚Р°) - РґР»СЏ РѕРґРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 	virtual void makeStorageForObject(GraphObject *object) = 0;
 	virtual void deleteStorageForObject(int sid)  = 0;
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
+	// СЃРѕР·РґР°С‘С‚ РјРµСЃС‚Рѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РёРЅРѕСЂРјР°С†РёРё (storage, РєРµС€ РѕР±СЉРµРєС‚Р°) - РґР»СЏ РґРµС‚РµР№ РѕР±СЉРµРєС‚Р°
 	virtual void makeStorageForChildren(GraphObject *object)  = 0;
 	virtual void deleteStorageForChildren(int sid)  = 0;
 };

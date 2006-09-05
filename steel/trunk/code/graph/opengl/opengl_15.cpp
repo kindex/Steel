@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: GraphEngine - OpenGL Engine
+	File: graph/opengl/opengl_15.cpp
+	Unit: opengl
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,18 +8,19 @@
 	License:
 		Steel Engine License
 	Description:
-		Функции для рендерига объектов на OpenGL 1.5
+		Р¤СѓРЅРєС†РёРё РґР»СЏ СЂРµРЅРґРµСЂРёРіР° РѕР±СЉРµРєС‚РѕРІ РЅР° OpenGL 1.5
 
 		Buffer Objects
  ************************************************************/
 
+#include "../../steel.h"
 #include "opengl_engine.h"
 #include "gl/libext.h"
 
-// нарисовать множество полигонов с указанным материалом / VBO
+// РЅР°СЂРёСЃРѕРІР°С‚СЊ РјРЅРѕР¶РµСЃС‚РІРѕ РїРѕР»РёРіРѕРЅРѕРІ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РјР°С‚РµСЂРёР°Р»РѕРј / VBO
 void OpenGL_Engine::DrawTriangles_OpenGL15(GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {
-	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// РµСЃР»Рё РµСЃС‚СЊ РїРѕР»РёРіРѕРЅС‹ Рё РІРµСЂС€РёРЅС‹
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 
@@ -70,20 +72,20 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 {
 	steel::vector<uid> buffersToDelete;
 
-	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
+	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// РµСЃР»Рё РµСЃС‚СЊ РїРѕР»РёРіРѕРЅС‹ Рё РІРµСЂС€РёРЅС‹
 	{
-		Material *m = e.material; // получаем материал
+		Material *m = e.material; // РїРѕР»СѓС‡Р°РµРј РјР°С‚РµСЂРёР°Р»
 		if(m != NULL  && conf->geti("drawFill", 1))
 		{
-			// загружаем нормали объекта
+			// Р·Р°РіСЂСѓР¶Р°РµРј РЅРѕСЂРјР°Р»Рё РѕР±СЉРµРєС‚Р°
 	
 			int texCount = m->map.size();
 
 			int curTexArb = 0;
-			// идём по всем картам
+			// РёРґС‘Рј РїРѕ РІСЃРµРј РєР°СЂС‚Р°Рј
 			for(int i=0; i<texCount; i++)
 			{
-				Texture map = m->map[i]; // текущая текстура
+				Texture map = m->map[i]; // С‚РµРєСѓС‰Р°СЏ С‚РµРєСЃС‚СѓСЂР°
 
 				if(glActiveTextureARB)
 				{
@@ -92,7 +94,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 				}
 				else if(curTexArb>0) break;
 
-				// режим мультитекстурирования
+				// СЂРµР¶РёРј РјСѓР»СЊС‚РёС‚РµРєСЃС‚СѓСЂРёСЂРѕРІР°РЅРёСЏ
 				GLint mode = GL_REPLACE;
 				if(i>0)
 				{
@@ -146,10 +148,10 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 				}
 				else
 				{
-					if(conf->geti("drawTexture") && map.kind == TEXTURE_FORMAT_COLOR_MAP) // обычная текстура
-					{	// загружем текстуру
+					if(conf->geti("drawTexture") && map.kind == TEXTURE_FORMAT_COLOR_MAP) // РѕР±С‹С‡РЅР°СЏ С‚РµРєСЃС‚СѓСЂР°
+					{	// Р·Р°РіСЂСѓР¶РµРј С‚РµРєСЃС‚СѓСЂСѓ
 						bindTexture(map.texture); // 2D texture (auto detect from Image)
-						// загружаем тектурные координаты
+						// Р·Р°РіСЂСѓР¶Р°РµРј С‚РµРєС‚СѓСЂРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹
 						TexCoords *coords = e.object->getTexCoords(i);
 						if(coords && !coords->data.empty())
 						{
@@ -164,7 +166,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 					}
 					
 
-					if(map.kind == TEXTURE_FORMAT_COLOR) // цвет RGBA
+					if(map.kind == TEXTURE_FORMAT_COLOR) // С†РІРµС‚ RGBA
 						glColor4f(map.color.r, map.color.g, map.color.b, map.color.a);
 
 					curTexArb++;
@@ -189,7 +191,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 				glDepthMask(GL_FALSE);
 			}
 // -------------------------------------------------------------------------------
-			// загружаем и ресуем треугольники
+			// Р·Р°РіСЂСѓР¶Р°РµРј Рё СЂРµСЃСѓРµРј С‚СЂРµСѓРіРѕР»СЊРЅРёРєРё
 			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
 			{
 				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
@@ -199,7 +201,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 
 // -------------------------------------------------------------------------------
 
-			// откат настроек
+			// РѕС‚РєР°С‚ РЅР°СЃС‚СЂРѕРµРє
 			glPopAttrib();
 
 			while(curTexArb >= 0)
@@ -215,12 +217,12 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 		{
 			glPushAttrib(GL_ALL_ATTRIB_BITS);
 
-			if(e.material && !e.material->map.empty() &&e.material->map[0].kind == TEXTURE_FORMAT_COLOR) // цвет RGBA
+			if(e.material && !e.material->map.empty() &&e.material->map[0].kind == TEXTURE_FORMAT_COLOR) // С†РІРµС‚ RGBA
 					glColor4f(e.material->map[0].color.r, e.material->map[0].color.g, e.material->map[0].color.b, e.material->map[0].color.a);
 			else
 				glColor4f(1,1,1,1);
 
-			// загружаем вершины объекта
+			// Р·Р°РіСЂСѓР¶Р°РµРј РІРµСЂС€РёРЅС‹ РѕР±СЉРµРєС‚Р°
 			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 			{
 				glVertexPointer(3, GL_FLOAT, 0, 0);

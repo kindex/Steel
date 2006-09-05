@@ -1,8 +1,21 @@
-// Файл для регистрации всех типов ресурсов
+/*id*******************************************************************************
+	File: res/res_main.h
+	Unit: res
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+        РЎРѕР·РґР°РЅРёРµ РєРѕР»Р»РµРєС†РёР№ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ РєР°Р¶РґРѕРіРѕ С‚РёРїР° СЂРµСЃСѓСЂСЃР°
+		Рё СЂРµРіРёСЃС‚СЂР°С†РёРё РІСЃРµС… С‚РёРїРѕРІ СЂРµСЃСѓСЂСЃРѕРІ
+**************************************************************************************/
 
 #ifndef __RES_MAIN_H
 #define __RES_MAIN_H
 
+#include "../steel.h"
 #include "res.h"
 
 #include "conf/conf.h"
@@ -12,7 +25,7 @@
 #include "script/script.h"
 #include "text/text.h"
 
-// глобальная коллекция ресурсов
+// РіР»РѕР±Р°Р»СЊРЅР°СЏ РєРѕР»Р»РµРєС†РёСЏ СЂРµСЃСѓСЂСЃРѕРІ
 extern ResCollection<Config> resConfig;
 extern ResCollection<Image> resImage;
 extern ResCollection<Model> resModel;
@@ -21,6 +34,6 @@ extern ResCollection<Script> resScript;
 extern ResCollection<Text> resText;
 
 
-bool registerResources();
+bool registerResources(void);
 
 #endif

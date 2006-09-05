@@ -4,7 +4,7 @@ xmlns:w="urn:schemas-microsoft-com:office:word"
 xmlns="http://www.w3.org/TR/REC-html40">
 
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 11">
 <meta name=Originator content="Microsoft Word 11">
@@ -44,7 +44,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 @font-face
 	{font-family:"MS Mincho";
 	panose-1:2 2 6 9 4 2 5 8 3 4;
-	mso-font-alt:"\FF2D\FF33 \660E\671D";
+	mso-font-alt:"ＭＳ 明朝";
 	mso-font-charset:128;
 	mso-generic-font-family:modern;
 	mso-font-pitch:fixed;
@@ -574,7 +574,7 @@ table.MsoTableGrid
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="15362"/>
+ <o:shapedefaults v:ext="edit" spidmax="18434"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -587,8 +587,6 @@ table.MsoTableGrid
 
 <h1><span style='mso-ansi-language:RU'>Соглашения о программном коде<o:p></o:p></span></h1>
 
-<p><span style='mso-font-kerning:1.0pt;mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
-
 <p><span style='mso-font-kerning:1.0pt;mso-ansi-language:RU'>Документ описывает
 </span><span style='mso-ansi-language:RU'>соглашения<span style='mso-font-kerning:
 1.0pt'> о программном коде, </span></span><span style='mso-fareast-font-family:
@@ -597,15 +595,11 @@ lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Testing</span><span
 lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> </span><span
 lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Suite</span><span
 style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> и
-предназначен для программистов и проектировщиков системы, занятых над этим проектом.
-Данных соглашений следует придерживаться при составлении документов, написании
-кода и обмена информацией.<o:p></o:p></span></p>
-
-<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+предназначен для программистов и проектировщиков системы, занятых над этим
+проектом. Данных соглашений следует придерживаться при составлении документов,
+написании кода и обмена информацией.<o:p></o:p></span></p>
 
 <h2><span style='mso-ansi-language:RU'>Соглашения о документах<o:p></o:p></span></h2>
-
-<p><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
 
 <p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>В
 данном разделе мы опишем основные правила составления документов. Этот раздел
@@ -634,7 +628,8 @@ style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>. Для
 "MS Mincho"'>Microsoft</span><span lang=EN-US style='mso-fareast-font-family:
 "MS Mincho";mso-ansi-language:RU'> </span><span lang=EN-US style='mso-fareast-font-family:
 "MS Mincho"'>Word</span><span style='mso-fareast-font-family:"MS Mincho";
-mso-ansi-language:RU'>, так и любой другой текстовый редактор.<o:p></o:p></span></p>
+mso-ansi-language:RU'>, так и любой другой текстовый редактор. В качестве
+шаблона может служить этот документ.<o:p></o:p></span></p>
 
 <p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Следует
 также учесть, что весь текст пишется в кодировке </span><span lang=EN-US
@@ -659,8 +654,19 @@ lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> </s
 lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Engine</span><span
 style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>.<o:p></o:p></span></p>
 
+<h2><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Кодировка<o:p></o:p></span></h2>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Исходный
+код пишется в кодировке </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>UTF</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>-8. В начале файла не должны присутствовать символы </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>c</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> кодами 239,
+187, 191. Символы<span style='mso-spacerun:yes'>  </span>кодом больше, чем 127
+могут присутствовать только в комментариях.<o:p></o:p></span></p>
+
 <p><span style='mso-fareast-font-family:"MS Mincho";background:yellow;
-mso-highlight:yellow;mso-ansi-language:RU'>Кодировка + переводы строк</span><span
+mso-highlight:yellow;mso-ansi-language:RU'>переводы строк</span><span
 style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p></o:p></span></p>
 
 <h2><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Названия
@@ -730,8 +736,8 @@ style='mso-ansi-language:RU'>: &lt;название проекта&gt;<o:p></o:p
 RU'><span style='mso-tab-count:1'>   </span></span><span lang=EN-US
 style='mso-fareast-font-family:"MS Mincho"'>(C) DiVision, &lt;years&gt;<o:p></o:p></span></p>
 
-<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>   </span><span
-style='mso-spacerun:yes'> </span>Authors:</span></p>
+<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>   
+</span>Authors:</span></p>
 
 <p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>       
 </span>* &lt;</span><span style='mso-ansi-language:RU'>автор</span><span
@@ -757,12 +763,28 @@ mso-ansi-language:RU'>заслуга</span><span lang=EN-US style='font-family:"
 </span>Steel Engine License</span><span lang=EN-US style='font-family:"Times New Roman"'><o:p></o:p></span></p>
 
 <p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>   
-</span>Description:</span></p>
+</span>Description</span><span style='mso-ansi-language:RU'>:<o:p></o:p></span></p>
 
-<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>       
-</span>&lt;</span><span style='mso-ansi-language:RU'>Непосредственно</span> <span
-style='mso-ansi-language:RU'>описание</span> <span style='mso-ansi-language:
-RU'>модуля</span><span lang=EN-US>&gt;</span></p>
+<p class=code053cm><span style='mso-ansi-language:RU'><span
+style='mso-spacerun:yes'>        </span>&lt;Непосредственно описание модуля&gt;<o:p></o:p></span></p>
+
+<p class=code053cm><span style='mso-ansi-language:RU'><span
+style='mso-spacerun:yes'>    </span></span><span lang=EN-US>[TODO]</span><span
+style='mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<p class=code053cm><span style='mso-ansi-language:RU'><span
+style='mso-spacerun:yes'>        </span>...</span></p>
+
+<p class=code053cm><span style='mso-ansi-language:RU'><span
+style='mso-spacerun:yes'>    </span></span><span lang=EN-US style='background:
+yellow;mso-highlight:yellow'>[Parts:]<o:p></o:p></span></p>
+
+<p class=code053cm><span style='background:yellow;mso-highlight:yellow;
+mso-ansi-language:RU'><span style='mso-spacerun:yes'>        </span>&lt;</span><span
+style='font-family:"Times New Roman";background:yellow;mso-highlight:yellow;
+mso-ansi-language:RU'>Список подмодулей</span><span style='background:yellow;
+mso-highlight:yellow;mso-ansi-language:RU'>&gt;</span><span style='mso-ansi-language:
+RU'><o:p></o:p></span></p>
 
 <p class=code053cm><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>************************************************************/<o:p></o:p></span></p>
 
@@ -787,14 +809,25 @@ style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>&gt; - врем
 
 <p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
 
-<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Также
-не обязательной является секция </span><span lang=EN-US style='mso-bidi-font-size:
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Не
+обязательной является секция </span><span lang=EN-US style='mso-bidi-font-size:
 10.0pt;font-family:"Courier New"'>Part</span><span lang=EN-US style='mso-bidi-font-size:
 10.0pt;font-family:"Courier New";mso-ansi-language:RU'> </span><span
 lang=EN-US style='mso-bidi-font-size:10.0pt;font-family:"Courier New"'>of</span><span
 style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>, если модуль
 не является непосредственно частью проекта и может быть использован в других
 целях.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Также
+не обязательной является секция </span><span lang=EN-US style='mso-bidi-font-size:
+10.0pt;font-family:"Courier New"'>TODO</span><span style='mso-bidi-font-size:
+10.0pt;font-family:"Courier New";mso-ansi-language:RU'>.<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Changelog</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> не нужно
+указывать в файле, так как все изменения хранятся в репозитории.</span><span
+style='mso-bidi-font-size:10.0pt;font-family:"Courier New";mso-ansi-language:
+RU'><o:p></o:p></span></p>
 
 <h2><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Требования
 к программному коду<o:p></o:p></span></h2>
@@ -812,8 +845,8 @@ Kernighan и Rob Pike.<o:p></o:p></span></p>
 написании кода следует учитывать, что читабельность важнее эффективности. Не
 следует употреблять сомнительные и неопределенные стандартами конструкций
 языка. Следует заботиться также о переносимости программы на другие платформы.
-Наша цель — получить код, который можно перенести на другую платформу практически
-без изменений.<o:p></o:p></span></p>
+Наша цель — получить код, который можно перенести на другую платформу
+практически без изменений.<o:p></o:p></span></p>
 
 <p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Если
 же эффективность в данном месте важнее читаемости, то следует в комментариях
@@ -850,14 +883,14 @@ style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>отделят�
 
 <p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Слева
 и справа от оператора присваивания следует ставить пробелы.<span
-style='mso-spacerun:yes'>  </span>Можно также отделять пробелами и другие операции,
-но это следует делать так, чтобы программист мог легко распознать формулу и
-порядок действий. <o:p></o:p></span></p>
+style='mso-spacerun:yes'>  </span>Можно также отделять пробелами и другие
+операции, но это следует делать так, чтобы программист мог легко распознать
+формулу и порядок действий. <o:p></o:p></span></p>
 
 <p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>В
 некоторых случаях может потребоваться написать очень большую формулу или
-длинное условие, которое не помещается на одну строку. Тогда мы можем разбить большое
-выражение на строки.<o:p></o:p></span></p>
+длинное условие, которое не помещается на одну строку. Тогда мы можем разбить
+большое выражение на строки.<o:p></o:p></span></p>
 
 <p><span style='mso-fareast-font-family:"MS Mincho";mso-font-kerning:1.0pt;
 mso-ansi-language:RU'>Например<o:p></o:p></span></p>
@@ -883,13 +916,14 @@ mso-ansi-language:RU'>превращается в<o:p></o:p></span></p>
 RU'>(<o:p></o:p></span></p>
 
 <p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
-RU'><span style='mso-spacerun:yes'>  </span>(</span><span lang=EN-US
-style='mso-fareast-font-family:"MS Mincho"'>cccccccccccccc</span><span
-style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>) &amp;&amp;
-((</span><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>cccccccccc</span><span
-style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>)|(</span><span
-lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>cccccccccccccc</span><span
-style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>))<o:p></o:p></span></p>
+RU'><span style='mso-spacerun:yes'> </span><span
+style='mso-spacerun:yes'> </span>(</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>cccccccccccccc</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>) &amp;&amp; ((</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>cccccccccc</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>)|(</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>cccccccccccccc</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>))<o:p></o:p></span></p>
 
 <p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
 RU'><span style='mso-spacerun:yes'>  </span>&amp;&amp;<o:p></o:p></span></p>
@@ -987,8 +1021,8 @@ mso-ansi-language:RU'>Весь код блока пишется с отступ�
 style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'> </span><span
 style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>знака (</span><span
 lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>token</span><span
-style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>), обозначающего
-комментарий, продолжающийся до конца строки (обычно это 2 слэша).</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>),
+обозначающего комментарий, продолжающийся до конца строки (обычно это 2 слэша).</span><span
 style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'> </span><span
 style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Такие
 комментарии описывают небольшой объект, и отделяется от текста<span
@@ -1042,8 +1076,8 @@ style='mso-spacerun:yes'>    </span>very very very very very very very very
 very<o:p></o:p></span></p>
 
 <p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><span
-style='mso-spacerun:yes'>   </span><span style='mso-spacerun:yes'> </span>very
-very very very very very very very very<o:p></o:p></span></p>
+style='mso-spacerun:yes'>    </span>very very very very very very very very
+very<o:p></o:p></span></p>
 
 <p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><span
 style='mso-spacerun:yes'>    </span>very long comment for the function
@@ -1063,8 +1097,8 @@ style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>!&quot;);<o:p><
 "MS Mincho";mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
 
 <p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Следует
-заметить, что короткие комментарии пишутся перед или после элемента кода, который
-они поясняют, а длинные – перед поясняемым кодом.<o:p></o:p></span></p>
+заметить, что короткие комментарии пишутся перед или после элемента кода,
+который они поясняют, а длинные – перед поясняемым кодом.<o:p></o:p></span></p>
 
 <h3><span style='mso-ansi-language:RU'>Идентификаторы<o:p></o:p></span></h3>
 
@@ -1214,8 +1248,8 @@ func(char *c);<o:p></o:p></span></p>
 
 <p><span lang=EN-US>TEMP</span><span style='mso-ansi-language:RU'>: <o:p></o:p></span></p>
 
-<p><span style='mso-ansi-language:RU'>Ставится рядом с временно написанным кодом
-для тестирования. Не должно попадать в </span><span lang=EN-US>trunk</span><span
+<p><span style='mso-ansi-language:RU'>Ставится рядом с временно написанным
+кодом для тестирования. Не должно попадать в </span><span lang=EN-US>trunk</span><span
 style='mso-ansi-language:RU'>.<o:p></o:p></span></p>
 
 <p><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>

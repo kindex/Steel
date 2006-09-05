@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: GraphEngine - OpenGL Engine SDL
+	File: graph/opengl/opengl_sdl_engine.cpp
+	Unit: opengl
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -10,6 +11,8 @@
 	Description:
 		Часть графического движока OpenGL, которая реализует
 		системно зависимые функции, такие как создание окна.
+
+		TODO delete class
  ************************************************************/
 
 #include "../../steel.h"

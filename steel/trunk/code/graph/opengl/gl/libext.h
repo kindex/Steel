@@ -1,11 +1,21 @@
-//
-// Header file to libExt
-//
-// Author: Alex V. Boreskoff <alexboreskoff@mtu-net.ru>, <steps3d@narod.ru>
-//
+/*id*********************************************************
+	File: graph/opengl/gl/libext.h
+	Unit: opengl ext
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* Alex V. Boreskoff <alexboreskoff@mtu-net.ru>, <steps3d@narod.ru>
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		??
+	Description:
+		Simple library to load basic extensions
+ ************************************************************/
 
 #ifndef __LIB_EXT__
 #define __LIB_EXT__
+
+#include "../../../steel.h"
 
 #ifdef  _WIN32
     #include    <windows.h>
@@ -27,8 +37,8 @@
 
 bool OpenGL_ExtensionsIsSupported(const char *ext);
 //void OpenGL_ExtensionsInitAssertExtensions(const char *extList);
-void OpenGL_ExtensionsInit();
-void OpenGL_ExtensionsPrintfInfo();
+void OpenGL_ExtensionsInit(void);
+void OpenGL_ExtensionsPrintfInfo(void);
 
 extern bool GL_EXTENSION_MULTITEXTURE;
 extern int	GL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS;

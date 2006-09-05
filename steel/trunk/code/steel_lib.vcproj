@@ -454,11 +454,11 @@
 				Name="model"
 				>
 				<File
-					RelativePath=".\res\model\_3ds.cpp"
+					RelativePath=".\res\model\3ds.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\res\model\_3ds.h"
+					RelativePath=".\res\model\3ds.h"
 					>
 				</File>
 				<File
@@ -766,12 +766,8 @@
 					>
 				</File>
 				<Filter
-					Name="extensions"
+					Name="ext"
 					>
-					<File
-						RelativePath=".\graph\opengl\extensions.h"
-						>
-					</File>
 					<File
 						RelativePath=".\graph\opengl\ext\normalisation_cube_map.cpp"
 						>

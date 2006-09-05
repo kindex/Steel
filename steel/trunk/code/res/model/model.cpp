@@ -1,4 +1,17 @@
-    // sTangent - vektor v storonu uveli4enija S teksturnoj koordinati (vpravo)
+/*id*********************************************************
+	File: res/model/model.h
+	Unit: res/model
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РјРѕРґРµР»Рё РІ РІРёРґРµ РјРЅРѕРіРѕРіСЂР°РЅРЅРёРєР°
+ ************************************************************/
+
+// sTangent - vektor v storonu uveli4enija S teksturnoj koordinati (vpravo)
     // tangentSpaceLight - vektor ot ver6uni do to4ki osveshenija v TBN (Tangent, Binormal, Normal) prostrastve (sTangent, tTangent, normal) - tangent space http://www.paulsprojects.net/tutorials/tutorials.html
     //( Sx Sy Sz )
     //( Tx Ty Tz ) - matrix to convert from object space to tangent space
@@ -8,6 +21,7 @@
 //    mat_id mat;  
 
 
+#include "../../steel.h"
 #include "model.h"
 
 /*void Model:: updateMaterial()
@@ -160,7 +174,7 @@ void Model::updateAABB()
 }
 
 
-float Model::calculateVolume() // вычислить объём
+float Model::calculateVolume() // РІС‹С‡РёСЃР»РёС‚СЊ РѕР±СЉС‘Рј
 {
 	float volume = 0;
 	for(steel::vector<Triangle>::iterator it = triangleAll.data.begin(); it != triangleAll.data.end(); it++)
@@ -174,7 +188,7 @@ float Model::calculateVolume() // вычислить объём
 	return fabs(volume)/6.0f;
 }
 
-float Model::getVolume() // вычислить объём
+float Model::getVolume() // РІС‹С‡РёСЃР»РёС‚СЊ РѕР±СЉС‘Рј
 {
 	if(volume<-EPSILON)
 		return volume = calculateVolume();

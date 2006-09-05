@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: GraphEngine - OpenGL Engine
+	File: graph/opengl/opengl_10.cpp
+	Unit: opengl
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,14 +8,15 @@
 	License:
 		Steel Engine License
 	Description:
-		Функции для рендерига объектов на OpenGL 1.0
+		Р¤СѓРЅРєС†РёРё РґР»СЏ СЂРµРЅРґРµСЂРёРіР° РѕР±СЉРµРєС‚РѕРІ РЅР° OpenGL 1.0
 		glBegin - glEnd
  ************************************************************/
 
+#include "../../steel.h"
 #include "opengl_engine.h"
 #include "gl/libext.h"
 
-// нарисовать множество полигонов с указанным материалом / Blend
+// РЅР°СЂРёСЃРѕРІР°С‚СЊ РјРЅРѕР¶РµСЃС‚РІРѕ РїРѕР»РёРіРѕРЅРѕРІ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РјР°С‚РµСЂРёР°Р»РѕРј / Blend
 void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material)
@@ -30,7 +32,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
 		for(int i=0; i<texCount; i++)
 		{
 			glPushAttrib(GL_ALL_ATTRIB_BITS);
-			const Texture &texture = *material->getTexture(i); // текущая текстура
+			const Texture &texture = *material->getTexture(i); // С‚РµРєСѓС‰Р°СЏ С‚РµРєСЃС‚СѓСЂР°
 
 			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
 				currentMode = texture.mode;
@@ -49,7 +51,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
 				continue;
 			}
 
-			// режим мультитекстурирования
+			// СЂРµР¶РёРј РјСѓР»СЊС‚РёС‚РµРєСЃС‚СѓСЂРёСЂРѕРІР°РЅРёСЏ
 			switch(currentMode)
 			{
 				case TEXTURE_BLEND_MODE_MUL:	
@@ -101,10 +103,10 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
 	}
 }
 
-// нарисовать множество полигонов с указанным материалом
+// РЅР°СЂРёСЃРѕРІР°С‚СЊ РјРЅРѕР¶РµСЃС‚РІРѕ РїРѕР»РёРіРѕРЅРѕРІ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РјР°С‚РµСЂРёР°Р»РѕРј
 void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {
-	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// РµСЃР»Рё РµСЃС‚СЊ РїРѕР»РёРіРѕРЅС‹ Рё РІРµСЂС€РёРЅС‹
 	{
 		total.vertex += e.vertex->data.size();
 		total.triangle += triangles->data.size();
@@ -122,7 +124,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e,
 	}
 }
 
-// установить текущуу текстуру
+// СѓСЃС‚Р°РЅРѕРІРёС‚СЊ С‚РµРєСѓС‰СѓСѓ С‚РµРєСЃС‚СѓСЂСѓ
 bool OpenGL_Engine::BindTexture_OpenGL10(Image *image, bool enable)
 {
 	if(enable) glEnable(GL_TEXTURE_2D);
@@ -159,10 +161,10 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image *image, bool enable)
 	return true;
 }
 
-// нарисовать множество полигонов как сетку (только рёбра)
+// РЅР°СЂРёСЃРѕРІР°С‚СЊ РјРЅРѕР¶РµСЃС‚РІРѕ РїРѕР»РёРіРѕРЅРѕРІ РєР°Рє СЃРµС‚РєСѓ (С‚РѕР»СЊРєРѕ СЂС‘Р±СЂР°)
 void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
 {
-	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// РµСЃР»Рё РµСЃС‚СЊ РїРѕР»РёРіРѕРЅС‹ Рё РІРµСЂС€РёРЅС‹
 	{
 		total.object++;
 		total.vertex += e.vertex->data.size();
@@ -179,10 +181,10 @@ void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Tria
     }
 }
 
-// нарисовать множество линий
+// РЅР°СЂРёСЃРѕРІР°С‚СЊ РјРЅРѕР¶РµСЃС‚РІРѕ Р»РёРЅРёР№
 void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
 {
-	if(e.vertex && e.lines && !e.lines->index.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	if(e.vertex && e.lines && !e.lines->index.empty() && !e.vertex->data.empty())// РµСЃР»Рё РµСЃС‚СЊ РїРѕР»РёРіРѕРЅС‹ Рё РІРµСЂС€РёРЅС‹
 	{
 		total.object++;
 		total.vertex += e.vertex->data.size();
@@ -199,7 +201,7 @@ void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Gra
     }
 }
 
-// нарисовать нормали к вершинам
+// РЅР°СЂРёСЃРѕРІР°С‚СЊ РЅРѕСЂРјР°Р»Рё Рє РІРµСЂС€РёРЅР°Рј
 void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
 {
 	if(e.normal && e.vertex && e.vertex->data.size() == e.normal->data.size())
@@ -224,7 +226,7 @@ void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, G
 	}
 }
 
-// нарисовать вершины
+// РЅР°СЂРёСЃРѕРІР°С‚СЊ РІРµСЂС€РёРЅС‹
 void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
 {
 	if(e.vertex && !e.vertex->data.empty())
@@ -244,7 +246,7 @@ void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, 
 	}
 }
 
-// нарисовать AABB
+// РЅР°СЂРёСЃРѕРІР°С‚СЊ AABB
 void OpenGL_Engine::DrawAABB_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
 {
 	aabb &c = e.frame;

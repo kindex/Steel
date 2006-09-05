@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: GraphEngine - OpenGL Engine
+	File: graph/opengl/opengl_engine.h
+	Unit: opengl
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -8,9 +9,9 @@
 	License:
 		Steel Engine License
 	Description:
-		Графический движок реализлванный на фунциях OpenGL. 
-		Рисует трехмерный объект в виде 3d-mesh,
-		расчитывает динамическое освещение
+		Р“СЂР°С„РёС‡РµСЃРєРёР№ РґРІРёР¶РѕРє СЂРµР°Р»РёР·Р»РІР°РЅРЅС‹Р№ РЅР° С„СѓРЅС†РёСЏС… OpenGL. 
+		Р РёСЃСѓРµС‚ С‚СЂРµС…РјРµСЂРЅС‹Р№ РѕР±СЉРµРєС‚ РІ РІРёРґРµ 3d-mesh,
+		СЂР°СЃС‡РёС‚С‹РІР°РµС‚ РґРёРЅР°РјРёС‡РµСЃРєРѕРµ РѕСЃРІРµС‰РµРЅРёРµ
  ************************************************************/
 
 #ifndef __GRAPH_OPENGL_ENGINE_H
@@ -57,17 +58,17 @@ protected:
 		char	*object;
 	};
 
-	struct GraphObjectStorage // множество треугольников одного материала
+	struct GraphObjectStorage // РјРЅРѕР¶РµСЃС‚РІРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРєРѕРІ РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°
 	{
-		// инентификатор объекта (uid)
+		// РёРЅРµРЅС‚РёС„РёРєР°С‚РѕСЂ РѕР±СЉРµРєС‚Р° (uid)
 		uid objectId;
-		int storageId; // индекс этой структуры (кеша) в массиве stroage
+		int storageId; // РёРЅРґРµРєСЃ СЌС‚РѕР№ СЃС‚СЂСѓРєС‚СѓСЂС‹ (РєРµС€Р°) РІ РјР°СЃСЃРёРІРµ stroage
 		GraphObject *object;
 		
-		// время последнего изменения объекта. Если отлично от того, что возвращает PhysicObject::getModificationTime(), то надо обновить кеш.
+		// РІСЂРµРјСЏ РїРѕСЃР»РµРґРЅРµРіРѕ РёР·РјРµРЅРµРЅРёСЏ РѕР±СЉРµРєС‚Р°. Р•СЃР»Рё РѕС‚Р»РёС‡РЅРѕ РѕС‚ С‚РѕРіРѕ, С‡С‚Рѕ РІРѕР·РІСЂР°С‰Р°РµС‚ PhysicObject::getModificationTime(), С‚Рѕ РЅР°РґРѕ РѕР±РЅРѕРІРёС‚СЊ РєРµС€.
 		ModificationTime modificationTime, childrenModificationTime;
 
-		// список детей объекта (uid)
+		// СЃРїРёСЃРѕРє РґРµС‚РµР№ РѕР±СЉРµРєС‚Р° (uid)
 		steel::svector<uid> children;
 
 		// *** Polyhedra ****
@@ -82,7 +83,7 @@ protected:
 		aabb		frame;
 		bool		blend; // true if blending
 		bool		visible;
-		float		distance; // расстояние до камеры
+		float		distance; // СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ РєР°РјРµСЂС‹
 
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 	};
@@ -179,17 +180,17 @@ public:
 		DrawAABB(NULL)
 		{}
 
-	void processCamera();
+	void processCamera(void);
 	bool init(std::string _conf);
 	bool process(steel::time globalTime, steel::time time);
-	bool deinit();
+	bool deinit(void);
 
 	void prepare(GraphObject *object, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GraphObject *parent = NULL);
 
-	virtual void swapBuffers() = 0;
-	virtual bool createWindow() = 0;
+	virtual void swapBuffers(void) = 0;
+	virtual bool createWindow(void) = 0;
 	virtual void setCaption(std::string caption) = 0;
-	virtual bool isFocused() { return focused; }
+	virtual bool isFocused(void) { return focused; }
 	
 	bool isVisible(aabb box);
 
@@ -227,16 +228,15 @@ public:
 
 	GraphObjectStorage &getStorage(GraphObject *object);
 	
-		// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
+		// СЃРѕР·РґР°С‘С‚ РјРµСЃС‚Рѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РёРЅРѕСЂРјР°С†РёРё (storage, РєРµС€ РѕР±СЉРµРєС‚Р°) - РґР»СЏ РѕРґРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 	void makeStorageForObject(GraphObject *object);
 	void deleteStorageForObject(int sid);
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
+	// СЃРѕР·РґР°С‘С‚ РјРµСЃС‚Рѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РёРЅРѕСЂРјР°С†РёРё (storage, РєРµС€ РѕР±СЉРµРєС‚Р°) - РґР»СЏ РґРµС‚РµР№ РѕР±СЉРµРєС‚Р°
 	void makeStorageForChildren(GraphObject *object);
 	void deleteStorageForChildren(int sid);
 
-	// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
+	// РѕРІРЅРѕРІР»СЏСЋРµС‚ РјРµСЃС‚Рѕ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РёРЅРѕСЂРјР°С†РёРё (storage, РєРµС€ РѕР±СЉРµРєС‚Р°) - РґР»СЏ РѕРґРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 	virtual void cacheStorageObject(GraphObjectStorage &objectStorage);
-
 };
 
 

@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: GraphEngine
+	File: graph/types.h
+	Unit: graph engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -9,11 +10,12 @@
 	License:
 		Steel Engine License
 	Description:
-		Графический джижок - базовые графические типы
+		Р“СЂР°С„РёС‡РµСЃРєРёР№ РґР¶РёР¶РѕРє - Р±Р°Р·РѕРІС‹Рµ РіСЂР°С„РёС‡РµСЃРєРёРµ С‚РёРїС‹
  ************************************************************/
 #ifndef __GRAPH__TYPES_H
 #define __GRAPH__TYPES_H
 
+#include "../steel.h"
 #include "../interface.h"
 #include "../math/aabb.h"
 #include "../math/maths.h"
@@ -27,7 +29,7 @@ struct color4f
 
 	void set(float R, float G, float B, float A) {r = R; g = G; b = B; a = A;}
 
-	color4f() {}
+	color4f(void) {}
 	color4f(float R, float G, float B, float A): r(R), g(G), b(B), a(A) {}
 };
 

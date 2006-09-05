@@ -1,3 +1,18 @@
+/*id*********************************************************
+	File: graph/graph_helper.cpp
+	Unit: graph engine
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Class for debug information output (for Physic Engine)
+		using graph engine
+ ************************************************************/
+
+#include "../steel.h"
 #include "graph_helper.h"
 #include "../common/steel_vector.h"
 

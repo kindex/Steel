@@ -1,11 +1,17 @@
-/***************************************************************************
- *            bones.cpp
- *
- *  Thu Feb  2 22:57:53 2006
- *  Copyright  2006  J. Anton
- *  kane@mail.berlios.de
- ****************************************************************************/
+/*id*********************************************************
+	File: res/model/bones.cpp
+	Unit: res/model
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* Kane [J. Anton, kane@mail.berlios.de]
+	License:
+		Steel Engine License
+	Description:
+		TODO
+ ************************************************************/
 
+#include "../../steel.h"
 #include "bones.h"
 #include "../../common/logger.h"
 

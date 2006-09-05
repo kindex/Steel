@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: Res-Image [Resources - Images - BMP (RGB bitmap)]
+	File: res/image/bmp.cpp
+	Unit: res/image
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -10,6 +11,7 @@
 		Класс для загрузки BMP-файла в класс Image
  ************************************************************/
 
+#include "../../steel.h"
 #include "bmp.h"
 #include "../../common/logger.h"
 #include "../rstream.h"

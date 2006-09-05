@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: GraphEngine - OpenGL Engine
+	File: graph/opengl/opengl_11.cpp
+	Unit: opengl
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,16 +8,18 @@
 	License:
 		Steel Engine License
 	Description:
-		Ôóíêöèè äëÿ ðåíäåðèãà îáúåêòîâ íà OpenGL 1.1.
-		Èñïîëüçóåòñÿ glVertexPointer è BindTexture
+		Ð¤ÑƒÐ½ÐºÑ†Ð¸Ð¸ Ð´Ð»Ñ Ñ€ÐµÐ½Ð´ÐµÑ€Ð¸Ð³Ð° Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð½Ð° OpenGL 1.1
+		Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ÑÑ glVertexPointer Ð¸ BindTexture
  ************************************************************/
+
+#include "../../steel.h"
 #include "opengl_engine.h"
 #include "gl/libext.h"
 
-// íàðèñîâàòü ìíîæåñòâî ïîëèãîíîâ ñ óêàçàííûì ìàòåðèàëîì / glVertexPointer
+// Ð½Ð°Ñ€Ð¸ÑÐ¾Ð²Ð°Ñ‚ÑŒ Ð¼Ð½Ð¾Ð¶ÐµÑÑ‚Ð²Ð¾ Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ð¾Ð² Ñ ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ñ‹Ð¼ Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ð°Ð»Ð¾Ð¼ / glVertexPointer
 void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {
-	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// åñëè åñòü ïîëèãîíû è âåðøèíû
+	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// ÐµÑÐ»Ð¸ ÐµÑÑ‚ÑŒ Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ñ‹ Ð¸ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñ‹
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 
@@ -29,7 +32,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e,
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		}
 
-/*		RUNTIME ERROR: glDrawElements âûëåçàåò â ïëîõóþ îáëàñòü ïàìÿòè, åñëè ïåðåäàþòñÿ íîðìàëè
+/*		RUNTIME ERROR: glDrawElements Ð²Ñ‹Ð»ÐµÐ·Ð°ÐµÑ‚ Ð² Ð¿Ð»Ð¾Ñ…ÑƒÑŽ Ð¾Ð±Ð»Ð°ÑÑ‚ÑŒ Ð¿Ð°Ð¼ÑÑ‚Ð¸, ÐµÑÐ»Ð¸ Ð¿ÐµÑ€ÐµÐ´Ð°ÑŽÑ‚ÑÑ Ð½Ð¾Ñ€Ð¼Ð°Ð»Ð¸
 		if(e.normal) // TODO check array length
 		{
 			glVertexPointer(3, GL_FLOAT, 0, &e.normal->data.front());
@@ -189,7 +192,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image, bool enable)
 
 void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
 {
-	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// åñëè åñòü ïîëèãîíû è âåðøèíû
+	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// ÐµÑÐ»Ð¸ ÐµÑÑ‚ÑŒ Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ñ‹ Ð¸ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñ‹
 	{
 		total.object++;
 		total.vertex += e.vertex->data.size();
@@ -208,7 +211,7 @@ void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Tria
 
 void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total)
 {
-	if(e.vertex && e.lines && !e.lines->index.empty() && !e.vertex->data.empty())// åñëè åñòü ïîëèãîíû è âåðøèíû
+	if(e.vertex && e.lines && !e.lines->index.empty() && !e.vertex->data.empty())// ÐµÑÐ»Ð¸ ÐµÑÑ‚ÑŒ Ð¿Ð¾Ð»Ð¸Ð³Ð¾Ð½Ñ‹ Ð¸ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñ‹
 	{
 		total.object++;
 		total.vertex += e.vertex->data.size();

@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: PhysicEngine
+	File: physic/physic_interface.h
+	Unit: physic engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,12 +8,13 @@
 	License:
 		Steel Engine License
 	Description:
-		Физический джижок - интерфейс двигающегося объекта
+		Р¤РёР·РёС‡РµСЃРєРёР№ РґР¶РёР¶РѕРє - РёРЅС‚РµСЂС„РµР№СЃ РґРІРёРіР°СЋС‰РµРіРѕСЃСЏ РѕР±СЉРµРєС‚Р°
  ************************************************************/
 
 #ifndef PHYSIC_INTERFACE_H
 #define PHYSIC_INTERFACE_H
 
+#include "../steel.h"
 #include "../engine.h"
 #include "../math/aabb.h"
 #include "../math/matrix34.h"
@@ -22,8 +24,8 @@
 typedef enum
 {
 	PROCESS_NONE,
-	PROCESS_CUSTOM, // сам объект определяет своё движение
-	PROCESS_UNI // движется по универсальным законам
+	PROCESS_CUSTOM, // СЃР°Рј РѕР±СЉРµРєС‚ РѕРїСЂРµРґРµР»СЏРµС‚ СЃРІРѕС‘ РґРІРёР¶РµРЅРёРµ
+	PROCESS_UNI // РґРІРёР¶РµС‚СЃСЏ РїРѕ СѓРЅРёРІРµСЂСЃР°Р»СЊРЅС‹Рј Р·Р°РєРѕРЅР°Рј
 } ProcessKind;
 
 typedef enum
@@ -38,10 +40,10 @@ typedef enum
 
 struct velocity
 {
-	v3 translation; // скорость поступательного движения
-	v3 rotationAxis;  // ось вращения*скорость вращения(радиан/сек)
+	v3 translation; // СЃРєРѕСЂРѕСЃС‚СЊ РїРѕСЃС‚СѓРїР°С‚РµР»СЊРЅРѕРіРѕ РґРІРёР¶РµРЅРёСЏ
+	v3 rotationAxis;  // РѕСЃСЊ РІСЂР°С‰РµРЅРёСЏ*СЃРєРѕСЂРѕСЃС‚СЊ РІСЂР°С‰РµРЅРёСЏ(СЂР°РґРёР°РЅ/СЃРµРє)
 
-	inline velocity() {}
+	inline velocity(void) {}
 	inline velocity(const v3 _translation, const v3 _axis) 
 	{
 		translation = _translation;
@@ -55,7 +57,7 @@ typedef steel::svector<PhysicObject *> PhysicObjectList;
 
 class PhysicObject: public Interface
 {
-//	steel::time	currentTime; // время, в котором находиться объект
+//	steel::time	currentTime; // РІСЂРµРјСЏ, РІ РєРѕС‚РѕСЂРѕРј РЅР°С…РѕРґРёС‚СЊСЃСЏ РѕР±СЉРµРєС‚
 	friend class PhysicEngine;
 	friend class PhysicEngineSteel;
 
@@ -63,48 +65,48 @@ public:
 
 // *** Common ***
 
-	// список детей
-	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
-	// возвращает количество детей
+	// СЃРїРёСЃРѕРє РґРµС‚РµР№
+	/*	СЃРїРёСЃРѕРє СЃРѕСЃС‚Р°РІРЅС‹С… С‡Р°СЃС‚РµР№ РѕР±СЉРµРєС‚Р° (РїРѕС‚РѕРјРєРѕРІ). РќР°РїСЂРёРјРµСЂ, РґР»СЏ РјРёСЂР° - СЌС‚Рѕ СЃС‚РµРЅС‹ Рё РјРѕРЅСЃС‚СЂС‹, Р° РґР»СЏ РјРѕРЅСЃС‚СЂР° СЌС‚Рѕ РјРѕР¶РµС‚ Р±С‹С‚СЊ С‡Р°СЃС‚Р°РјРё С‚РµР»Р°.*/
+	// РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРµС‚РµР№
 	virtual int getPhysicChildrenCount(void) { return 0; } 
-	// ребёнок с указанным номером
+	// СЂРµР±С‘РЅРѕРє СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РЅРѕРјРµСЂРѕРј
 	virtual PhysicObject* getPhysicChildren(int number) { return NULL; }
 
-	// Непосредственно перед добавлением в движок вызывается 
-	virtual bool PhysicBeforeInject() { return true;}
-	// После удаления из движка вызывается процедура afterRemove
-	virtual void PhysicAfterRemove() {}
+	// РќРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РїРµСЂРµРґ РґРѕР±Р°РІР»РµРЅРёРµРј РІ РґРІРёР¶РѕРє РІС‹Р·С‹РІР°РµС‚СЃСЏ 
+	virtual bool PhysicBeforeInject(void) { return true;}
+	// РџРѕСЃР»Рµ СѓРґР°Р»РµРЅРёСЏ РёР· РґРІРёР¶РєР° РІС‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРѕС†РµРґСѓСЂР° afterRemove
+	virtual void PhysicAfterRemove(void) {}
 
-	// вызывается перед каждой итерацией обработки. Внутри этой процедуры объект может менять некоторые свои параметры
+	// РІС‹Р·С‹РІР°РµС‚СЃСЏ РїРµСЂРµРґ РєР°Р¶РґРѕР№ РёС‚РµСЂР°С†РёРµР№ РѕР±СЂР°Р±РѕС‚РєРё. Р’РЅСѓС‚СЂРё СЌС‚РѕР№ РїСЂРѕС†РµРґСѓСЂС‹ РѕР±СЉРµРєС‚ РјРѕР¶РµС‚ РјРµРЅСЏС‚СЊ РЅРµРєРѕС‚РѕСЂС‹Рµ СЃРІРѕРё РїР°СЂР°РјРµС‚СЂС‹
 	virtual	void ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
 
 
 // *** Configuration ***
 
 
-	// Форма объекта и способ проверки и обработки коллизий
-	virtual CollisionType getCollisionType() { return COLLISION_NONE; }
+	// Р¤РѕСЂРјР° РѕР±СЉРµРєС‚Р° Рё СЃРїРѕСЃРѕР± РїСЂРѕРІРµСЂРєРё Рё РѕР±СЂР°Р±РѕС‚РєРё РєРѕР»Р»РёР·РёР№
+	virtual CollisionType getCollisionType(void) { return COLLISION_NONE; }
 
-	// Положение и поворот произвольной точки объекта в локальный координатах (точка отсчёта объекта). Именно за изменения этого параметра и отвечает физический движок.
+	// РџРѕР»РѕР¶РµРЅРёРµ Рё РїРѕРІРѕСЂРѕС‚ РїСЂРѕРёР·РІРѕР»СЊРЅРѕР№ С‚РѕС‡РєРё РѕР±СЉРµРєС‚Р° РІ Р»РѕРєР°Р»СЊРЅС‹Р№ РєРѕРѕСЂРґРёРЅР°С‚Р°С… (С‚РѕС‡РєР° РѕС‚СЃС‡С‘С‚Р° РѕР±СЉРµРєС‚Р°). РРјРµРЅРЅРѕ Р·Р° РёР·РјРµРЅРµРЅРёСЏ СЌС‚РѕРіРѕ РїР°СЂР°РјРµС‚СЂР° Рё РѕС‚РІРµС‡Р°РµС‚ С„РёР·РёС‡РµСЃРєРёР№ РґРІРёР¶РѕРє.
 	virtual	void setPosition(ObjectPosition const &newPosition) = 0;
 
-	// скорость
-	virtual velocity	getVelocity() = 0;
+	// СЃРєРѕСЂРѕСЃС‚СЊ
+	virtual velocity	getVelocity(void) = 0;
 	virtual void		setVelocity(const velocity &v) = 0;
-	// масса
-	virtual	float	getMass() = 0;
+	// РјР°СЃСЃР°
+	virtual	float	getMass(void) = 0;
 
 
-/*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
+/*РљР°СЂРєР°СЃ - РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє, РІ РєРѕС‚РѕСЂРѕРј СЃРѕРґРµСЂР¶РёС‚СЃСЏ РѕР±СЉРµРєС‚. РњРѕР¶РµС‚ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ, РЅРѕ РЅРµ РјРµРЅСЊС€Рµ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР°, Р·Р°РЅРёРјР°РµРјС‹Рј РѕР±С…РµРєС‚РѕРј. Р”РѕР»Р¶РµРЅ РІС‹С‡РёСЃР»СЏС‚СЊСЃСЏ Р±С‹СЃС‚СЂРѕ*/
 //	virtual aabb getPFrame() = 0; // AABB of object
 
 	// *** Polyhedra ***
-	virtual Vertexes*	getPVertexes() { return NULL; } // список вершин (координаты относительно getPosition() и всех матриц предков)
-	// массив индексов вершин, которые образуют треугольники (грани)
-	virtual Triangles*	getTriangles() { return NULL; }
+	virtual Vertexes*	getPVertexes(void) { return NULL; } // СЃРїРёСЃРѕРє РІРµСЂС€РёРЅ (РєРѕРѕСЂРґРёРЅР°С‚С‹ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ getPosition() Рё РІСЃРµС… РјР°С‚СЂРёС† РїСЂРµРґРєРѕРІ)
+	// РјР°СЃСЃРёРІ РёРЅРґРµРєСЃРѕРІ РІРµСЂС€РёРЅ, РєРѕС‚РѕСЂС‹Рµ РѕР±СЂР°Р·СѓСЋС‚ С‚СЂРµСѓРіРѕР»СЊРЅРёРєРё (РіСЂР°РЅРё)
+	virtual Triangles*	getTriangles(void) { return NULL; }
 
-	virtual Config* getPMaterial() { return NULL; }
-	// эта функция вызывается, если другой объект трогает этот
+	virtual Config* getPMaterial(void) { return NULL; }
+	// СЌС‚Р° С„СѓРЅРєС†РёСЏ РІС‹Р·С‹РІР°РµС‚СЃСЏ, РµСЃР»Рё РґСЂСѓРіРѕР№ РѕР±СЉРµРєС‚ С‚СЂРѕРіР°РµС‚ СЌС‚РѕС‚
 	virtual void	trigger(PhysicObject *object) {}
 };
 

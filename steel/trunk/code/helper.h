@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Helper for Physic Engine
+		Class for debug information output (for Physic Engine)
 		draws velocity, collisions
 		Этот класс предназначен для вывода отладочной информации на экран
 		стандартными средствами графического движка.

@@ -1,5 +1,6 @@
 /*id*******************************************************************************
-	Unit: Res Text
+	File: res/text/text.h
+	Unit: res/text
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
@@ -7,15 +8,16 @@
 	License:
 		Steel Engine License
 	Description:
-        Молуль для хранения ресурса типа текст
+        РњРѕР»СѓР»СЊ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СЂРµСЃСѓСЂСЃР° С‚РёРїР° С‚РµРєСЃС‚
 **************************************************************************************/
 #ifndef __RES__TEXT_H
 #define __RES__TEXT_H
 
+#include "../../steel.h"
 #include "../res.h"
 #include <string>
 
-// формат текста
+// С„РѕСЂРјР°С‚ С‚РµРєСЃС‚Р°
 typedef enum
 {
 	TEXT_ASCII,
@@ -33,13 +35,13 @@ protected:
 public:
 	Text(void): text(NULL), length(0) {}
 
-	// сам текст в виде z-terminated string (в конце /0)
+	// СЃР°Рј С‚РµРєСЃС‚ РІ РІРёРґРµ z-terminated string (РІ РєРѕРЅС†Рµ /0)
 	unsigned char *getText(void) const
 	{ 
 		return text; 
 	}
 
-	// длина текста без /0
+	// РґР»РёРЅР° С‚РµРєСЃС‚Р° Р±РµР· /0
 	int getLength(void) const
 	{ 
 		return length; 

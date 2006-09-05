@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: GraphEngine - OpenGL Engine
+	File: graph/opengl/opengl_engine.cpp
+	Unit: opengl
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -8,11 +9,12 @@
 	License:
 		Steel Engine License
 	Description:
-		Графический джижок релизлванный на фунциях OpenGL. 
-		Рисует трехмерный объект в виде 3d-mesh,
-		расчитывает динамическое освещение
+		Р“СЂР°С„РёС‡РµСЃРєРёР№ РґРІРёР¶РѕРє СЂРµР°Р»РёР·Р»РІР°РЅРЅС‹Р№ РЅР° С„СѓРЅС†РёСЏС… OpenGL. 
+		Р РёСЃСѓРµС‚ С‚СЂРµС…РјРµСЂРЅС‹Р№ РѕР±СЉРµРєС‚ РІ РІРёРґРµ 3d-mesh,
+		СЂР°СЃС‡РёС‚С‹РІР°РµС‚ РґРёРЅР°РјРёС‡РµСЃРєРѕРµ РѕСЃРІРµС‰РµРЅРёРµ
  ************************************************************/
 
+#include "../../steel.h"
 #include "opengl_engine.h"
 
 #include <iostream>
@@ -23,7 +25,6 @@
 #include "../../res/image/image.h"
 #include "gl/libext.h"
 #include "ext/normalisation_cube_map.h"
-//#include "extensions.h"
 #include "../../res/res_main.h"
 
 #include <algorithm>
@@ -31,8 +32,8 @@
 using namespace std;
 
 /*
-Сердце Графического движка.
-Отвечает за вывод графичесткого элемента.
+РЎРµСЂРґС†Рµ Р“СЂР°С„РёС‡РµСЃРєРѕРіРѕ РґРІРёР¶РєР°.
+РћС‚РІРµС‡Р°РµС‚ Р·Р° РІС‹РІРѕРґ РіСЂР°С„РёС‡РµСЃС‚РєРѕРіРѕ СЌР»РµРјРµРЅС‚Р°.
 */
 
 
@@ -129,7 +130,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 
 //	steel::vector<int> elementAlpha;
 
-// В начале выводим только непрозрачные объекты
+// Р’ РЅР°С‡Р°Р»Рµ РІС‹РІРѕРґРёРј С‚РѕР»СЊРєРѕ РЅРµРїСЂРѕР·СЂР°С‡РЅС‹Рµ РѕР±СЉРµРєС‚С‹
 	for(steel::vector<GraphObjectStorage>::iterator it = storage.begin(); it != storage.end(); it++)
 //		if(!it->blend)
 			process(*it, globalTime, time);
@@ -140,7 +141,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 		}
 */
 
-// Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
+// РџРѕС‚РѕРј РїСЂРѕР·СЂР°С‡РЅС‹Рµ РІ РїРѕСЂСЏРґРєРµ СѓРґР°Р»С‘РЅРЅРѕСЃС‚Рё РѕС‚ РєР°РјРµСЂС‹: РІРЅР°С‡Р°Р»Рµ СЃР°РјС‹Рµ РґР°Р»СЊРЅРёРµ
 
 /*	if(conf->geti("drawAlpha")>0)
 	{
@@ -415,7 +416,7 @@ void OpenGL_Engine::cacheStorageObject(GraphObjectStorage &objectStorage)
 //		aabb frame = object->getFrame();
 //		frame.mul(object_matrix);
 
-// проверка, находится ли frame внутри пирамиды, которую образует угол обзора камеры. Если не попадает, то откидываем этот объект и всех его потомков
+// РїСЂРѕРІРµСЂРєР°, РЅР°С…РѕРґРёС‚СЃСЏ Р»Рё frame РІРЅСѓС‚СЂРё РїРёСЂР°РјРёРґС‹, РєРѕС‚РѕСЂСѓСЋ РѕР±СЂР°Р·СѓРµС‚ СѓРіРѕР» РѕР±Р·РѕСЂР° РєР°РјРµСЂС‹. Р•СЃР»Рё РЅРµ РїРѕРїР°РґР°РµС‚, С‚Рѕ РѕС‚РєРёРґС‹РІР°РµРј СЌС‚РѕС‚ РѕР±СЉРµРєС‚ Рё РІСЃРµС… РµРіРѕ РїРѕС‚РѕРјРєРѕРІ
 //		objectStorage.visible = isVisible(frame);
 
 		objectStorage.faceMaterials	= object->getFaceMaterials();

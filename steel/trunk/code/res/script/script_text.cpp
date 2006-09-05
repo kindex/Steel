@@ -1,3 +1,19 @@
+/*id*********************************************************
+	File: res/script/script_text.cpp
+	Unit: res/script
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Класс для загрузки таблицы настроек из текстового файла. 
+		Значения отделяются табуляуцей.
+	TODO
+		change logic or name
+ ************************************************************/
+
 #include "script_text.h"
 #include "../rstream.h"
 

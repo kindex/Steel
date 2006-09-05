@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: 3D PhysicEngine Steel
+	File: physic/pe_particle.cpp
+	Unit: steel physic engine/particles
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -8,10 +9,11 @@
 	License:
 		Steel Engine License
 	Description:
-		Steel Версия физического движка. 
-	Обрабатывает движение только частиц.
+		Steel Р’РµСЂСЃРёСЏ С„РёР·РёС‡РµСЃРєРѕРіРѕ РґРІРёР¶РєР°. 
+		РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РґРІРёР¶РµРЅРёРµ С‚РѕР»СЊРєРѕ С‡Р°СЃС‚РёС†.
 ************************************************************/
 
+#include "../steel.h"
 #include "physic_engine_steel.h"
 
 v3 PhysicEngineSteel::calculateForceForParticle(PhysicObjectStorage &storage1, PhysicObjectStorage &storage2)
@@ -39,16 +41,16 @@ v3 PhysicEngineSteel::calculateForceForParticle(PhysicObjectStorage &storage1, P
 	float gravity_power = 0.5f*(storage1.gravity_power + storage2.gravity_power);
 	float gravity_min_dist = 0.5f*(storage1.gravity_min_dist + storage2.gravity_min_dist);
 
-	//res += (pos2-pos1).getNormalized() * (dist - spring_r0)*spring_k; // пружина
+	//res += (pos2-pos1).getNormalized() * (dist - spring_r0)*spring_k; // РїСЂСѓР¶РёРЅР°
 	res += (pos2-pos1).getNormalized() * (pow((1/dist),2) - pow(1/dist,3)); // lennard-jones
 
 	if(dist>gravity_min_dist && gravity_k != 0)
 	{
-		res += (pos2-pos1).getNormalized() * pow(dist, gravity_power)*gravity_k; // гравитация
+		res += (pos2-pos1).getNormalized() * pow(dist, gravity_power)*gravity_k; // РіСЂР°РІРёС‚Р°С†РёСЏ
 	}
 
 // --------------------------------------------------------------------------
-	storage2.force -= res; // сила действия равна силе противодействия
+	storage2.force -= res; // СЃРёР»Р° РґРµР№СЃС‚РІРёСЏ СЂР°РІРЅР° СЃРёР»Рµ РїСЂРѕС‚РёРІРѕРґРµР№СЃС‚РІРёСЏ
 
 	return res;
 }
@@ -57,8 +59,8 @@ v3 PhysicEngineSteel::calculateForceForParticle(PhysicObjectStorage &storage1)
 {
 	v3 res;
 	res.loadZero();
-// реагируем только с частицами, номер которых больше этого
-// для того, чтобы исключить повторную проверку (сила действия равна силе противодействия)
+// СЂРµР°РіРёСЂСѓРµРј С‚РѕР»СЊРєРѕ СЃ С‡Р°СЃС‚РёС†Р°РјРё, РЅРѕРјРµСЂ РєРѕС‚РѕСЂС‹С… Р±РѕР»СЊС€Рµ СЌС‚РѕРіРѕ
+// РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РёСЃРєР»СЋС‡РёС‚СЊ РїРѕРІС‚РѕСЂРЅСѓСЋ РїСЂРѕРІРµСЂРєСѓ (СЃРёР»Р° РґРµР№СЃС‚РІРёСЏ СЂР°РІРЅР° СЃРёР»Рµ РїСЂРѕС‚РёРІРѕРґРµР№СЃС‚РІРёСЏ)
 	for(unsigned int i = storage1.partiecleSetId + 1; i < particleSet.size(); i++)
 		res += calculateForceForParticle(storage1, storage[particleSet[i]]);
 

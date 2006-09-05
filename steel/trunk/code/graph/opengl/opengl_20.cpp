@@ -1,5 +1,6 @@
 /*id*********************************************************
-	Unit: OpenGL Engine
+	File: graph/opengl/opengl_20.cpp
+	Unit: opengl
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -7,16 +8,17 @@
 	License:
 		Steel Engine License
 	Description:
-		Функции для рендерига объектов на OpenGL 2.0
+		Р¤СѓРЅРєС†РёРё РґР»СЏ СЂРµРЅРґРµСЂРёРіР° РѕР±СЉРµРєС‚РѕРІ РЅР° OpenGL 2.0
 
 		Shader Objects
  ************************************************************/
 
+#include "../../steel.h"
 #include "opengl_glsl.h"
 #include "opengl_engine.h"
 #include "gl/libext.h"
 
-// нарисовать множество полигонов с указанным материалом / Multitexture
+// РЅР°СЂРёСЃРѕРІР°С‚СЊ РјРЅРѕР¶РµСЃС‚РІРѕ РїРѕР»РёРіРѕРЅРѕРІ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РјР°С‚РµСЂРёР°Р»РѕРј / Multitexture
 void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material && GL_EXTENSION_GLSL)
@@ -39,7 +41,7 @@ void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphObjectStorage &e, Tria
 
 			for(int i=0; i<texCount; i++)
 			{
-				const Texture &texture = *material->getTexture(i); // текущая текстура
+				const Texture &texture = *material->getTexture(i); // С‚РµРєСѓС‰Р°СЏ С‚РµРєСЃС‚СѓСЂР°
 
 				glActiveTextureARB(GL_TEXTURE0_ARB + i);
 				glClientActiveTextureARB(GL_TEXTURE0_ARB + i);

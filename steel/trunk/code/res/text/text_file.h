@@ -1,5 +1,6 @@
 /*id*******************************************************************************
-	Unit: Res Text
+	File: res/text/text_file.h
+	Unit: res/text
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
@@ -7,11 +8,12 @@
 	License:
 		Steel Engine License
 	Description:
-        Молуль для рагрузки текста из текстового файла
+        РњРѕР»СѓР»СЊ РґР»СЏ СЂР°РіСЂСѓР·РєРё С‚РµРєСЃС‚Р° РёР· С‚РµРєСЃС‚РѕРІРѕРіРѕ С„Р°Р№Р»Р°
 **************************************************************************************/
 #ifndef __RES__TEXT_FILE_H
 #define __RES__TEXT_FILE_H
 
+#include "../../steel.h"
 #include "../res.h"
 #include "text.h"
 

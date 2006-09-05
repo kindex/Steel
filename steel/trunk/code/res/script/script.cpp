@@ -1,4 +1,19 @@
+/*id*********************************************************
+	File: res/script/script.cpp
+	Unit: res/script
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Класс для хранения таблицы настроек
+	TODO
+		change logic or name
+ ************************************************************/
 
+#include "../../steel.h"
 #include "script.h"
 #include "../../common/utils.h"
 using namespace std;

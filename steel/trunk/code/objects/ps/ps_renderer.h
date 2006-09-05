@@ -1,4 +1,4 @@
-﻿/*id*********************************************************
+/*id*********************************************************
 	File: objects/ps/ps_renderer.cpp
 	Unit: particle_system
 	Part of: Steel engine

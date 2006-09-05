@@ -1,23 +1,23 @@
-/*********************************************************************
-(C) KINDEX, 2004
-kindex@inbox.lv
-http://kindex.times.lv
+/*id*******************************************************************************
+	File: res/model/3ds.h
+	Unit: res/model
+	Part of: Steel engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+        РњРѕР»СѓР»СЊ РґР»СЏ Р·Р°РіСЂСѓР·РєРё РјРѕРґРµР»Рё С„РѕСЂРјР°С‚Рµ 3ds
 
-3DS file loader (only trimesh&materials)
+		3DMAX СЌРєСЃРїРѕСЂС‚РёСЂСѓРµС‚ РЅРµ РІСЃРµ РґР°РЅРЅС‹Рµ Рѕ РјР°С‚РµСЂРёР°Р»Рµ РІ .3DS.
+		РћРЅ РЅРµ СЌРєСЃРїРѕСЂС‚РёСЂСѓРµС‚ Bump, Reflection, Self_Illum
+		Р РµС€РµРЅРёРµ: РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ Рѕ РјР°С‚РµСЂРёР°Р»Рµ С…СЂР°РЅРёС‚СЊ РІ С„Р°Р№Р»Р°С… РЅР°СЃС‚СЂРѕРµРє. 
+		(res/materials/<mat_name>.mat)
+**************************************************************************************/
 
-20040228 Stated 3DS TriMesh OpenGL
-20040301 Materials Colors DEPTH_TEST
-20040501 Fix materials
-Вывод: 3DMAX экспортирует не все данные о материале в .3DS.
-Он не экспортирует Bump, Reflection, Self_Illum
-Решение: дополнительные данные о материале хранить в файлах настроек. 
-(res/materials/<mat_name>.mat)
-
-Это делает процедура updatematerial()
-
-**********************************************************************/
-
-#include "_3ds.h"
+#include "../../steel.h"
+#include "3ds.h"
 #include "../res_main.h"
 #include "../../common/utils.h"
 using namespace std;
@@ -281,7 +281,7 @@ bool _3DS::init(const std::string name, const std::string dir)
 
 	parsechain(*this, f, t);
 
-	// Следует сгенерировать нормали, так как в 3DS файле нет нормалей
+	// РЎР»РµРґСѓРµС‚ СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РЅРѕСЂРјР°Р»Рё, С‚Р°Рє РєР°Рє РІ 3DS С„Р°Р№Р»Рµ РЅРµС‚ РЅРѕСЂРјР°Р»РµР№
 	generateNormals();
 	updateAABB();
 

@@ -19,7 +19,7 @@
 
 #include <string>
 
-#if (STEEL_OS == WIN32) && (STEEL_COMPILER == GCC)
+#if STEEL_COMPILER == COMPILER_GCC
 int main1(int argc, char *argv[]);
 #else
 int main(int argc, char *argv[]);
