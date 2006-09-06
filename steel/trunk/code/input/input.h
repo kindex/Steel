@@ -40,6 +40,7 @@ protected:
 	int cx, cy, lastdx, lastdy;
 
 public:
+	virtual ~Input(void) {}
 	bool init(std::string _conf);
 	void setGame(Game *_game) { game = _game; }
 

@@ -14,6 +14,7 @@
 
 #include "../steel.h"
 #include "utils.h"
+#include "logger.h"
 
 #if STEEL_OS == OS_WIN32
 #include <windows.h>

@@ -58,13 +58,14 @@ protected:
 	std::map<std::string, GameObj*>	tag;
 
 public:
-	GameObj()
+	GameObj(void)
 	{
 		parent	= false;
 		processKind	= PROCESS_NONE;
 		positionKind = POSITION_LOCAL;
 	}
 
+	virtual ~GameObj(void) {}
 	void setPositionKind(PositionKind newKind) { positionKind = newKind; }
 	PositionKind	getPositionKind(void){	return positionKind;}
 	ProcessKind	getProcessKind(void) { return processKind; }

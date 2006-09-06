@@ -37,8 +37,8 @@ Image *createBitmap(const std::string filename)
 {
 	Image *r;
 	// try to load image2d
-	if(r = createBMP(filename)) return r;
-	if(r = createTGA(filename)) return r;
+	if((r = createBMP(filename))!= NULL) return r;
+	if((r = createTGA(filename))!= NULL) return r;
 	return NULL;
 }
 
@@ -46,13 +46,13 @@ Image *createImageFormat(const std::string filename)
 {
 	Image *r;
 	// try to load image2d
-	if(r = createBitmap(filename))	return r;
-	if(r = createBitmap(filename + ".normal"))	
+	if((r = createBitmap(filename)) != NULL) return r;
+	if((r = createBitmap(filename + ".normal"))	!= NULL)
 	{
 		((Image*)r)->setFormat(IMAGE_NORMAL);
 		return r;
 	}
-	if(r = createBitmap(filename + ".height"))
+	if((r = createBitmap(filename + ".height")) != NULL)
 	{
 		((Image*)r)->convertFromHeightMapToNormalMap();
 		((Image*)r)->setFormat(IMAGE_NORMAL);
@@ -67,9 +67,9 @@ Image *createImage(const std::string filename, const std::string base)
 {
 	Image *r;
 	// try to load image2d
-	if(r = createImageFormat(base + "/" +  filename)) return r;
+	if((r = createImageFormat(base + "/" +  filename)) != NULL) return r;
 	// try to load cubemap
-	if(r = createImageFormat(base + "/" + filename + ".cube"))
+	if((r = createImageFormat(base + "/" + filename + ".cube")) != NULL)
 	{
 		((Image*)r)->setDimension(IMAGE_CUBE);
 		return r;
@@ -109,3 +109,4 @@ bool registerResources()
 
 	return true;
 }
+

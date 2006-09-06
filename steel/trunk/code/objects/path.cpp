@@ -45,8 +45,8 @@ bool TagPath::init(ScriptLine &s)
 
 void TagPath::ProcessPhysic(steel::time curTime, steel::time frameLength, PhysicEngine *engine)
 {
-	int cnt = target.size();
-/*	GameObj *t = parent->findChildren(target[currentTarget].id);
+/*	int cnt = target.size();
+	GameObj *t = parent->findChildren(target[currentTarget].id);
 	if(!t) return;
 
 	v3 curPos = getPosition().getVector();

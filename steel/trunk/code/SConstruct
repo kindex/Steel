@@ -50,12 +50,10 @@ sources = Split("""
 	./common/timer.cpp
 	./common/system_info.cpp
 	./common/win_info.cpp
-	./graph/graph_helper.cpp
-	./graph/graph_engine.cpp
-	./graph/opengl/opengl_sdl_engine.cpp
 	./graph/opengl/ext/normalisation_cube_map.cpp
-	./graph/opengl/opengl_engine.cpp
 	./graph/opengl/gl/libext.cpp
+	./graph/opengl/opengl_sdl_engine.cpp
+	./graph/opengl/opengl_engine.cpp
 	./graph/opengl/opengl_win_engine.cpp
 	./graph/opengl/opengl_10.cpp
 	./graph/opengl/opengl_11.cpp
@@ -63,7 +61,8 @@ sources = Split("""
 	./graph/opengl/opengl_15.cpp
 	./graph/opengl/opengl_20.cpp
 	./graph/opengl/opengl_glsl.cpp
-	./test.cpp
+	./graph/graph_helper.cpp
+	./graph/graph_engine.cpp
 	./objects/custom_path.cpp
 	./objects/game_obj.cpp
 	./objects/ps/ps_renderer.cpp
@@ -90,13 +89,13 @@ sources = Split("""
 	./res/res.cpp
 	./res/image/image.cpp
 	./res/image/bmp.cpp
-	./res/image/png.cpp
 	./res/image/tga.cpp
 	./res/text/text_file.cpp
 	./physic/physic_engine.cpp
 	./physic/physic_engine_steel.cpp
 	./physic/pe_particle.cpp
 	./main.cpp
+	./test.cpp
 	""")
 
 libs = Split("""

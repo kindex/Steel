@@ -35,7 +35,7 @@ bool OpenGL_SDL_Engine::createWindow()
 	if (SDL_Init(SDL_INIT_VIDEO)<0)
 	{
 		error("graph sdl",std::string(_("SDL initialization has failed: "))+SDL_GetError());
-		setError(SE_SDL_INIT);
+//		setError(SE_SDL_INIT);
 		return false;
 	}
 
@@ -46,7 +46,7 @@ bool OpenGL_SDL_Engine::createWindow()
 	if ( !videoInfo )
 	{
 		error("graph sdl",std::string(_("Video query has failed: "))+SDL_GetError());
-		setError(SE_SDL_VQUERY);
+//		setError(SE_SDL_VQUERY);
 		SDL_Quit();
 		return false;
 	}
@@ -75,7 +75,7 @@ bool OpenGL_SDL_Engine::createWindow()
 		//(SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32) == -1) ) СЃ СЌС‚РёРј РЅРµ СЂР°Р±РѕС‚Р°РµС‚..
 	{
 		error("graph sdl opengl",std::string(_("Setting the GL attribute has failed: "))+SDL_GetError());
-		setError(SE_OGL_INIT);
+//		setError(SE_OGL_INIT);
 		SDL_Quit();
 		return false;
 	}
@@ -84,7 +84,7 @@ bool OpenGL_SDL_Engine::createWindow()
 	if ( !surface )
 	{
 		error("graph sdl",std::string(_("Setting the video mode has failed: "))+SDL_GetError());
-		setError(SE_SDL_VIDEO);
+//		setError(SE_SDL_VIDEO);
 		SDL_Quit();
 		return false;
 	}

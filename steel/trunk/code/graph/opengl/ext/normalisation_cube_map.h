@@ -14,6 +14,16 @@
 #define __OPENGL_NORMALISATION_CUBE_MAP
 
 #include "../../../steel.h"
+
+#ifdef  _WIN32
+	#include    <windows.h>
+#else
+	#define GLX_GLXEXT_LEGACY
+#endif
+
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 #include "../gl/libext.h"
 
 GLuint generateNormalisationCubeMap(void);

@@ -46,6 +46,7 @@ protected:
 	Config *conf;
 	ParticleSet *set;
 public:
+	virtual ~ParticleProcessor(void) {}
 };
 
 // класс для создания новых частиц

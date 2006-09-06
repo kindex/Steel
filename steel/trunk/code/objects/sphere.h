@@ -25,7 +25,7 @@ protected:
 	TexCoords *texCoords0, *texCoords1;
 public:
 	Sphere(void);
-	~Sphere(void);
+	virtual ~Sphere(void);
 
 	TexCoords*	getTexCoords(int texNumber)
 	{

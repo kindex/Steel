@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Обработчика ввода с клавиатуры и мыши, используя SDL
+		Обработчик ввода с клавиатуры и мыши, используя SDL
  ************************************************************/
 
 #ifndef INPUT_SDL_H
@@ -18,7 +18,6 @@
 
 #if STEEL_OPENGL_API == OPENGL_SDL
 
-#include "../_cpp.h"
 #include "input.h"
 
 class InputSDL: public Input

@@ -128,7 +128,7 @@ void GLSL::loadLog(GLuint object)
     if(logLength < 1 )
         return;
                                     // try to avoid allocating buffer
-    if ( logLength > sizeof ( buffer ) )
+    if ( logLength > (int)sizeof ( buffer ) )
     {
         infoLog = (GLcharARB*) malloc ( logLength );
 

@@ -19,7 +19,6 @@
 #define __GRAPH_OPENGL_SDL_ENGINE_H
 
 #include "../../steel.h"
-#include "../../_cpp.h"
 
 #if STEEL_OPENGL_API == OPENGL_SDL
 
