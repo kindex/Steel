@@ -37,37 +37,37 @@ using namespace std;
 */
 
 
-void OpenGL_Engine::process(GraphObjectStorage &e, steel::time globalTime, steel::time time)
+void OpenGL_Engine::process(GraphStorage *e, steel::time globalTime, steel::time time)
 {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
 	float m[16]; // TODO
-	m[0] = e.matrix.data.matrix.data.m[0][0];	m[1] = e.matrix.data.matrix.data.m[1][0];	m[2] = e.matrix.data.matrix.data.m[2][0];	m[3]  = 0;
-	m[4] = e.matrix.data.matrix.data.m[0][1];	m[5] = e.matrix.data.matrix.data.m[1][1];	m[6] = e.matrix.data.matrix.data.m[2][1];	m[7]  = 0;
-	m[8] = e.matrix.data.matrix.data.m[0][2];	m[9] = e.matrix.data.matrix.data.m[1][2];	m[10] = e.matrix.data.matrix.data.m[2][2];	m[11] = 0;
-	m[12] = e.matrix.data.vector.x;				m[13] = e.matrix.data.vector.y;				m[14] = e.matrix.data.vector.z;				m[15] = 1;
+	m[0] = e->matrix.data.matrix.data.m[0][0];	m[1] = e->matrix.data.matrix.data.m[1][0];	m[2] = e->matrix.data.matrix.data.m[2][0];	m[3]  = 0;
+	m[4] = e->matrix.data.matrix.data.m[0][1];	m[5] = e->matrix.data.matrix.data.m[1][1];	m[6] = e->matrix.data.matrix.data.m[2][1];	m[7]  = 0;
+	m[8] = e->matrix.data.matrix.data.m[0][2];	m[9] = e->matrix.data.matrix.data.m[1][2];	m[10] = e->matrix.data.matrix.data.m[2][2];	m[11] = 0;
+	m[12] = e->matrix.data.vector.x;				m[13] = e->matrix.data.vector.y;				m[14] = e->matrix.data.vector.z;				m[15] = 1;
 	glLoadMatrixf(m);
 
-	if(conf->geti("drawFace") && e.faceMaterials && DrawFill)
-		for(unsigned int i = 0; i < e.faceMaterials->size(); i++)
-			(this->*DrawFill)(e, e.faceMaterials->at(i).triangles, e.faceMaterials->at(i).material, total);
+	if(conf->geti("drawFace") && e->faceMaterials && DrawFill)
+		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
+			(this->*DrawFill)(*e, e->faceMaterials->at(i).triangles, e->faceMaterials->at(i).material, total);
 
-	if(conf->geti("drawWire") && e.faceMaterials && DrawWire)
-		for(unsigned int i = 0; i < e.faceMaterials->size(); i++)
-			(this->*DrawWire)(e, e.faceMaterials->at(i).triangles, total);
+	if(conf->geti("drawWire") && e->faceMaterials && DrawWire)
+		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
+			(this->*DrawWire)(*e, e->faceMaterials->at(i).triangles, total);
 
 	if(conf->geti("drawLines") && DrawLines)
-		(this->*DrawLines)(e, total);
+		(this->*DrawLines)(*e, total);
 
 	if(conf->geti("drawNormals") && DrawNormals)
-		(this->*DrawNormals)(e, total);
+		(this->*DrawNormals)(*e, total);
 
 	if(conf->geti("drawVertexes") && DrawVertexes)
-		(this->*DrawVertexes)(e, total);
+		(this->*DrawVertexes)(*e, total);
 
 	if(conf->geti("drawAABB") && DrawAABB)
-		(this->*DrawAABB)(e, total);
+		(this->*DrawAABB)(*e, total);
 
 	glPopMatrix();
 }
@@ -109,7 +109,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 	int size = objects.size();
 
 	for(int i=0; i < size; i++)
-		prepare(objects[i], globalTime, time); /* Update vertexes, faces, ights */
+		prepare(getStorage(objects[i]), globalTime, time); /* Update vertexes, faces, ights */
 
 
 //	if(!ARB_multitexture_supported) 
@@ -131,9 +131,12 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 //	steel::vector<int> elementAlpha;
 
 // В начале выводим только непрозрачные объекты
-	for(steel::vector<GraphObjectStorage>::iterator it = storage.begin(); it != storage.end(); it++)
+	for(svector<Storage*>::iterator it = storages.begin(); it != storages.end(); it++)
 //		if(!it->blend)
-			process(*it, globalTime, time);
+	{
+			GraphStorage *storage = GS(*it);
+			process(storage, globalTime, time);
+	}
 	/*		else
 		{
 			it->distance = (camera.eye - it->matrix*v3(0,0,0)).getLength();
@@ -314,39 +317,35 @@ void OpenGL_Engine::processCamera()
     glLoadIdentity();
 }
 
-OpenGL_Engine::GraphObjectStorage &OpenGL_Engine::getStorage(GraphObject *object)
+OpenGL_Engine::GraphStorage *OpenGL_Engine::getStorage(GraphObject *object)
 {
 	uid id = object->getId();
 	assert(idHash.find(id) != idHash.end(), "Object not found in graph storage");
 
-	return storage[idHash[id]];
+	return (GraphStorage*)storages[idHash[id]];
 }
 
-void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::time time, matrix34 matrix, GraphObject *parent)
+void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix, GraphObject *parent)
 {
-
 	info.curTime = globalTime;
 	info.frameLength = time;
 	info.modificationTime = globalFrameNumber;
 	info.cameraEye = camera.eye;
 	info.cameraDirection = camera.center - camera.eye;
 
-	object->ProcessGraph(info);
+	G(storage->object)->ProcessGraph(info);
+	storage->cache();
 
-	int sid = idHash[object->getId()];
-		
-	cacheStorageObject(storage[sid]);
-
-	if(storage[sid].childrenModificationTime < object->getChildrenModificationTime())
+	if(storage->childrenModificationTime < storage->object->getChildrenModificationTime())
 	{
-		storage[sid].childrenModificationTime = object->getChildrenModificationTime();
+		storage->childrenModificationTime = storage->object->getChildrenModificationTime();
 
 		StorageHash newChildrenId;
 
-		int count = object->getGraphChildrenCount();
+		int count = G(storage->object)->getGraphChildrenCount();
 		for(int i = 0; i < count; i++) // add new + cache
 		{
-			GraphObject *child = object->getGraphChildren(i);
+			GraphObject *child = G(storage->object)->getGraphChildren(i);
 			uid id = child->getId();
 			newChildrenId[id] = i;
 
@@ -356,53 +355,68 @@ void OpenGL_Engine::prepare(GraphObject *object, steel::time globalTime, steel::
 				makeStorageForObject(child);
 				makeStorageForChildren(child);
 
-				storage[sid].children.push_back(id);
+				storage->children.push_back(id);
 			}
-			cacheStorageObject(getStorage(child));
+			getStorage(child)->cache();
 		}
-		int size = storage[sid].children.size();
+		int size = storage->children.size();
 
-		for(int i = 0; i<size; i++)
+		for(int i = 0; i < size; i++)
 		{
-			uid id = storage[sid].children[i];
+			uid id = storage->children[i];
 			if(newChildrenId.find(id) == newChildrenId.end())
 			{
 				int n = idHash[id];
 				deleteStorageForChildren(n);
 				deleteStorageForObject(n);
-				storage[sid].children[i] = storage[sid].children.back();
-				storage[sid].children.pop_back();
+				storage->children[i] = storage->children.back();
+				storage->children.pop_back();
 				size--;
 				i--;
 			}
 		}
 	}
 
-	if(storage[sid].lights)
-	for(Lights::const_iterator it = storage[sid].lights->begin(); it != storage[sid].lights->end(); it++)
+	if(storage->lights != NULL)
+	for(Lights::const_iterator it = storage->lights->begin(); it != storage->lights->end(); it++)
 	{
 		lights.push_back(*it);
-		lights.back().position = storage[sid].matrix*lights.back().position;
+		lights.back().position = storage->matrix*lights.back().position;
 	}
 
-	int count = object->getGraphChildrenCount();
+	int count = G(storage->object)->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
-		GraphObject *child = object->getGraphChildren(i);
+		GraphObject *child = G(storage->object)->getGraphChildren(i);
 		
-		prepare(child, globalTime, time);
+		prepare(getStorage(child), globalTime, time);
 	}
 
 }
 
-void OpenGL_Engine::cacheStorageObject(GraphObjectStorage &objectStorage)
+
+void OpenGL_Engine::makeStorageForChildren(Interface *object)
 {
-	GraphObject *object = objectStorage.object;
+	int count = G(object)->getGraphChildrenCount();
+	for(int i = 0; i < count; i++)
+	{
+		GraphObject *child = G(object)->getGraphChildren(i);
+		makeStorageForObject(child);
+		makeStorageForChildren(child);
+	}
+}
 
-	matrix34 object_matrix = object->getPosition(); // global 
-	PositionKind pos = object->getPositionKind();
+void OpenGL_Engine::GraphStorage::fill(Interface *object)
+{
+	Storage::fill(object);
+}
 
-	objectStorage.matrix = object_matrix;
+void OpenGL_Engine::GraphStorage::cache(void)
+{
+	matrix34 object_matrix = G(object)->getPosition(); // global 
+	PositionKind pos = G(object)->getPositionKind();
+
+	matrix = object_matrix;
 
 /*	if(pos == POSITION_LOCAL && parent)
 	{
@@ -410,75 +424,21 @@ void OpenGL_Engine::cacheStorageObject(GraphObjectStorage &objectStorage)
 	}*/
 
 
-	if(objectStorage.modificationTime < object->getModificationTime())
+	if(modificationTime < G(object)->getModificationTime())
 	{
-		objectStorage.modificationTime = object->getModificationTime();
+		modificationTime = G(object)->getModificationTime();
 //		aabb frame = object->getFrame();
 //		frame.mul(object_matrix);
 
 // проверка, находится ли frame внутри пирамиды, которую образует угол обзора камеры. Если не попадает, то откидываем этот объект и всех его потомков
 //		objectStorage.visible = isVisible(frame);
 
-		objectStorage.faceMaterials	= object->getFaceMaterials();
-		objectStorage.vertex		= object->getVertexes();
-		objectStorage.normal		= object->getNormals();
-		objectStorage.lines			= object->getLines();
-		objectStorage.lights		= object->getLights();
-		objectStorage.blend			= false;
+		faceMaterials	= G(object)->getFaceMaterials();
+		vertex			= G(object)->getVertexes();
+		normal			= G(object)->getNormals();
+		lines			= G(object)->getLines();
+		lights			= G(object)->getLights();
+		blend			= false;
 	}
 }
 
-void OpenGL_Engine::makeStorageForObject(GraphObject *object)
-{
-	uid objectId = object->getId();
-	if(idHash.find(objectId) != idHash.end())
-	{
-		log_msg("error graph", "Duplicate object " + IntToStr(objectId) + " in storage");
-		return;
-	}
-
-	int storageId = storage.size();
-	storage.resize(storageId + 1);
-
-	GraphObjectStorage &objectStorage = storage[storageId];
-
-	idHash[objectId] = storageId;
-
-	objectStorage.object = object;
-	objectStorage.storageId = storageId;
-	objectStorage.objectId = objectId;
-
-	objectStorage.modificationTime = -1;
-	objectStorage.childrenModificationTime = -1;
-}
-
-void OpenGL_Engine::deleteStorageForObject(int sid)
-{
-	idHash.erase(storage[sid].objectId);
-	storage[sid] = storage.back();
-	idHash[storage[sid].objectId] = sid;
-	storage.pop_back();
-}
-
-void OpenGL_Engine::deleteStorageForChildren(int sid)
-{
-	int count = storage[sid].children.size();
-	for(int i = 0; i < count; i++)
-	{
-		int n = idHash[storage[sid].children[i]];
-		deleteStorageForChildren(n);
-		deleteStorageForObject(n);
-	}
-}
-
-
-void OpenGL_Engine::makeStorageForChildren(GraphObject *object)
-{
-	int count = object->getGraphChildrenCount();
-	for(int i = 0; i < count; i++)
-	{
-		GraphObject *child = object->getGraphChildren(i);
-		makeStorageForObject(child);
-		makeStorageForChildren(child);
-	}
-}

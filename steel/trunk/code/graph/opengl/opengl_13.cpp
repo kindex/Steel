@@ -22,7 +22,7 @@
 
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material && GL_EXTENSION_MULTITEXTURE)
 	{
@@ -96,7 +96,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 
 			if(conf->geti("drawBump") && !lights.empty() && (i==0) && !e.blend && (texture.format == TEXTURE_FORMAT_BUMP_MAP || texture.format == TEXTURE_FORMAT_COLOR_MAP))
 			{
-				TexCoords *coords = e.object->getTexCoords(i);
+				TexCoords *coords = G(e.object)->getTexCoords(i);
 
 				int j = 0;
 
@@ -149,7 +149,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Tria
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				if(BindTexture) (this->*BindTexture)(texture.image, true);
 
-				TexCoords *coords = e.object->getTexCoords(i);
+				TexCoords *coords = G(e.object)->getTexCoords(i);
 				assert(coords->data.size() == e.vertex->data.size(), "TexCoords.size != Vertex.size");
 				if(BindTexCoords) (this->*BindTexCoords)(coords);
 				currentTextureArb++;
@@ -362,7 +362,7 @@ bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix34 const matrix, v3 const 
 }
 */
 
-void OpenGL_Engine::drawBump(GraphObjectStorage &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img)
+void OpenGL_Engine::drawBump(GraphStorage &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img)
 {
 	glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
 	glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);

@@ -26,7 +26,7 @@
 #include <GL/gl.h>			// Header File For The OpenGL32 Library
 #include <GL/glu.h>			// Header File For The GLu32 Library
 //#include <GL/glaux.h>		// Header File For The Glaux Library
-#else
+#elif STEEL_OS == OS_WIN32
 #include <windows.h>		// Header File For Windows
 #include <gl\gl.h>			// Header File For The OpenGL32 Library
 #include <gl\glu.h>			// Header File For The GLu32 Library
@@ -58,19 +58,10 @@ protected:
 		char	*object;
 	};
 
-	struct GraphObjectStorage // множество треугольников одного материала
+#define GS(storage) ((GraphStorage*)(storage))
+
+	struct GraphStorage: public Storage // множество треугольников одного материала
 	{
-		// инентификатор объекта (uid)
-		uid objectId;
-		int storageId; // индекс этой структуры (кеша) в массиве stroage
-		GraphObject *object;
-		
-		// время последнего изменения объекта. Если отлично от того, что возвращает PhysicObject::getModificationTime(), то надо обновить кеш.
-		ModificationTime modificationTime, childrenModificationTime;
-
-		// список детей объекта (uid)
-		steel::svector<uid> children;
-
 		// *** Polyhedra ****
 		FaceMaterials *faceMaterials;
 		Vertexes	*vertex;
@@ -85,11 +76,12 @@ protected:
 		bool		visible;
 		float		distance; // расстояние до камеры
 
+		GraphStorage(void): faceMaterials(NULL), vertex(NULL), normal(NULL), lights(NULL),
+			lines(NULL) {}
+		void fill(Interface *object);
+		void cache(void);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 	};
-
-	// data, to store collected information
-	steel::vector<GraphObjectStorage> storage;
 
 	std::map<uid, OpenGL_Buffer> buffer;
 
@@ -101,46 +93,46 @@ protected:
 protected:
 	// procedure variables
 	bool (OpenGL_Engine::*BindTexture)(Image *image, bool enable);
-	void (OpenGL_Engine::*DrawFill)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawFill)(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 
 	void (OpenGL_Engine::*BindTexCoords)(TexCoords *coords);
 	void (OpenGL_Engine::*BindTexCoords3f)(TexCoords3f *coords);
 
-	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawNormals)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawVertexes)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawAABB)(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawNormals)(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawVertexes)(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawAABB)(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.0
 	bool BindTexture_OpenGL10(Image *image, bool enable);
-	void DrawFill_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
-	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
-	void DrawWire_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
-	void DrawLines_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
-	void DrawNormals_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
-	void DrawVertexes_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
-	void DrawAABB_OpenGL10(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void DrawFill_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void DrawWire_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void DrawLines_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
+	void DrawNormals_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
+	void DrawVertexes_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
+	void DrawAABB_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.1
 	bool BindTexture_OpenGL11(Image *image, bool enable);
-	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
-	void DrawWire_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
-	void DrawLines_OpenGL11(OpenGL_Engine::GraphObjectStorage &e, GraphEngine::GraphTotalInfo &total);
+	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void DrawWire_OpenGL11(OpenGL_Engine::GraphStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void DrawLines_OpenGL11(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
 	void BindTexCoords_OpenGL11(TexCoords *coords);
 	void BindTexCoords3f_OpenGL11(TexCoords3f *coords);
 
 	// OpenGL 1.3
-	void DrawFill_OpenGL13(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void DrawFill_OpenGL13(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.5
-	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void BindTexCoords_OpenGL15(TexCoords *coords);
 	void BindTexCoords3f_OpenGL15(TexCoords3f *coords);
 
 	// OpenGL 2.0
-	void DrawFill_OpenGL20(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void DrawFill_OpenGL20(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
 	GLSL *BindShader(Material *shader);
 
 	// Stuff to delete
@@ -185,7 +177,7 @@ public:
 	bool process(steel::time globalTime, steel::time time);
 	bool deinit(void);
 
-	void prepare(GraphObject *object, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GraphObject *parent = NULL);
+	void prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GraphObject *parent = NULL);
 
 	virtual void swapBuffers(void) = 0;
 	virtual bool createWindow(void) = 0;
@@ -194,8 +186,7 @@ public:
 	
 	bool isVisible(aabb box);
 
-//	void process(GraphObjectStorage &e);
-	void process(GraphObjectStorage &e, steel::time globalTime, steel::time time);
+	void process(GraphStorage *e, steel::time globalTime, steel::time time);
 	
 //	void drawFaces(DrawElement &e);
 //	void drawNormals(DrawElement &e);
@@ -203,7 +194,7 @@ public:
 //	void drawAABB(DrawElement &e, matrix34 matrix);
 
 	
-	void drawBump(GraphObjectStorage &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img);
+	void drawBump(GraphStorage &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img);
 	void getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, FaceMaterials *faceMaterials, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent);
 	void genTangentSpaceLight(steel::vector<v3> const &sTangent, steel::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
 
@@ -226,17 +217,12 @@ public:
 /*	bool bindTexCoords(MapCoord *coord);
 	bool bindVertexes(Vertexes *v);*/
 
-	GraphObjectStorage &getStorage(GraphObject *object);
+	GraphStorage *getStorage(GraphObject *object);
 	
-		// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	void makeStorageForObject(GraphObject *object);
-	void deleteStorageForObject(int sid);
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	void makeStorageForChildren(GraphObject *object);
-	void deleteStorageForChildren(int sid);
+	Storage* getStorageClass(Interface *object) { return new GraphStorage; }
 
-	// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	virtual void cacheStorageObject(GraphObjectStorage &objectStorage);
+	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
+	void makeStorageForChildren(Interface *object);
 };
 
 

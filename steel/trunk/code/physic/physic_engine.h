@@ -17,8 +17,8 @@
 #define PHYSIC_ENGINE_H
 
 #include "../steel.h"
+#include <map>
 #include "../res/conf/conf.h"
-
 #include "physic_interface.h"
 
 class PhysicEngine: public Engine
@@ -56,14 +56,6 @@ public:
 	// добавляет объект и его детей в движок для обработки
 	virtual bool inject(PhysicObject *object);
 	virtual bool remove(PhysicObject *object);
-
-
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	virtual void makeStorageForObject(PhysicObject *object) = 0;
-	virtual void deleteStorageForObject(int sid)  = 0;
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	virtual void makeStorageForChildren(PhysicObject *object)  = 0;
-	virtual void deleteStorageForChildren(int sid)  = 0;
 
 	virtual void setGravitation(const v3 force) { g = force; }
 };

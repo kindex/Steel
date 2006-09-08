@@ -67,7 +67,6 @@ public:
 	PositionKind	getPositionKind(void) {return POSITION_GLOBAL; }
 
 	GLines*		getLines(void)		{	return &glines;	}
-	uid			getId(void)			{	return 0;		}
 	aabb		getFrame(void)		{	return aabb(v3(-INF, -INF, -INF), v3(INF, INF, INF));	}
 	bool		cleanup(void)		{	return true;	}
 	Vertexes*	getVertexes(void)	{	return &vertex;	}

@@ -42,10 +42,6 @@ class GraphEngine: public Engine
 protected:
 	steel::vector<GraphObject*> objects;
 
-	typedef std::map <uid, int> StorageHash;
-	// отображение идентификаторов объекта на положение в массиве storage
-	StorageHash idHash;
-
 	GraphEngineInfo info;
 public:
 	struct GraphTotalInfo
@@ -66,13 +62,6 @@ public:
 	virtual bool isVisible(aabb box) = 0;
 	// Clear collected information
 	bool clear(void);
-	
-		// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	virtual void makeStorageForObject(GraphObject *object) = 0;
-	virtual void deleteStorageForObject(int sid)  = 0;
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	virtual void makeStorageForChildren(GraphObject *object)  = 0;
-	virtual void deleteStorageForChildren(int sid)  = 0;
 };
 
 #endif

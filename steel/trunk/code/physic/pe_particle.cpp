@@ -16,7 +16,7 @@
 #include "../steel.h"
 #include "physic_engine_steel.h"
 
-v3 PhysicEngineSteel::calculateForceForParticle(PhysicObjectStorage &storage1, PhysicObjectStorage &storage2)
+v3 PhysicEngineSteel::calculateForceForParticle(PhysicStorage &storage1, PhysicStorage &storage2)
 {
 	v3 res;
 	res.loadZero();
@@ -29,8 +29,8 @@ v3 PhysicEngineSteel::calculateForceForParticle(PhysicObjectStorage &storage1, P
 	if(helperDrawLines) // draw collision
 		helper->drawLine(Line(pos1, pos2-pos1), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
 
-	Config *material1 =  storage1.object->getPMaterial();
-	Config *material2 =  storage2.object->getPMaterial();
+	Config *material1 =  ((PhysicObject*)storage1.object)->getPMaterial();
+	Config *material2 =  ((PhysicObject*)storage2.object)->getPMaterial();
 
 	float dist = (pos2-pos1).getLength();
 	
@@ -55,20 +55,20 @@ v3 PhysicEngineSteel::calculateForceForParticle(PhysicObjectStorage &storage1, P
 	return res;
 }
 
-v3 PhysicEngineSteel::calculateForceForParticle(PhysicObjectStorage &storage1)
+v3 PhysicEngineSteel::calculateForceForParticle(PhysicStorage &storage1)
 {
 	v3 res;
 	res.loadZero();
 // реагируем только с частицами, номер которых больше этого
 // для того, чтобы исключить повторную проверку (сила действия равна силе противодействия)
 	for(unsigned int i = storage1.partiecleSetId + 1; i < particleSet.size(); i++)
-		res += calculateForceForParticle(storage1, storage[particleSet[i]]);
+		res += calculateForceForParticle(storage1, *(PhysicStorage*)storages[particleSet[i]]);
 
 	return res;
 }
 
 
-bool PhysicEngineSteel::processParticle(PhysicObjectStorage &objectStorage, steel::time globalTime, steel::time time)
+bool PhysicEngineSteel::processParticle(PhysicStorage &objectStorage, steel::time globalTime, steel::time time)
 {
 	objectStorage.position;
 

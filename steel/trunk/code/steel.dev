@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=133
+UnitCount=134
 Type=0
 Ver=1
 ObjFiles=
@@ -1371,6 +1371,16 @@ BuildCmd=
 FileName=graph\opengl\opengl_20.cpp
 CompileCpp=1
 Folder=graph/opengl
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit134]
+FileName=engine.cpp
+CompileCpp=1
+Folder=Steel
 Compile=1
 Link=1
 Priority=1000

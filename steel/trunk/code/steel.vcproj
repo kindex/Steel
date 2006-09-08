@@ -322,6 +322,10 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
+				RelativePath=".\engine.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\engine.h"
 				>
 			</File>
@@ -1210,7 +1214,7 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="res"
+			Name="data"
 			>
 			<File
 				RelativePath="..\res\game.conf"

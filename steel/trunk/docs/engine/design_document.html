@@ -463,7 +463,7 @@ table.MsoTableGrid
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="13314"/>
+ <o:shapedefaults v:ext="edit" spidmax="15362"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -1279,8 +1279,8 @@ EN-US'>DFD </span>верхнего уровня</p>
 
 <p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>main</span></span>
 (<span lang=EN-US style='mso-ansi-language:EN-US'>core</span>) получает
-управление от ОС, инициализирует все модули, в главном цикле программы поочерёдно
-передаёт управление всем частям движка. К модулю <span lang=EN-US
+управление от ОС, инициализирует все модули, в главном цикле программы
+поочерёдно передаёт управление всем частям движка. К модулю <span lang=EN-US
 style='mso-ansi-language:EN-US'>core</span><span lang=EN-US> </span>также
 относятся <a href="#_Базовые_типы_данных">базовые тиры данных</a>, <a
 href="#_Logger_(common/logger.h)">логгер</a>, консоль.</p>
@@ -1295,9 +1295,10 @@ lang=EN-US style='mso-ansi-language:EN-US'>Game</span><span lang=EN-US> </span>�
 <p><span lang=EN-US style='mso-ansi-language:EN-US'><a
 href="#_Object_(interface.h)">Game<span style='mso-ansi-language:RU'> </span>objects</a></span><span
 lang=EN-US> </span>– это набор игровых объектов. Они определяют, как их нужно
-рисовать и куда им нужно двигаться. Часть основных объектов (модель, источник освещения,
-уровень) находиться в движке, в специфичные объекты (<span class=SpellE>юниты</span>,
-оружие) являются частью <span lang=EN-US style='mso-ansi-language:EN-US'>Game</span>.</p>
+рисовать и куда им нужно двигаться. Часть основных объектов (модель, источник
+освещения, уровень) находиться в движке, в специфичные объекты (<span
+class=SpellE>юниты</span>, оружие) являются частью <span lang=EN-US
+style='mso-ansi-language:EN-US'>Game</span>.</p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'><a
 href="#_Resource_Collection_(res/res.h)"><span class=SpellE>Res</span></a></span><span
@@ -1478,8 +1479,8 @@ EN-US'>Position</span>). Положение – это смещение, пов�
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>Положение и поворот произвольной точки
-  объекта в локальных или глобальных координатах (точка отсчёта объекта).</p>
+  <p style='margin-left:0cm;text-indent:0cm'>Положение и поворот произвольной
+  точки объекта в локальных или глобальных координатах (точка отсчёта объекта).</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes'>
@@ -1721,7 +1722,8 @@ EN-US'>Abstract Interface:<o:p></o:p></span></p>
  </tr>
 </table>
 
-<p><o:p>&nbsp;</o:p></p>
+<h3><span lang=EN-US style='background:yellow;mso-highlight:yellow;mso-ansi-language:
+EN-US'>Storage</span><span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h3>
 
 <h2><a name="_Toc142999573"></a><a name="_Physic_Engine"></a><span
 style='mso-bookmark:_Toc142999573'><span lang=EN-US style='mso-ansi-language:
@@ -1842,7 +1844,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   font-family:"Courier New";mso-no-proof:yes'>Polyhedra – полигональное тело<o:p></o:p></span></p>
   <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='font-size:
   10.0pt;font-family:"Courier New";mso-ansi-language:EN-US;mso-no-proof:yes'>Particle</span><span
-  style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'> – частица<o:p></o:p></span></p>
+  style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'> –
+  частица<o:p></o:p></span></p>
   <p style='margin-left:0cm;text-indent:0cm'><span lang=EN-US style='font-size:
   10.0pt;font-family:"Courier New";mso-ansi-language:EN-US;mso-no-proof:yes'>Sphere</span><span
   style='font-size:10.0pt;font-family:"Courier New";mso-no-proof:yes'> – шар<o:p></o:p></span></p>
@@ -1897,8 +1900,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p style='margin-left:0cm;text-indent:0cm'>Положение и поворот произвольной
-  точки объекта в локальный координатах (точка отсчёта объекта). Именно за изменения
-  этого параметра и отвечает физический движок.</p>
+  точки объекта в локальный координатах (точка отсчёта объекта). Именно за
+  изменения этого параметра и отвечает физический движок.</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:3'>
@@ -2128,9 +2131,9 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p style='margin-left:0cm;text-indent:0cm'>писок вершин (координаты отночительно
-  <span lang=EN-US style='mso-ansi-language:EN-US'>Position</span>() и всех
-  матриц предков)</p>
+  <p style='margin-left:0cm;text-indent:0cm'>писок вершин (координаты
+  отночительно <span lang=EN-US style='mso-ansi-language:EN-US'>Position</span>()
+  и всех матриц предков)</p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:8'>
@@ -2273,8 +2276,8 @@ font-family:"Courier New";mso-no-proof:yes'> afterRemove().</span> После
 <p>Перед каждой итерацией обработки вызывается <span class=SpellE><span
 lang=EN-US style='mso-ansi-language:EN-US'>PhysisObject</span></span>::<span
 lang=EN-US style='mso-ansi-language:EN-US'>process</span>(). Параметры: текущее
-время, длина обрабатываемого кванта времени, номер обрабатываемого кадра. Внутри
-этой процедуры объект может менять некоторые свои параметры.</p>
+время, длина обрабатываемого кванта времени, номер обрабатываемого кадра.
+Внутри этой процедуры объект может менять некоторые свои параметры.</p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>Object</span><span
 lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Can</span><span
@@ -2451,9 +2454,9 @@ href="#_Структура_каталогов"><span class=SpellE>res</span></a>
 <p>У процедуры <span lang=EN-US style='mso-ansi-language:EN-US'>add</span> есть
 второй параметр типа <span class=SpellE><span lang=EN-US style='mso-ansi-language:
 EN-US'>bool</span></span>. Если он равняется <span lang=EN-US style='mso-ansi-language:
-EN-US'>false</span>, то после загрузки ресурса текущая директория не восстанавливается
-и надо это делать вручную с помощью вызова <span lang=EN-US style='mso-ansi-language:
-EN-US'>pop</span>.</p>
+EN-US'>false</span>, то после загрузки ресурса текущая директория не
+восстанавливается и надо это делать вручную с помощью вызова <span lang=EN-US
+style='mso-ansi-language:EN-US'>pop</span>.</p>
 
 <p>Удаление ресурсов происходит с помощью функции <span lang=EN-US
 style='mso-ansi-language:EN-US'>remove</span>(<span lang=EN-US
@@ -2464,8 +2467,8 @@ lang=EN-US style='mso-ansi-language:EN-US'>links</span>) – сколько ра
 хотели загрузить. При запросе на загрузку ресурса с уже существующим именем
 ресурс не загружается, а возвращается уже загруженный из коллекции и
 увеличивается количество ссылок. При вызове <span lang=EN-US style='mso-ansi-language:
-EN-US'>remove</span><span lang=EN-US> </span>количество ссылок уменьшается.
-Если ссылок больше нет (=0), то ресурс удаляется физически (Вызывается его
+EN-US'>remove</span><span lang=EN-US> </span>количество ссылок уменьшается. Если
+ссылок больше нет (=0), то ресурс удаляется физически (Вызывается его
 деструктор).</p>
 
 <p>Итого, ресурсы надо освобождать, иначе они до завершения программы будут в
@@ -2626,8 +2629,8 @@ style='background:silver;mso-highlight:silver;mso-no-proof:yes'><o:p></o:p></spa
 <h3><a name="_Toc142999587"><span lang=EN-US style='mso-ansi-language:EN-US;
 mso-no-proof:yes'>Material</span></a><span style='mso-no-proof:yes'><o:p></o:p></span></h3>
 
-<p><span style='mso-no-proof:yes'>Материал задаёт множество текстур и типы их наложения
-или шейдеры для рендеринга моделей. Загружает файлы формата </span><span
+<p><span style='mso-no-proof:yes'>Материал задаёт множество текстур и типы их
+наложения или шейдеры для рендеринга моделей. Загружает файлы формата </span><span
 lang=EN-US style='mso-ansi-language:EN-US;mso-no-proof:yes'>mat</span><span
 style='mso-no-proof:yes'>.<o:p></o:p></span></p>
 
@@ -3291,7 +3294,7 @@ style='mso-ansi-language:EN-US'> (OS_WIN32, OS_LINUX)<o:p></o:p></span></p>
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL_COMPILER – </span>содержит<span
 style='mso-ansi-language:EN-US'> </span>идентификатор<span style='mso-ansi-language:
 EN-US'> </span>компилятора<span lang=EN-US style='mso-ansi-language:EN-US'>
-(COMPILER _VS8, COMPILER _GCC, COMPILER _DEVCPP)<o:p></o:p></span></p>
+(COMPILER _VS8, COMPILER _GCC)<o:p></o:p></span></p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL_OPENGL_API – </span>содержит<span
 style='mso-ansi-language:EN-US'> </span>информацию<span style='mso-ansi-language:
@@ -3304,19 +3307,24 @@ lang=EN-US style='mso-ansi-language:EN-US'> OpenGL (OPENGL_WINAPI, OPENGL_SQL)<o
 lang=EN-US style='mso-ansi-language:EN-US'>D</span>), а не определяются внутри
 кода.</p>
 
+<p><span lang=EN-US style='background:yellow;mso-highlight:yellow;mso-ansi-language:
+EN-US'>COMPILER</span><span style='background:yellow;mso-highlight:yellow'>_</span><span
+lang=EN-US style='background:yellow;mso-highlight:yellow;mso-ansi-language:
+EN-US'>VERSION</span></p>
+
 <p><o:p>&nbsp;</o:p></p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL</span>_<span
-lang=EN-US style='mso-ansi-language:EN-US'>VECTOR</span> - определена, когда <span
-class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>svector</span></span><span
-lang=EN-US> </span>использует реализацию <span lang=EN-US style='mso-ansi-language:
-EN-US'>steel</span>::<span lang=EN-US style='mso-ansi-language:EN-US'>vector</span><span
-lang=EN-US> </span>(<span lang=EN-US style='mso-ansi-language:EN-US'>common</span>/<span
-lang=EN-US style='mso-ansi-language:EN-US'>steel</span>_<span lang=EN-US
-style='mso-ansi-language:EN-US'>vector</span>.<span lang=EN-US
-style='mso-ansi-language:EN-US'>h</span>), иначе использует <span lang=EN-US
-style='mso-ansi-language:EN-US'>std</span>::<span lang=EN-US style='mso-ansi-language:
-EN-US'>vector</span></p>
+lang=EN-US style='mso-ansi-language:EN-US'>VECTOR</span><span lang=EN-US> </span>-
+определена, когда <span class=SpellE><span lang=EN-US style='mso-ansi-language:
+EN-US'>svector</span></span><span lang=EN-US> </span>использует реализацию <span
+lang=EN-US style='mso-ansi-language:EN-US'>steel</span>::<span lang=EN-US
+style='mso-ansi-language:EN-US'>vector</span><span lang=EN-US> </span>(<span
+lang=EN-US style='mso-ansi-language:EN-US'>common</span>/<span lang=EN-US
+style='mso-ansi-language:EN-US'>steel</span>_<span lang=EN-US style='mso-ansi-language:
+EN-US'>vector</span>.<span lang=EN-US style='mso-ansi-language:EN-US'>h</span>),
+иначе использует <span lang=EN-US style='mso-ansi-language:EN-US'>std</span>::<span
+lang=EN-US style='mso-ansi-language:EN-US'>vector</span></p>
 
 <h2><a name="_Toc142999602"><span style='mso-no-proof:yes'>Пространство</span></a><span
 style='mso-bookmark:_Toc142999602'><span style='mso-ansi-language:EN-US;
@@ -3337,9 +3345,9 @@ lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h1>
 lang=EN-US style='mso-ansi-language:EN-US'>class</span><span lang=EN-US> </span><span
 lang=EN-US style='mso-ansi-language:EN-US'>Logger</span>. Существует глобальный
 экземпляр класса <span lang=EN-US style='mso-ansi-language:EN-US'>steel</span>::<span
-lang=EN-US style='mso-ansi-language:EN-US'>log</span>, через который следует выводить
-все сообщения. <span class=SpellE>Лоррег</span> использует глобальный таймер,
-который отсчитывает время от момента запуска программы. </p>
+lang=EN-US style='mso-ansi-language:EN-US'>log</span>, через который следует
+выводить все сообщения. <span class=SpellE>Лоррег</span> использует глобальный
+таймер, который отсчитывает время от момента запуска программы. </p>
 
 <p>Все сообщения выводятся в файл <span lang=EN-US style='mso-ansi-language:
 EN-US'>steel</span>.<span lang=EN-US style='mso-ansi-language:EN-US'>log</span></p>
@@ -3365,8 +3373,9 @@ lang=EN-US> </span>для каждого ключевого слова. В на�
 сообщений в главном лог-файле. Фильтр – это набор ключевых слов, отледённый
 пробелами. Правила фильтра проверябтся посдедовательно. Если с сообщении есть
 ключевое слово из фильтра, то оно выводиться, если же фильтр начинается с -, то
-отбрасывается. Например, если фильтр “error -info”, то будут выводиться все сообщения
-с error, а если error нет, то будут отбрасываться все сообщения с info.</span></p>
+отбрасывается. Например, если фильтр “error -info”, то будут выводиться все
+сообщения с error, а если error нет, то будут отбрасываться все сообщения с
+info.</span></p>
 
 <p><o:p>&nbsp;</o:p></p>
 

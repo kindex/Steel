@@ -19,7 +19,7 @@
 #include "gl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphObjectStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material && GL_EXTENSION_GLSL)
 	{
@@ -48,7 +48,7 @@ void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphObjectStorage &e, Tria
 
 				if(texture.format == TEXTURE_FORMAT_COLOR_MAP)
 				{
-					TexCoords *coords = e.object->getTexCoords(i);
+					TexCoords *coords = G(e.object)->getTexCoords(i);
 
 					(this->*BindTexture)(texture.image, false);
 

@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: physic/physic_engine.h
+	File: physic/physic_engine_steel.h
 	Unit: steel physic engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
@@ -40,19 +40,15 @@ protected:
 	bool helperDrawLines;
 
 	// кеш объекта
-	struct PhysicObjectStorage
+	struct PhysicStorage: public Storage
 	{
 		// инентификатор объекта (uid)
 		uid objectId;
-		int storageId; // индекс этой структуры (кеша) в массиве stroage
-		PhysicObject *object; // ссылка на объект
+//		PhysicObject *object; // ссылка на объект
 		CollisionType collisionType;
 
 		// время последнего изменения объекта. Если отлично от того, что возвращает PhysicObject::getModificationTime(), то надо обновить кеш.
 		ModificationTime modificationTime, childrenModificationTime;
-
-		// список детей объекта (uid)
-		steel::svector<uid> children;
 
 		// индекс в массиве particleSet
 		int partiecleSetId;
@@ -63,25 +59,23 @@ protected:
 		v3 velocity;
 		float mass, spring_r0, spring_k, gravity_k, gravity_power, gravity_min_dist, friction_k, friction_power;
 		Config *material;
+
+		void fill(Interface *object);
+		void cache(void);
 	};
 
-	// кеш объектов
-	steel::svector<PhysicObjectStorage> storage;
 	// множество объектов с типом обработки частица
 	steel::svector<int> particleSet;
 
 public:
-
-	PhysicObjectStorage &getStorage(PhysicObject *object);
+	PhysicStorage *getStorage(PhysicObject *object);
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	void makeStorageForObject(PhysicObject *object);
-	void deleteStorageForObject(int sid);
+	Storage* getStorageClass(Interface *object) { return new PhysicStorage; }
+	
+	void makeStorageForObjectPost(Interface *object, Storage *storage);
+	void deleteStorageForObjectPost(int sid);
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	void makeStorageForChildren(PhysicObject *object);
-	void deleteStorageForChildren(int sid);
-
-	// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	void cacheStorageObject(PhysicObjectStorage &objectStorage);
+	void makeStorageForChildren(Interface *object);
 
 	// рекурсивно обновить информацию об объектах и их детей
 	void prepare(PhysicObject *object, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), PhysicObject *parent = NULL);
@@ -90,12 +84,12 @@ public:
 	bool process(steel::time globalTime, steel::time time);
 
 	// обработать движение одного объекта
-	bool processParticle(PhysicObjectStorage &objectStorage, steel::time globalTime, steel::time time);
+	bool processParticle(PhysicStorage &objectStorage, steel::time globalTime, steel::time time);
 
 	// рассчитать суммарно действующие силы для частицы
-	v3 calculateForceForParticle(PhysicObjectStorage &storage);
+	v3 calculateForceForParticle(PhysicStorage &storage);
 	// рассчитать силу взаимодействия между двумя частицами
-	v3 calculateForceForParticle(PhysicObjectStorage &storage1, PhysicObjectStorage &storage2);
+	v3 calculateForceForParticle(PhysicStorage &storage1, PhysicStorage &storage2);
 };
 
 
