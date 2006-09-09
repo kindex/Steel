@@ -19,6 +19,9 @@
 
 #include "../common/steel_vector.h"
 
+#undef min
+#undef max
+
 struct aabb3 // AABB 3D
 {
 	v3 min, max;

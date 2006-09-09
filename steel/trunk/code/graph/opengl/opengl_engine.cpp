@@ -157,20 +157,76 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 */
 	if(conf->geti("swapBuffers", 1))
 	{
-		glFlush(); // TODO: flush in thread
-		swapBuffers();
+//		glFlush(); // TODO: flush in thread
+		(this->*FlushOpenGL_Window)();
+//		swapBuffers();
 	}
 
 	return true;
 }
 
-bool OpenGL_Engine::init(std::string _conf)
+#if STEEL_OS == OS_WIN32
+void OpenGL_Engine::UseWinAPI(void)
+{
+	CreateOpenGL_Window = &OpenGL_Engine::CreateOpenGL_Window_WinAPI;
+	RepairOpenGL_Window = &OpenGL_Engine::RepairOpenGL_Window_WinAPI;
+	DeleteOpenGL_Window = &OpenGL_Engine::DeleteOpenGL_Window_WinAPI;
+	setCaptionOpenGL_Window = &OpenGL_Engine::setCaptionOpenGL_Window_WinAPI;
+	FlushOpenGL_Window = &OpenGL_Engine::FlushOpenGL_Window_WinAPI;
+	log_msg("graph opengl opengl_info", "Using VideoAPI::WinAPI");
+}
+#endif
+
+#ifdef LIB_SDL
+void OpenGL_Engine::UseSDL(void)
+{
+	CreateOpenGL_Window = &OpenGL_Engine::CreateOpenGL_Window_SDL;
+	RepairOpenGL_Window = &OpenGL_Engine::RepairOpenGL_Window_SDL;
+	DeleteOpenGL_Window = &OpenGL_Engine::DeleteOpenGL_Window_SDL;
+	setCaptionOpenGL_Window = &OpenGL_Engine::setCaptionOpenGL_Window_SDL;
+	FlushOpenGL_Window = &OpenGL_Engine::FlushOpenGL_Window_SDL;
+	log_msg("graph opengl opengl_info sdl", "Using VideoAPI::SDL");
+}
+#endif
+
+
+bool OpenGL_Engine::init(std::string _conf, Input *input)
 {
 	if(!(conf = resConfig.add(_conf)))
 	{
-		log_msg("error graph conf res","Cannot find renderer config file "+_conf);
+		log_msg("error graph conf res", "Cannot find renderer config file "+_conf);
 		return false;
 	}
+
+		string VideoAPI = conf->gets("VideoAPI");
+
+		if(VideoAPI == "WinAPI")
+		#if STEEL_OS == OS_WIN32
+			UseWinAPI();
+		#else
+			error("graph opengl sdl opengl_info", "Cannot find VideoAPI::WinAPI");
+		#endif
+
+		if(VideoAPI == "SDL")
+		#ifdef LIB_SDL
+			UseSDL();
+		#else
+			error("graph opengl sdl opengl_info", "Cannot find VideoAPI::SDL");
+		#endif
+
+	#if STEEL_OS == OS_WIN32
+		if(CreateOpenGL_Window == NULL)	UseWinAPI();
+	#endif
+
+	#ifdef LIB_SDL
+		if(CreateOpenGL_Window == NULL)	UseSDL();
+	#endif
+
+		if(CreateOpenGL_Window == NULL)
+		{
+			error("graph opengl sdl opengl_info", "Cannot find VideoAPI");
+			return false;
+		}
 
 	conf->setDefault("window.left", "10");
 	conf->setDefault("window.top", "10");
@@ -184,7 +240,7 @@ bool OpenGL_Engine::init(std::string _conf)
 
 	conf->setDefault("fullscreen", "0");
 
-	if (!createWindow())
+	if (!(this->*CreateOpenGL_Window)(input))
 	{
 		//lastError = getError();
 		return false;
@@ -284,7 +340,7 @@ bool OpenGL_Engine::init(std::string _conf)
 
 	log_msg("opengl graph", "OpenGL engine has been initialized!");
 
-	setCaption("Steel Engine");
+	(this->*setCaptionOpenGL_Window)("Steel Engine");
 
 	clear();
 
@@ -442,3 +498,10 @@ void OpenGL_Engine::GraphStorage::cache(void)
 	}
 }
 
+void OpenGL_Engine::onResize(int width, int height)
+{
+	conf->setup("window.width", IntToStr(width));
+	conf->setup("window.height", IntToStr(height));
+	if(RepairOpenGL_Window)
+		(this->*RepairOpenGL_Window)();
+}

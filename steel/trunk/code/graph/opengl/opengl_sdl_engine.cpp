@@ -17,20 +17,29 @@
 
 #include "../../steel.h"
 
-#if STEEL_OPENGL_API == OPENGL_SDL
+#ifdef LIB_SDL
 
-#include "opengl_sdl_engine.h"
+#include "opengl_engine.h"
 
 #ifdef STEEL_USE_GETTEXT
 #include <libintl.h>
 #endif
 
-void OpenGL_SDL_Engine::swapBuffers()
+struct WindowInformationSDL: public OpenGL_Engine::WindowInformation
 {
+	SDL_Surface *surface;	// SDL surface
+
+	WindowInformationWinAPI(void): surface(NULL) {}
+};
+
+
+void OpenGL_Engine::FlushOpenGL_Window_SDL()
+{
+	glFlush();
 	SDL_GL_SwapBuffers();
 }
 
-bool OpenGL_SDL_Engine::createWindow()
+bool OpenGL_Engine::CreateOpenGL_Window_SDL()
 {
 	if (SDL_Init(SDL_INIT_VIDEO)<0)
 	{
@@ -108,13 +117,13 @@ bool OpenGL_SDL_Engine::createWindow()
 	return true;
 }
 
-bool OpenGL_SDL_Engine::deinit()
+bool OpenGL_Engine::DeleteOpenGL_Window_SDL()
 {
 	SDL_Quit();
 	return OpenGL_Engine::deinit();
 }
 
-void OpenGL_SDL_Engine::setCaption(std::string caption)
+void OpenGL_Engine::setCaptionOpenGL_Window_SDL(std::string caption)
 {
 	SDL_WM_SetCaption(caption.c_str(),caption.c_str());
 }

@@ -26,9 +26,7 @@
 #define OS_LINUX 0
 #define OS_WIN32 1
 
-//	Видео подсистемы (STEEL_OPENGL_API)
-#define OPENGL_SDL 0
-#define OPENGL_WINAPI 1
+//#define LIB_SDL
 
 /*
 	STEEL_VECTOR определена, когда svector использует реализацию 

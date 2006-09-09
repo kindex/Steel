@@ -16,14 +16,7 @@
 
 #include "steel.h"
 
-#if STEEL_OPENGL_API==OPENGL_SDL
-	#include "graph/opengl/opengl_sdl_engine.h"
-	#include "input/input_sdl.h"
-#endif
-#if STEEL_OPENGL_API==OPENGL_WINAPI	
-	#include "graph/opengl/opengl_win_engine.h"
-	#include "input/input_win.h"
-#endif
+#include "input/input.h"
 
 #include "common/logger.h"
 #include "common/timer.h"
@@ -33,6 +26,7 @@
 #include "common/utils.h"
 #include "res/res_main.h"
 #include "main.h"
+#include "graph/opengl/opengl_engine.h"
 
 using namespace std;
 
@@ -74,26 +68,19 @@ int main(int argc, char *argv[])
 	float speed = 0.01f; // 100 FPS
 
 // ******************* GRAPH ************************
-#if STEEL_OPENGL_API == OPENGL_SDL
-	OpenGL_SDL_Engine graph;
-	InputSDL input;
-	//graph.bindResColection(&res);
-	if(!graph.init("renderer")) return 1;
-#endif
-#if STEEL_OPENGL_API == OPENGL_WINAPI
-	OpenGL_WIN_Engine graph;
-	InputWIN input;
-	if(!graph.init("renderer", &input)) return 1;
-#endif
-	
+	Input *input = new Input;
+
+	OpenGL_Engine *graph = new OpenGL_Engine();
+	if(!graph->init("opengl", input)) return 1;
+
 // ******************* INPUT ************************
-	if(!input.init("input")) return 1;
+	if(!input->init("input")) return 1;
 // ******************* GAME *************************
 	Steel game;
 
-	if(!game.init("game", &input, commandLine)) return 1;
+	if(!game.init("game", input, commandLine)) return 1;
 
-	game.bind(&graph);
+	game.bind(graph);
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
@@ -102,11 +89,11 @@ int main(int argc, char *argv[])
 	bool first = true;
 	steel::time	lastFrameTime = timer.total();
 
-	while(input.isAlive() && game.isAlive())
+	while(input->isAlive() && game.isAlive())
 	{
-		input.process();
+		(input->*(input->Process))();
 		double dx = 0, dy = 0;
-		input.getMouseDelta(dx, dy);
+		input->getMouseDelta(dx, dy);
 		
 		game.handleMouse(dx, -dy);
 
@@ -125,19 +112,20 @@ int main(int argc, char *argv[])
 			lastFrameTime = timer.total();
 		}
 
-		game.draw(&graph);
+		game.draw(graph);
 
 		timer.incframe();
 
 		if(captionUdateTime + 0.5 < timer.total())
 		{
-			graph.setCaption(std::string("Sleel engine")
-				+ " Obj: " + IntToStr(graph.total.object)
-				+ " Trg: " + IntToStr(graph.total.triangle)
+			(graph->*(graph->setCaptionOpenGL_Window))(
+				std::string("Sleel engine")
+				+ " Obj: " + IntToStr(graph->total.object)
+				+ " Trg: " + IntToStr(graph->total.triangle)
 //				+ " Col: " + IntToStr(game.getCollisionCount())
 				+ " FPS " + timer.getfps_s()
+			);
 
-				);
 			speed = 1.0f/timer.getfps();
 			if(speed > 0.1f) speed = 0.1f;
 
@@ -153,9 +141,11 @@ int main(int argc, char *argv[])
 	}
 	log_msg("core", "Exit from main loop");
 // ******************* MAIN LOOP ************************
-	input.freeMouse();
+	(input->*input->FreeMouse)();
 
-	graph.deinit();
+	graph->deinit();
+	delete graph;
+
 	game.deinit();
 	steel::log.close();
 	return 0;

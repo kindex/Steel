@@ -13,9 +13,9 @@
 
 #include "../steel.h"
 
-#if STEEL_OPENGL_API == OPENGL_WINAPI
+#if STEEL_OS == OS_WIN32
 
-#include "input_win.h"
+#include "input.h"
 #include "../common/utils.h"
 
 #include <windows.h>		// Header File For Windows
@@ -25,7 +25,7 @@ using namespace std;
 
 typedef POINT Point;									// This is a window structure that holds an X and Y
 
-void InputWIN::captureMouse()
+void Input::CaptureMouse_WinAPI()
 {
 	mouseCaptured = true;
 
@@ -36,13 +36,13 @@ void InputWIN::captureMouse()
 	ShowCursor(false);										// Hide Mouse Pointer
 }
 
-void InputWIN::freeMouse()
+void Input::FreeMouse_WinAPI()
 {
 	ShowCursor(true);			// show Mouse Pointer
 	mouseCaptured = false;
 }
 
-string decodeKey(MSG p)
+string Input::DecodeKey_WinAPI(MSG p)
 {
 	string key;
 	switch(p.message)
@@ -92,7 +92,7 @@ string decodeKey(MSG p)
 }
 
 
-LRESULT CALLBACK InputWIN::processMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK Input::ProcessMessage_WinAPI(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{
@@ -115,7 +115,7 @@ LRESULT CALLBACK InputWIN::processMessage(HWND hWnd, UINT uMsg, WPARAM wParam, L
 	return 0;
 }
 
-void InputWIN::process()
+void Input::Process_WinAPI()
 {
 	MSG msg;
 	BOOL wasmsg;
@@ -132,7 +132,7 @@ void InputWIN::process()
 		case WM_RBUTTONDOWN:
 		case WM_MBUTTONDOWN:
 		case WM_KEYDOWN:
-			key = decodeKey(msg);
+			key = DecodeKey_WinAPI(msg);
 
 			if(key != "" && !keyPressed[key])
 			{
@@ -140,9 +140,9 @@ void InputWIN::process()
 				if(key == "space")
 				{
 					if(mouseCaptured) 
-						freeMouse();
+						FreeMouse_WinAPI();
 					else
-						captureMouse();
+						CaptureMouse_WinAPI();
 				}
 				keyPressed[key] = true;
 			}
@@ -153,7 +153,7 @@ void InputWIN::process()
 		case WM_RBUTTONUP:
 		case WM_MBUTTONUP:
 		case WM_KEYUP:
-			key = decodeKey(msg);
+			key = DecodeKey_WinAPI(msg);
 			if(key != "")
 				game->handleEventKeyUp(key);
 			keyPressed[key] = false;

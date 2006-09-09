@@ -11,43 +11,55 @@
 		Часть графического движока OpenGL, которая реализует
 		системно зависимые функции, такие как создание окна.
 	TODO
-		delete class
+		fullscreen <-> window mode
+		set refresh rate
+		restore DC on DC lose
  ************************************************************/
 
 #include "../../steel.h"
 
-#if STEEL_OPENGL_API == OPENGL_WINAPI
+#if STEEL_OS == OS_WIN32
 
-#include "opengl_win_engine.h"
-#include "../../input/input_win.h"
+#include "opengl_engine.h"
+#include "../../input/input.h"
 #include "../../common/utils.h"
 
 extern HINSTANCE hInstance;
 
-struct Window
+static svector<OpenGL_Engine*> engines;
+
+struct WindowInformationWinAPI: public OpenGL_Engine::WindowInformation
 {
 	HWND handle;
-	bool focused;
-	InputWIN *input;
-	OpenGL_WIN_Engine *engine;
+	bool focused, return_pressed;
+
+	HDC		DC;    // Window Handle, Device Context
+	HGLRC	RC; // Rendering Context - for OpenGL
+	DWORD	dwStyle;
+	Input	*input;
+
+	WindowInformationWinAPI(void): input(NULL) {}
 };
 
-steel::vector<Window> window;
-
-bool OpenGL_WIN_Engine::init(std::string _conf, InputWIN *_input)
-{
-	input = _input;
-	return OpenGL_Engine::init(_conf);
-}
-
-void OpenGL_WIN_Engine::repair() // repair window on resize
+bool OpenGL_Engine::RepairOpenGL_Window_WinAPI() // repair window on resize
 {
 	glViewport( 0, 0, conf->geti("window.width"), conf->geti("window.height"));
+	((WindowInformationWinAPI*)windowInformation)->input->		
+		setMouseCenter(	conf->geti("window.width")/2, 
+						conf->geti("window.height")/2);
+	return true;
 }
 
-void OpenGL_WIN_Engine::swapBuffers()
+bool OpenGL_Engine::FlushOpenGL_Window_WinAPI()
 {
-    if (DC) SwapBuffers(DC);
+    if(((WindowInformationWinAPI*)windowInformation)->DC)
+	{
+		glFlush();
+		SwapBuffers(((WindowInformationWinAPI*)windowInformation)->DC);
+		return true;
+	}
+	else
+		return false;
 }
 
 void RedrawWindow(HWND hWnd)
@@ -61,47 +73,51 @@ void RedrawWindow(HWND hWnd)
 LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     LONG    lRet = 0;
-	for(steel::vector<Window>::iterator it = window.begin(); it != window.end(); it++)
-    if (hWnd == it->handle)
+	for(svector<OpenGL_Engine*>::iterator it = engines.begin(); it != engines.end(); it++)
 	{
-
-		switch (uMsg)
+		WindowInformationWinAPI &win = *((WindowInformationWinAPI*)(*it)->windowInformation);
+	    if(hWnd == win.handle)
 		{
-/* 	case WM_PAINT:										// If we need to repaint the scene
-        RedrawWindow(hWnd);
-		break;*/
-
-//	case WM_KILLFOCUS:
-		case WM_SIZE:
-			it->engine->resize(LOWORD(lParam),HIWORD(lParam));
-			break;
-
-	    case WM_CLOSE:										// If the window is being closes
-		    PostQuitMessage(0);								// Send a QUIT Message to the window
-			break;
-
-		case WM_KEYDOWN:
-			if(wParam == VK_RETURN && !it->engine->return_pressed)
+			switch (uMsg)
 			{
-				it->engine->fullScpeenToggle();
-				it->engine->return_pressed = true;
+	/* 	case WM_PAINT:										// If we need to repaint the scene
+			RedrawWindow(hWnd);
+			break;*/
+
+	//	case WM_KILLFOCUS:
+			case WM_SIZE:
+			(*it)->onResize(LOWORD(lParam),HIWORD(lParam));
+			break;
+
+
+			// TODO
+			case WM_CLOSE:										// If the window is being closes
+			    PostQuitMessage(0);								// Send a QUIT Message to the window
+				break;
+
+			case WM_KEYDOWN:
+				if(wParam == VK_RETURN && !win.return_pressed)
+				{
+//					*it->engine->fullScpeenToggle();
+					win.return_pressed = true;
+				}
+
+				lRet = win.input->ProcessMessage_WinAPI(hWnd, uMsg, wParam, lParam);
+				break;
+			case WM_KEYUP:
+				if(wParam == VK_RETURN)
+					win.return_pressed = false;
+
+				lRet = win.input->ProcessMessage_WinAPI(hWnd, uMsg, wParam, lParam);
+				break;
+
+			default:											// Return by default
+				lRet = win.input->ProcessMessage_WinAPI(hWnd, uMsg, wParam, lParam);
+				break;
 			}
-
-			lRet = it->input->processMessage(hWnd, uMsg, wParam, lParam);
-			break;
-		case WM_KEYUP:
-			if(wParam == VK_RETURN)
-				it->engine->return_pressed = false;
-
-			lRet = it->input->processMessage(hWnd, uMsg, wParam, lParam);
-			break;
-
-		default:											// Return by default
-			lRet = it->input->processMessage(hWnd, uMsg, wParam, lParam);
-		    break;
+			return lRet;
 		}
-		return lRet;
-    }
+	}
 
     // ne nashe okno
     lRet = DefWindowProc (hWnd, uMsg, wParam, lParam);
@@ -109,14 +125,8 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     return lRet;										// Return by default
 }
 
-void OpenGL_WIN_Engine::resize(int w, int h)
-{
-	conf->setup("window.width", IntToStr(w));
-	conf->setup("window.height", IntToStr(h));
-	repair();
-}
 
-void OpenGL_WIN_Engine::fullScpeenToggle()
+/*void OpenGL_WIN_Engine::fullScpeenToggle()
 {
 	if(conf->geti("fullscreen"))
 	{
@@ -128,8 +138,8 @@ void OpenGL_WIN_Engine::fullScpeenToggle()
 	}
 
 
-}
-
+}*/
+/*
 bool OpenGL_WIN_Engine::changeToWindow()
 {
 	bool ok = false;
@@ -263,12 +273,13 @@ bool OpenGL_WIN_Engine::changeToFullScpeen()
 //		SetWindowLong(handle, GWL_STYLE, WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 	}
 	return ok;
-}
+}*/
 
-bool OpenGL_WIN_Engine::createWindow()
+bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input *input)
 {
-	HWND hWnd;
 	WNDCLASS wndclass;
+
+	windowInformation = new WindowInformationWinAPI;
 
 	memset(&wndclass, 0, sizeof(WNDCLASS));				// Init the size of the class
 	wndclass.style = 0;
@@ -287,16 +298,16 @@ bool OpenGL_WIN_Engine::createWindow()
 		return false;							// Register the class
 	}
 	
-	dwStyle =  WS_OVERLAPPEDWINDOW |
+	((WindowInformationWinAPI*)windowInformation)->dwStyle =  WS_OVERLAPPEDWINDOW |
         WS_CLIPSIBLINGS  |        WS_CLIPCHILDREN;
 
 	if(conf->geti("fullscreen")) 						// Check if we wanted full screen mode
 	{													// Set the window properties for full screen mode
-		dwStyle = WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+		((WindowInformationWinAPI*)windowInformation)->dwStyle = WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 //		ShowCursor(FALSE);								// Hide the cursor
 	}
-	else if(dwStyle)									// Assign styles to the window depending on the choice
-		dwStyle =
+	else if(((WindowInformationWinAPI*)windowInformation)->dwStyle)									// Assign styles to the window depending on the choice
+		((WindowInformationWinAPI*)windowInformation)->dwStyle =
         WS_OVERLAPPEDWINDOW |
         WS_CLIPSIBLINGS  |        WS_CLIPCHILDREN
         ;
@@ -306,31 +317,27 @@ bool OpenGL_WIN_Engine::createWindow()
 	//AdjustWindowRect( &rWindow, dwStyle, false);		// Adjust Window To True Requested Size
 
 														// Create the window
-	hWnd = CreateWindow("steel", "Steel Engine", dwStyle, 
+	((WindowInformationWinAPI*)windowInformation)->handle = CreateWindow("steel", "Steel Engine", ((WindowInformationWinAPI*)windowInformation)->dwStyle, 
 		conf->geti("window.left"), conf->geti("window.top"),
 						conf->geti("window.width"), conf->geti("window.height"),
 						NULL, NULL, hInstance, NULL);
 
-	if(!hWnd) return false;								// If we could get a handle, return NULL
+	if(!((WindowInformationWinAPI*)windowInformation)->handle) return false;								// If we could get a handle, return NULL
 
-	window.resize(window.size() + 1);
-	window[window.size() - 1].handle	= hWnd;
-	window[window.size() - 1].focused	= false;
-	window[window.size() - 1].input		= input;
-	window[window.size() - 1].engine	= this;
+	engines.push_back(this);
 
+	((WindowInformationWinAPI*)windowInformation)->focused	= false;
+	((WindowInformationWinAPI*)windowInformation)->input	= input;
 	input->setMouseCenter(conf->geti("window.width")/2, conf->geti("window.height")/2);
 
-	handle = hWnd;
+	ShowWindow(((WindowInformationWinAPI*)windowInformation)->handle, SW_SHOWNORMAL);					// Show the window
+	UpdateWindow(((WindowInformationWinAPI*)windowInformation)->handle);									// Draw the window
 
-	ShowWindow(hWnd, SW_SHOWNORMAL);					// Show the window
-	UpdateWindow(hWnd);									// Draw the window
+  	SetFocus(((WindowInformationWinAPI*)windowInformation)->handle);										// Sets Keyboard Focus To The Window
 
-  	SetFocus(hWnd);										// Sets Keyboard Focus To The Window
+    if(((WindowInformationWinAPI*)windowInformation)->handle) ((WindowInformationWinAPI*)windowInformation)->DC = GetDC(((WindowInformationWinAPI*)windowInformation)->handle);
 
-    if (handle) DC = GetDC(handle);
-
-	    PIXELFORMATDESCRIPTOR pfd, *ppfd;
+    PIXELFORMATDESCRIPTOR pfd, *ppfd;
     int pixelformat;
 
     ppfd = &pfd;
@@ -354,33 +361,37 @@ bool OpenGL_WIN_Engine::createWindow()
     ppfd->cColorBits = conf->geti("screen.depth");
     ppfd->cDepthBits = conf->geti("screen.depth");
 
-    if ( (pixelformat = ChoosePixelFormat(DC, ppfd)) == 0 )    {        MessageBox(NULL, "ChoosePixelFormat failed", "Error", MB_OK);        return FALSE;    }
-    if (SetPixelFormat(DC, pixelformat, ppfd) == FALSE)    {        MessageBox(NULL, "SetPixelFormat failed", "Error", MB_OK);        return FALSE;    }
+    if((pixelformat = ChoosePixelFormat(((WindowInformationWinAPI*)windowInformation)->DC, ppfd)) == 0 )    {        MessageBox(NULL, "ChoosePixelFormat failed", "Error", MB_OK);        return FALSE;    }
+    if(SetPixelFormat(((WindowInformationWinAPI*)windowInformation)->DC, pixelformat, ppfd) == FALSE)    {        MessageBox(NULL, "SetPixelFormat failed", "Error", MB_OK);        return FALSE;    }
 
-    RC = wglCreateContext(DC);
-    wglMakeCurrent(DC, RC);
+    ((WindowInformationWinAPI*)windowInformation)->RC = wglCreateContext(((WindowInformationWinAPI*)windowInformation)->DC);
+    wglMakeCurrent(((WindowInformationWinAPI*)windowInformation)->DC, ((WindowInformationWinAPI*)windowInformation)->RC);
 
-	if(conf->geti("fullscreen"))
-			   	changeToFullScpeen();							// Go to full screen
+	//if(conf->geti("fullscreen"))
+	  // 	changeToFullScpeen();							// Go to full screen
 
 	log_msg("opengl graph", "Video mode has been set! (" +	
 		IntToStr(conf->geti("window.width")) + "x" + 
 		IntToStr(conf->geti("window.height")) + "x" +
 		IntToStr(conf->geti("screen.depth"))+ ")" );
 
-	return_pressed = false;
+	((WindowInformationWinAPI*)windowInformation)->return_pressed = false;
 
 	return true;
 }
 
-bool OpenGL_WIN_Engine::deinit()
+
+bool OpenGL_Engine::setCaptionOpenGL_Window_WinAPI(std::string caption)
 {
-	return OpenGL_Engine::deinit();
+	SetWindowText(((WindowInformationWinAPI*)windowInformation)->handle, caption.c_str() );
+	return true;
 }
 
-void OpenGL_WIN_Engine::setCaption(std::string caption)
+bool OpenGL_Engine::DeleteOpenGL_Window_WinAPI() // repair window on resize
 {
-	SetWindowText(handle, caption.c_str() );
+	// TODO
+	return true;
 }
+
 
 #endif

@@ -17,11 +17,10 @@
 #ifndef __GRAPH_OPENGL_ENGINE_H
 #define __GRAPH_OPENGL_ENGINE_H
 
-#include <string>
-
 #include "../../steel.h"
 
-#include "../graph_engine.h"
+#include <string>
+
 #if STEEL_OS == OS_LINUX
 #include <GL/gl.h>			// Header File For The OpenGL32 Library
 #include <GL/glu.h>			// Header File For The GLu32 Library
@@ -33,6 +32,8 @@
 #include "gl\glaux.h"		// Header File For The Glaux Library
 #endif
 
+#include "../graph_engine.h"
+#include "../../input/input.h"
 #include "opengl_glsl.h"
 
 class OpenGL_Engine: public GraphEngine
@@ -169,21 +170,25 @@ public:
 		DrawLines(NULL),  
 		DrawNormals(NULL),
 		DrawVertexes(NULL),
-		DrawAABB(NULL)
+		DrawAABB(NULL),
+
+		
+		windowInformation(NULL),
+
+		CreateOpenGL_Window(NULL),
+		RepairOpenGL_Window(NULL),
+		DeleteOpenGL_Window(NULL),
+		setCaptionOpenGL_Window(NULL),
+		FlushOpenGL_Window(NULL)
 		{}
 
-	void processCamera(void);
-	bool init(std::string _conf);
-	bool process(steel::time globalTime, steel::time time);
-	bool deinit(void);
+	virtual void processCamera(void);
+	virtual bool init(std::string _conf, Input *input);
+	virtual bool process(steel::time globalTime, steel::time time);
+	virtual bool deinit(void);
 
 	void prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GraphObject *parent = NULL);
 
-	virtual void swapBuffers(void) = 0;
-	virtual bool createWindow(void) = 0;
-	virtual void setCaption(std::string caption) = 0;
-	virtual bool isFocused(void) { return focused; }
-	
 	bool isVisible(aabb box);
 
 	void process(GraphStorage *e, steel::time globalTime, steel::time time);
@@ -223,6 +228,42 @@ public:
 
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
 	void makeStorageForChildren(Interface *object);
+
+	void onResize(int width, int height);
+
+	struct WindowInformation
+	{
+	};
+
+	WindowInformation *windowInformation;
+	// Window management functions
+	bool isFocusedOpenGL_Window(void) { return focused; }
+
+	bool (OpenGL_Engine::*CreateOpenGL_Window)(Input *input);
+	bool (OpenGL_Engine::*RepairOpenGL_Window)(void);
+	bool (OpenGL_Engine::*DeleteOpenGL_Window)(void);
+	bool (OpenGL_Engine::*setCaptionOpenGL_Window)(std::string caption);
+	bool (OpenGL_Engine::*FlushOpenGL_Window)(void); // Swap buffers
+
+#ifdef LIB_SDL
+	void UseSDL(void);
+
+	bool CreateOpenGL_Window_SDL(Input *input);
+	bool FlushOpenGL_Window_SDL(void); // Swap buffers
+	bool DeleteOpenGL_Window_SDL(void);
+	bool setCaptionOpenGL_Window_SDL(std::string caption);
+#endif
+
+#if STEEL_OS == OS_WIN32
+	void UseWinAPI(void);
+
+	bool CreateOpenGL_Window_WinAPI(Input *input);
+	bool FlushOpenGL_Window_WinAPI(void); // Swap buffers
+	bool DeleteOpenGL_Window_WinAPI(void);
+	bool RepairOpenGL_Window_WinAPI(void);
+	bool setCaptionOpenGL_Window_WinAPI(std::string caption);
+#endif
+
 };
 
 

@@ -19,6 +19,11 @@
 */
 #include "../steel.h"
 
+
+#if STEEL_OS == OS_WIN32
+	#include <windows.h>
+#endif
+
 #include "../res/conf/conf.h"
 
 class Input;  // forward declaration, cross-use
@@ -40,18 +45,44 @@ protected:
 	int cx, cy, lastdx, lastdy;
 
 public:
-	virtual ~Input(void) {}
-	bool init(std::string _conf);
-	void setGame(Game *_game) { game = _game; }
+	Input(void):game(NULL), conf(NULL),
+		CaptureMouse(NULL),
+		FreeMouse(NULL),
+		Process(NULL)
+		{}
 
-	bool isPressed(std::string key);
-	bool isAlive(void) { return alive; }
-	virtual void captureMouse(void) = 0;
-	virtual void freeMouse(void) = 0;
-	virtual void process(void) = 0;
+	virtual ~Input(void) {}
+	virtual bool init(std::string _conf);
+	virtual void setGame(Game *_game) { game = _game; }
+
+	virtual bool isPressed(std::string key);
+	virtual bool isAlive(void) { return alive; }
 	virtual void getMouseDelta(double &dx, double &dy);
 	virtual void setMouseCenter(int _cx, int _cy) { cx = _cx; cy = _cy; }
-	bool isMouseCaptured(void) { return mouseCaptured; }
+	virtual bool isMouseCaptured(void) { return mouseCaptured; }
+
+	void (Input::*CaptureMouse)(void);
+	void (Input::*FreeMouse)(void);
+	void (Input::*Process)(void);
+
+#if STEEL_OS == OS_WIN32
+	void UseWinAPI(void);
+
+	void CaptureMouse_WinAPI(void);
+	void FreeMouse_WinAPI(void);
+	void Process_WinAPI(void);
+	LRESULT CALLBACK ProcessMessage_WinAPI(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	std::string DecodeKey_WinAPI(MSG p);
+#endif
+
+#ifdef LIB_SDL
+	void UseSDL(void);
+
+	void CaptureMouse_SDL(void);
+	void FreeMouse_SDL(void);
+	void Process_SDL(void);
+#endif
+
 };
 
 #endif // __INPUT_H__

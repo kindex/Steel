@@ -95,7 +95,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles 
 				}
 			}*/
 
-
+// -> (*).  ->*  *(->)
 			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, G(e.object)->getTexCoords(i),  total);
 		   	glPopAttrib();
 		}

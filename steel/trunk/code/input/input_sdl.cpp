@@ -13,12 +13,12 @@
 
 #include "../steel.h"
 
-#if STEEL_OPENGL_API == OPENGL_SDL
+#ifdef LIB_SDL
 
 #include "SDL.h"
-#include "input_sdl.h"
+#include "input.h"
 
-void InputSDL::process()
+void Input::Process_SDL()
 {
 		SDL_Event event;
 		std::string key;
@@ -79,7 +79,7 @@ void InputSDL::process()
 }
 
 
-void InputSDL::captureMouse()
+void Input::CaptureMouse_SDL()
 {
 	mouseCaptured = true;
 
@@ -89,7 +89,7 @@ void InputSDL::captureMouse()
 	//SDL_WarpMouse(cx, cy);
 }
 
-void InputSDL::freeMouse()
+void Input::FreeMouse_SDL()
 {
 //	ShowCursor(true);			// show Mouse Pointer
 	mouseCaptured = false;

@@ -19,8 +19,8 @@
 format0=color_map
 image0=tex/wall1
 
-format1=color_map
-image1=tex/tr_ceiling_3_s
+;format1=color_map
+;image1=tex/tr_ceiling_3_s
 
 ;+	color_map	tex/tr_ceiling_3_s
 vertexShader=/sphere/lighting.vsh

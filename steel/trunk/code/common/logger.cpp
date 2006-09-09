@@ -19,11 +19,12 @@
 #include "utils.h"
 
 #if STEEL_OS == OS_WIN32
-#include <Windows.h>
+#include <windows.h>
 #endif
 
 #include <time.h>
 #include <map>
+#include <iomanip>
 
 using namespace std;
 
@@ -40,7 +41,6 @@ bool Logger::open(std::string filename)
 
 	opened = true;
 
-	f << ">>>>>>>>>>>>>>>>" << endl;
 	f << "Started Logging @ [ ";
 
 	//Def
@@ -49,7 +49,15 @@ bool Logger::open(std::string filename)
 	#if STEEL_OS == OS_WIN32
 	SYSTEMTIME sm;
 	GetLocalTime(&sm);
-	f << sm.wYear << "-" << sm.wMonth << "-"<<  sm.wDay << " "<< sm.wHour << ":"<<sm.wMinute << ":"<< sm.wSecond << ":"<< sm.wMilliseconds << " ]"<< endl;
+	f 
+		<< sm.wYear << "-" 
+		<< setfill('0') << setw(2) << sm.wMonth << "-"
+		<< setfill('0') << setw(2) << sm.wDay << " "
+		<< setfill('0') << setw(2) << sm.wHour << ":"
+		<< setfill('0') << setw(2) << sm.wMinute << ":"
+		<< setfill('0') << setw(2) << sm.wSecond << "."
+		<< setfill('0') << setw(3) << sm.wMilliseconds << " ]"<< endl;
+
 	#elif STEEL_OS == OS_LINUX
 	time_t sm = ::time(NULL);
 	struct tm *tm = localtime(&sm);
@@ -65,7 +73,6 @@ bool Logger::close( void )
 	if(opened)
 	{
 		out("Finished Logging");
-		out("<<<<<<<<<<<<<<<<");
 		f.close();
 		opened = false;
 		return true;

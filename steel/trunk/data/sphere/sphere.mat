@@ -3,9 +3,9 @@
 format0=color_map
 image0=warn
 
-format1=color_map
-image1=/wall/tex/floor2
-mode1=*
+;format1=color_map
+;image1=/wall/tex/floor2
+;mode1=*
 
 ;****** Shader ******
 vertexShader=lighting.vsh

@@ -24,10 +24,6 @@
 #include "main.h"
 
 
-
-//#define OPENGL_WINAPI
-
-
 /*extern int mainCRTStartup(void);
 */
 
@@ -48,7 +44,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 	return main1(0, NULL);							// Exit The Program
 }
 
-#elif (STEEL_COMPILER == COMPILER_VS8) && (STEEL_OPENGL_API == OPENGL_WINAPI)
+#elif (STEEL_COMPILER == COMPILER_VS8)
 HINSTANCE hInstance;
 
 int APIENTRY WinMain(HINSTANCE hInstance,
@@ -60,6 +56,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	return main(0, NULL);
 }
-#endif	// STEEL_COMPILER && STEEL_OPENGL_API
+#endif	// STEEL_COMPILER
 
 #endif	// STEEL_OS

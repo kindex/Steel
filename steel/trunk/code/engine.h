@@ -36,7 +36,7 @@ public:
 	Config			*conf;
 
 	virtual ~Engine(void) {}
-	virtual bool init(std::string _conf) = 0; // initialization
+//	virtual bool init(std::string _conf) = 0; // initialization
 
 	virtual bool clear(void) = 0; 
 //	protottype: virtual bool inject(Interface *object) { return false; }; // add object to process by engine

@@ -14,10 +14,35 @@
 #include "input.h"
 #include "../res/res_main.h"
 
+using namespace std;
+
 bool Input::isPressed(std::string key)
 {
 	return keyPressed.find(key) != keyPressed.end() && keyPressed[key];
 }
+
+#if STEEL_OS == OS_WIN32
+void Input::UseWinAPI(void)
+{
+	CaptureMouse = &Input::CaptureMouse_WinAPI;
+	FreeMouse = &Input::FreeMouse_WinAPI;
+	Process = &Input::Process_WinAPI;
+
+	log_msg("input", "Using InputAPI::WinAPI");
+}
+#endif
+
+#ifdef LIB_SDL
+void Input::UseSDL(void)
+{
+	CaptureMouse = &Input::CaptureMouse_SDL;
+	FreeMouse = &Input::FreeMouse_SDL;
+	Process = &Input::Process_SDL;
+
+	log_msg("input", "Using InputAPI::SDL");
+}
+#endif
+
 
 bool Input::init(std::string _conf) 
 { 
@@ -31,10 +56,43 @@ bool Input::init(std::string _conf)
 		return false;
 	}
 
+	string InputAPI = conf->gets("InputAPI");
+
+	if(InputAPI == "WinAPI")
+	#if STEEL_OS == OS_WIN32
+		UseWinAPI();
+	#else
+		error("graph opengl sdl opengl_info", "Cannot find InputAPI::WinAPI");
+	#endif
+
+	if(InputAPI == "SDL")
+	#ifdef LIB_SDL
+		UseSDL();
+	#else
+		error("graph opengl sdl opengl_info", "Cannot find InputAPI::SDL");
+	#endif
+
+#if STEEL_OS == OS_WIN32
+	if(Process == NULL)	UseWinAPI();
+#endif
+
+#ifdef LIB_SDL
+	if(Process == NULL)	UseSDL();
+#endif
+
+	if(Process == NULL)
+	{
+		error("graph opengl sdl opengl_info", "Cannot find InputAPI");
+		return false;
+	}
+
+
 	if(conf->geti("mouse.capture", 0))
-		captureMouse();
+		(this->*CaptureMouse)();
 
 	sensetivity = conf->getd("mouse.sensetivity", 1);
+	lastdx = 0;
+	lastdy = 0;
 
 	return true; 
 }
