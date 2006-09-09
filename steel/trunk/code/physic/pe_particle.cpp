@@ -70,7 +70,6 @@ v3 PhysicEngineSteel::calculateForceForParticle(PhysicStorage &storage1)
 
 bool PhysicEngineSteel::processParticle(PhysicStorage &objectStorage, steel::time globalTime, steel::time time)
 {
-	objectStorage.position;
 
 // -------------------
 	objectStorage.force += g*objectStorage.mass*0;

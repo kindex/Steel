@@ -181,7 +181,7 @@ void OpenGL_Engine::UseWinAPI(void)
 void OpenGL_Engine::UseSDL(void)
 {
 	CreateOpenGL_Window = &OpenGL_Engine::CreateOpenGL_Window_SDL;
-	RepairOpenGL_Window = &OpenGL_Engine::RepairOpenGL_Window_SDL;
+	RepairOpenGL_Window = NULL;
 	DeleteOpenGL_Window = &OpenGL_Engine::DeleteOpenGL_Window_SDL;
 	setCaptionOpenGL_Window = &OpenGL_Engine::setCaptionOpenGL_Window_SDL;
 	FlushOpenGL_Window = &OpenGL_Engine::FlushOpenGL_Window_SDL;
@@ -470,7 +470,7 @@ void OpenGL_Engine::GraphStorage::fill(Interface *object)
 void OpenGL_Engine::GraphStorage::cache(void)
 {
 	matrix34 object_matrix = G(object)->getPosition(); // global 
-	PositionKind pos = G(object)->getPositionKind();
+//	PositionKind pos = G(object)->getPositionKind();
 
 	matrix = object_matrix;
 

@@ -174,7 +174,7 @@ int chain_triangles(_3DS &m, rstream &f, int size)
 
 	f.read((char*)&count, 2); r += 2;
 
-	int x = sizeof(m.triangleAll.data[0]);
+//	int x = sizeof(m.triangleAll.data[0]);
 
     m.triangleAll.data.resize(count);
 	for(int i=0; i<count; i++)

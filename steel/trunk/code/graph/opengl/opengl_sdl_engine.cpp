@@ -19,6 +19,7 @@
 
 #ifdef LIB_SDL
 
+#include <SDL.h>
 #include "opengl_engine.h"
 
 #ifdef STEEL_USE_GETTEXT
@@ -29,17 +30,18 @@ struct WindowInformationSDL: public OpenGL_Engine::WindowInformation
 {
 	SDL_Surface *surface;	// SDL surface
 
-	WindowInformationWinAPI(void): surface(NULL) {}
+	WindowInformationSDL(void): surface(NULL) {}
 };
 
 
-void OpenGL_Engine::FlushOpenGL_Window_SDL()
+bool OpenGL_Engine::FlushOpenGL_Window_SDL()
 {
 	glFlush();
 	SDL_GL_SwapBuffers();
+	return true;
 }
 
-bool OpenGL_Engine::CreateOpenGL_Window_SDL()
+bool OpenGL_Engine::CreateOpenGL_Window_SDL(Input* input)
 {
 	if (SDL_Init(SDL_INIT_VIDEO)<0)
 	{
@@ -89,8 +91,8 @@ bool OpenGL_Engine::CreateOpenGL_Window_SDL()
 		return false;
 	}
 
-	surface = SDL_SetVideoMode(conf->geti("window.width"), conf->geti("window.height"), conf->geti("screen.depth"), videoFlags);
-	if ( !surface )
+	((WindowInformationSDL*)windowInformation)->surface = SDL_SetVideoMode(conf->geti("window.width"), conf->geti("window.height"), conf->geti("screen.depth"), videoFlags);
+	if (!((WindowInformationSDL*)windowInformation)->surface )
 	{
 		error("graph sdl",std::string(_("Setting the video mode has failed: "))+SDL_GetError());
 //		setError(SE_SDL_VIDEO);
@@ -123,9 +125,10 @@ bool OpenGL_Engine::DeleteOpenGL_Window_SDL()
 	return OpenGL_Engine::deinit();
 }
 
-void OpenGL_Engine::setCaptionOpenGL_Window_SDL(std::string caption)
+bool OpenGL_Engine::setCaptionOpenGL_Window_SDL(std::string caption)
 {
 	SDL_WM_SetCaption(caption.c_str(),caption.c_str());
+	return true;
 }
 
 #endif

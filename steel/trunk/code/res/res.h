@@ -82,6 +82,7 @@ public:
 
 	uid	getId(void) { return resId; }
 	void setId(uid id) { resId = id; }
+	virtual ~Res(void) {}
 };
 
 
