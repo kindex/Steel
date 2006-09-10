@@ -280,6 +280,7 @@ void Game::bindPhysicEngine()
 void Game::insonify(Listener *listener)
 {
 	listener->setPosition(eye.x, eye.y, eye.z);
+	listener->setOrientation(v3(eye.x, eye.y, eye.z), v3(direction.x, direction.y, direction.z));
 	updateListener(*listener);
 }
 
