@@ -23,6 +23,8 @@
 #include "../res/res_main.h"
 //#include "openal_engine.h"
 
+///**/#include "audio_interface.h"
+
 class AudioEngine;
 
 class Listener
@@ -47,7 +49,7 @@ private:
 };
 
 
-class Source
+class Source		// maybe to move this structure to the interface/audio object
 {
 public:
 	Source() {};
@@ -101,7 +103,16 @@ public:
 
 	Listener listener;
 	std::vector<AudioConfig> config;		// audio configs
+
 	std::vector<Source> sources;
+
+	//AudioObjectList sources;
+
+
+	// the same as Kindex
+
+	//steel::vector<AudioObject*> objects;
+
 };
 
 

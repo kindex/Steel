@@ -107,7 +107,7 @@ bool initializeOpenAL()
 
 	log_msg("openal init", "OpenAL has been initialized!");
 
-/*
+/**/
 	// check for EAX 2.0 support
 	log_msg("openal init", "Checking for EAX 2.0 support...");
 	if ( !alIsExtensionPresent((ALubyte*)"EAX2.0") )
