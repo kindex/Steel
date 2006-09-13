@@ -168,7 +168,7 @@ void OpenALEngine::setListener(const Listener &aListener)
 
 	alListenerfv(AL_POSITION, listener.getPosition());
 	alListenerfv(AL_VELOCITY, listener.getVelocity());
-	float orientation[] = { listener.getOrientationAt().x, listener.getOrientationAt().y, listener.getOrientationAt().z, 
+	float orientation[6] = { listener.getOrientationAt().x, listener.getOrientationAt().y, listener.getOrientationAt().z, 
 								   listener.getOrientationUp().x, listener.getOrientationUp().y, listener.getOrientationUp().z};
 	alListenerfv(AL_ORIENTATION, orientation);
 }
@@ -193,11 +193,14 @@ void OpenALEngine::AudioStorage::soundStop(void)
 
 void OpenALEngine::AudioStorage::soundUpdate(void)
 {
-	alSourcef (source, AL_PITCH,    pitch	);
-    alSourcef (source, AL_GAIN,     gain	);
-    alSourcefv(source, AL_POSITION, position);
-//    alSourcefv(source, AL_VELOCITY, getVelocity()	);
-	alSourcei (source, AL_LOOPING,  isLoop	);
+	if(sound != NULL)
+	{
+		alSourcef (source, AL_PITCH,    pitch	);
+		alSourcef (source, AL_GAIN,     gain	);
+		alSourcefv(source, AL_POSITION, position);
+	//    alSourcefv(source, AL_VELOCITY, getVelocity()	);
+		alSourcei (source, AL_LOOPING,  isLoop	);
+	}
 }
 
 bool OpenALEngine::inject(AudioObject *object)
