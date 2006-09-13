@@ -31,13 +31,13 @@ void Engine::Storage::cache()
 }
 
 
-void Engine::makeStorageForObject(Interface *object)
+bool Engine::makeStorageForObject(Interface *object)
 {
 	uid objectId = object->getId();
 	if(idHash.find(objectId) != idHash.end())
 	{
 		log_msg("error engine", "Duplicate object " + IntToStr(objectId) + " in storage");
-		return;
+		return false;
 	}
 
 	int storageIndex = storages.size();
@@ -46,7 +46,7 @@ void Engine::makeStorageForObject(Interface *object)
 	if(newStorage == NULL)
 	{
 		log_msg("error engine", "Cannot find storage for object " + IntToStr(objectId));
-		return ;
+		return false;
 	}
 
 	storages.push_back(newStorage);
@@ -55,6 +55,7 @@ void Engine::makeStorageForObject(Interface *object)
 	newStorage->storageIndex = storageIndex;
 	newStorage->fill(object);
 	makeStorageForObjectPost(object, newStorage);
+	return true;
 }
 
 void Engine::deleteStorageForObject(int sid)
@@ -65,8 +66,11 @@ void Engine::deleteStorageForObject(int sid)
 	idHash.erase(storage->objectId);
 	delete storage;
 
-	storages[sid] = storages.back();
-	idHash[storages[sid]->objectId] = sid;
+	if(sid + 1 < storages.size())
+	{
+		storages[sid] = storages.back();
+		idHash[storages[sid]->objectId] = sid;
+	}
 	storages.pop_back();
 }
 
@@ -75,7 +79,7 @@ void Engine::deleteStorageForChildren(int sid)
 	int count = storages[sid]->children.size();
 	for(int i = 0; i < count; i++)
 	{
-		int n = idHash[storages[sid]->children[i]];
+		int n = findSid(storages[sid]->children[i]);
 		deleteStorageForChildren(n);
 		deleteStorageForObject(n);
 	}

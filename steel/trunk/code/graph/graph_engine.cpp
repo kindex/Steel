@@ -22,12 +22,11 @@ bool GraphEngine::inject(GraphObject *object)
 {
 	// если объект не хочет добавляться
 	if(!object->GraphBeforeInject()) return false;
+	// кешируем объект
+	if(!makeStorageForObject(object)) return false;
+	makeStorageForChildren(object);
 	// список глобальных объектов
 	objects.push_back(object);
-	// кешируем объект
-	makeStorageForObject(object);
-//	cacheStroageObject(getStorage(object));
-	makeStorageForChildren(object);
 
 	return true;
 }
@@ -45,8 +44,8 @@ bool GraphEngine::clear()
 
 bool GraphEngine::remove(GraphObject *object)
 {
-	deleteStorageForChildren(idHash[object->getId()]);
-	deleteStorageForObject(idHash[object->getId()]);
+	deleteStorageForChildren(findSid(object->getId()));
+	deleteStorageForObject(findSid(object->getId()));
 	
 	for(steel::vector<GraphObject*>::iterator it = objects.begin(); it != objects.end(); it++)
 		if(*it == object)

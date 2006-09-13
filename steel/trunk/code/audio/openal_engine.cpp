@@ -207,12 +207,11 @@ bool OpenALEngine::inject(AudioObject *object)
 {
 	// если объект не хочет добавляться
 	if(!object->AudioBeforeInject()) return false;
+	// кешируем объект
+	if(!makeStorageForObject(object)) return false;
+	makeStorageForChildren(object);
 	// список глобальных объектов
 	objects.push_back(object);
-	// кешируем объект
-	makeStorageForObject(object);
-//	cacheStroageObject(getStorage(object));
-	makeStorageForChildren(object);
 
 	return true;
 }

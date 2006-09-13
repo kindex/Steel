@@ -29,10 +29,6 @@ protected:
 	// действующая гратация на все обхекты
 	v3 g;
 
-	typedef std::map <uid, int> StorageHash;
-	// отображение идентификаторов объекта на положение в массиве storage
-	StorageHash idHash;
-
 public:
 	struct TotalInfo
 	{

@@ -34,12 +34,11 @@ bool PhysicEngine::inject(PhysicObject *object)
 {
 	// если объект не хочет добавляться
 	if(!object->PhysicBeforeInject()) return false;
+	// кешируем объект
+	if(!makeStorageForObject(object)) return false;
+	makeStorageForChildren(object);
 	// список глобальных объектов
 	objects.push_back(object);
-	// кешируем объект
-	makeStorageForObject(object);
-//	cacheStroageObject(getStorage(object));
-	makeStorageForChildren(object);
 
 	return true;
 }

@@ -33,7 +33,7 @@
 	steel::vector (common/steel_vector.h),
 	иначе использует std::vector
 */
-#define STEEL_VECTOR
+//#define STEEL_VECTOR
 
 
 /*

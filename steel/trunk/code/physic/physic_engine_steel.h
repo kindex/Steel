@@ -52,15 +52,22 @@ protected:
 
 		// индекс в массиве particleSet
 		int partiecleSetId;
-
-		// *** Particle ***
-		v3 force;
+		float mass;
+		Config *material;
 		v3 position;
 		v3 velocity;
-		float mass, spring_r0, spring_k, gravity_k, gravity_power, gravity_min_dist, friction_k, friction_power;
-		Config *material;
+		v3 force;
 
 		void fill(Interface *object);
+		void cache(void);
+		PhysicStorage(void):material(NULL) {}
+	};
+
+	struct PhysicStorageParticle: public PhysicStorage
+	{
+		// *** Particle ***
+		float spring_r0, spring_k, gravity_k, gravity_power, gravity_min_dist, friction_k, friction_power;
+
 		void cache(void);
 	};
 
@@ -69,8 +76,9 @@ protected:
 
 public:
 	PhysicStorage *getStorage(PhysicObject *object);
+	PhysicStorage* getStorage(uid id);
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	Storage* getStorageClass(Interface *object) { return new PhysicStorage; }
+	Storage* getStorageClass(Interface *object);
 	
 	void makeStorageForObjectPost(Interface *object, Storage *storage);
 	void deleteStorageForObjectPost(int sid);
@@ -83,13 +91,14 @@ public:
 	// обработать движение всех объектов
 	bool process(steel::time globalTime, steel::time time);
 
+// ************* PARTICLE *************
 	// обработать движение одного объекта
-	bool processParticle(PhysicStorage &objectStorage, steel::time globalTime, steel::time time);
+	bool processParticle(PhysicStorageParticle *objectStorage, steel::time globalTime, steel::time time);
 
 	// рассчитать суммарно действующие силы для частицы
-	v3 calculateForceForParticle(PhysicStorage &storage);
+	v3 calculateForceForParticle(PhysicStorageParticle *storage);
 	// рассчитать силу взаимодействия между двумя частицами
-	v3 calculateForceForParticle(PhysicStorage &storage1, PhysicStorage &storage2);
+	v3 calculateForceForParticle(PhysicStorageParticle *storage1, PhysicStorageParticle *storage2);
 };
 
 

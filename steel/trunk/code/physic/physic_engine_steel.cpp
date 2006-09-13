@@ -21,11 +21,21 @@
 PhysicEngineSteel::PhysicStorage* PhysicEngineSteel::getStorage(PhysicObject *object)
 {
 	uid id = object->getId();
-	assert(idHash.find(id) != idHash.end(), "Object not found in physic storage");
+//	assert(idHash.find(id) != idHash.end(), "Object not found in physic storage");
 
-	return (PhysicStorage*)storages[idHash[id]];
+	if(idHash.find(id) != idHash.end())
+		return (PhysicStorage*)storages[findSid(id)];
+	else
+		return NULL;
 }
 
+PhysicEngineSteel::PhysicStorage* PhysicEngineSteel::getStorage(uid id)
+{
+	if(idHash.find(id) != idHash.end())
+		return (PhysicStorage*)storages[findSid(id)];
+	else
+		return NULL;
+}
 
 
 void PhysicEngineSteel::PhysicStorage::fill(Interface *object)
@@ -33,11 +43,11 @@ void PhysicEngineSteel::PhysicStorage::fill(Interface *object)
 	Storage::fill(object);
 
 	collisionType = ((PhysicObject*)object)->getCollisionType();
-	force.loadZero();
 }
 
 void PhysicEngineSteel::makeStorageForObjectPost(Interface *object, Storage *storage)
 {
+	PhysicEngine::makeStorageForObjectPost(object, storage);
 	if(((PhysicStorage*)storage)->collisionType == COLLISION_PARTICLE)
 	{
 		((PhysicStorage*)storage)->partiecleSetId = particleSet.size();
@@ -47,7 +57,9 @@ void PhysicEngineSteel::makeStorageForObjectPost(Interface *object, Storage *sto
 
 void PhysicEngineSteel::deleteStorageForObjectPost(int sid)
 {
-	if(((PhysicStorage*)storages[sid])->collisionType == COLLISION_PARTICLE)
+	PhysicStorage *storage = (PhysicStorage*)storages[sid];
+	if(storage)
+	if(storage->collisionType == COLLISION_PARTICLE)
 	{
 		((PhysicStorage*)storages[particleSet.back()])->partiecleSetId = 
 			((PhysicStorage*)storages[sid])->partiecleSetId;
@@ -77,21 +89,10 @@ void PhysicEngineSteel::PhysicStorage::cache()
 
 	if(modificationTime < pobject->getModificationTime())
 	{
-		position = pobject->getPosition().getTranslation();
 		mass = pobject->getMass();
-
 		material = pobject->getPMaterial();
 
-		if(collisionType == COLLISION_PARTICLE)
-		{
-			spring_r0			= material->getf("spring_r0");
-			spring_k			= material->getf("spring_k");
-			gravity_k			= material->getf("gravity_k");
-			gravity_power		= material->getf("gravity_power");
-			gravity_min_dist	= material->getf("gravity_min_dist");
-			friction_k			= material->getf("friction_k");
-			friction_power		= material->getf("friction_power");
-		}
+		position = pobject->getPosition().getTranslation();
 	}
 }
 
@@ -126,7 +127,9 @@ void PhysicEngineSteel::prepare(PhysicObject *object, steel::time globalTime, st
 
 				storages[sid]->children.push_back(id);
 			}
-			getStorage(child)->cache();
+			Storage *storage = getStorage(child);
+			if(storage != NULL)
+				storage->cache();
 		}
 		int size = storages[sid]->children.size();
 
@@ -140,6 +143,7 @@ void PhysicEngineSteel::prepare(PhysicObject *object, steel::time globalTime, st
 				deleteStorageForObject(n);
 				storages[sid]->children[i] = storages[sid]->children.back();
 				storages[sid]->children.pop_back();
+
 				size--;
 				i--;
 			}
@@ -176,40 +180,65 @@ bool PhysicEngineSteel::process(steel::time globalTime, steel::time time)
 
 	for(svector<int>::iterator it = particleSet.begin(); it != particleSet.end(); it++)
 	{
-		processParticle(*(PhysicStorage*)storages[*it], globalTime, time);
+		processParticle((PhysicStorageParticle*)storages[*it], globalTime, time);
 	}
 	
 
 	for(svector<int>::iterator it = particleSet.begin(); it != particleSet.end(); it++)
 	{
-		PhysicStorage &objectStorage = *(PhysicStorage*)storages[*it];
+		PhysicStorageParticle *objectStorage = (PhysicStorageParticle*)storages[*it];
 
-		objectStorage.velocity += time*objectStorage.force/objectStorage.mass;
-		objectStorage.force += objectStorage.velocity.getNormalized() * objectStorage.velocity.getNormalized();
+		objectStorage->velocity += time*objectStorage->force/objectStorage->mass;
+		objectStorage->force += objectStorage->velocity.getNormalized() * objectStorage->velocity.getNormalized();
 		v3 frictionForce  = 
-			-objectStorage.velocity.getNormalized() * pow(objectStorage.velocity.getLength(), objectStorage.friction_power)*objectStorage.friction_k;
+			-objectStorage->velocity.getNormalized() * pow(objectStorage->velocity.getLength(), objectStorage->friction_power)*objectStorage->friction_k;
 
-		v3 newVelocity = objectStorage.velocity + time*frictionForce/objectStorage.mass;
+		v3 newVelocity = objectStorage->velocity + time*frictionForce/objectStorage->mass;
 
-		if((newVelocity & objectStorage.velocity) >0) // сила трения не может развернуть тело
-				objectStorage.velocity = newVelocity;
+		if((newVelocity & objectStorage->velocity) >0) // сила трения не может развернуть тело
+				objectStorage->velocity = newVelocity;
 		else
-			objectStorage.velocity.loadZero();
+			objectStorage->velocity.loadZero();
 
 
-		objectStorage.position += objectStorage.velocity*time;
+		objectStorage->position += objectStorage->velocity*time;
 
-		PhysicObject &object = *(PhysicObject*)objectStorage.object;
+		PhysicObject &object = *(PhysicObject*)objectStorage->object;
 
 		ObjectPosition objectPosition = object.getPosition();
-		objectPosition.setTranslation(objectStorage.position);
+		objectPosition.setTranslation(objectStorage->position);
 		object.setPosition(objectPosition);
 
 		velocity vel;
-		vel.translation = objectStorage.velocity;
+		vel.translation = objectStorage->velocity;
 		object.setVelocity(vel);
 	}
 
 	return true;
 }
 
+
+PhysicEngineSteel::Storage* PhysicEngineSteel::getStorageClass(Interface *object)
+{ 
+	if(((PhysicObject*)object)->getCollisionType() == COLLISION_PARTICLE)
+		return new PhysicStorageParticle;
+	else
+		return new PhysicStorage;
+}
+
+
+void PhysicEngineSteel::PhysicStorageParticle::cache()
+{
+	PhysicStorage::cache();
+//		if(collisionType == COLLISION_PARTICLE)
+	if(modificationTime < ((PhysicObject*)object)->getModificationTime())
+	{
+		spring_r0			= material->getf("spring_r0");
+		spring_k			= material->getf("spring_k");
+		gravity_k			= material->getf("gravity_k");
+		gravity_power		= material->getf("gravity_power");
+		gravity_min_dist	= material->getf("gravity_min_dist");
+		friction_k			= material->getf("friction_k");
+		friction_power		= material->getf("friction_power");
+	}
+}

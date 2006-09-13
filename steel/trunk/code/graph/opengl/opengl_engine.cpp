@@ -378,7 +378,7 @@ OpenGL_Engine::GraphStorage *OpenGL_Engine::getStorage(GraphObject *object)
 	uid id = object->getId();
 	assert(idHash.find(id) != idHash.end(), "Object not found in graph storage");
 
-	return (GraphStorage*)storages[idHash[id]];
+	return (GraphStorage*)storages[findSid(id)];
 }
 
 void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix, GraphObject *parent)
@@ -422,7 +422,7 @@ void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel
 			uid id = storage->children[i];
 			if(newChildrenId.find(id) == newChildrenId.end())
 			{
-				int n = idHash[id];
+				int n = findSid(id);
 				deleteStorageForChildren(n);
 				deleteStorageForObject(n);
 				storage->children[i] = storage->children.back();

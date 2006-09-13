@@ -76,9 +76,17 @@ protected:
 	typedef std::map <uid, int> StorageHash;
 	// отображение идентификаторов объекта на положение в массиве storage
 	StorageHash idHash;
+	virtual int findSid(uid id)
+	{
+		StorageHash::iterator it = idHash.find(id);
+		if(it == idHash.end())
+			return -1;
+		else
+			return it->second;
+	}
 
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	virtual void makeStorageForObject(Interface *object);
+	virtual bool makeStorageForObject(Interface *object);
 	virtual Storage* getStorageClass(Interface *object)  = 0;
 	virtual void makeStorageForObjectPost(Interface *object, Storage *storage) {}
 
