@@ -56,6 +56,8 @@ bool test()
 	audio->setConfig();
 	audio->loadSources();
 
+	//setListenerEnvironment(EAX_ENVIRONMENT_SEWERPIPE);
+
 	audio->sources[0].setPosition(0.0f, 0.0f, 0.0f);
 	soundUpdate(audio->sources[0]);
 	soundPlay(audio->sources[0]);
