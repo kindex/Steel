@@ -26,7 +26,8 @@
 #include "text/text.h"
 #include "audio/audio.h"
 
-// глобальная коллекция ресурсовextern ResCollection<Config> resConfig;
+// глобальная коллекция ресурсов
+extern ResCollection<Config> resConfig;
 extern ResCollection<Image> resImage;
 extern ResCollection<Model> resModel;
 extern ResCollection<Material> resMaterial;
