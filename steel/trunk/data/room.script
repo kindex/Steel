@@ -6,12 +6,18 @@
 
 
 //KIND	parent	id	CONF		X,Y,Z		Angle		Scale	Vx,Vy,Vz;
-solid			wall/wall1	20,0,-1
-solid			wall/wall1	-20,0,-1
-solid			wall/ceil	0,0,15
-solid			wall/wall1	0,20,-1
-solid			wall/wall1	0,-20,-1
+;solid			wall/wall1	20,0,-1
+;solid			wall/wall1	-20,0,-1
+;solid			wall/ceil	0,0,15
+;solid			wall/wall1	0,20,-1
+;solid			wall/wall1	0,-20,-1
 solid			wall/floor	0,0,-20.5
+;solid			wall/wall1	20,0,-1
+;solid			wall/wall1	-20,0,-1
+;solid			wall/ceil	0,0,15
+;solid			wall/wall1	0,20,-1
+;solid			wall/wall1	0,-20,-1
+;solid			wall/floor	0,0,-20.5
 
 solid			sphere/sphere2		0,0,2
 ;solid			spaceman/spaceman	1,0,2
@@ -20,4 +26,14 @@ solid			sphere/sphere2		0,0,2
 ;solid			spaceman/spaceman	4,0,2
 
 ;ps			particle_system/ps	0,0,2
+
+;solid			box/box8	0,0,0
+;solid			box/box2	2,0,0
+;solid			box/box3	3,0,0
+;solid			box/box4	4,0,0
+;solid			box/box5	5,0,0
+;solid			box/box6	6,0,0
+;solid			box/box7	7,0,0
+;solid			box/box1	8,0,0
+;solid			box/box0	-10,0,0
 

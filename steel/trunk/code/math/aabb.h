@@ -18,6 +18,8 @@
 #include "matrix34.h"
 
 #include "../common/steel_vector.h"
+#undef min
+#undef max
 
 #undef min
 #undef max

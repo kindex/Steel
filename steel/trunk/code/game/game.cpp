@@ -8,9 +8,9 @@
 	License:
 		Steel Engine License
 	Description:
-		Этот юнит является дополнением к steel engine и служит
-		примером использования движка. В этом юните задаются правила игры
-		или графической демки.
+		?? }?? ??????? ??????????? ? steel engine ? ?????
+		???????? ?????R??????? ??????.  ??? }??? ????}?? ??????? ???9
+		??? ????!????? ?????.
  ************************************************************/
 
 #include "../steel.h"
@@ -373,6 +373,15 @@ void Steel::bindPhysicEngine()
 	}
 }
 
+void Steel::insonify(AudioEngine *engine)
+{
+	Listener listener;
+	listener.setPosition(eye.x, eye.y, eye.z);
+	listener.setOrientation(v3(eye.x, eye.y, eye.z), v3(direction.x, direction.y, direction.z));
+
+	engine->setListener(listener);
+}
+
 void Steel::draw(GraphEngine *graph)
 {
 /*	if(!input->isMouseCaptured())
@@ -399,10 +408,11 @@ void Steel::draw(GraphEngine *graph)
 
 		graph->inject(crosshair);
 	}*/
-
+	
 	graph->camera.setup(eye, direction);
 	graph->processCamera();
 	graph->process(0,0);
+	
 
 //	if(conf->geti("crosshair"))
 //		graph->remove(crosshair);
@@ -463,4 +473,19 @@ bool Steel::executeCommand(std::string command)
 	}
 	else
 		return false;
+}
+
+
+void Steel::bindAudioEngine(AudioEngine *engine)
+{
+	audioEngine = engine;
+
+
+	audioEngine->sources[0].setPosition(0.0f, 0.0f, 0.0f);
+	soundUpdate(audioEngine->sources[0]);
+	soundPlay(audioEngine->sources[0]);
+
+	audioEngine->sources[1].setPosition(-10.0f, 0.0f, 0.0f);
+	soundUpdate(audioEngine->sources[1]);
+	soundPlay(audioEngine->sources[1]);
 }

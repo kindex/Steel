@@ -79,14 +79,14 @@ protected:
 
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
 	virtual void makeStorageForObject(Interface *object);
-	virtual Storage* getStorageClass(Interface *object) = 0;
+	virtual Storage* getStorageClass(Interface *object) {return NULL;};
 	virtual void makeStorageForObjectPost(Interface *object, Storage *storage) {}
 
 	virtual void deleteStorageForObject(int sid);
 	virtual void deleteStorageForObjectPost(int sid) {}
 
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	virtual void makeStorageForChildren(Interface *object)  = 0;
+	virtual void makeStorageForChildren(Interface *object)  {};
 	virtual void deleteStorageForChildren(int sid);
 };
 

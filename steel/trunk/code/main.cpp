@@ -10,8 +10,8 @@
 	License:
 		Steel Engine License
 	Description:
-		main() создаёт игровые классы, коллеццию ресурсов, загружет 
-		плагины, содержит главный цикл игры.
+		main() ????? ?????9? ?????9, ?????  ?} ????????, ??????? 
+		??????9, ??????? ?????9?  ??? ???9.
  ************************************************************/
 
 #include "steel.h"
@@ -27,6 +27,8 @@
 #include "res/res_main.h"
 #include "main.h"
 #include "graph/opengl/opengl_engine.h"
+
+#include "audio/openal_engine.h"
 
 using namespace std;
 
@@ -82,6 +84,18 @@ int main(int argc, char *argv[])
 
 	game.bind(graph);
 
+
+	AudioEngine *audio = new OpenALEngine();
+	if (!audio->init("audio"))	return 1;
+
+	audio->setConfig();
+	audio->loadSources();
+
+	game.bindAudioEngine(audio);
+
+
+	//Listener *listener = new Listener();
+
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
 	log_msg("core", "Entering main loop");
@@ -113,6 +127,7 @@ int main(int argc, char *argv[])
 		}
 
 		game.draw(graph);
+		game.insonify(audio);
 
 		timer.incframe();
 
@@ -146,7 +161,8 @@ int main(int argc, char *argv[])
 	graph->deinit();
 	delete graph;
 
-	game.deinit();
+	destroyOpenAL();
+
 	steel::log.close();
 	return 0;
 }

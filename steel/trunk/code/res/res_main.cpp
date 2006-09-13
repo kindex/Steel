@@ -8,8 +8,8 @@
 	License:
 		Steel Engine License
 	Description:
-        Создание коллекций ресурсов для каждого типа ресурса
-		и регистрации всех типов ресурсов
+        ???????? ?????? ?? ???????? ??? ??????? ??? ???????
+		? ??????? ?? ???& ???? ????????
 **************************************************************************************/
 
 #include "../steel.h"
@@ -20,6 +20,8 @@
 #include "conf/conf_text.h"
 #include "script/script_text.h"
 #include "text/text_file.h"
+#include "audio/wav.h"
+#include "audio/ogg.h"
 
 
 ResCollection<Config>	resConfig;
@@ -28,6 +30,7 @@ ResCollection<Model>	resModel;
 ResCollection<Material> resMaterial;
 ResCollection<Script>	resScript;
 ResCollection<Text>		resText;
+ResCollection<Audio> resAudio;
 
 
 // Image filename:
@@ -93,9 +96,9 @@ T2* createClass(const std::string filename, const std::string base)
 	}
 	else
 	{
-		delete object;
+        delete object;
 		return NULL;
-	}
+    }
 }
 
 bool registerResources()
@@ -106,6 +109,8 @@ bool registerResources()
 	resConfig.setId("config");	resConfig.registerResLoader(createClass<ConfigText, Config>);
 	resScript.setId("script");	resScript.registerResLoader(createClass<ScriptText, Script>);
 	resText.setId("text");	resText.registerResLoader(createClass<TextFile, Text>);
+	resAudio.registerResLoader(createClass<WAV, Audio>);            resAudio.setId("audio");
+//	resAudio.registerResLoader(createClass<Audio, OGG>);            
 
 	return true;
 }

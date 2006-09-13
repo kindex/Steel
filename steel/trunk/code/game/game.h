@@ -33,6 +33,9 @@ class Game; // forward declaration, cross-use
 #include <string>
 #include <map>
 
+#include "../audio/openal_engine.h"
+
+
 /*
 Класс, задающий правила игры
 */
@@ -67,6 +70,7 @@ protected:
 	GraphEngine *graphEngine;
 //	PhysicEngineSteel *physicEngine;
 	PhysicEngine *physicEngine;
+	AudioEngine	*audioEngine;
 
 	void processKeyboard();
 
@@ -87,7 +91,11 @@ public:
 
 	void bind(GraphEngine *engine);
 	void bindPhysicEngine(void);
+	void bindAudioEngine(AudioEngine *engine);
 	void draw(GraphEngine *engine);
+
+	void insonify(AudioEngine *engine);
+
 	void process(steel::time globalTime, steel::time time);
 //	int getCollisionCount() { return physicEngine->total.collisionCount; }
 
