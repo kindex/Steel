@@ -6,9 +6,7 @@
 		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 	License:
 		Steel Engine License
-	File history:
-		[2006.09.09 11:34:29] Kuzmi4: File Creation.
-    Description:
+	Description:
 		Звуковой движок.
  ************************************************************/
 
@@ -52,12 +50,7 @@ Source::Source(Audio *sound)
 */
 //=============================================================
 
-void AudioEngine::setConfig()
-{
-	config = loadConfig();
-}
-
-void AudioEngine::loadSources()
+/*void AudioEngine::loadSources()
 {
 	for (unsigned int i = 0; i < config.size(); i++)
 	{
@@ -72,4 +65,8 @@ void AudioEngine::loadSources()
 		config[i].loop == "looping" ? source->setLooped(true) : source->setLooped(false);
 		sources.push_back(*source);
 	}
-}
+}*/
+
+
+
+

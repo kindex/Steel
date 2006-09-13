@@ -69,28 +69,23 @@ int main(int argc, char *argv[])
 
 	float speed = 0.01f; // 100 FPS
 
-// ******************* GRAPH ************************
+// ******************* INPUT ************************
 	Input *input = new Input;
-
+	if(!input->init("input")) return 1;
+// ******************* GRAPH ************************
 	OpenGL_Engine *graph = new OpenGL_Engine();
 	if(!graph->init("opengl", input)) return 1;
+// ******************* AUDIO ************************
+	AudioEngine *audio = new OpenALEngine();
+	if (!audio->init("audio"))	return 1;
 
-// ******************* INPUT ************************
-	if(!input->init("input")) return 1;
+
 // ******************* GAME *************************
 	Steel game;
 
 	if(!game.init("game", input, commandLine)) return 1;
 
 	game.bind(graph);
-
-
-	AudioEngine *audio = new OpenALEngine();
-	if (!audio->init("audio"))	return 1;
-
-	audio->setConfig();
-	audio->loadSources();
-
 	game.bindAudioEngine(audio);
 
 
@@ -161,7 +156,8 @@ int main(int argc, char *argv[])
 	graph->deinit();
 	delete graph;
 
-	destroyOpenAL();
+	audio->deinit();
+	delete audio;
 
 	steel::log.close();
 	return 0;

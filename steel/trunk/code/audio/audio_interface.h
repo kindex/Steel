@@ -6,8 +6,6 @@
 		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 	License:
 		Steel Engine License
-	File history:
-		[2006.09.14 22:02:39] Kuzmi4: File Creation.
     Description:
 		Звуковой движок.
  ************************************************************/
@@ -15,23 +13,20 @@
 #ifndef __AUDIO_INTERFACE_H
 #define __AUDIO_INTERFACE_H
 
-#include "../engine.h"
-#include "audio_engine.h"
+#include "../interface.h"
+#include "../res/audio/audio.h"
 
-class AudioObject;
-
-typedef steel::svector<AudioObject*> AudioObjectList;
-
-class AudioObject : public Interface
+class AudioObject: public Interface
 {
 public:
-	getSound() const { return sound; }
-	getCoords() const { return coords; }
-	setSound(Source newSound) { sound = newSound; }
-	setCoords(v3 newCoords) { coords = newCoords; }
-private:
-	Source sound;
-	v3 coords;
+	virtual bool AudioBeforeInject(void) { return true; }
+	virtual int getAudioChildrenCount(void) 	{		return 0;	}
+	virtual AudioObject* getAudioChildren(int i)	{		return NULL;	}
+
+	virtual float getGain(void) = 0;
+	virtual float getPitch(void) = 0;
+	virtual bool isLooped(void) = 0;
+	virtual Audio *getSound(void)  = 0;
 
 
 /*

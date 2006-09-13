@@ -14,6 +14,7 @@
  ************************************************************/
 
 #include "../steel.h"
+#include "../audio/audio_interface.h"
 #include "game_obj.h"
 
 class Combiner: public GameObj
@@ -21,12 +22,18 @@ class Combiner: public GameObj
 protected:
 	GraphObject *graph;
 	PhysicObject *physic;
+	AudioObject	*audio;
+
 public:
-	Combiner(void): graph(NULL), physic(NULL) {}
+	Combiner(void): graph(NULL), physic(NULL), audio(NULL) {}
 
 	virtual void setGraphObject(GraphObject *_graph)
 	{ // TODO check error (if graph was already set)
 		graph = _graph;
+	}
+	virtual void setAudioObject(AudioObject *_audio)
+	{
+		audio = _audio;
 	}
 
 	ModificationTime getModificationTime(void) 
@@ -66,6 +73,12 @@ public:
 	TexCoords*	getTexCoords(int texNumber) { return graph?graph->getTexCoords(texNumber):NULL;}
 
 	Lights*		getLights(void) { return graph?graph->getLights():NULL;}
+
+// ********** AUDIO ************
+	float getGain(void) { return audio?audio->getGain():1.0f; }
+	float getPitch(void) { return audio?audio->getPitch():1.0f; }
+	bool isLooped(void) { return audio?audio->isLooped():false; }
+	Audio *getSound(void){ return audio?audio->getSound():NULL; }
 
 // ********** PHYSIC *************
 // TODO

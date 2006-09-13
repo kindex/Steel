@@ -929,6 +929,14 @@
 				Name="objects"
 				>
 				<File
+					RelativePath=".\objects\audio_object.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\objects\audio_object.h"
+					>
+				</File>
+				<File
 					RelativePath=".\objects\combiner.cpp"
 					>
 				</File>

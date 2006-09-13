@@ -1,7 +1,10 @@
 ;	color_map	gbnm
 ;	bump	gbnm
 
-	bump	boxes/crate1_side_local
+
+format0=color_map
+image0=boxes/crate1_side_local
+
 *	color_map	boxes/box1_side_no_handle_d
 ;	env	image/env/tsccity
 ;	bump	medflr2_local

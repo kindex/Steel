@@ -59,26 +59,49 @@ class AL_Listener : public Listener
 
 class OpenALEngine: public AudioEngine
 {
+protected:
+#define A(object) ((AudioObject*)(object))
+	struct AudioStorage: public Storage // множество треугольников одного материала
+	{
+		Audio *sound;
+		v3 position;
+
+		// from OpenAL_Source
+		unsigned int source;		// unsigned int
+		unsigned int buffer;		// unsigned int
+		bool isLoop;
+		float gain;
+		float pitch;
+
+		void soundPlay(void);
+		void soundClose(void);
+		void soundStop(void);
+		void soundUpdate(void);
+
+		bool init(void);
+		bool deinit(void) { return true; }
+		void fill(Interface *object);
+		void cache(void);
+
+		AudioStorage(void): sound(NULL) {}
+		~AudioStorage(void) { deinit(); }
+	};
+
+
+	void setListenerEnvironment(unsigned long environment);
+	ALboolean CheckALCError();
+	ALboolean CheckALError();
+	void updateListener(Listener &listener);
+
 public:
 	void setListener(const Listener &aListener);
 	bool init(const std::string _conf);
+	bool deinit(void);
+	bool inject(AudioObject *object);
+
+	Storage* getStorageClass(Interface *object) { return new AudioStorage; }
+	void makeStorageForChildren(Interface *object);
 };
-
-
-extern void destroyOpenAL();
-extern void setListenerEnvironment(unsigned long environment);
-
-extern ALboolean CheckALCError();
-extern ALboolean CheckALError();
-
-extern void updateListener(Listener &listener);
-
-extern void soundPlay(Source &sound);
-extern void soundClose(Source &sound);
-extern void soundStop(Source &sound);
-extern void soundUpdate(Source &sound);
-
-
 
 #endif
 

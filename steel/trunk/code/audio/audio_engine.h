@@ -18,10 +18,9 @@
 #include <vector>
 #include "../engine.h"
 #include "../res/audio/audio.h"
-//#include "openal_engine.h"
 #include "../res/audio/audio_config.h"
 #include "../res/res_main.h"
-//#include "openal_engine.h"
+#include "audio_interface.h"
 
 ///**/#include "audio_interface.h"
 
@@ -49,64 +48,26 @@ private:
 };
 
 
-class Source		// maybe to move this structure to the interface/audio object
-{
-public:
-	Source() {};
-	Source(Audio *sound);
-	//float getPosition(short i) { return position[i]; }
-	//float getVelocity(short i) { return velocity[i]; }
-
-	v3 getPosition() { return position; }
-	float *getVelocity() { return velocity; }
-	float getGain() const { return gain; }
-	float getPitch() const { return pitch; }
-	bool isLooped() const { return isLoop; }
-	void setPosition(float x, float y, float z) { position[0] = x; position[1] = y; position[2] = z; }
-	void setVelocity(float x, float y, float z) { velocity[0] = x; velocity[1] = y; velocity[2] = z; }
-	void setGain(float newGain) { gain = newGain; }
-	void setPitch(float newPitch) { pitch = newPitch; }
-	void setLooped(bool newLoop) { isLoop = newLoop; }
-
-	// from OpenAL_Source
-	Audio *sound;
-	unsigned int source;		// unsigned int
-	unsigned int buffer;		// unsigned int
-
-	std::string fileName;
-	std::string name;		// == id
-	std::string type;
-	std::string load;
-	//std::string loop;
-
-private:
-	float velocity[3];
-	v3 position;
-	bool isLoop;
-	float gain;
-	float pitch;
-};
-
-
 class AudioEngine : public Engine
 {
+protected:
+	svector<AudioObject*> objects;
+
 public:
 	AudioEngine(void) {}
-	void setConfig(void);
-	void loadSources(void);
 
 	virtual bool init(const std::string _conf) = 0;
 	virtual bool clear(void) { return true; } 
-	virtual bool deinit(void) { return true; } 
+	virtual bool deinit(void) = 0;
+	virtual void setListener(const Listener &aListener) { listener = aListener; }
+
+	virtual bool inject(AudioObject *object) = 0;
 
 //============================
 
 	Listener listener;
-	std::vector<AudioConfig> config;		// audio configs
+//	std::vector<AudioConfig> config;		// audio configs
 
-	std::vector<Source> sources;
-
-	virtual void setListener(const Listener &aListener) { listener = aListener; }
 
 	//AudioObjectList sources;
 

@@ -18,6 +18,7 @@
 
 #include "../steel.h"
 #include "../physic/physic_interface.h"
+#include "../audio/audio_interface.h"
 #include "../physic/physic_engine.h"	// Kane
 #include "../graph/graph_interface.h"
 
@@ -40,13 +41,14 @@ typedef steel::vector<GameObj*> GameObjList;
 имень детей
 быть прикреплённым к родителю
 */
-class GameObj: public virtual GraphObject, public virtual PhysicObject
+class GameObj: public virtual GraphObject, public virtual PhysicObject, public virtual AudioObject
 {
 public:
 	GameObj			*parent;
 	
 	PhysicObjectList physicChildren;
 	GraphObjectList  graphChildren;
+	svector<AudioObject*>  audioChildren;
 
 	velocity	vel;
 	float		mass;
@@ -88,6 +90,9 @@ public:
 	int getGraphChildrenCount(void)	{		return (int)graphChildren.size();	}
 	GraphObject* getGraphChildren(int i)	{		return graphChildren[i];	}
 
+	int getAudioChildrenCount(void)	{		return (int)audioChildren.size();	}
+	AudioObject* getAudioChildren(int i)	{		return audioChildren[i];	}
+
 	GameObj *getParent() { return parent; }
 
 	ObjectPosition		getPosition(void) {return position;}
@@ -97,6 +102,11 @@ public:
 	void	setVelocity(velocity const &v) {vel = v; }
 	// масса
 	float	getMass(void){return mass;}
+
+	float getGain(void) { return 1.0f;}
+	float getPitch(void){ return 1.0f;}
+	bool isLooped(void) { return false;}
+	Audio *getSound(void)  { return NULL;}
 };
 
 class GameObjSet: public GameObj

@@ -105,6 +105,7 @@ void GameObj::addChildren(GameObj *obj)
 {
 	graphChildren.push_back((GraphObject*)obj);
 	physicChildren.push_back((PhysicObject*)obj);
+	audioChildren.push_back((AudioObject*)obj);
 
 	obj->attach(this);
 //	string name = obj->getName();

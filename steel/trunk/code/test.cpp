@@ -19,42 +19,8 @@
 #include "steel.h"
 #include "common/logger.h"
 
-#include "res/audio/wav.h"
-//#include "res/res_main.h"
-
-#include "audio/openal_engine.h"
-
 bool test()
 {
-/*
-	Listener *listener = new Listener();
-	updateListener(*listener);
-	listener->setOrientation(v3(0.0f, 0.0f, -1.0f), v3(0.0f, 1.0f, 0.0f));
-	updateListener(*listener);
-*/
-	//Audio *tSnd = resAudio.add("audio/stereo");
-
-//	Source *source1 = new Source(resAudio.add("audio/rain"));
-//	Source *source2 = new Source(resAudio.add("audio/thunder"));
-
-	//alSourcef(source1->source, AL_ROLLOFF_FACTOR, 0.0f);
-	//alSourcef(source2->source, AL_ROLLOFF_FACTOR, 0.0f);
-/**
-	source1->setLooped(true);
-	source2->setLooped(true);
-	source1->setPosition(0.0f, 0.0f, 0.0f);
-	soundUpdate(*source1);
-	source2->setPosition(-10.0f, 0.0f, 0.0f);
-	soundUpdate(*source2);
-
-	soundPlay(*source1);
-	soundPlay(*source2);
-**/
-
-
-	//setListenerEnvironment(EAX_ENVIRONMENT_SEWERPIPE);
-
-
 
 	return true;
 }

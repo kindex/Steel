@@ -48,10 +48,8 @@ void AL_Source::initialize(Audio * sound)
 };
 */
 
-//====================================================================
-// extern functions
 
-ALboolean CheckALCError()
+ALboolean OpenALEngine::CheckALCError()
 {
 	ALenum errCode;
 	string err = "ALC error: ";		
@@ -64,7 +62,7 @@ ALboolean CheckALCError()
 	return AL_TRUE;
 }
 
-ALboolean CheckALError()
+ALboolean OpenALEngine::CheckALError()
 {
 	ALenum errCode;
 	string err = "OpenAL error: ";
@@ -131,7 +129,7 @@ bool OpenALEngine::init(const std::string _conf)
 	return true;
 }
 
-void destroyOpenAL()
+bool OpenALEngine::deinit(void)
 {
 	// clear all buffers and sources
 //	for (TBuf::iterator i = buffers.begin(); i != buffers.end(); i++)
@@ -145,9 +143,10 @@ void destroyOpenAL()
 	// close sound device
 	log_msg("openal deinit", "Closing sound device...");
 	alcCloseDevice(pDevice);
+	return true;
 }
 
-extern void setListenerEnvironment(unsigned long environment)
+void OpenALEngine::setListenerEnvironment(unsigned long environment)
 {
 	if ( m_EAXSet )
          m_EAXSet(&DSPROPSETID_EAX_ListenerProperties,
@@ -175,54 +174,81 @@ void OpenALEngine::setListener(const Listener &aListener)
 }
 
 
-extern void soundPlay(Source &sound)
+void OpenALEngine::AudioStorage::soundPlay(void)
 {
-	alSourcePlay(sound.source);
+	alSourcePlay(source);
 }
 
-extern void soundClose(Source &sound)
+void OpenALEngine::AudioStorage::soundClose(void)
 {
-	alSourceStop(sound.source);
-	if (alIsSource(sound.source))
-		alDeleteSources(1, &sound.source);
+	alSourceStop(source);
+	if (alIsSource(source))
+		alDeleteSources(1, &source);
 }
 
-extern void soundStop(Source &sound)
+void OpenALEngine::AudioStorage::soundStop(void)
 {
-	alSourceStop(sound.source);
+	alSourceStop(source);
 }
 
-extern void soundUpdate(Source &sound)
+void OpenALEngine::AudioStorage::soundUpdate(void)
 {
-	alSourcef (sound.source, AL_PITCH,    sound.getPitch()	);
-    alSourcef (sound.source, AL_GAIN,     sound.getGain()		);
-    alSourcefv(sound.source, AL_POSITION, sound.getPosition()	);
-    alSourcefv(sound.source, AL_VELOCITY, sound.getVelocity()	);
-	alSourcei (sound.source, AL_LOOPING,  sound.isLooped()	);
+	alSourcef (source, AL_PITCH,    pitch	);
+    alSourcef (source, AL_GAIN,     gain	);
+    alSourcefv(source, AL_POSITION, position);
+//    alSourcefv(source, AL_VELOCITY, getVelocity()	);
+	alSourcei (source, AL_LOOPING,  isLoop	);
 }
 
-
-
-// from audio_engine.h
-Source::Source(Audio *sound)
+bool OpenALEngine::inject(AudioObject *object)
 {
-	setVelocity(0.0f, 0.0f, 0.0f);
-	setPosition(0.0f, 0.0f, 0.0f);
-	setGain(1.0f);
-	setPitch(1.0f);
-	setLooped(false);
+	// если объект не хочет добавляться
+	if(!object->AudioBeforeInject()) return false;
+	// список глобальных объектов
+	objects.push_back(object);
+	// кешируем объект
+	makeStorageForObject(object);
+//	cacheStroageObject(getStorage(object));
+	makeStorageForChildren(object);
 
-	alGenBuffers(1, &buffer);
-	alBufferData(buffer, sound->format, sound->data, sound->size, sound->frequency);
-	if (sound->data)
-		free(sound->data);
-	alGenSources(1, &source);
-
-	alSourcei (source, AL_BUFFER,   buffer			);
-
-    alSourcef (source, AL_PITCH,    getPitch()		);
-    alSourcef (source, AL_GAIN,     getGain()		);
-    alSourcefv(source, AL_POSITION, getPosition()	);
-    alSourcefv(source, AL_VELOCITY, getVelocity()	);
-	alSourcei (source, AL_LOOPING,  isLooped()		);
+	return true;
 }
+
+void OpenALEngine::makeStorageForChildren(Interface *object)
+{
+
+}
+
+void OpenALEngine::AudioStorage::fill(Interface *object)
+{
+	Storage::fill(object);
+
+	cache();
+
+	if(sound != NULL)
+	{
+		alGenBuffers(1, &buffer);
+		alBufferData(buffer, sound->format, sound->data, sound->size, sound->frequency);
+		if (sound->data)
+			free(sound->data);
+		alGenSources(1, &source);
+		alSourcei (source, AL_BUFFER,    buffer	);
+		soundUpdate();
+		soundPlay();
+	}
+}
+
+void OpenALEngine::AudioStorage::cache(void)
+{
+	Storage::fill(object);
+
+	sound = A(object)->getSound();
+	position = A(object)->getPosition().getTranslation();
+
+	isLoop = A(object)->isLooped();
+	gain = A(object)->getGain();
+	pitch = A(object)->getPitch();
+	
+	soundUpdate();
+}
+

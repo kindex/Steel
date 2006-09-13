@@ -24,6 +24,7 @@
 #include "../objects/model_obj.h"
 #include "../objects/combiner.h"
 #include "../objects/sphere.h"
+#include "../objects/audio_object.h"
 
 #include "../res/res_main.h"
 
@@ -102,8 +103,14 @@ bool Steel::init(string _conf, Input *_input, std::string params)
 	speedup = 1;
 	light = NULL;
 
+	AudioSourceRes *audio = new AudioSourceRes;
+
+	audio->setSound(resAudio.add("audio/rain"));
+
+
 	Combiner *obj = new Combiner;
 	obj->setGraphObject(new Sphere);
+	obj->setAudioObject(audio);
 	obj->setPosition(matrix34::CreateTranslationMatrix(v3(0, 0, 3.0f)));
 	world->addChildren(obj);
 
@@ -111,7 +118,6 @@ bool Steel::init(string _conf, Input *_input, std::string params)
 	light->setProcessKind(PROCESS_NONE);
 	matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
 	world->addChildren(light);
-
 
 	return true;
 }
@@ -353,7 +359,6 @@ void Steel::bind(GraphEngine *engine)
 
 	graphEngine->inject(physicHelper);
 
-
 	int count = world->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
@@ -378,7 +383,6 @@ void Steel::insonify(AudioEngine *engine)
 	Listener listener;
 	listener.setPosition(eye.x, eye.y, eye.z);
 	listener.setOrientation(v3(eye.x, eye.y, eye.z), v3(direction.x, direction.y, direction.z));
-
 	engine->setListener(listener);
 }
 
@@ -480,12 +484,9 @@ void Steel::bindAudioEngine(AudioEngine *engine)
 {
 	audioEngine = engine;
 
-
-	audioEngine->sources[0].setPosition(0.0f, 0.0f, 0.0f);
-	soundUpdate(audioEngine->sources[0]);
-	soundPlay(audioEngine->sources[0]);
-
-	audioEngine->sources[1].setPosition(-10.0f, 0.0f, 0.0f);
-	soundUpdate(audioEngine->sources[1]);
-	soundPlay(audioEngine->sources[1]);
+	int count = world->getAudioChildrenCount();
+	for(int i = 0; i < count; i++)
+	{
+		engine->inject(world->getAudioChildren(i));
+	}
 }
