@@ -12,7 +12,7 @@ ResourceIncludes=
 MakeIncludes=
 Compiler=_@@_
 CppCompiler=-DSTEEL_COMPILER=0_@@_-DSTEEL_OS=1_@@_
-Linker=-lopengl32 -lglu32 -lglaux -lkernel32 -luser32 -lgdi32 _@@_../sdk/libs/ALut.lib_@@_../sdk/libs/eax.lib_@@_../sdk/libs/eaxguid.lib_@@_../sdk/libs/OpenAL32.lib_@@_
+Linker=-lopengl32_@@_-lglu32_@@_-lglaux_@@_-lkernel32_@@_-luser32_@@_-lgdi32 _@@_../sdk/libs/ALut.lib_@@_../sdk/libs/eax.lib_@@_../sdk/libs/OpenAL32.lib_@@_../sdk/libs/eaxguid.lib_@@_
 IsCpp=1
 Icon=
 ExeOutput=..\build.devcpp

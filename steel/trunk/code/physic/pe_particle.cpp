@@ -79,3 +79,23 @@ bool PhysicEngineSteel::processParticle(PhysicStorageParticle *objectStorage, st
 
 	return true;
 }
+
+bool PhysicEngineSteel::PhysicStorageParticle::cache()
+{
+//		if(collisionType == COLLISION_PARTICLE)
+//	debugi(((PhysicObject*)object)->getModificationTime());
+
+	if(PhysicStorage::cache())
+	{
+		spring_r0			= material->getf("spring_r0");
+		spring_k			= material->getf("spring_k");
+		gravity_k			= material->getf("gravity_k");
+		gravity_power		= material->getf("gravity_power");
+		gravity_min_dist	= material->getf("gravity_min_dist");
+		friction_k			= material->getf("friction_k");
+		friction_power		= material->getf("friction_power");
+		return true;
+	}
+	else
+		return false;
+}

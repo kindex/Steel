@@ -70,7 +70,7 @@ bool Steel::init(string _conf, Input *_input, std::string params)
 	world = new GameGroup();
 	world->setProcessKind(PROCESS_NONE);
 	
-//	Interface::global, 
+//	Object::global, 
 	world->conf = conf->gets("script");
 	if(!world->load(world)) return false;
 
@@ -103,13 +103,13 @@ bool Steel::init(string _conf, Input *_input, std::string params)
 	speedup = 1;
 	light = NULL;
 
-	Combiner *obj = new Combiner;
+/*	Combiner *obj = new Combiner;
 	obj->setGraphObject(new Sphere);
 	AudioSourceRes *audio = new AudioSourceRes;
 	audio->setSound(resAudio.add("audio/rain"));
 	obj->setAudioObject(audio);
 	obj->setPosition(matrix34::CreateTranslationMatrix(v3(0, 0, 3.0f)));
-	world->addChildren(obj);
+	world->addChildren(obj);*/
 
 	light = new GameLight;
 	light->setProcessKind(PROCESS_NONE);

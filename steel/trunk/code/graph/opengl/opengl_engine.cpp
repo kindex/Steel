@@ -373,14 +373,6 @@ void OpenGL_Engine::processCamera()
     glLoadIdentity();
 }
 
-OpenGL_Engine::GraphStorage *OpenGL_Engine::getStorage(GraphObject *object)
-{
-	uid id = object->getId();
-	assert(idHash.find(id) != idHash.end(), "Object not found in graph storage");
-
-	return (GraphStorage*)storages[findSid(id)];
-}
-
 void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix, GraphObject *parent)
 {
 	info.curTime = globalTime;
@@ -451,7 +443,7 @@ void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel
 }
 
 
-void OpenGL_Engine::makeStorageForChildren(Interface *object)
+void OpenGL_Engine::makeStorageForChildren(Object *object)
 {
 	int count = G(object)->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
@@ -462,12 +454,12 @@ void OpenGL_Engine::makeStorageForChildren(Interface *object)
 	}
 }
 
-void OpenGL_Engine::GraphStorage::fill(Interface *object)
+void OpenGL_Engine::GraphStorage::fill(Object *object)
 {
 	Storage::fill(object);
 }
 
-void OpenGL_Engine::GraphStorage::cache(void)
+bool OpenGL_Engine::GraphStorage::cache(void)
 {
 	matrix34 object_matrix = G(object)->getPosition(); // global 
 //	PositionKind pos = G(object)->getPositionKind();
@@ -480,7 +472,7 @@ void OpenGL_Engine::GraphStorage::cache(void)
 	}*/
 
 
-	if(modificationTime < G(object)->getModificationTime())
+	if(Storage::cache())
 	{
 		modificationTime = G(object)->getModificationTime();
 //		aabb frame = object->getFrame();
@@ -495,7 +487,10 @@ void OpenGL_Engine::GraphStorage::cache(void)
 		lines			= G(object)->getLines();
 		lights			= G(object)->getLights();
 		blend			= false;
+		return true;
 	}
+	else
+		return false;
 }
 
 void OpenGL_Engine::onResize(int width, int height)

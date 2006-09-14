@@ -17,6 +17,7 @@
 void SimpleEmitter::born(Particle &particle)
 {
 	particle.position = particleSystem->getPosition().getTranslation() + v3(frand(), frand(), frand())*conf->getf("position_dispersion");
+	
 	particle.velocity.loadZero();
 	particle.size = conf->getf("particle_size");
 }
@@ -26,11 +27,12 @@ void SimpleEmitter::ProcessPhysic(steel::time curTime, steel::time frameLength, 
 {
 	if(frand() < 0.5 && set->particles.size() > 1) // delete particle
 	{
-		int dieId = (int)floor(frand()*set->particles.size()); // particle number
+		int dieId = rand()%set->particles.size(); // particle number
 
 		delete set->particles[dieId];
 
-		set->particles[dieId] = set->particles.back();
+		if((size_t)(dieId + 1) < set->particles.size())
+			set->particles[dieId] = set->particles.back();
 		set->particles.pop_back();
 
 		particleSystem->setChildrenChangeTime(modificationTime);

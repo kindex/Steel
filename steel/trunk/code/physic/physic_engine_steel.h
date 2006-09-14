@@ -58,8 +58,8 @@ protected:
 		v3 velocity;
 		v3 force;
 
-		void fill(Interface *object);
-		void cache(void);
+		void fill(Object *object);
+		bool cache(void);
 		PhysicStorage(void):material(NULL) {}
 	};
 
@@ -68,22 +68,22 @@ protected:
 		// *** Particle ***
 		float spring_r0, spring_k, gravity_k, gravity_power, gravity_min_dist, friction_k, friction_power;
 
-		void cache(void);
+		bool cache(void);
 	};
 
 	// множество объектов с типом обработки частица
 	steel::svector<int> particleSet;
 
 public:
-	PhysicStorage *getStorage(PhysicObject *object);
-	PhysicStorage* getStorage(uid id);
+	PhysicStorage* getStorage(PhysicObject *object) { return (PhysicStorage*)Engine::getStorage(object); }
+	PhysicStorage* getStorage(uid id) { return (PhysicStorage*)Engine::getStorage(id); }
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	Storage* getStorageClass(Interface *object);
+	Storage* getStorageClass(Object *object);
 	
-	void makeStorageForObjectPost(Interface *object, Storage *storage);
+	void makeStorageForObjectPost(Object *object, Storage *storage);
 	void deleteStorageForObjectPost(int sid);
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	void makeStorageForChildren(Interface *object);
+	void makeStorageForChildren(Object *object);
 
 	// рекурсивно обновить информацию об объектах и их детей
 	void prepare(PhysicObject *object, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), PhysicObject *parent = NULL);

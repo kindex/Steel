@@ -10,7 +10,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Класс Interface - прототип класса, от которого должны наследоваться 
+		Класс Object - прототип класса, от которого должны наследоваться 
 		классы, которые должны обрабатываться классом Engine.
 		Класс Engine (движок) через функцию inject() получает объекты, которые
 		должны быть обработаны, но обрабатывает их только внутри process().
@@ -39,8 +39,8 @@ public:
 //	virtual bool init(std::string _conf) = 0; // initialization
 
 	virtual bool clear(void) = 0; 
-//	protottype: virtual bool inject(Interface *object) { return false; }; // add object to process by engine
-//	virtual	bool remove(Interface *object);
+//	protottype: virtual bool inject(Object *object) { return false; }; // add object to process by engine
+//	virtual	bool remove(Object *object);
 //	virtual bool process() = 0; // add object to process by engine
 	virtual void bindHelper(EngineHelper *_helper) { helper = _helper; } 
 	// TODO: убрать это. Не вписывает в идею движка
@@ -55,7 +55,7 @@ protected:
 	*/
 	struct Storage
 	{
-		Interface *object;
+		Object *object;
 //		int storageType; //  ??
 		uid objectId; // инентификатор объекта (uid)
 		int storageIndex; // индекс этой структуры (кеша) в массиве storage
@@ -65,10 +65,11 @@ protected:
 		// список детей объекта (uid)
 		svector<uid> children;
 
-		Storage(void): object(NULL) {}
-		virtual void fill(Interface *object);
+		Storage(void): object(NULL),modificationTime(-2) {}
+		virtual void fill(Object *object);
 		// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-		virtual void cache(void);
+		// возвращает true, если была обнавлена вся информация
+		virtual bool cache(void);
 		virtual ~Storage(void) {}
 	};
 	// кеш объектов
@@ -85,16 +86,19 @@ protected:
 			return it->second;
 	}
 
+	virtual Storage *getStorage(Object *object);
+	virtual Storage* getStorage(uid id);
+
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	virtual bool makeStorageForObject(Interface *object);
-	virtual Storage* getStorageClass(Interface *object)  = 0;
-	virtual void makeStorageForObjectPost(Interface *object, Storage *storage) {}
+	virtual bool makeStorageForObject(Object *object);
+	virtual Storage* getStorageClass(Object *object)  = 0;
+	virtual void makeStorageForObjectPost(Object *object, Storage *storage) {}
 
 	virtual void deleteStorageForObject(int sid);
 	virtual void deleteStorageForObjectPost(int sid) {}
 
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	virtual void makeStorageForChildren(Interface *object) = 0;
+	virtual void makeStorageForChildren(Object *object) = 0;
 	virtual void deleteStorageForChildren(int sid);
 };
 

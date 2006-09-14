@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Класс Interface - прототип класса, от которого должны наследоваться 
+		Класс Object - прототип класса, от которого должны наследоваться 
 		классы, которые должны обрабатываться классом Engine.
 		Класс Engine (движок) через функцию inject() получает объекты, которые
 		должны быть обработаны, но обрабатывает их только внутри process().
@@ -18,20 +18,27 @@
 #include "steel.h"
 #include "engine.h"
 
-void Engine::Storage::fill(Interface *object)
+void Engine::Storage::fill(Object *object)
 {
 	this->object = object;
 	objectId = object->getId();
 	modificationTime = childrenModificationTime = -1;
 }
 
-void Engine::Storage::cache()
+bool Engine::Storage::cache()
 {
-	modificationTime = object->getModificationTime();
+	ModificationTime newTime = object->getModificationTime();
+	if(modificationTime < newTime)
+	{
+		modificationTime = newTime;
+		return true;
+	}
+	else
+		return false;
 }
 
 
-bool Engine::makeStorageForObject(Interface *object)
+bool Engine::makeStorageForObject(Object *object)
 {
 	uid objectId = object->getId();
 	if(idHash.find(objectId) != idHash.end())
@@ -66,7 +73,7 @@ void Engine::deleteStorageForObject(int sid)
 	idHash.erase(storage->objectId);
 	delete storage;
 
-	if(sid + 1 < storages.size())
+	if(size_t(sid + 1) < storages.size())
 	{
 		storages[sid] = storages.back();
 		idHash[storages[sid]->objectId] = sid;
@@ -83,4 +90,23 @@ void Engine::deleteStorageForChildren(int sid)
 		deleteStorageForChildren(n);
 		deleteStorageForObject(n);
 	}
+}
+
+Engine::Storage* Engine::getStorage(Object *object)
+{
+	uid id = object->getId();
+//	assert(idHash.find(id) != idHash.end(), "Object not found in physic storage");
+
+	if(idHash.find(id) != idHash.end())
+		return storages[findSid(id)];
+	else
+		return NULL;
+}
+
+Engine::Storage* Engine::getStorage(uid id)
+{
+	if(idHash.find(id) != idHash.end())
+		return storages[findSid(id)];
+	else
+		return NULL;
 }

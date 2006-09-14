@@ -55,7 +55,7 @@ class PhysicObject;
 
 typedef steel::svector<PhysicObject *> PhysicObjectList;
 
-class PhysicObject: public Interface
+class PhysicObject: public Object
 {
 //	steel::time	currentTime; // время, в котором находиться объект
 	friend class PhysicEngine;

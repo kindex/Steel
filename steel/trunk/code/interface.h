@@ -89,7 +89,7 @@ public:
 extern IdGenerator objectIdGenerator;
 
 /*
-Interface protottype
+Object protottype
 От этого класса наследуются все объекты и интерфейсы в движке.
 
 Объект этого класса:
@@ -98,22 +98,22 @@ Interface protottype
 относительно его родителя или в глобальный коорлинатах. Систему отсчёта определяет 
 функция getPositionKind
 */
-class Interface;
+class Object;
 
-typedef steel::svector<Interface *> ObjectList;
+typedef steel::svector<Object *> ObjectList;
 
 typedef int ModificationTime;
 
 extern ModificationTime globalFrameNumber;
 
-class Interface
+class Object
 {
 protected:
 	uid id;
 	ModificationTime modificationTime;
 public:
 	// дефолтовый конструктор присваюивает уникальный идентификатор.
-	Interface(void) { id = objectIdGenerator.genUid(); modificationTime = 0; }
+	Object(void) { id = objectIdGenerator.genUid(); modificationTime = 0; }
 
 	// Object unique identifier
 	virtual uid								getId(void)				{ return id; }

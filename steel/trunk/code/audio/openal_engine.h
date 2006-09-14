@@ -80,8 +80,8 @@ protected:
 
 		bool init(void);
 		bool deinit(void) { return true; }
-		void fill(Interface *object);
-		void cache(void);
+		void fill(Object *object);
+		bool cache(void);
 
 		AudioStorage(void): sound(NULL) {}
 		~AudioStorage(void) { deinit(); }
@@ -99,8 +99,8 @@ public:
 	bool deinit(void);
 	bool inject(AudioObject *object);
 
-	Storage* getStorageClass(Interface *object) { return new AudioStorage; }
-	void makeStorageForChildren(Interface *object);
+	Storage* getStorageClass(Object *object) { return new AudioStorage; }
+	void makeStorageForChildren(Object *object);
 };
 
 #endif

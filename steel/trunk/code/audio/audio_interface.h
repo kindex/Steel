@@ -1,5 +1,5 @@
 /*id*********************************************************
-	Unit: Audio Interface
+	Unit: Audio Object
 	Part of: Steel Engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -16,7 +16,7 @@
 #include "../interface.h"
 #include "../res/audio/audio.h"
 
-class AudioObject: public Interface
+class AudioObject: public Object
 {
 public:
 	virtual bool AudioBeforeInject(void) { return true; }

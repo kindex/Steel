@@ -28,7 +28,7 @@
 #include "math/line.h"
 #include "math/aabb.h"
 
-class EngineHelper // Abstract Interface
+class EngineHelper // Abstract Object
 {
 public:
 	virtual ~EngineHelper(void) {}

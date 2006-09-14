@@ -50,7 +50,7 @@ typedef steel::svector<GraphObject*> GraphObjectList;
 
 #define G(object) ((GraphObject*)object)
 
-class GraphObject: public Interface
+class GraphObject: public Object
 {
 protected:
 	int gInjectedCount;

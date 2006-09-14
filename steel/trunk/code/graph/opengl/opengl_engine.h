@@ -79,8 +79,8 @@ protected:
 
 		GraphStorage(void): faceMaterials(NULL), vertex(NULL), normal(NULL), lights(NULL),
 			lines(NULL) {}
-		void fill(Interface *object);
-		void cache(void);
+		void fill(Object *object);
+		bool cache(void);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 	};
 
@@ -222,12 +222,13 @@ public:
 /*	bool bindTexCoords(MapCoord *coord);
 	bool bindVertexes(Vertexes *v);*/
 
-	GraphStorage *getStorage(GraphObject *object);
-	
-	Storage* getStorageClass(Interface *object) { return new GraphStorage; }
+	GraphStorage* getStorage(GraphObject *object) { return (GraphStorage*)Engine::getStorage(object); }
+	GraphStorage* getStorage(uid id) { return (GraphStorage*)Engine::getStorage(id); }
+	 
+	Storage* getStorageClass(Object *object) { return new GraphStorage; }
 
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	void makeStorageForChildren(Interface *object);
+	void makeStorageForChildren(Object *object);
 
 	void onResize(int width, int height);
 

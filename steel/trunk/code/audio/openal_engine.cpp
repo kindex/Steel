@@ -216,12 +216,12 @@ bool OpenALEngine::inject(AudioObject *object)
 	return true;
 }
 
-void OpenALEngine::makeStorageForChildren(Interface *object)
+void OpenALEngine::makeStorageForChildren(Object *object)
 {
 
 }
 
-void OpenALEngine::AudioStorage::fill(Interface *object)
+void OpenALEngine::AudioStorage::fill(Object *object)
 {
 	Storage::fill(object);
 
@@ -240,7 +240,7 @@ void OpenALEngine::AudioStorage::fill(Interface *object)
 	}
 }
 
-void OpenALEngine::AudioStorage::cache(void)
+bool OpenALEngine::AudioStorage::cache(void)
 {
 	Storage::fill(object);
 
@@ -252,5 +252,6 @@ void OpenALEngine::AudioStorage::cache(void)
 	pitch = A(object)->getPitch();
 	
 	soundUpdate();
+	return true;
 }
 

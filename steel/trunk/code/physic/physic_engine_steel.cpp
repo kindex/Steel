@@ -18,34 +18,14 @@
 
 /////////////////////////////////// PHYSIC CORE ////////////////////////////////////
 
-PhysicEngineSteel::PhysicStorage* PhysicEngineSteel::getStorage(PhysicObject *object)
-{
-	uid id = object->getId();
-//	assert(idHash.find(id) != idHash.end(), "Object not found in physic storage");
-
-	if(idHash.find(id) != idHash.end())
-		return (PhysicStorage*)storages[findSid(id)];
-	else
-		return NULL;
-}
-
-PhysicEngineSteel::PhysicStorage* PhysicEngineSteel::getStorage(uid id)
-{
-	if(idHash.find(id) != idHash.end())
-		return (PhysicStorage*)storages[findSid(id)];
-	else
-		return NULL;
-}
-
-
-void PhysicEngineSteel::PhysicStorage::fill(Interface *object)
+void PhysicEngineSteel::PhysicStorage::fill(Object *object)
 {
 	Storage::fill(object);
 
 	collisionType = ((PhysicObject*)object)->getCollisionType();
 }
 
-void PhysicEngineSteel::makeStorageForObjectPost(Interface *object, Storage *storage)
+void PhysicEngineSteel::makeStorageForObjectPost(Object *object, Storage *storage)
 {
 	PhysicEngine::makeStorageForObjectPost(object, storage);
 	if(((PhysicStorage*)storage)->collisionType == COLLISION_PARTICLE)
@@ -71,7 +51,7 @@ void PhysicEngineSteel::deleteStorageForObjectPost(int sid)
 
 
 
-void PhysicEngineSteel::makeStorageForChildren(Interface *object)
+void PhysicEngineSteel::makeStorageForChildren(Object *object)
 {
 	int count = ((PhysicObject*)object)->getPhysicChildrenCount();
 	for(int i = 0; i < count; i++)
@@ -82,18 +62,17 @@ void PhysicEngineSteel::makeStorageForChildren(Interface *object)
 	}
 }
 
-void PhysicEngineSteel::PhysicStorage::cache()
+bool PhysicEngineSteel::PhysicStorage::cache()
 {
-	Storage::cache();
-	PhysicObject *pobject = (PhysicObject*)object;
-
-	if(modificationTime < pobject->getModificationTime())
+	position = ((PhysicObject*)object)->getPosition().getTranslation();
+	if(Storage::cache())
 	{
-		mass = pobject->getMass();
-		material = pobject->getPMaterial();
-
-		position = pobject->getPosition().getTranslation();
+		mass = ((PhysicObject*)object)->getMass();
+		material = ((PhysicObject*)object)->getPMaterial();
+		return true;
 	}
+	else
+		return false;
 }
 
 
@@ -218,7 +197,7 @@ bool PhysicEngineSteel::process(steel::time globalTime, steel::time time)
 }
 
 
-PhysicEngineSteel::Storage* PhysicEngineSteel::getStorageClass(Interface *object)
+PhysicEngineSteel::Storage* PhysicEngineSteel::getStorageClass(Object *object)
 { 
 	if(((PhysicObject*)object)->getCollisionType() == COLLISION_PARTICLE)
 		return new PhysicStorageParticle;
@@ -227,18 +206,4 @@ PhysicEngineSteel::Storage* PhysicEngineSteel::getStorageClass(Interface *object
 }
 
 
-void PhysicEngineSteel::PhysicStorageParticle::cache()
-{
-	PhysicStorage::cache();
-//		if(collisionType == COLLISION_PARTICLE)
-	if(modificationTime < ((PhysicObject*)object)->getModificationTime())
-	{
-		spring_r0			= material->getf("spring_r0");
-		spring_k			= material->getf("spring_k");
-		gravity_k			= material->getf("gravity_k");
-		gravity_power		= material->getf("gravity_power");
-		gravity_min_dist	= material->getf("gravity_min_dist");
-		friction_k			= material->getf("friction_k");
-		friction_power		= material->getf("friction_power");
-	}
-}
+

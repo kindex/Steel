@@ -28,7 +28,10 @@ void UniPSanimator::ProcessPhysic(steel::time curTime, steel::time frameLength, 
 		{
 			children.resize(size);
 			for(int i = oldsize; i < size; i++)
+			{
 				children[i] = new UniParticle(set->particles[i], conf);
+//				debugi(children[i]->getModificationTime());
+			}
 		}
 		if(size < (int)children.size())
 		{
@@ -43,5 +46,4 @@ void UniPSanimator::ProcessPhysic(steel::time curTime, steel::time frameLength, 
 
 	for(int i=0; i<size; i++)
 		children[i]->setParticle(set->particles[i]);
-
 }
