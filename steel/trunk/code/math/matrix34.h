@@ -57,6 +57,12 @@ struct matrix34
 	{ 
 		return get(1,0,0, 0,1,0, 0,0,1, translation.x, translation.y, translation.z); 
 	}
+	inline static const matrix34	CreateRotationMatrix(const float angle, const v3 rotation)
+	{ 
+		matrix34 matrix;
+		matrix.setRotationAxis(angle, rotation);
+		return matrix; 
+	}
 
 
 	//binary operators

@@ -40,6 +40,7 @@ public:
 	void ProcessGraph(const GraphEngineInfo &info);
 
 	void DeleteTriangle(int n);
+
 };
 
 #endif

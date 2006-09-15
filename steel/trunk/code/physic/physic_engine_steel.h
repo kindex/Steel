@@ -60,7 +60,7 @@ protected:
 
 		void fill(Object *object);
 		bool cache(void);
-		PhysicStorage(void):material(NULL) {}
+		PhysicStorage(Engine *engine): Storage(engine), material(NULL) {}
 	};
 
 	struct PhysicStorageParticle: public PhysicStorage
@@ -69,6 +69,7 @@ protected:
 		float spring_r0, spring_k, gravity_k, gravity_power, gravity_min_dist, friction_k, friction_power;
 
 		bool cache(void);
+		PhysicStorageParticle(Engine *engine): PhysicStorage(engine) {}
 	};
 
 	// множество объектов с типом обработки частица

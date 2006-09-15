@@ -39,14 +39,21 @@ using namespace std;
 
 void OpenGL_Engine::process(GraphStorage *e, steel::time globalTime, steel::time time)
 {
+	if(e->positionKind == POSITION_SCREEN)
+	{
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glPushMatrix();
+	}
 	glMatrixMode(GL_MODELVIEW);
+
 	glPushMatrix();
 
 	float m[16]; // TODO
-	m[0] = e->matrix.data.matrix.data.m[0][0];	m[1] = e->matrix.data.matrix.data.m[1][0];	m[2] = e->matrix.data.matrix.data.m[2][0];	m[3]  = 0;
-	m[4] = e->matrix.data.matrix.data.m[0][1];	m[5] = e->matrix.data.matrix.data.m[1][1];	m[6] = e->matrix.data.matrix.data.m[2][1];	m[7]  = 0;
-	m[8] = e->matrix.data.matrix.data.m[0][2];	m[9] = e->matrix.data.matrix.data.m[1][2];	m[10] = e->matrix.data.matrix.data.m[2][2];	m[11] = 0;
-	m[12] = e->matrix.data.vector.x;				m[13] = e->matrix.data.vector.y;				m[14] = e->matrix.data.vector.z;				m[15] = 1;
+	m[0] = e->position.data.matrix.data.m[0][0];	m[1] = e->position.data.matrix.data.m[1][0];	m[2] = e->position.data.matrix.data.m[2][0];	m[3]  = 0;
+	m[4] = e->position.data.matrix.data.m[0][1];	m[5] = e->position.data.matrix.data.m[1][1];	m[6] = e->position.data.matrix.data.m[2][1];	m[7]  = 0;
+	m[8] = e->position.data.matrix.data.m[0][2];	m[9] = e->position.data.matrix.data.m[1][2];	m[10] = e->position.data.matrix.data.m[2][2];	m[11] = 0;
+	m[12] = e->position.data.vector.x;				m[13] = e->position.data.vector.y;				m[14] = e->position.data.vector.z;				m[15] = 1;
 	glLoadMatrixf(m);
 
 	if(conf->geti("drawFace") && e->faceMaterials && DrawFill)
@@ -70,6 +77,8 @@ void OpenGL_Engine::process(GraphStorage *e, steel::time globalTime, steel::time
 		(this->*DrawAABB)(*e, total);
 
 	glPopMatrix();
+	if(e->positionKind == POSITION_SCREEN)
+		glPopMatrix();
 }
 
 
@@ -382,6 +391,7 @@ void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel
 	info.cameraDirection = camera.center - camera.eye;
 
 	G(storage->object)->ProcessGraph(info);
+	storage->setParent(parent);
 	storage->cache();
 
 	if(storage->childrenModificationTime < storage->object->getChildrenModificationTime())
@@ -429,7 +439,7 @@ void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel
 	for(Lights::const_iterator it = storage->lights->begin(); it != storage->lights->end(); it++)
 	{
 		lights.push_back(*it);
-		lights.back().position = storage->matrix*lights.back().position;
+		lights.back().position = storage->position*lights.back().position;
 	}
 
 	int count = G(storage->object)->getGraphChildrenCount();
@@ -461,15 +471,15 @@ void OpenGL_Engine::GraphStorage::fill(Object *object)
 
 bool OpenGL_Engine::GraphStorage::cache(void)
 {
-	matrix34 object_matrix = G(object)->getPosition(); // global 
+	position = G(object)->getPosition();
+	positionKind = G(object)->getPositionKind();
 //	PositionKind pos = G(object)->getPositionKind();
 
-	matrix = object_matrix;
-
-/*	if(pos == POSITION_LOCAL && parent)
+	if(parent != NULL && positionKind == POSITION_LOCAL)
 	{
-		object_matrix = parent_matrix*object_matrix;
-	}*/
+		ObjectPosition parent_matrix = GS(engine->getStorage(G(parent)))->position;
+		position = parent_matrix*position;
+	}
 
 
 	if(Storage::cache())

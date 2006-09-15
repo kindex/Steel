@@ -74,7 +74,8 @@ typedef enum
 {
 	POSITION_NONE,
 	POSITION_LOCAL,
-	POSITION_GLOBAL
+	POSITION_GLOBAL,
+	POSITION_SCREEN
 } PositionKind;
 
 class IdGenerator

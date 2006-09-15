@@ -107,12 +107,12 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphStorage &e, Triangles 
 
 				if(texture.format == TEXTURE_FORMAT_BUMP_MAP)
 				{
-					drawBump(e, coords, e.matrix, lights[j].position, bufId, currentTextureArb, texture.image);
+					drawBump(e, coords, e.position, lights[j].position, bufId, currentTextureArb, texture.image);
 					currentTextureArb +=2;
 				}
 				else
 				{
-					drawBump(e, coords, e.matrix, lights[j].position, bufId, currentTextureArb, zeroNormal);
+					drawBump(e, coords, e.position, lights[j].position, bufId, currentTextureArb, zeroNormal);
 					glActiveTextureARB(GL_TEXTURE2_ARB + currentTextureArb);
 					glClientActiveTextureARB(GL_TEXTURE2_ARB + currentTextureArb);
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);

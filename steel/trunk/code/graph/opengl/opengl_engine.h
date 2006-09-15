@@ -63,6 +63,9 @@ protected:
 
 	struct GraphStorage: public Storage // множество треугольников одного материала
 	{
+		ObjectPosition	position; // global or screen
+		PositionKind	positionKind;
+
 		// *** Polyhedra ****
 		FaceMaterials *faceMaterials;
 		Vertexes	*vertex;
@@ -71,13 +74,12 @@ protected:
 
 		GLines		*lines;
 
-		matrix34	matrix;
 		aabb		frame;
 		bool		blend; // true if blending
 		bool		visible;
 		float		distance; // расстояние до камеры
 
-		GraphStorage(void): faceMaterials(NULL), vertex(NULL), normal(NULL), lights(NULL),
+		GraphStorage(Engine *engine): Storage(engine), faceMaterials(NULL), vertex(NULL), normal(NULL), lights(NULL),
 			lines(NULL) {}
 		void fill(Object *object);
 		bool cache(void);
@@ -225,7 +227,7 @@ public:
 	GraphStorage* getStorage(GraphObject *object) { return (GraphStorage*)Engine::getStorage(object); }
 	GraphStorage* getStorage(uid id) { return (GraphStorage*)Engine::getStorage(id); }
 	 
-	Storage* getStorageClass(Object *object) { return new GraphStorage; }
+	Storage* getStorageClass(Object *object) { return new GraphStorage(this); }
 
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
 	void makeStorageForChildren(Object *object);

@@ -55,7 +55,9 @@ protected:
 	*/
 	struct Storage
 	{
-		Object *object;
+		Object	*object;
+		Object	*parent;
+		Engine	*engine;
 //		int storageType; //  ??
 		uid objectId; // инентификатор объекта (uid)
 		int storageIndex; // индекс этой структуры (кеша) в массиве storage
@@ -65,12 +67,13 @@ protected:
 		// список детей объекта (uid)
 		svector<uid> children;
 
-		Storage(void): object(NULL),modificationTime(-2) {}
+		Storage(Engine *aengine): engine(aengine), object(NULL), parent(NULL) {}
 		virtual void fill(Object *object);
 		// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
 		// возвращает true, если была обнавлена вся информация
 		virtual bool cache(void);
 		virtual ~Storage(void) {}
+		virtual void setParent(Object *aparent) {parent = aparent; }
 	};
 	// кеш объектов
 	svector<Storage*> storages;
@@ -86,9 +89,11 @@ protected:
 			return it->second;
 	}
 
+public:
 	virtual Storage *getStorage(Object *object);
 	virtual Storage* getStorage(uid id);
 
+protected:
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
 	virtual bool makeStorageForObject(Object *object);
 	virtual Storage* getStorageClass(Object *object)  = 0;

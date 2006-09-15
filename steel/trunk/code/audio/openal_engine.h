@@ -83,7 +83,7 @@ protected:
 		void fill(Object *object);
 		bool cache(void);
 
-		AudioStorage(void): sound(NULL) {}
+		AudioStorage(Engine *engine): Storage(engine), sound(NULL) {}
 		~AudioStorage(void) { deinit(); }
 	};
 
@@ -99,7 +99,7 @@ public:
 	bool deinit(void);
 	bool inject(AudioObject *object);
 
-	Storage* getStorageClass(Object *object) { return new AudioStorage; }
+	Storage* getStorageClass(Object *object) { return new AudioStorage(this); }
 	void makeStorageForChildren(Object *object);
 };
 

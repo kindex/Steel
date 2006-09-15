@@ -25,4 +25,4 @@ solid			wall/floor	0,0,-20
 ;solid			spaceman/spaceman	3,0,2
 ;solid			spaceman/spaceman	4,0,2
 
-ps			particle_system/ps	0,0,2
+;ps			particle_system/ps	0,0,2

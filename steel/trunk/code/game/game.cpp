@@ -103,13 +103,17 @@ bool Steel::init(string _conf, Input *_input, std::string params)
 	speedup = 1;
 	light = NULL;
 
-/*	Combiner *obj = new Combiner;
+	Combiner *obj = new Combiner;
 	obj->setGraphObject(new Sphere);
 	AudioSourceRes *audio = new AudioSourceRes;
 	audio->setSound(resAudio.add("audio/rain"));
-	obj->setAudioObject(audio);
-	obj->setPosition(matrix34::CreateTranslationMatrix(v3(0, 0, 3.0f)));
-	world->addChildren(obj);*/
+//	obj->setAudioObject(audio);
+	obj->setPositionKind(POSITION_SCREEN);
+	obj->setPosition(
+		matrix34::CreateTranslationMatrix(v3(0, 0, 0.0f))
+		*matrix34::CreateRotationMatrix(1, v3(1,0,0))*0.5
+		);
+	world->addChildren(obj);
 
 	light = new GameLight;
 	light->setProcessKind(PROCESS_NONE);

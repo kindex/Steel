@@ -200,9 +200,9 @@ bool PhysicEngineSteel::process(steel::time globalTime, steel::time time)
 PhysicEngineSteel::Storage* PhysicEngineSteel::getStorageClass(Object *object)
 { 
 	if(((PhysicObject*)object)->getCollisionType() == COLLISION_PARTICLE)
-		return new PhysicStorageParticle;
+		return new PhysicStorageParticle(this);
 	else
-		return new PhysicStorage;
+		return new PhysicStorage(this);
 }
 
 
