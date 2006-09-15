@@ -14,6 +14,7 @@
 #ifndef __RES_AUDIO_WAV_H
 #define __RES_AUDIO_WAV_H
 
+#include "../../steel.h"
 #include "audio.h"
 
 

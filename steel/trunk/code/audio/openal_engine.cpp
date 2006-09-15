@@ -11,6 +11,7 @@
 		Звуковой движок.
  ************************************************************/
 
+#include "../steel.h"
 #include "openal_engine.h"
 #include "../common/logger.h"
 

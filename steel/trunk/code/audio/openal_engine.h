@@ -15,6 +15,7 @@
 #ifndef __OPENAL_ENGINE_H
 #define __OPENAL_ENGINE_H
 
+#include "../steel.h"
 #include <string>
 #include <iostream>
 #include <windows.h>

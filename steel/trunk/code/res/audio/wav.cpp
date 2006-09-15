@@ -11,6 +11,7 @@
 		TODO
  ************************************************************/
 
+#include "../../steel.h"
 #include "wav.h"
 #include "../rstream.h"
 #include <fstream>

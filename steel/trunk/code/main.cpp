@@ -7,6 +7,7 @@
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [J. Anton, kane@mail.berlios.de]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
+		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 	License:
 		Steel Engine License
 	Description:

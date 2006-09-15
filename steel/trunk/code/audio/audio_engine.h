@@ -14,6 +14,7 @@
 #ifndef __AUDIO_ENGINE_H
 #define __AUDIO_ENGINE_H
 
+#include "../steel.h"
 #include <vector>
 #include "../engine.h"
 #include "../res/audio/audio.h"

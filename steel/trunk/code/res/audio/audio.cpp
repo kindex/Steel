@@ -11,6 +11,7 @@
 		TODO
  ************************************************************/
 
+#include "../../steel.h"
 #include "audio.h"
 
 //TBuf buffers;

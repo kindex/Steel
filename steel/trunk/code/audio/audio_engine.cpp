@@ -10,6 +10,7 @@
 		Звуковой движок.
  ************************************************************/
 
+#include "../steel.h"
 #include "audio_engine.h"
 
 Listener::Listener()

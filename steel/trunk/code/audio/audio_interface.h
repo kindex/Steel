@@ -13,6 +13,7 @@
 #ifndef __AUDIO_INTERFACE_H
 #define __AUDIO_INTERFACE_H
 
+#include "../steel.h"
 #include "../interface.h"
 #include "../res/audio/audio.h"
 
