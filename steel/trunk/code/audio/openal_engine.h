@@ -1,4 +1,5 @@
 /*id*********************************************************
+	File: audio/audio_engine.h
 	Unit: OpenAL Engine
 	Part of: Steel Engine
 	(C) DiVision, 2004-2006
@@ -6,10 +7,8 @@
 		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 	License:
 		Steel Engine License
-	File history:
-		[2006.07.28 11:13:16] Kuzmi4: File Creation.
-    Description:
-		Звуковой движок.
+	Description:
+		Р—РІСѓРєРѕРІРѕР№ РґРІРёР¶РѕРє.
  ************************************************************/
 
 
@@ -61,7 +60,7 @@ class OpenALEngine: public AudioEngine
 {
 protected:
 #define A(object) ((AudioObject*)(object))
-	struct AudioStorage: public Storage // множество треугольников одного материала
+	struct AudioStorage: public Storage // РјРЅРѕР¶РµСЃС‚РІРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРєРѕРІ РѕРґРЅРѕРіРѕ РјР°С‚РµСЂРёР°Р»Р°
 	{
 		Audio *sound;
 		v3 position;

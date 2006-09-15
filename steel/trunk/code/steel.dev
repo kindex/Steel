@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=151
+UnitCount=149
 Type=0
 Ver=1
 ObjFiles=
@@ -1508,7 +1508,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit147]
-FileName=res\audio\audio_config.cpp
+FileName=res\audio\ogg.h
 CompileCpp=1
 Folder=res/audio
 Compile=1
@@ -1518,7 +1518,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit148]
-FileName=res\audio\audio_config.h
+FileName=res\audio\wav.cpp
 CompileCpp=1
 Folder=res/audio
 Compile=1
@@ -1528,7 +1528,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit149]
-FileName=res\audio\ogg.h
+FileName=res\audio\wav.h
 CompileCpp=1
 Folder=res/audio
 Compile=1

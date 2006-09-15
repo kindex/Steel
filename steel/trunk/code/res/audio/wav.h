@@ -1,15 +1,14 @@
 /*id*********************************************************
-	Unit: Audio Engine
+	File: res/audio/wav.h
+	Unit: res audio
 	Part of: Steel Engine
 	(C) DiVision, 2004-2006
 	Authors:
 		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 	License:
 		Steel Engine License
-	File history:
-		[2006.07.29 20:28:15] Kuzmi4: File Creation.
-    Description:
-		Звуковой движок.
+	Description:
+		TODO
  ************************************************************/
 
 #ifndef __RES_AUDIO_WAV_H

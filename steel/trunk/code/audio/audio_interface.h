@@ -6,8 +6,8 @@
 		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 	License:
 		Steel Engine License
-    Description:
-		Звуковой движок.
+	Description:
+		Р—РІСѓРєРѕРІРѕР№ РґРІРёР¶РѕРє.
  ************************************************************/
 
 #ifndef __AUDIO_INTERFACE_H

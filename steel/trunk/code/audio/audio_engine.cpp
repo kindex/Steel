@@ -7,7 +7,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Звуковой движок.
+		Р—РІСѓРєРѕРІРѕР№ РґРІРёР¶РѕРє.
  ************************************************************/
 
 #include "audio_engine.h"

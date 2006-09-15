@@ -1,4 +1,5 @@
 /*id*********************************************************
+	File: audio/audio_engine.h
 	Unit: Audio Engine
 	Part of: Steel Engine
 	(C) DiVision, 2004-2006
@@ -6,10 +7,8 @@
 		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 	License:
 		Steel Engine License
-	File history:
-		[2006.07.30 00:03:09] Kuzmi4: File Creation.
-    Description:
-		Звуковой движок.
+	Description:
+		Р—РІСѓРєРѕРІРѕР№ РґРІРёР¶РѕРє.
  ************************************************************/
 
 #ifndef __AUDIO_ENGINE_H
@@ -18,11 +17,8 @@
 #include <vector>
 #include "../engine.h"
 #include "../res/audio/audio.h"
-#include "../res/audio/audio_config.h"
 #include "../res/res_main.h"
 #include "audio_interface.h"
-
-///**/#include "audio_interface.h"
 
 class AudioEngine;
 

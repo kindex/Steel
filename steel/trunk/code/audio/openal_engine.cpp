@@ -1,4 +1,5 @@
 /*id*********************************************************
+	File: audio/openal_engine.cpp
 	Unit: OpenAL Engine
 	Part of: Steel Engine
 	(C) DiVision, 2004-2006
@@ -6,10 +7,8 @@
 		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 	License:
 		Steel Engine License
-	File history:
-		[2006.07.28 16:50:47] Kuzmi4: File Creation.
-    Description:
-		Звуковой движок.
+	Description:
+		Р—РІСѓРєРѕРІРѕР№ РґРІРёР¶РѕРє.
  ************************************************************/
 
 #include "openal_engine.h"
@@ -205,12 +204,12 @@ void OpenALEngine::AudioStorage::soundUpdate(void)
 
 bool OpenALEngine::inject(AudioObject *object)
 {
-	// если объект не хочет добавляться
+	// РµСЃР»Рё РѕР±СЉРµРєС‚ РЅРµ С…РѕС‡РµС‚ РґРѕР±Р°РІР»СЏС‚СЊСЃСЏ
 	if(!object->AudioBeforeInject()) return false;
-	// кешируем объект
+	// РєРµС€РёСЂСѓРµРј РѕР±СЉРµРєС‚
 	if(!makeStorageForObject(object)) return false;
 	makeStorageForChildren(object);
-	// список глобальных объектов
+	// СЃРїРёСЃРѕРє РіР»РѕР±Р°Р»СЊРЅС‹С… РѕР±СЉРµРєС‚РѕРІ
 	objects.push_back(object);
 
 	return true;

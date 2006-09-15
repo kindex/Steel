@@ -562,14 +562,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\res\audio\audio_config.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\res\audio\audio_config.h"
-					>
-				</File>
-				<File
 					RelativePath=".\res\audio\ogg.h"
 					>
 				</File>
