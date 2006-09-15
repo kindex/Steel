@@ -92,9 +92,13 @@ sources = Split("""
 	./res/image/bmp.cpp
 	./res/image/tga.cpp
 	./res/text/text_file.cpp
+	./res/audio/audio.cpp
+	./res/audio/wav.cpp
 	./physic/physic_engine.cpp
 	./physic/physic_engine_steel.cpp
 	./physic/pe_particle.cpp
+	./audio/audio_engine.cpp
+	./audio/openal_engine.cpp
 	./main.cpp
 	./test.cpp
 	""")
