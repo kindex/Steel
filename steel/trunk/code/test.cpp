@@ -17,6 +17,7 @@
  ************************************************************/
 
 #include "steel.h"
+#ifndef LIB_STEEL
 #include "common/logger.h"
 
 bool test()
@@ -24,3 +25,4 @@ bool test()
 
 	return true;
 }
+#endif

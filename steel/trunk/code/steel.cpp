@@ -12,6 +12,7 @@
  ************************************************************/
 
 #include "steel.h"
+#ifndef LIB_STEEL
 
 #if STEEL_OS == OS_WIN32
 #include <windows.h>
@@ -58,4 +59,5 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 }
 #endif	// STEEL_COMPILER
 
+#endif
 #endif	// STEEL_OS

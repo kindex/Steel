@@ -15,6 +15,7 @@
 
 #ifndef __MAIN_H
 #define __MAIN_H
+#ifndef LIB_STEEL
 
 
 #include <string>
@@ -29,4 +30,5 @@ bool test(void);
 
 extern std::string commandLine;
 
+#endif
 #endif

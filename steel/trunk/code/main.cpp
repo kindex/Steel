@@ -16,6 +16,7 @@
  ************************************************************/
 
 #include "steel.h"
+#ifndef LIB_STEEL
 
 #include "input/input.h"
 
@@ -163,3 +164,4 @@ int main(int argc, char *argv[])
 	steel::log.close();
 	return 0;
 }
+#endif
