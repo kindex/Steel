@@ -73,25 +73,22 @@ int main(int argc, char *argv[])
 
 // ******************* INPUT ************************
 	Input *input = new Input;
-	if(!input->init("input")) return 1;
+	if(!input->init("../conf/input")) return 1;
 // ******************* GRAPH ************************
 	OpenGL_Engine *graph = new OpenGL_Engine();
-	if(!graph->init("opengl", input)) return 1;
+	if(!graph->init("../conf/opengl", input)) return 1;
 // ******************* AUDIO ************************
 	AudioEngine *audio = new OpenALEngine();
-	if (!audio->init("audio"))	return 1;
+	if (!audio->init("../conf/audio"))	return 1;
 
 
 // ******************* GAME *************************
 	Steel game;
 
-	if(!game.init("game", input, commandLine)) return 1;
+	if(!game.init("../conf/game", input, commandLine)) return 1;
 
 	game.bind(graph);
 	game.bindAudioEngine(audio);
-
-
-	//Listener *listener = new Listener();
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
