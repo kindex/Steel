@@ -34,6 +34,7 @@ class Game; // forward declaration, cross-use
 #include <map>
 
 #include "../audio/openal_engine.h"
+#include "../audio/audio_engine.h"
 
 
 /*
@@ -70,9 +71,7 @@ protected:
 	GraphEngine *graphEngine;
 //	PhysicEngineSteel *physicEngine;
 	PhysicEngine *physicEngine;
-	AudioEngine	*audioEngine;
-
-	void processKeyboard();
+	AudioEngine	 *audioEngine;
 
 // World - custom objects
 	GameGroup	*world;
@@ -82,10 +81,16 @@ protected:
 	GameLight	*light;
 
 public:
-	Steel(void) { } 
+	Steel(void):
+	input(NULL),	conf(NULL),
+	graphEngine(NULL),	physicEngine(NULL),	audioEngine(NULL),
+	world(NULL),	physicHelper(NULL),	lightTag(NULL),	light(NULL)
+	{ } 
+
 	virtual bool init(std::string _conf, Input *_input, std::string params);
 	virtual void deinit(void);
 
+	void processKeyboard();
 	bool executeScript(std::string script);
 	bool executeCommand(std::string command);
 

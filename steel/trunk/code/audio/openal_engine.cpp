@@ -12,6 +12,9 @@
  ************************************************************/
 
 #include "../steel.h"
+
+#ifdef LIB_OPENAL
+
 #include "openal_engine.h"
 #include "../common/logger.h"
 
@@ -255,3 +258,4 @@ bool OpenALEngine::AudioStorage::cache(void)
 	return true;
 }
 
+#endif

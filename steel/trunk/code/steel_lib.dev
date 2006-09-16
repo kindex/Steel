@@ -1,7 +1,7 @@
 [Project]
 FileName=steel_lib.dev
 Name=Steel lib
-UnitCount=148
+UnitCount=146
 Type=2
 Ver=1
 ObjFiles=
@@ -11,7 +11,7 @@ PrivateResource=steel_private.rc
 ResourceIncludes=
 MakeIncludes=
 Compiler=_@@_
-CppCompiler=-DSTEEL_COMPILER=2_@@_-DSTEEL_OS=1
+CppCompiler=-DSTEEL_COMPILER=2_@@_-DSTEEL_OS=1_@@_-DSTEEL_COMPILER_VERSION=34_@@_-DLIB_OPENAL_@@_
 Linker=_@@_
 IsCpp=1
 Icon=
@@ -1018,9 +1018,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit107]
-FileName=physic\pe_particle.cpp
+FileName=graph\opengl\opengl_10.cpp
 CompileCpp=1
-Folder=physic
+Folder=graph/opengl
 Compile=1
 Link=1
 Priority=1000
@@ -1028,7 +1028,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit108]
-FileName=graph\opengl\opengl_10.cpp
+FileName=graph\opengl\opengl_11.cpp
 CompileCpp=1
 Folder=graph/opengl
 Compile=1
@@ -1078,16 +1078,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit109]
-FileName=graph\opengl\opengl_11.cpp
-CompileCpp=1
-Folder=graph/opengl
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit110]
 FileName=graph\opengl\gl\libext.cpp
 CompileCpp=1
 Folder=graph/opengl/gl
@@ -1097,7 +1087,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit111]
+[Unit110]
 FileName=graph\opengl\gl\libext.h
 CompileCpp=1
 Folder=graph/opengl/gl
@@ -1107,7 +1097,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit112]
+[Unit111]
 FileName=graph\opengl\opengl_13.cpp
 CompileCpp=1
 Folder=graph/opengl
@@ -1117,7 +1107,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit113]
+[Unit112]
 FileName=graph\opengl\opengl_15.cpp
 CompileCpp=1
 Folder=graph/opengl
@@ -1127,7 +1117,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit114]
+[Unit113]
 FileName=objects\combiner.h
 CompileCpp=1
 Folder=objects
@@ -1137,7 +1127,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit115]
+[Unit114]
 FileName=objects\sphere.cpp
 CompileCpp=1
 Folder=objects
@@ -1147,8 +1137,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit117]
-FileName=objects\combiner.cpp
+[Unit115]
+FileName=objects\sphere.h
 CompileCpp=1
 Folder=objects
 Compile=1
@@ -1157,7 +1147,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit118]
+[Unit117]
 FileName=res\text\text.h
 CompileCpp=1
 Folder=res/text
@@ -1167,8 +1157,18 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit118]
+FileName=res\text\text_file.cpp
+CompileCpp=1
+Folder=res/text
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit116]
-FileName=objects\sphere.h
+FileName=objects\combiner.cpp
 CompileCpp=1
 Folder=objects
 Compile=1
@@ -1188,7 +1188,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit119]
-FileName=res\text\text_file.cpp
+FileName=res\text\text_file.h
 CompileCpp=1
 Folder=res/text
 Compile=1
@@ -1198,9 +1198,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit120]
-FileName=res\text\text_file.h
+FileName=common\system_info.cpp
 CompileCpp=1
-Folder=res/text
+Folder=common
 Compile=1
 Link=1
 Priority=1000
@@ -1218,16 +1218,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit121]
-FileName=common\system_info.cpp
-CompileCpp=1
-Folder=common
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit122]
 FileName=common\system_info.h
 CompileCpp=1
 Folder=common
@@ -1237,7 +1227,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit123]
+[Unit122]
 FileName=common\win_info.cpp
 CompileCpp=1
 Folder=common
@@ -1247,7 +1237,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit124]
+[Unit123]
 FileName=common\win_info.h
 CompileCpp=1
 Folder=common
@@ -1257,7 +1247,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit125]
+[Unit124]
 FileName=graph\opengl\opengl_glsl.h
 CompileCpp=1
 Folder=graph/opengl
@@ -1267,7 +1257,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit126]
+[Unit125]
 FileName=graph\opengl\opengl_20.cpp
 CompileCpp=1
 Folder=graph/opengl
@@ -1277,7 +1267,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit127]
+[Unit126]
 FileName=graph\opengl\opengl_glsl.cpp
 CompileCpp=1
 Folder=graph/opengl
@@ -1287,7 +1277,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit128]
+[Unit127]
 FileName=engine.cpp
 CompileCpp=1
 Folder=Steel lib
@@ -1297,7 +1287,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit129]
+[Unit128]
 FileName=input\input_sdl.cpp
 CompileCpp=1
 Folder=input
@@ -1307,7 +1297,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit130]
+[Unit129]
 FileName=audio\audio_engine.cpp
 CompileCpp=1
 Folder=audio
@@ -1317,7 +1307,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit131]
+[Unit130]
 FileName=audio\audio_engine.h
 CompileCpp=1
 Folder=audio
@@ -1327,7 +1317,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit132]
+[Unit131]
 FileName=audio\audio_interface.h
 CompileCpp=1
 Folder=audio
@@ -1337,7 +1327,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit133]
+[Unit132]
 FileName=audio\openal_engine.cpp
 CompileCpp=1
 Folder=audio
@@ -1347,10 +1337,20 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit134]
+[Unit133]
 FileName=audio\openal_engine.h
 CompileCpp=1
 Folder=audio
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit134]
+FileName=audio\openal\al.h
+CompileCpp=1
+Folder=audio/openal
 Compile=1
 Link=1
 Priority=1000
@@ -1388,16 +1388,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit135]
-FileName=audio\openal\al.h
-CompileCpp=1
-Folder=audio/openal
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit136]
 FileName=audio\openal\alc.h
 CompileCpp=1
 Folder=audio/openal
@@ -1407,7 +1397,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit137]
+[Unit136]
 FileName=audio\openal\alctypes.h
 CompileCpp=1
 Folder=audio/openal
@@ -1417,7 +1407,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit138]
+[Unit137]
 FileName=audio\openal\altypes.h
 CompileCpp=1
 Folder=audio/openal
@@ -1427,7 +1417,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit139]
+[Unit138]
 FileName=audio\openal\alu.h
 CompileCpp=1
 Folder=audio/openal
@@ -1437,7 +1427,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit140]
+[Unit139]
 FileName=audio\openal\alut.h
 CompileCpp=1
 Folder=audio/openal
@@ -1447,7 +1437,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit141]
+[Unit140]
 FileName=audio\openal\eax.h
 CompileCpp=1
 Folder=audio/openal
@@ -1457,7 +1447,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit142]
+[Unit141]
 FileName=res\audio\audio.cpp
 CompileCpp=1
 Folder=res/audio
@@ -1467,7 +1457,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit143]
+[Unit142]
 FileName=res\audio\audio.h
 CompileCpp=1
 Folder=res/audio
@@ -1477,8 +1467,18 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit143]
+FileName=res\audio\ogg.h
+CompileCpp=1
+Folder=res/audio
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit144]
-FileName=res\audio\audio_config.cpp
+FileName=res\audio\wav.cpp
 CompileCpp=1
 Folder=res/audio
 Compile=1
@@ -1488,7 +1488,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit145]
-FileName=res\audio\audio_config.h
+FileName=res\audio\wav.h
 CompileCpp=1
 Folder=res/audio
 Compile=1
@@ -1498,9 +1498,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit146]
-FileName=res\audio\ogg.h
+FileName=physic\physic_engine_particle.cpp
 CompileCpp=1
-Folder=res/audio
+Folder=physic
 Compile=1
 Link=1
 Priority=1000

@@ -78,8 +78,11 @@ int main(int argc, char *argv[])
 	OpenGL_Engine *graph = new OpenGL_Engine();
 	if(!graph->init("../conf/opengl", input)) return 1;
 // ******************* AUDIO ************************
-	AudioEngine *audio = new OpenALEngine();
-	if (!audio->init("../conf/audio"))	return 1;
+	AudioEngine *audio = NULL;
+#ifdef LIB_OPENAL
+	audio = new OpenALEngine();
+#endif
+	if(audio && !audio->init("../conf/audio"))	return 1;
 
 
 // ******************* GAME *************************
@@ -88,7 +91,7 @@ int main(int argc, char *argv[])
 	if(!game.init("../conf/game", input, commandLine)) return 1;
 
 	game.bind(graph);
-	game.bindAudioEngine(audio);
+	if(audio) game.bindAudioEngine(audio);
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
@@ -121,7 +124,7 @@ int main(int argc, char *argv[])
 		}
 
 		game.draw(graph);
-		game.insonify(audio);
+		if(audio) game.insonify(audio);
 
 		timer.incframe();
 
@@ -155,8 +158,11 @@ int main(int argc, char *argv[])
 	graph->deinit();
 	delete graph;
 
-	audio->deinit();
-	delete audio;
+	if(audio) 
+	{
+		audio->deinit();
+		delete audio;
+	}
 
 	steel::log.close();
 	return 0;

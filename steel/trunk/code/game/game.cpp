@@ -107,7 +107,7 @@ bool Steel::init(string _conf, Input *_input, std::string params)
 	obj->setGraphObject(new Sphere);
 	AudioSourceRes *audio = new AudioSourceRes;
 	audio->setSound(resAudio.add("audio/rain"));
-//	obj->setAudioObject(audio);
+	obj->setAudioObject(audio);
 	obj->setPositionKind(POSITION_SCREEN);
 	obj->setPosition(
 		matrix34::CreateTranslationMatrix(v3(0, 0, 0.0f))

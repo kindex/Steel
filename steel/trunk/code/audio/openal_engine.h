@@ -16,6 +16,9 @@
 #define __OPENAL_ENGINE_H
 
 #include "../steel.h"
+
+#ifdef LIB_OPENAL
+
 #include <string>
 #include <iostream>
 #include <windows.h>
@@ -104,4 +107,4 @@ public:
 };
 
 #endif
-
+#endif
