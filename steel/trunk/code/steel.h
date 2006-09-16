@@ -19,11 +19,11 @@
 #include "common/types.h"
 
 //	Компиляторы (STEEL_COMPILER)
-#define COMPILER_GCC 0
+#define COMPILER_GCC 2
 #define COMPILER_VS8 1
 
 //	ОС (STEEL_OS)
-#define OS_LINUX 0
+#define OS_LINUX 2
 #define OS_WIN32 1
 
 //#define LIB_SDL

@@ -13,7 +13,7 @@ Using feachures: gettext; default: gettext
 	'gettext`: enable the support of GETTEXT library
 	""")
 
-env=Environment(CPPPATH=["/usr/include/SDL"], CCFLAGS="-Wall -DSTEEL_COMPILER=0 -DLIB_SDL -DSTEEL_OS=0")
+env=Environment(CPPPATH=["/usr/include/SDL"], CCFLAGS="-Wall -DSTEEL_COMPILER=2 -DLIB_SDL -DSTEEL_OS=2")
 
 mode=ARGUMENTS.get("mode","debug")
 if mode=="debug":
@@ -96,7 +96,7 @@ sources = Split("""
 	./res/audio/wav.cpp
 	./physic/physic_engine.cpp
 	./physic/physic_engine_steel.cpp
-	./physic/pe_particle.cpp
+	./physic/physic_engine_particle.cpp
 	./audio/audio_engine.cpp
 	./audio/openal_engine.cpp
 	./main.cpp
