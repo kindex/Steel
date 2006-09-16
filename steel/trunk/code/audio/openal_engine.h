@@ -38,27 +38,6 @@
 #pragma comment(lib, "eaxguid.lib")
 
 using namespace std;
-/*
-class AL_Source : public Source
-{
-public:
-	//AL_Source(Audio * sound);
-
-	Audio *sound;
-//private:
-	ALuint buffer;
-	ALuint source;
-
-	std::string name;	// == id
-};
-
-/*
-class AL_Listener : public Listener
-{
-};
-*/
-
-//extern void updateListener(Listener);				
 
 class OpenALEngine: public AudioEngine
 {

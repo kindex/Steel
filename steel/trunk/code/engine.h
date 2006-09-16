@@ -67,7 +67,7 @@ protected:
 		// список детей объекта (uid)
 		svector<uid> children;
 
-		Storage(Engine *aengine): engine(aengine), object(NULL), parent(NULL) {}
+		Storage(Engine *aengine): object(NULL), parent(NULL), engine(aengine) {}
 		virtual void fill(Object *object);
 		// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
 		// возвращает true, если была обнавлена вся информация
