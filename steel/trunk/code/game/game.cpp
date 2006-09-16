@@ -63,7 +63,7 @@ bool Steel::init(string _conf, Input *_input, std::string params)
 
 	if(!conf->isset("script"))
 	{
-		log_msg("error game res", "Cannot find script to init scene");
+		error("game res", "Cannot find script to init scene");
 		return false;
 	}
 

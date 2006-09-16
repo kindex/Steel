@@ -83,8 +83,8 @@ protected:
 
 public:
 	Steel(void) { } 
-	bool init(std::string _conf, Input *_input, std::string params);
-	void deinit(void);
+	virtual bool init(std::string _conf, Input *_input, std::string params);
+	virtual void deinit(void);
 
 	bool executeScript(std::string script);
 	bool executeCommand(std::string command);
@@ -105,10 +105,10 @@ public:
 
 	v3	getGlobalPosition(std::string obj);
 
-	void handleEventKeyDown(std::string key);
-	void handleEventKeyUp(std::string key);
+	virtual void handleEventKeyDown(std::string key);
+	virtual void handleEventKeyUp(std::string key);
 
-	void handleMouse(double dx, double dy);
+	virtual void handleMouse(double dx, double dy);
 };
 
 #endif
