@@ -20,9 +20,9 @@ Using Remote Desktop connection
 	Version: 1.1.0
 	Vendor: Microsoft Corporation
 
-Kindex Primary PC [2006-07-29 14:42:06] 
-	Renderer: GeForce 6600 GT/PCI/SSE2/3DNOW!
-	Version: 2.0.1
+Kindex Primary PC [2006-09-17]
+	Renderer: GeForce 7600 GT/PCI/SSE2/3DNOW!
+	Version: 2.0.3
 	Vendor: NVIDIA Corporation
 
 Def Primary PC [2006-07-29 14:42:35] 
