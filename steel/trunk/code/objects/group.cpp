@@ -22,8 +22,6 @@
 #include "../common/utils.h"
 
 #include "group.h"
-#include "custom_path.h"
-#include "path.h"
 #include "triangle.h"
 #include "model_obj.h"
 #include "ps/particle_system.h"
@@ -104,20 +102,6 @@ bool GameGroup::load(GameObj *global)
 		// X,Y,Z - вектор, указывающий направление спрайта (не зависит от положения камеры)
 //		CHECK_KIND("sprite", Sprite, PROCESS_NONE);
 		
-		// объект, который движется по своим законам
-		// TODO правила движения - дифур
-		CHECK_KIND("custom", CustomPath, PROCESS_CUSTOM);
-
-		// путь по контрольным точкам
-		//"path"		id	{tag	speed	smooth}
-		// метка, которая движется по зацикленной траектории по контрольным точкам
-		// {tag	speed	smooth} - такая тройка указывает каждую контрольную точку и может повторяться много раз в строке
-		// tag - id объекта
-		// speed - скорость движения к следующей метке. Если траектория не должны быть зацикленной, то можно указать скорость 0 - тогда движение остановится
-		// smooth - радиус закругления для перехода к следующей метке, плано интерполируются скорости
-		CHECK_KIND("path", TagPath, PROCESS_CUSTOM);
-
-
 		if(obj)
 		{
 			if(obj->getProcessKind() == PROCESS_UNI)

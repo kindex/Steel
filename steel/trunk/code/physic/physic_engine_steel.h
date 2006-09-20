@@ -33,6 +33,31 @@
 */
 #include <map>
 
+typedef enum
+{
+	SMOOTH_NONE,
+	SMOOTH_DIRECTION,
+	SMOOTH_RADIUSS
+} PhysicPathKeySmooth;
+
+
+struct PhysicPathKey
+{
+	v3	point;
+	PhysicObject *object;
+	PhysicPathKeySmooth smooth;
+	float smoothRadious, speed, time, waitTime;
+	bool stop;
+};
+
+class PhysicPath
+{
+protected:
+	svector<PhysicPathKey*> keys;
+public:
+	void push(PhysicPathKey *newKey) { keys.push_back(newKey); }
+	v3 CalculateCoordinates(float time);
+};
 
 class PhysicEngineSteel: public PhysicEngine
 {

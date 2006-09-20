@@ -1,6 +1,6 @@
 /*id*********************************************************
-	File: objects/path.cpp
-	Unit: objects
+	File: physic/physic_engine_path.cpp
+	Unit: steel physic engine
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
@@ -8,17 +8,25 @@
 	License:
 		Steel Engine License
 	Description:
-		Path. ÐœÐµÑ‚ÐºÐ°, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ Ð´Ð²Ð¸Ð¶ÐµÑ‚ÑÑ Ð¿Ð¾ Ñ‚Ñ€Ð°ÐµÐºÑ‚Ð¾Ñ€Ð¸Ð¸ Ð¾Ñ‚ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ðº Ð¾Ð±ÑŠÐµÐºÑ‚Ñƒ.
- ************************************************************/
+		Steel Âåðñèÿ ôèçè÷åñêîãî äâèæêà. 
+		Îòâå÷àåò çà äâèæåíèå ïî òðàåêòîðèè.
+************************************************************/
 
 #include "../steel.h"
-#include "path.h"
+#include "physic_engine_steel.h"
+
+v3 PhysicPath::CalculateCoordinates(float time)
+{
+	// TODO
+
+	return v3(0, 0, 0);
+}
 
 /*
-Ð”Ð»Ñ Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð±Ñ‹Ñ‚ÑŒ Ð¿Ñ€Ð¾Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€Ð¾Ð²Ð°Ð½
-Ð¿Ñ€ÐµÐ´Ð¾Ðº Ð¸ Ð¿ÐµÑ€Ð²Ð°Ñ Ñ†ÐµÐ»ÑŒ.
+Äëÿ èíèöèàëèçàöèè äîëæåí áûòü ïðîèíèöèàëèçèðîâàí
+ïðåäîê è ïåðâàÿ öåëü.
 */
-
+/*
 bool TagPath::init(ScriptLine &s)
 {
 	if(!parent) return false;
@@ -45,7 +53,7 @@ bool TagPath::init(ScriptLine &s)
 
 void TagPath::ProcessPhysic(steel::time curTime, steel::time frameLength, PhysicEngine *engine)
 {
-/*	int cnt = target.size();
+	int cnt = target.size();
 	GameObj *t = parent->findChildren(target[currentTarget].id);
 	if(!t) return;
 
@@ -84,5 +92,6 @@ void TagPath::ProcessPhysic(steel::time curTime, steel::time frameLength, Physic
 	}
 	else
 		vel.translation = (tp-curPos).getNormalized()* speed;
-		*/
+		
 }
+*/

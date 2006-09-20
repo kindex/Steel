@@ -865,6 +865,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\physic\physic_engine_path.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\physic\physic_engine_steel.cpp"
 					>
 				</File>
@@ -1029,41 +1033,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\objects\custom_path.cpp"
-					>
-					<FileConfiguration
-						Name="DebugWin|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\objects\custom_path.h"
-					>
-				</File>
-				<File
 					RelativePath=".\objects\game_obj.cpp"
 					>
 					<FileConfiguration
@@ -1166,41 +1135,6 @@
 				</File>
 				<File
 					RelativePath=".\objects\model_obj.h"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\path.cpp"
-					>
-					<FileConfiguration
-						Name="DebugWin|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\objects\path.h"
 					>
 				</File>
 				<File
