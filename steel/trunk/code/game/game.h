@@ -66,7 +66,7 @@ protected:
 	int framesToPass;
 //  Input-Output 
 	Input		*input;
-	Config		*conf;
+	OldConfig		*conf;
 
 	GraphEngine *graphEngine;
 //	PhysicEngineSteel *physicEngine;

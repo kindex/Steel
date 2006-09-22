@@ -732,6 +732,30 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="config"
+					>
+					<File
+						RelativePath=".\res\config\config.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\config\config.h"
+						>
+					</File>
+					<File
+						RelativePath=".\res\config\config_collection.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\config\config_collection.h"
+						>
+					</File>
+					<File
+						RelativePath=".\res\config\config_parser.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audio"

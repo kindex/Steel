@@ -24,11 +24,11 @@ bool GameObjModel::init(ScriptLine	&s)
 	
 	if(s.count()<3) return false;
 	string config = s.gets(3);
-	conf = resConfig.add(config, false);
+	conf = resOldConfig.add(config, false);
 	if(!conf)
 	{
 		log_msg("error res model", "Model config not found: " + s.gets(3));
-		resConfig.pop();
+		resOldConfig.pop();
 		return false;
 	}
 	string modelName = conf->gets("model");
@@ -37,7 +37,7 @@ bool GameObjModel::init(ScriptLine	&s)
 	if(!m) 
 	{
 		log_msg("error res model", "Model not found: " + modelName);
-		resConfig.pop();
+		resOldConfig.pop();
 		return false;
 	}
 
@@ -62,12 +62,12 @@ bool GameObjModel::init(ScriptLine	&s)
 		if(!it->material) 
 		{
 			log_msg("error game object model", "No material for object");
-			resConfig.pop();
+			resOldConfig.pop();
 			return false;
 		}
 	}
 
-	resConfig.pop();
+	resOldConfig.pop();
 	return m != NULL;
 }
 

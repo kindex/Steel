@@ -16,7 +16,7 @@
 #include "../../steel.h"
 #include "conf.h"
 
-class ConfigText:public Config
+class OldConfigText:public OldConfig
 {
 public:
 	bool init(const std::string name, const std::string dir);

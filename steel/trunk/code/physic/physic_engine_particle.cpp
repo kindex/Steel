@@ -29,8 +29,8 @@ v3 PhysicEngineSteel::calculateForceForParticle(PhysicStorageParticle *storage1,
 	if(helperDrawLines) // draw collision
 		helper->drawLine(Line(pos1, pos2-pos1), 0.0f,0.0f, color4f(1.0f,0.0f,0.0f,1.0f));
 
-	Config *material1 =  ((PhysicObject*)storage1->object)->getPMaterial();
-	Config *material2 =  ((PhysicObject*)storage2->object)->getPMaterial();
+	OldConfig *material1 =  ((PhysicObject*)storage1->object)->getPMaterial();
+	OldConfig *material2 =  ((PhysicObject*)storage2->object)->getPMaterial();
 
 	float dist = (pos2-pos1).getLength();
 	

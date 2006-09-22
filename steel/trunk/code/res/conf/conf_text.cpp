@@ -19,7 +19,7 @@
 
 using namespace std;
 
-bool ConfigText::init(const std::string name, const std::string dir)
+bool OldConfigText::init(const std::string name, const std::string dir)
 {
 	std::string file = dir + "/" + name;
 

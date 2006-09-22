@@ -137,20 +137,19 @@ protected:
 
 	// *********** Functions ***************
 	bool removeRaw(int index); // удаляет ссылку на ресурс. Если количество ссылок = 0, то ресурс удалается физически из коллекции
-	bool purge(int delIndex); // физически удаляет ресурс из коллекции
-	void setId(std::string _id) { id = _id; } // устанавливает идентификатор коллекии
-
-	// Добавляет функцию для создания класса, котоыре умеет загружать ресурс
-	void registerResLoader(funcCreateResClass *_func)	{		classes.push_back(_func);	}
+	virtual bool purge(int delIndex); // физически удаляет ресурс из коллекции
 
 	// Найти номер ресурса по полному имени
     inline int getIndex(const std::string name);
 	// Проверить, существует ли ресурс с указанным полным именем
 	inline bool find(const std::string& name) {return index.find(name) != index.end(); } 
 
-	T* addForce(std::string name, bool pop = true);
+	virtual T* addForce(std::string name, bool pop = true);
 
-	friend bool registerResources();
+public:
+	// Добавляет функцию для создания класса, котоыре умеет загружать ресурс
+	void registerResLoader(funcCreateResClass *_func)	{		classes.push_back(_func);	}
+	void setId(std::string _id) { id = _id; } // устанавливает идентификатор коллекии
 };
 
 

@@ -25,7 +25,7 @@ protected:
 	GLuint programId, vertexShaderId, fragmentShaderId;
 	Text *vertexShader, *fragmentShader;
 	Material *material;
-	const Config	*conf;
+	const OldConfig	*conf;
 public:
 	GLSL(void): programId(0), vertexShaderId(0), fragmentShaderId(0),
 		vertexShader(NULL), fragmentShader(NULL), material(NULL), conf(NULL) {};

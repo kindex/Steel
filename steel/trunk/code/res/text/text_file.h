@@ -23,4 +23,7 @@ public:
 	bool init(const std::string name, const std::string dir);
 };
 
+char* readfile(std::string file);
+
+
 #endif

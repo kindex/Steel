@@ -18,6 +18,7 @@
 #include "../steel.h"
 #include "res.h"
 
+#include "config/config_collection.h"
 #include "conf/conf.h"
 #include "image/image.h"
 #include "model/model.h"
@@ -27,13 +28,14 @@
 #include "audio/audio.h"
 
 // глобальные коллекции ресурсов
-extern ResCollection<Config> resConfig;
-extern ResCollection<Image> resImage;
-extern ResCollection<Model> resModel;
-extern ResCollection<Material> resMaterial;
-extern ResCollection<Script> resScript;
-extern ResCollection<Text> resText;
-extern ResCollection<Audio> resAudio;
+extern ResCollectionConfig		resConfig;
+extern ResCollection<OldConfig> resOldConfig;
+extern ResCollection<Image>		resImage;
+extern ResCollection<Model>		resModel;
+extern ResCollection<Material>	resMaterial;
+extern ResCollection<Script>	resScript;
+extern ResCollection<Text>		resText;
+extern ResCollection<Audio>		resAudio;
 
 
 bool registerResources(void);

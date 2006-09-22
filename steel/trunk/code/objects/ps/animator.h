@@ -18,11 +18,11 @@
 
 class UniParticle: public PhysicObject
 {
-	Config *conf;
+	OldConfig *conf;
 	Particle *particle;
 public:
 
-	UniParticle(Particle *_particle, Config *_conf) { particle = _particle; conf = _conf;}
+	UniParticle(Particle *_particle, OldConfig *_conf) { particle = _particle; conf = _conf;}
 	void setParticle(Particle *_particle) { particle = _particle; }
 
 	CollisionType getCollisionType() 
@@ -36,7 +36,7 @@ public:
 	}
 
 	PositionKind	getPositionKind(void){	return POSITION_GLOBAL;}
-	Config* getPMaterial(void) { return conf; }
+	OldConfig* getPMaterial(void) { return conf; }
 
 	ObjectPosition getPosition(void)
 	{ 
@@ -81,7 +81,7 @@ public:
 	bool		cleanupP(void)		{	return true;	}
 	Vertexes*	getPVertexes(void)	{	return NULL;}
 	Triangles*	getTriangles(void)	{	return NULL;}
-	Config*		getPMaterial(void)	{	return NULL;}
+	OldConfig*		getPMaterial(void)	{	return NULL;}
 
 	velocity	getVelocity(void) { return velocity(v3(0,0,0),v3(0,0,0));}
 	void		setVelocity(const velocity &v) {}

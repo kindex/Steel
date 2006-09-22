@@ -49,3 +49,31 @@ bool TextFile::init(const std::string name, const std::string dir)
 
 	return true;
 }
+
+char* readfile(std::string file)
+{
+	char *text;
+
+	rstream f(file); // no binary acces, only text
+	if(f.fail()) 
+	{
+		log_msg("res conf error", "Cannot open file " + file);
+		return NULL;
+	}
+
+	filebuf *pbuf;
+	long size;
+
+	pbuf = f.rdbuf();
+	// get file size using buffer's members
+	size = pbuf->pubseekoff (0,ios::end,ios::in);
+	pbuf->pubseekpos (0,ios::in);
+	// allocate memory to contain file data
+	text = new char[size + 1];
+	// get file data  
+	pbuf->sgetn((char*)text, size);
+	f.close();
+ 
+	text[size] = '\0';
+	return text;
+}

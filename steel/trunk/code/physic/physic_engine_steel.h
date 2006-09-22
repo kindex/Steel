@@ -78,7 +78,7 @@ protected:
 		// индекс в массиве particleSet
 		int partiecleSetId;
 		float mass;
-		Config *material;
+		OldConfig *material;
 		v3 position;
 		v3 velocity;
 		v3 force;

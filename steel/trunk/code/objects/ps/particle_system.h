@@ -43,7 +43,7 @@ struct ParticleSet
 class ParticleProcessor
 {
 protected:
-	Config *conf;
+	OldConfig *conf;
 	ParticleSet *set;
 public:
 	virtual ~ParticleProcessor(void) {}
@@ -55,7 +55,7 @@ class ParticleEmitter: public ParticleProcessor
 protected:
 	ParticleSystem *particleSystem;
 public:
-	virtual bool init(Config *_conf, ParticleSet *_set, ParticleSystem *_particleSystem);
+	virtual bool init(OldConfig *_conf, ParticleSet *_set, ParticleSystem *_particleSystem);
 	virtual void initParticles(void);
 	virtual void born(Particle &particle) = 0; // создать частицу
 	virtual void kill(int i); // убить частицу с номером i
@@ -69,7 +69,7 @@ protected:
 	GraphObject *particleSystem;
 
 public:
-	virtual bool init(Config *_conf, ParticleSet *_set, GraphObject *_particleSystem);
+	virtual bool init(OldConfig *_conf, ParticleSet *_set, GraphObject *_particleSystem);
 	virtual bool initParticles(void) = 0;
 };
 
@@ -79,14 +79,14 @@ class ParticleAnimator: public PhysicObject, public ParticleProcessor
 protected:
 	ParticleSystem *particleSystem;
 public:
-	virtual bool init(Config *_conf, ParticleSet *_set, ParticleSystem *_particleSystem);
+	virtual bool init(OldConfig *_conf, ParticleSet *_set, ParticleSystem *_particleSystem);
 	virtual bool initParticles(void) = 0;
 };
 
 // система чатиц
 class ParticleSystem: public GameObj
 {
-	Config *conf, *emitterConf, *rendererConf, *animatorConf;
+	OldConfig *conf, *emitterConf, *rendererConf, *animatorConf;
 	ParticleSet			 particleSet;
 	ParticleEmitter		*emitter;
 	ParticleRenderer	*renderer;

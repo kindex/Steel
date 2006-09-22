@@ -19,7 +19,7 @@ using namespace std;
 
 bool Material::init(string name, const std::string dir)
 {
-	conf = resConfig.add(name + ".mat", false);
+	conf = resOldConfig.add(name + ".mat", false);
 	if(conf == NULL)
 	{
 		log_msg("error res material", string("Material not found: ") + name);
@@ -102,5 +102,5 @@ Material::~Material()
 	{
 		if(it->image) resImage.remove(it->image);
 	}
-	if(conf) resConfig.remove(conf);
+	if(conf) resOldConfig.remove(conf);
 }

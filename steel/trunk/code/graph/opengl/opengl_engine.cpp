@@ -201,7 +201,7 @@ void OpenGL_Engine::UseSDL(void)
 
 bool OpenGL_Engine::init(std::string _conf, Input *input)
 {
-	if(!(conf = resConfig.add(_conf)))
+	if(!(conf = resOldConfig.add(_conf)))
 	{
 		log_msg("error graph conf res", "Cannot find renderer config file "+_conf);
 		return false;

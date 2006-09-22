@@ -105,7 +105,7 @@ public:
 	// массив индексов вершин, которые образуют треугольники (грани)
 	virtual Triangles*	getTriangles(void) { return NULL; }
 
-	virtual Config* getPMaterial(void) { return NULL; }
+	virtual OldConfig* getPMaterial(void) { return NULL; }
 	// эта функция вызывается, если другой объект трогает этот
 	virtual void	trigger(PhysicObject *object) {}
 };

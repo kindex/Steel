@@ -19,7 +19,7 @@
 #include <string>
 #include <map>
 
-class Config: public Res
+class OldConfig: public Res
 {
 protected:
 //string settings

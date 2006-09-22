@@ -13,6 +13,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:Zoom>110</w:Zoom>
+  <w:SpellingState>Clean</w:SpellingState>
   <w:GrammarState>Clean</w:GrammarState>
   <w:ValidateAgainstSchemas/>
   <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
@@ -124,6 +125,9 @@ p.code, li.code, div.code
 	mso-fareast-font-family:"Times New Roman";
 	mso-ansi-language:EN-US;
 	mso-no-proof:yes;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
 span.GramE
 	{mso-style-name:"";
 	mso-gram-e:yes;}
@@ -177,7 +181,7 @@ table.MsoTableGrid
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="12290"/>
+ <o:shapedefaults v:ext="edit" spidmax="14338"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -193,10 +197,10 @@ table.MsoTableGrid
 <p style='margin-bottom:0cm;margin-bottom:.0001pt'>Описывает форматы хранения
 различных типов ресурсов.</p>
 
-<h1>Конфиги</h1>
+<h1><span class=SpellE>Конфиги</span></h1>
 
-<p>Этот формат файла подходит как для описания сцены, так и для любых конфигов,
-материалов, анимации, моделей и т.д.</p>
+<p>Этот формат файла подходит как для описания сцены, так и для любых <span
+class=SpellE>конфигов</span>, материалов, анимации, моделей и т.д.</p>
 
 <h3>Требования</h3>
 
@@ -210,17 +214,21 @@ table.MsoTableGrid
 
 <p>Без типизации. Объект сам может распознать нужные настройки из строки.</p>
 
-<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>Includes.</span></span><span
-lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>Includes</span>.</span></p>
 
-<h3>Спецификация</h3>
+<h3>Синтаксис</h3>
 
-<p>В основе конфига лежит понятие <span lang=EN-US style='mso-ansi-language:
-EN-US'>value</span> (значение переменной). Всё содержимое файла является <span
-lang=EN-US style='mso-ansi-language:EN-US'>value</span> (исключая комментарии).<span
-lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+<p>В основе <span class=SpellE>конфига</span> лежит понятие <span class=SpellE><span
+lang=EN-US style='mso-ansi-language:EN-US'>config</span></span> (значение
+переменной). Всё содержимое файла является <span lang=EN-US style='mso-ansi-language:
+EN-US'>value</span> (исключая комментарии).</p>
+
+<p class=code><span lang=EN-US>&lt;config&gt; ::= <span style='background:lime;
+mso-highlight:lime'>[&lt;tag&gt;] &lt;value&gt;</span> | &lt;value&gt;</span></p>
 
 <p class=code><span lang=EN-US>&lt;value&gt; ::= null</span></p>
+
+<p class=code><span lang=EN-US>&lt;value&gt; ::= default</span></p>
 
 <p class=code><span lang=EN-US>&lt;value&gt; ::= &lt;nuber&gt;</span></p>
 
@@ -228,199 +236,193 @@ lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
 
 <p class=code><span lang=EN-US>&lt;value&gt; ::= “&lt;string&gt;”</span></p>
 
-<p class=code><span lang=EN-US>&lt;value&gt; ::= {&lt;struct&gt;} | [&lt;tag&gt;]
-{&lt;struct&gt;}</span></p>
-
-<p class=code><span lang=EN-US>&lt;value&gt; ::= (&lt;array&gt;)</span></p>
+<p class=code><span lang=EN-US>&lt;value&gt; ::= {&lt;array&gt;} | (&lt;array&gt;)</span></p>
 
 <p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
 
-<p class=code><span lang=EN-US>&lt;tag&gt; ::= &lt;id&gt; |
-&lt;id&gt;:&lt;inherits&gt;</span></p>
+<p class=code><span lang=EN-US style='background:lime;mso-highlight:lime'>&lt;tag&gt;
+::= &lt;id&gt; | &lt;id&gt;:&lt;inherits&gt;<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>&lt;inherits&gt; ::= <i style='mso-bidi-font-style:
-normal'>&lt;empty</i>&gt; | &lt;external_id&gt;,&lt;inherits&gt;</span></p>
+<p class=code><span lang=EN-US style='background:lime;mso-highlight:lime'>&lt;inherits&gt;
+::= <i style='mso-bidi-font-style:normal'>&lt;empty</i>&gt; |
+&lt;external_id&gt;,&lt;inherits&gt;<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>&lt;id&gt; := virtual &lt;alpha&gt; | &lt;alpha&gt;</span></p>
+<p class=code><span lang=EN-US style='background:lime;mso-highlight:lime'>&lt;id&gt;
+:= virtual &lt;alpha&gt; | &lt;alpha&gt;<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>&lt;external_id&gt; ::= &lt;alpha&gt; | &lt;path
-to config&gt;#&lt;alpha&gt;</span></p>
-
-<p class=code><span lang=EN-US>&lt;struct&gt; ::= &lt;assignment&gt; | &lt;assignment&gt;;
-&lt;struct&gt; | <i style='mso-bidi-font-style:normal'>&lt;empty&gt;<o:p></o:p></i></span></p>
-
-<p class=code><span lang=EN-US>&lt;assignment&gt; ::= &lt;variable&gt; =
-&lt;value&gt;</span></p>
-
-<p class=code><span lang=EN-US>&lt;variable&gt; ::= &lt;alpa&gt;</span></p>
-
-<p class=code><span lang=EN-US>&lt;type&gt; ::= &lt;alpha&gt;</span></p>
+<p class=code><span lang=EN-US style='background:lime;mso-highlight:lime'>&lt;external_id&gt;
+::= &lt;alpha&gt; | &lt;path to config&gt;#&lt;alpha&gt;</span></p>
 
 <p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
 
-<p class=code><span lang=EN-US>&lt;array&gt; ::= &lt;array_element&gt; | &lt;array_element&gt;
-&lt;array&gt; | &lt;array_element&gt;,&lt;array&gt; |&lt;array_element&gt;;
-&lt;array&gt; | <i style='mso-bidi-font-style:normal'>&lt;empty&gt;</i></span></p>
+<p class=code><span lang=EN-US>&lt;array&gt; ::= &lt;array_element&gt;
+&lt;array&gt; | &lt;array_element&gt;;&lt;array&gt; | <i style='mso-bidi-font-style:
+normal'>&lt;empty&gt;<o:p></o:p></i></span></p>
 
-<p class=code><span lang=EN-US>&lt;array_element&gt; ::= &lt;value&gt; | &lt;number&gt;:&lt;value&gt;</span></p>
+<p class=code><span lang=EN-US>&lt;array_element&gt; ::= &lt;config&gt; |
+&lt;alpha&gt; = &lt;config&gt; | &lt;number&gt; = &lt;config&gt;</span></p>
 
 <p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
 
-<p>Комментарии в стиле<span class=GramE> С</span>++ // и /*.</p>
+<p><span style='background:lime;mso-highlight:lime'>Комментарии в стиле //</span><span
+lang=EN-US style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>,</span><span
+style='background:lime;mso-highlight:lime'> /* и </span><span lang=EN-US
+style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>#</span><span
+lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>String</span><span
-lang=EN-US> </span>– строка, стоящая из любых символов. Символы начала строки (‘
-и “) экранируются при помощи \.</p>
+lang=EN-US> </span>– строка, стоящая из любых символов. <span style='background:
+lime;mso-highlight:lime'>Символы начала строки (‘ и “) экранируются при помощи
+\.</span></p>
 
 <p><span lang=EN-US style='mso-ansi-language:EN-US'>Number</span><span
 lang=EN-US> </span>– целое или дробное число.</p>
 
-<p>alpha - английские буквы и символ подчёркивания. <span class=GramE><span
-lang=EN-US style='background:yellow;mso-highlight:yellow;mso-ansi-language:
-EN-US'>Case</span><span lang=EN-US style='background:yellow;mso-highlight:yellow'>
-</span><span lang=EN-US style='background:yellow;mso-highlight:yellow;
-mso-ansi-language:EN-US'>sensitive</span>.</span></p>
-
-<p class=code><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
-
-<h3>Описание</h3>
-
-<p><o:p>&nbsp;</o:p></p>
-
-<h3>Примеры</h3>
-
-<p class=code><span lang=EN-US>//some.scene</span></p>
-
-<p class=code><span lang=EN-US>(</span></p>
+<p><span class=SpellE>alpha</span> - английские буквы и символ подчёркивания, или
+цифры, начиная со второго символа. <span class=GramE><span lang=EN-US
+style='mso-ansi-language:EN-US'>Case sensitive.</span></span><span lang=EN-US
+style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
 
 <p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-class=GramE>[<span lang=EN-US style='mso-ansi-language:EN-US'>virtual</span><span
-lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>wall</span>]
-{ // <span lang=EN-US style='mso-ansi-language:EN-US'>virtual</span><span
-lang=EN-US> </span>означает, что этот объект служит только как шаблон, и не
-добавляется в сцену</span><o:p></o:p></span></p>
+<h3><span style='background:silver;mso-highlight:silver'>Семантика</span><span
+lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h3>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span></span><span
-lang=EN-US>material = [:material/diffuse#70] {}</span><span lang=EN-US
-style='mso-ansi-language:RU'> </span><span lang=EN-US>// </span><span
-style='mso-ansi-language:RU'>полностью наследуетматериал<o:p></o:p></span></p>
+<p><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
 
-<p class=code><span lang=EN-US><span style='mso-spacerun:yes'>    </span><span
-style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>    </span><span
-style='mso-spacerun:yes'> </span>model = ‘model/box’</span></p>
+<h3><span style='background:silver;mso-highlight:silver'>Примеры</span><span
+lang=EN-US style='background:silver;mso-highlight:silver;mso-ansi-language:
+EN-US'><o:p></o:p></span></h3>
 
-<p class=code><span lang=EN-US><span style='mso-spacerun:yes'>    </span><span
-style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>    </span><span
-style='mso-spacerun:yes'> </span>scale =(10 10 1)</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'>//some.scene<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US><span style='mso-spacerun:yes'>    </span><span
-style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>    </span><span
-style='mso-spacerun:yes'> </span>texcoord_scale = (0.1 0.1 1)</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'>(<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US><span style='mso-spacerun:yes'>    </span>}</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><o:p>&nbsp;</o:p></span></p>
 
-<p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+<p class=code><span style='background:silver;mso-highlight:silver;mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>     </span><span class=GramE>[<span
+lang=EN-US style='mso-ansi-language:EN-US'>virtual</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>wall</span>] { // <span lang=EN-US
+style='mso-ansi-language:EN-US'>virtual</span><span lang=EN-US> </span>означает,
+что этот объект служит только как шаблон, и не добавляется в сцену</span><o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US><span style='mso-spacerun:yes'>    </span><span
-style='mso-spacerun:yes'> </span>[w1:wall] { // </span><span style='mso-ansi-language:
-RU'>только</span> <span style='mso-ansi-language:RU'>дополняем</span> <span
-lang=EN-US>wall</span></p>
+<p class=code><span style='background:silver;mso-highlight:silver;mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>          </span></span><span lang=EN-US
+style='background:silver;mso-highlight:silver'>material =
+[:material/diffuse#70] {} // </span><span style='background:silver;mso-highlight:
+silver;mso-ansi-language:RU'>полностью</span><span style='background:silver;
+mso-highlight:silver'> </span><span style='background:silver;mso-highlight:
+silver;mso-ansi-language:RU'>наследуетматериал</span><span lang=EN-US
+style='background:silver;mso-highlight:silver'><o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US><span style='mso-spacerun:yes'>    </span><span
-style='mso-spacerun:yes'>    </span>origin</span><span style='mso-ansi-language:
-RU'> = (10 20 0); // изменяем положение<o:p></o:p></span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>          </span>model = ‘model/box’<o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'>    </span></span><span
-lang=EN-US>material = {</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>    </span><span
+style='mso-spacerun:yes'>      </span>scale =</span><span lang=EN-US
+style='background:silver;mso-highlight:silver;mso-ansi-language:RU'> </span><span
+lang=EN-US style='background:silver;mso-highlight:silver'>(10 10 1)<o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'>    </span><span
-style='mso-spacerun:yes'>    </span></span><span lang=EN-US>texture</span><span
-style='mso-ansi-language:RU'> = ‘</span><span lang=EN-US>blick</span><span
-style='mso-ansi-language:RU'>/</span><span lang=EN-US>blick</span><span
-style='mso-ansi-language:RU'>1’ // и текстуру материала<o:p></o:p></span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>          </span>texcoord_scale = (0.1 0.1 1)<o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'>    </span>}<o:p></o:p></span></p>
-
-<p class=code><span style='mso-ansi-language:RU'><span
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
 style='mso-spacerun:yes'>    </span>}<o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-class=GramE>[<span lang=EN-US style='mso-ansi-language:EN-US'>w2</span>:<span
-lang=EN-US style='mso-ansi-language:EN-US'>wall</span>]<span lang=EN-US
-style='mso-ansi-language:EN-US'> {</span><span lang=EN-US> </span></span></span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><o:p>&nbsp;</o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'>    </span></span><span
-lang=EN-US>origin</span><span style='mso-ansi-language:RU'> = (10 20 0);<span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'>    </span></span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>     </span>[w1:wall] { // </span><span
+style='background:silver;mso-highlight:silver;mso-ansi-language:RU'>только</span><span
+style='background:silver;mso-highlight:silver'> </span><span style='background:
+silver;mso-highlight:silver;mso-ansi-language:RU'>дополняем</span><span
+lang=EN-US style='background:silver;mso-highlight:silver'> wall<o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'>    </span></span><span
-lang=EN-US>angle = 90;</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>        </span>origin = (10 20 0); // </span><span
+style='background:silver;mso-highlight:silver;mso-ansi-language:RU'>изменяем</span><span
+style='background:silver;mso-highlight:silver'> </span><span style='background:
+silver;mso-highlight:silver;mso-ansi-language:RU'>положение</span><span
+lang=EN-US style='background:silver;mso-highlight:silver'><o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span></span><span
-lang=EN-US>}</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>        </span>material = {<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>)</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>            </span>texture = ‘blick/blick1’ // </span><span
+style='background:silver;mso-highlight:silver;mso-ansi-language:RU'>и</span><span
+style='background:silver;mso-highlight:silver'> </span><span style='background:
+silver;mso-highlight:silver;mso-ansi-language:RU'>текстуру</span><span
+style='background:silver;mso-highlight:silver'> </span><span style='background:
+silver;mso-highlight:silver;mso-ansi-language:RU'>материала</span><span
+lang=EN-US style='background:silver;mso-highlight:silver'><o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>        </span>}<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>// second.scene</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>   </span><span style='mso-spacerun:yes'> </span>}<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>(</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>     </span>[w2:wall] { <o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span></span><span
-lang=EN-US>[w3:some.scene#w1] {</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>        </span>origin = (10 20 0);<span
+style='mso-spacerun:yes'>        </span><o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span></span><span
-lang=EN-US>origin</span><span style='mso-ansi-language:RU'> = (50 50 10);<o:p></o:p></span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>        </span>angle = 90;<o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span></span><span
-lang=EN-US>model</span><span style='mso-ansi-language:RU'> = </span><span
-lang=EN-US>null</span><span style='mso-ansi-language:RU'>; // обнуляет модель предка<o:p></o:p></span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>     </span>}<o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span></span><span
-lang=EN-US>mesh = {</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'>)<o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span></span><span
-lang=EN-US>vertexes = ((0,0,0) (1,0,0) (0,1,0))</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><o:p>&nbsp;</o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span></span><span
-lang=EN-US>triangles = ((0 1 2)(0 2 1)</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'>//
+second.scene<o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span></span><span
-lang=EN-US>}</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'>(<o:p></o:p></span></p>
 
-<p class=code><span style='mso-ansi-language:RU'><span
-style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span></span><span
-lang=EN-US>}</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>     </span>[w3:some.scene#w1] {<o:p></o:p></span></p>
 
-<p class=code><span lang=EN-US>)</span></p>
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>          </span>origin = (50 50 10);<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>          </span>model</span><span style='background:
+silver;mso-highlight:silver;mso-ansi-language:RU'> = </span><span lang=EN-US
+style='background:silver;mso-highlight:silver'>null</span><span
+style='background:silver;mso-highlight:silver;mso-ansi-language:RU'>; //
+обнуляет модель предка<o:p></o:p></span></p>
+
+<p class=code><span style='background:silver;mso-highlight:silver;mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>          </span></span><span lang=EN-US
+style='background:silver;mso-highlight:silver'>mesh</span><span
+style='background:silver;mso-highlight:silver;mso-ansi-language:RU'> = {<o:p></o:p></span></p>
+
+<p class=code><span style='background:silver;mso-highlight:silver;mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>               </span></span><span
+lang=EN-US style='background:silver;mso-highlight:silver'>vertexes = ((0,0,0)
+(1,0,0) (0,1,0))<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>               </span>triangles = ((0 1 2)(0 2 1)<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>          </span>}<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>          </span>angle = [w3:some.scene#w1] default;<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'><span
+style='mso-spacerun:yes'>     </span>}<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:silver;mso-highlight:silver'>)</span></p>
 
 <h1>Составители<span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h1>
 

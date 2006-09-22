@@ -56,7 +56,7 @@ public:
 class Material: public Res
 {
 protected:
-	Config *conf;
+	OldConfig *conf;
 	bool	blend, shader;
 	steel::vector<Texture> texture;
 	std::string directory;
@@ -74,7 +74,7 @@ public:
 	// указана ли в конфиге материала шейдер для рендеринга
 	bool isShader(void) { return shader; }
 	// получить час конфиг
-	const Config *getConfig(void) const { return conf; };
+	const OldConfig *getConfig(void) const { return conf; };
 	// директория, откуда был загружен материал. 
 	// Нужна для относительного отсчёта файлов, указанных в конфиге
 	std::string getDirectory(void) { return directory;}

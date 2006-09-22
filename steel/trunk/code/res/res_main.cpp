@@ -18,13 +18,15 @@
 #include "image/tga.h"
 #include "model/3ds.h"
 #include "conf/conf_text.h"
+#include "config/config_collection.h"
 #include "script/script_text.h"
 #include "text/text_file.h"
 #include "audio/wav.h"
 #include "audio/ogg.h"
 
 
-ResCollection<Config>	resConfig;
+ResCollectionConfig		resConfig;
+ResCollection<OldConfig>resOldConfig;
 ResCollection<Image>	resImage;
 ResCollection<Model>	resModel;
 ResCollection<Material> resMaterial;
@@ -103,10 +105,12 @@ T2* createClass(const std::string filename, const std::string base)
 
 bool registerResources()
 {
+	resConfig.setId("config");
+
 	resImage.setId("image");	resImage.registerResLoader(createImage);
 	resModel.setId("model");	resModel.registerResLoader(createClass<_3DS, Model>);
 	resMaterial.setId("material");resMaterial.registerResLoader(createClass<Material, Material>);
-	resConfig.setId("config");	resConfig.registerResLoader(createClass<ConfigText, Config>);
+	resOldConfig.setId("oldconfig");	resOldConfig.registerResLoader(createClass<OldConfigText, OldConfig>);
 	resScript.setId("script");	resScript.registerResLoader(createClass<ScriptText, Script>);
 	resText.setId("text");	resText.registerResLoader(createClass<TextFile, Text>);
 	resAudio.registerResLoader(createClass<WAV, Audio>);            resAudio.setId("audio");

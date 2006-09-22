@@ -16,7 +16,7 @@
 #include "../../common/utils.h"
 using namespace std;
 
-const string Config::gets(const string key, const string _default) const
+const string OldConfig::gets(const string key, const string _default) const
 {
 	std::map<std::string, std::string>::const_iterator it;
 	if((it=var_s.find(key)) != var_s.end())
@@ -25,7 +25,7 @@ const string Config::gets(const string key, const string _default) const
 		return _default;
 }
 
-double Config::getd(const string key, const double _default) const
+double OldConfig::getd(const string key, const double _default) const
 {
 	std::map<std::string, double>::const_iterator it;
 	if((it=var_f.find(key)) != var_f.end())
@@ -35,7 +35,7 @@ double Config::getd(const string key, const double _default) const
 }
 
 
-float Config::getf(string key, float _default) const
+float OldConfig::getf(string key, float _default) const
 {
 	std::map<std::string, double>::const_iterator it;
 	if((it=var_f.find(key)) != var_f.end())
@@ -44,7 +44,7 @@ float Config::getf(string key, float _default) const
 		return _default;
 }
 
-int Config::geti(string key, int _default) const
+int OldConfig::geti(string key, int _default) const
 {
 	std::map<std::string, double>::const_iterator it;
 	if((it=var_f.find(key)) != var_f.end())
@@ -53,7 +53,7 @@ int Config::geti(string key, int _default) const
 		return _default;
 }
 
-v3 Config::getv3(string key, v3 _default) const
+v3 OldConfig::getv3(string key, v3 _default) const
 {
 	std::map<std::string, v3>::const_iterator it;
 	if((it=var_v3.find(key)) != var_v3.end())
@@ -62,19 +62,19 @@ v3 Config::getv3(string key, v3 _default) const
 		return _default;
 }
 
-void Config::setup(std::string key, std::string value)
+void OldConfig::setup(std::string key, std::string value)
 {
 	var_s[key] = value;
 	var_f[key] = atof(value.c_str());
 }
 
-void Config::setup(std::string key, double value)
+void OldConfig::setup(std::string key, double value)
 {
 	var_s[key] = FloatToStr(value);
 	var_f[key] = value;
 }
 
-void Config::setDefault(std::string key, std::string value)
+void OldConfig::setDefault(std::string key, std::string value)
 {
 	if(var_s.find(key) == var_s.end())
 		var_s[key] = value;
@@ -83,7 +83,7 @@ void Config::setDefault(std::string key, std::string value)
 		var_f[key] = atof(value.c_str());
 }
 
-bool Config::unload() 
+bool OldConfig::unload() 
 { 
 	var_s.clear();
 	var_f.clear();

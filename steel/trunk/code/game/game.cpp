@@ -33,10 +33,10 @@ using namespace std;
 
 bool Steel::init(string _conf, Input *_input, std::string params)
 {
-	// Config
+	// OldConfig
 	input = _input; 
 	input->setGame(this);
-	conf = resConfig.add( _conf);
+	conf = resOldConfig.add( _conf);
 	if(!conf)
 	{
 		log_msg("error game res", string("Cannot load game config ") + _conf);
@@ -174,7 +174,7 @@ bool Steel::createObject()
 {
 /*	Particle *p = new Particle;
 
-	if(p->init(eye, direction, resConfig.add( "ps_weapon")))
+	if(p->init(eye, direction, resOldConfig.add( "ps_weapon")))
 	{
 		graphEngine->inject(p);
 		physicEngine->inject(p);

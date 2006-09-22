@@ -40,7 +40,7 @@ protected:
 	double sensetivity;
 	bool alive, mouseCaptured, focused;
 	Game	*game;
-	Config	*conf;
+	OldConfig	*conf;
 
 	int cx, cy, lastdx, lastdy;
 
