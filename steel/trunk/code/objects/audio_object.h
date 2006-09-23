@@ -16,15 +16,26 @@
 
 class AudioSourceRes: public AudioObject
 {
-protected:
-	Audio *sound;
 public:
-	AudioSourceRes(void):sound(NULL) {}
+	AudioSourceRes(void); //:sound(NULL), gain(1.0f), pitch(1.0f), isLooped(false) {}
 
 	void setSound(Audio *aSound) { sound = aSound; }
+	void setGain(float newGain) { gain = newGain; }
+	void setPitch(float newPitch) { pitch = newPitch; }
+	void setLooped(bool newLoop) { isLoop = newLoop; }
 
-	float getGain(void) { return 1.0f;}
-	float getPitch(void){ return 1.0f;}
-	bool isLooped(void) { return false;}
+	float getGain(void) { return gain; }
+	float getPitch(void) { return pitch;}
+	bool isLooped(void) { return isLoop;}
 	Audio *getSound(void) {return sound; } 
+
+	
+
+protected:
+	Audio *sound;
+
+private:
+	float gain;
+	float pitch;
+	bool isLoop;
 };

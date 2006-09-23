@@ -182,6 +182,19 @@ void OpenALEngine::AudioStorage::soundPlay(void)
 	alSourcePlay(source);
 }
 
+
+void OpenALEngine::AudioStorage::soundPause(void)
+{
+	alSourcePause(source);
+}
+
+
+void OpenALEngine::AudioStorage::soundStop(void)
+{
+	alSourceStop(source);
+}
+
+
 void OpenALEngine::AudioStorage::soundClose(void)
 {
 	alSourceStop(source);
@@ -189,10 +202,6 @@ void OpenALEngine::AudioStorage::soundClose(void)
 		alDeleteSources(1, &source);
 }
 
-void OpenALEngine::AudioStorage::soundStop(void)
-{
-	alSourceStop(source);
-}
 
 void OpenALEngine::AudioStorage::soundUpdate(void)
 {
@@ -205,6 +214,7 @@ void OpenALEngine::AudioStorage::soundUpdate(void)
 		alSourcei (source, AL_LOOPING,  isLoop	);
 	}
 }
+
 
 bool OpenALEngine::inject(AudioObject *object)
 {
@@ -219,10 +229,12 @@ bool OpenALEngine::inject(AudioObject *object)
 	return true;
 }
 
+
 void OpenALEngine::makeStorageForChildren(Object *object)
 {
 
 }
+
 
 void OpenALEngine::AudioStorage::fill(Object *object)
 {
@@ -243,6 +255,7 @@ void OpenALEngine::AudioStorage::fill(Object *object)
 	}
 }
 
+
 bool OpenALEngine::AudioStorage::cache(void)
 {
 	Storage::fill(object);
@@ -257,5 +270,6 @@ bool OpenALEngine::AudioStorage::cache(void)
 	soundUpdate();
 	return true;
 }
+
 
 #endif

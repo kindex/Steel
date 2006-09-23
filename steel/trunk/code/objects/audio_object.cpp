@@ -14,3 +14,10 @@
 
 #include "audio_object.h"
 
+AudioSourceRes::AudioSourceRes(void)
+{
+	sound = NULL;
+	gain = 1.0f;
+	pitch = 1.0f;
+	isLoop = false;
+}

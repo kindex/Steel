@@ -56,8 +56,9 @@ protected:
 		float pitch;
 
 		void soundPlay(void);
-		void soundClose(void);
+		void soundPause(void);
 		void soundStop(void);
+		void soundClose(void);
 		void soundUpdate(void);
 
 		bool init(void);
