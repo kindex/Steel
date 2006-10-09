@@ -55,19 +55,17 @@ string ParseAlpha(const char* body, int &i)
 }
 
 
-ConfigArray *ParseArray(const char* body, int &i)
+ConfigStruct *ParseStruct(const char* body, int &i)
 {
-	if(!(body[i] == '{' || body[i] == '('))
+	if(body[i] != '{')
 	{
 		parse_error("config parser", string("Illergal symbol '") + body[i] + "' at line " + IntToStr(line) + "[STRUCT]");
 		return NULL;
 	}
-	char end;
-	if(body[i] == '{') end = '}';
-	if(body[i] == '(') end = ')';
+	char end = '}';
 	i++;
 
-	ConfigArray *res = new ConfigArray();
+	ConfigStruct *res = new ConfigStruct();
 	for(;;)
 	{
 		Config* value = NULL;
@@ -84,8 +82,8 @@ ConfigArray *ParseArray(const char* body, int &i)
 			return res;
 		}
 		string var;
-		if(isFirstAlpha(body[i])) // var = value
-		{
+//		if(isFirstAlpha(body[i])) // var = value
+//		{
 			var = ParseAlpha(body, i);
 			SkipSpaces(body, i);
 			if(body[i] != '=') 
@@ -96,7 +94,8 @@ ConfigArray *ParseArray(const char* body, int &i)
 			}
 			i++;
 			SkipSpaces(body, i);
-		}
+//		}
+#if 0
 		else
 		{
 			if(isDigit(body[i])) // possible variants: int = config or simple number
@@ -133,12 +132,52 @@ ConfigArray *ParseArray(const char* body, int &i)
 			if(var.empty())
 				var = IntToStr(res->getFreeIndex());
 		}
+#endif
 		if(!value)
 			value = ParseConfig(body, i);
 
 		res->setValue(var, value);
 		SkipSpaces(body, i);
-		if(body[i] == ';') i++;		// optional ;
+		if(body[i] == ';' || body[i] == ',') i++;		// optional ;
+	}
+
+	return res;
+}
+
+
+ConfigArray *ParseArray(const char* body, int &i)
+{
+	if(body[i] != '(')
+	{
+		parse_error("config parser", string("Illergal symbol '") + body[i] + "' at line " + IntToStr(line) + "[STRUCT]");
+		return NULL;
+	}
+	char end = '}';
+	i++;
+
+	ConfigArray *res = new ConfigArray();
+	for(;;)
+	{
+		Config* value = NULL;
+
+		SkipSpaces(body, i);
+		if(body[i] == end)
+		{
+			i++;
+			return res;
+		}
+		if(body[i] == '\0')
+		{
+			parse_error("config parser", string("Unexpected end of config. Expecting ") + end + " [STRUCT]");
+			return res;
+		}
+
+		value = ParseConfig(body, i);
+		if(value != NULL)
+			res->push(value);
+
+		SkipSpaces(body, i);
+		if(body[i] == ';' || body[i] == ',') i++;		// optional ;
 	}
 
 	return res;
@@ -242,9 +281,12 @@ Config *ParseValue(const char* body, int &i)
 		res = new ConfigString;
 		((ConfigString*)res)->setValue(ParseString(body, i));
 	}else
-
-	// Struct
-	if(body[i] == '{' || body[i] == '(')
+	if(body[i] == '{') // Struct
+	{
+		res = ParseStruct(body, i);
+	}
+	else
+	if(body[i] == '(') // Array
 	{
 		res = ParseArray(body, i);
 	}

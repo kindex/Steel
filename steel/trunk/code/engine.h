@@ -33,7 +33,7 @@
 class Engine
 {
 public:
-	OldConfig			*conf;
+	OldConfig *conf;
 
 	virtual ~Engine(void) {}
 //	virtual bool init(std::string _conf) = 0; // initialization

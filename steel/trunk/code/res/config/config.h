@@ -48,20 +48,37 @@ public:
 	virtual char *getValue(void);
 	virtual char *getValueFromParent(void);
 
-	double getd(const double _default = 0.0f);
-	float getf(const float _default = 0.0f) { return (float)getd((double)_default); } 
-	std::string gets(const std::string _default = "");
+	// Config Base types
+	double returnd(const double _default = 0.0f);
+	float returnf(const float _default = 0.0f) { return (float)returnd((double)_default); } 
+	std::string returns(const std::string _default = "");
 
-	virtual std::string finds(std::string path, const std::string _default = "") = 0;
+	// Steel types
+	double	getd (std::string path, const double _default = 0.0f);
+	float	getf (std::string path, const float  _default = 0.0f) { return (float)getd(path, (double)_default); } 
+	int		geti (std::string path, const int	 _default = 0) { return (int)getd(path, (double)_default); } 
+	v3		getv3(std::string path, const v3	 _default = v3(0.0f, 0.0f, 0.0f));
+	std::string	gets(std::string path, const std::string _default = std::string());
+
+
+	virtual Config *find(std::string path) = 0;
 
 	virtual Config* getStructElement(const std::string key);
 	virtual Config* getStructElementRaw(const std::string key) { return NULL; }
 
-	std::string getParagraph(int level);
+	std::string getIndent(int level);
 	virtual std::string Dump(int level = 0) = 0;
 };
 
-class ConfigNumber: public Config
+class ConfigSimple: public Config
+{
+public:
+	Config *find(std::string path);
+
+};
+
+
+class ConfigNumber: public ConfigSimple
 {
 protected:
 	double value;
@@ -74,7 +91,7 @@ public:
 	std::string finds(std::string path, const std::string _default = "");
 };
 
-class ConfigString: public Config
+class ConfigString: public ConfigSimple
 {
 protected:
 	std::string value;
@@ -88,30 +105,54 @@ public:
 	std::string finds(std::string path, const std::string _default = "");
 };
 
-class ConfigArray: public Config
+class ConfigCompound: public Config
+{
+};
+
+
+class ConfigStruct: public ConfigCompound
 {
 protected:
 	std::map<std::string, Config*> set;
-	int freeIndex;
 
 public:
-	ConfigArray(void){ type = CONFIG_VALUE_STRUCT; freeIndex = 0; }
+	ConfigStruct(void){ type = CONFIG_VALUE_STRUCT; }
 
 	Config* getStructElementRaw(const std::string key);
 	void setValue(const std::string key, Config *value) { set[key] = value; }
 	std::string Dump(int level);
-	std::string finds(std::string path, const std::string _default = "");
-	int getFreeIndex(void);
+	
+	Config *find(std::string path);
+	v3 returnv3(const v3 _default = v3(0.0f, 0.0f, 0.0f));
 };
+
+class ConfigArray: public ConfigCompound
+{
+protected:
+	svector<Config*> set;
+
+public:
+	ConfigArray(void){ type = CONFIG_VALUE_ARRAY; }
+
+	Config* getArrayElementRaw(const size_t index);
+	int getArraySizeRaw(const int index) { return set.size(); }
+	std::string Dump(int level);
+	
+	Config *find(std::string path);
+	v3 returnv3(const v3 _default = v3(0.0f, 0.0f, 0.0f));
+	void push(Config* newValue) { set.push_back(newValue); }
+};
+
 
 #define parse_error(keys, msg) (log_msg((keys), (msg)))
 
-Config *ParseConfig(const char* body, int &i);
-Config *ParseValue(const char* body, int &i);
-std::string ParseAlpha(const char* body, int &i);
-void SkipSpaces(const char* body, int &i);
-ConfigArray *ParseArray(const char* body, int &i);
-double ParseNumber(const char* body, int &i);
+Config*			ParseConfig(const char* body, int &i);
+Config*			ParseValue(const char* body, int &i);
+std::string		ParseAlpha(const char* body, int &i);
+void			SkipSpaces(const char* body, int &i);
+ConfigStruct*	ParseStruct(const char* body, int &i);
+ConfigArray*	ParseArray(const char* body, int &i);
+double			ParseNumber(const char* body, int &i);
 
 
 #endif

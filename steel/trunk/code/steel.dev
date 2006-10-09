@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=150
+UnitCount=152
 Type=0
 Ver=1
 ObjFiles=
@@ -1548,9 +1548,19 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit151]
-FileName=res\audio\wav.h
+FileName=objects\audio_object.cpp
 CompileCpp=1
-Folder=res/audio
+Folder=objects
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit152]
+FileName=objects\audio_object.h
+CompileCpp=1
+Folder=objects
 Compile=1
 Link=1
 Priority=1000

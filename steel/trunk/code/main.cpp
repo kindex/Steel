@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 // ******************* GAME *************************
 	Steel game;
 
-	if(!game.init("../conf/game", input, commandLine)) return 1;
+	if(!game.init(resConfig.add("../conf/game"), input, commandLine)) return 1;
 
 	game.bind(graph);
 	if(audio) game.bindAudioEngine(audio);

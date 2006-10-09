@@ -66,7 +66,7 @@ protected:
 	int framesToPass;
 //  Input-Output 
 	Input		*input;
-	OldConfig		*conf;
+	Config	*conf;
 
 	GraphEngine *graphEngine;
 //	PhysicEngineSteel *physicEngine;
@@ -87,7 +87,7 @@ public:
 	world(NULL),	physicHelper(NULL),	lightTag(NULL),	light(NULL)
 	{ } 
 
-	virtual bool init(std::string _conf, Input *_input, std::string params);
+	virtual bool init(Config *_conf, Input *_input, std::string params);
 	virtual void deinit(void);
 
 	void processKeyboard();

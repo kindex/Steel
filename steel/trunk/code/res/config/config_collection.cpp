@@ -30,7 +30,7 @@ Config* ResCollectionConfig::addForce(std::string name, bool pop)
 	std::string fullResName = baseDirectory + "/" + name;
 
 	Config *obj = NULL;
-	char *file = readfile(fullResName);
+	char *file = readfile(fullResName + ".conf");
 	int filei = 0;
 	if(file)
 	{

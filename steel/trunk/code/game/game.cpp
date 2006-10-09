@@ -31,15 +31,15 @@
 using namespace std;
 
 
-bool Steel::init(string _conf, Input *_input, std::string params)
+bool Steel::init(Config *_conf, Input *_input, std::string params)
 {
 	// OldConfig
 	input = _input; 
 	input->setGame(this);
-	conf = resOldConfig.add( _conf);
+	conf = _conf;
 	if(!conf)
 	{
-		log_msg("error game res", string("Cannot load game config ") + _conf);
+		log_msg("error game res", "Cannot load game config");
 		return false;
 	}
 	if(!executeScript(params))
@@ -61,7 +61,7 @@ bool Steel::init(string _conf, Input *_input, std::string params)
 
 	moveSpeed.loadZero();
 
-	if(!conf->isset("script"))
+	if(conf->find("script") == NULL)
 	{
 		error("game res", "Cannot find script to init scene");
 		return false;
@@ -154,8 +154,6 @@ void Steel::handleEventKeyDown(std::string key)
 	if(key == "7") speedup = 5;
 	if(key == "8") speedup = 20;
 	if(key == "9") speedup = 50;
-
-	if(key == "c") conf->toggle("crosshair");
 
 	if(key == "g")
 	{
@@ -466,7 +464,7 @@ bool Steel::executeCommand(std::string command)
 	explode('.', token[0], var);
 	if(var.size() == 1)
 	{
-		conf->setup(var[0], token[1]);
+//		conf->setup(var[0], token[1]);
 		log_msg("script", var[0] + " = " + token[1]);
 		return true;
 	}

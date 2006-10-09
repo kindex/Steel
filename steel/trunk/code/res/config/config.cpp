@@ -64,7 +64,7 @@ string Config::genFullId(string someConfigId)
 		return file + "#" + someConfigId;
 }
 
-double Config::getd(const double _default)
+double Config::returnd(const double _default)
 {
 	if(getType() == CONFIG_VALUE_NUMBER)
 	{
@@ -88,7 +88,57 @@ double Config::getd(const double _default)
 	return _default;
 }
 
-std::string Config::gets(const std::string _default)
+double Config::getd(std::string path, const double _default)
+{
+	Config *value = find(path);
+	if(value == NULL) 
+		return _default;
+	else
+		return value->returnd(_default);
+}
+
+v3 Config::getv3(std::string path, const v3 _default)
+{
+	Config *value = find(path);
+	if (value == NULL)
+		return _default;
+	else
+	{
+		switch (value->getType())
+		{
+		case CONFIG_VALUE_STRUCT:
+			return ((ConfigStruct*)value)->returnv3(_default);
+//		case CONFIG_VALUE_ARRAY:
+		default:
+			return _default;
+		}
+	}
+}
+
+
+std::string	Config::gets(std::string path, const std::string _default)
+{
+	Config *value = find(path);
+	if (value == NULL)
+		return _default;
+	else
+		return value->returns(_default);
+}
+
+v3 ConfigStruct::returnv3(const v3 _default)
+{
+	Config *x = getStructElementRaw("x");	if(x == NULL) return _default;
+	Config *y = getStructElementRaw("y");	if(y == NULL) return _default;
+	Config *z = getStructElementRaw("z");	if(z == NULL) return _default;
+	return v3(
+				x->returnf(_default.x), 
+				y->returnf(_default.y),
+				z->returnf(_default.z)
+			);
+}
+
+
+std::string Config::returns(const std::string _default)
 {
 	if(getType() == CONFIG_VALUE_STRING)
 	{
@@ -112,7 +162,7 @@ std::string Config::gets(const std::string _default)
 }
 
 
-Config* ConfigArray::getStructElementRaw(const std::string key)
+Config* ConfigStruct::getStructElementRaw(const std::string key)
 {
 	std::map<std::string, Config*>::iterator it = set.find(key);
 	if(it == set.end())
@@ -150,7 +200,7 @@ Config* Config::getStructElement(const std::string key)
 	return NULL;
 }
 
-string Config::getParagraph(int level)
+string Config::getIndent(int level)
 {
 	string res;
 	while(level-->0)
@@ -164,25 +214,25 @@ string Config::getParagraph(int level)
 string ConfigNumber::Dump(int level)
 {
 	return 
-//		getParagraph(level) + 
-		gets();
+//		getIndent(level) + 
+		returns();
 }
 
 string ConfigString::Dump(int level)
 {
 	return 
-//		getParagraph(level) + 
-		"'" + gets() + "'";
+//		getIndent(level) + 
+		"'" + returns() + "'";
 }
 
-string ConfigArray::Dump(int level)
+string ConfigStruct::Dump(int level)
 {
 	level += 2;
 	string res("{\n");
 	
 	for(std::map<std::string, Config*>::iterator it = set.begin(); it != set.end(); it++)
 	{
-		res += getParagraph(level) + it->first + " = ";
+		res += getIndent(level) + it->first + " = ";
 		if(it->second)
 			res += it->second->Dump(level + 3 + it->first.length()) + "\n";
 		else
@@ -190,7 +240,7 @@ string ConfigArray::Dump(int level)
 	}
 
 	level -= 2;
-	return res + getParagraph(level) + "}";
+	return res + getIndent(level) + "}";
 }
 
 std::string ConfigNumber::finds(std::string path, const std::string _default)
@@ -210,29 +260,88 @@ std::string ConfigString::finds(std::string path, const std::string _default)
 	return gets(_default);
 }
 
-std::string ConfigArray::finds(std::string path, const std::string _default)
+Config* ConfigStruct::find(std::string path)
 {
 	if(path.empty())
 	{
-		error("res config", "Cannot convert struct to string");
-		return _default;
+//		error("res config", "Cannot convert struct to simple type");
+		return this;
 	}
 	int s = 0;
 	string var = ParseAlpha(path.c_str(), s);
-	string ext = s < path.length()?path.substr(s + 1):"";
+	string ext = (string::size_type)s < path.length()?path.substr(s + 1):"";
 	Config *child = getStructElement(var);
-	if(!child) return _default;
-	return child->finds(ext);
-	
+	if(child == NULL) return NULL;
+	return child->find(ext);
 }
 
-int ConfigArray::getFreeIndex(void)
+Config *ConfigSimple::find(std::string path)
 {
-	for(;;)
+	if(!path.empty())
+		error("res config", "Cannot split simple type into components");
+	return this;
+}
+
+// ************************* ConfigArray ***********************
+Config* ConfigArray::getArrayElementRaw(const size_t index)
+{
+	if(index >= set.size())
 	{
-		string key = IntToStr(freeIndex);
-		freeIndex++;
-		if(set.find(key) == set.end())
-			return freeIndex - 1;
+		error("res config", "Array index out of bound");
+		return NULL;
 	}
+	else
+		return set[index];
+
+}
+
+std::string ConfigArray::Dump(int level)
+{
+	level += 2;
+	string res("(\n");
+	
+	for(svector<Config*>::iterator it = set.begin(); it != set.end(); it++)
+	{
+		res += getIndent(level);
+
+		if(it != NULL)
+			res += (*it)->Dump(level) + "\n";
+		else
+			res += "null\n";
+	}
+
+	level -= 2;
+	return res + getIndent(level) + ")";}
+	
+Config *ConfigArray::find(std::string path)
+{
+	if(path.empty())
+	{
+//		error("res config", "Cannot convert struct to simple type");
+		return this;
+	}
+	int s = 0;
+	int index = (int)ParseNumber(path.c_str(), s);
+	string ext = (string::size_type)s < path.length()?path.substr(s + 1):"";
+	if(index < 0)
+	{
+		error("res config", "Array index out of bound (<0)");
+		return NULL;
+	}
+	Config *child = getArrayElementRaw(index);
+
+	if(child == NULL) return NULL;
+	return child->find(ext);
+}
+
+v3 ConfigArray::returnv3(const v3 _default)
+{
+	Config *x = getArrayElementRaw(0);	if(x == NULL) return _default;
+	Config *y = getArrayElementRaw(1);	if(y == NULL) return _default;
+	Config *z = getArrayElementRaw(2);	if(z == NULL) return _default;
+	return v3(
+				x->returnf(_default.x), 
+				y->returnf(_default.y),
+				z->returnf(_default.z)
+			);
 }
