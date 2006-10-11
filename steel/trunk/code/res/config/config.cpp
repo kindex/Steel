@@ -14,6 +14,7 @@
 #include "../../steel.h"
 
 #include "config.h"
+#include "config_parser.h"
 
 using namespace std;
 
@@ -268,7 +269,7 @@ Config* ConfigStruct::find(std::string path)
 		return this;
 	}
 	int s = 0;
-	string var = ParseAlpha(path.c_str(), s);
+	string var = ConfigParser::getAlpha(path.c_str(), s);
 	string ext = (string::size_type)s < path.length()?path.substr(s + 1):"";
 	Config *child = getStructElement(var);
 	if(child == NULL) return NULL;
@@ -321,7 +322,7 @@ Config *ConfigArray::find(std::string path)
 		return this;
 	}
 	int s = 0;
-	int index = (int)ParseNumber(path.c_str(), s);
+	int index = (int)ConfigParser::getNumber(path.c_str(), s);
 	string ext = (string::size_type)s < path.length()?path.substr(s + 1):"";
 	if(index < 0)
 	{

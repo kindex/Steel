@@ -20,9 +20,26 @@
 #ifndef LIB_STEEL
 #include "common/logger.h"
 
+#include "res/config/config.h"
+#include "res/text/text_file.h"
+#include "res/config/config_collection.h"
+#include "res/res_main.h"
+
+using namespace std;
+
+
+
+
 bool test()
 {
+/*	Config *a = resConfig.add("test");
 
+	debug( "\n\n" +  a->Dump() + "\n\n");
+*/
+/*	double x = a->getd();
+	float y = a->getf();
+*/
 	return true;
 }
+
 #endif

@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel
-UnitCount=152
+UnitCount=153
 Type=0
 Ver=1
 ObjFiles=
@@ -1561,6 +1561,16 @@ BuildCmd=
 FileName=objects\audio_object.h
 CompileCpp=1
 Folder=objects
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit153]
+FileName=res\config\config_parser.h
+CompileCpp=1
+Folder=res/config
 Compile=1
 Link=1
 Priority=1000

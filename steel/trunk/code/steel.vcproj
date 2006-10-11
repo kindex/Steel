@@ -755,6 +755,10 @@
 						RelativePath=".\res\config\config_parser.cpp"
 						>
 					</File>
+					<File
+						RelativePath=".\res\config\config_parser.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

@@ -39,9 +39,9 @@ bool TextFile::init(const std::string name, const std::string dir)
 	length = size;
 	pbuf->pubseekpos (0,ios::in);
 	// allocate memory to contain file data
-	text = new unsigned char[size + 1];
+	text = new char[size + 1];
 	// get file data  
-	pbuf->sgetn((char*)text, size);
+	pbuf->sgetn(text, size);
 	f.close();
  
 	format = TEXT_ASCII;

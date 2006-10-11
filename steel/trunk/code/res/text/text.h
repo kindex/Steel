@@ -28,7 +28,7 @@ typedef enum
 class Text: public Res
 {
 protected:
-	unsigned char *text;
+	char *text;
 	int length;
 	TextFormat format;
 
@@ -36,7 +36,7 @@ public:
 	Text(void): text(NULL), length(0) {}
 
 	// сам текст в виде z-terminated string (в конце /0)
-	unsigned char *getText(void) const
+	char *getText(void) const
 	{ 
 		return text; 
 	}
@@ -47,11 +47,15 @@ public:
 		return length; 
 	}
 
-	TextFormat gerFormat(void) const
+	TextFormat getFormat(void) const
 	{
 		return TEXT_ASCII;
 	}
 
+	char getChar(int index)
+	{
+		return text[index];
+	}
 
 	~Text(void)
 	{

@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: res/config/config.h
+	File: res/config/config_parser.cpp
 	Unit: res config
 	Part of: Steel engine
 	(C) DiVision, 2006
@@ -13,171 +13,211 @@
 
 #include "../../steel.h"
 
-#include "config.h"
+#include "config_parser.h"
 #include <math.h>
 
 using namespace std;
 
-static int line, charn;
 
-bool isFirstAlpha(char c)
+Config*	ConfigParser::Parse(Text *_file)
 {
-	return (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' ||c == '_');
+	if(_file == NULL) return NULL;
+	file = _file;
+	position = 0;
+	line = 1;
+	charNumber = 1;
+	Config *res = ParseConfig();
+
+	SkipSpaces();
+	char c = seec();
+	
+	if(c != '\0') 
+		LOG_PARSE_ERROR(string("Unxpected symbol '") + c + "'. Expecting EOF");
+
+	for(svector<ParseError>::iterator it = errors.begin(); it != errors.end(); it++)
+	{
+		log_msg("error parser", it->message + 
+			" (" +  IntToStr(it->line) + ":" + IntToStr(it->charNumber) + ") [" +
+			it->sender + "]");
+	}
+
+
+	return res;
 }
 
-bool isDigit(char c)
+
+
+Config* ConfigParser::ParseConfig()
 {
-	return (c >= '0' && c <= '9');
+	// TODO: parse tag
+	return ParseValue();
 }
 
 
-string ParseAlpha(const char* body, int &i)
+Config* ConfigParser::ParseValue()
 {
-	string res;
-	char c = body[i];
-	// skip spaces
-	if(!isFirstAlpha(c))
+	Config *res = NULL;
+
+	SkipSpaces();
+	char c = seec();
+	if(c == '\0')
 	{
-		parse_error("config parser", "Expecting character or _ at line " + IntToStr(line) + "[ALPHA]");
+		return res;
 	}
-	while(c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' || c >= '0' && c <= '9' ||c == '_')
+		
+	// Number
+	if(c == '+' || c == '-' || (c>='0' && c <= '9'))
 	{
-		res.push_back(c);
-		c = body[++i];
+		res = new ConfigNumber(ParseNumber());
 	}
-	if(res.empty())
+	else if(c == '\'' || c == '"')	// String
 	{
-		i++;
-		parse_error("config parser", "Empty AlphaString at line " + IntToStr(line) + "[ALPHA]");
+		res = new ConfigString(ParseString());
+	}
+	else if(c == '{') // Struct
+	{
+		res = ParseStruct();
+	}
+	else if(c == '(') // Array
+	{
+		res = ParseArray();
+	}
+	else
+	{
+		getc(); // skip char to avoid infinite cycle
+		LOG_PARSE_ERROR(string("Illergal symbol '") + c + "'");
 	}
 
 	return res;
 }
 
 
-ConfigStruct *ParseStruct(const char* body, int &i)
+string ConfigParser::ParseAlpha()
 {
-	if(body[i] != '{')
+	string res;
+	char c = getc();
+	// skip spaces
+	if(!isFirstAlpha(c))
 	{
-		parse_error("config parser", string("Illergal symbol '") + body[i] + "' at line " + IntToStr(line) + "[STRUCT]");
+		LOG_PARSE_ERROR("Expecting alpha character");
+	}
+	while(c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' || c >= '0' && c <= '9' ||c == '_')
+	{
+		res.push_back(c);
+		c = getc();
+	}
+	if(res.empty())
+	{
+		LOG_PARSE_ERROR("Empty AlphaString");
+	}
+	else
+		ungetc();
+
+	return res;
+}
+
+string ConfigParser::getAlpha(const char *text, int &position)
+{
+	string res;
+	char c = text[position];
+	// skip spaces
+	if(!isFirstAlpha(c)) return res;
+	
+	while(c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' || c >= '0' && c <= '9' ||c == '_')
+	{
+		res.push_back(c);
+		c = text[++position];
+	}
+
+	return res;
+}
+
+
+ConfigStruct* ConfigParser::ParseStruct()
+{
+	char c = getc();
+	if(c != '{')
+	{
+		ungetc();
+		LOG_PARSE_ERROR(string("Illergal symbol '") + c + "'");
 		return NULL;
 	}
 	char end = '}';
-	i++;
 
 	ConfigStruct *res = new ConfigStruct();
 	for(;;)
 	{
 		Config* value = NULL;
 
-		SkipSpaces(body, i);
-		if(body[i] == end)
+		SkipSpaces();
+		c = seec();
+		if(c == end)
 		{
-			i++;
+			getc();
 			return res;
 		}
-		if(body[i] == '\0')
+		if(c == '\0')
 		{
-			parse_error("config parser", string("Unexpected end of config. Expecting ") + end + " [STRUCT]");
+			LOG_PARSE_ERROR(string("Unexpected end of config. Expecting '") + end + "'");
 			return res;
 		}
 		string var;
-//		if(isFirstAlpha(body[i])) // var = value
-//		{
-			var = ParseAlpha(body, i);
-			SkipSpaces(body, i);
-			if(body[i] != '=') 
-			{
-				parse_error("config parser", string("Illegal symbol '") + body[i] + "' at line " + IntToStr(line) + ". Expecting = [STRUCT]");
-				i++;
-				continue;
-			}
-			i++;
-			SkipSpaces(body, i);
-//		}
-#if 0
-		else
+		var = ParseAlpha();
+		SkipSpaces();
+		c = getc();
+		if(c != '=') 
 		{
-			if(isDigit(body[i])) // possible variants: int = config or simple number
-			{
-				double integer = ParseNumber(body, i);
-/*				if(!integer)
-				{
-					parse_error("config parser", "Illergal number in struct at line " + IntToStr(line) + " [STRUCT]")
-					continue;
-				}*/
-				SkipSpaces(body, i);
-				if(body[i] == '=') // int = config
-				{
-					if(integer<0)
-					{
-						parse_error("config parser", "Array index must be > 0 at line " + IntToStr(line) + " [STRUCT]");
-						continue;
-					}
-					if( fabs((double)(int)integer - integer) > EPSILON)
-					{
-						parse_error("config parser", "Array index must be integer at line " + IntToStr(line) + " [STRUCT]");
-						continue;
-					}
-					var = IntToStr((int)integer);
-					i++;
-					SkipSpaces(body, i);
-				}
-				else
-				{
-					value = new ConfigNumber();
-					((ConfigNumber*)value)->setValue(integer);
-				}
-			}
-			if(var.empty())
-				var = IntToStr(res->getFreeIndex());
+			LOG_PARSE_ERROR(string("Illegal symbol '") + c + "'. Expecting '='");
+			continue;
 		}
-#endif
-		if(!value)
-			value = ParseConfig(body, i);
+		SkipSpaces();
+		value = ParseConfig();
 
 		res->setValue(var, value);
-		SkipSpaces(body, i);
-		if(body[i] == ';' || body[i] == ',') i++;		// optional ;
+		SkipSpaces();
+		c = seec();
+		if(c == ';' || c == ',') getc();		// optional ';' or ','
 	}
 
 	return res;
 }
 
 
-ConfigArray *ParseArray(const char* body, int &i)
+ConfigArray* ConfigParser::ParseArray()
 {
-	if(body[i] != '(')
+	char c = seec();
+	if(c != '(')
 	{
-		parse_error("config parser", string("Illergal symbol '") + body[i] + "' at line " + IntToStr(line) + "[STRUCT]");
+		LOG_PARSE_ERROR(string("Illergal symbol '") + c + "'");
 		return NULL;
 	}
-	char end = '}';
-	i++;
+	char end = ')';
+	getc();
 
 	ConfigArray *res = new ConfigArray();
 	for(;;)
 	{
 		Config* value = NULL;
 
-		SkipSpaces(body, i);
-		if(body[i] == end)
+		SkipSpaces();
+		c = seec();
+		if(c == end) 
 		{
-			i++;
+			getc();
 			return res;
 		}
-		if(body[i] == '\0')
+		if(c == '\0')
 		{
-			parse_error("config parser", string("Unexpected end of config. Expecting ") + end + " [STRUCT]");
+			LOG_PARSE_ERROR(string("Unexpected end of config. Expecting '") + end + "'");
 			return res;
 		}
-
-		value = ParseConfig(body, i);
+		value = ParseConfig();
 		if(value != NULL)
 			res->push(value);
 
-		SkipSpaces(body, i);
-		if(body[i] == ';' || body[i] == ',') i++;		// optional ;
+		SkipSpaces();
+		c = seec();
+		if(c == ';' || c == ',') getc();		// optional ';' or ','
 	}
 
 	return res;
@@ -185,7 +225,7 @@ ConfigArray *ParseArray(const char* body, int &i)
 
 
 
-double ParseNumber(const char* body, int &start)
+double ConfigParser::getNumber(const char* body, int &start)
 {
 	int sign = 1;
 	double res = 0.0, power = 1.0;
@@ -195,7 +235,6 @@ double ParseNumber(const char* body, int &start)
 
 	if(body[start]<'0' || body[start]>'9')
 	{
-		parse_error("config parser", string("Illergal symbol '") + body[start] + "' at line " + IntToStr(line) + "[NUMBER]");
 		return 0.0f;
 	}
 	while(body[start]>='0' && body[start]<='9')
@@ -216,90 +255,123 @@ double ParseNumber(const char* body, int &start)
 	return res*sign;
 }
 
-
-std::string ParseString(const char* body, int &start)
+double ConfigParser::ParseNumber()
 {
-	int limit = body[start];
-	std::string res;
-	start++;
+	int sign = 1;
+	double res = 0.0, power = 1.0;
+	char c = getc();
+	if(c == '-') sign = -1, c =  getc();
+	else
+	if(c == '+') sign = +1, c =  getc();
 
-	while(body[start] != limit && body[start] != '\0')
+	if(c < '0' || c > '9')
 	{
-		res.push_back(body[start]);
-		start++;
+		ungetc();
+		LOG_PARSE_ERROR(string("Unexpected char '") + c + "'. Expecting digit");
+		return 0.0f;
+	}
+	while(c >= '0' && c <= '9')
+	{
+		res = res*10 + (c - '0');
+		c = getc();
+	}
+	if(c == '.')
+	{
+		c = getc();
+		while(c >= '0' && c <= '9')
+		{
+			power *= 0.1;
+			res = res + (c - '0')*power;
+			c = getc();
+		}
+	}
+	ungetc();
+	return res*sign;
+}
+
+
+std::string ConfigParser::ParseString()
+{
+	// TODO: escape end of string char
+	char c = getc();
+	if(c != '\'' && c != '"')
+	{
+		LOG_PARSE_ERROR(string("Unexpected char '") + c + "'. Expecting ' or \"");
+		ungetc();
+		return string();
+	}
+	char end = c;
+	std::string res;
+	c = getc();
+
+	while(c != end && c != '\0')
+	{
+		res.push_back(c);
+		c = getc();
 	}
 	
-	if(body[start] == '\0')
+	if(c == '\0')
 	{
-		parse_error("config parser", "Unexpected end of string at line " + IntToStr(line) + "[STRING]");
+		ungetc();
+		LOG_PARSE_ERROR("Unexpected end of file in string");
 		return res;
 	}
-	else
-		start++;
 
 	return res;
 }
 
-void SkipSpaces(const char* body, int &i)
+void ConfigParser::SkipSpaces()
 {
-	char c = body[i];
-	// skip spaces
-	// TODOL: skip comments
-	while(c == ' ' || c == '\n' || c == '\t' || c == '\r')
+	char c;
+	// TODO: skip comments
+	
+	do
 	{
-		if(c == '\n') line++, charn = 0;
-		i++; charn++;
-		c = body[i];
+	 c = getc();
 	}
+	while(c == ' ' || c == '\n' || c == '\t' || c == '\r');
+	ungetc();
 }
 
-Config *ParseConfig(const char* body, int &i)
+
+bool ConfigParser::isFirstAlpha(char c)
 {
-	return ParseValue(body, i);
+	return (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' ||c == '_');
 }
 
-Config *ParseValue(const char* body, int &i)
+bool ConfigParser::isDigit(char c)
 {
-	Config *res = NULL;
+	return (c >= '0' && c <= '9');
+}
 
-	SkipSpaces(body, i);
-	if(body[i] == '\0') 
-		return res;
-		
-	// Number
-	if(body[i] == '+' || body[i] == '-' || body[i]>='0' && body[i] <= '9')
-	{
-		double number = ParseNumber(body, i);
 
-		res = new ConfigNumber;
-		((ConfigNumber*)res)->setValue(number);
-	}else
+char ConfigParser::seec(void)
+{
+	char c = file->getChar(position);
+	return c;
+}
 
-	// String
-	if(body[i] == '\'' || body[i] == '"')
+char ConfigParser::getc(void)
+{
+	// TODO: UTF-8 line length
+
+	char c = file->getChar(position);
+	prevLine = line;
+	prevCharNumber = charNumber;
+	if(c == '\n')
 	{
-		res = new ConfigString;
-		((ConfigString*)res)->setValue(ParseString(body, i));
-	}else
-	if(body[i] == '{') // Struct
-	{
-		res = ParseStruct(body, i);
+		line++;
+		charNumber = 1;
 	}
 	else
-	if(body[i] == '(') // Array
-	{
-		res = ParseArray(body, i);
-	}
-	else
-	{
-		parse_error("config parser", string("Illergal symbol '") + body[i] + "' at line " + IntToStr(line) + "[VALUE]");
-		i++;
-	}
+		charNumber++;
+	position++;
+	return c;
+}
 
-/*	SkipSpaces(body, i);
-	if(body[i] != '\0') 
-		parse_error("config parser", string("Unxpected symbol '") + body[i] + "' at line " + IntToStr(line) + "[VALUE]");
-*/
-	return res;
-
+void ConfigParser::ungetc(void)
+{
+	position--;
+	line = prevLine;
+	charNumber = prevCharNumber;
 }

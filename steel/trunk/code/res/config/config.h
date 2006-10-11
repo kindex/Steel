@@ -85,6 +85,7 @@ protected:
 
 public:
 	ConfigNumber(void) { type = CONFIG_VALUE_NUMBER; }
+	ConfigNumber(double newValue) { type = CONFIG_VALUE_NUMBER; value = newValue;}
 	void setValue(double newValue) { value = newValue; }
 	char *getValueRaw(void) { return (char*)&value; }
 	std::string Dump(int level);
@@ -98,6 +99,7 @@ protected:
 
 public:
 	ConfigString(void){ type = CONFIG_VALUE_STRING; }
+	ConfigString(std::string newValue){ type = CONFIG_VALUE_STRING; value = newValue; }
 
 	void setValue(std::string newValue) { value = newValue; }
 	char *getValueRaw(void) { return (char*)&value; }
@@ -144,15 +146,6 @@ public:
 };
 
 
-#define parse_error(keys, msg) (log_msg((keys), (msg)))
-
-Config*			ParseConfig(const char* body, int &i);
-Config*			ParseValue(const char* body, int &i);
-std::string		ParseAlpha(const char* body, int &i);
-void			SkipSpaces(const char* body, int &i);
-ConfigStruct*	ParseStruct(const char* body, int &i);
-ConfigArray*	ParseArray(const char* body, int &i);
-double			ParseNumber(const char* body, int &i);
 
 
 #endif

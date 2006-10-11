@@ -15,6 +15,7 @@
 
 #include "config_collection.h"
 #include "../text/text_file.h"
+#include "../config/config_parser.h"
 
 using namespace std;
 
@@ -30,14 +31,16 @@ Config* ResCollectionConfig::addForce(std::string name, bool pop)
 	std::string fullResName = baseDirectory + "/" + name;
 
 	Config *obj = NULL;
-	char *file = readfile(fullResName + ".conf");
-	int filei = 0;
-	if(file)
+	TextFile *file = new TextFile();
+	if(!file->init(name + ".conf", baseDirectory))
 	{
-		obj = ParseConfig(file, filei);
-		SkipSpaces(file, filei);
-		if(file[filei] != '\0') 
-			parse_error("config parser", string("Unxpected symbol '") + file[filei] + "'");
+		delete file; 
+		file = NULL;
+	}
+	if(file != NULL)
+	{
+		ConfigParser* parser = new ConfigParser();
+		obj = parser->Parse(file);
 	}
 	else
 		log_msg("res error " + id, "Not found " + fullResName);
