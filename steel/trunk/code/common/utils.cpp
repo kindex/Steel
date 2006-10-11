@@ -177,3 +177,15 @@ std::string strtr(const char *s, char a, char b)
 	}
 	return res;
 }
+
+string escape(string base, char escapedChar)
+{
+	string res;
+	for(string::iterator i = base.begin(); i != base.end(); i++)
+	{
+		if(*i == escapedChar) res += '\\';
+		if(*i == '\\') res += '\\';
+		res += *i;
+	}
+	return res;
+}

@@ -292,7 +292,6 @@ double ConfigParser::ParseNumber()
 
 std::string ConfigParser::ParseString()
 {
-	// TODO: escape end of string char
 	char c = getc();
 	if(c != '\'' && c != '"')
 	{
@@ -302,12 +301,16 @@ std::string ConfigParser::ParseString()
 	}
 	char end = c;
 	std::string res;
-	c = getc();
-
-	while(c != end && c != '\0')
+	for(;;)
 	{
-		res.push_back(c);
 		c = getc();
+		if(c == end || c == '\0') break;
+		if(c == '\\')
+		{
+			char d = seec();
+			if(d == end || d == '\\') c = getc();
+		}
+		res.push_back(c);
 	}
 	
 	if(c == '\0')
@@ -323,13 +326,54 @@ std::string ConfigParser::ParseString()
 void ConfigParser::SkipSpaces()
 {
 	char c;
-	// TODO: skip comments
-	
-	do
+	char d;
+/*
+	state:
+	0 - spaces
+	1 - line comment (# //)
+	2 - big comment  /* 
+*/
+	int state = 0; 
+	for(;;)
 	{
-	 c = getc();
+		c = getc();
+		switch(state)
+		{
+		case 0:
+			switch(c)
+			{
+			case ' ':	case '\n':	case '\t':	case '\r': 
+				break;
+			case '#':
+				state = 1;
+				break;
+			case '/':
+				d = seec(); 
+				if(d == '/'){ state = 1; getc(); }
+				else if(d == '*') { state = 2; getc(); }
+				else
+				{
+					ungetc();
+					return;
+				}
+				break;
+			default: // not space
+				ungetc();
+				return;
+			}
+			break;
+		case 1: // #
+			if(c == '\n') state = 0;
+			break;
+		case 2: // /*
+			if(c == '*')
+			{
+				c = getc();
+				if(c == '/') state = 0;
+			}	
+			break;
+		}
 	}
-	while(c == ' ' || c == '\n' || c == '\t' || c == '\r');
 	ungetc();
 }
 

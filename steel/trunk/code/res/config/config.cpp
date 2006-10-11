@@ -223,7 +223,7 @@ string ConfigString::Dump(int level)
 {
 	return 
 //		getIndent(level) + 
-		"'" + returns() + "'";
+		"'" + escape(returns(), '\'') + "'";
 }
 
 string ConfigStruct::Dump(int level)

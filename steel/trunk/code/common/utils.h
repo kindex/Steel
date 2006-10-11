@@ -47,5 +47,7 @@ void deleteFiles(std::string dir, std::string mask);
 void deleteFile(std::string dir, std::string file);
 // translate all chars a to b into string s
 std::string strtr(const char *s, char a, char b);
+// escape escapedChar and \ in base string. (Ex: escape(a'b\c, ') => a\'b\\c)
+std::string escape(std::string base, char escapedChar);
 
 #endif
