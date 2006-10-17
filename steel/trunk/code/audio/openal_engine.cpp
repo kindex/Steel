@@ -219,9 +219,11 @@ void OpenALEngine::AudioStorage::soundUpdate(void)
 bool OpenALEngine::inject(AudioObject *object)
 {
 	// если объект не хочет добавляться
-	if(!object->AudioBeforeInject()) return false;
+	if(!object->AudioBeforeInject()) 
+		return false;
 	// кешируем объект
-	if(!makeStorageForObject(object)) return false;
+	if(!makeStorageForObject(object)) 
+		return false;
 	makeStorageForChildren(object);
 	// список глобальных объектов
 	objects.push_back(object);
@@ -246,8 +248,8 @@ void OpenALEngine::AudioStorage::fill(Object *object)
 	{
 		alGenBuffers(1, &buffer);
 		alBufferData(buffer, sound->format, sound->data, sound->size, sound->frequency);
-		if (sound->data)
-			free(sound->data);
+//		if (sound->data)
+//			free(sound->data);
 		alGenSources(1, &source);
 		alSourcei (source, AL_BUFFER,    buffer	);
 		soundUpdate();

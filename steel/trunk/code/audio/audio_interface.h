@@ -27,7 +27,7 @@ public:
 	virtual float getGain(void) = 0;
 	virtual float getPitch(void) = 0;
 	virtual bool isLooped(void) = 0;
-	virtual Audio *getSound(void)  = 0;
+	virtual Audio* getSound(void)  = 0;
 
 
 /*

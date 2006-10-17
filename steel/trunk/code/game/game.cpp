@@ -25,6 +25,7 @@
 #include "../objects/combiner.h"
 #include "../objects/sphere.h"
 #include "../objects/audio_object.h"
+#include "../objects/audio_ambient.h"
 
 #include "../res/res_main.h"
 
@@ -108,14 +109,60 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 	AudioSourceRes *audio = new AudioSourceRes;
 	audio->setSound(resAudio.add("audio/rain"));
 	audio->setLooped(true);
+	audio->setGain(0.0f);
 	obj->setAudioObject(audio);
 	obj->setPositionKind(POSITION_GLOBAL);
 	obj->setPosition(
-		matrix34::CreateTranslationMatrix(v3(0, 0, 0.0f))
+		matrix34::CreateTranslationMatrix(v3(0, 0, 10.0f))
 		*matrix34::CreateRotationMatrix(1, v3(1,0,0))*0.5
 		);
 	world->addChildren(obj);
 
+	Combiner* audioAm = new Combiner;
+	AudioSourceRes *audioX = new AudioSourceRes();
+	audioX->setSound(resAudio.add("audio/rain"));
+	audioX->setLooped(true);
+	audioX->setGain(1.0f);
+	audioX->setPitch(1.0f);
+	audioAm->setAudioObject(audioX);
+	audioAm->setPositionKind(POSITION_GLOBAL);
+	audioAm->setPosition(
+		matrix34::CreateTranslationMatrix(v3(0, 0, 0.0f))
+		*matrix34::CreateRotationMatrix(1, v3(1,0,0))*0.5
+		);
+	world->addChildren(audioAm);
+
+/**/
+	Combiner *obj2 = new Combiner;
+	obj2->setGraphObject(new Sphere);
+	AudioSourceRes *audio2 = new AudioSourceRes;
+	audio2->setSound(resAudio.add("audio/thunder"));
+	audio2->setLooped(true);
+	obj2->setAudioObject(audio2);
+	obj2->setPositionKind(POSITION_GLOBAL);
+	obj2->setPosition(
+		matrix34::CreateTranslationMatrix(v3(10, 10, 1.0f))
+		*matrix34::CreateRotationMatrix(1, v3(1,0,0))*0.5
+		);
+	world->addChildren(obj2);
+
+	/**/
+	Combiner *obj3= new Combiner;
+	obj3->setGraphObject(new Sphere);
+	AudioSourceRes *audio3 = new AudioSourceRes;
+	audio3->setSound(resAudio.add("audio/thunder"));
+	audio3->setLooped(true);
+	//audio3->setSound(audio2->getSound());
+	//audio3->setLooped(true);
+	obj3->setAudioObject(audio3);
+	obj3->setPositionKind(POSITION_GLOBAL);
+	obj3->setPosition(
+		matrix34::CreateTranslationMatrix(v3(-10, -10, 1.0f))
+		*matrix34::CreateRotationMatrix(1, v3(1,0,0))*0.5
+		);
+	world->addChildren(obj3);
+
+	/**/
 	light = new GameLight;
 	light->setProcessKind(PROCESS_NONE);
 	matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
@@ -483,6 +530,35 @@ bool Steel::executeCommand(std::string command)
 void Steel::bindAudioEngine(AudioEngine *engine)
 {
 	audioEngine = engine;
+	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_MOUNTAINS);
+	/*
+	EAX_ENVIRONMENT_GENERIC,
+    EAX_ENVIRONMENT_PADDEDCELL,
+    EAX_ENVIRONMENT_ROOM,
+    EAX_ENVIRONMENT_BATHROOM,
+    EAX_ENVIRONMENT_LIVINGROOM,
+    EAX_ENVIRONMENT_STONEROOM,
+    EAX_ENVIRONMENT_AUDITORIUM,
+    EAX_ENVIRONMENT_CONCERTHALL,
+    EAX_ENVIRONMENT_CAVE,
+    EAX_ENVIRONMENT_ARENA,
+    EAX_ENVIRONMENT_HANGAR,
+    EAX_ENVIRONMENT_CARPETEDHALLWAY,
+    EAX_ENVIRONMENT_HALLWAY,
+    EAX_ENVIRONMENT_STONECORRIDOR,
+    EAX_ENVIRONMENT_ALLEY,
+    EAX_ENVIRONMENT_FOREST,
+    EAX_ENVIRONMENT_CITY,
+    EAX_ENVIRONMENT_MOUNTAINS,
+    EAX_ENVIRONMENT_QUARRY,
+    EAX_ENVIRONMENT_PLAIN,
+    EAX_ENVIRONMENT_PARKINGLOT,
+    EAX_ENVIRONMENT_SEWERPIPE,
+    EAX_ENVIRONMENT_UNDERWATER,
+    EAX_ENVIRONMENT_DRUGGED,
+    EAX_ENVIRONMENT_DIZZY,
+    EAX_ENVIRONMENT_PSYCHOTIC
+	*/
 
 	int count = world->getAudioChildrenCount();
 	for(int i = 0; i < count; i++)

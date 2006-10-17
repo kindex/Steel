@@ -57,6 +57,7 @@ public:
 	virtual bool clear(void) { return true; } 
 	virtual bool deinit(void) = 0;
 	virtual void setListener(const Listener &aListener) { listener = aListener; }
+	virtual void setListenerEnvironment(unsigned long environment) = 0;
 
 	virtual bool inject(AudioObject *object) = 0;
 

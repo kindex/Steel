@@ -26,7 +26,8 @@ bool WAV::init(const std::string name, const std::string dir)
 	
 	if(!f.open(dir + "/" + name, "wav"))
 		return false;
-
+	
+	fileName = dir + "/" + name + ".wav";
 
 	filebuf *pbuf;
 	long sizel;

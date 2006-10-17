@@ -71,12 +71,14 @@ protected:
 	};
 
 
-	void setListenerEnvironment(unsigned long environment);
+	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???
 	ALboolean CheckALCError();
 	ALboolean CheckALError();
 	void updateListener(Listener &listener);
 
 public:
+	
+
 	void setListener(const Listener &aListener);
 	bool init(const std::string _conf);
 	bool deinit(void);

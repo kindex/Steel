@@ -12,6 +12,9 @@
 		Аудио объект, берущий звуки из ресурсов
  ************************************************************/
 
+#ifndef __AUDIO_OBJECT_H
+#define __AUDIO_OBJECT_H
+
 #include "../audio/audio_interface.h"
 
 class AudioSourceRes: public AudioObject
@@ -27,7 +30,7 @@ public:
 	float getGain(void) { return gain; }
 	float getPitch(void) { return pitch;}
 	bool isLooped(void) { return isLoop;}
-	Audio *getSound(void) {return sound; } 
+	Audio* getSound(void) {return sound; } 
 
 	
 
@@ -39,3 +42,5 @@ private:
 	float pitch;
 	bool isLoop;
 };
+
+#endif

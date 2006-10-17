@@ -1045,6 +1045,14 @@
 				Name="objects"
 				>
 				<File
+					RelativePath=".\objects\audio_ambient.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\audio_ambient.h"
+					>
+				</File>
+				<File
 					RelativePath=".\objects\audio_object.cpp"
 					>
 				</File>
