@@ -27,11 +27,16 @@ public:
 	void setPitch(float newPitch) { pitch = newPitch; }
 	void setLooped(bool newLoop) { isLoop = newLoop; }
 
+	void setRolloff(float newRolloff) { rolloffFactor = newRolloff; }
+	void setSourceRelative(bool newRelation) { sourceRelative = newRelation; }
+
 	float getGain(void) { return gain; }
 	float getPitch(void) { return pitch;}
 	bool isLooped(void) { return isLoop;}
 	Audio* getSound(void) {return sound; } 
 
+	float getRolloff(void) { return rolloffFactor; }
+	bool getSourceRelative(void) { return sourceRelative; }
 	
 
 protected:
@@ -41,6 +46,10 @@ private:
 	float gain;
 	float pitch;
 	bool isLoop;
+
+	float rolloffFactor;	// rolloff factor, If you set AL_ROLLOFF_FACTOR to 0, 
+							// you are just disabling distance attenuation, not panning.
+	bool sourceRelative;	// source relative to the listener, constant = true / dynamic = false
 };
 
 #endif

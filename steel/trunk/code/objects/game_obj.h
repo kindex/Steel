@@ -103,10 +103,14 @@ public:
 	// масса
 	float	getMass(void){return mass;}
 
+	// audio
 	float getGain(void) { return 1.0f;}
 	float getPitch(void){ return 1.0f;}
 	bool isLooped(void) { return false;}
 	Audio *getSound(void)  { return NULL;}
+
+	float getRolloff(void) { return 1.0f; }
+	bool getSourceRelative(void) { return false; }
 };
 
 class GameObjSet: public GameObj

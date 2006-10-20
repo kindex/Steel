@@ -212,6 +212,9 @@ void OpenALEngine::AudioStorage::soundUpdate(void)
 		alSourcefv(source, AL_POSITION, position);
 	//    alSourcefv(source, AL_VELOCITY, getVelocity()	);
 		alSourcei (source, AL_LOOPING,  isLoop	);
+
+		alSourcef (source, AL_ROLLOFF_FACTOR, rolloffFactor); 
+		alSourcei (source, AL_SOURCE_RELATIVE, sourceRelative);
 	}
 }
 
@@ -268,6 +271,9 @@ bool OpenALEngine::AudioStorage::cache(void)
 	isLoop = A(object)->isLooped();
 	gain = A(object)->getGain();
 	pitch = A(object)->getPitch();
+
+	rolloffFactor = A(object)->getRolloff();
+	sourceRelative = A(object)->getSourceRelative();
 	
 	soundUpdate();
 	return true;

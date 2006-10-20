@@ -103,13 +103,15 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 	framesToPass = 0;
 	speedup = 1;
 	light = NULL;
-
+/**
 	Combiner *obj = new Combiner;
 	obj->setGraphObject(new Sphere);
 	AudioSourceRes *audio = new AudioSourceRes;
 	audio->setSound(resAudio.add("audio/rain"));
 	audio->setLooped(true);
-	audio->setGain(0.0f);
+	audio->setGain(1.0f);
+	audio->setPitch(1.0f);
+	//audio->setRolloff(0.0f);
 	obj->setAudioObject(audio);
 	obj->setPositionKind(POSITION_GLOBAL);
 	obj->setPosition(
@@ -117,13 +119,16 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		*matrix34::CreateRotationMatrix(1, v3(1,0,0))*0.5
 		);
 	world->addChildren(obj);
-
+/**/
 	Combiner* audioAm = new Combiner;
 	AudioSourceRes *audioX = new AudioSourceRes();
 	audioX->setSound(resAudio.add("audio/rain"));
 	audioX->setLooped(true);
-	audioX->setGain(1.0f);
+	audioX->setGain(0.1f);
 	audioX->setPitch(1.0f);
+	audioX->setLooped(true);
+	//audioX->setRolloff(0.0f);
+	audioX->setSourceRelative(true);
 	audioAm->setAudioObject(audioX);
 	audioAm->setPositionKind(POSITION_GLOBAL);
 	audioAm->setPosition(
@@ -150,7 +155,7 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 	Combiner *obj3= new Combiner;
 	obj3->setGraphObject(new Sphere);
 	AudioSourceRes *audio3 = new AudioSourceRes;
-	audio3->setSound(resAudio.add("audio/thunder"));
+	audio3->setSound(resAudio.add("audio/bark"));
 	audio3->setLooped(true);
 	//audio3->setSound(audio2->getSound());
 	//audio3->setLooped(true);
@@ -163,6 +168,35 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 	world->addChildren(obj3);
 
 	/**/
+
+	Combiner *obj4= new Combiner;
+	obj4->setGraphObject(new Sphere);
+	AudioSourceRes *audio4 = new AudioSourceRes;
+	audio4->setSound(resAudio.add("audio/test4"));
+	audio4->setLooped(true);
+	audio4->setRolloff(0.0f);
+	obj4->setAudioObject(audio4);
+	obj4->setPositionKind(POSITION_GLOBAL);
+	obj4->setPosition(
+		matrix34::CreateTranslationMatrix(v3(-10, 10, 1.0f))
+		*matrix34::CreateRotationMatrix(1, v3(1,0,0))*0.5
+		);
+	world->addChildren(obj4);
+
+	Combiner *obj5= new Combiner;
+	obj5->setGraphObject(new Sphere);
+	AudioSourceRes *audio5 = new AudioSourceRes;
+	audio5->setSound(resAudio.add("audio/tank"));
+	audio5->setLooped(true);
+	
+	obj5->setAudioObject(audio5);
+	obj5->setPositionKind(POSITION_GLOBAL);
+	obj5->setPosition(
+		matrix34::CreateTranslationMatrix(v3(10, -10, 1.0f))
+		*matrix34::CreateRotationMatrix(1, v3(1,0,0))*0.5
+		);
+	world->addChildren(obj5);
+
 	light = new GameLight;
 	light->setProcessKind(PROCESS_NONE);
 	matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
@@ -530,7 +564,7 @@ bool Steel::executeCommand(std::string command)
 void Steel::bindAudioEngine(AudioEngine *engine)
 {
 	audioEngine = engine;
-	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_MOUNTAINS);
+	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_GENERIC);
 	/*
 	EAX_ENVIRONMENT_GENERIC,
     EAX_ENVIRONMENT_PADDEDCELL,

@@ -91,7 +91,12 @@ int main(int argc, char *argv[])
 	if(!game.init(resConfig.add("../conf/game"), input, commandLine)) return 1;
 
 	game.bind(graph);
-	if(audio) game.bindAudioEngine(audio);
+	if(audio)
+	{
+		game.insonify(audio);
+		game.bindAudioEngine(audio);
+	}
+		
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;

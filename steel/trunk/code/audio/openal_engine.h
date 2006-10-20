@@ -55,6 +55,9 @@ protected:
 		float gain;
 		float pitch;
 
+		float rolloffFactor;
+		bool sourceRelative;
+
 		void soundPlay(void);
 		void soundPause(void);
 		void soundStop(void);

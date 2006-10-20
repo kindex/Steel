@@ -20,7 +20,7 @@
 AudioAmbient::AudioAmbient(void)
 {
 	setSound(NULL);
-	setGain(1.0f);
+	setGain(0.5f);
 	setPitch(1.0f);
 	setLooped(true);
 }

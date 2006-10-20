@@ -16,8 +16,11 @@
 
 AudioSourceRes::AudioSourceRes(void)
 {
+	// default values ? or not, possibly not
 	sound = NULL;
 	gain = 1.0f;
 	pitch = 1.0f;
 	isLoop = false;
+	rolloffFactor = 1.0f;
+	sourceRelative = false;
 }
