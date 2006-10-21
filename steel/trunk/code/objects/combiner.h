@@ -14,6 +14,8 @@
  ************************************************************/
 
 #include "../steel.h"
+#ifndef __OBJECTS__COMBINER_H
+#define __OBJECTS__COMBINER_H
 #include "../audio/audio_interface.h"
 #include "game_obj.h"
 
@@ -86,3 +88,4 @@ public:
 // ********** PHYSIC *************
 // TODO
 };
+#endif
