@@ -128,6 +128,13 @@ void splitPath(std::string fullpath, std::string &path, std::string &filename)
 	path = implode('/', apath);
 }
 
+std::string createPath(std::string dir, std::string filename)
+{
+	if(dir.empty()) return filename;
+	else return dir + "/" + filename;
+}
+
+
 // delete file in directory
 void deleteFile(std::string dir, std::string file)
 {

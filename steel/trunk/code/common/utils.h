@@ -41,6 +41,8 @@ std::string implode(const char delimiter, const svector<std::string> elements);
 std::string getPath(std::string fullpath);
 // split full path to path + filename
 void splitPath(std::string fullpath, std::string &path, std::string &filename);
+std::string createPath(std::string dir, std::string filename);
+
 // delete file in directory
 void deleteFiles(std::string dir, std::string mask);
 // delete all files in directory with mask

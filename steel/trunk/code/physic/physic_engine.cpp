@@ -17,11 +17,12 @@
 #include "physic_engine.h"
 #include "../res/res_main.h"
 
-bool PhysicEngine::init(std::string _conf)
+bool PhysicEngine::init(Config* _conf)
 {
-	if(!(conf = resOldConfig.add(_conf)))
+	conf = _conf;
+	if(conf == NULL)
 	{
-		log_msg("error graph conf res","Cannot find renderer config file "+_conf);
+		log_msg("error graph conf res","Cannot find renderer config file");
 		return false;
 	}
 

@@ -53,7 +53,7 @@ protected:
 public:
 	AudioEngine(void) {}
 
-	virtual bool init(const std::string _conf) = 0;
+	virtual bool init(Config *_conf) = 0;
 	virtual bool clear(void) { return true; } 
 	virtual bool deinit(void) = 0;
 	virtual void setListener(const Listener &aListener) { listener = aListener; }

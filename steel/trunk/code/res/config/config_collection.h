@@ -25,5 +25,6 @@ protected:
 	Config* addForce(std::string name, bool pop);
 };
 
+extern ResCollectionConfig		resConfig;
 
 #endif

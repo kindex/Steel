@@ -23,7 +23,7 @@
 
 #include "steel.h"
 #include "res/res.h"
-#include "res/conf/conf.h"
+#include "res/config/config.h"
 #include "math/vector3d.h"
 #include "interface.h"
 #include "helper.h"
@@ -33,7 +33,7 @@
 class Engine
 {
 public:
-	OldConfig *conf;
+	Config *conf;
 
 	virtual ~Engine(void) {}
 //	virtual bool init(std::string _conf) = 0; // initialization

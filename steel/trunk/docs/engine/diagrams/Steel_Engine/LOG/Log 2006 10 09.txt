@@ -1,8 +1,0 @@
------------------------------------------------------------------------
-22:00
-Open model: Steel_Engine
-Folder: C:\Documents and Settings\Andrey\My Documents\GRADE Models\Steel_Engine
-Open OK
-22:35
-Close model: Steel_Engine
------------------------------------------------------------------------

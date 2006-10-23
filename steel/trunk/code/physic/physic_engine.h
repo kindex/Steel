@@ -36,7 +36,7 @@ public:
 	} total;
 
 public:
-	virtual bool init(std::string _conf);
+	virtual bool init(Config* _conf);
 	virtual void deinit(void) { clear();}
 
 	// удаляет все объекты из движка (foreach remove)

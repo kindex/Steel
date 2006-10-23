@@ -79,7 +79,7 @@ ALboolean OpenALEngine::CheckALError()
 }
 
 
-bool OpenALEngine::init(const std::string _conf)
+bool OpenALEngine::init(Config* _conf)
 {
 	log_msg("openal init", "Initializing OpenAL...");
 

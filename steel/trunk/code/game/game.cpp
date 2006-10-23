@@ -34,9 +34,6 @@ using namespace std;
 
 bool Steel::init(Config *_conf, Input *_input, std::string params)
 {
-	// OldConfig
-	input = _input; 
-	input->setGame(this);
 	conf = _conf;
 	if(!conf)
 	{
@@ -48,6 +45,9 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		log_msg("core error", "Cannor execute script");
 		return false;
 	}
+
+	input = _input; 
+	input->setGame(this);
 
 	// Init world
 	eye = v3(conf->getf("camera_eye_x", 1.0f), conf->getf("camera_eye_y", 1.0f), conf->getf("camera_eye_z", 1.0f));
@@ -81,7 +81,7 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 //	physicEngine = new PhysicEngine3D;
 	physicEngine = new PhysicEngineSteel;
 
-	if(!physicEngine->init("physic")) return 1;
+	if(!physicEngine->init(conf->find("physic"))) return 1;
 	this->bindPhysicEngine();
 
 	g = conf->getv3("g");

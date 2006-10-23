@@ -83,7 +83,7 @@ public:
 	
 
 	void setListener(const Listener &aListener);
-	bool init(const std::string _conf);
+	bool init(Config* _conf);
 	bool deinit(void);
 	bool inject(AudioObject *object);
 

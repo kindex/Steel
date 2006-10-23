@@ -248,23 +248,18 @@ template<class T>
 T* ResCollection<T>::addForce(std::string name, bool pop)
 {
 	std::string baseDirectory;
-	
 	splitPath(name, baseDirectory, name);
-
 	resStack.push(baseDirectory);
+	std::string fullResName = createPath(baseDirectory, name);
 
-	log_msg("res " + id, "Loading " + baseDirectory + "/" + name);
+	log_msg("res " + id, "Loading " + fullResName);
 
     int s = classes.size();
 	for(int i = 0; i < s; i++)
 	{
-//		T *obj = createClass(&classes[i], name, baseDirectory); // + baseDirectory
-
-		T *obj = (*classes[i])(name, baseDirectory); // + baseDirectory
+		T *obj = (*classes[i])(name, baseDirectory);
 
 		if(obj == NULL) continue;
-		
-		std::string fullResName = baseDirectory + "/" + name;
 
 		ResStorage newResStorage;
 		newResStorage.id = obj->getId();
@@ -282,7 +277,7 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
 
 		return obj;
 	}
-	log_msg("res error " + id, "Failed " + baseDirectory + "/" + name);
+	log_msg("res error " + id, "Failed " + fullResName);
 	if(pop) resStack.pop();
 
 	return NULL;

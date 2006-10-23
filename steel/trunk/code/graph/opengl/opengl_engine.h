@@ -185,7 +185,7 @@ public:
 		{}
 
 	virtual void processCamera(void);
-	virtual bool init(std::string _conf, Input *input);
+	virtual bool init(Config* _conf, Input *input);
 	virtual bool process(steel::time globalTime, steel::time time);
 	virtual bool deinit(void);
 

@@ -199,11 +199,12 @@ void OpenGL_Engine::UseSDL(void)
 #endif
 
 
-bool OpenGL_Engine::init(std::string _conf, Input *input)
+bool OpenGL_Engine::init(Config* _conf, Input *input)
 {
-	if(!(conf = resOldConfig.add(_conf)))
+	conf = _conf;
+	if(conf == NULL)
 	{
-		log_msg("error graph conf res", "Cannot find renderer config file "+_conf);
+		log_msg("error graph conf res", "Cannot find renderer config file");
 		return false;
 	}
 
@@ -237,7 +238,7 @@ bool OpenGL_Engine::init(std::string _conf, Input *input)
 			return false;
 		}
 
-	conf->setDefault("window.left", "10");
+/*	conf->setDefault("window.left", "10");
 	conf->setDefault("window.top", "10");
 
 	conf->setDefault("window.width", "800");
@@ -247,7 +248,7 @@ bool OpenGL_Engine::init(std::string _conf, Input *input)
 	conf->setDefault("screen.width", "800");
 	conf->setDefault("screen.height", "600");
 
-	conf->setDefault("fullscreen", "0");
+	conf->setDefault("fullscreen", "0");*/
 
 	if (!(this->*CreateOpenGL_Window)(input))
 	{
@@ -370,9 +371,9 @@ void OpenGL_Engine::processCamera()
     
 //	gluPerspective( camera.fov, (float)window.width/window.height, front, back );
 
-	conf->setup("camera.aspect", conf->getd("window.width") / conf->getd("window.height"));
+	double cameraAspectRatio = conf->getd("window.width") / conf->getd("window.height");
 
-	gluPerspective(conf->getd("camera.fov"), conf->getd("camera.aspect"), conf->getd("camera.min_dist"), conf->getd("camera.max_dist"));
+	gluPerspective(conf->getd("camera.fov"), cameraAspectRatio, conf->getd("camera.min_dist"), conf->getd("camera.max_dist"));
 
     gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, 
 			camera.center.x, camera.center.y, camera.center.z, 
@@ -505,8 +506,8 @@ bool OpenGL_Engine::GraphStorage::cache(void)
 
 void OpenGL_Engine::onResize(int width, int height)
 {
-	conf->setup("window.width", IntToStr(width));
-	conf->setup("window.height", IntToStr(height));
+	conf->setValued("window.width", width);
+	conf->setValued("window.height", height);
 	if(RepairOpenGL_Window)
 		(this->*RepairOpenGL_Window)();
 }

@@ -36,7 +36,6 @@ class Game; // forward declaration, cross-use
 #include "../audio/openal_engine.h"
 #include "../audio/audio_engine.h"
 
-
 /*
 Класс, задающий правила игры
 */
@@ -65,7 +64,7 @@ protected:
 	bool _alive, paused;
 	int framesToPass;
 //  Input-Output 
-	Input		*input;
+	Input	*input;
 	Config	*conf;
 
 	GraphEngine *graphEngine;

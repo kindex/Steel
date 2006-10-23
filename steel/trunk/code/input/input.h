@@ -28,6 +28,7 @@
 
 class Input;  // forward declaration, cross-use
 #include "../game/game.h"
+#include "../res/res_main.h"
 
 #include <string>
 #include <map>
@@ -40,19 +41,21 @@ protected:
 	double sensetivity;
 	bool alive, mouseCaptured, focused;
 	Game	*game;
-	OldConfig	*conf;
+	Config	*conf;
 
 	int cx, cy, lastdx, lastdy;
 
 public:
-	Input(void):game(NULL), conf(NULL),
+	Input(void):
+		game(NULL),
+		conf(NULL),
 		CaptureMouse(NULL),
 		FreeMouse(NULL),
 		Process(NULL)
 		{}
 
 	virtual ~Input(void) {}
-	virtual bool init(std::string _conf);
+	virtual bool init(Config* _conf);
 	virtual void setGame(Game *_game) { game = _game; }
 
 	virtual bool isPressed(std::string key);

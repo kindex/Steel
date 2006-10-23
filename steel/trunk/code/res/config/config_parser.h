@@ -24,7 +24,9 @@
 #include "config.h"
 
 #define LOG_PARSE_ERROR(message)  \
-	errors.push_back(ParseError(std::string(message), std::string(__FUNCTION__), line, charNumber));
+	errors.push_back(ParseError(std::string(message), std::string(__FUNCTION__), line, charNumber))
+
+struct ConfigTag;
 
 class ConfigParser
 {
@@ -34,10 +36,12 @@ public:
 	Config*	Parse(Text *file);
 
 	Config*			ParseConfig(void);
+	ConfigTag*		ParseTag(void);
 	Config*			ParseValue(void);
 	
 	static double	getNumber(const char *text, int &position);
 	double			ParseNumber(void);
+	Config*			ParseNull(void);
 	
 	static std::string	getAlpha(const char *text, int &position);
 	std::string		ParseAlpha(void);
@@ -71,5 +75,9 @@ protected:
 	svector<ParseError> errors;
 };
 
+struct ConfigTag
+{
+	svector<ConfigTemplate> templates;
+};
 
 #endif

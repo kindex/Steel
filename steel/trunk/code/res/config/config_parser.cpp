@@ -18,7 +18,6 @@
 
 using namespace std;
 
-
 Config*	ConfigParser::Parse(Text *_file)
 {
 	if(_file == NULL) return NULL;
@@ -45,12 +44,76 @@ Config*	ConfigParser::Parse(Text *_file)
 	return res;
 }
 
-
-
-Config* ConfigParser::ParseConfig()
+Config* ConfigParser::ParseConfig(void)
 {
-	// TODO: parse tag
-	return ParseValue();
+	SkipSpaces();
+	char c = seec();
+	ConfigTag *tag = NULL;
+	if(c == '[') // found tag
+	{
+		tag = ParseTag();
+	}
+	
+	Config *result = ParseValue();
+	if(tag != NULL)
+	{
+		if(result != NULL)
+		{
+			result->templates = tag->templates;
+		}
+		delete tag;
+	}
+	return result;
+}
+
+
+ConfigTag* ConfigParser::ParseTag()
+{
+	char c = seec();
+	if(c != '[') return NULL;
+	getc();
+	string collector;
+	int level = 0;
+
+	ConfigTag * tag = NULL;
+	for(;;)
+	{
+		c = getc();
+		if(c == ']' && level == 0) break;
+		else if(c == ',')
+		{
+			if(!collector.empty())
+			{
+				if(tag == NULL) tag = new ConfigTag;
+				tag->templates.push_back(collector);
+				collector.clear();
+			}
+			else
+				LOG_PARSE_ERROR(string("Empty path to template"));
+		}
+		else if(c>='0' && c<='9' || c>='A' && c<='Z' || c>='a' && c<='z' || c =='[' || c == ']' || c == '.' || c == '#' || c == '/')
+		{
+			collector += c;
+			if(c == '[')
+				if(level >= 1)
+					LOG_PARSE_ERROR(string("Too many ["));
+				else
+					level++;
+			if(c == ']') 
+				if(level <= 0)
+					LOG_PARSE_ERROR(string("Too many ]"));
+				else
+					level--;
+		}
+		else LOG_PARSE_ERROR(string("Unxpected symbol '") + c + "'");
+	}
+	if(!collector.empty())
+	{
+		if(tag == NULL) tag = new ConfigTag;
+		tag->templates.push_back(collector);
+	}
+
+	return tag;
 }
 
 
@@ -82,12 +145,15 @@ Config* ConfigParser::ParseValue()
 	{
 		res = ParseArray();
 	}
+	else if(c == 'n') // null
+	{
+		res = ParseNull();
+	}
 	else
 	{
 		getc(); // skip char to avoid infinite cycle
 		LOG_PARSE_ERROR(string("Illergal symbol '") + c + "'");
 	}
-
 	return res;
 }
 
@@ -133,7 +199,7 @@ string ConfigParser::getAlpha(const char *text, int &position)
 }
 
 
-ConfigStruct* ConfigParser::ParseStruct()
+ConfigStruct* ConfigParser::ParseStruct(void)
 {
 	char c = getc();
 	if(c != '{')
@@ -172,6 +238,8 @@ ConfigStruct* ConfigParser::ParseStruct()
 		}
 		SkipSpaces();
 		value = ParseConfig();
+		
+		value->setParent(res);
 
 		res->setValue(var, value);
 		SkipSpaces();
@@ -183,7 +251,7 @@ ConfigStruct* ConfigParser::ParseStruct()
 }
 
 
-ConfigArray* ConfigParser::ParseArray()
+ConfigArray* ConfigParser::ParseArray(void)
 {
 	char c = seec();
 	if(c != '(')
@@ -212,6 +280,8 @@ ConfigArray* ConfigParser::ParseArray()
 			return res;
 		}
 		value = ParseConfig();
+		value->setParent(res);
+
 		if(value != NULL)
 			res->push(value);
 
@@ -287,6 +357,20 @@ double ConfigParser::ParseNumber()
 	}
 	ungetc();
 	return res*sign;
+}
+
+Config* ConfigParser::ParseNull()
+{
+	bool fail = false;
+	fail = fail || getc() != 'n';
+	fail = fail || getc() != 'u';
+	fail = fail || getc() != 'l';
+	fail = fail || getc() != 'l';
+	if(fail)
+	{
+		LOG_PARSE_ERROR(string("Expecting null"));
+	}
+	return new ConfigNull;
 }
 
 

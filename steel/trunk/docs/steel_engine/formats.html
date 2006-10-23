@@ -181,7 +181,7 @@ table.MsoTableGrid
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="16386"/>
+ <o:shapedefaults v:ext="edit" spidmax="18434"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -227,14 +227,12 @@ style='mso-ansi-language:EN-US'>config</span></span> (значение пере�
 содержимое файла является <span lang=EN-US style='mso-ansi-language:EN-US'>value</span>
 (исключая комментарии).</p>
 
-<p class=code><span lang=EN-US>&lt;config&gt; ::= <span style='background:lime;
-mso-highlight:lime'>[&lt;tag&gt;] &lt;value&gt;</span> | &lt;value&gt;</span></p>
+<p class=code><span lang=EN-US>&lt;config&gt; ::= [&lt;tag&gt;] &lt;value&gt; |
+&lt;value&gt;</span></p>
 
-<p class=code><span lang=EN-US style='background:lime;mso-highlight:lime'>&lt;value&gt;
-::= null<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>&lt;value&gt; ::= null</span></p>
 
-<p class=code><span lang=EN-US style='background:lime;mso-highlight:lime'>&lt;value&gt;
-::= default</span></p>
+<p class=code><span lang=EN-US>&lt;value&gt; ::= default</span></p>
 
 <p class=code><span lang=EN-US>&lt;value&gt; ::= &lt;nuber&gt;</span></p>
 
@@ -253,23 +251,17 @@ style='mso-bidi-font-style:normal'>&lt;empty&gt;<o:p></o:p></i></span></p>
 &lt;struct_element&gt;,&lt;struct&gt; |<i style='mso-bidi-font-style:normal'>&lt;empty&gt;<o:p></o:p></i></span></p>
 
 <p class=code><span lang=EN-US>&lt;struct_element&gt; ::= &lt;alpha&gt; =
-&lt;config&gt;</span><span style='mso-ansi-language:RU'><o:p></o:p></span></p>
+&lt;config&gt;</span></p>
 
-<p class=code><span style='background:lime;mso-highlight:lime;mso-ansi-language:
-RU'><o:p>&nbsp;</o:p></span></p>
+<p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
 
-<p class=code><span lang=EN-US style='background:lime;mso-highlight:lime'>&lt;tag&gt;
-::= &lt;id&gt; | &lt;id&gt;:&lt;inherits&gt;<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>&lt;tag&gt; ::= &lt;templates&gt;</span></p>
 
-<p class=code><span lang=EN-US style='background:lime;mso-highlight:lime'>&lt;inherits&gt;
-::= <i style='mso-bidi-font-style:normal'>&lt;empty</i>&gt; |
-&lt;external_id&gt;,&lt;inherits&gt;<o:p></o:p></span></p>
+<p class=code><span lang=EN-US>&lt;templates&gt; ::= <i style='mso-bidi-font-style:
+normal'>&lt;empty</i>&gt; | &lt;external_id&gt;,&lt;inherits&gt;</span></p>
 
-<p class=code><span lang=EN-US style='background:lime;mso-highlight:lime'>&lt;id&gt;
-:= virtual &lt;alpha&gt; | &lt;alpha&gt;<o:p></o:p></span></p>
-
-<p class=code><span lang=EN-US style='background:lime;mso-highlight:lime'>&lt;external_id&gt;
-::= &lt;alpha&gt; | &lt;path to config&gt;#&lt;alpha&gt;</span></p>
+<p class=code><span lang=EN-US>&lt;external_id&gt; ::= &lt;alpha&gt; | &lt;path
+to config&gt;#&lt;alpha&gt; | &lt;path to config&gt;#</span></p>
 
 <p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
 
@@ -283,8 +275,8 @@ lang=EN-US> </span>– строка, стоящая из любых символ
 lang=EN-US> </span>– целое или дробное число в стандартной форме или <span
 class=SpellE><span style='background:lime;mso-highlight:lime'>експоненциональной</span></span>.</p>
 
-<p><span class=SpellE>alpha</span> - английские буквы и символ подчёркивания,
-или цифры, начиная со второго символа. <span class=GramE><span lang=EN-US
+<p><span class=SpellE>alpha</span> - английские буквы и символ подчёркивания, или
+цифры, начиная со второго символа. <span class=GramE><span lang=EN-US
 style='background:yellow;mso-highlight:yellow;mso-ansi-language:EN-US'>Case
 sensitive</span><span lang=EN-US style='mso-ansi-language:EN-US'>.</span></span><span
 lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
@@ -400,8 +392,8 @@ style='mso-spacerun:yes'>          </span>origin = (50 50 10);<o:p></o:
 style='mso-spacerun:yes'>          </span>model</span><span style='background:
 silver;mso-highlight:silver;mso-ansi-language:RU'> = </span><span lang=EN-US
 style='background:silver;mso-highlight:silver'>null</span><span
-style='background:silver;mso-highlight:silver;mso-ansi-language:RU'>; //
-обнуляет модель предка<o:p></o:p></span></p>
+style='background:silver;mso-highlight:silver;mso-ansi-language:RU'>; // обнуляет
+модель предка<o:p></o:p></span></p>
 
 <p class=code><span style='background:silver;mso-highlight:silver;mso-ansi-language:
 RU'><span style='mso-spacerun:yes'>          </span></span><span lang=EN-US

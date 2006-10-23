@@ -42,6 +42,7 @@ int main1(int argc, char *argv[])
 int main(int argc, char *argv[])
 #endif
 {
+// *********************** LOG *********************
 	globalTimer.start(); globalFrameNumber = 1;
 
 	deleteFiles("..\\log", "*.log");
@@ -73,22 +74,22 @@ int main(int argc, char *argv[])
 
 // ******************* INPUT ************************
 	Input *input = new Input;
-	if(!input->init("../conf/input")) return 1;
+	if(!input->init(resConfig.add("../conf/input.conf"))) return 2;
 // ******************* GRAPH ************************
 	OpenGL_Engine *graph = new OpenGL_Engine();
-	if(!graph->init("../conf/opengl", input)) return 1;
+	if(!graph->init(resConfig.add("../conf/opengl.conf"), input)) return 3;
 // ******************* AUDIO ************************
 	AudioEngine *audio = NULL;
 #ifdef LIB_OPENAL
 	audio = new OpenALEngine();
 #endif
-	if(audio && !audio->init("../conf/audio"))	return 1;
+	if(audio && !audio->init(resConfig.add("../conf/audio")))return 4;
 
 
 // ******************* GAME *************************
 	Steel game;
 
-	if(!game.init(resConfig.add("../conf/game"), input, commandLine)) return 1;
+	if(!game.init(resConfig.add("../conf/game.conf"), input, commandLine)) return 5;
 
 	game.bind(graph);
 	if(audio)

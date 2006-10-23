@@ -15,47 +15,110 @@
 
 #include "config.h"
 #include "config_parser.h"
+#include "config_collection.h"
 
 using namespace std;
 
 ResCollection<Config>	resNewConfig;
 
-char *Config::getValueFromParent(void)
+ConfigTemplate::ConfigTemplate(const string FullPath)
 {
-	for(size_t i = 0; i < inherits.size(); i++)
+	string::size_type it = FullPath.find('#');
+	if(it == string::npos)
 	{
-		std::string parentName = genFullId(inherits[i]);
-		Config *parent;
-		if(!(parent = resNewConfig.get(parentName)))
+		local = true;
+		localPath = FullPath;
+	}
+	else
+	{
+		local = false;
+		configId = FullPath.substr(0, it);
+		localPath = FullPath.substr(it + 1);
+	}
+}
+
+
+Config* Config::find(const std::string path)
+{
+	Config *result = findInThis(path);
+	if(result == NULL) result = findInTemplate(path);
+	return result;
+}
+
+void Config::toggle(const std::string path)
+{
+	Config *c = find(path);
+	if(c != NULL)
+	{
+		if(c->getType() == CONFIG_VALUE_NUMBER)
 		{
-			parent = resNewConfig.add(parentName);
-			if(!parent)
+			double v = c->returnd(0.0);
+			if(v == 0.0) v = 1.0; else v = 0.0;
+			((ConfigNumber*)c)->setValue(v);
+		}
+	}
+}
+
+// TODO: trace path, create if none
+void Config::setValued(const std::string path, double value)
+{
+	Config *c = find(path);
+	if(c != NULL)
+		if(c->getType() == CONFIG_VALUE_NUMBER)
+			((ConfigNumber*)c)->setValue(value);
+}
+
+
+Config* Config::findInTemplate(const std::string path)
+{
+	for(int i = templates.size() - 1; i >= 0; i--)
+	{
+		if(templates[i].local)// local template
+		{
+			Config *parent = getParent();
+			if(parent != NULL)
 			{
-				error("res config", "Cannot find inherited config '" + parentName + "' in config '" + getFullId() +"'");
-				continue;
+				Config *_template = parent->find(templates[i].localPath);
+				if(_template != NULL)
+				{
+					Config *result = _template->find(path);
+					if(result != NULL) return result;
+				}
 			}
 		}
-		char *result = parent->getValue();
-		if(result == NULL) 
-			continue;
-		else
-			return result;
+		else // global
+		{
+			Config *globalTemplate;
+			if(!templates[i].configId.empty())
+				globalTemplate = resConfig.get(templates[i].configId);
+			else
+				globalTemplate = getRoot();
+			if(globalTemplate != NULL)
+			{
+				Config *_template = globalTemplate->find(templates[i].localPath);
+				if(_template != NULL)
+				{
+					Config *result = _template->find(path);
+					if(result != NULL) return result;
+				}
+			}
+		}
 	}
-
 	return NULL;
 }
 
-char *Config::getValue(void)
+Config* Config::getRoot(void)
 {
-	char *result = getValueRaw();
-	if(result != NULL) return result;
-	
-	result = getValueFromParent();
-	if(result != NULL) 
-		return result;
-	else
-		return NULL;
+	Config *a = this;
+	Config *b = this;
+	while(a != NULL) 
+	{
+		b = a;
+		a = a->parent;
+	}
+	return b;
 }
+
 
 string Config::genFullId(string someConfigId)
 {
@@ -65,28 +128,10 @@ string Config::genFullId(string someConfigId)
 		return file + "#" + someConfigId;
 }
 
-double Config::returnd(const double _default)
+double ConfigString::returnd(const double _default)
 {
-	if(getType() == CONFIG_VALUE_NUMBER)
-	{
-		double *result = (double*)getValue();
-		if(!result)
-			return _default;
-		else
-			return *result;
-	}
-	if(getType() == CONFIG_VALUE_STRING)
-	{
-		string *result = (string*)getValue();
-		if(!result)
-			return _default;
-		else
-		{
-			return atof(result->c_str());
-		}
-	}
-	else
-	return _default;
+	string result = returns();
+	return atof(result.c_str());
 }
 
 double Config::getd(std::string path, const double _default)
@@ -128,9 +173,9 @@ std::string	Config::gets(std::string path, const std::string _default)
 
 v3 ConfigStruct::returnv3(const v3 _default)
 {
-	Config *x = getStructElementRaw("x");	if(x == NULL) return _default;
-	Config *y = getStructElementRaw("y");	if(y == NULL) return _default;
-	Config *z = getStructElementRaw("z");	if(z == NULL) return _default;
+	Config *x = getStructElement("x");	if(x == NULL) return _default;
+	Config *y = getStructElement("y");	if(y == NULL) return _default;
+	Config *z = getStructElement("z");	if(z == NULL) return _default;
 	return v3(
 				x->returnf(_default.x), 
 				y->returnf(_default.y),
@@ -139,66 +184,20 @@ v3 ConfigStruct::returnv3(const v3 _default)
 }
 
 
-std::string Config::returns(const std::string _default)
+std::string ConfigNumber::returns(const std::string _default)
 {
-	if(getType() == CONFIG_VALUE_STRING)
-	{
-		std::string *result = (string*)getValue();
-		if(!result)
-			return _default;
-		else
-			return *result;
-	}
-	else
-	if(getType() == CONFIG_VALUE_NUMBER)
-	{
-		double *result = (double*)getValue();
-		if(!result)
-			return _default;
-		else
-			return FloatToStr(*result);
-	}
-	else
-	return _default;
+	double result = returnd();
+	return FloatToStr(result);
 }
 
 
-Config* ConfigStruct::getStructElementRaw(const std::string key)
+Config* ConfigStruct::getStructElement(const std::string key)
 {
 	std::map<std::string, Config*>::iterator it = set.find(key);
 	if(it == set.end())
 		return NULL;
 	else
 		return it->second;
-}
-
-Config* Config::getStructElement(const std::string key)
-{
-	Config* result = getStructElementRaw(key);
-	if(result != NULL) return result;
-
-	for(size_t i = 0; i < inherits.size(); i++)
-	{
-		std::string parentName = genFullId(inherits[i]);
-		Config *parent;
-		if(!(parent = resNewConfig.get(parentName)))
-		{
-			parent = resNewConfig.add(parentName);
-			if(!parent)
-			{
-				error("res config", "Cannot find inherited config '" + parentName + "' in config '" + getFullId() +"'");
-				continue;
-			}
-		}
-
-		Config *result = parent->getStructElement(key);
-		if(!result) 
-			continue;
-		else
-			return result;
-	}
-
-	return NULL;
 }
 
 string Config::getIndent(int level)
@@ -211,22 +210,41 @@ string Config::getIndent(int level)
 	return res;
 }
 
-
-string ConfigNumber::Dump(int level)
+std::string ConfigTemplate::Dump(void)
 {
-	return 
-//		getIndent(level) + 
-		returns();
+	if(local) return localPath;
+	else return configId + "#" + localPath;
 }
 
-string ConfigString::Dump(int level)
+std::string Config::DumpPrefix(int level)
 {
-	return 
-//		getIndent(level) + 
-		"'" + escape(returns(), '\'') + "'";
+	if(!templates.empty())
+	{
+		string res("[");
+		for(svector<ConfigTemplate>::const_iterator it = templates.begin(); it != templates.end(); it++)
+		{
+			if(it != templates.begin())
+				res += ", ";
+			res += it->Dump();
+		}
+		res += "] ";
+		return res;
+	}
+	else
+		return string();
 }
 
-string ConfigStruct::Dump(int level)
+string ConfigNumber::DumpThis(int level)
+{
+	return returns();
+}
+
+string ConfigString::DumpThis(int level)
+{
+	return "'" + escape(returns(), '\'') + "'";
+}
+
+string ConfigStruct::DumpThis(int level)
 {
 	level += 2;
 	string res("{\n");
@@ -261,7 +279,7 @@ std::string ConfigString::finds(std::string path, const std::string _default)
 	return gets(_default);
 }
 
-Config* ConfigStruct::find(std::string path)
+Config* ConfigStruct::findInThis(std::string path)
 {
 	if(path.empty())
 	{
@@ -276,7 +294,7 @@ Config* ConfigStruct::find(std::string path)
 	return child->find(ext);
 }
 
-Config *ConfigSimple::find(std::string path)
+Config *ConfigSimple::findInThis(std::string path)
 {
 	if(!path.empty())
 		error("res config", "Cannot split simple type into components");
@@ -284,7 +302,7 @@ Config *ConfigSimple::find(std::string path)
 }
 
 // ************************* ConfigArray ***********************
-Config* ConfigArray::getArrayElementRaw(const size_t index)
+Config* ConfigArray::getArrayElement(const size_t index)
 {
 	if(index >= set.size())
 	{
@@ -293,10 +311,9 @@ Config* ConfigArray::getArrayElementRaw(const size_t index)
 	}
 	else
 		return set[index];
-
 }
 
-std::string ConfigArray::Dump(int level)
+std::string ConfigArray::DumpThis(int level)
 {
 	level += 2;
 	string res("(\n");
@@ -314,7 +331,7 @@ std::string ConfigArray::Dump(int level)
 	level -= 2;
 	return res + getIndent(level) + ")";}
 	
-Config *ConfigArray::find(std::string path)
+Config *ConfigArray::findInThis(std::string path)
 {
 	if(path.empty())
 	{
@@ -329,7 +346,7 @@ Config *ConfigArray::find(std::string path)
 		error("res config", "Array index out of bound (<0)");
 		return NULL;
 	}
-	Config *child = getArrayElementRaw(index);
+	Config *child = getArrayElement(index);
 
 	if(child == NULL) return NULL;
 	return child->find(ext);
@@ -337,12 +354,13 @@ Config *ConfigArray::find(std::string path)
 
 v3 ConfigArray::returnv3(const v3 _default)
 {
-	Config *x = getArrayElementRaw(0);	if(x == NULL) return _default;
-	Config *y = getArrayElementRaw(1);	if(y == NULL) return _default;
-	Config *z = getArrayElementRaw(2);	if(z == NULL) return _default;
+	Config *x = getArrayElement(0);	if(x == NULL) return _default;
+	Config *y = getArrayElement(1);	if(y == NULL) return _default;
+	Config *z = getArrayElement(2);	if(z == NULL) return _default;
 	return v3(
 				x->returnf(_default.x), 
 				y->returnf(_default.y),
 				z->returnf(_default.z)
 			);
 }
+

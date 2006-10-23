@@ -44,12 +44,12 @@ void Input::UseSDL(void)
 #endif
 
 
-bool Input::init(std::string _conf) 
+bool Input::init(Config* _conf) 
 { 
 	alive = true; 
 	mouseCaptured = false; 
 
-	conf = resOldConfig.add(_conf);
+	conf = _conf;
 	if(!conf)
 	{
 		log_msg("error input res", "Input config file not found");

@@ -23,20 +23,14 @@ Config* ResCollectionConfig::addForce(std::string name, bool pop)
 {
 	std::string baseDirectory;
 	splitPath(name, baseDirectory, name);
-
 	resStack.push(baseDirectory);
+	std::string fullResName = createPath(baseDirectory, name);
 
-	log_msg("res " + id, "Loading " + baseDirectory + "/" + name);
-
-	std::string fullResName = baseDirectory + "/" + name;
+	log_msg("res " + id, "Loading " + fullResName);
 
 	Config *obj = NULL;
 	TextFile *file = new TextFile();
-	if(!file->init(name + ".conf", baseDirectory))
-	{
-		delete file; 
-		file = NULL;
-	}
+	if(!file->init(name, baseDirectory)) delete file, file = NULL;
 	if(file != NULL)
 	{
 		ConfigParser* parser = new ConfigParser();
