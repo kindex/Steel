@@ -113,7 +113,7 @@ void Sphere::ProcessGraph(const GraphEngineInfo &info)
 
 	if(frand()<0.1f && !faces->at(0).triangles->data.empty())
 	{
-		DeleteTriangle((int)(frand()*faces->at(0).triangles->data.size()));
+		DeleteTriangle(floor((frand()*(faces->at(0).triangles->data.size()-1))));
 	}
 	for(unsigned int i = 0; i<normals->data.size(); i++)
 	{
