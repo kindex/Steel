@@ -16,6 +16,8 @@
 #include "utils.h"
 #include "logger.h"
 
+#include <sstream>
+
 #if STEEL_OS == OS_WIN32
 #include <windows.h>
 #endif
@@ -61,10 +63,10 @@ string FloatToStr(double a)
 // convert integer into string
 string IntToStr(int a)
 {
-    char s[32];
+	std::stringstream res;
+	res << a;
 
-    sprintf(s,"%i", a);
-    return string(s);
+	return res.str();
 }
 
 // split string into array of strings with delimiter

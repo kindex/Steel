@@ -57,6 +57,11 @@ public:
 		return text[index];
 	}
 
+	void Cleanup()
+	{
+		if(text) { delete [] text; length = 0; text = NULL; }
+	}
+
 	~Text(void)
 	{
 		if(text) delete [] text; 

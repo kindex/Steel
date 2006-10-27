@@ -25,7 +25,7 @@
 
 //An epsilon value for comparisons
 #ifndef EPSILON
-#define EPSILON 1.0e-6f
+	#define EPSILON 1.0e-6f
 #endif
 
 #ifndef EPSILON2

@@ -101,6 +101,8 @@ protected:
 class ConfigNull: public Config
 {
 public:
+	ConfigNull(void): Config(CONFIG_VALUE_NULL, false) {}
+
 	Config		*findInThis(const std::string path) { return NULL; }
 	std::string  DumpThis(int level = 0) { return "null"; }
 };

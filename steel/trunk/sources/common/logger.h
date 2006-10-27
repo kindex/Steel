@@ -22,6 +22,18 @@
 #include "timer.h"
 #include "steel_vector.h"
 
+struct GlobalErrors
+{
+	int errorCount;
+	int warningCount;
+
+	GlobalErrors(void): errorCount(0), warningCount(0) {}
+};
+
+extern GlobalErrors globalErrors;
+
+
+
 #undef assert
 
 /*
@@ -42,7 +54,11 @@
 	Если условие не выполняется, то компиляция прерывается 
 	с ошибкой «cannot allocate an array of constant size 0»
 */
-#define cassert(expression)	{	int __[(expression)?1:0];	}
+#ifdef _DEBUG
+	#define cassert(expression)	{	int __[(expression)?1:0];	}
+#else
+	#define cassert(expression)	{}
+#endif
 
 // именно этим макросом надо выводить все временные отладочные сообщения в лог файл.
 #define debug(message)	log_msg("debug", (message))
@@ -56,9 +72,17 @@ void _log_msg(std::string keywords, std::string message);
 
 // именно этим макросом надо выводить сообщения в лог-файл
 #define error(keywords, message) \
+	globalErrors.errorCount++, \
 	log_msg(std::string("error ") + \
 		keywords, std::string(__FILE__) + "@" + \
+		__FUNCTION__ + ":" + IntToStr(__LINE__) + " " + message) 
+
+#define warn(keywords, message) \
+	globalErrors.warningCount++, \
+	log_msg(std::string("warning ") + \
+		keywords, std::string(__FILE__) + "@" + \
 		__FUNCTION__ + ":" + IntToStr(__LINE__) + " " + message)
+
 
 // неудачный выход из процедуры с сообщением в лог
 #define abort_init(keywords, _msg) { log_msg(keywords, _msg); return false; }

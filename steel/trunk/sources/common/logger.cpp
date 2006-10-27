@@ -208,3 +208,5 @@ bool LogFilter::check(std::string keywords)
 }
 
 LogFilter logFilter;
+GlobalErrors globalErrors;
+

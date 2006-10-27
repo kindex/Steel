@@ -26,6 +26,15 @@
 #define OS_LINUX 2
 #define OS_WIN32 1
 
+#if !defined(STEEL_COMPILER)
+	#error STEEL_COMPILER is not defined
+#endif
+
+#if !defined(STEEL_OS)
+	#errorSTEEL_OS
+#endif
+
+
 //#define LIB_SDL
 
 /*
