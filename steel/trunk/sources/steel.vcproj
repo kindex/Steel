@@ -402,7 +402,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="code"
+			Name="sources"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
