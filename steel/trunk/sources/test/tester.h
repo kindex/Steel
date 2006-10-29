@@ -1,4 +1,4 @@
-/*id*********************************************************
+п»ї/*id*********************************************************
 	File: tester.h
 	Unit: tester
 	Part of: Steel engine
@@ -8,7 +8,9 @@
 	License:
 		Steel Engine License
 	Description:
-		Основные макросы и процедуры для самотестирования кода.
+		РћСЃРЅРѕРІРЅС‹Рµ РјР°РєСЂРѕСЃС‹ Рё РїСЂРѕС†РµРґСѓСЂС‹ РґР»СЏ СЃР°РјРѕС‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ РєРѕРґР°.
+	TODO:
+		Check test execution time and memory leak
  ************************************************************/
 
 #ifndef TESTER_H
@@ -30,6 +32,17 @@
 	testInfo.level--; \
 }
 
+#define TEST_CODE(code) \
+{\
+	testInfo.testCount++;\
+	code;\
+}
+
+#define TEST_ERROR(message) \
+{ \
+	Error(message);\
+}
+
 #define CHECK_NOT_NULL(value, message) \
 { \
 	if((value) == NULL)	\
@@ -38,21 +51,22 @@
 	}	\
 }
 
-#define CHECK_EQUAL(a, b, message) \
+#define CHECK_TRUE(expr, message) \
 { \
-	if((a) != (b))  \
+	if(!(expr))  \
 	{	\
-		Error(std::string(#a) + " != " + #b + ". " +  (message));\
+		Error(std::string("Failed ") + #expr + ". " +  (message));\
 	}	\
 }
 
 struct TestInfo
 {
+	int testCount;
 	int level;
 	int errorCount;
 	svector<std::string> errors;
 	
-	TestInfo(void): level(0), errorCount(0) {}
+	TestInfo(void): level(0), errorCount(0), testCount(0) {}
 	void push(std::string newError) { errors.push_back(newError); }
 	void report(void);
 };

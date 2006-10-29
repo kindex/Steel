@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel Engine
-UnitCount=153
+UnitCount=155
 Type=0
 Ver=1
 ObjFiles=
@@ -1571,6 +1571,26 @@ BuildCmd=
 FileName=res\config\config_parser.h
 CompileCpp=1
 Folder=res/config
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit154]
+FileName=res\text\text_string.cpp
+CompileCpp=1
+Folder=res/text
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit155]
+FileName=res\text\text_string.h
+CompileCpp=1
+Folder=res/text
 Compile=1
 Link=1
 Priority=1000

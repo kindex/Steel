@@ -67,12 +67,16 @@ protected:
 
 		ParseError(void) {}
 		ParseError(std::string _message, std::string _sender, int _line, int _charNumber): message(_message), sender(_sender), line(_line), charNumber(_charNumber) {}
+
+		std::string getMessage(void);
 	};
 
 	Text *file;
 	int position;
 	int line, charNumber, prevLine, prevCharNumber;
 	svector<ParseError> errors;
+
+	friend class ConfigParserTest;
 };
 
 struct ConfigTag

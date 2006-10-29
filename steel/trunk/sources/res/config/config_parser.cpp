@@ -25,14 +25,17 @@ Config*	ConfigParser::Parse(Text *_file)
 	position = 0;
 	line = 1;
 	charNumber = 1;
+	errors.clear();
 	Config *res = ParseConfig();
 
-	SkipSpaces();
-	char c = seec();
-	
-	if(c != '\0') 
-		LOG_PARSE_ERROR(string("Unxpected symbol '") + c + "'. Expecting EOF");
-
+	if(res != NULL)
+	{
+		SkipSpaces();
+		char c = seec();
+		
+		if(c != '\0') 
+			LOG_PARSE_ERROR(string("Unxpected symbol '") + c + "'. Expecting EOF");
+	}
 	for(svector<ParseError>::iterator it = errors.begin(); it != errors.end(); it++)
 	{
 		log_msg("error parser", it->message + 
@@ -151,8 +154,9 @@ Config* ConfigParser::ParseValue()
 	}
 	else
 	{
+		LOG_PARSE_ERROR(string("Illegal symbol '") + c + "'");
 		getc(); // skip char to avoid infinite cycle
-		LOG_PARSE_ERROR(string("Illergal symbol '") + c + "'");
+		return NULL;
 	}
 	return res;
 }
@@ -205,7 +209,7 @@ ConfigStruct* ConfigParser::ParseStruct(void)
 	if(c != '{')
 	{
 		ungetc();
-		LOG_PARSE_ERROR(string("Illergal symbol '") + c + "'");
+		LOG_PARSE_ERROR(string("Illegal symbol '") + c + "'");
 		return NULL;
 	}
 	char end = '}';
@@ -238,10 +242,14 @@ ConfigStruct* ConfigParser::ParseStruct(void)
 		}
 		SkipSpaces();
 		value = ParseConfig();
-		
-		value->setParent(res);
+		if(value != NULL)
+		{
+			value->setParent(res);
+			res->setValue(var, value);
+		}
+		else
+			break;
 
-		res->setValue(var, value);
 		SkipSpaces();
 		c = seec();
 		if(c == ';' || c == ',') getc();		// optional ';' or ','
@@ -256,7 +264,7 @@ ConfigArray* ConfigParser::ParseArray(void)
 	char c = seec();
 	if(c != '(')
 	{
-		LOG_PARSE_ERROR(string("Illergal symbol '") + c + "'");
+		LOG_PARSE_ERROR(string("Illegal symbol '") + c + "'");
 		return NULL;
 	}
 	char end = ')';
@@ -280,10 +288,12 @@ ConfigArray* ConfigParser::ParseArray(void)
 			return res;
 		}
 		value = ParseConfig();
-		value->setParent(res);
 
 		if(value != NULL)
+		{
+			value->setParent(res);
 			res->push(value);
+		}
 
 		SkipSpaces();
 		c = seec();
@@ -447,9 +457,11 @@ void ConfigParser::SkipSpaces()
 			}
 			break;
 		case 1: // #
+			if(c == '\0') state = 0, ungetc();
 			if(c == '\n') state = 0;
 			break;
 		case 2: // /*
+			if(c == '\0') state = 0, ungetc();
 			if(c == '*')
 			{
 				c = getc();
@@ -502,4 +514,9 @@ void ConfigParser::ungetc(void)
 	position--;
 	line = prevLine;
 	charNumber = prevCharNumber;
+}
+
+string ConfigParser::ParseError::getMessage(void)
+{
+	return message + " (" +  IntToStr(line) + ":" + IntToStr(charNumber) + ") [" + sender + "]";
 }

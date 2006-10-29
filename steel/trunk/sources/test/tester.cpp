@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Основные макросы и процедуры для самотестирования кода.
+		РћСЃРЅРѕРІРЅС‹Рµ РјР°РєСЂРѕСЃС‹ Рё РїСЂРѕС†РµРґСѓСЂС‹ РґР»СЏ СЃР°РјРѕС‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ РєРѕРґР°.
  ************************************************************/
 #include "../steel.h"
 #include "tester.h"
@@ -23,7 +23,7 @@ TestInfo testInfo;
 
 void TestInfo::report()
 {
-	string message = IntToStr(errors.size()) + " errors";
+	string message = IntToStr(errors.size()) + " errors in " + IntToStr(testCount) + " tests";
 	cout << "Test report: " << message << endl;
 	log_msg("test", message);
 }
@@ -33,14 +33,15 @@ void TestInfo::report()
 void Tester::TestAll(void)
 {
 	int errors = testInfo.errorCount;
+	int tests = testInfo.testCount;
 	TestMembers();
 	Test();
 	std::cout << std::string(testInfo.level-1, '\t');
 	int newErrors = testInfo.errorCount - errors;
 	if(newErrors == 0) 
-		std::cout << "Ok" << std::endl;
+		std::cout << "Ok (" << testInfo.testCount - tests << " tests)" << std::endl;
 	else
-		std::cout << newErrors << " Errors" << std::endl;
+		std::cout << newErrors << " Errors (" << testInfo.testCount - tests<< " tests)" << std::endl;
 }
 
 
