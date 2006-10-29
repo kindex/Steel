@@ -16,7 +16,7 @@
 #define __GRAPH__TYPES_H
 
 #include "../steel.h"
-#include "../interface.h"
+#include "../engine/interface.h"
 #include "../math/aabb.h"
 #include "../math/maths.h"
 #include "../math/vector3d.h"

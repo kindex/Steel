@@ -16,7 +16,7 @@
 
 #include "../steel.h"
 #include <vector>
-#include "../engine.h"
+#include "../engine/engine.h"
 #include "../res/audio/audio.h"
 #include "../res/res_main.h"
 #include "audio_interface.h"

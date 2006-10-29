@@ -405,26 +405,6 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath=".\engine.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\engine.h"
-				>
-			</File>
-			<File
-				RelativePath=".\helper.h"
-				>
-			</File>
-			<File
-				RelativePath=".\interface.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\interface.h"
-				>
-			</File>
-			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -1332,6 +1312,30 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="engine"
+				>
+				<File
+					RelativePath=".\engine\engine.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\engine\engine.h"
+					>
+				</File>
+				<File
+					RelativePath=".\engine\helper.h"
+					>
+				</File>
+				<File
+					RelativePath=".\engine\interface.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\engine\interface.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

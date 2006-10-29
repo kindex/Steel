@@ -15,7 +15,7 @@
 		Для этого объекты должны поддерживать интервейс (interface) обмена 
 		информацией с движком.
  ************************************************************/
-#include "steel.h"
+#include "../steel.h"
 #include "engine.h"
 
 void Engine::Storage::fill(Object *object)

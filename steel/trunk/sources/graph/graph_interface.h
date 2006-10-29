@@ -17,7 +17,7 @@
 #define __GRAPH_INTERFACE_H
 
 #include "../steel.h"
-#include "../engine.h"
+#include "../engine/engine.h"
 
 #include "types.h"
 

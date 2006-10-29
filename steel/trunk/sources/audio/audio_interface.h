@@ -14,7 +14,7 @@
 #define __AUDIO_INTERFACE_H
 
 #include "../steel.h"
-#include "../interface.h"
+#include "../engine/interface.h"
 #include "../res/audio/audio.h"
 
 class AudioObject: public Object

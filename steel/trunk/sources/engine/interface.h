@@ -1,6 +1,6 @@
 /*id*********************************************************
-	File: interface.h
-	Unit: core
+	File: engine/object.h
+	Unit: engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -14,11 +14,11 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#include "math/vector3d.h"
-#include "math/matrix34.h"
+#include "../math/vector3d.h"
+#include "../math/matrix34.h"
 
-#include "common/steel_vector.h"
-#include "steel.h"
+#include "../common/steel_vector.h"
+#include "../steel.h"
 
 // One triangle, indexes of vertexes
 struct Triangle // anti-clockwise direction (one side Triangle)

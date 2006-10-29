@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: engine.h
+	File: engine/engine.h
 	Unit: core
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
@@ -21,10 +21,10 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include "steel.h"
-#include "res/res.h"
-#include "res/config/config.h"
-#include "math/vector3d.h"
+#include "../steel.h"
+#include "../res/res.h"
+#include "../res/config/config.h"
+#include "../math/vector3d.h"
 #include "interface.h"
 #include "helper.h"
 

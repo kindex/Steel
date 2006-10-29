@@ -15,7 +15,7 @@
 #define PHYSIC_INTERFACE_H
 
 #include "../steel.h"
-#include "../engine.h"
+#include "../engine/engine.h"
 #include "../math/aabb.h"
 #include "../math/matrix34.h"
 #include "../math/vector3d.h"
