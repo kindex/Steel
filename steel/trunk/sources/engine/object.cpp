@@ -12,7 +12,7 @@
 		(глобальную, локальную систему координат)
 ************************************************************/
 
-#include "interface.h"
+#include "object.h"
 
 #include "../common/logger.h"
 #include "../common/utils.h"

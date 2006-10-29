@@ -25,7 +25,7 @@
 #include "../res/res.h"
 #include "../res/config/config.h"
 #include "../math/vector3d.h"
-#include "interface.h"
+#include "object.h"
 #include "helper.h"
 
 #include <string>

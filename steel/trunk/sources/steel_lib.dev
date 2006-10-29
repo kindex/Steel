@@ -1468,7 +1468,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit143]
-FileName=engine\interface.cpp
+FileName=engine\object.cpp
 CompileCpp=1
 Folder=engine
 Compile=1
@@ -1478,7 +1478,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit144]
-FileName=engine\interface.h
+FileName=engine\object.h
 CompileCpp=1
 Folder=engine
 Compile=1

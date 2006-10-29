@@ -1329,11 +1329,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\engine\interface.cpp"
+					RelativePath=".\engine\object.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\engine\interface.h"
+					RelativePath=".\engine\object.h"
 					>
 				</File>
 			</Filter>
