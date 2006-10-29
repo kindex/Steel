@@ -26,7 +26,7 @@
 
 #include "tester.h"
 
-#include "../res/config/test_config/test_config.h"
+#include "../res/test_res/test_res.h"
 
 bool test(void);
 
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
 	test();
 
-	TEST(Config);
+	TEST(Res);
 
 	testInfo.report();
 

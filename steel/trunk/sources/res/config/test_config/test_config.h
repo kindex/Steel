@@ -19,27 +19,28 @@
 #include "../config.h"
 #include "../config_parser.h"
 
+class ConfigTest: public Tester
+{
+public:
+
+};
+
 class ConfigParserTest: public Tester
 {
 public:
 	void Test(void)
 	{
-		TestNull();
+		TestParser();
 	}
-	void TestNull();
+	void TestParser();
 };
 
 
-class ConfigTest: public Tester
+class ResCollectionConfigTest: public Tester
 {
 public:
-	void TestMembers(void)
-	{
-		TEST(ConfigParser);
-	}
+
 };
-
-
 
 #endif
 

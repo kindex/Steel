@@ -485,6 +485,18 @@
 						</File>
 					</Filter>
 				</Filter>
+				<Filter
+					Name="test_res"
+					>
+					<File
+						RelativePath=".\res\test_res\test_res.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\test_res\test_res.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="audio"

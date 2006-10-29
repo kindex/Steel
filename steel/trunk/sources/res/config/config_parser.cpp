@@ -56,6 +56,11 @@ Config* ConfigParser::ParseConfig(void)
 	{
 		tag = ParseTag();
 	}
+	if(c == '\0') // no value
+	{
+		LOG_PARSE_ERROR("No value in config");
+		return NULL;
+	}
 	
 	Config *result = ParseValue();
 	if(tag != NULL)
@@ -244,15 +249,23 @@ ConfigStruct* ConfigParser::ParseStruct(void)
 		value = ParseConfig();
 		if(value != NULL)
 		{
-			value->setParent(res);
-			res->setValue(var, value);
+			if(res->getStructElement(var) == NULL)
+			{
+				value->setParent(res);
+				res->setValue(var, value);
+			}
+			else
+			{
+				LOG_PARSE_ERROR(string("Duplicate key '") + var + "'");
+				delete value; value = NULL;
+			}
 		}
 		else
 			break;
 
 		SkipSpaces();
 		c = seec();
-		if(c == ';' || c == ',') getc();		// optional ';' or ','
+		if(c == ';') getc();		// optional ';'
 	}
 
 	return res;
@@ -297,7 +310,7 @@ ConfigArray* ConfigParser::ParseArray(void)
 
 		SkipSpaces();
 		c = seec();
-		if(c == ';' || c == ',') getc();		// optional ';' or ','
+		if(c == ',') getc();		// optional ','
 	}
 
 	return res;
@@ -402,7 +415,10 @@ std::string ConfigParser::ParseString()
 		if(c == '\\')
 		{
 			char d = seec();
-			if(d == end || d == '\\') c = getc();
+			if(d == '\'' || d == '"' || d == '\\')
+				c = getc();
+			else
+				LOG_PARSE_ERROR(string("Illegal escape sequence '\\") + d + "'. Accepting \\', \\\" or \\\\");
 		}
 		res.push_back(c);
 	}
@@ -427,7 +443,8 @@ void ConfigParser::SkipSpaces()
 	1 - line comment (# //)
 	2 - big comment  /* 
 */
-	int state = 0; 
+	int state = 0;
+	int level = 0;
 	for(;;)
 	{
 		c = getc();
@@ -444,7 +461,7 @@ void ConfigParser::SkipSpaces()
 			case '/':
 				d = seec(); 
 				if(d == '/'){ state = 1; getc(); }
-				else if(d == '*') { state = 2; getc(); }
+				else if(d == '*') { state = 2; level = 1;  getc(); }
 				else
 				{
 					ungetc();
@@ -457,15 +474,31 @@ void ConfigParser::SkipSpaces()
 			}
 			break;
 		case 1: // #
-			if(c == '\0') state = 0, ungetc();
+			if(c == '\0') 
+			{
+				state = 0;
+				ungetc();
+			}
 			if(c == '\n') state = 0;
 			break;
 		case 2: // /*
-			if(c == '\0') state = 0, ungetc();
+			if(c == '\0') 
+			{
+				LOG_PARSE_ERROR("Unexpected end of file in comment");
+				state = 0;
+				ungetc();
+				break;
+			}
+			if(c == '/' && seec() == '*') { level++; break; }
+
 			if(c == '*')
 			{
 				c = getc();
-				if(c == '/') state = 0;
+				if(c == '/')
+				{
+					level--;
+					if(level == 0) state = 0;
+				}
 			}	
 			break;
 		}
