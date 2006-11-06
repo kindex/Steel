@@ -27,8 +27,8 @@
 
 #include "openal/al.h"
 #include "openal/alc.h"
-#include "openal/alu.h"
-#include "openal/alut.h"
+//#include "openal/alu.h"
+//#include "openal/alut.h"
 #include "openal/eax.h"
 
 #include "audio_engine.h"
@@ -86,6 +86,7 @@ public:
 	bool init(Config* _conf);
 	bool deinit(void);
 	bool inject(AudioObject *object);
+	bool process(void);
 
 	Storage* getStorageClass(Object *object) { return new AudioStorage(this); }
 	void makeStorageForChildren(Object *object);

@@ -33,6 +33,8 @@ public:
 	virtual float getRolloff(void) = 0;		// ROLLOFF_FACTOR
 	virtual bool getSourceRelative(void) = 0;
 
+	virtual string getStatus(void) = 0;
+
 /*
 	getCoords();
 	getMaterial();

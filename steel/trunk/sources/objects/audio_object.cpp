@@ -23,4 +23,6 @@ AudioSourceRes::AudioSourceRes(void)
 	isLoop = false;
 	rolloffFactor = 1.0f;
 	sourceRelative = false;
+
+	status = "neutral";
 }

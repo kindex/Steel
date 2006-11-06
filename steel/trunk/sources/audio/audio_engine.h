@@ -60,6 +60,8 @@ public:
 	virtual void setListenerEnvironment(unsigned long environment) = 0;
 
 	virtual bool inject(AudioObject *object) = 0;
+	virtual bool process(void) = 0;
+
 
 //============================
 

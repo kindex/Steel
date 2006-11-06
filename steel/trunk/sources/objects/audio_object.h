@@ -38,6 +38,8 @@ public:
 	float getRolloff(void) { return rolloffFactor; }
 	bool getSourceRelative(void) { return sourceRelative; }
 	
+	string getStatus(void) { return status; }
+	void setStatus(string newStatus) { status = newStatus; }
 
 protected:
 	Audio *sound;
@@ -50,6 +52,8 @@ private:
 	float rolloffFactor;	// rolloff factor, If you set AL_ROLLOFF_FACTOR to 0, 
 							// you are just disabling distance attenuation, not panning.
 	bool sourceRelative;	// source relative to the listener, constant = true / dynamic = false
+
+	string status;		// play, stop, pause, neutral
 };
 
 #endif

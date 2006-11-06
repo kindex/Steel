@@ -111,15 +111,15 @@ bool OpenALEngine::init(Config* _conf)
 /**/
 	// check for EAX 2.0 support
 	log_msg("openal init", "Checking for EAX 2.0 support...");
-	if ( !alIsExtensionPresent((ALubyte*)"EAX2.0") )
+	if ( !alIsExtensionPresent((/*ALubyte* */ ALchar*)"EAX2.0") )
 	{
 //		std::cout << "\nNo EAX found!\n";
 		log_msg("openal init", "ERROR: No EAX 2.0 found!");
         return false; 
 	}
 
-	m_EAXSet = (EAXSet)alGetProcAddress((ALubyte*)"EAXSet");
-    m_EAXGet = (EAXGet)alGetProcAddress((ALubyte*)"EAXGet");
+	m_EAXSet = (EAXSet)alGetProcAddress((/*ALubyte* */ ALchar*)"EAXSet");
+    m_EAXGet = (EAXGet)alGetProcAddress((/*ALubyte* */ ALchar*)"EAXGet");
 
 	if ( !m_EAXSet || !m_EAXGet )
 	{
@@ -256,7 +256,7 @@ void OpenALEngine::AudioStorage::fill(Object *object)
 		alGenSources(1, &source);
 		alSourcei (source, AL_BUFFER,    buffer	);
 		soundUpdate();
-		soundPlay();
+		soundPlay();			// WHAT THE FUCK IS THIS ??????????
 	}
 }
 
@@ -276,6 +276,12 @@ bool OpenALEngine::AudioStorage::cache(void)
 	sourceRelative = A(object)->getSourceRelative();
 	
 	soundUpdate();
+	return true;
+}
+
+bool OpenALEngine::process(void)
+{
+	// iterator po vsem objectam - kto 4to ho4et
 	return true;
 }
 

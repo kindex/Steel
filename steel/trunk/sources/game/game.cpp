@@ -28,6 +28,7 @@
 #include "../objects/audio_ambient.h"
 
 #include "../res/res_main.h"
+//#include "../objects/kar98k.h"
 
 using namespace std;
 

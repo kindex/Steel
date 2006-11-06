@@ -85,6 +85,8 @@ public:
 	float getRolloff(void) { return audio ? audio->getRolloff() : 1.0f; }
 	bool getSourceRelative(void) { return audio ? audio->getSourceRelative() : false; }
 
+	string getStatus(void) { return audio ? audio->getStatus() : "neutral"; }
+
 // ********** PHYSIC *************
 // TODO
 };

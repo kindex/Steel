@@ -111,6 +111,8 @@ public:
 
 	float getRolloff(void) { return 1.0f; }
 	bool getSourceRelative(void) { return false; }
+
+	string getStatus(void) { return "neutral"; }
 };
 
 class GameObjSet: public GameObj
