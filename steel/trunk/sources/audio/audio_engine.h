@@ -19,7 +19,8 @@
 #include "../engine/engine.h"
 #include "../res/audio/audio.h"
 #include "../res/res_main.h"
-#include "audio_interface.h"
+#include "sound.h"
+
 
 class AudioEngine;
 
@@ -48,7 +49,7 @@ private:
 class AudioEngine : public Engine
 {
 protected:
-	svector<AudioObject*> objects;
+//	svector<AudioObject*> objects;
 
 public:
 	AudioEngine(void) {}
@@ -59,8 +60,11 @@ public:
 	virtual void setListener(const Listener &aListener) { listener = aListener; }
 	virtual void setListenerEnvironment(unsigned long environment) = 0;
 
-	virtual bool inject(AudioObject *object) = 0;
+	//virtual bool inject(AudioObject *object) = 0;
 	virtual bool process(void) = 0;
+
+	virtual bool soundPlay(Sound* sound) = 0;
+	virtual bool soundUpdate(Sound* sound) = 0;
 
 
 //============================

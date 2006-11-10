@@ -16,7 +16,7 @@
 #include "../steel.h"
 #ifndef __OBJECTS__COMBINER_H
 #define __OBJECTS__COMBINER_H
-#include "../audio/audio_interface.h"
+#include "../audio/audio_object.h"
 #include "game_obj.h"
 
 class Combiner: public GameObj
@@ -77,15 +77,15 @@ public:
 	Lights*		getLights(void) { return graph?graph->getLights():NULL;}
 
 // ********** AUDIO ************
-	float getGain(void) { return audio ? audio->getGain() : 1.0f; }		// audio is AudioObject* type
-	float getPitch(void) { return audio ? audio->getPitch() : 1.0f; }
-	bool isLooped(void) { return audio ? audio->isLooped() : false; }
-	Audio *getSound(void){ return audio ? audio->getSound() : NULL; }
+//	float getGain(void) { return audio ? audio->getGain() : 1.0f; }		// audio is AudioObject* type
+//	float getPitch(void) { return audio ? audio->getPitch() : 1.0f; }
+//	bool isLooped(void) { return audio ? audio->isLooped() : false; }
+//	Audio *getSound(void){ return audio ? audio->getSound() : NULL; }
 
-	float getRolloff(void) { return audio ? audio->getRolloff() : 1.0f; }
-	bool getSourceRelative(void) { return audio ? audio->getSourceRelative() : false; }
+//	float getRolloff(void) { return audio ? audio->getRolloff() : 1.0f; }
+//	bool getSourceRelative(void) { return audio ? audio->getSourceRelative() : false; }
 
-	string getStatus(void) { return audio ? audio->getStatus() : "neutral"; }
+//	string getStatus(void) { return audio ? audio->getStatus() : "neutral"; }
 
 // ********** PHYSIC *************
 // TODO

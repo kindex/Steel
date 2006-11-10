@@ -15,7 +15,7 @@
 #define KAR98K_H
 
 #include "combiner.h"
-#include "audio_object.h"
+#include "../audio/audio_object.h"
 
 class Kar98k : public Combiner
 {
@@ -32,9 +32,9 @@ private:
 	int magazine;		// magazine = 5 rounds
 	float weight;		// weight = 3900 g
 	float length;		// length = 1.11 m
-	AudioSourceRes* auRechamber;
-	AudioSourceRes* auReload;
-	AudioSourceRes* auFire;
+//	AudioSourceRes* auRechamber;
+//	AudioSourceRes* auReload;
+//	AudioSourceRes* auFire;
 };
 
 #endif

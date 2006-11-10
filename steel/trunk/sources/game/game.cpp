@@ -24,8 +24,7 @@
 #include "../objects/model_obj.h"
 #include "../objects/combiner.h"
 #include "../objects/sphere.h"
-#include "../objects/audio_object.h"
-#include "../objects/audio_ambient.h"
+#include "../audio/audio_object.h"
 
 #include "../res/res_main.h"
 //#include "../objects/kar98k.h"
@@ -120,7 +119,7 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		*matrix34::CreateRotationMatrix(1, v3(1,0,0))*0.5
 		);
 	world->addChildren(obj);
-/**/
+/**
 	Combiner* audioAm = new Combiner;
 	AudioSourceRes *audioX = new AudioSourceRes();
 	audioX->setSound(resAudio.add("audio/rain"));
@@ -138,7 +137,7 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		);
 	world->addChildren(audioAm);
 
-/**/
+/**
 	Combiner *obj2 = new Combiner;
 	obj2->setGraphObject(new Sphere);
 	AudioSourceRes *audio2 = new AudioSourceRes;
@@ -152,7 +151,7 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		);
 	world->addChildren(obj2);
 
-	/**/
+/**
 	Combiner *obj3= new Combiner;
 	obj3->setGraphObject(new Sphere);
 	AudioSourceRes *audio3 = new AudioSourceRes;
@@ -168,7 +167,7 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		);
 	world->addChildren(obj3);
 
-	/**/
+/**
 
 	Combiner *obj4= new Combiner;
 	obj4->setGraphObject(new Sphere);
@@ -197,7 +196,7 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		*matrix34::CreateRotationMatrix(1, v3(1,0,0))*0.5
 		);
 	world->addChildren(obj5);
-
+/**/
 	light = new GameLight;
 	light->setProcessKind(PROCESS_NONE);
 	matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
@@ -598,6 +597,6 @@ void Steel::bindAudioEngine(AudioEngine *engine)
 	int count = world->getAudioChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
-		engine->inject(world->getAudioChildren(i));
+//		engine->inject(world->getAudioChildren(i));
 	}
 }

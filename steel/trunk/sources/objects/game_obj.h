@@ -18,7 +18,7 @@
 
 #include "../steel.h"
 #include "../physic/physic_interface.h"
-#include "../audio/audio_interface.h"
+#include "../audio/audio_object.h"
 #include "../physic/physic_engine.h"	// Kane
 #include "../graph/graph_interface.h"
 

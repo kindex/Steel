@@ -25,32 +25,6 @@ EAXSet m_EAXSet;
 EAXGet m_EAXGet;
 
 //========================================================================
-// classes
-/*
-void AL_Source::initialize(Audio * sound)
-{
-	setVelocity(0.0f, 0.0f, 0.0f);
-	setPosition(0.0f, 0.0f, 0.0f);
-	setGain(1.0f);
-	setPitch(1.0f);
-	setLooped(false);
-
-	alGenBuffers(1, &buffer);
-	alBufferData(buffer, sound->format, sound->data, sound->size, sound->frequency);
-	if (sound->data)
-		free(sound->data);
-	alGenSources(1, &source);
-
-	alSourcei (source, AL_BUFFER,   buffer			);
-
-    alSourcef (source, AL_PITCH,    getPitch()		);
-    alSourcef (source, AL_GAIN,     getGain()		);
-    alSourcefv(source, AL_POSITION, getPosition()	);
-    alSourcefv(source, AL_VELOCITY, getVelocity()	);
-	alSourcei (source, AL_LOOPING,  isLooped()		);
-};
-*/
-
 
 ALboolean OpenALEngine::CheckALCError()
 {
@@ -176,7 +150,7 @@ void OpenALEngine::setListener(const Listener &aListener)
 	alListenerfv(AL_ORIENTATION, orientation);
 }
 
-
+/**
 void OpenALEngine::AudioStorage::soundPlay(void)
 {
 	alSourcePlay(source);
@@ -217,11 +191,12 @@ void OpenALEngine::AudioStorage::soundUpdate(void)
 		alSourcei (source, AL_SOURCE_RELATIVE, sourceRelative);
 	}
 }
+/**/
 
-
-bool OpenALEngine::inject(AudioObject *object)
+bool OpenALEngine::inject(/* AudioObject *object */)
 {
-	// если объект не хочет добавляться
+	
+/*	// если объект не хочет добавляться
 	if(!object->AudioBeforeInject()) 
 		return false;
 	// кешируем объект
@@ -229,12 +204,27 @@ bool OpenALEngine::inject(AudioObject *object)
 		return false;
 	makeStorageForChildren(object);
 	// список глобальных объектов
-	objects.push_back(object);
-
+*/
+/*	if (AS(object)->getSound() != NULL)
+	{
+		//unsigned int buffer;
+		//unsigned int source;
+		//AudioSound* obj = new AudioSound();
+		alGenBuffers(1, &AS(object)->buffer);
+		alBufferData(AS(object)->buffer, AS(object)->getSound()->format, AS(object)->getSound()->data, AS(object)->getSound()->size, AS(object)->getSound()->frequency);
+		alGenSources(1, &AS(object)->source);
+		alSourcei(AS(object)->source, AL_BUFFER, AS(object)->buffer);
+		AS(object)->position = object->getPosition().getTranslation();
+		objects.push_back(object);
+		AS(object)->sndUpdate();
+		AS(object)->sndPlay(AS(object)->source);
+	}	
+	//objects.push_back(object);
+*/
 	return true;
 }
 
-
+/**
 void OpenALEngine::makeStorageForChildren(Object *object)
 {
 
@@ -256,8 +246,9 @@ void OpenALEngine::AudioStorage::fill(Object *object)
 		alGenSources(1, &source);
 		alSourcei (source, AL_BUFFER,    buffer	);
 		soundUpdate();
-		soundPlay();			// WHAT THE FUCK IS THIS ??????????
+	//	soundPlay();			// WHAT THE FUCK IS THIS ??????????
 	}
+
 }
 
 
@@ -274,14 +265,28 @@ bool OpenALEngine::AudioStorage::cache(void)
 
 	rolloffFactor = A(object)->getRolloff();
 	sourceRelative = A(object)->getSourceRelative();
-	
+
 	soundUpdate();
 	return true;
 }
-
+/**/
 bool OpenALEngine::process(void)
 {
 	// iterator po vsem objectam - kto 4to ho4et
+//	for (int i = 0; i < objects.size(); i++)
+	{
+
+	}
+	return true;
+}
+
+bool OpenALEngine::soundPlay(Sound* sound)
+{
+	return true;
+}
+
+bool OpenALEngine::soundUpdate(Sound* sound)
+{
 	return true;
 }
 

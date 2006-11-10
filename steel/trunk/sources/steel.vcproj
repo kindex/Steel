@@ -752,7 +752,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\audio\audio_interface.h"
+					RelativePath=".\audio\audio_object.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\audio\audio_object.h"
 					>
 				</File>
 				<File
@@ -761,6 +765,10 @@
 				</File>
 				<File
 					RelativePath=".\audio\openal_engine.h"
+					>
+				</File>
+				<File
+					RelativePath=".\audio\sound.h"
 					>
 				</File>
 				<Filter
@@ -772,6 +780,10 @@
 					</File>
 					<File
 						RelativePath=".\audio\openal\alc.h"
+						>
+					</File>
+					<File
+						RelativePath=".\audio\openal_types.h"
 						>
 					</File>
 				</Filter>
@@ -1012,22 +1024,6 @@
 				Name="objects"
 				>
 				<File
-					RelativePath=".\objects\audio_ambient.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\audio_ambient.h"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\audio_object.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\audio_object.h"
-					>
-				</File>
-				<File
 					RelativePath=".\objects\combiner.cpp"
 					>
 				</File>
@@ -1103,6 +1099,14 @@
 				</File>
 				<File
 					RelativePath=".\objects\group.h"
+					>
+				</File>
+				<File
+					RelativePath=".\objects\kar98k.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\objects\kar98k.h"
 					>
 				</File>
 				<File

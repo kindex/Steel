@@ -33,6 +33,8 @@
 
 #include "audio_engine.h"
 
+//#include "../objects/audio_sound.h"
+
 //#pragma comment(lib, "openal32.lib")
 //#pragma comment(lib, "alut.lib")
 #pragma comment(lib, "eaxguid.lib")
@@ -42,36 +44,8 @@ using namespace std;
 class OpenALEngine: public AudioEngine
 {
 protected:
-#define A(object) ((AudioObject*)(object))
-	struct AudioStorage: public Storage // множество треугольников одного материала
-	{
-		Audio *sound;
-		v3 position;
-
-		// from OpenAL_Source
-		unsigned int source;		// unsigned int
-		unsigned int buffer;		// unsigned int
-		bool isLoop;
-		float gain;
-		float pitch;
-
-		float rolloffFactor;
-		bool sourceRelative;
-
-		void soundPlay(void);
-		void soundPause(void);
-		void soundStop(void);
-		void soundClose(void);
-		void soundUpdate(void);
-
-		bool init(void);
-		bool deinit(void) { return true; }
-		void fill(Object *object);
-		bool cache(void);
-
-		AudioStorage(Engine *engine): Storage(engine), sound(NULL) {}
-		~AudioStorage(void) { deinit(); }
-	};
+//#define A(object) ((AudioObject*)(object))
+//#define AS(object) ((AudioSound*)(object))
 
 
 	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???
@@ -80,16 +54,20 @@ protected:
 	void updateListener(Listener &listener);
 
 public:
+	bool soundPlay(Sound* sound); 
+	bool soundUpdate(Sound* sound);
+
+public:
 	
 
 	void setListener(const Listener &aListener);
 	bool init(Config* _conf);
 	bool deinit(void);
-	bool inject(AudioObject *object);
+	bool inject(/*AudioObject *object*/);
 	bool process(void);
 
-	Storage* getStorageClass(Object *object) { return new AudioStorage(this); }
-	void makeStorageForChildren(Object *object);
+	Storage* getStorageClass(Object *object) { return new Storage(this); }
+	void makeStorageForChildren(Object *object) {};
 };
 
 #endif

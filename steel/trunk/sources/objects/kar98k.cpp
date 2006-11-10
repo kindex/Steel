@@ -22,18 +22,18 @@ Kar98k::Kar98k(void)
 	magazine = 5;		// rounds
 	weight = 3900;		// g
 	length = 1.11f;		// m
-	AudioSourceRes* auFire = new AudioSourceRes();
-	auFire->setSound(resAudio.add("audio/kar98k/wpnfire_k98_1b"));
-	AudioSourceRes* auReload = new AudioSourceRes();
-	auReload->setSound(resAudio.add("audio/kar98k/kar98_reload"));
-	AudioSourceRes* auRechamber = new AudioSourceRes();
-	auRechamber->setSound(resAudio.add("audio/kar98k/kar98_rechamber"));
+//	AudioSourceRes* auFire = new AudioSourceRes();
+//	auFire->setSound(resAudio.add("audio/kar98k/wpnfire_k98_1b"));
+//	AudioSourceRes* auReload = new AudioSourceRes();
+//	auReload->setSound(resAudio.add("audio/kar98k/kar98_reload"));
+//	AudioSourceRes* auRechamber = new AudioSourceRes();
+//	auRechamber->setSound(resAudio.add("audio/kar98k/kar98_rechamber"));
 }
 
 void Kar98k::fire(void)
 {
 	magazine--;
-	auFire->setStatus("play");
+//	auFire->setStatus("play");
 	// fireSound play
 }
 
@@ -42,7 +42,7 @@ void Kar98k::reload(void)
 	if (magazine != 5)
 	{
 		magazine = 5;
-		auReload->setStatus("play");
+//		auReload->setStatus("play");
 		
 		// reloading sound play
 	}
