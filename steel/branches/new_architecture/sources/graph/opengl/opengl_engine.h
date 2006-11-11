@@ -71,6 +71,8 @@ protected:
 		Vertexes	*vertex;
 		Normals		*normal;
 		Lights		*lights;
+		int textureCount;
+		svector<TexCoords*> texCoords;
 
 		GLines		*lines;
 
@@ -81,7 +83,7 @@ protected:
 
 		GraphStorage(Engine *engine): Storage(engine), faceMaterials(NULL), vertex(NULL), normal(NULL), lights(NULL),
 			lines(NULL) {}
-		void fill(Object *object);
+		void fill(GameObject *object);
 		bool cache(void);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 	};
@@ -189,7 +191,7 @@ public:
 	virtual bool process(steel::time globalTime, steel::time time);
 	virtual bool deinit(void);
 
-	void prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GraphObject *parent = NULL);
+	void prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
 
 	bool isVisible(aabb box);
 
@@ -224,13 +226,13 @@ public:
 /*	bool bindTexCoords(MapCoord *coord);
 	bool bindVertexes(Vertexes *v);*/
 
-	GraphStorage* getStorage(GraphObject *object) { return (GraphStorage*)Engine::getStorage(object); }
+	GraphStorage* getStorage(GameObject *object) { return (GraphStorage*)Engine::getStorage(object); }
 	GraphStorage* getStorage(uid id) { return (GraphStorage*)Engine::getStorage(id); }
 	 
-	Storage* getStorageClass(Object *object) { return new GraphStorage(this); }
+	Storage* getStorageClass(GameObject *object) { return new GraphStorage(this); }
 
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	void makeStorageForChildren(Object *object);
+	void makeStorageForChildren(GameObject *object);
 
 	void onResize(int width, int height);
 

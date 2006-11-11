@@ -30,8 +30,6 @@
 #include "main.h"
 #include "graph/opengl/opengl_engine.h"
 
-#include "audio/openal_engine.h"
-
 using namespace std;
 
 std::string commandLine;
@@ -43,7 +41,7 @@ int main(int argc, char *argv[])
 #endif
 {
 // *********************** LOG *********************
-	globalTimer.start(); globalFrameNumber = 1;
+	globalTimer.start(); //globalFrameNumber = 1;
 
 	deleteFiles("..\\log", "*.log");
 	logFilter.set("-opengl_info");
@@ -79,12 +77,12 @@ int main(int argc, char *argv[])
 	OpenGL_Engine *graph = new OpenGL_Engine();
 	if(!graph->init(resConfig.add("../conf/opengl.conf"), input)) return 3;
 // ******************* AUDIO ************************
-	AudioEngine *audio = NULL;
+/*	AudioEngine *audio = NULL;
 #ifdef LIB_OPENAL
 	audio = new OpenALEngine();
 #endif
 	if(audio && !audio->init(resConfig.add("../conf/audio")))return 4;
-
+*/
 
 // ******************* GAME *************************
 	Steel game;
@@ -92,11 +90,11 @@ int main(int argc, char *argv[])
 	if(!game.init(resConfig.add("../conf/game.conf"), input, commandLine)) return 5;
 
 	game.bind(graph);
-	if(audio)
+/*	if(audio)
 	{
 		game.insonify(audio);
 		game.bindAudioEngine(audio);
-	}
+	}*/
 		
 
 // ******************* MAIN LOOP ************************
@@ -130,7 +128,7 @@ int main(int argc, char *argv[])
 		}
 
 		game.draw(graph);
-		if(audio) game.insonify(audio);
+//		if(audio) game.insonify(audio);
 
 		timer.incframe();
 
@@ -155,7 +153,7 @@ int main(int argc, char *argv[])
 			log_msg("core", "Main loop: first frame passed");
 			timer.resume();
 		}
-		globalFrameNumber++;
+//		globalFrameNumber++;
 	}
 	log_msg("core", "Exit from main loop");
 // ******************* MAIN LOOP ************************
@@ -164,12 +162,12 @@ int main(int argc, char *argv[])
 	graph->deinit();
 	delete graph;
 
-	if(audio) 
+/*	if(audio) 
 	{
 		audio->deinit();
 		delete audio;
 	}
-
+*/
 	steel::log.close();
 	return 0;
 }

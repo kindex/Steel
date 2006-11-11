@@ -21,6 +21,7 @@
 #include "../steel.h"
 #include "../res/conf/conf.h"
 #include "graph_interface.h"
+#include "../engine/interface.h"
 
 class GraphEngine;
 
@@ -39,22 +40,20 @@ public:
 
 class GraphEngine: public Engine
 {
-protected:
-	steel::vector<GraphObject*> objects;
-
-	GraphEngineInfo info;
 public:
+
+	static const InterfaceId interfaceId = 0x100;
+
 	struct GraphTotalInfo
 	{
 		int vertex, triangle, object, global;
 	} total;
 
-public:
 	Camera camera;
 	virtual void processCamera() = 0;
 	// Collect information about object: how to render it
-	virtual bool inject(GraphObject *object);
-	virtual bool remove(GraphObject *object);
+	virtual bool inject(GameObject *object);
+	virtual bool remove(GameObject *object);
 	
 	virtual bool process(steel::time globalTime, steel::time time) = 0;
 
@@ -62,6 +61,12 @@ public:
 	virtual bool isVisible(aabb box) = 0;
 	// Clear collected information
 	bool clear(void);
+
+protected:
+	steel::vector<GameObject*> objects;
+
+	GraphEngineInfo info;
+
 };
 
 #endif

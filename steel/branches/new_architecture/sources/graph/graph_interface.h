@@ -18,8 +18,9 @@
 
 #include "../steel.h"
 #include "../engine/engine.h"
+#include "../engine/interface.h"
 
-#include "types.h"
+#include "graph_types.h"
 
 #include "../res/material/material.h"
 
@@ -45,32 +46,16 @@ typedef steel::vector<FaceMaterial>	FaceMaterials;
 например, как мета-шарики, система частиц
 */
 
-class GraphObject;
-typedef steel::svector<GraphObject*> GraphObjectList;
-
-#define G(object) ((GraphObject*)object)
-
-class GraphObject: public Object
+class GraphInterface: public Interface
 {
-protected:
-	int gInjectedCount;
 public:
 // *** Common ***
-	GraphObject(): gInjectedCount(0) {}
 	// список детей
 	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
 	// возвращает количество детей
-	virtual int getGraphChildrenCount(void) { return 0; } 
+	virtual void setGraphChildrenCount(int) = 0;
 	// ребёнок с указанным номером
-	virtual GraphObject* getGraphChildren(int number) { return NULL; }
-
-	// Непосредственно перед добавлением в движок вызывается 
-	virtual bool GraphBeforeInject() { gInjectedCount++; return true;}
-	// После удаления из движка вызывается процедура afterRemove
-	virtual void GraphAfterRemove() {gInjectedCount--;}
-
-	// вызывается перед каждой итерацией обработки. Внутри этой процедуры объект может менять некоторые свои параметры
-	virtual	void ProcessGraph(const GraphEngineInfo &info) {}
+	virtual void setGraphChildren(int number, GameObject*) = 0;
 
 // *** Configuration ***
 
@@ -81,16 +66,16 @@ public:
 	// Следующие функции возврящяют ссылки на массивы данных (NULL if none), и должны 
 	// отвечать за хранние этих данных до следующего вызова этой функции
 	// или вызова cleanup
-	virtual Vertexes*	getVertexes() { return NULL;} // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
-	virtual Normals*	getNormals() { return NULL;} // список нормалей в вершинам
+	virtual void	setVertexes(Vertexes*) = 0; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	virtual void	setNormals(Normals*) = 0; // список нормалей в вершинам
 
-	virtual GLines*		getLines() { return NULL;} // индексы вершин для линий и цвета линий (for debug)
+	virtual void	setLines(GLines*) = 0; // индексы вершин для линий и цвета линий (for debug)
 
 	// массив индексов вершин, которые образуют треугольники (грани) + материалы
-	virtual FaceMaterials* getFaceMaterials() { return NULL;}
-	virtual TexCoords*	getTexCoords(int texNumber) { return NULL;}
+	virtual void	setFaceMaterials(FaceMaterials*) = 0;
+	virtual void	setTexCoords(int texNumber, TexCoords*) = 0;
 
-	virtual Lights*		getLights() { return NULL;}
+	virtual void 	setLights(Lights*) = 0;
 };
 
 #endif

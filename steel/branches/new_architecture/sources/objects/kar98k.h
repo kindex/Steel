@@ -15,7 +15,6 @@
 #define KAR98K_H
 
 #include "combiner.h"
-#include "../audio/audio_object.h"
 
 class Kar98k : public Combiner
 {

@@ -25,7 +25,7 @@
 #include "../res/res.h"
 #include "../res/config/config.h"
 #include "../math/vector3d.h"
-#include "object.h"
+#include "game_object.h"
 #include "helper.h"
 
 #include <string>
@@ -55,25 +55,25 @@ protected:
 	*/
 	struct Storage
 	{
-		Object	*object;
-		Object	*parent;
+		GameObject	*object;
+		GameObject	*parent;
 		Engine	*engine;
 //		int storageType; //  ??
 		uid objectId; // инентификатор объекта (uid)
 		int storageIndex; // индекс этой структуры (кеша) в массиве storage
 
 		// время последнего изменения объекта. Если отлично от того, что возвращает Object::getModificationTime(), то надо обновить кеш.
-		ModificationTime modificationTime, childrenModificationTime;
+//		ModificationTime modificationTime, childrenModificationTime;
 		// список детей объекта (uid)
 		svector<uid> children;
 
 		Storage(Engine *aengine): object(NULL), parent(NULL), engine(aengine) {}
-		virtual void fill(Object *object);
+		virtual void fill(GameObject *object);
 		// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
 		// возвращает true, если была обнавлена вся информация
 		virtual bool cache(void);
 		virtual ~Storage(void) {}
-		virtual void setParent(Object *aparent) {parent = aparent; }
+		virtual void setParent(GameObject *aparent) {parent = aparent; }
 	};
 	// кеш объектов
 	svector<Storage*> storages;
@@ -90,20 +90,20 @@ protected:
 	}
 
 public:
-	virtual Storage *getStorage(Object *object);
+	virtual Storage *getStorage(GameObject *object);
 	virtual Storage* getStorage(uid id);
 
 protected:
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	virtual bool makeStorageForObject(Object *object);
-	virtual Storage* getStorageClass(Object *object)  = 0;
-	virtual void makeStorageForObjectPost(Object *object, Storage *storage) {}
+	virtual bool makeStorageForObject(GameObject *object);
+	virtual Storage* getStorageClass(GameObject *object)  = 0;
+	virtual void makeStorageForObjectPost(GameObject *object, Storage *storage) {}
 
 	virtual void deleteStorageForObject(int sid);
 	virtual void deleteStorageForObjectPost(int sid) {}
 
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	virtual void makeStorageForChildren(Object *object) = 0;
+	virtual void makeStorageForChildren(GameObject *object) = 0;
 	virtual void deleteStorageForChildren(int sid);
 };
 

@@ -96,7 +96,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphStorage &e, Triangles 
 
 			if(conf->geti("drawBump") && !lights.empty() && (i==0) && !e.blend && (texture.format == TEXTURE_FORMAT_BUMP_MAP || texture.format == TEXTURE_FORMAT_COLOR_MAP))
 			{
-				TexCoords *coords = G(e.object)->getTexCoords(i);
+				TexCoords *coords = e.texCoords[i];
 
 				int j = 0;
 
@@ -149,7 +149,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphStorage &e, Triangles 
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				if(BindTexture) (this->*BindTexture)(texture.image, true);
 
-				TexCoords *coords = G(e.object)->getTexCoords(i);
+				TexCoords *coords = e.texCoords[i];
 				assert(coords->data.size() == e.vertex->data.size(), "TexCoords.size != Vertex.size");
 				if(BindTexCoords) (this->*BindTexCoords)(coords);
 				currentTextureArb++;

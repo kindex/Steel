@@ -22,7 +22,6 @@
 #include "../objects/game_obj.h"
 #include "../objects/group.h"
 
-#include "../physic/physic_engine_steel.h"
 #include "../graph/graph_engine.h"
 #include "../graph/graph_helper.h"
 
@@ -32,9 +31,6 @@ class Game; // forward declaration, cross-use
 
 #include <string>
 #include <map>
-
-#include "../audio/openal_engine.h"
-#include "../audio/audio_engine.h"
 
 /*
 Класс, задающий правила игры
@@ -68,18 +64,15 @@ protected:
 	Config	*conf;
 
 	GraphEngine *graphEngine;
-	PhysicEngine *physicEngine;
-	AudioEngine	 *audioEngine;
 
 // World - custom objects
-	GameGroup	*world;
-	GraphHelper	*physicHelper;
+ 	GameObject	*world;
+//	GraphHelper	*physicHelper;
 
 public:
 	Steel(void):
 	input(NULL),	conf(NULL),
-	graphEngine(NULL),	physicEngine(NULL),	audioEngine(NULL),
-	world(NULL),	physicHelper(NULL)
+	graphEngine(NULL),	world(NULL)
 	{ } 
 
 	virtual bool init(Config *_conf, Input *_input, std::string params);
@@ -90,11 +83,11 @@ public:
 	bool executeCommand(std::string command);
 
 	void bind(GraphEngine *engine);
-	void bindPhysicEngine(void);
-	void bindAudioEngine(AudioEngine *engine);
+//	void bindPhysicEngine(void);
+//	void bindAudioEngine(AudioEngine *engine);
 	void draw(GraphEngine *engine);
 
-	void insonify(AudioEngine *engine);
+//	void insonify(AudioEngine *engine);
 
 	void process(steel::time globalTime, steel::time time);
 //	int getCollisionCount() { return physicEngine->total.collisionCount; }

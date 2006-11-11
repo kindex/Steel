@@ -16,7 +16,7 @@
 #define __GRAPH__TYPES_H
 
 #include "../steel.h"
-#include "../engine/object.h"
+#include "../engine/engine_types.h"
 #include "../math/aabb.h"
 #include "../math/maths.h"
 #include "../math/vector3d.h"
@@ -76,7 +76,7 @@ struct GraphEngineInfo
 {
 	steel::time curTime;
 	steel::time frameLength;
-	ModificationTime modificationTime;
+//	ModificationTime modificationTime;
 	v3 cameraEye;
 	v3 cameraDirection;
 };

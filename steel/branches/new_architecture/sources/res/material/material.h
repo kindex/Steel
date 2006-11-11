@@ -17,7 +17,7 @@
 #include "../../steel.h"
 #include "../image/image.h"
 #include "../conf/conf.h"
-#include "../../graph/types.h"
+#include "../../graph/graph_types.h"
 
 //тип смешивания двух текстур
 typedef	enum

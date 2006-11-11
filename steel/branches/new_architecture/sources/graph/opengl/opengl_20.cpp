@@ -48,7 +48,7 @@ void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphStorage &e, Triangles 
 
 				if(texture.format == TEXTURE_FORMAT_COLOR_MAP)
 				{
-					TexCoords *coords = G(e.object)->getTexCoords(i);
+					TexCoords *coords = e.texCoords[i];
 
 					(this->*BindTexture)(texture.image, false);
 

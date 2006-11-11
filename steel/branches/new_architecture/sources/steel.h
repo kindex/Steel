@@ -31,7 +31,7 @@
 #endif
 
 #if !defined(STEEL_OS)
-	#errorSTEEL_OS
+	#error STEEL_OS
 #endif
 
 
@@ -73,5 +73,7 @@ private:
 #else
 	#define _( msgid )
 #endif
+
+#define NULL 0
 
 #endif

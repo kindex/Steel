@@ -66,8 +66,8 @@ public:
 	bool inject(/*AudioObject *object*/);
 	bool process(void);
 
-	Storage* getStorageClass(Object *object) { return new Storage(this); }
-	void makeStorageForChildren(Object *object) {};
+	Storage* getStorageClass(GameObject *object) { return new Storage(this); }
+	void makeStorageForChildren(GameObject *object) {};
 };
 
 #endif

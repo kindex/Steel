@@ -17,7 +17,7 @@
 #include "../steel.h"
 #include "../graph/graph_interface.h"
 
-class Sphere: public GraphObject
+class Sphere: public GameObject
 {
 protected:
 	Vertexes *vertexes, *normals;

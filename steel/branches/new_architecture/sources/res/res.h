@@ -23,10 +23,11 @@
 #include <string>
 #include <stack>
 
-#include "../engine/object.h"
 #include "../common/types.h"
 #include "../common/utils.h"
 #include "../common/logger.h"
+
+#include "../engine/id_generator.h"
 
 
 // Собирает полное имя файла относительно директории. Если имя файла начинается с /, то имя файла считается уже полным

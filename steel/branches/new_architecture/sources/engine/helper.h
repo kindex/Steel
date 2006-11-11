@@ -23,7 +23,7 @@
 
 #include "../steel.h"
 
-#include "../graph/types.h"
+#include "../graph/graph_types.h"
 #include "../math/vector3d.h"
 #include "../math/line.h"
 #include "../math/aabb.h"

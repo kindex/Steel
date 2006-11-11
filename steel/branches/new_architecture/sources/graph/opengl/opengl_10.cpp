@@ -24,7 +24,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles 
 		total.object++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
-		int texCount = material->getTextureCount();
+		int texCount = e.textureCount;
 
 		TextureBlendMode inheritedMode = TEXTURE_BLEND_MODE_NONE, currentMode;
 
@@ -96,7 +96,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles 
 			}*/
 
 // -> (*).  ->*  *(->)
-			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, G(e.object)->getTexCoords(i),  total);
+			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, e.texCoords[i],  total);
 		   	glPopAttrib();
 		}
 	   	glPopAttrib();

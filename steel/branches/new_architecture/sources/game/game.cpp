@@ -24,9 +24,9 @@
 #include "../objects/model_obj.h"
 #include "../objects/combiner.h"
 #include "../objects/sphere.h"
-#include "../audio/audio_object.h"
 
 #include "../res/res_main.h"
+#include "../objects/scene.h"
 //#include "../objects/kar98k.h"
 
 using namespace std;
@@ -68,24 +68,33 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		return false;
 	}
 
-	world = new GameGroup();
-	world->setProcessKind(PROCESS_NONE);
+	Config *scene = conf->find("scene");
+	if(scene == NULL)
+	{
+		error("game res", "Cannot find scene config");
+		return false;
+	}
+
+	world = createGameObject(scene);
+	if(world == NULL)
+	{
+		error("game", "Cannot init scene");
+		return false;
+	}
 	
-//	Object::global, 
-	world->conf = conf->gets("script");
-	if(!world->load(world)) return false;
+	
 
 // ******************* PHYSIC **************************
-	physicHelper  = new GraphHelper;
+//	physicHelper  = new GraphHelper;
 
 //	physicEngine = new PhysicEngine3D;
-	physicEngine = new PhysicEngineSteel;
+//	physicEngine = new PhysicEngineSteel;
 
-	if(!physicEngine->init(conf->find("physic"))) return 1;
-	this->bindPhysicEngine();
+/*	if(!physicEngine->init(conf->find("physic"))) return 1;
+	this->bindPhysicEngine();*/
 
 	g = conf->getv3("g");
-	physicEngine->setGravitation(g);
+//	physicEngine->setGravitation(g);
 
 	_alive = true;
 	paused = conf->geti("paused", 0) == 1;
@@ -102,14 +111,14 @@ void Steel::handleEventKeyDown(std::string key)
 	if(key == "pause") paused = !paused;
 	if(key == "n") framesToPass = 1;
 
-	if(key == "f1") physicEngine->conf->toggle("helperDrawLines");
+/*	if(key == "f1") physicEngine->conf->toggle("helperDrawLines");
 	if(key == "f2") graphEngine->conf->toggle("drawFace");
 	if(key == "f3") graphEngine->conf->toggle("drawWire");
 	if(key == "f4") graphEngine->conf->toggle("drawBump");
 	if(key == "f5") graphEngine->conf->toggle("drawVertexes");
 	if(key == "f7") graphEngine->conf->toggle("drawNormals");
 	if(key == "f8") graphEngine->conf->toggle("drawAABB");
-
+*/
 	if(key == "f6") 
 	{
 		graphEngine->conf->toggle("clearColor");
@@ -133,7 +142,7 @@ void Steel::handleEventKeyDown(std::string key)
 		else
 			g = conf->getv3("g");
 
-		physicEngine->setGravitation(g);
+//		physicEngine->setGravitation(g);
 	}
 
 	if(key == "mouse1" && !conf->getf("automaticGun"))
@@ -207,7 +216,7 @@ void Steel::process(steel::time globalTime, steel::time time)
 	{
 		static steel::time totalPhysicTime = 0;
 		steel::time frame = 0.01f*speedup;
- 		physicEngine->process(totalPhysicTime, frame);
+// 		physicEngine->process(totalPhysicTime, frame);
 		totalPhysicTime += frame;
 
 		if(framesToPass>0) framesToPass--;
@@ -233,81 +242,33 @@ void Steel::bind(GraphEngine *engine)
 {
 	graphEngine = engine;
 
-	graphEngine->inject(physicHelper);
+//	graphEngine->inject(physicHelper);
 
-	int count = world->getGraphChildrenCount();
-	for(int i = 0; i < count; i++)
-	{
-		engine->inject(world->getGraphChildren(i));
-	}
+	if(world != NULL)
+		engine->inject(world);
 }
 
-void Steel::bindPhysicEngine()
-{
-//	if(conf->geti("drawHelper"))
-	physicEngine->bindHelper(physicHelper);
-
-	int count = world->getPhysicChildrenCount();
-	for(int i = 0; i < count; i++)
-	{
-		physicEngine->inject(world->getPhysicChildren(i));
-	}
-}
-
-void Steel::insonify(AudioEngine *engine)
-{
-	Listener listener;
-	listener.setPosition(eye.x, eye.y, eye.z);
-	listener.setOrientation(v3(direction.x, direction.y, direction.z), v3(0,0,1));
-	engine->setListener(listener);
-}
 
 void Steel::draw(GraphEngine *graph)
 {
-/*	if(!input->isMouseCaptured())
-	{
-		if(tag.find("camera.eye") != tag.end())
-			eye = getGlobalPosition("camera.eye");
-		if(tag.find("camera.target") != tag.end())
-		{
-			v4 target = getGlobalPosition("camera.target");
-			direction = target - eye;
-		}
-	}
-*/
 	direction.normalize();
 
-/*	if(conf->geti("crosshair"))
-	{
-		matrix34 m;
-
-		m.loadIdentity(); m.setTranslation(eye + direction*0.01f);
-
-		crosshair->setPosition(m);
-		((Sprite*)crosshair)->setAlign(-direction);
-
-		graph->inject(crosshair);
-	}*/
-	
 	graph->camera.setup(eye, direction);
 	graph->processCamera();
 	graph->process(0,0);
-	
-
-//	if(conf->geti("crosshair"))
-//		graph->remove(crosshair);
 }
 
 
 
 void Steel::deinit()
 {
-	if(physicEngine)
+/*	if(physicEngine)
 	{
 		physicEngine->deinit();
 		delete physicEngine;
 		physicEngine = NULL;
 	}
+	*/
 }
 
 
@@ -356,42 +317,3 @@ bool Steel::executeCommand(std::string command)
 }
 
 
-void Steel::bindAudioEngine(AudioEngine *engine)
-{
-	audioEngine = engine;
-	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_GENERIC);
-	/*
-	EAX_ENVIRONMENT_GENERIC,
-    EAX_ENVIRONMENT_PADDEDCELL,
-    EAX_ENVIRONMENT_ROOM,
-    EAX_ENVIRONMENT_BATHROOM,
-    EAX_ENVIRONMENT_LIVINGROOM,
-    EAX_ENVIRONMENT_STONEROOM,
-    EAX_ENVIRONMENT_AUDITORIUM,
-    EAX_ENVIRONMENT_CONCERTHALL,
-    EAX_ENVIRONMENT_CAVE,
-    EAX_ENVIRONMENT_ARENA,
-    EAX_ENVIRONMENT_HANGAR,
-    EAX_ENVIRONMENT_CARPETEDHALLWAY,
-    EAX_ENVIRONMENT_HALLWAY,
-    EAX_ENVIRONMENT_STONECORRIDOR,
-    EAX_ENVIRONMENT_ALLEY,
-    EAX_ENVIRONMENT_FOREST,
-    EAX_ENVIRONMENT_CITY,
-    EAX_ENVIRONMENT_MOUNTAINS,
-    EAX_ENVIRONMENT_QUARRY,
-    EAX_ENVIRONMENT_PLAIN,
-    EAX_ENVIRONMENT_PARKINGLOT,
-    EAX_ENVIRONMENT_SEWERPIPE,
-    EAX_ENVIRONMENT_UNDERWATER,
-    EAX_ENVIRONMENT_DRUGGED,
-    EAX_ENVIRONMENT_DIZZY,
-    EAX_ENVIRONMENT_PSYCHOTIC
-	*/
-
-	int count = world->getAudioChildrenCount();
-	for(int i = 0; i < count; i++)
-	{
-//		engine->inject(world->getAudioChildren(i));
-	}
-}

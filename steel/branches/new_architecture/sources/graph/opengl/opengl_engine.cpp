@@ -383,11 +383,11 @@ void OpenGL_Engine::processCamera()
     glLoadIdentity();
 }
 
-void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix, GraphObject *parent)
+void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix, GameObject *parent)
 {
 	info.curTime = globalTime;
 	info.frameLength = time;
-	info.modificationTime = globalFrameNumber;
+//	info.modificationTime = globalFrameNumber;
 	info.cameraEye = camera.eye;
 	info.cameraDirection = camera.center - camera.eye;
 

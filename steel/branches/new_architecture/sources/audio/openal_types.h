@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: audio/openal_engine.cpp
+	File: audio/openal_types.h
 	Unit: OpenAL Engine
 	Part of: Steel Engine
 	(C) DiVision, 2004-2006
