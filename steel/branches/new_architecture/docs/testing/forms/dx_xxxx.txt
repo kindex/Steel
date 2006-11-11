@@ -1,0 +1,54 @@
+/*id*********************************************************
+	Unit: testing
+	Part of: Testing
+	(C) DiVision, 2004-2006
+	Authors:
+		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
+	File history:
+		[2006-08-15 19:45:51] Def: File Creation.
+    Description:
+		This file contains PTR form for defect.
+ ************************************************************/
+
+PTR.
+
+FROM			[]
+TO			[]	
+Number:			XXXX
+
+Detected Date:		[2006-08-09 19:46:35]
+
+Problem type:		[defect]
+
+Summary:		[]	<short description of problem>
+
+Status:			[]	(review, assigned, developing, testing, retesting delayed, development delayed, closed, cancelled.)
+
+Resolution:		[]	(corrected, code verified, implementation must be changed etc.)
+
+Detected in Product:	[]	<Product Name>  Build # <build/commit> 
+
+Functional zone:	[]	<functional part of application>
+
+Environment:		[]	<machine name or environment name>
+ 
+Severity:		[]	<Critical, Fatal, High, Medium, Low>
+
+Problem Repeatable:	[]	<yes or no>
+
+Problem Detailed Decription:
+			[.
+			 .	
+			 .]
+	 
+Verification type:	[]	<acceptance, documentation, installation, integration, regression, system>  
+
+Problem due date:	[]	<date when problem should be solved>
+	 
+Status due date:	[]	<date when current problem status should be changed> 
+
+Status Change History:
+			[.
+			 .	
+			 .]	<who>:[when DATE TEME]:Status:Description.
+		
