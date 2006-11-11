@@ -54,7 +54,7 @@ class Steel: public Game
 {
 protected:
 // Camera
-	v3	eye, direction, cameraSpeed;
+	v3 eye, direction, cameraSpeed;
 	v3 g;
 	float speedup, speed;
 	steel::time time;
@@ -68,22 +68,18 @@ protected:
 	Config	*conf;
 
 	GraphEngine *graphEngine;
-//	PhysicEngineSteel *physicEngine;
 	PhysicEngine *physicEngine;
 	AudioEngine	 *audioEngine;
 
 // World - custom objects
 	GameGroup	*world;
 	GraphHelper	*physicHelper;
-//	Sprite		*crosshair;
-	GameObj		*lightTag;
-	GameLight	*light;
 
 public:
 	Steel(void):
 	input(NULL),	conf(NULL),
 	graphEngine(NULL),	physicEngine(NULL),	audioEngine(NULL),
-	world(NULL),	physicHelper(NULL),	lightTag(NULL),	light(NULL)
+	world(NULL),	physicHelper(NULL)
 	{ } 
 
 	virtual bool init(Config *_conf, Input *_input, std::string params);

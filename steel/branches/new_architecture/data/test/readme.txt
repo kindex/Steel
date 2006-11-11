@@ -1,2 +1,2 @@
 Files for selftests
-Must no  be included into build
+Must not be included into build
