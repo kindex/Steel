@@ -19,11 +19,11 @@ using namespace std;
 
 bool Material::init(string name, const std::string dir)
 {
-	conf = resOldConfig.add(name + ".mat", false);
+	conf = resConfig.add(name + ".mat", false);
 	if(conf == NULL)
 	{
 		log_msg("error res material", string("Material not found: ") + name);
-		resScript.pop();
+		resConfig.pop();
 		return false;
 	} 
 	directory = dir;
@@ -87,12 +87,12 @@ bool Material::init(string name, const std::string dir)
 	}
 	if(texture.empty()) 
 	{
-		resScript.pop();
+		resConfig.pop();
 		return false;
 	}
 
 	blend = texture[0].mode != TEXTURE_BLEND_MODE_REPLACE;
-	resScript.pop();
+	resConfig.pop();
 	return true;
 }
 
@@ -102,5 +102,5 @@ Material::~Material()
 	{
 		if(it->image) resImage.remove(it->image);
 	}
-	if(conf) resOldConfig.remove(conf);
+	if(conf) resConfig.remove(conf);
 }

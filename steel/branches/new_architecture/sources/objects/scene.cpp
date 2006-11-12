@@ -13,29 +13,35 @@
 #include "../steel.h"
 #include "scene.h"
 
-#include "model_obj.h"
+#include "../engine/game_object.h"
+#include "sphere.h"
+#include "../res/config/config.h"
 
-GameObjectOld *findClass(const string &_class)
+#include <string>
+
+using namespace std;
+
+GameObject* findClass(const string &_class)
 {
-	if(_class == "scene") return new Scene;
-	if(_class == "model") return new GameObjModel;
+	if(_class == "sphere") return new Sphere;
+//	if(_class == "scene") return new Scene;
 
 	return NULL;
 }
 
-GameObjectOld	*createGameObject(Config *conf)
+GameObject	*createGameObject(Config *conf)
 {
 	if(conf == NULL) return NULL;
 	string _class = conf->gets("class");
 
-	GameObjectOld *obj = findClass(_class);
+	GameObject *obj = findClass(_class);
 	if(obj == NULL) return NULL;
 
 	v3 origin =  conf->getv3("origin");
 	ObjectPosition pos;
 	pos.loadIdentity();
 	pos.setTranslation(origin);
-	obj->setPosition(pos);
+//	obj->setPosition(pos);
 
 	bool result = obj->InitFromConfig(conf);
 	if(!result)
@@ -56,8 +62,8 @@ bool Scene::InitFromConfig(Config *conf)
 	const ConfigArray &objectsArray =  *static_cast<ConfigArray*>(objectsConfig);
 	for(ConfigArray::iterator it = objectsArray.begin(); it != objectsArray.end(); it++ )
 	{
-		GameObjectOld *newObject = createGameObject(*it);
-		objects
+		GameObject *newObject = createGameObject(*it);
+		objects.push_back(newObject);
 	}
 
 	return true;

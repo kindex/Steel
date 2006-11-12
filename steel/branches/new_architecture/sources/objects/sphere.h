@@ -16,6 +16,7 @@
 
 #include "../steel.h"
 #include "../graph/graph_interface.h"
+#include "../graph/graph_engine.h"
 
 class Sphere: public GameObject
 {
@@ -23,21 +24,17 @@ protected:
 	Vertexes *vertexes, *normals;
 	FaceMaterials *faces;
 	TexCoords *texCoords0, *texCoords1;
+	GraphEngine *graphEngine;
+
 public:
 	Sphere(void);
 	virtual ~Sphere(void);
 
-	TexCoords*	getTexCoords(int texNumber)
-	{
-		if(texNumber == 0)
-			return texCoords0;
-		else
-			return texCoords1;
-	}
-	Vertexes*	getVertexes(void) { return vertexes;}
-	Normals*	getNormals(void) { return normals;} // список нормалей в вершинам
-	FaceMaterials* getFaceMaterials(void) { return faces;}
-	void ProcessGraph(const GraphEngineInfo &info);
+	bool isSuportingInterface(InterfaceId id) { return id == GraphEngine::interfaceId; }
+	
+	bool updateInformation(InterfaceId id, Engine* engine);
+	void bindEngine(InterfaceId, Engine*) { }
+	void ProcessGraph();
 
 	void DeleteTriangle(int n);
 

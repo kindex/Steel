@@ -16,8 +16,8 @@
 
 #include "../../steel.h"
 #include "../image/image.h"
-#include "../conf/conf.h"
 #include "../../graph/graph_types.h"
+#include "../config/config.h"
 
 //тип смешивания двух текстур
 typedef	enum
@@ -56,7 +56,7 @@ public:
 class Material: public Res
 {
 protected:
-	OldConfig *conf;
+	Config *conf;
 	bool	blend, shader;
 	steel::vector<Texture> texture;
 	std::string directory;
@@ -74,7 +74,7 @@ public:
 	// указана ли в конфиге материала шейдер для рендеринга
 	bool isShader(void) { return shader; }
 	// получить час конфиг
-	const OldConfig *getConfig(void) const { return conf; };
+	const Config *getConfig(void) const { return conf; };
 	// директория, откуда был загружен материал. 
 	// Нужна для относительного отсчёта файлов, указанных в конфиге
 	std::string getDirectory(void) { return directory;}

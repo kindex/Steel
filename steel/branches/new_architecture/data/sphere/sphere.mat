@@ -1,19 +1,20 @@
-#BlendMode format file,color
+{
+//BlendMode format file,color
 
-format0=color_map
-image0=warn
+format0='color_map'
+image0='warn'
 
-;format1=color_map
-;image1=/wall/tex/floor2
-;mode1=*
+//format1=color_map
+//image1=/wall/tex/floor2
+//mode1=*
 
-;****** Shader ******
-vertexShader=lighting.vsh
-fragmentShader=lighting.fsh
+//****** Shader ******
+vertexShader='lighting.vsh'
+fragmentShader='lighting.fsh'
+}
+//vertexShader=/none.vsh
+//fragmentShader=/none.fsh
 
-;vertexShader=/none.vsh
-;fragmentShader=/none.fsh
-
-;	env	
-;	color_map	warn
-;+	color_map	warn
+//	env	
+//	color_map	warn
+//+	color_map	warn

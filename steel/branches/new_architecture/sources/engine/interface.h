@@ -1,16 +1,16 @@
 #ifndef ENGINE__INTERFACE_H
 #define ENGINE__INTERFACE_H
 
+#include "../steel.h"
+
 typedef int InterfaceId;
 
 class GameObject;
 
-class Interface
+class BaseInterface
 {
-
+public:
+	virtual bool setCurrentObject(GameObject*) = 0;
 };
-
-typedef
-void (GameObject::*Callback)(Interface*);
 
 #endif

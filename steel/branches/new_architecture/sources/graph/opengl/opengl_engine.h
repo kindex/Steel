@@ -39,6 +39,25 @@
 class OpenGL_Engine: public GraphEngine
 {
 protected:
+	GameObject *currentObject;
+	Storage	   *currentStorage;
+
+public: // interface realization
+	bool setCurrentObject(GameObject*);
+	void setPosition(ObjectPosition);
+	void setPositionKind(PositionKind);
+	void setGraphChildrenCount(int);
+	void setGraphChildren(int number, GameObject*);
+	void setVertexes(Vertexes*); // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	void setNormals(Normals*); // список нормалей в вершинам
+	void setLines(GLines*); // индексы вершин для линий и цвета линий (for debug)
+	void setFaceMaterials(FaceMaterials*);// массив индексов вершин, которые образуют треугольники (грани) + материалы
+	void setTexCoordsCount(int);
+	void setTexCoords(int texNumber, TexCoords*);
+	void setLights(Lights*);
+
+
+protected:
 	struct OpenGL_Buffer
 	{
 		typedef enum 
@@ -82,7 +101,7 @@ protected:
 		float		distance; // расстояние до камеры
 
 		GraphStorage(Engine *engine): Storage(engine), faceMaterials(NULL), vertex(NULL), normal(NULL), lights(NULL),
-			lines(NULL) {}
+			lines(NULL), position(ObjectPosition::getIdentity() ) {}
 		void fill(GameObject *object);
 		bool cache(void);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
@@ -183,7 +202,8 @@ public:
 		RepairOpenGL_Window(NULL),
 		DeleteOpenGL_Window(NULL),
 		setCaptionOpenGL_Window(NULL),
-		FlushOpenGL_Window(NULL)
+		FlushOpenGL_Window(NULL),
+		currentObject(NULL), currentStorage(NULL) 
 		{}
 
 	virtual void processCamera(void);

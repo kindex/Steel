@@ -24,8 +24,6 @@
 	#include <windows.h>
 #endif
 
-#include "../res/conf/conf.h"
-
 class Input;  // forward declaration, cross-use
 #include "../game/game.h"
 #include "../res/res_main.h"

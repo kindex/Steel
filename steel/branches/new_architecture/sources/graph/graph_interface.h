@@ -46,16 +46,19 @@ typedef steel::vector<FaceMaterial>	FaceMaterials;
 например, как мета-шарики, система частиц
 */
 
-class GraphInterface: public Interface
+class GraphInterface
 {
 public:
-// *** Common ***
+	static const InterfaceId interfaceId = 0x100;
 	// список детей
 	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
 	// возвращает количество детей
 	virtual void setGraphChildrenCount(int) = 0;
 	// ребёнок с указанным номером
 	virtual void setGraphChildren(int number, GameObject*) = 0;
+
+	virtual void setPosition(ObjectPosition) = 0;
+	virtual void setPositionKind(PositionKind) = 0;
 
 // *** Configuration ***
 
@@ -73,6 +76,7 @@ public:
 
 	// массив индексов вершин, которые образуют треугольники (грани) + материалы
 	virtual void	setFaceMaterials(FaceMaterials*) = 0;
+	virtual void	setTexCoordsCount(int) = 0;
 	virtual void	setTexCoords(int texNumber, TexCoords*) = 0;
 
 	virtual void 	setLights(Lights*) = 0;

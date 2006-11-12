@@ -12,13 +12,13 @@
 		(глобальную, локальную систему координат)
 ************************************************************/
 
-#include "object.h"
+#include "game_object.h"
 
 #include "../common/logger.h"
 #include "../common/utils.h"
 
 IdGenerator objectIdGenerator;
-ModificationTime globalFrameNumber;
+//ModificationTime globalFrameNumber;
 
 uid IdGenerator::genUid() 
 { 

@@ -16,6 +16,9 @@
 
 #include "../steel.h"
 
+#include "../engine/game_object.h"
+#include "../res/model/model.h"
+
 
 /*
 Рисуемый объект, GraphMesh и PhysicMesh берутся из модели
@@ -32,7 +35,6 @@ public:
 	GameObjectModel()	{ 		m = NULL; conf = NULL;	}
 
 	void assignModel(Model *M)	{		m = M;	}
-	bool init(ScriptLine	&s);
 
 	aabb getFrame();
 	Vertexes*	getVertexes()

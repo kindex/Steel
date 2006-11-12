@@ -19,12 +19,6 @@
 #include "../common/logger.h"
 #include "../common/utils.h"
 
-#include "../res/script/script.h"
-
-#include "../objects/model_obj.h"
-#include "../objects/combiner.h"
-#include "../objects/sphere.h"
-
 #include "../res/res_main.h"
 #include "../objects/scene.h"
 //#include "../objects/kar98k.h"
@@ -61,12 +55,6 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 	brakeSpeed = conf->getf("camera_brakes", 200);
 
 	moveSpeed.loadZero();
-
-	if(conf->find("script") == NULL)
-	{
-		error("game res", "Cannot find script to init scene");
-		return false;
-	}
 
 	Config *scene = conf->find("scene");
 	if(scene == NULL)

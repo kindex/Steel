@@ -15,6 +15,28 @@
 #include "sphere.h"
 #include "../res/res_main.h"
 
+bool Sphere::updateInformation(InterfaceId id, Engine* engine)
+{
+	if(id == GraphEngine::interfaceId)
+	{
+		ProcessGraph();
+		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
+
+		gengine.setCurrentObject(this);
+		gengine.setPosition(ObjectPosition::getIdentity());
+		gengine.setPositionKind(POSITION_GLOBAL);
+		gengine.setVertexes(vertexes);
+		gengine.setNormals(normals);
+		gengine.setFaceMaterials(faces);
+		gengine.setTexCoordsCount(2);
+		gengine.setTexCoords(0, texCoords0);
+		gengine.setTexCoords(1, texCoords1);
+		return true;
+	}
+	return false;
+}
+
+
 Sphere::Sphere()
 {
 	int height = 12;
@@ -64,7 +86,7 @@ Sphere::Sphere()
 	
 	faces = new FaceMaterials(1);
 
-	faces->at(0).material = resMaterial.add("sphere/sphere");
+	faces->at(0).material = resMaterial.add("/sphere/sphere");
 	faces->at(0).triangles = new Triangles;
 	faces->at(0).triangles->data.resize(height*radius*2);
 	faces->at(0).triangles->setId(objectIdGenerator.genUid());
@@ -102,7 +124,7 @@ Sphere::~Sphere()
 }
 
 
-void Sphere::ProcessGraph(const GraphEngineInfo &info)
+void Sphere::ProcessGraph()
 {
 	for(unsigned int i=0; i < vertexes->data.size(); i++)
 	{

@@ -17,28 +17,29 @@
  ************************************************************/
 #include "../steel.h"
 #include "engine.h"
+#include "game_object.h"
 
-void Engine::Storage::fill(Object *object)
+void Engine::Storage::fill(GameObject *object)
 {
 	this->object = object;
 	objectId = object->getId();
-	modificationTime = childrenModificationTime = -1;
+//	modificationTime = childrenModificationTime = -1;
 }
 
 bool Engine::Storage::cache()
 {
-	ModificationTime newTime = object->getModificationTime();
+/*	ModificationTime newTime = object->getModificationTime();
 	if(modificationTime < newTime)
 	{
 		modificationTime = newTime;
 		return true;
 	}
-	else
+	else*/
 		return false;
 }
 
 
-bool Engine::makeStorageForObject(Object *object)
+bool Engine::makeStorageForObject(GameObject *object)
 {
 	uid objectId = object->getId();
 	if(idHash.find(objectId) != idHash.end())
@@ -92,7 +93,7 @@ void Engine::deleteStorageForChildren(int sid)
 	}
 }
 
-Engine::Storage* Engine::getStorage(Object *object)
+Engine::Storage* Engine::getStorage(GameObject *object)
 {
 	uid id = object->getId();
 //	assert(idHash.find(id) != idHash.end(), "Object not found in physic storage");

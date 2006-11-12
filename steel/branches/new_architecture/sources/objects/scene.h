@@ -13,17 +13,16 @@
 #include "../steel.h"
 #ifndef __OBJECTS__SCENE_H
 #define __OBJECTS__SCENE_H
-#include "game_obj.h"
+#include "../engine/game_object.h"
 
-GameObject	*createGameObject(Config *conf);
+GameObject *createGameObject(Config *conf);
 
 class Scene: public GameObject
 {
 public:
-	virtual bool InitFromConfig(Config *conf);
+	bool InitFromConfig(Config *conf);
 protected:
 	svector<GameObject*> objects;
-
 };
 
 #endif

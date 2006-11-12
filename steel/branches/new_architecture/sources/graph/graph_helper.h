@@ -18,7 +18,7 @@
 #include "../steel.h"
 #include "../math/line.h"
 #include "../engine/helper.h"
-#include "graph_interface.h"
+#include "../engine/game_object.h"
 
 class GraphHelper: public GameObject
 {

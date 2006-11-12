@@ -31,11 +31,97 @@
 
 using namespace std;
 
+
+bool OpenGL_Engine::setCurrentObject(GameObject* object)
+{
+	uid id = object->getId();
+	currentStorage = getStorage(id);
+	if(currentStorage == NULL)
+	{
+		currentObject = NULL;
+		return false;
+	}
+	currentObject = object;
+
+	return false;
+}
+
+void OpenGL_Engine::setPosition(ObjectPosition position)
+{
+	if(currentStorage != NULL)
+	{
+		GS(currentStorage)->position = position;
+	}
+}
+
+void OpenGL_Engine::setPositionKind(PositionKind kind)
+{
+	if(currentStorage != NULL)
+	{
+		GS(currentStorage)->positionKind = kind;
+	}
+}
+
+
+void OpenGL_Engine::setGraphChildrenCount(int)
+{
+}
+
+void OpenGL_Engine::setGraphChildren(int number, GameObject*)
+{
+}
+
+void OpenGL_Engine::setVertexes(Vertexes* vertexes) // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+{
+	if(currentStorage != NULL)
+	{
+		GS(currentStorage)->vertex = vertexes;
+	}
+}
+
+void OpenGL_Engine::setNormals(Normals* normals) // список нормалей в вершинам
+{
+	if(currentStorage != NULL)
+	{
+		GS(currentStorage)->normal = normals;
+	}
+}
+void OpenGL_Engine::setLines(GLines*) // индексы вершин для линий и цвета линий (for debug)
+{
+}
+
+void OpenGL_Engine::setFaceMaterials(FaceMaterials* faceMaterials)// массив индексов вершин, которые образуют треугольники (грани) + материалы
+{
+	if(currentStorage != NULL)
+	{
+		GS(currentStorage)->faceMaterials = faceMaterials;
+	}
+}
+
+void OpenGL_Engine::setTexCoordsCount(int size)
+{
+	if(currentStorage != NULL)
+	{
+		GS(currentStorage)->texCoords.resize(size);
+	}
+}
+
+void OpenGL_Engine::setTexCoords(int texNumber, TexCoords* coords)
+{
+	if(currentStorage != NULL && GS(currentStorage)->texCoords.size() > texNumber)
+	{
+		GS(currentStorage)->texCoords[texNumber] = coords;
+	}
+}
+
+void OpenGL_Engine::setLights(Lights*)
+{
+}
+
 /*
 Сердце Графического движка.
 Отвечает за вывод графичесткого элемента.
 */
-
 
 void OpenGL_Engine::process(GraphStorage *e, steel::time globalTime, steel::time time)
 {
@@ -391,11 +477,12 @@ void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel
 	info.cameraEye = camera.eye;
 	info.cameraDirection = camera.center - camera.eye;
 
-	G(storage->object)->ProcessGraph(info);
+	storage->object->updateInformation(this->interfaceId, this);
+
 	storage->setParent(parent);
 	storage->cache();
 
-	if(storage->childrenModificationTime < storage->object->getChildrenModificationTime())
+/*	if(storage->childrenModificationTime < storage->object->getChildrenModificationTime())
 	{
 		storage->childrenModificationTime = storage->object->getChildrenModificationTime();
 
@@ -442,66 +529,36 @@ void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel
 		lights.push_back(*it);
 		lights.back().position = storage->position*lights.back().position;
 	}
-
-	int count = G(storage->object)->getGraphChildrenCount();
+*/
+/*	int count = G(storage->object)->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
 		GraphObject *child = G(storage->object)->getGraphChildren(i);
 		
 		prepare(getStorage(child), globalTime, time);
-	}
-
+	}*/
 }
 
 
-void OpenGL_Engine::makeStorageForChildren(Object *object)
+void OpenGL_Engine::makeStorageForChildren(GameObject *object)
 {
-	int count = G(object)->getGraphChildrenCount();
+/*	int count = G(object)->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
 		GraphObject *child = G(object)->getGraphChildren(i);
 		makeStorageForObject(child);
 		makeStorageForChildren(child);
-	}
+	}*/
 }
 
-void OpenGL_Engine::GraphStorage::fill(Object *object)
+void OpenGL_Engine::GraphStorage::fill(GameObject *object)
 {
 	Storage::fill(object);
 }
 
 bool OpenGL_Engine::GraphStorage::cache(void)
 {
-	position = G(object)->getPosition();
-	positionKind = G(object)->getPositionKind();
-//	PositionKind pos = G(object)->getPositionKind();
-
-	if(parent != NULL && positionKind == POSITION_LOCAL)
-	{
-		ObjectPosition parent_matrix = GS(engine->getStorage(G(parent)))->position;
-		position = parent_matrix*position;
-	}
-
-
-	if(Storage::cache())
-	{
-		modificationTime = G(object)->getModificationTime();
-//		aabb frame = object->getFrame();
-//		frame.mul(object_matrix);
-
-// проверка, находится ли frame внутри пирамиды, которую образует угол обзора камеры. Если не попадает, то откидываем этот объект и всех его потомков
-//		objectStorage.visible = isVisible(frame);
-
-		faceMaterials	= G(object)->getFaceMaterials();
-		vertex			= G(object)->getVertexes();
-		normal			= G(object)->getNormals();
-		lines			= G(object)->getLines();
-		lights			= G(object)->getLights();
-		blend			= false;
-		return true;
-	}
-	else
-		return false;
+	return  false;
 }
 
 void OpenGL_Engine::onResize(int width, int height)

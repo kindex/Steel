@@ -25,10 +25,10 @@
 #include "../res/res.h"
 #include "../res/config/config.h"
 #include "../math/vector3d.h"
-#include "game_object.h"
 #include "helper.h"
 
 #include <string>
+class GameObject;
 
 class Engine
 {
@@ -78,6 +78,7 @@ protected:
 	// кеш объектов
 	svector<Storage*> storages;
 	typedef std::map <uid, int> StorageHash;
+	typedef int sid; // Storage vector index
 	// отображение идентификаторов объекта на положение в массиве storage
 	StorageHash idHash;
 	virtual int findSid(uid id)

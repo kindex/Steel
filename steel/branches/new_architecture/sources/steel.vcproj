@@ -519,46 +519,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="conf"
-					>
-					<File
-						RelativePath=".\res\conf\conf.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\res\conf\conf.h"
-						>
-					</File>
-					<File
-						RelativePath=".\res\conf\conf_text.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\res\conf\conf_text.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="script"
-					>
-					<File
-						RelativePath=".\res\script\script.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\res\script\script.h"
-						>
-					</File>
-					<File
-						RelativePath=".\res\script\script_text.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\res\script\script_text.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="material"
 					>
 					<File
@@ -763,14 +723,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\graph\graph_helper.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\graph\graph_helper.h"
-					>
-				</File>
-				<File
 					RelativePath=".\graph\graph_interface.h"
 					>
 				</File>
@@ -875,41 +827,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\objects\model_obj.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="DebugWin|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\objects\model_obj.h"
-					>
-				</File>
-				<File
 					RelativePath=".\objects\scene.cpp"
 					>
 				</File>
@@ -970,6 +887,10 @@
 		<Filter
 			Name="data"
 			>
+			<File
+				RelativePath="..\data\1.scene"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="conf"

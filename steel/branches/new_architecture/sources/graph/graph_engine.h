@@ -19,9 +19,9 @@
 #define __GRAPH_ENGINE_H
 
 #include "../steel.h"
-#include "../res/conf/conf.h"
 #include "graph_interface.h"
 #include "../engine/interface.h"
+#include "../engine/game_object.h"
 
 class GraphEngine;
 
@@ -38,11 +38,9 @@ public:
 	void setup(const v3 &EYE, const v3 &DIR);
 };
 
-class GraphEngine: public Engine
+class GraphEngine: public Engine, public GraphInterface, public BaseInterface
 {
 public:
-
-	static const InterfaceId interfaceId = 0x100;
 
 	struct GraphTotalInfo
 	{
