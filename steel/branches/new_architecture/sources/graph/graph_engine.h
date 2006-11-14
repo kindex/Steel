@@ -38,7 +38,7 @@ public:
 	void setup(const v3 &EYE, const v3 &DIR);
 };
 
-class GraphEngine: public Engine, public GraphInterface, public BaseInterface
+class GraphEngine: public Engine, public GraphInterface
 {
 public:
 

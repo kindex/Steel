@@ -63,12 +63,19 @@ void OpenGL_Engine::setPositionKind(PositionKind kind)
 }
 
 
-void OpenGL_Engine::setGraphChildrenCount(int)
+void OpenGL_Engine::addChild(GameObject* parent, GameObject* child)
 {
+	// TODO:
 }
 
-void OpenGL_Engine::setGraphChildren(int number, GameObject*)
+void OpenGL_Engine::deleteChild(GameObject* parent, GameObject* child)
 {
+	// TODO:
+}
+
+void OpenGL_Engine::clearChildren(GameObject*)
+{
+	// TODO:
 }
 
 void OpenGL_Engine::setVertexes(Vertexes* vertexes) // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
@@ -86,8 +93,13 @@ void OpenGL_Engine::setNormals(Normals* normals) // список нормале�
 		GS(currentStorage)->normal = normals;
 	}
 }
-void OpenGL_Engine::setLines(GLines*) // индексы вершин для линий и цвета линий (for debug)
+void OpenGL_Engine::setLines(GLines* lines) // индексы вершин для линий и цвета линий (for debug)
 {
+	if(currentStorage != NULL)
+	{
+		GS(currentStorage)->lines = lines;
+	}
+
 }
 
 void OpenGL_Engine::setFaceMaterials(FaceMaterials* faceMaterials)// массив индексов вершин, которые образуют треугольники (грани) + материалы
@@ -114,8 +126,12 @@ void OpenGL_Engine::setTexCoords(int texNumber, TexCoords* coords)
 	}
 }
 
-void OpenGL_Engine::setLights(Lights*)
+void OpenGL_Engine::setLights(Lights* lights)
 {
+	if(currentStorage != NULL)
+	{
+		GS(currentStorage)->lights = lights;
+	}
 }
 
 /*

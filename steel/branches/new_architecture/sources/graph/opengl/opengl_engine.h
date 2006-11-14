@@ -46,8 +46,6 @@ public: // interface realization
 	bool setCurrentObject(GameObject*);
 	void setPosition(ObjectPosition);
 	void setPositionKind(PositionKind);
-	void setGraphChildrenCount(int);
-	void setGraphChildren(int number, GameObject*);
 	void setVertexes(Vertexes*); // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
 	void setNormals(Normals*); // список нормалей в вершинам
 	void setLines(GLines*); // индексы вершин для линий и цвета линий (for debug)
@@ -55,6 +53,10 @@ public: // interface realization
 	void setTexCoordsCount(int);
 	void setTexCoords(int texNumber, TexCoords*);
 	void setLights(Lights*);
+
+	void addChild(GameObject* parent, GameObject* child);
+	void deleteChild(GameObject* parent, GameObject* child);
+	void clearChildren(GameObject*);
 
 
 protected:

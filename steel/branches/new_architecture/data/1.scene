@@ -1,0 +1,7 @@
+# Scene format example
+
+# 1 sphere
+
+{
+class='sphere'
+}

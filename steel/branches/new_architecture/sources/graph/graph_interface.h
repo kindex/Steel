@@ -34,6 +34,13 @@ struct FaceMaterial
 
 typedef steel::vector<FaceMaterial>	FaceMaterials;
 
+class ChildrenInterface
+{
+public:
+	virtual void addChild(GameObject* parent, GameObject* child) = 0;
+	virtual void deleteChild(GameObject* parent, GameObject* child) = 0;
+	virtual void clearChildren(GameObject*) = 0;
+};
 
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 
@@ -46,16 +53,10 @@ typedef steel::vector<FaceMaterial>	FaceMaterials;
 например, как мета-шарики, система частиц
 */
 
-class GraphInterface
+class GraphInterface: public BaseInterface, public ChildrenInterface
 {
 public:
 	static const InterfaceId interfaceId = 0x100;
-	// список детей
-	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
-	// возвращает количество детей
-	virtual void setGraphChildrenCount(int) = 0;
-	// ребёнок с указанным номером
-	virtual void setGraphChildren(int number, GameObject*) = 0;
 
 	virtual void setPosition(ObjectPosition) = 0;
 	virtual void setPositionKind(PositionKind) = 0;
