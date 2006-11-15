@@ -21,7 +21,6 @@
 #include "config/config_collection.h"
 #include "image/image.h"
 #include "model/model.h"
-#include "material/material.h"
 #include "text/text.h"
 #include "audio/audio.h"
 
@@ -29,7 +28,6 @@
 extern ResCollectionConfig		resConfig;
 extern ResCollection<Image>		resImage;
 extern ResCollection<Model>		resModel;
-extern ResCollection<Material>	resMaterial;
 extern ResCollection<Text>		resText;
 extern ResCollection<Audio>		resAudio;
 

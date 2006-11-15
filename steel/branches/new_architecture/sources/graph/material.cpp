@@ -11,16 +11,24 @@
         Молуль для загрузки и хранения материала
 **************************************************************************************/
 
-#include "../../steel.h"
+#include "../steel.h"
 #include "material.h"
-#include "../res_main.h"
-#include "../../common/utils.h"
+#include "../res/res_main.h"
+#include "../common/utils.h"
 using namespace std;
 
-
-bool Material::InitFromConfig(Config *config)
+Material::Material(const std::string &matFileName)
 {
-		shader = !conf->gets("vertexShader").empty() && !conf->gets("fragmentShader").empty();
+	InitFromConfig(resConfig.add(matFileName + ".mat"));
+}
+
+
+bool Material::InitFromConfig(Config *_conf)
+{
+	if(_conf == NULL) return false;
+	conf = _conf;
+
+	shader = !conf->gets("vertexShader").empty() && !conf->gets("fragmentShader").empty();
 
 	texture.clear();
 
@@ -40,9 +48,11 @@ bool Material::InitFromConfig(Config *config)
 
 		if(format == "color_map")
 		{
-			m.image = resImage.add(conf->gets("image" + IntToStr(i)));
+			string imageName = conf->getPath("image" + IntToStr(i));
 
-			if(m.image)
+			m.image = resImage.add(imageName);
+
+			if(m.image != NULL)
 			{
 				m.format = TEXTURE_FORMAT_COLOR_MAP;
 				texture.push_back(m);
@@ -51,7 +61,7 @@ bool Material::InitFromConfig(Config *config)
 		if(format == "bump")
 		{
 			m.image = resImage.add(conf->gets("image" + IntToStr(i)));
-			if(m.image)
+			if(m.image != NULL)
 			{
 				m.format = TEXTURE_FORMAT_BUMP_MAP;
 				texture.push_back(m);
@@ -84,23 +94,6 @@ bool Material::InitFromConfig(Config *config)
 	return !texture.empty(); 
 }
 
-bool Material::init(string name, const std::string dir)
-{
-	conf = resConfig.add(name + ".mat", false);
-	if(conf == NULL)
-	{
-		log_msg("error res material", string("Material not found: ") + name);
-		resConfig.pop();
-		return false;
-	} 
-	directory = dir;
-
-	bool result = InitFromConfig(conf);
-
-	resConfig.pop();
-
-	return result;
-}
 
 Material::~Material()
 {

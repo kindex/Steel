@@ -35,6 +35,11 @@ Config* ResCollectionConfig::addForce(std::string name, bool pop)
 	{
 		ConfigParser* parser = new ConfigParser();
 		obj = parser->Parse(file);
+		if(obj != NULL)
+		{
+			obj->setFilePath(fullResName);
+		}
+		delete parser;
 	}
 	else
 		log_msg("res error " + id, "Not found " + fullResName);

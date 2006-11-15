@@ -11,20 +11,21 @@
 		Загрузка уровня из *.scene файла.
  ************************************************************/
 #include "../steel.h"
-#include "scene.h"
+#include <string>
 
 #include "../engine/game_object.h"
-#include "sphere.h"
 #include "../res/config/config.h"
 
-#include <string>
+#include "scene.h"
+#include "sphere.h"
+#include "combiner.h"
 
 using namespace std;
 
 GameObject* findClass(const string &_class)
 {
 	if(_class == "sphere") return new Sphere;
-//	if(_class == "scene") return new Scene;
+	if(_class == "combiner") return new Combiner;
 
 	return NULL;
 }

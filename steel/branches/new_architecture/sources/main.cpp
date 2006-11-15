@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 	globalTimer.start(); //globalFrameNumber = 1;
 
 	deleteFiles("..\\log", "*.log");
-	logFilter.set("-opengl_info");
+	logFilter.set("-opengl_info -system_info -windows_info");
 
 	steel::log.open("../steel.log");
 

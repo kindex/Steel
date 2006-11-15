@@ -17,7 +17,7 @@
 #include "gl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / Blend
-void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material)
 	{
@@ -104,7 +104,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles 
 }
 
 // нарисовать множество полигонов с указанным материалом
-void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {
 	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
@@ -162,7 +162,7 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image *image, bool enable)
 }
 
 // нарисовать множество полигонов как сетку (только рёбра)
-void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
 {
 	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
@@ -182,7 +182,7 @@ void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles 
 }
 
 // нарисовать множество линий
-void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
 {
 	if(e.vertex && e.lines && !e.lines->index.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
@@ -202,7 +202,7 @@ void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngi
 }
 
 // нарисовать нормали к вершинам
-void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
 {
 	if(e.normal && e.vertex && e.vertex->data.size() == e.normal->data.size())
 	{
@@ -227,7 +227,7 @@ void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEn
 }
 
 // нарисовать вершины
-void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
 {
 	if(e.vertex && !e.vertex->data.empty())
 	{
@@ -247,7 +247,7 @@ void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphE
 }
 
 // нарисовать AABB
-void OpenGL_Engine::DrawAABB_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawAABB_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
 {
 	aabb &c = e.frame;
 	if(c.empty()) return;

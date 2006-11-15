@@ -50,10 +50,10 @@ protected:
 
 	/*
 		для увеличения произвтдительности некоторая чать информации об объектах
-		хранится в Storage. В унаследованных от Engine классах
-		класс Storage дополняется
+		хранится в Shadow. В унаследованных от Engine классах
+		класс Shadow дополняется
 	*/
-	struct Storage
+	struct Shadow
 	{
 		GameObject	*object;
 		GameObject	*parent;
@@ -67,18 +67,18 @@ protected:
 		// список детей объекта (uid)
 		svector<uid> children;
 
-		Storage(Engine *aengine): object(NULL), parent(NULL), engine(aengine) {}
+		Shadow(Engine *aengine): object(NULL), parent(NULL), engine(aengine) {}
 		virtual void fill(GameObject *object);
 		// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
 		// возвращает true, если была обнавлена вся информация
 		virtual bool cache(void);
-		virtual ~Storage(void) {}
+		virtual ~Shadow(void) {}
 		virtual void setParent(GameObject *aparent) {parent = aparent; }
 	};
 	// кеш объектов
-	svector<Storage*> storages;
+	svector<Shadow*> storages;
 	typedef std::map <uid, int> StorageHash;
-	typedef int sid; // Storage vector index
+	typedef int sid; // Shadow vector index
 	// отображение идентификаторов объекта на положение в массиве storage
 	StorageHash idHash;
 	virtual int findSid(uid id)
@@ -91,14 +91,14 @@ protected:
 	}
 
 public:
-	virtual Storage *getStorage(GameObject *object);
-	virtual Storage* getStorage(uid id);
+	virtual Shadow *getStorage(GameObject *object);
+	virtual Shadow* getStorage(uid id);
 
 protected:
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
 	virtual bool makeStorageForObject(GameObject *object);
-	virtual Storage* getStorageClass(GameObject *object)  = 0;
-	virtual void makeStorageForObjectPost(GameObject *object, Storage *storage) {}
+	virtual Shadow* getStorageClass(GameObject *object)  = 0;
+	virtual void makeStorageForObjectPost(GameObject *object, Shadow *storage) {}
 
 	virtual void deleteStorageForObject(int sid);
 	virtual void deleteStorageForObjectPost(int sid) {}

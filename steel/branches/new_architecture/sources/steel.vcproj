@@ -519,18 +519,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="material"
-					>
-					<File
-						RelativePath=".\res\material\material.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\res\material\material.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="text"
 					>
 					<File
@@ -730,6 +718,41 @@
 					RelativePath=".\graph\graph_types.h"
 					>
 				</File>
+				<File
+					RelativePath=".\graph\material.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug Lib|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\graph\material.h"
+					>
+				</File>
 				<Filter
 					Name="OpenGL"
 					>
@@ -818,6 +841,14 @@
 			<Filter
 				Name="objects"
 				>
+				<File
+					RelativePath=".\objects\combiner.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\objects\combiner.h"
+					>
+				</File>
 				<File
 					RelativePath=".\objects\light.cpp"
 					>

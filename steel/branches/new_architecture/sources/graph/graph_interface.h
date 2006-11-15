@@ -22,7 +22,7 @@
 
 #include "graph_types.h"
 
-#include "../res/material/material.h"
+#include "material.h"
 
 // материал + треугольники, к которым он относится
 struct FaceMaterial

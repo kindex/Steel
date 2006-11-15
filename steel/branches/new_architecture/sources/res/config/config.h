@@ -42,6 +42,7 @@ struct ConfigTemplate
 	bool local;
 
 };
+class ConfigArray;
 
 class Config: public Res
 {
@@ -51,8 +52,8 @@ public:
 
 	// common
 	virtual ConfigValueType getType(void) const { return type; }
-	virtual std::string getShortId(void) const { return id; }
-	virtual std::string getFullId(void) const { return file + "#" + id; }
+	virtual std::string		getShortId(void) const { return id; }
+	virtual std::string		getFullId(void) const { return file + "#" + id; }
 
 	// Config Base types
 	virtual double		returnd(const double _default = 0.0f) const { return _default; }
@@ -71,9 +72,17 @@ public:
 			int			geti (const std::string path, const int	 _default = 0) const { return (int)getd(path, (double)_default); } 
 	const	v3			getv3(const std::string path, const v3	 _default = v3(0.0f, 0.0f, 0.0f)) const;
 	const	std::string	gets(const std::string path, const std::string _default = std::string()) const;
+	const	ConfigArray*getArray(const std::string path) const;
+			ConfigArray*getArray(const std::string path);
+	// полный путь к файлу относительно конфига (включая шаблоны)
+			std::string getPath(const std::string path, const std::string _default = std::string());
 
 	// formated output
 	virtual std::string Dump(int level = 0) { return DumpPrefix(level) + DumpThis(level); }
+	
+	// директория, из которой был загружен конфиг
+	std::string getConfigFilePath(void) const;
+	virtual void setFilePath(const std::string &_file) { file = _file; }
 
 	friend class ConfigParser;
 
@@ -180,6 +189,7 @@ public:
 		  Config* getStructElement(const std::string key);
 
 	const std::string DumpThis(int level) const;
+	void setFilePath(const std::string &_file);
 
 protected:
 	std::map<std::string, Config*> set;
@@ -200,6 +210,7 @@ public:
 	int getArraySize(const int index) const { return set.size(); }
 
 	const std::string DumpThis(int level) const;
+	void setFilePath(const std::string &_file);
 
 // iterators
 	typedef svector<Config*>::iterator iterator;

@@ -40,7 +40,7 @@ class OpenGL_Engine: public GraphEngine
 {
 protected:
 	GameObject *currentObject;
-	Storage	   *currentStorage;
+	Shadow	   *currentStorage;
 
 public: // interface realization
 	bool setCurrentObject(GameObject*);
@@ -80,9 +80,9 @@ protected:
 		char	*object;
 	};
 
-#define GS(storage) ((GraphStorage*)(storage))
+#define GS(storage) (static_cast<GraphShadow*>(storage))
 
-	struct GraphStorage: public Storage // множество треугольников одного материала
+	struct GraphShadow: public Shadow // множество треугольников одного материала
 	{
 		ObjectPosition	position; // global or screen
 		PositionKind	positionKind;
@@ -102,7 +102,7 @@ protected:
 		bool		visible;
 		float		distance; // расстояние до камеры
 
-		GraphStorage(Engine *engine): Storage(engine), faceMaterials(NULL), vertex(NULL), normal(NULL), lights(NULL),
+		GraphShadow(Engine *engine): Shadow(engine), faceMaterials(NULL), vertex(NULL), normal(NULL), lights(NULL),
 			lines(NULL), position(ObjectPosition::getIdentity() ) {}
 		void fill(GameObject *object);
 		bool cache(void);
@@ -119,46 +119,46 @@ protected:
 protected:
 	// procedure variables
 	bool (OpenGL_Engine::*BindTexture)(Image *image, bool enable);
-	void (OpenGL_Engine::*DrawFill)(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawFill)(OpenGL_Engine::GraphShadow &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphShadow &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 
 	void (OpenGL_Engine::*BindTexCoords)(TexCoords *coords);
 	void (OpenGL_Engine::*BindTexCoords3f)(TexCoords3f *coords);
 
-	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawNormals)(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawVertexes)(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*DrawAABB)(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphShadow &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawNormals)(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawVertexes)(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
+	void (OpenGL_Engine::*DrawAABB)(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.0
 	bool BindTexture_OpenGL10(Image *image, bool enable);
-	void DrawFill_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
-	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
-	void DrawWire_OpenGL10(OpenGL_Engine::GraphStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
-	void DrawLines_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
-	void DrawNormals_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
-	void DrawVertexes_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
-	void DrawAABB_OpenGL10(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
+	void DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void DrawWire_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
+	void DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
+	void DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
+	void DrawAABB_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.1
 	bool BindTexture_OpenGL11(Image *image, bool enable);
-	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
-	void DrawWire_OpenGL11(OpenGL_Engine::GraphStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
-	void DrawLines_OpenGL11(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total);
+	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void DrawWire_OpenGL11(OpenGL_Engine::GraphShadow &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total);
+	void DrawLines_OpenGL11(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
 	void BindTexCoords_OpenGL11(TexCoords *coords);
 	void BindTexCoords3f_OpenGL11(TexCoords3f *coords);
 
 	// OpenGL 1.3
-	void DrawFill_OpenGL13(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.5
-	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphShadow &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void BindTexCoords_OpenGL15(TexCoords *coords);
 	void BindTexCoords3f_OpenGL15(TexCoords3f *coords);
 
 	// OpenGL 2.0
-	void DrawFill_OpenGL20(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	void DrawFill_OpenGL20(OpenGL_Engine::GraphShadow &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
 	GLSL *BindShader(Material *shader);
 
 	// Stuff to delete
@@ -213,11 +213,11 @@ public:
 	virtual bool process(steel::time globalTime, steel::time time);
 	virtual bool deinit(void);
 
-	void prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
+	void prepare(GraphShadow *storage, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
 
 	bool isVisible(aabb box);
 
-	void process(GraphStorage *e, steel::time globalTime, steel::time time);
+	void process(GraphShadow *e, steel::time globalTime, steel::time time);
 	
 //	void drawFaces(DrawElement &e);
 //	void drawNormals(DrawElement &e);
@@ -225,7 +225,7 @@ public:
 //	void drawAABB(DrawElement &e, matrix34 matrix);
 
 	
-	void drawBump(GraphStorage &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img);
+	void drawBump(GraphShadow &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img);
 	void getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, FaceMaterials *faceMaterials, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent);
 	void genTangentSpaceLight(steel::vector<v3> const &sTangent, steel::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
 
@@ -248,10 +248,10 @@ public:
 /*	bool bindTexCoords(MapCoord *coord);
 	bool bindVertexes(Vertexes *v);*/
 
-	GraphStorage* getStorage(GameObject *object) { return (GraphStorage*)Engine::getStorage(object); }
-	GraphStorage* getStorage(uid id) { return (GraphStorage*)Engine::getStorage(id); }
+	GraphShadow* getStorage(GameObject *object) { return (GraphShadow*)Engine::getStorage(object); }
+	GraphShadow* getStorage(uid id) { return (GraphShadow*)Engine::getStorage(id); }
 	 
-	Storage* getStorageClass(GameObject *object) { return new GraphStorage(this); }
+	Shadow* getStorageClass(GameObject *object) { return new GraphShadow(this); }
 
 	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
 	void makeStorageForChildren(GameObject *object);

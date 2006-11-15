@@ -132,7 +132,9 @@ void splitPath(std::string fullpath, std::string &path, std::string &filename)
 
 std::string createPath(std::string dir, std::string filename)
 {
-	if(dir.empty()) return filename;
+	if(!filename.empty() && filename[0] == '/')
+		return filename;
+	else if(dir.empty()) return filename;
 	else return dir + "/" + filename;
 }
 

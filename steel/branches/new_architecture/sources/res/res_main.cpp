@@ -26,9 +26,8 @@
 ResCollectionConfig		resConfig;
 ResCollection<Image>	resImage;
 ResCollection<Model>	resModel;
-ResCollection<Material> resMaterial;
 ResCollection<Text>		resText;
-ResCollection<Audio> resAudio;
+ResCollection<Audio>	resAudio;
 
 
 // Image filename:
@@ -105,7 +104,6 @@ bool registerResources()
 
 	resImage.setId("image");	resImage.registerResLoader(createImage);
 	resModel.setId("model");	resModel.registerResLoader(createClass<_3DS, Model>);
-	resMaterial.setId("material");resMaterial.registerResLoader(createClass<Material, Material>);
 	resText.setId("text");	resText.registerResLoader(createClass<TextFile, Text>);
 	resAudio.registerResLoader(createClass<WAV, Audio>);            resAudio.setId("audio");
 //	resAudio.registerResLoader(createClass<Audio, OGG>);            

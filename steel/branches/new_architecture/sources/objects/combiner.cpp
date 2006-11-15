@@ -16,3 +16,41 @@
 #include "../steel.h"
 #include "combiner.h"
 
+bool GraphObject::InitFromConfig(Config *conf)
+{
+	if(conf == NULL) return false;
+	
+	ConfigArray *vertexesConfing = conf->getArray("vertexes");
+	ConfigArray *trianglesConfig = conf->getArray("triangles");
+	ConfigArray *mapCoordsConfing = conf->getArray("mapCoords");
+
+
+	return true;
+}
+
+bool GraphObject::updateInformation(InterfaceId id, Engine* engine)
+{
+	return true;
+}
+
+bool Combiner::InitFromConfig(Config *conf)
+{
+	if(conf == NULL) return false;
+
+	position.loadIdentity();
+	position.setTranslation(conf->getv3("origin"));
+	positionKind = conf->gets("position_kind", "global") == "local"?POSITION_LOCAL:POSITION_GLOBAL;
+
+	graph = new GraphObject;
+
+	bool ok =  graph->InitFromConfig(conf->find("graph"));
+	if(!ok)
+	{
+		delete graph; 
+		graph = NULL; 
+		return false;
+	}
+
+	return true;
+}
+

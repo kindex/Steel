@@ -19,14 +19,14 @@
 #include "engine.h"
 #include "game_object.h"
 
-void Engine::Storage::fill(GameObject *object)
+void Engine::Shadow::fill(GameObject *object)
 {
 	this->object = object;
 	objectId = object->getId();
 //	modificationTime = childrenModificationTime = -1;
 }
 
-bool Engine::Storage::cache()
+bool Engine::Shadow::cache()
 {
 /*	ModificationTime newTime = object->getModificationTime();
 	if(modificationTime < newTime)
@@ -50,7 +50,7 @@ bool Engine::makeStorageForObject(GameObject *object)
 
 	int storageIndex = storages.size();
 	
-	Storage* newStorage = getStorageClass(object);
+	Shadow* newStorage = getStorageClass(object);
 	if(newStorage == NULL)
 	{
 		log_msg("error engine", "Cannot find storage for object " + IntToStr(objectId));
@@ -70,7 +70,7 @@ void Engine::deleteStorageForObject(int sid)
 {
 	deleteStorageForObjectPost(sid);
 
-	Storage *storage = storages[sid];
+	Shadow *storage = storages[sid];
 	idHash.erase(storage->objectId);
 	delete storage;
 
@@ -93,7 +93,7 @@ void Engine::deleteStorageForChildren(int sid)
 	}
 }
 
-Engine::Storage* Engine::getStorage(GameObject *object)
+Engine::Shadow* Engine::getStorage(GameObject *object)
 {
 	uid id = object->getId();
 //	assert(idHash.find(id) != idHash.end(), "Object not found in physic storage");
@@ -104,7 +104,7 @@ Engine::Storage* Engine::getStorage(GameObject *object)
 		return NULL;
 }
 
-Engine::Storage* Engine::getStorage(uid id)
+Engine::Shadow* Engine::getStorage(uid id)
 {
 	if(idHash.find(id) != idHash.end())
 		return storages[findSid(id)];

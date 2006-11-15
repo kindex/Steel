@@ -120,7 +120,7 @@ void OpenGL_Engine::setTexCoordsCount(int size)
 
 void OpenGL_Engine::setTexCoords(int texNumber, TexCoords* coords)
 {
-	if(currentStorage != NULL && GS(currentStorage)->texCoords.size() > texNumber)
+	if(currentStorage != NULL && static_cast<int>(GS(currentStorage)->texCoords.size()) > texNumber)
 	{
 		GS(currentStorage)->texCoords[texNumber] = coords;
 	}
@@ -139,7 +139,7 @@ void OpenGL_Engine::setLights(Lights* lights)
 Отвечает за вывод графичесткого элемента.
 */
 
-void OpenGL_Engine::process(GraphStorage *e, steel::time globalTime, steel::time time)
+void OpenGL_Engine::process(GraphShadow *e, steel::time globalTime, steel::time time)
 {
 	if(e->positionKind == POSITION_SCREEN)
 	{
@@ -242,10 +242,10 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 //	steel::vector<int> elementAlpha;
 
 // В начале выводим только непрозрачные объекты
-	for(svector<Storage*>::iterator it = storages.begin(); it != storages.end(); it++)
+	for(svector<Shadow*>::iterator it = storages.begin(); it != storages.end(); it++)
 //		if(!it->blend)
 	{
-			GraphStorage *storage = GS(*it);
+			GraphShadow *storage = GS(*it);
 			process(storage, globalTime, time);
 	}
 	/*		else
@@ -485,7 +485,7 @@ void OpenGL_Engine::processCamera()
     glLoadIdentity();
 }
 
-void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix, GameObject *parent)
+void OpenGL_Engine::prepare(GraphShadow *storage, steel::time globalTime, steel::time time, matrix34 matrix, GameObject *parent)
 {
 	info.curTime = globalTime;
 	info.frameLength = time;
@@ -567,12 +567,12 @@ void OpenGL_Engine::makeStorageForChildren(GameObject *object)
 	}*/
 }
 
-void OpenGL_Engine::GraphStorage::fill(GameObject *object)
+void OpenGL_Engine::GraphShadow::fill(GameObject *object)
 {
-	Storage::fill(object);
+	Shadow::fill(object);
 }
 
-bool OpenGL_Engine::GraphStorage::cache(void)
+bool OpenGL_Engine::GraphShadow::cache(void)
 {
 	return  false;
 }

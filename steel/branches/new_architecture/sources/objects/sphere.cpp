@@ -15,6 +15,17 @@
 #include "sphere.h"
 #include "../res/res_main.h"
 
+void Sphere::bindEngine(InterfaceId id, Engine* engine)
+{
+	if(id == GraphEngine::interfaceId)
+	{
+		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
+
+		gengine.setPositionKind(POSITION_GLOBAL);
+		gengine.setPosition(ObjectPosition::getIdentity());
+	}
+}
+
 bool Sphere::updateInformation(InterfaceId id, Engine* engine)
 {
 	if(id == GraphEngine::interfaceId)
@@ -23,8 +34,6 @@ bool Sphere::updateInformation(InterfaceId id, Engine* engine)
 		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
 
 		gengine.setCurrentObject(this);
-		gengine.setPosition(ObjectPosition::getIdentity());
-		gengine.setPositionKind(POSITION_GLOBAL);
 		gengine.setVertexes(vertexes);
 		gengine.setNormals(normals);
 		gengine.setFaceMaterials(faces);
@@ -86,14 +95,14 @@ Sphere::Sphere()
 	
 	faces = new FaceMaterials(1);
 
-	faces->at(0).material = resMaterial.add("/sphere/sphere");
+	faces->at(0).material = new Material("/sphere/sphere");
 	faces->at(0).triangles = new Triangles;
 	faces->at(0).triangles->data.resize(height*radius*2);
 	faces->at(0).triangles->setId(objectIdGenerator.genUid());
 	faces->at(0).triangles->setChanged(true);
 	
 	for(int i=0; i < height; i++)
-		for(int j=0; j < radius; j++)
+ 		for(int j=0; j < radius; j++)
 		{
 			faces->at(0).triangles->data[(i*radius+j)*2 + 0].set(
 				i*radius + j, 

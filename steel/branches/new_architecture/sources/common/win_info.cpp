@@ -344,9 +344,9 @@ void DetectWindowsVersion(void)
 	if (VerInfo.wSuiteMask == VER_SUITE_STORAGE_SERVER) 
 	{
 	//VER_SUITE_STORAGE_SERVER = $00002000; //
-	//Windows Storage Server 2003 R2 or Windows Storage Server 2003 is installed.
+	//Windows Shadow Server 2003 R2 or Windows Shadow Server 2003 is installed.
 		log_msg("windows_info",  "  VER_SUITE_STORAGE_SERVER");
-		log_msg("windows_info",  "    Comment: Windows Storage Server 2003 R2 or Windows Storage Server 2003 is installed.");
+		log_msg("windows_info",  "    Comment: Windows Shadow Server 2003 R2 or Windows Shadow Server 2003 is installed.");
 	};
 	//#define VER_SUITE_STORAGE_SERVER            0x00002000
 

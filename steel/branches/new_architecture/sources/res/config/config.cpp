@@ -229,6 +229,51 @@ const std::string	Config::gets(std::string path, const std::string _default) con
 		return value->returns(_default);
 }
 
+const ConfigArray* Config::getArray(const std::string path) const
+{
+	const Config *value = find(path);
+	if (value != NULL && value->getType() == CONFIG_VALUE_ARRAY)
+		return static_cast<const ConfigArray*>(value);
+	else
+		return NULL;
+}
+
+ConfigArray* Config::getArray(const std::string path)
+{
+	Config *value = find(path);
+	if (value != NULL && value->getType() == CONFIG_VALUE_ARRAY)
+		return static_cast<ConfigArray*>(value);
+	else
+		return NULL;
+}
+
+std::string Config::getConfigFilePath(void) const
+{
+	string path, name;
+	splitPath(file, path, name);
+	return path;
+}
+
+std::string Config::getPath(const std::string path, const std::string _default)
+{
+	Config *value = find(path);
+	string base;
+	string res;
+	if (value != NULL && value->getType() == CONFIG_VALUE_STRING)
+	{
+		res = value->returns(_default);
+		base = value->getConfigFilePath();
+	}
+	else
+	{
+		res =  _default;
+		base = this->getConfigFilePath();
+	}
+
+	return createPath(base, res);
+}
+
+
 const v3 ConfigStruct::returnv3(const v3 _default) const
 {
 	const Config *x = getStructElement("x");	if(x == NULL) return _default;
@@ -483,5 +528,17 @@ const v3 ConfigArray::returnv3(const v3 _default) const
 				y->returnf(_default.y),
 				z->returnf(_default.z)
 			);
+}
+
+void ConfigArray::setFilePath(const std::string &_file)
+{
+	for(iterator it = begin(); it != end(); it++)
+		(*it)->setFilePath(_file);
+}
+
+void ConfigStruct::setFilePath(const std::string &_file)
+{
+	for(std::map<std::string, Config*>::iterator it = set.begin(); it != set.end(); it++)
+		it->second->setFilePath(_file);
 }
 

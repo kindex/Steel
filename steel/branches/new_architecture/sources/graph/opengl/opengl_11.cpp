@@ -17,7 +17,7 @@
 #include "gl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / glVertexPointer
-void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {
 	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
@@ -190,7 +190,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image, bool enable)
 
 
 
-void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphStorage &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
 {
 	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
@@ -209,7 +209,7 @@ void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphStorage &e, Triangles 
 	}
 }
 
-void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphStorage &e, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
 {
 	if(e.vertex && e.lines && !e.lines->index.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{

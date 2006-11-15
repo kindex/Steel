@@ -1,3 +1,4 @@
+#
 {
 //BlendMode format file,color
 
@@ -9,8 +10,8 @@ image0='warn'
 //mode1=*
 
 //****** Shader ******
-vertexShader='lighting.vsh'
-fragmentShader='lighting.fsh'
+//vertexShader='lighting.vsh'
+//fragmentShader='lighting.fsh'
 }
 //vertexShader=/none.vsh
 //fragmentShader=/none.fsh

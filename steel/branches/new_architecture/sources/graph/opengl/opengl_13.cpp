@@ -22,7 +22,7 @@
 
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphStorage &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material && GL_EXTENSION_MULTITEXTURE)
 	{
@@ -362,7 +362,7 @@ bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix34 const matrix, v3 const 
 }
 */
 
-void OpenGL_Engine::drawBump(GraphStorage &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img)
+void OpenGL_Engine::drawBump(GraphShadow &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img)
 {
 	glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
 	glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);

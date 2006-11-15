@@ -14,10 +14,10 @@
 #ifndef __RES__MATERIAL_H
 #define __RES__MATERIAL_H
 
-#include "../../steel.h"
-#include "../image/image.h"
-#include "../../graph/graph_types.h"
-#include "../config/config.h"
+#include "../steel.h"
+#include "../res/image/image.h"
+#include "graph_types.h"
+#include "../res/config/config.h"
 
 //тип смешивания двух текстур
 typedef	enum
@@ -63,10 +63,10 @@ protected:
 
 public:
 	Material(void): conf(NULL) {}
+	Material(Config *conf) { InitFromConfig(conf); }
+	Material(const std::string &matFileName);
 	~Material(void);
 
-	// загружает материал из *.mat файла
-	bool init(std::string _conf, const std::string dir);
 	// загружает материал из конфига
 	bool InitFromConfig(Config *config);
 	// получить текстуру с номером number
