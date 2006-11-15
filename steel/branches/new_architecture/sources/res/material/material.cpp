@@ -17,18 +17,10 @@
 #include "../../common/utils.h"
 using namespace std;
 
-bool Material::init(string name, const std::string dir)
-{
-	conf = resConfig.add(name + ".mat", false);
-	if(conf == NULL)
-	{
-		log_msg("error res material", string("Material not found: ") + name);
-		resConfig.pop();
-		return false;
-	} 
-	directory = dir;
 
-	shader = !conf->gets("vertexShader").empty() && !conf->gets("fragmentShader").empty();
+bool Material::InitFromConfig(Config *config)
+{
+		shader = !conf->gets("vertexShader").empty() && !conf->gets("fragmentShader").empty();
 
 	texture.clear();
 
@@ -85,15 +77,29 @@ bool Material::init(string name, const std::string dir)
 			texture.push_back(m);
 		}
 	}
-	if(texture.empty()) 
+	if(!texture.empty())
 	{
+		blend = texture[0].mode != TEXTURE_BLEND_MODE_REPLACE;
+	}
+	return !texture.empty(); 
+}
+
+bool Material::init(string name, const std::string dir)
+{
+	conf = resConfig.add(name + ".mat", false);
+	if(conf == NULL)
+	{
+		log_msg("error res material", string("Material not found: ") + name);
 		resConfig.pop();
 		return false;
-	}
+	} 
+	directory = dir;
 
-	blend = texture[0].mode != TEXTURE_BLEND_MODE_REPLACE;
+	bool result = InitFromConfig(conf);
+
 	resConfig.pop();
-	return true;
+
+	return result;
 }
 
 Material::~Material()

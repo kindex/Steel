@@ -53,7 +53,7 @@ public:
 
 // материал задаёт множество текстур и типы их наложения
 // или шейдеры для рендеринга моделей
-class Material: public Res
+class Material
 {
 protected:
 	Config *conf;
@@ -67,6 +67,8 @@ public:
 
 	// загружает материал из *.mat файла
 	bool init(std::string _conf, const std::string dir);
+	// загружает материал из конфига
+	bool InitFromConfig(Config *config);
 	// получить текстуру с номером number
 	Texture *getTexture(int number) { return &texture[number]; }
 	// получить количество текстур
