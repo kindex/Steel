@@ -25,9 +25,11 @@ public:
 	bool soundPlay(Sound* sound);
 	bool soundStop(Sound* sound);
 
+	bool attachAudioEngine(AudioEngine* aEngine);
+
 private:
 	AudioEngine* engine;
-	vector<Sound*> sounds;
+	vector<Sound*> sounds;	// ???
 };
 
 #endif

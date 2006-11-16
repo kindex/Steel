@@ -18,3 +18,9 @@ bool AudioObject::soundPlay(Sound* sound)
 	engine->soundPlay(sound);
 	return true;
 }
+
+bool AudioObject::attachAudioEngine(AudioEngine* aEngine)
+{
+	engine = aEngine;
+	return true;
+}

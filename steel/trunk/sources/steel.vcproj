@@ -783,7 +783,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\audio\openal_types.h"
+						RelativePath=".\audio\openal\openal_types.h"
 						>
 					</File>
 				</Filter>

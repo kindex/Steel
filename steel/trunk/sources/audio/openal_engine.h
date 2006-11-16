@@ -33,6 +33,8 @@
 
 #include "audio_engine.h"
 
+#include "openal/openal_types.h"
+
 //#include "../objects/audio_sound.h"
 
 //#pragma comment(lib, "openal32.lib")

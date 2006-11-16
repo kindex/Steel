@@ -30,9 +30,9 @@ class Source
 	ALfloat		gain;				// Indicate the gain (volume amplification) applied. Range:  ]0.0- ] 
 	ALfloat		minGain;			// Indicate minimum source attenuation. Range:  [0.0 - 1.0]
 	ALfloat		maxGain;			// Indicate maximum source attenuation. Range:  [0.0 - 1.0]
-	ALfloat[3]	position;			// Specify the current location in three dimensional space.
-	ALfloat[3]	velocity;			// Specify the current velocity in three dimensional space.
-	ALfloat[3]	direction;			// Specify the current direction.
+	ALfloat		position[3];			// Specify the current location in three dimensional space.
+	ALfloat		velocity[3];			// Specify the current velocity in three dimensional space.
+	ALfloat		direction[3];			// Specify the current direction.
 	ALint		sourceRelative;		// AL_TRUE or AL_FALSE
 	ALint		sourceState;		// Source state information.
 	ALint		sourceType;			// Source type (Static, Streaming or undetermined)
