@@ -207,7 +207,7 @@ public:
 	const v3 returnv3(const v3 _default = v3(0.0f, 0.0f, 0.0f)) const;
 	const Config* getArrayElement(const size_t index) const;
 	Config* getArrayElement(const size_t index);
-	int getArraySize(const int index) const { return set.size(); }
+	size_t size(void) const { return set.size(); }
 
 	const std::string DumpThis(int level) const;
 	void setFilePath(const std::string &_file);

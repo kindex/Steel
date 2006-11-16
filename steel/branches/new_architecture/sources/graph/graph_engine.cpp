@@ -25,13 +25,14 @@ bool GraphEngine::inject(GameObject *object)
 	// если объект не хочет добавляться
 	if(!object->beforeInject(interfaceId)) return false;
 
-	setCurrentObject(object);
-	object->bindEngine(interfaceId, this);
 	// кешируем объект
 	if(!makeStorageForObject(object)) return false;
 	makeStorageForChildren(object);
 	// список глобальных объектов
 	objects.push_back(object);
+
+	setCurrentObject(object);
+	object->bindEngine(interfaceId, this);
 
 	return true;
 }

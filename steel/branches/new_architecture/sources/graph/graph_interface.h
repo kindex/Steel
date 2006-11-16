@@ -21,6 +21,7 @@
 #include "../engine/interface.h"
 
 #include "graph_types.h"
+#include "material.h"
 
 #include "material.h"
 

@@ -23,13 +23,16 @@
 class GraphObject: public GameObject
 {
 public:
+	GraphObject(void);
+
 	bool isSuportingInterface(InterfaceId id) { return id == GraphInterface::interfaceId; }
-	bool updateInformation(InterfaceId, Engine*);
+	void bindEngine(InterfaceId, Engine*);
 	bool InitFromConfig(Config *conf);
 protected:
 	Vertexes *vertexes;
 	Normals  *normals;
 	FaceMaterials *faces;
+	TexCoords *texCoords;
 };
 
 class Combiner: public GameObject

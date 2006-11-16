@@ -211,8 +211,10 @@ const v3 Config::getv3(std::string path, const v3 _default) const
 		switch (value->getType())
 		{
 		case CONFIG_VALUE_STRUCT:
-			return ((ConfigStruct*)value)->returnv3(_default);
-//		case CONFIG_VALUE_ARRAY:
+			return static_cast<const ConfigStruct*>(value)->returnv3(_default);
+		case CONFIG_VALUE_ARRAY:
+			return static_cast<const ConfigArray*>(value)->returnv3(_default);
+
 		default:
 			return _default;
 		}
@@ -424,7 +426,7 @@ Config* ConfigStruct::findInThis(std::string path)
 const Config *ConfigSimple::findInThis(std::string path) const
 {
 	if(!path.empty())
-		error("res config", "Cannot split simple type into components");
+		error("res config", "Cannot split simple type into components (remind path '" + path + "')");
 	return this;
 }
 Config *ConfigSimple::findInThis(std::string path)
@@ -477,13 +479,23 @@ const std::string ConfigArray::DumpThis(int level) const
 	
 const Config *ConfigArray::findInThis(std::string path) const
 {
-	if(path.empty())
+	if(path.size()<3)
 	{
 //		error("res config", "Cannot convert struct to simple type");
 		return this;
 	}
-	int s = 0;
+	int s = 1;
+	if(path[0] != '[')
+	{
+		error("res config", "Error in path ('" + path + "'). Expecting [");
+		return this;
+	}
 	int index = (int)ConfigParser::getNumber(path.c_str(), s);
+	if(path[s] != ']')
+	{
+		error("res config", "Error in path ('" + path + "'). Expecting ]");
+		return this;
+	}
 	string ext = (string::size_type)s < path.length()?path.substr(s + 1):"";
 	if(index < 0)
 	{

@@ -31,6 +31,7 @@ public:
 	// уникальный идентификатор для массива данных
 	uid		id;
 public:
+	BufferedElement(void): changed(true) { id = objectIdGenerator.genUid(); }
 	uid		getId(void) const { return id; }
 	void	setId(uid _id) { id = _id; changed = false; }
 	bool	wasChanged(void) const { return changed; }
@@ -42,13 +43,15 @@ struct Vertexes: public BufferedElement
 {
 	steel::vector<v3> data;
 
-	Vertexes(): data(0) {}
+	Vertexes(): BufferedElement(), data(0) {}
 };
 
 // массив треугольников многогранника
 struct Triangles: public BufferedElement
 {
 	steel::vector<Triangle> data;
+
+	Triangles(void): BufferedElement() {}
 };
 
 /*

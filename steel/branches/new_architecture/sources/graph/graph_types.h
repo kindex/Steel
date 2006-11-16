@@ -48,6 +48,8 @@ class TexCoords: public BufferedElement
 {
 public:
 	steel::vector<v2>	data;
+
+	TexCoords(): BufferedElement(), data(0) {}
 };
 
 class TexCoords3f: public BufferedElement

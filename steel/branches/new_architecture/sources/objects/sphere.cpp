@@ -17,7 +17,7 @@
 
 void Sphere::bindEngine(InterfaceId id, Engine* engine)
 {
-	if(id == GraphEngine::interfaceId)
+	if(id == GraphInterface::interfaceId)
 	{
 		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
 
@@ -28,7 +28,7 @@ void Sphere::bindEngine(InterfaceId id, Engine* engine)
 
 bool Sphere::updateInformation(InterfaceId id, Engine* engine)
 {
-	if(id == GraphEngine::interfaceId)
+	if(id == GraphInterface::interfaceId)
 	{
 		ProcessGraph();
 		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);

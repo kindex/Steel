@@ -63,7 +63,7 @@ protected:
 
 public:
 	Material(void): conf(NULL) {}
-	Material(Config *conf) { InitFromConfig(conf); }
+	Material(Config *conf): conf(NULL) { InitFromConfig(conf); }
 	Material(const std::string &matFileName);
 	~Material(void);
 
