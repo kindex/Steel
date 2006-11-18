@@ -1,12 +1,10 @@
 /*id*********************************************************
-	File: graph/types.h
+	File: graph/graph_types.h
 	Unit: graph engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-		* Kane [J. Anton, kane@mail.berlios.de]
-		* Bond [Andrey Bondarenko]
 	License:
 		Steel Engine License
 	Description:

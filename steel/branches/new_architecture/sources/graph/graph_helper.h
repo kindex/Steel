@@ -19,6 +19,8 @@
 #include "../math/line.h"
 #include "../engine/helper.h"
 #include "../engine/game_object.h"
+#include "../engine/engine_types.h"
+#include "graph_interface.h"
 
 class GraphHelper: public GameObject
 {

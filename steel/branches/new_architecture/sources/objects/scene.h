@@ -10,6 +10,7 @@
 	Description:
 		Загрузка уровня из *.scene файла.
  ************************************************************/
+
 #include "../steel.h"
 #ifndef __OBJECTS__SCENE_H
 #define __OBJECTS__SCENE_H

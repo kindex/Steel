@@ -1,8 +1,8 @@
 /*id*********************************************************
-	File: helper.h
-	Unit: core
+	File: engine/helper.h
+	Unit: engine
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:

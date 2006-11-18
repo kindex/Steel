@@ -1,6 +1,6 @@
 /*id*********************************************************
-	File: interface.cpp
-	Unit: core
+	File: engine/game_object.cpp
+	Unit: engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -8,8 +8,8 @@
 	License:
 		Steel Engine License
 	Description:
-		Предок для интерфейтов объектов, которые имеют положение
-		(глобальную, локальную систему координат)
+		GameObject protottype
+		От этого класса наследуются все игровые объекты.
 ************************************************************/
 
 #include "game_object.h"

@@ -1,6 +1,6 @@
 /*id*******************************************************************************
-	File: res/material/material.h
-	Unit: res/material
+	File: graph/material.h
+	Unit: graph engine
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-        Молуль для загрузки и хранения материала
+        Формат хранения материала
 **************************************************************************************/
 
 #ifndef __RES__MATERIAL_H

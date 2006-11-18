@@ -2,10 +2,9 @@
 	File: graph/graph_interface.h
 	Unit: graph engine
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-		* Kane [J. Anton, kane@mail.berlios.de]
 		* Bond [Andrey Bondarenko]
 	License:
 		Steel Engine License

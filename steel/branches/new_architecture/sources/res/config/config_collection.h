@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: res/config/config_collection.cpp
+	File: res/config/config_collection.h
 	Unit: res config
 	Part of: Steel engine
 	(C) DiVision, 2006

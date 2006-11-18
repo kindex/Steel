@@ -1,11 +1,10 @@
 /*id*********************************************************
 	File: engine/engine.h
-	Unit: core
+	Unit: engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-		* Kane [J. Anton, kane@mail.berlios.de]
 		* Bond [Andrey Bondarenko]
 	License:
 		Steel Engine License
@@ -15,7 +14,7 @@
 		Класс Engine (движок) через функцию inject() получает объекты, которые
 		должны быть обработаны, но обрабатывает их только внутри process().
 		Для этого объекты должны поддерживать интервейс (interface) обмена 
-		информацией с движком.
+		информацией с движком. От этого интерфейса наследуется Engine.
  ************************************************************/
 
 #ifndef ENGINE_H
@@ -76,7 +75,7 @@ protected:
 		virtual void setParent(GameObject *aparent) {parent = aparent; }
 	};
 	// кеш объектов
-	svector<Shadow*> storages;
+	svector<Shadow*> shadows;
 	typedef std::map <uid, int> StorageHash;
 	typedef int sid; // Shadow vector index
 	// отображение идентификаторов объекта на положение в массиве storage

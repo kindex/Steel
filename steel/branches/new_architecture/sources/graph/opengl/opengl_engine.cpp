@@ -242,7 +242,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 //	steel::vector<int> elementAlpha;
 
 // В начале выводим только непрозрачные объекты
-	for(svector<Shadow*>::iterator it = storages.begin(); it != storages.end(); it++)
+	for(svector<Shadow*>::iterator it = shadows.begin(); it != shadows.end(); it++)
 //		if(!it->blend)
 	{
 			GraphShadow *storage = GS(*it);

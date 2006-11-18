@@ -533,6 +533,14 @@
 						RelativePath=".\res\text\text_file.h"
 						>
 					</File>
+					<File
+						RelativePath=".\res\text\text_string.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\text\text_string.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="audio"
@@ -847,14 +855,6 @@
 				</File>
 				<File
 					RelativePath=".\objects\combiner.h"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\light.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\light.h"
 					>
 				</File>
 				<File

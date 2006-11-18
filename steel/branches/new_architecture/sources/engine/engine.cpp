@@ -1,6 +1,6 @@
 /*id*********************************************************
-	File: engine.h
-	Unit: core
+	File: engine/engine.h
+	Unit: engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -13,7 +13,7 @@
 		Класс Engine (движок) через функцию inject() получает объекты, которые
 		должны быть обработаны, но обрабатывает их только внутри process().
 		Для этого объекты должны поддерживать интервейс (interface) обмена 
-		информацией с движком.
+		информацией с движком. От этого интерфейса наследуется Engine.
  ************************************************************/
 #include "../steel.h"
 #include "engine.h"
@@ -48,7 +48,7 @@ bool Engine::makeStorageForObject(GameObject *object)
 		return false;
 	}
 
-	int storageIndex = storages.size();
+	int storageIndex = shadows.size();
 	
 	Shadow* newStorage = getStorageClass(object);
 	if(newStorage == NULL)
@@ -57,7 +57,7 @@ bool Engine::makeStorageForObject(GameObject *object)
 		return false;
 	}
 
-	storages.push_back(newStorage);
+	shadows.push_back(newStorage);
 
 	idHash[objectId] = storageIndex;
 	newStorage->storageIndex = storageIndex;
@@ -70,24 +70,24 @@ void Engine::deleteStorageForObject(int sid)
 {
 	deleteStorageForObjectPost(sid);
 
-	Shadow *storage = storages[sid];
+	Shadow *storage = shadows[sid];
 	idHash.erase(storage->objectId);
 	delete storage;
 
-	if(size_t(sid + 1) < storages.size())
+	if(size_t(sid + 1) < shadows.size())
 	{
-		storages[sid] = storages.back();
-		idHash[storages[sid]->objectId] = sid;
+		shadows[sid] = shadows.back();
+		idHash[shadows[sid]->objectId] = sid;
 	}
-	storages.pop_back();
+	shadows.pop_back();
 }
 
 void Engine::deleteStorageForChildren(int sid)
 {
-	int count = storages[sid]->children.size();
+	int count = shadows[sid]->children.size();
 	for(int i = 0; i < count; i++)
 	{
-		int n = findSid(storages[sid]->children[i]);
+		int n = findSid(shadows[sid]->children[i]);
 		deleteStorageForChildren(n);
 		deleteStorageForObject(n);
 	}
@@ -99,7 +99,7 @@ Engine::Shadow* Engine::getStorage(GameObject *object)
 //	assert(idHash.find(id) != idHash.end(), "Object not found in physic storage");
 
 	if(idHash.find(id) != idHash.end())
-		return storages[findSid(id)];
+		return shadows[findSid(id)];
 	else
 		return NULL;
 }
@@ -107,7 +107,7 @@ Engine::Shadow* Engine::getStorage(GameObject *object)
 Engine::Shadow* Engine::getStorage(uid id)
 {
 	if(idHash.find(id) != idHash.end())
-		return storages[findSid(id)];
+		return shadows[findSid(id)];
 	else
 		return NULL;
 }

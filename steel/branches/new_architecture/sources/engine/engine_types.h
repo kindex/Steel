@@ -1,3 +1,16 @@
+/*id*********************************************************
+	File: engine/engine_types.h
+	Unit: engine
+	Part of: Steel engine
+	(C) DiVision, 2004-2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Основные типы данных для интерфейса движка.
+ ************************************************************/
+
 #ifndef ENGINE__ENGINE_TYPES_H
 #define ENGINE__ENGINE_TYPES_H
 
