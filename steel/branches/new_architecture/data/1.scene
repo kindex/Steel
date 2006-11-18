@@ -12,6 +12,7 @@ objects = (
 	class = 'combiner'
 	origin = (0 0 0)
 	graph = {
+		class = 'mesh1'
 		vertexes = ( (0 0 0) (0 1 0) (1 1 0))
 		texCoords= ( (0 0)   (0 1)   (1 1)  )
 		triangles = ( (0 2 1) (0 1 2) )
@@ -23,6 +24,21 @@ objects = (
 	origin = (0 0 1)
 	graph = [#objects[0].graph] {}
 	}
+	
+	{
+	class = 'combiner'
+	origin = (1 1 0.5)
+	graph = {
+		class = 'box'
+		size = 0.5
+		material =  
+			{
+			format0='color_map'
+			image0='/box/boxes/box1_side_handle_d'
+			}
+		}
+	}
+	
 )
 
 }

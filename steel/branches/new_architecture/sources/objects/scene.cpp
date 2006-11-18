@@ -19,11 +19,11 @@
 
 #include "scene.h"
 #include "sphere.h"
-#include "combiner.h"
+#include "combiner/combiner.h"
 
 using namespace std;
 
-GameObject* findClass(const string &_class)
+GameObject* findGameObject(const string &_class)
 {
 	if(_class == "scene") return new Scene;
 	if(_class == "sphere") return new Sphere;
@@ -38,7 +38,7 @@ GameObject	*createGameObject(Config *conf)
 	if(conf == NULL) return NULL;
 	string _class = conf->gets("class");
 
-	GameObject *obj = findClass(_class);
+	GameObject *obj = findGameObject(_class);
 	if(obj == NULL) return NULL;
 
 	v3 origin =  conf->getv3("origin");

@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: objects/combiner.h
+	File: objects/combiner/combiner.h
 	Unit: objects
 	Part of: Steel engine
 	(C) DiVision, 2006
@@ -13,27 +13,13 @@
 		одного физического объекта [и одного графического].
  ************************************************************/
 
-#ifndef __OBJECTS__COMBINER_H
-#define __OBJECTS__COMBINER_H
+#ifndef __OBJECTS__COMBINER__COMBINER_H
+#define __OBJECTS__COMBINER__COMBINER_H
 
-#include "../steel.h"
-#include "../engine/game_object.h"
-#include "../graph/graph_interface.h"
-
-class GraphObject: public GameObject
-{
-public:
-	GraphObject(void);
-
-	bool isSuportingInterface(InterfaceId id) { return id == GraphInterface::interfaceId; }
-	void bindEngine(InterfaceId, Engine*);
-	bool InitFromConfig(Config *conf);
-protected:
-	Vertexes *vertexes;
-	Normals  *normals;
-	FaceMaterials *faces;
-	TexCoords *texCoords;
-};
+#include "../../steel.h"
+#include "../../engine/game_object.h"
+#include "../../graph/graph_interface.h"
+#include "graph_object.h"
 
 class Combiner: public GameObject
 {

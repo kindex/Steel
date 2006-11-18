@@ -847,14 +847,6 @@
 				Name="objects"
 				>
 				<File
-					RelativePath=".\objects\combiner.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\combiner.h"
-					>
-				</File>
-				<File
 					RelativePath=".\objects\scene.cpp"
 					>
 				</File>
@@ -873,6 +865,26 @@
 				<Filter
 					Name="ps"
 					>
+				</Filter>
+				<Filter
+					Name="combiner"
+					>
+					<File
+						RelativePath=".\objects\combiner\combiner.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\combiner\combiner.h"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\combiner\graph_object.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\combiner\graph_object.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

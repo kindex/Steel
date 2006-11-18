@@ -44,15 +44,15 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 	input->setGame(this);
 
 	// Init world
-	eye = v3(conf->getf("camera_eye_x", 1.0f), conf->getf("camera_eye_y", 1.0f), conf->getf("camera_eye_z", 1.0f));
+	eye = conf->getv3("camera.eye", v3(1.0f, 1.0f, 1.0f));
 
-	v3 target = v3(conf->getf("camera_target_x"), conf->getf("camera_target_y"), conf->getf("camera_target_z"));
+	v3 target = conf->getv3("camera.target", v3(0.0f,0.0f,0.0f));
 
 	direction = target-eye;
 	direction.normalize();
 
-	accSpeed = conf->getf("camera_acc", 50);
-	brakeSpeed = conf->getf("camera_brakes", 200);
+	accSpeed = conf->getf("camera.acc", 50);
+	brakeSpeed = conf->getf("camera.brakes", 200);
 
 	moveSpeed.loadZero();
 
@@ -99,14 +99,14 @@ void Steel::handleEventKeyDown(std::string key)
 	if(key == "pause") paused = !paused;
 	if(key == "n") framesToPass = 1;
 
-/*	if(key == "f1") physicEngine->conf->toggle("helperDrawLines");
+/*	if(key == "f1") physicEngine->conf->toggle("helperDrawLines");*/
 	if(key == "f2") graphEngine->conf->toggle("drawFace");
 	if(key == "f3") graphEngine->conf->toggle("drawWire");
 	if(key == "f4") graphEngine->conf->toggle("drawBump");
 	if(key == "f5") graphEngine->conf->toggle("drawVertexes");
 	if(key == "f7") graphEngine->conf->toggle("drawNormals");
 	if(key == "f8") graphEngine->conf->toggle("drawAABB");
-*/
+
 	if(key == "f6") 
 	{
 		graphEngine->conf->toggle("clearColor");
