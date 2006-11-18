@@ -15,10 +15,10 @@ CppCompiler=-DSTEEL_COMPILER=2_@@_-DSTEEL_OS=1_@@_-DSTEEL_COMPILER_VERSION=34_@@
 Linker=-lopengl32_@@_-lglu32_@@_-lglaux_@@_-lkernel32_@@_-luser32_@@_-lgdi32 _@@_../sdk/libs/eax.lib_@@_../sdk/libs/OpenAL32.lib_@@_../sdk/libs/eaxguid.lib_@@_
 IsCpp=1
 Icon=
-ExeOutput=..\build.devcpp
-ObjectOutput=..\temp
-OverrideOutput=0
-OverrideOutputName=steel.exe
+ExeOutput=..\bin
+ObjectOutput=..\temp\steel_devcpp_release\
+OverrideOutput=1
+OverrideOutputName=steel_devcpp_release.exe
 HostApplication=
 Folders=audio,audio/openal,common,engine,game,graph,graph/opengl,graph/opengl/extensions,graph/opengl/gl,input,math,objects,objects/ps,physic,res,res/audio,res/config,res/image,res/model,res/text
 CommandLine=
@@ -130,10 +130,10 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [VersionInfo]
-Major=0
+Major=1
 Minor=1
-Release=1
-Build=1
+Release=0
+Build=0
 LanguageID=1033
 CharsetID=1252
 CompanyName=
@@ -144,7 +144,7 @@ LegalCopyright=DiVision
 LegalTrademarks=
 OriginalFilename=
 ProductName=Steel Engine
-ProductVersion=dev
+ProductVersion=1.1.0
 AutoIncBuildNr=0
 
 [Unit11]
