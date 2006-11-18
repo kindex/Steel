@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="Steel Engine"
 	ProjectGUID="{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}"
+	RootNamespace="Steel Engine"
 	>
 	<Platforms>
 		<Platform
@@ -15,14 +16,14 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\build.debug"
-			IntermediateDirectory="..\temp"
+			OutputDirectory="..\bin"
+			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
-			BuildLogFile="..\temp\$(IntDir)\BuildLog.htm"
+			BuildLogFile="..\temp\$(SolutionName)_VS8_$(ConfigurationName)\BuildLog.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -53,10 +54,10 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="..\temp/steel.pch"
-				AssemblerListingLocation="..\temp/"
-				ObjectFile="..\temp/"
-				ProgramDataBaseFileName="..\temp/"
+				PrecompiledHeaderFile="..\temp\$(SolutionName)_VS8_$(ConfigurationName)/steel.pch"
+				AssemblerListingLocation="..\temp\$(SolutionName)_VS8_$(ConfigurationName)/"
+				ObjectFile="..\temp\$(SolutionName)_VS8_$(ConfigurationName)/"
+				ProgramDataBaseFileName="..\temp\$(SolutionName)_VS8_$(ConfigurationName)/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
@@ -76,14 +77,14 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib openal32.lib"
 				ShowProgress="0"
-				OutputFile="..\build.debug/steel.exe"
-				Version="1.0.0.1"
+				OutputFile="..\bin/$(SolutionName)_VS8_$(ConfigurationName).exe"
+				Version="1.1.0"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="MSVCRT"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="..\build.debug/steel.pdb"
+				ProgramDatabaseFile="..\temp\$(SolutionName)_VS8_$(ConfigurationName)/steel.pdb"
 				GenerateMapFile="true"
 				SubSystem="2"
 				EntryPointSymbol=""
