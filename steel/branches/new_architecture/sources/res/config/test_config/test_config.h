@@ -22,7 +22,11 @@
 class ConfigTest: public Tester
 {
 public:
-
+	void Test(void)
+	{
+		TestFind();
+	}
+	void TestFind();
 };
 
 class ConfigParserTest: public Tester

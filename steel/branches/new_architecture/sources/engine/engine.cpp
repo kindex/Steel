@@ -39,40 +39,40 @@ bool Engine::Shadow::cache()
 }
 
 
-bool Engine::makeStorageForObject(GameObject *object)
+bool Engine::makeShadowForObject(GameObject *object)
 {
 	uid objectId = object->getId();
 	if(idHash.find(objectId) != idHash.end())
 	{
-		log_msg("error engine", "Duplicate object " + IntToStr(objectId) + " in storage");
+		log_msg("error engine", "Duplicate object " + IntToStr(objectId) + " in shadow");
 		return false;
 	}
 
-	int storageIndex = shadows.size();
+	int shadowIndex = shadows.size();
 	
-	Shadow* newStorage = getStorageClass(object);
+	Shadow* newStorage = getShadowClass(object);
 	if(newStorage == NULL)
 	{
-		log_msg("error engine", "Cannot find storage for object " + IntToStr(objectId));
+		log_msg("error engine", "Cannot find shadow for object " + IntToStr(objectId));
 		return false;
 	}
 
 	shadows.push_back(newStorage);
 
-	idHash[objectId] = storageIndex;
-	newStorage->storageIndex = storageIndex;
+	idHash[objectId] = shadowIndex;
+	newStorage->shadowIndex = shadowIndex;
 	newStorage->fill(object);
-	makeStorageForObjectPost(object, newStorage);
+	makeShadowForObjectPost(object, newStorage);
 	return true;
 }
 
-void Engine::deleteStorageForObject(int sid)
+void Engine::deleteShadowForObject(int sid)
 {
-	deleteStorageForObjectPost(sid);
+	deleteShadowForObjectPost(sid);
 
-	Shadow *storage = shadows[sid];
-	idHash.erase(storage->objectId);
-	delete storage;
+	Shadow *shadow = shadows[sid];
+	idHash.erase(shadow->objectId);
+	delete shadow;
 
 	if(size_t(sid + 1) < shadows.size())
 	{
@@ -82,21 +82,21 @@ void Engine::deleteStorageForObject(int sid)
 	shadows.pop_back();
 }
 
-void Engine::deleteStorageForChildren(int sid)
+void Engine::deleteShadowForChildren(int sid)
 {
 	int count = shadows[sid]->children.size();
 	for(int i = 0; i < count; i++)
 	{
 		int n = findSid(shadows[sid]->children[i]);
-		deleteStorageForChildren(n);
-		deleteStorageForObject(n);
+		deleteShadowForChildren(n);
+		deleteShadowForObject(n);
 	}
 }
 
-Engine::Shadow* Engine::getStorage(GameObject *object)
+Engine::Shadow* Engine::getShadow(GameObject *object)
 {
 	uid id = object->getId();
-//	assert(idHash.find(id) != idHash.end(), "Object not found in physic storage");
+//	assert(idHash.find(id) != idHash.end(), "Object not found in physic shadow");
 
 	if(idHash.find(id) != idHash.end())
 		return shadows[findSid(id)];
@@ -104,7 +104,7 @@ Engine::Shadow* Engine::getStorage(GameObject *object)
 		return NULL;
 }
 
-Engine::Shadow* Engine::getStorage(uid id)
+Engine::Shadow* Engine::getShadow(uid id)
 {
 	if(idHash.find(id) != idHash.end())
 		return shadows[findSid(id)];

@@ -158,3 +158,55 @@ void ConfigParserTest::TestParser(void)
 	#undef TEST_PARSER_INCORRECT
 	#undef TEST_PARSER
 }
+
+void ConfigTest::TestFind(void)
+{
+/*
+
+(
+	{
+		valued = 123.0
+		valueStruct = {
+					values = "test"
+				}
+		arr = (1 2 3)
+	}
+)
+
+*/
+	
+	ConfigNumber *valued = new ConfigNumber(123.0);
+
+	ConfigStruct *valueStruct = new ConfigStruct;
+	valueStruct->setValue("values", new ConfigString("test"));
+
+	ConfigArray  *arr = new ConfigArray;
+	arr->push(new ConfigNumber(1));
+	arr->push(new ConfigNumber(2));
+	arr->push(new ConfigNumber(3));
+
+	ConfigStruct *_struct = new ConfigStruct;
+	_struct->setValue("valued", valued);
+	_struct->setValue("valueStruct", valueStruct);
+	_struct->setValue("arr", arr);
+
+	ConfigArray  *config = new ConfigArray;
+	config->push(_struct);
+
+
+	CHECK_TRUE(config->getd("[0].valued", -1) == 123.0, "Find: array->struct->number" );
+	CHECK_TRUE(config->getd("[0]valued", -1) == -1, "Find: array->struct->number" );
+	CHECK_TRUE(config->getd("[valued", -1) == -1, "Find: array->struct->number" );
+	CHECK_TRUE(config->getd("[1].valued", -1) == -1, "Find: array->struct->number" );
+	CHECK_TRUE(config->getd("[-1].valued", -1) == -1, "Find: array->struct->number" );
+	CHECK_TRUE(config->getd("[0].xxx", -1) == -1, "Find: array->struct->number" );
+
+	CHECK_TRUE(config->gets("[0].valueStruct.values", "-1") == "test", "Find: array->struct->struct->string" );
+	CHECK_TRUE(config->gets("[0].valueStructvalues", "-1") == "-1", "Find: array->struct->struct->string" );
+
+	CHECK_TRUE(config->getd("[0].arr[0]", -1.0) == 1.0, "Find: array->struct->array->number");
+	CHECK_TRUE(config->getd("[0].arr[1]", -1.0) == 2.0, "Find: array->struct->array->number");
+	CHECK_TRUE(config->getd("[0].arr[2]", -1.0) == 3.0, "Find: array->struct->array->number");
+
+	CHECK_TRUE(_struct->getd("arr[2]", -1.0) == 3.0, "Find: struct->array->number");
+}

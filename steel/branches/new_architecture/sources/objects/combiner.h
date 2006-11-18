@@ -54,6 +54,7 @@ public:
 		if(id == GraphInterface::interfaceId && graph != NULL)
 		{
 			dynamic_cast<GraphInterface*>(engine)->setPositionKind(positionKind);
+			dynamic_cast<GraphInterface*>(engine)->setPosition(position);
 			graph->bindEngine(id, engine);
 		}
 	}

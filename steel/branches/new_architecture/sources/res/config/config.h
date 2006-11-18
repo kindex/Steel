@@ -33,7 +33,7 @@ typedef enum
 struct ConfigTemplate
 {
 	ConfigTemplate(void): local(true) {}
-	ConfigTemplate(const std::string FullPath);
+	ConfigTemplate(const std::string &FullPath);
 
 	const std::string Dump(void) const;
 
@@ -58,24 +58,24 @@ public:
 	// Config Base types
 	virtual double		returnd(const double _default = 0.0f) const { return _default; }
 	virtual float		returnf(const float _default = 0.0f) const { return (float)returnd((double)_default); } 
-	virtual const std::string returns(const std::string _default = std::string()) const { return _default; }
+	virtual const std::string returns(const std::string &_default = std::string()) const { return _default; }
 
 	// search for config subelement (struct, array)
-	virtual const Config *find(const std::string path) const;
-	virtual Config *find(const std::string path);
-	virtual void toggle(const std::string path);
-	virtual void setValued(const std::string path, double value);
+	virtual const Config *find(const std::string &path) const;
+	virtual Config *find(const std::string &path);
+	virtual void toggle(const std::string &path);
+	virtual void setValued(const std::string &path, double value);
 
 	// Steel types
-			double		getd (const std::string path, const double _default = 0.0f) const;
-			float		getf (const std::string path, const float  _default = 0.0f) const { return (float)getd(path, (double)_default); } 
-			int			geti (const std::string path, const int	 _default = 0) const { return (int)getd(path, (double)_default); } 
-	const	v3			getv3(const std::string path, const v3	 _default = v3(0.0f, 0.0f, 0.0f)) const;
-	const	std::string	gets(const std::string path, const std::string _default = std::string()) const;
-	const	ConfigArray*getArray(const std::string path) const;
-			ConfigArray*getArray(const std::string path);
+			double		getd (const std::string &path, const double _default = 0.0f) const;
+			float		getf (const std::string &path, const float  _default = 0.0f) const { return (float)getd(path, (double)_default); } 
+			int			geti (const std::string &path, const int	 _default = 0) const { return (int)getd(path, (double)_default); } 
+	const	v3			getv3(const std::string &path, const v3	 _default = v3(0.0f, 0.0f, 0.0f)) const;
+	const	std::string	gets(const std::string &path, const std::string &_default = std::string()) const;
+	const	ConfigArray*getArray(const std::string &path) const;
+			ConfigArray*getArray(const std::string &path);
 	// полный путь к файлу относительно конфига (включая шаблоны)
-			std::string getPath(const std::string path, const std::string _default = std::string());
+			std::string getPath(const std::string &path, const std::string &_default = std::string());
 
 	// formated output
 	virtual std::string Dump(int level = 0) { return DumpPrefix(level) + DumpThis(level); }
@@ -87,10 +87,10 @@ public:
 	friend class ConfigParser;
 
 protected:
-	virtual const Config* findInThis(const std::string path)  const = 0;
-	virtual Config* findInThis(const std::string path) = 0;
-	virtual const Config* findInTemplate(const std::string path) const;
-	virtual Config* findInTemplate(const std::string path);
+	virtual const Config* findInThis(const std::string &path)  const = 0;
+	virtual Config* findInThis(const std::string &path) = 0;
+	virtual const Config* findInTemplate(const std::string &path) const;
+	virtual Config* findInTemplate(const std::string &path);
 
 	virtual std::string genFullId(std::string someConfigId) const;
 	const Config* getParent(void) const { return parent; }
@@ -117,8 +117,8 @@ class ConfigNull: public Config
 public:
 	ConfigNull(void): Config(CONFIG_VALUE_NULL, false) {}
 
-	const Config	*findInThis(const std::string path) const { return NULL; }
-	Config			*findInThis(const std::string path) { return NULL; }
+	const Config	*findInThis(const std::string &path) const { return NULL; }
+	Config			*findInThis(const std::string &path) { return NULL; }
 	const std::string  DumpThis(int level = 0)  const { return "null"; }
 };
 
@@ -127,8 +127,8 @@ class ConfigSimple: public Config
 public:
 	ConfigSimple(ConfigValueType _type, bool _valueIsSet): Config(_type, _valueIsSet) {}
 
-	const Config *findInThis(const std::string path) const;
-	Config *findInThis(const std::string path);
+	const Config *findInThis(const std::string &path) const;
+	Config *findInThis(const std::string &path);
 };
 
 
@@ -141,10 +141,10 @@ public:
 	void	setValue(double newValue) { value = newValue; }
 	
 	double	returnd(const double _default = 0.0f) const { return value; }
-	const	std::string ConfigNumber::returns(const std::string _default = std::string()) const;
+	const	std::string ConfigNumber::returns(const std::string &_default = std::string()) const;
 
 	const	std::string DumpThis(int level) const;
-	const	std::string finds(const std::string path, const std::string _default = "") const;
+	const	std::string finds(const std::string &path, const std::string &_default = "") const;
 
 protected:
 	double value;
@@ -154,13 +154,13 @@ class ConfigString: public ConfigSimple
 {
 public:
 	ConfigString(void): ConfigSimple(CONFIG_VALUE_STRING, false) {}
-	ConfigString(const std::string newValue): ConfigSimple(CONFIG_VALUE_STRING, true), value(newValue) {}
+	ConfigString(const std::string &newValue): ConfigSimple(CONFIG_VALUE_STRING, true), value(newValue) {}
 
-	void	setValue(const std::string newValue) { value = newValue; }
+	void	setValue(const std::string &newValue) { value = newValue; }
 
-	const	std::string returns(const std::string _default = std::string()) const { return value; }
+	const	std::string returns(const std::string &_default = std::string()) const { return value; }
 	double	returnd(const double _default = 0.0) const;
-	const	std::string finds(const std::string path, const std::string _default = "") const;
+	const	std::string finds(const std::string &path, const std::string &_default = "") const;
 
 	const	std::string DumpThis(int level) const;
 
@@ -180,13 +180,13 @@ class ConfigStruct: public ConfigCompound
 public:
 	ConfigStruct(void): ConfigCompound(CONFIG_VALUE_STRUCT) { }
 
-	void setValue(const std::string key, Config *value) { set[key] = value; }
+	void setValue(const std::string &key, Config *value) { set[key] = value; }
 	
-	const Config *findInThis(const std::string path) const;
-		  Config *findInThis(const std::string path);
+	const Config *findInThis(const std::string &path) const;
+		  Config *findInThis(const std::string &path);
 	const v3		returnv3(const v3 _default = v3(0.0f, 0.0f, 0.0f)) const;
- 	const Config* getStructElement(const std::string key) const;
-		  Config* getStructElement(const std::string key);
+ 	const Config* getStructElement(const std::string &key) const;
+		  Config* getStructElement(const std::string &key);
 
 	const std::string DumpThis(int level) const;
 	void setFilePath(const std::string &_file);
@@ -202,8 +202,8 @@ public:
 	
 	void push(Config* newValue) { set.push_back(newValue); }
 
-	const Config *findInThis(const std::string path) const;
-	Config *findInThis(const std::string path);
+	const Config *findInThis(const std::string &path) const;
+	Config *findInThis(const std::string &path);
 	const v3 returnv3(const v3 _default = v3(0.0f, 0.0f, 0.0f)) const;
 	const Config* getArrayElement(const size_t index) const;
 	Config* getArrayElement(const size_t index);

@@ -26,8 +26,7 @@ bool GraphEngine::inject(GameObject *object)
 	if(!object->beforeInject(interfaceId)) return false;
 
 	// кешируем объект
-	if(!makeStorageForObject(object)) return false;
-	makeStorageForChildren(object);
+	if(!makeShadowForObject(object)) return false;
 	// список глобальных объектов
 	objects.push_back(object);
 
@@ -50,8 +49,8 @@ bool GraphEngine::clear()
 
 bool GraphEngine::remove(GameObject *object)
 {
-	deleteStorageForChildren(findSid(object->getId()));
-	deleteStorageForObject(findSid(object->getId()));
+	deleteShadowForChildren(findSid(object->getId()));
+	deleteShadowForObject(findSid(object->getId()));
 	
 	for(steel::vector<GameObject*>::iterator it = objects.begin(); it != objects.end(); it++)
 		if(*it == object)

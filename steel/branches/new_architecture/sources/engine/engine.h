@@ -59,7 +59,7 @@ protected:
 		Engine	*engine;
 //		int storageType; //  ??
 		uid objectId; // инентификатор объекта (uid)
-		int storageIndex; // индекс этой структуры (кеша) в массиве storage
+		int shadowIndex; // индекс этой структуры (кеша) в массиве shadow
 
 		// время последнего изменения объекта. Если отлично от того, что возвращает Object::getModificationTime(), то надо обновить кеш.
 //		ModificationTime modificationTime, childrenModificationTime;
@@ -68,7 +68,7 @@ protected:
 
 		Shadow(Engine *aengine): object(NULL), parent(NULL), engine(aengine) {}
 		virtual void fill(GameObject *object);
-		// овновляюет место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
+		// овновляюет место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
 		// возвращает true, если была обнавлена вся информация
 		virtual bool cache(void);
 		virtual ~Shadow(void) {}
@@ -76,13 +76,13 @@ protected:
 	};
 	// кеш объектов
 	svector<Shadow*> shadows;
-	typedef std::map <uid, int> StorageHash;
+	typedef std::map <uid, int> ShadowHash;
 	typedef int sid; // Shadow vector index
-	// отображение идентификаторов объекта на положение в массиве storage
-	StorageHash idHash;
+	// отображение идентификаторов объекта на положение в массиве shadow
+	ShadowHash idHash;
 	virtual int findSid(uid id)
 	{
-		StorageHash::iterator it = idHash.find(id);
+		ShadowHash::iterator it = idHash.find(id);
 		if(it == idHash.end())
 			return -1;
 		else
@@ -90,21 +90,20 @@ protected:
 	}
 
 public:
-	virtual Shadow *getStorage(GameObject *object);
-	virtual Shadow* getStorage(uid id);
+	virtual Shadow *getShadow(GameObject *object);
+	virtual Shadow* getShadow(uid id);
 
 protected:
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для одного объекта
-	virtual bool makeStorageForObject(GameObject *object);
-	virtual Shadow* getStorageClass(GameObject *object)  = 0;
-	virtual void makeStorageForObjectPost(GameObject *object, Shadow *storage) {}
+	// создаёт место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
+	virtual bool makeShadowForObject(GameObject *object);
+	virtual Shadow* getShadowClass(GameObject *object)  = 0;
+	virtual void makeShadowForObjectPost(GameObject *object, Shadow *shadow) {}
 
-	virtual void deleteStorageForObject(int sid);
-	virtual void deleteStorageForObjectPost(int sid) {}
+	virtual void deleteShadowForObject(int sid);
+	virtual void deleteShadowForObjectPost(int sid) {}
 
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	virtual void makeStorageForChildren(GameObject *object) = 0;
-	virtual void deleteStorageForChildren(int sid);
+	// создаёт место для хранения дополнительной инормации (shadow, кеш объекта) - для детей объекта
+	virtual void deleteShadowForChildren(int sid);
 };
 
 #endif

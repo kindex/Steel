@@ -165,6 +165,7 @@ public:
 		else
 			return data; 
 	}
+
 	iterator end(void) const
 	{ 
 		if(_count == 0)
@@ -172,9 +173,10 @@ public:
 		else
 			return data + _count;
 	}
+
 	T &back(void)	{		return data[_count-1];	}
 	T &front(void)	{		return data[0];	}
-	void erase(iterator it)
+	void erase(const iterator it)
 	{
 		int move = ((data + _count -1) - it)*sizeof(T);
 		if(move > 0)
@@ -184,6 +186,14 @@ public:
 		_count--;
 	}
 
+	iterator find(const T &value)
+	{
+		iterator it;
+		for(it = begin(); it != end(); it++)
+			if( *it == value)
+				break;
+		return it;
+	}
 };
 #endif // STEEL_VECTOR
 

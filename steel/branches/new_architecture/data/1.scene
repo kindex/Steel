@@ -5,14 +5,24 @@
 {
 //class='sphere'
 
-class = 'combiner'
 
-origin = (0 0 0)
-
-graph = {
-	vertexes = ( (0 0 0) (0 1 0) (1 1 0))
-	texCoords= ( (0 0)   (0 1)   (1 1)  )
-	triangles = ( (0 2 1) (0 1 2) )
-	material = [sphere/sphere.mat#] {}
+class = 'scene'
+objects = (
+	{
+	class = 'combiner'
+	origin = (0 0 0)
+	graph = {
+		vertexes = ( (0 0 0) (0 1 0) (1 1 0))
+		texCoords= ( (0 0)   (0 1)   (1 1)  )
+		triangles = ( (0 2 1) (0 1 2) )
+		material = [sphere/sphere.mat#] {}
+		}
 	}
+	{
+	class = 'combiner'
+	origin = (0 0 1)
+	graph = [#objects[0].graph] {}
+	}
+)
+
 }

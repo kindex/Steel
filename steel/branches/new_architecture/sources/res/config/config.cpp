@@ -21,7 +21,7 @@ using namespace std;
 
 ResCollection<Config>	resNewConfig;
 
-ConfigTemplate::ConfigTemplate(const string FullPath)
+ConfigTemplate::ConfigTemplate(const string &FullPath)
 {
 	string::size_type it = FullPath.find('#');
 	if(it == string::npos)
@@ -38,14 +38,14 @@ ConfigTemplate::ConfigTemplate(const string FullPath)
 }
 
 
-const Config* Config::find(const std::string path) const
+const Config* Config::find(const std::string &path) const
 {
 	const Config *result = findInThis(path);
 	if(result == NULL) result = findInTemplate(path);
 	return result;
 }
 
-Config* Config::find(const std::string path)
+Config* Config::find(const std::string &path)
 {
 	Config *result = findInThis(path);
 	if(result == NULL) result = findInTemplate(path);
@@ -53,7 +53,7 @@ Config* Config::find(const std::string path)
 }
 
 
-void Config::toggle(const std::string path)
+void Config::toggle(const std::string &path)
 {
 	Config *c = find(path);
 	if(c != NULL)
@@ -68,7 +68,7 @@ void Config::toggle(const std::string path)
 }
 
 // TODO: trace path, create if none
-void Config::setValued(const std::string path, double value)
+void Config::setValued(const std::string &path, double value)
 {
 	Config *c = find(path);
 	if(c != NULL)
@@ -77,7 +77,7 @@ void Config::setValued(const std::string path, double value)
 }
 
 
-const Config* Config::findInTemplate(const std::string path) const
+const Config* Config::findInTemplate(const std::string &path) const
 {
 	for(int i = templates.size() - 1; i >= 0; i--)
 	{
@@ -115,7 +115,7 @@ const Config* Config::findInTemplate(const std::string path) const
 	return NULL;
 }
 
-Config* Config::findInTemplate(const std::string path)
+Config* Config::findInTemplate(const std::string &path)
 {
 	for(int i = templates.size() - 1; i >= 0; i--)
 	{
@@ -192,7 +192,7 @@ double ConfigString::returnd(const double _default) const
 	return atof(result.c_str());
 }
 
-double Config::getd(std::string path, const double _default) const
+double Config::getd(const std::string &path, const double _default) const
 {
 	const Config *value = find(path);
 	if(value == NULL) 
@@ -201,7 +201,7 @@ double Config::getd(std::string path, const double _default) const
 		return value->returnd(_default);
 }
 
-const v3 Config::getv3(std::string path, const v3 _default) const
+const v3 Config::getv3(const std::string &path, const v3 _default) const
 {
 	const Config *value = find(path);
 	if (value == NULL)
@@ -222,7 +222,7 @@ const v3 Config::getv3(std::string path, const v3 _default) const
 }
 
 
-const std::string	Config::gets(std::string path, const std::string _default) const
+const std::string	Config::gets(const std::string &path, const std::string &_default) const
 {
 	const Config *value = find(path);
 	if (value == NULL)
@@ -231,7 +231,7 @@ const std::string	Config::gets(std::string path, const std::string _default) con
 		return value->returns(_default);
 }
 
-const ConfigArray* Config::getArray(const std::string path) const
+const ConfigArray* Config::getArray(const std::string &path) const
 {
 	const Config *value = find(path);
 	if (value != NULL && value->getType() == CONFIG_VALUE_ARRAY)
@@ -240,7 +240,7 @@ const ConfigArray* Config::getArray(const std::string path) const
 		return NULL;
 }
 
-ConfigArray* Config::getArray(const std::string path)
+ConfigArray* Config::getArray(const std::string &path)
 {
 	Config *value = find(path);
 	if (value != NULL && value->getType() == CONFIG_VALUE_ARRAY)
@@ -256,7 +256,7 @@ std::string Config::getConfigFilePath(void) const
 	return path;
 }
 
-std::string Config::getPath(const std::string path, const std::string _default)
+std::string Config::getPath(const std::string &path, const std::string &_default)
 {
 	Config *value = find(path);
 	string base;
@@ -289,14 +289,14 @@ const v3 ConfigStruct::returnv3(const v3 _default) const
 }
 
 
-const std::string ConfigNumber::returns(const std::string _default) const
+const std::string ConfigNumber::returns(const std::string &_default) const
 {
 	double result = returnd();
 	return FloatToStr(result);
 }
 
 
-const Config* ConfigStruct::getStructElement(const std::string key) const
+const Config* ConfigStruct::getStructElement(const std::string &key) const
 {
 	std::map<std::string, Config*>::const_iterator it = set.find(key);
 	if(it == set.end())
@@ -305,7 +305,7 @@ const Config* ConfigStruct::getStructElement(const std::string key) const
 		return it->second;
 }
 
-Config* ConfigStruct::getStructElement(const std::string key)
+Config* ConfigStruct::getStructElement(const std::string &key)
 {
 	std::map<std::string, Config*>::iterator it = set.find(key);
 	if(it == set.end())
@@ -376,14 +376,14 @@ const string ConfigStruct::DumpThis(int level) const
 	return res + getIndent(level) + "}";
 }
 
-const std::string ConfigNumber::finds(std::string path, const std::string _default) const
+const std::string ConfigNumber::finds(const std::string &path, const std::string &_default) const
 {
 	if(!path.empty())
 		error("res config", "Cannot find variable '" + path + "' in number");
 	return gets(_default);
 }
 
-const std::string ConfigString::finds(std::string path, const std::string _default) const
+const std::string ConfigString::finds(const std::string &path, const std::string &_default) const
 {
 	if(!path.empty())
 	{
@@ -393,43 +393,49 @@ const std::string ConfigString::finds(std::string path, const std::string _defau
 	return gets(_default);
 }
 
-const Config* ConfigStruct::findInThis(std::string path) const
+const Config* ConfigStruct::findInThis(const std::string &path) const
 {
-	if(path.empty())
+	if(path.size() < 1)
 	{
 //		error("res config", "Cannot convert struct to simple type");
 		return this;
 	}
+	
 	int s = 0;
+	if(path[0] == '.') s++;
+
 	string var = ConfigParser::getAlpha(path.c_str(), s);
-	string ext = (string::size_type)s < path.length()?path.substr(s + 1):"";
+	string ext = (string::size_type)s < path.length()?path.substr(s):"";
 	const Config *child = getStructElement(var);
 	if(child == NULL) return NULL;
 	return child->find(ext);
 }
 
-Config* ConfigStruct::findInThis(std::string path)
+Config* ConfigStruct::findInThis(const std::string &path)
 {
-	if(path.empty())
+	if(path.size() < 1)
 	{
 //		error("res config", "Cannot convert struct to simple type");
 		return this;
 	}
+	
 	int s = 0;
+	if(path[0] == '.') s++;
+
 	string var = ConfigParser::getAlpha(path.c_str(), s);
-	string ext = (string::size_type)s < path.length()?path.substr(s + 1):"";
+	string ext = (string::size_type)s < path.length()?path.substr(s):"";
 	Config *child = getStructElement(var);
 	if(child == NULL) return NULL;
 	return child->find(ext);
 }
 
-const Config *ConfigSimple::findInThis(std::string path) const
+const Config *ConfigSimple::findInThis(const std::string &path) const
 {
 	if(!path.empty())
 		error("res config", "Cannot split simple type into components (remind path '" + path + "')");
 	return this;
 }
-Config *ConfigSimple::findInThis(std::string path)
+Config *ConfigSimple::findInThis(const std::string &path)
 {
 	if(!path.empty())
 		error("res config", "Cannot split simple type into components");
@@ -477,7 +483,7 @@ const std::string ConfigArray::DumpThis(int level) const
 	level -= 2;
 	return res + getIndent(level) + ")";}
 	
-const Config *ConfigArray::findInThis(std::string path) const
+const Config *ConfigArray::findInThis(const std::string &path) const
 {
 	if(path.size()<3)
 	{
@@ -508,15 +514,25 @@ const Config *ConfigArray::findInThis(std::string path) const
 	return child->find(ext);
 }
 
-Config *ConfigArray::findInThis(std::string path)
+Config *ConfigArray::findInThis(const std::string &path)
 {
-	if(path.empty())
+	if(path.size()<3)
 	{
 //		error("res config", "Cannot convert struct to simple type");
 		return this;
 	}
-	int s = 0;
+	int s = 1;
+	if(path[0] != '[')
+	{
+		error("res config", "Error in path ('" + path + "'). Expecting [");
+		return this;
+	}
 	int index = (int)ConfigParser::getNumber(path.c_str(), s);
+	if(path[s] != ']')
+	{
+		error("res config", "Error in path ('" + path + "'). Expecting ]");
+		return this;
+	}
 	string ext = (string::size_type)s < path.length()?path.substr(s + 1):"";
 	if(index < 0)
 	{

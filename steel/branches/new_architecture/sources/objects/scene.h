@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Загрузка уровня из *.scene файла.
+		Р—Р°РіСЂСѓР·РєР° СѓСЂРѕРІРЅСЏ РёР· *.scene С„Р°Р№Р»Р°.
  ************************************************************/
 
 #include "../steel.h"
@@ -22,6 +22,10 @@ class Scene: public GameObject
 {
 public:
 	bool InitFromConfig(Config *conf);
+
+	bool isSuportingInterface(InterfaceId);
+	void bindEngine(InterfaceId, Engine*);
+
 protected:
 	svector<GameObject*> objects;
 };

@@ -37,9 +37,9 @@ typedef steel::vector<FaceMaterial>	FaceMaterials;
 class ChildrenInterface
 {
 public:
-	virtual void addChild(GameObject* parent, GameObject* child) = 0;
-	virtual void deleteChild(GameObject* parent, GameObject* child) = 0;
-	virtual void clearChildren(GameObject*) = 0;
+	virtual void addChild(GameObject* child) = 0;
+	virtual void deleteChild(GameObject* child) = 0;
+	virtual void clearChildren(void) = 0;
 };
 
 /*

@@ -40,7 +40,8 @@ class OpenGL_Engine: public GraphEngine
 {
 protected:
 	GameObject *currentObject;
-	Shadow	   *currentStorage;
+	struct GraphShadow;
+	GraphShadow *currentShadow;
 
 public: // interface realization
 	bool setCurrentObject(GameObject*);
@@ -54,9 +55,9 @@ public: // interface realization
 	void setTexCoords(int texNumber, TexCoords*);
 	void setLights(Lights*);
 
-	void addChild(GameObject* parent, GameObject* child);
-	void deleteChild(GameObject* parent, GameObject* child);
-	void clearChildren(GameObject*);
+	void addChild(GameObject* child);
+	void deleteChild(GameObject* child);
+	void clearChildren(void);
 
 
 protected:
@@ -80,7 +81,7 @@ protected:
 		char	*object;
 	};
 
-#define GS(storage) (static_cast<GraphShadow*>(storage))
+#define GS(shadow) (static_cast<GraphShadow*>(shadow))
 
 	struct GraphShadow: public Shadow // множество треугольников одного материала
 	{
@@ -108,6 +109,8 @@ protected:
 		bool cache(void);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 	};
+
+	void addChild(GraphShadow &, GameObject*);
 
 	std::map<uid, OpenGL_Buffer> buffer;
 
@@ -205,7 +208,7 @@ public:
 		DeleteOpenGL_Window(NULL),
 		setCaptionOpenGL_Window(NULL),
 		FlushOpenGL_Window(NULL),
-		currentObject(NULL), currentStorage(NULL) 
+		currentObject(NULL), currentShadow(NULL) 
 		{}
 
 	virtual void processCamera(void);
@@ -213,7 +216,7 @@ public:
 	virtual bool process(steel::time globalTime, steel::time time);
 	virtual bool deinit(void);
 
-	void prepare(GraphShadow *storage, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
+	void prepare(GraphShadow *shadow, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
 
 	bool isVisible(aabb box);
 
@@ -248,13 +251,10 @@ public:
 /*	bool bindTexCoords(MapCoord *coord);
 	bool bindVertexes(Vertexes *v);*/
 
-	GraphShadow* getStorage(GameObject *object) { return (GraphShadow*)Engine::getStorage(object); }
-	GraphShadow* getStorage(uid id) { return (GraphShadow*)Engine::getStorage(id); }
+	GraphShadow* getShadow(GameObject *object) { return (GraphShadow*)Engine::getShadow(object); }
+	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id); }
 	 
-	Shadow* getStorageClass(GameObject *object) { return new GraphShadow(this); }
-
-	// создаёт место для хранения дополнительной инормации (storage, кеш объекта) - для детей объекта
-	void makeStorageForChildren(GameObject *object);
+	Shadow* getShadowClass(GameObject *object) { return new GraphShadow(this); }
 
 	void onResize(int width, int height);
 

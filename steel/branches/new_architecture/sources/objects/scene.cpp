@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Çàãðóçêà óðîâíÿ èç *.scene ôàéëà.
+		Ð—Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° ÑƒÑ€Ð¾Ð²Ð½Ñ Ð¸Ð· *.scene Ñ„Ð°Ð¹Ð»Ð°.
  ************************************************************/
 
 #include "../steel.h"
@@ -25,9 +25,11 @@ using namespace std;
 
 GameObject* findClass(const string &_class)
 {
+	if(_class == "scene") return new Scene;
 	if(_class == "sphere") return new Sphere;
 	if(_class == "combiner") return new Combiner;
 
+	error("objects", string("game class '") + _class + "' not found");
 	return NULL;
 }
 
@@ -57,16 +59,34 @@ GameObject	*createGameObject(Config *conf)
 
 bool Scene::InitFromConfig(Config *conf)
 {
-	Config *objectsConfig = conf->find("objects");
-	if(objectsConfig == NULL || objectsConfig->getType() != CONFIG_VALUE_ARRAY)
+	ConfigArray *objectsConfig = conf->getArray("objects");
+	if(objectsConfig == NULL)
 		return false;
 	
 	const ConfigArray &objectsArray =  *static_cast<ConfigArray*>(objectsConfig);
-	for(ConfigArray::iterator it = objectsArray.begin(); it != objectsArray.end(); it++ )
+	for EACH(ConfigArray, objectsArray, it)
 	{
 		GameObject *newObject = createGameObject(*it);
 		objects.push_back(newObject);
 	}
 
 	return true;
+}
+
+bool Scene::isSuportingInterface(InterfaceId id)
+{
+	for EACH(svector<GameObject*>, objects, it)
+		if((*it)->isSuportingInterface(id)) return true;
+
+	return false;
+}
+
+void Scene::bindEngine(InterfaceId id, Engine* egnine)
+{
+	dynamic_cast<ChildrenInterface*>(egnine)->clearChildren();
+
+	ChildrenInterface &gengine = *dynamic_cast<ChildrenInterface*>(egnine);
+	for EACH(svector<GameObject*>, objects, it)
+		if((*it)->isSuportingInterface(id)) 
+			gengine.addChild(*it);
 }
