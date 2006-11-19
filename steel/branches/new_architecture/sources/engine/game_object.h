@@ -26,6 +26,7 @@ protected:
 public:
 	// дефолтовый конструктор присваюивает уникальный идентификатор.
 	GameObject(void) { id = objectIdGenerator.genUid(); }
+	virtual ~GameObject(void) {}
 
 	// Object unique identifier
 	virtual uid	 getId(void)				{ return id; }
@@ -36,6 +37,7 @@ public:
 	
 	virtual bool updateInformation(InterfaceId, Engine*) { return false; }
 	virtual void bindEngine(InterfaceId, Engine*) { }
+	virtual void process(ProcessInfo &) {}
 
 	virtual bool InitFromConfig(Config *conf) {return true;}
 };

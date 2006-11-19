@@ -14,18 +14,17 @@
 #include "ps_renderer.h"
 #include "../../res/res_main.h"
 
-void SpriteRenderer::ProcessGraph(const GraphEngineInfo &info)
+void SpriteRenderer::process(ProcessInfo &info)
 {
-	initSprites(vertex.data.size()/4, set->particles.size());
+	initSprites(vertexes.data.size()/4, set->particles.size());
 
-	v3 pos_diff = particleSystem->getPosition().getTranslation();
-	eye = info.cameraEye;
+	eye = info.camera->eye;
 
 	int cnt = set->particles.size();
 	for(int i=0; i<cnt; i++)
 	{
 		int i4 = i*4;
-		v3 pos = set->particles[i]->position - pos_diff;
+		v3 pos = set->particles[i]->position;
 
 		v3 dir;
 //В зависимости от типа выравнивания рассчитываем перпендикуляр к плоскости спрайта (dir).
@@ -34,9 +33,9 @@ void SpriteRenderer::ProcessGraph(const GraphEngineInfo &info)
 //pos – положение спрайта
 		switch(align)
 		{
-			case SPRITE_ALIGN_SCREEN: dir = -info.cameraDirection; break;
-			case SPRITE_ALIGN_CAMERA: dir = info.cameraEye - pos; break;
-			case SPRITE_ALIGN_Z: dir = info.cameraEye - pos; dir.z = 0; break;
+			case SPRITE_ALIGN_SCREEN: dir = -info.camera->direction(); break;
+			case SPRITE_ALIGN_CAMERA: dir = info.camera->eye - pos; break;
+			case SPRITE_ALIGN_Z: dir = info.camera->eye - pos; dir.z = 0; break;
 			case SPRITE_ALIGN_CUSTOM: dir = customAlign; break;
 		}
 
@@ -49,41 +48,41 @@ void SpriteRenderer::ProcessGraph(const GraphEngineInfo &info)
 		per2 *= set->particles[i]->size;
 
 		// углы спарйта
-		vertex.data[i4 + 0]  = pos + per1 - per2;
-		vertex.data[i4 + 1]  = pos + -per1 - per2;
-		vertex.data[i4 + 2]  = pos + -per1 + per2;
-		vertex.data[i4 + 3]  = pos + per1 + per2;
+		vertexes.data[i4 + 0]  = pos + per1 - per2;
+		vertexes.data[i4 + 1]  = pos + -per1 - per2;
+		vertexes.data[i4 + 2]  = pos + -per1 + per2;
+		vertexes.data[i4 + 3]  = pos + per1 + per2;
 
 		// нормали к углам спарйта
-		normal.data[i4 + 0] = dir;
-		normal.data[i4 + 1] = dir;
-		normal.data[i4 + 2] = dir;
-		normal.data[i4 + 3] = dir;
+		normals.data[i4 + 0] = dir;
+		normals.data[i4 + 1] = dir;
+		normals.data[i4 + 2] = dir;
+		normals.data[i4 + 3] = dir;
 	}
 }
 
-aabb SpriteRenderer::getFrame()
+aabb SpriteRenderer::getFrame(void)
 {
 	aabb frame;
-	for(steel::vector<v3>::iterator it = vertex.data.begin(); it != vertex.data.end(); it++)
+	for EACH(steel::vector<v3>, vertexes.data, it)
 		frame.merge(*it);
 
 	return frame;
 }
 
-void SpriteRenderer::initSprites()
+void SpriteRenderer::initSprites(void)
 {
-	face.resize(1);
-	face[0].material = m;
+	face.resize(1);		
+	face[0].material = material;
 
 	face[0].triangles = new Triangles;
 	face[0].triangles->id = objectIdGenerator.genUid();
 	face[0].triangles->changed = false;
 
-	normal.id = objectIdGenerator.genUid();
-	vertex.id = objectIdGenerator.genUid();
-	vertex.changed = true;
-	normal.changed = true;
+	normals.id = objectIdGenerator.genUid();
+	vertexes.id = objectIdGenerator.genUid();
+	vertexes.changed = true;
+	normals.changed = true;
 
 	texCoords.changed = false;
 	texCoords.id = objectIdGenerator.genUid();
@@ -93,8 +92,8 @@ void SpriteRenderer::initSprites(int begin, int end)
 {
 	if(begin == end) return ;
 
-	vertex.data.resize(end*4);
-	normal.data.resize(end*4);
+	vertexes.data.resize(end*4);
+	normals.data.resize(end*4);
 	face[0].triangles->data.resize(end*2);
 
 	for(int j = begin; j<end; j++)
@@ -118,7 +117,7 @@ void SpriteRenderer::initSprites(int begin, int end)
 
 bool SpriteRenderer::initParticles()
 {
-	if(!(m = resMaterial.add(conf->gets("material")))) abort_init("res ps renderer", "Cannot find material " + conf->gets("material"));
+	material = new Material(conf->find("material"));
 
 	std::string salign = conf->gets("align", "screen"); // align;
 	if(salign == "screen")	align = SPRITE_ALIGN_SCREEN; else
@@ -137,13 +136,29 @@ bool SpriteRenderer::initParticles()
 	return true;
 }
 
+bool SpriteRenderer::updateInformation(InterfaceId id, Engine* engine)
+{
+	if(id == GraphInterface::interfaceId)
+	{
+		GraphInterface &gengine = *dynamic_cast<GraphInterface*>(engine);
+
+		gengine.setVertexes(&vertexes);
+		gengine.setNormals(&normals);
+		gengine.setFaceMaterials(&face);
+		gengine.setTexCoordsCount(1);
+		gengine.setTexCoords(0, &texCoords);
+		return true;
+	}
+	return false;
+}
+
 bool ObjectPSRenderer::initParticles()
 {
 
 	return true;
 }
 
-void ObjectPSRenderer::ProcessGraph(const GraphEngineInfo &info)
+/*void ObjectPSRenderer::ProcessGraph(const GraphEngineInfo &info)
 {
 	int newSize = set->particles.size();
 	int oldSize = children.size();
@@ -177,3 +192,4 @@ void ObjectPSRenderer::ProcessGraph(const GraphEngineInfo &info)
 		children[i]->setPosition(pos);
 	}
 }
+*/

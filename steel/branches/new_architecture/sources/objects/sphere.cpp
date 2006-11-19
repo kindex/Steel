@@ -33,7 +33,6 @@ bool Sphere::updateInformation(InterfaceId id, Engine* engine)
 		ProcessGraph();
 		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
 
-		gengine.setCurrentObject(this);
 		gengine.setVertexes(vertexes);
 		gengine.setNormals(normals);
 		gengine.setFaceMaterials(faces);

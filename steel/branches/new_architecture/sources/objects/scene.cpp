@@ -20,6 +20,7 @@
 #include "scene.h"
 #include "sphere.h"
 #include "combiner/combiner.h"
+#include "ps/particle_system.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ GameObject* findGameObject(const string &_class)
 	if(_class == "scene") return new Scene;
 	if(_class == "sphere") return new Sphere;
 	if(_class == "combiner") return new Combiner;
+	if(_class == "ps") return new ParticleSystem;
 
 	error("objects", string("game class '") + _class + "' not found");
 	return NULL;
@@ -89,4 +91,10 @@ void Scene::bindEngine(InterfaceId id, Engine* egnine)
 	for EACH(svector<GameObject*>, objects, it)
 		if((*it)->isSuportingInterface(id)) 
 			gengine.addChild(*it);
+}
+
+void Scene::process(ProcessInfo &info)
+{
+	for EACH(svector<GameObject*>, objects, it)
+			(*it)->process(info);
 }

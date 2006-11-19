@@ -49,7 +49,6 @@ public:
 	{
 		if(id == GraphInterface::interfaceId && graph != NULL)
 		{
-			dynamic_cast<GraphInterface*>(engine)->setCurrentObject(this);
 			dynamic_cast<GraphInterface*>(engine)->setPosition(position);
 			return graph->updateInformation(id, engine);
 		}

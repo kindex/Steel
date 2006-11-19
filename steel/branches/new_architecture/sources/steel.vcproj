@@ -865,6 +865,38 @@
 				<Filter
 					Name="ps"
 					>
+					<File
+						RelativePath=".\objects\ps\animator.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\ps\animator.h"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\ps\emitter.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\ps\emitter.h"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\ps\particle_system.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\ps\particle_system.h"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\ps\ps_renderer.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\ps\ps_renderer.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="combiner"

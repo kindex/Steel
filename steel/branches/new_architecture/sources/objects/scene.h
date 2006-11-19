@@ -25,6 +25,7 @@ public:
 
 	bool isSuportingInterface(InterfaceId);
 	void bindEngine(InterfaceId, Engine*);
+	void process(ProcessInfo &);
 
 protected:
 	svector<GameObject*> objects;

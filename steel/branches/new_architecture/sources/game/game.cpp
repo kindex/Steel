@@ -204,7 +204,14 @@ void Steel::process(steel::time globalTime, steel::time time)
 	{
 		static steel::time totalPhysicTime = 0;
 		steel::time frame = 0.01f*speedup;
-// 		physicEngine->process(totalPhysicTime, frame);
+
+		ProcessInfo info;
+		info.curTime = totalPhysicTime;
+		info.frameLength = frame;
+		info.camera = &graphEngine->camera;
+
+		world->process(info);
+
 		totalPhysicTime += frame;
 
 		if(framesToPass>0) framesToPass--;

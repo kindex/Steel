@@ -25,19 +25,6 @@
 
 class GraphEngine;
 
-class Camera
-{
-public:
-    v3 up, eye, center;
-
-public:
-	Camera(void);
-
-    void seteye(const v3 &EYE) { eye = EYE; }
-    void setcenter(const v3 &CENTER) { center = CENTER; }
-	void setup(const v3 &EYE, const v3 &DIR);
-};
-
 class GraphEngine: public Engine, public GraphInterface
 {
 public:

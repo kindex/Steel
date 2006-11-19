@@ -287,7 +287,7 @@ void OpenGL_Engine::cleanBuffer(uid bufId)
 
 template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2, int elCnt)
 {
-	if(v == NULL) return false;
+	if(v == NULL || v->data.empty()) return false;
 
 	if(GL_EXTENSION_VBO) // Vertex Buffer Object supportd
 	{

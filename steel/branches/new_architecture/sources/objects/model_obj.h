@@ -28,7 +28,7 @@ class GameObjectModel: public GameObject
 {
 protected:
 	Model *m;
-	OldConfig *conf;
+	Config *conf;
 	FaceMaterials faceMaterial;
 
 public:
@@ -67,7 +67,7 @@ public:
 	{
 		return m->getTexCoords(mapNumber);
 	}
-	OldConfig*		getPMaterial()
+	Config*		getPMaterial()
 	{	
 		return conf;
 	}

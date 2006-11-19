@@ -518,6 +518,7 @@ void OpenGL_Engine::prepare(GraphShadow *shadow, steel::time globalTime, steel::
 	info.cameraEye = camera.eye;
 	info.cameraDirection = camera.center - camera.eye;
 
+	currentShadow = shadow;
 	shadow->object->updateInformation(this->interfaceId, this);
 
 	shadow->setParent(parent);
