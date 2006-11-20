@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel Engine
-UnitCount=135
+UnitCount=136
 Type=0
 Ver=1
 ObjFiles=
@@ -20,7 +20,7 @@ ObjectOutput=..\temp\steel_devcpp_release\
 OverrideOutput=1
 OverrideOutputName=steel_devcpp_release.exe
 HostApplication=
-Folders=audio,audio/openal,common,engine,game,graph,graph/opengl,graph/opengl/extensions,graph/opengl/gl,input,math,objects,objects/combiner,objects/ps,physic,res,res/audio,res/config,res/image,res/model,res/text
+Folders=audio,audio/openal,common,engine,game,graph,graph/opengl,graph/opengl/extensions,graph/opengl/gl,input,math,objects,objects/combiner,objects/ps,physic,res,res/audio,res/config,res/image,res/image/bmp,res/model,res/text
 CommandLine=
 UseCustomMakefile=0
 CustomMakefile=
@@ -1298,9 +1298,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit136]
-FileName=objects\combiner\audio_object.cpp
+FileName=res\image\bmp\bmp_load.cpp
 CompileCpp=1
-Folder=objects/combiner
+Folder=res/image/bmp
 Compile=1
 Link=1
 Priority=1000
