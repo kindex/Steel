@@ -22,13 +22,13 @@
 
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material && GL_EXTENSION_MULTITEXTURE)
 	{
 		steel::vector<uid> buffersToDelete;
 
-		total.object++;
+		total.objectCount++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		int texCount = material->getTextureCount();
@@ -96,7 +96,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, Triangles *
 
 			if(conf->geti("drawBump") && !lights.empty() && (i==0) && !e.blend && (texture.format == TEXTURE_FORMAT_BUMP_MAP || texture.format == TEXTURE_FORMAT_COLOR_MAP))
 			{
-				TexCoords *coords = e.texCoords[i];
+				const TexCoords *coords = e.texCoords[i];
 
 				int j = 0;
 
@@ -149,8 +149,8 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, Triangles *
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				if(BindTexture) (this->*BindTexture)(texture.image, true);
 
-				TexCoords *coords = e.texCoords[i];
-				assert(coords->data.size() == e.vertex->data.size(), "TexCoords.size != Vertex.size");
+				const TexCoords *coords = e.texCoords[i];
+				assert(coords->data.size() == e.vertexes->data.size(), "TexCoords.size != Vertex.size");
 				if(BindTexCoords) (this->*BindTexCoords)(coords);
 				currentTextureArb++;
 			}
@@ -198,7 +198,7 @@ static v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 }
 
 
-void OpenGL_Engine::getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, FaceMaterials *faceMaterials, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent)
+void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent)
 { // TODO: mem cleanup
 	int id = vertex->getId();
 	
@@ -304,10 +304,10 @@ void OpenGL_Engine::genTangentSpaceLight(steel::vector<v3> const &sTangent, stee
 /*
 void OpenGL_Engine::drawDistColor(DrawElement &e, matrix34 const matrix, v3 const light, float const distance)
 {
-	float *coords = new float[e.vertex->size()];
+	float *coords = new float[e.vertexes->size()];
 
 	int i = 0;
-	for(Vertexes::iterator it = e.vertex->begin(); it != e.vertex->end(); it++)
+	for(Vertexes::iterator it = e.vertexes->begin(); it != e.vertexes->end(); it++)
 	{
 		float d = (light-(*it)).getLength();
 		float c = 1 - d/distance;
@@ -338,8 +338,8 @@ bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix34 const matrix, v3 const 
 	{
 		v3List *sTangent, *tTangent, *tangentSpaceLight;
 
-//		getTangentSpace(e.vertex, e.mapcoord, e.triangle, e.normal, &sTangent, &tTangent);
-//		genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, &tangentSpaceLight);
+//		getTangentSpace(e.vertexes, e.mapcoord, e.triangle, e.normals, &sTangent, &tTangent);
+//		genTangentSpaceLight(*sTangent, *tTangent, *e.vertexes, *e.normals, matrix, light, &tangentSpaceLight);
 
 	//Bind normalisation cube map to texture unit 1
 		glEnable(GL_TEXTURE_CUBE_MAP_ARB);
@@ -362,7 +362,7 @@ bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix34 const matrix, v3 const 
 }
 */
 
-void OpenGL_Engine::drawBump(GraphShadow &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img)
+void OpenGL_Engine::drawBump(GraphShadow &e, const TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img)
 {
 	glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
 	glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb);
@@ -376,12 +376,12 @@ void OpenGL_Engine::drawBump(GraphShadow &e, TexCoords *coords, matrix34 const m
     tangentSpaceLightBufferedArray tangentSpaceLight;
 	tangentSpaceLight.changed = true;
 	tangentSpaceLight.id = bufId;
-	tangentSpaceLight.data.resize(e.vertex->data.size());
+	tangentSpaceLight.data.resize(e.vertexes->data.size());
 
 	v3List *sTangent, *tTangent;
 
-	getTangentSpace(e.vertex, coords, e.faceMaterials, e.normal, &sTangent, &tTangent);
-	genTangentSpaceLight(*sTangent, *tTangent, *e.vertex, *e.normal, matrix, light, tangentSpaceLight.data);
+	getTangentSpace(e.vertexes, coords, e.faceMaterials, e.normals, &sTangent, &tTangent);
+	genTangentSpaceLight(*sTangent, *tTangent, *e.vertexes, *e.normals, matrix, light, tangentSpaceLight.data);
 
 	if(BindTexCoords3f) (this->*BindTexCoords3f)(&tangentSpaceLight);
 

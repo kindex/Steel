@@ -18,23 +18,23 @@
 #include "gl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / VBO
-void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {
-	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	if(triangles && e.vertexes && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 
-		total.vertex += e.vertex->data.size();
-		total.triangle += triangles->data.size();
+		total.vertexCount += e.vertexes->data.size();
+		total.triangleCount += triangles->data.size();
 			
 //		if(coords)	{ glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY); }
 
-		if(BindVBO(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+		if(BindVBO(e.vertexes, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 		{
 			glVertexPointer(3, GL_FLOAT, 0, 0);
 		}
 
-		if(BindVBO(e.normal, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+		if(BindVBO(e.normals, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 		{
 			glNormalPointer(GL_FLOAT, 0, 0);
 		}
@@ -49,18 +49,18 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, Triangles *triangles,
 	}
 }
 
-void OpenGL_Engine::BindTexCoords_OpenGL15(TexCoords *coords)
+void OpenGL_Engine::BindTexCoords_OpenGL15(const TexCoords *coords)
 {
-	if(coords)	
+	if(coords != NULL)	
 	{ 
 		if(BindVBO(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
 			glTexCoordPointer(2, GL_FLOAT, 0,0);
 	}
 }
 
-void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
+void OpenGL_Engine::BindTexCoords3f_OpenGL15(const TexCoords3f *coords)
 {
-	if(coords)	
+	if(coords != NULL)
 	{ 
 		if(BindVBO(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 			glTexCoordPointer(3, GL_FLOAT, 0,0);
@@ -72,7 +72,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 {
 	steel::vector<uid> buffersToDelete;
 
-	if(e.triangle && e.vertex && !e.vertex->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
+	if(e.triangle && e.vertexes && !e.vertexes->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
 	{
 		Material *m = e.material; // получаем материал
 		if(m != NULL  && conf->geti("drawFill", 1))
@@ -223,14 +223,14 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 				glColor4f(1,1,1,1);
 
 			// загружаем вершины объекта
-			if(bind(e.vertex, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+			if(bind(e.vertexes, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 			{
 				glVertexPointer(3, GL_FLOAT, 0, 0);
 			}
 			else
 			{
 				glEnable(GL_VERTEX_ARRAY);
-				glVertexPointer(3, GL_FLOAT, 0, &e.vertex->data[0]);
+				glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->data[0]);
 			}
 			glPolygonMode(GL_FRONT, GL_LINE);  		// Draw Polygons As Wireframes
 			glPolygonMode(GL_BACK, GL_LINE); 
@@ -249,7 +249,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 		}
 	}
 
-	if(e.lines && e.vertex && !e.vertex->data.empty() && !e.lines->empty())
+	if(e.lines && e.vertexes && !e.vertexes->data.empty() && !e.lines->empty())
 	{
 		glColor4f(1,1,1,1);
 		glBegin(GL_LINES);
@@ -257,8 +257,8 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 		int i = 0;
 		for(GLines::iterator it = e.lines->begin(); it != e.lines->end(); it++)
 		{
-			glVertex3fv(e.vertex->data[it->a[0]].get3fv());
-			glVertex3fv(e.vertex->data[it->a[1]].get3fv());
+			glVertex3fv(e.vertexes->data[it->a[0]].get3fv());
+			glVertex3fv(e.vertexes->data[it->a[1]].get3fv());
 		}
 		glEnd();
 	}

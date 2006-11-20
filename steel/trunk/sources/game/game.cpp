@@ -244,8 +244,9 @@ void Steel::bind(GraphEngine *engine)
 void Steel::bind(AudioEngine *engine)
 {
 	audioEngine = engine;
-
+#ifdef LIB_OPENAL
 	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_GENERIC);
+#endif
 	/*
 	EAX_ENVIRONMENT_GENERIC,
     EAX_ENVIRONMENT_PADDEDCELL,

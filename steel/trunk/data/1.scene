@@ -72,7 +72,16 @@ objects =
 			} // material
 		} // emitter
 	} // ps
+	{
+	class = 'combiner'
+	origin = (0 0 -21)
+	graph =
+		{
+			class = 'model'
+			file = 'wall/wall1_model'
+		} // graph
 	
+	} // combiner
 	
 ) // objects
 } // scene

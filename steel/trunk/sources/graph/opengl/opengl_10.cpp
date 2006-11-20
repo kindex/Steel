@@ -17,11 +17,11 @@
 #include "gl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / Blend
-void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material)
 	{
-		total.object++;
+		total.objectCount++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		int texCount = e.textureCount;
@@ -104,20 +104,20 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *
 }
 
 // нарисовать множество полигонов с указанным материалом
-void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {
-	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	if(triangles && e.vertexes && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
-		total.vertex += e.vertex->data.size();
-		total.triangle += triangles->data.size();
+		total.vertexCount += e.vertexes->data.size();
+		total.triangleCount += triangles->data.size();
 
 		glBegin(GL_TRIANGLES);
 		 
 		for(unsigned int i=0; i<triangles->data.size(); i++)
 		{
-			if(coords) glTexCoord2fv(&coords->data[ triangles->data[i].a[0] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[0] ].x);
-			if(coords) glTexCoord2fv(&coords->data[ triangles->data[i].a[1] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[1] ].x);
-			if(coords) glTexCoord2fv(&coords->data[ triangles->data[i].a[2] ].x);              glVertex3fv(&e.vertex->data[ triangles->data[i].a[2] ].x);
+			if(coords != NULL) glTexCoord2fv(&coords->data[ triangles->data[i].a[0] ].x);	glVertex3fv(&e.vertexes->data[ triangles->data[i].a[0] ].x);
+			if(coords != NULL) glTexCoord2fv(&coords->data[ triangles->data[i].a[1] ].x);	glVertex3fv(&e.vertexes->data[ triangles->data[i].a[1] ].x);
+			if(coords != NULL) glTexCoord2fv(&coords->data[ triangles->data[i].a[2] ].x);	glVertex3fv(&e.vertexes->data[ triangles->data[i].a[2] ].x);
 		}
 	 
 		glEnd();
@@ -162,20 +162,20 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image *image, bool enable)
 }
 
 // нарисовать множество полигонов как сетку (только рёбра)
-void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *triangles, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, GraphEngine::GraphTotalInfo &total)
 {
-	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	if(triangles != NULL && e.vertexes != NULL && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
-		total.object++;
-		total.vertex += e.vertex->data.size();
-		total.triangle += triangles->data.size();
+		total.objectCount++;
+		total.vertexCount += e.vertexes->data.size();
+		total.triangleCount += triangles->data.size();
          
         for(unsigned int i=0; i<triangles->data.size(); i++)
         {
 	        glBegin(GL_LINE_LOOP);
-            glVertex3fv(&e.vertex->data[ triangles->data[i].a[0] ].x);
-            glVertex3fv(&e.vertex->data[ triangles->data[i].a[1] ].x);
-            glVertex3fv(&e.vertex->data[ triangles->data[i].a[2] ].x);
+            glVertex3fv(&e.vertexes->data[ triangles->data[i].a[0] ].x);
+            glVertex3fv(&e.vertexes->data[ triangles->data[i].a[1] ].x);
+            glVertex3fv(&e.vertexes->data[ triangles->data[i].a[2] ].x);
 		    glEnd();
         }
     }
@@ -184,18 +184,18 @@ void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow &e, Triangles *
 // нарисовать множество линий
 void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
 {
-	if(e.vertex && e.lines && !e.lines->index.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
+	if(e.vertexes && e.lines && !e.lines->index.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
-		total.object++;
-		total.vertex += e.vertex->data.size();
-		total.triangle += e.lines->index.size();
+		total.objectCount++;
+		total.vertexCount += e.vertexes->data.size();
+		total.triangleCount += e.lines->index.size();
 		
 		glBegin(GL_LINES);
         for(unsigned int i=0; i < e.lines->index.size(); i++)
         {
 			// TODO color
-            glVertex3fv(&e.vertex->data[ e.lines->index[i].a[0] ].x);
-            glVertex3fv(&e.vertex->data[ e.lines->index[i].a[1] ].x);
+            glVertex3fv(&e.vertexes->data[ e.lines->index[i].a[0] ].x);
+            glVertex3fv(&e.vertexes->data[ e.lines->index[i].a[1] ].x);
         }
         glEnd();
     }
@@ -204,7 +204,7 @@ void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngin
 // нарисовать нормали к вершинам
 void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
 {
-	if(e.normal && e.vertex && e.vertex->data.size() == e.normal->data.size())
+	if(e.normals != NULL && e.vertexes != NULL && e.vertexes->data.size() == e.normals->data.size())
 	{
 		glColor3f(0,0,1);
 		aabb &f = e.frame;
@@ -213,10 +213,10 @@ void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEng
 		if(diag<EPSILON) diag = 0.01f;
 
 		glBegin(GL_LINES);
-		for(unsigned int i=0; i < e.vertex->data.size(); i++)
+		for(unsigned int i=0; i < e.vertexes->data.size(); i++)
 		{
-			v3 s = e.vertex->data[i];
-			v3 d = e.vertex->data[i] + e.normal->data[i]*diag;
+			v3 s = e.vertexes->data[i];
+			v3 d = e.vertexes->data[i] + e.normals->data[i]*diag;
 
 			glVertex3f(s.x, s.y, s.z);
 			glVertex3f(d.x, d.y, d.z);
@@ -229,15 +229,15 @@ void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEng
 // нарисовать вершины
 void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
 {
-	if(e.vertex && !e.vertex->data.empty())
+	if(e.vertexes && !e.vertexes->data.empty())
 	{
 		glPointSize(5.0f);
 		glColor3f(0.5f, 1.0f, 1.0f);
 
 		glBegin(GL_POINTS);
-		for(unsigned int i=0; i < e.vertex->data.size(); i++)
+		for(unsigned int i=0; i < e.vertexes->data.size(); i++)
 		{
-			glVertex3fv(&e.vertex->data[i].x);
+			glVertex3fv(&e.vertexes->data[i].x);
 		}
 		glEnd();
 

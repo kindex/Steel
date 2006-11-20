@@ -17,6 +17,7 @@
 #include "../../steel.h"
 #include "../../engine/game_object.h"
 #include "../../graph/graph_interface.h"
+#include "../../res/model/model.h"
 
 class GraphObject;
 
@@ -24,6 +25,18 @@ GraphObject* findGraphObject(const std::string &_class);
 
 class GraphObject: public GameObject
 {
+public:
+	bool isSuportingInterface(InterfaceId id) { return id == GraphInterface::interfaceId; }
+};
+
+class GraphObjectModel: public GraphObject
+{
+public:
+	GraphObjectModel(void);
+	bool InitFromConfig(Config *conf);
+	void bindEngine(InterfaceId, Engine*);
+protected:
+	Model *model;
 };
 
 class GraphObjectCustom: public GraphObject
@@ -31,7 +44,6 @@ class GraphObjectCustom: public GraphObject
 public:
 	GraphObjectCustom(void);
 
-	bool isSuportingInterface(InterfaceId id) { return id == GraphInterface::interfaceId; }
 	void bindEngine(InterfaceId, Engine*);
 protected:
 	Vertexes *vertexes;

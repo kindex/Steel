@@ -13,6 +13,7 @@
 
 #include "graph_object.h"
 #include "../../graph/graph_engine.h"
+#include "../../res/res_main.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ GraphObject* findGraphObject(const string &_class)
 {
 	if(_class == "mesh") return new GraphObjectMesh;
 	if(_class == "box") return new GraphObjectBox;
+	if(_class == "model") return new GraphObjectModel;
 
 	error("objects", string("game class '") + _class + "' not found");
 	return NULL;
@@ -140,4 +142,33 @@ bool GraphObjectBox::InitFromConfig(Config *conf)
 		faces->at(0).triangles->data[i].set(i*3, i*3+1, i*3+2);
 
 	return true;
+}
+
+GraphObjectModel::GraphObjectModel(void): 
+	model(NULL) 
+{}
+
+bool GraphObjectModel::InitFromConfig(Config *conf)
+{
+	if(conf == NULL) return false;
+	
+	model = resModel.add(conf->getPath("file"));
+
+	return model != NULL;
+}
+
+void GraphObjectModel::bindEngine(InterfaceId id, Engine* engine)
+{
+	if(id == GraphInterface::interfaceId)
+	{
+		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
+		gengine.setVertexes(model->getVertexes());
+		gengine.setNormals(model->getNormals());
+		gengine.setFaceMaterials(model->getFaceMaterials());
+
+		size_t cnt = model->getFaceMaterials()->size();
+		gengine.setTexCoordsCount(cnt);
+		for (size_t i = 0; i < cnt; i++)
+			gengine.setTexCoords(i, model->getTexCoords(i));
+	}
 }

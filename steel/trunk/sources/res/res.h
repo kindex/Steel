@@ -21,7 +21,6 @@
 
 #include <map>
 #include <string>
-#include <stack>
 
 #include "../common/types.h"
 #include "../common/utils.h"
@@ -38,7 +37,7 @@ class ResStack
 {
 protected:
 	int level;
-	std::stack<std::string> dirs;
+	svector<std::string> dirs;
 
 public:
 	bool	push(std::string directory);
@@ -52,7 +51,7 @@ public:
 	template<class T>
 	friend class ResCollection;
 
-	ResStack(): level(0), dirs() {}
+	ResStack(): level(0), dirs(0) {}
 };
 extern ResStack resStack;
 

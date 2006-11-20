@@ -12,7 +12,7 @@
  ************************************************************/
 
 // sTangent - vektor v storonu uveli4enija S teksturnoj koordinati (vpravo)
-    // tangentSpaceLight - vektor ot ver6uni do to4ki osveshenija v TBN (Tangent, Binormal, Normal) prostrastve (sTangent, tTangent, normal) - tangent space http://www.paulsprojects.net/tutorials/tutorials.html
+    // tangentSpaceLight - vektor ot ver6uni do to4ki osveshenija v TBN (Tangent, Binormal, Normal) prostrastve (sTangent, tTangent, normals) - tangent space http://www.paulsprojects.net/tutorials/tutorials.html
     //( Sx Sy Sz )
     //( Tx Ty Tz ) - matrix to convert from object space to tangent space
     //( Nx Ny Nz )
@@ -33,7 +33,7 @@
 }
 */
 
-TexCoords	*Model::getTexCoords(int texNumber)
+const TexCoords	*Model::getTexCoords(int texNumber) const
 {
 	return &texCoords;
 }
@@ -41,13 +41,13 @@ TexCoords	*Model::getTexCoords(int texNumber)
 
 /*int Model::duplicateVertex(int src, v3 newnormal)
 {
-    int newsize = vertex.size()+1;
+    int newsize = vertexes.size()+1;
 
-    vertex.resize(newsize);
-    vertex[newsize-1] = vertex[src];
+    vertexes.resize(newsize);
+    vertexes[newsize-1] = vertexes[src];
 
-    normal.resize(newsize);
-    normal[newsize-1] = newnormal;
+    normals.resize(newsize);
+    normals[newsize-1] = newnormal;
 
     mapcoord.resize(newsize);
     mapcoord[newsize-1] = mapcoord[src];
@@ -58,18 +58,18 @@ void Model::generateNormals()
 {
     // Kollapse - soedinenie blizkih vershin
 /*   if (mapcoord.empty())
-    for (unsigned int i=0; i<vertex.size(); i++)
-        for (unsigned int j = i+1; j<vertex.size(); j++)
-        if ((vertex[i]-vertex[j]).GetSquaredLength()<0.00001) // ravni
+    for (unsigned int i=0; i<vertexes.size(); i++)
+        for (unsigned int j = i+1; j<vertexes.size(); j++)
+        if ((vertexes[i]-vertexes[j]).GetSquaredLength()<0.00001) // ravni
         {
-            int last = vertex.size()-1;
+            int last = vertexes.size()-1;
             for (unsigned int k=0; k<face.size()*3; k++) // Collapse
             {
                 if ((unsigned)index[k] == j)    index[k] = i;
                 if ((unsigned)index[k] == (unsigned)last) index[k] = j;
             }
-            vertex[j] = vertex[last];
-            vertex.resize(vertex.size()-1);
+            vertexes[j] = vertexes[last];
+            vertexes.resize(vertexes.size()-1);
             j--;
         }
 */
@@ -78,11 +78,11 @@ void Model::generateNormals()
 	steel::vector<v3> facenormal;
     facenormal.resize(triangleAll.data.size());
 
-    normal.data.resize(vertex.data.size());
+    normals.data.resize(vertexes.data.size());
 
-    for (unsigned int i=0; i<normal.data.size(); i++)
+    for (unsigned int i=0; i<normals.data.size(); i++)
     {
-        normal.data[i].loadZero();
+        normals.data[i].loadZero();
     }
     // Pods4et normalej poligonov
     for (unsigned int i=0; i<triangleAll.data.size(); i++)
@@ -91,17 +91,17 @@ void Model::generateNormals()
         int b = triangleAll.data[i].a[1];
         int c = triangleAll.data[i].a[2];
 
-        v3 p = vertex.data[b] - vertex.data[a];
-        v3 q = vertex.data[c] - vertex.data[a];
+        v3 p = vertexes.data[b] - vertexes.data[a];
+        v3 q = vertexes.data[c] - vertexes.data[a];
         facenormal[i] = p*q;
         if (facenormal[i] == v3(0,0,0)) facenormal[i] = v3(0,1,0); // TEMP TODO - Up
         facenormal[i].normalize();
-        normal.data[a] += facenormal[i];
-        normal.data[b] += facenormal[i];
-        normal.data[c] += facenormal[i];
+        normals.data[a] += facenormal[i];
+        normals.data[b] += facenormal[i];
+        normals.data[c] += facenormal[i];
     }
-    for (unsigned int i=0; i<normal.data.size(); i++)
-        normal.data[i].normalize();
+    for (unsigned int i=0; i<normals.data.size(); i++)
+        normals.data[i].normalize();
 
 // TODO - speed up
 
@@ -124,23 +124,23 @@ void Model::generateNormals()
         }
 */
 
-/*    int s = vertex.size();
+/*    int s = vertexes.size();
     for (unsigned int i=0; i<s; i++)
     if (use[i]>1)
     {
         for (unsigned int j=0; j<face.size(); j++)
         {
-            if ((index[j].a == i) && ( facenormal[j].DotProduct(normal[i])<k))
+            if ((index[j].a == i) && ( facenormal[j].DotProduct(normals[i])<k))
             {
                 index[j].a = duplicateVertex(i, facenormal[j]);
                 use[i]--; i--; break;
             }
-            if ((index[j].b == i) && ( facenormal[j].DotProduct(normal[i])<k))
+            if ((index[j].b == i) && ( facenormal[j].DotProduct(normals[i])<k))
             {
                 index[j].b = duplicateVertex(i, facenormal[j]);
                 use[i]--; i--; break;
             }
-            if ((index[j].c == i) && ( facenormal[j].DotProduct(normal[i])<k))
+            if ((index[j].c == i) && ( facenormal[j].DotProduct(normals[i])<k))
             {
                 index[j].c = duplicateVertex(i, facenormal[j]);
                 use[i]--; i--; break;
@@ -148,28 +148,28 @@ void Model::generateNormals()
         }
     }
 */
-//    normal.resize(vertex.size());
+//    normals.resize(vertexes.size());
 
-    for (unsigned int i=0; i<normal.data.size(); i++)
-        normal.data[i].loadZero();
+    for (unsigned int i=0; i<normals.data.size(); i++)
+        normals.data[i].loadZero();
 
     for (unsigned int i=0; i<triangleAll.data.size(); i++)
     {
         int a = triangleAll.data[i].a[0];
         int b = triangleAll.data[i].a[1];
         int c = triangleAll.data[i].a[2];
-        normal.data[a] += facenormal[i];
-        normal.data[b] += facenormal[i];
-        normal.data[c] += facenormal[i];
+        normals.data[a] += facenormal[i];
+        normals.data[b] += facenormal[i];
+        normals.data[c] += facenormal[i];
     }
-    for (unsigned int i=0; i<normal.data.size(); i++)
-        normal.data[i].normalize();
+    for (unsigned int i=0; i<normals.data.size(); i++)
+        normals.data[i].normalize();
 }
 
 void Model::updateAABB()
 {
 	frame.clear();
-	for(steel::vector<v3>::iterator it = vertex.data.begin(); it != vertex.data.end(); it++)
+	for(steel::vector<v3>::iterator it = vertexes.data.begin(); it != vertexes.data.end(); it++)
 		frame.merge(*it);
 }
 
@@ -179,9 +179,9 @@ float Model::calculateVolume() // вычислить объём
 	float volume = 0;
 	for(steel::vector<Triangle>::iterator it = triangleAll.data.begin(); it != triangleAll.data.end(); it++)
 	{
-		v3 a(vertex.data[it->a[0]]);
-		v3 b(vertex.data[it->a[1]]);
-		v3 c(vertex.data[it->a[2]]);
+		v3 a(vertexes.data[it->a[0]]);
+		v3 b(vertexes.data[it->a[1]]);
+		v3 c(vertexes.data[it->a[2]]);
 		volume += (a*b)&c;
 	}
 

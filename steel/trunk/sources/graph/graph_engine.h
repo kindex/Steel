@@ -31,7 +31,10 @@ public:
 
 	struct GraphTotalInfo
 	{
-		int vertex, triangle, object, global;
+		int vertexCount;
+		int triangleCount;
+		int objectCount;
+		int globalObjectCount;
 	} total;
 
 	Camera camera;

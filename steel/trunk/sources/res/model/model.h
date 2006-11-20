@@ -25,16 +25,25 @@
 class Model: public Res
 {
 public:
+	float calculateVolume(void); // вычислить объём
+	float getVolume(void); // вычислить объём
+
+	const Vertexes *getVertexes(void) const { return &vertexes; }
+	const Normals *getNormals(void) const { return &normals; }
+	const FaceMaterials *getFaceMaterials(void) const { return &faceMaterials; }
+	const TexCoords	*getTexCoords(int mapNumber) const;
+
+protected:
 	aabb				frame;
-    Vertexes			vertex;    // Vertexes
+    Vertexes			vertexes;    // Vertexes
 
     Triangles			triangleAll;        // Triangles
 
     TexCoords			texCoords; // Texture coordinates
-    Normals				normal;    // Vertex normals
-	FaceMaterials		faceMaterial;
+    Normals				normals;    // Vertex normals
+	FaceMaterials		faceMaterials;
 	
-	std::string name;
+	std::string			name;
 	float				volume;
 
     Model(void): name(), volume(-1) { }
@@ -54,9 +63,6 @@ public:
     int duplicateVertex(int src, v3 newnormal);
 
 	void generateNormals(void);
-	TexCoords	*getTexCoords(int mapNumber);
-	float calculateVolume(void); // вычислить объём
-	float getVolume(void); // вычислить объём
 };
 
 #endif

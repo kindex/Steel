@@ -5,9 +5,9 @@
 	(C) DiVision, 2004-2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 		* Kane [J. Anton, kane@mail.berlios.de]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
-		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 	License:
 		Steel Engine License
 	Description:
@@ -137,8 +137,8 @@ int main(int argc, char *argv[])
 		{
 			(graph->*(graph->setCaptionOpenGL_Window))(
 				std::string("Sleel engine")
-				+ " Obj: " + IntToStr(graph->total.object)
-				+ " Trg: " + IntToStr(graph->total.triangle)
+				+ " Obj: " + IntToStr(graph->total.objectCount)
+				+ " Trg: " + IntToStr(graph->total.triangleCount)
 //				+ " Col: " + IntToStr(game.getCollisionCount())
 				+ " FPS " + timer.getfps_s()
 			);

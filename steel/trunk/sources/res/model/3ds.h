@@ -19,9 +19,9 @@
 #include "../rstream.h"
 
 
-class _3DS;
+class Model_3DS;
 
-typedef int(F)(_3DS&, rstream&, int);
+typedef int(F)(Model_3DS&, rstream&, int);
 
 struct chainProcessor
 {
@@ -33,10 +33,16 @@ struct chainProcessor
 };
 
 
-class _3DS: public Model
+class Model_3DS: public Model
 {
 public:
 	bool init(const std::string name, const std::string dir);
+
+	friend int chain_model_material(Model_3DS &m, rstream &f, int size);
+	friend int chain_triangles(Model_3DS &m, rstream &f, int size);
+	friend int chain_vertexes(Model_3DS &m, rstream &f, int size);
+	friend int chain_map_coords(Model_3DS &m, rstream &f, int size);
+
 };
 
 #endif

@@ -103,7 +103,7 @@ bool registerResources()
 	resConfig.setId("config");
 
 	resImage.setId("image");	resImage.registerResLoader(createImage);
-	resModel.setId("model");	resModel.registerResLoader(createClass<_3DS, Model>);
+	resModel.setId("model");	resModel.registerResLoader(createClass<Model_3DS, Model>);
 	resText.setId("text");	resText.registerResLoader(createClass<TextFile, Text>);
 	resAudio.registerResLoader(createClass<WAV, Audio>);            resAudio.setId("audio");
 //	resAudio.registerResLoader(createClass<Audio, OGG>);            

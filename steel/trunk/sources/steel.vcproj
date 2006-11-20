@@ -72,7 +72,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib openal32.lib"
+				AdditionalDependencies="opengl32.lib ../sdk/libs/openal32.lib ../sdk/libs/eaxguid.lib ../sdk/libs/eax.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
 				ShowProgress="0"
 				OutputFile="..\bin/$(SolutionName)_VS8_$(ConfigurationName).exe"
 				Version="1.1.0"
@@ -231,10 +231,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions=" /wd4996"
-				Optimization="2"
-				InlineFunctionExpansion="1"
-				PreprocessorDefinitions="WIN32;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1"
-				StringPooling="true"
+				Optimization="1"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
+				WholeProgramOptimization="true"
+				PreprocessorDefinitions="WIN32;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;LIB_OPENAL"
+				StringPooling="false"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				PrecompiledHeaderFile="$(IntDir)\steel.pch"
@@ -255,7 +258,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
+				AdditionalDependencies="opengl32.lib ../sdk/libs/openal32.lib ../sdk/libs/eaxguid.lib ../sdk/libs/eax.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
 				OutputFile="..\bin/$(SolutionName)_VS8_$(ConfigurationName).exe"
 				Version="1.1.0"
 				LinkIncremental="1"
@@ -422,23 +425,7 @@
 						RelativePath=".\res\image\bmp.cpp"
 						>
 						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								StructMemberAlignment="1"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
 							Name="Debug Lib|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								StructMemberAlignment="1"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -482,6 +469,30 @@
 						RelativePath=".\res\image\tga.h"
 						>
 					</File>
+					<Filter
+						Name="bmp"
+						>
+						<File
+							RelativePath=".\res\image\bmp\bmp_load.cpp"
+							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									StructMemberAlignment="1"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									StructMemberAlignment="1"
+								/>
+							</FileConfiguration>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="model"

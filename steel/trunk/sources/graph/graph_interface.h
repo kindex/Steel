@@ -59,17 +59,17 @@ public:
 	// Следующие функции возврящяют ссылки на массивы данных (NULL if none), и должны 
 	// отвечать за хранние этих данных до следующего вызова этой функции
 	// или вызова cleanup
-	virtual void	setVertexes(Vertexes*) = 0; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
-	virtual void	setNormals(Normals*) = 0; // список нормалей в вершинам
+	virtual void	setVertexes(const Vertexes*) = 0; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	virtual void	setNormals(const Normals*) = 0; // список нормалей в вершинам
 
-	virtual void	setLines(GLines*) = 0; // индексы вершин для линий и цвета линий (for debug)
+	virtual void	setLines(const GLines*) = 0; // индексы вершин для линий и цвета линий (for debug)
 
 	// массив индексов вершин, которые образуют треугольники (грани) + материалы
-	virtual void	setFaceMaterials(FaceMaterials*) = 0;
-	virtual void	setTexCoordsCount(int) = 0;
-	virtual void	setTexCoords(int texNumber, TexCoords*) = 0;
+	virtual void	setFaceMaterials(const FaceMaterials*) = 0;
+	virtual void	setTexCoordsCount(unsigned int) = 0;
+	virtual void	setTexCoords(unsigned int texNumber, const TexCoords*) = 0;
 
-	virtual void 	setLights(Lights*) = 0;
+	virtual void 	setLights(const Lights*) = 0;
 };
 
 #endif

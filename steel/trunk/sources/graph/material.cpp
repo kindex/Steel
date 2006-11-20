@@ -48,7 +48,7 @@ bool Material::InitFromConfig(Config *_conf)
 
 		if(format == "color_map")
 		{
-			string imageName = conf->getPath("image" + IntToStr(i));
+			string imageName = "/" + conf->getPath("image" + IntToStr(i));
 
 			m.image = resImage.add(imageName);
 

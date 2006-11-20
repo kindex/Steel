@@ -33,7 +33,7 @@ bool ResStack::push(std::string directory)
 {
 	if(level>100) abort_init("res error", "To many recursive res::add executions (>100)");
 
-	dirs.push(directory);
+	dirs.push_back(directory);
 	level++;
 	steel::log.push();
 
@@ -45,7 +45,7 @@ bool ResStack::pop(void)
 	if(level==0) 
 		abort_init("res error", "Stack underflow");
 	level--;
-	dirs.pop();
+	dirs.pop_back();
 	steel::log.pop();
 	return true;
 }
@@ -69,7 +69,7 @@ std::string ResStack::top(void)
 {
 	std::string result;
 	if(level > 0)
-		result = dirs.top();
+		result = dirs.back();
 
 	return result;
 }

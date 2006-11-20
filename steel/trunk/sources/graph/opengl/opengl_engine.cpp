@@ -103,22 +103,22 @@ void OpenGL_Engine::clearChildren(void)
 	// TODO:
 }
 
-void OpenGL_Engine::setVertexes(Vertexes* vertexes) // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+void OpenGL_Engine::setVertexes(const Vertexes* vertexes) // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
 {
 	if(currentShadow != NULL)
 	{
-		GS(currentShadow)->vertex = vertexes;
+		GS(currentShadow)->vertexes = vertexes;
 	}
 }
 
-void OpenGL_Engine::setNormals(Normals* normals) // список нормалей в вершинам
+void OpenGL_Engine::setNormals(const Normals* normals) // список нормалей в вершинам
 {
 	if(currentShadow != NULL)
 	{
-		GS(currentShadow)->normal = normals;
+		GS(currentShadow)->normals = normals;
 	}
 }
-void OpenGL_Engine::setLines(GLines* lines) // индексы вершин для линий и цвета линий (for debug)
+void OpenGL_Engine::setLines(const GLines* lines) // индексы вершин для линий и цвета линий (for debug)
 {
 	if(currentShadow != NULL)
 	{
@@ -127,7 +127,7 @@ void OpenGL_Engine::setLines(GLines* lines) // индексы вершин дл�
 
 }
 
-void OpenGL_Engine::setFaceMaterials(FaceMaterials* faceMaterials)// массив индексов вершин, которые образуют треугольники (грани) + материалы
+void OpenGL_Engine::setFaceMaterials(const FaceMaterials* faceMaterials)// массив индексов вершин, которые образуют треугольники (грани) + материалы
 {
 	if(currentShadow != NULL)
 	{
@@ -135,7 +135,7 @@ void OpenGL_Engine::setFaceMaterials(FaceMaterials* faceMaterials)// масси�
 	}
 }
 
-void OpenGL_Engine::setTexCoordsCount(int size)
+void OpenGL_Engine::setTexCoordsCount(unsigned int size)
 {
 	if(currentShadow != NULL)
 	{
@@ -143,7 +143,7 @@ void OpenGL_Engine::setTexCoordsCount(int size)
 	}
 }
 
-void OpenGL_Engine::setTexCoords(int texNumber, TexCoords* coords)
+void OpenGL_Engine::setTexCoords(unsigned int texNumber, const TexCoords* coords)
 {
 	if(currentShadow != NULL && static_cast<int>(GS(currentShadow)->texCoords.size()) > texNumber)
 	{
@@ -151,7 +151,7 @@ void OpenGL_Engine::setTexCoords(int texNumber, TexCoords* coords)
 	}
 }
 
-void OpenGL_Engine::setLights(Lights* lights)
+void OpenGL_Engine::setLights(const Lights* lights)
 {
 	if(currentShadow != NULL)
 	{
@@ -238,9 +238,9 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 	// TODO repair DC 
 
 	lights.clear();
-	total.vertex = 0;
-	total.triangle = 0;
-	total.object = 0;
+	total.vertexCount = 0;
+	total.triangleCount = 0;
+	total.objectCount = 0;
 
 	int size = objects.size();
 

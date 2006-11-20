@@ -107,7 +107,7 @@ int loadpercentage(ifstream &f, float &p)
 }
 
 // ************************ SCENE
-int parsechain(_3DS &m, rstream &f, steel::vector<chainProcessor> tags, int size = 0)
+int parsechain(Model_3DS &m, rstream &f, steel::vector<chainProcessor> tags, int size = 0)
 {
     unsigned short subChainId;
     int subChainSize, reads = 0;
@@ -136,7 +136,7 @@ int parsechain(_3DS &m, rstream &f, steel::vector<chainProcessor> tags, int size
 }
 
 
-int chain_model_material(_3DS &m, rstream &f, int size) // model material info
+int chain_model_material(Model_3DS &m, rstream &f, int size) // model material info
 {
 	int r = 0;
 	string materialName;
@@ -146,12 +146,12 @@ int chain_model_material(_3DS &m, rstream &f, int size) // model material info
 	f.read(&count, 2); // face count
 	r += 2;
 
-	int s = m.faceMaterial.size();
-	m.faceMaterial.resize(s+1);
-	m.faceMaterial[s].name = materialName;
+	int s = m.faceMaterials.size();
+	m.faceMaterials.resize(s+1);
+	m.faceMaterials[s].name = materialName;
 
-	m.faceMaterial[s].triangles = new Triangles;
-	Triangles &a = *m.faceMaterial[s].triangles;
+	m.faceMaterials[s].triangles = new Triangles;
+	Triangles &a = *m.faceMaterials[s].triangles;
 
 	a.data.resize(count);
 
@@ -167,7 +167,7 @@ int chain_model_material(_3DS &m, rstream &f, int size) // model material info
 	return r;
 }
 
-int chain_triangles(_3DS &m, rstream &f, int size)
+int chain_triangles(Model_3DS &m, rstream &f, int size)
 {
 	int r = 0;
 	unsigned short count;
@@ -203,20 +203,20 @@ int chain_triangles(_3DS &m, rstream &f, int size)
 Vertices number (unsigned short)
 Vertices list: x1,y1,z1,x2,y2,z2 etc. (for each vertex: 3*float)
 */
-int chain_vertexes(_3DS &m, rstream &f, int size)
+int chain_vertexes(Model_3DS &m, rstream &f, int size)
 {
 	unsigned short count;
 
 	f.read(&count, 2);	
 	if(count*12 +2!= size)
 			throw;
-	m.vertex.data.resize(count);
-	f.read(&m.vertex.data[0], count*4*3); // count*3*float (x, y, z)
+	m.vertexes.data.resize(count);
+	f.read(&m.vertexes.data[0], count*4*3); // count*3*float (x, y, z)
 
 	return 2+count*3*4;
 }
 
-int chain_map_coords(_3DS &m, rstream &f, int size)
+int chain_map_coords(Model_3DS &m, rstream &f, int size)
 {
 	unsigned short count;
 
@@ -230,7 +230,7 @@ int chain_map_coords(_3DS &m, rstream &f, int size)
 }
 
 
-int chain_mesh(_3DS &m, rstream &f, int size)
+int chain_mesh(Model_3DS &m, rstream &f, int size)
 {
 	steel::vector<chainProcessor> t;
 	t.push_back(chainProcessor(0x4110, chain_vertexes)); // coordinates
@@ -241,7 +241,7 @@ int chain_mesh(_3DS &m, rstream &f, int size)
 	return parsechain(m, f, t, size);
 }
 
-int chain_4000(_3DS &m, rstream &f, int size)
+int chain_4000(Model_3DS &m, rstream &f, int size)
 {
 	string name;
 	int namesize = readstring(f, name);
@@ -252,7 +252,7 @@ int chain_4000(_3DS &m, rstream &f, int size)
 }
 
 
-int chain_3d3d(_3DS &m, rstream &f, int size)
+int chain_3d3d(Model_3DS &m, rstream &f, int size)
 {
 	steel::vector<chainProcessor> t;
 	t.push_back(chainProcessor(0x4000, chain_4000));
@@ -262,14 +262,14 @@ int chain_3d3d(_3DS &m, rstream &f, int size)
 
 
 
-int chain_4d4d(_3DS &m, rstream &f, int size)
+int chain_4d4d(Model_3DS &m, rstream &f, int size)
 {
 	steel::vector<chainProcessor> t;
 	t.push_back(chainProcessor(0x3D3D, chain_3d3d));
 	return parsechain(m, f, t, size);
 }
 
-bool _3DS::init(const std::string name, const std::string dir)
+bool Model_3DS::init(const std::string name, const std::string dir)
 {
 	rstream f;
 	
@@ -286,13 +286,13 @@ bool _3DS::init(const std::string name, const std::string dir)
 	updateAABB();
 
 
-	vertex.setId(objectIdGenerator.genUid());
-	normal.setId(objectIdGenerator.genUid());
+	vertexes.setId(objectIdGenerator.genUid());
+	normals.setId(objectIdGenerator.genUid());
 	triangleAll.setId(objectIdGenerator.genUid());
 	texCoords.setId(objectIdGenerator.genUid());
 
-	for(steel::vector<FaceMaterial>::iterator it = faceMaterial.begin();
-				it != faceMaterial.end(); it++)
+	for(steel::vector<FaceMaterial>::iterator it = faceMaterials.begin();
+				it != faceMaterials.end(); it++)
 	{
 		it->triangles->setId(objectIdGenerator.genUid());
 
