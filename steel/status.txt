@@ -4,7 +4,7 @@ Task Format:
 ID (revision number on task creation time)
 Name
 Short description
-Target programmers
+Target programmers (Open), current programmer (Construction), Tester(Testing), All authors (Released)
 Adviser
 Priority (1 - more, 10 - less)
 Estimated time (h, d, w)
@@ -12,10 +12,11 @@ Deadline (date, project version)
 
 Open:
 
-344. JPEG. JPEG file loader same as BMP loader. Def, Dark_Sirius. KindeX. 4. 3d. 20061131 (steel 1.1)
+344. JPEG. JPEG file loader same as BMP loader. Def, Dark_Sirius. KindeX. 4. 3d. 20061231 (steel 1.1)
+348. Config bug. Error in finding value by templates through parent config. KindeX. 5. 1d. 20061201
 
 Construction:
-345. PNG. PNG file loader same as BMP loader. Kane. KindeX. 4. 3d. 20061131 (steel 1.1)
+345. PNG. PNG file loader same as BMP loader. Kane. KindeX. 4. 3d. 20061231 (steel 1.1)
 
 
 Done Construction:
