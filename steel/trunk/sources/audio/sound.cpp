@@ -22,3 +22,4 @@ Sound::Sound(void)
 	rolloffFactor = 0.0f;
 	sourceRelative = 0.0f;
 }
+
