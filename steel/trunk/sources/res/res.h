@@ -23,44 +23,36 @@
 #include <string>
 #include <stack>
 
-#include "../engine/object.h"
 #include "../common/types.h"
 #include "../common/utils.h"
 #include "../common/logger.h"
 
+#include "../engine/id_generator.h"
+
 
 // Собирает полное имя файла относительно директории. Если имя файла начинается с /, то имя файла считается уже полным
-std::string getFullPath(std::string filename, std::string directory);
+std::string getFullPath(const std::string &filename, const std::string &directory);
 
 // Стек текущих директорий. Используется только коллекцией ресурсов.
 class ResStack
 {
 protected:
 	int level;
-	std::stack<std::string> stack;
+	std::stack<std::string> dirs;
 
 public:
 	bool	push(std::string directory);
-	bool	pushFullPath(std::string path)
-	{
-		std::string baseDirectory;		
-		splitPath(path, baseDirectory, path);
-		return push(baseDirectory);
-	}
+	bool	pushFullPath(std::string path);
 
 	bool	pop(void);
 	int		getLevel(void);
 	std::string top(void);
-
-	std::string getFullName(const std::string name)
-	{
-		return getFullPath(name, top());
-	}
+	std::string getFullName(const std::string &name);
 
 	template<class T>
 	friend class ResCollection;
 
-	ResStack(): level(0) {}
+	ResStack(): level(0), dirs() {}
 };
 extern ResStack resStack;
 
@@ -105,10 +97,10 @@ public:
 	inline T* get(const std::string& name) { return operator[](name); }  // Вернуть ресурс по полному имени
 
 	// Добавить ресурс по имени и типу, если ресурса еще нет в коллекции
-	T* add(const std::string name, bool pop = true);
+	T* add(const std::string &name, bool pop = true);
 
 	// Удалить ресурс
-	bool remove(const std::string name);
+	bool remove(const std::string &name);
 	bool remove(T* object);
 
 	// У процедуры add есть второй параметр типа bool. Если он равняется false, то после загрузки ресурса текущая директория не восстанавливается и надо это делать вручную с помощью вызова pop.
@@ -155,7 +147,7 @@ public:
 
 
 template<class T>
-T* ResCollection<T>::add(const std::string name, bool pop)
+T* ResCollection<T>::add(const std::string &name, bool pop)
 {
 	std::string name2 = resStack.getFullName(name);
 	int index = getIndex(name2);
@@ -196,7 +188,7 @@ bool ResCollection<T>::remove(T* object)
 
 
 template<class T>
-bool ResCollection<T>::remove(const std::string name)
+bool ResCollection<T>::remove(const std::string &name)
 {
 	int index = getIndex(name);
 	if(index < 0)

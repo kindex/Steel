@@ -13,7 +13,7 @@
 ************************************************************/
 #include "animator.h"
 
-bool UniPSanimator::initParticles()
+/*bool UniPSanimator::initParticles()
 {
 	return true;
 }
@@ -46,4 +46,10 @@ void UniPSanimator::ProcessPhysic(steel::time curTime, steel::time frameLength, 
 
 	for(int i=0; i<size; i++)
 		children[i]->setParticle(set->particles[i]);
+}
+*/
+
+bool SimpleAnimator::initParticles(void)
+{
+	return true;
 }

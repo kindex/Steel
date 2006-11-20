@@ -31,13 +31,140 @@
 
 using namespace std;
 
+
+bool OpenGL_Engine::setCurrentObject(GameObject* object)
+{
+	uid id = object->getId();
+	currentShadow = getShadow(id);
+	if(currentShadow == NULL)
+	{
+		currentObject = NULL;
+		return false;
+	}
+	currentObject = object;
+
+	return false;
+}
+
+void OpenGL_Engine::setPosition(ObjectPosition position)
+{
+	if(currentShadow != NULL)
+	{
+		GS(currentShadow)->position = position;
+	}
+}
+
+void OpenGL_Engine::setPositionKind(PositionKind kind)
+{
+	if(currentShadow != NULL)
+	{
+		currentShadow->positionKind = kind;
+	}
+}
+
+
+void OpenGL_Engine::addChild(GameObject* child)
+{
+	if(currentShadow != NULL)
+	{
+		addChild(*currentShadow, child);
+	}
+}
+
+void OpenGL_Engine::addChild(GraphShadow &shadow, GameObject *child)
+{
+	uid childUid = child->getId();
+	
+	svector<uid>::iterator it = shadow.children.find(childUid);
+
+	if(it != currentShadow->children.end()) return ; // child have been added before
+
+	if(!child->beforeInject(this->interfaceId)) return; // shild don't want to be added
+
+	if(!makeShadowForObject(child)) return;
+
+	shadow.children.push_back(childUid);
+
+	setCurrentObject(child);
+
+	child->bindEngine(this->interfaceId, this);
+
+	currentShadow = &shadow;
+}
+
+
+void OpenGL_Engine::deleteChild(GameObject* child)
+{
+	// TODO:
+}
+
+void OpenGL_Engine::clearChildren(void)
+{
+	// TODO:
+}
+
+void OpenGL_Engine::setVertexes(Vertexes* vertexes) // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+{
+	if(currentShadow != NULL)
+	{
+		GS(currentShadow)->vertex = vertexes;
+	}
+}
+
+void OpenGL_Engine::setNormals(Normals* normals) // список нормалей в вершинам
+{
+	if(currentShadow != NULL)
+	{
+		GS(currentShadow)->normal = normals;
+	}
+}
+void OpenGL_Engine::setLines(GLines* lines) // индексы вершин для линий и цвета линий (for debug)
+{
+	if(currentShadow != NULL)
+	{
+		GS(currentShadow)->lines = lines;
+	}
+
+}
+
+void OpenGL_Engine::setFaceMaterials(FaceMaterials* faceMaterials)// массив индексов вершин, которые образуют треугольники (грани) + материалы
+{
+	if(currentShadow != NULL)
+	{
+		GS(currentShadow)->faceMaterials = faceMaterials;
+	}
+}
+
+void OpenGL_Engine::setTexCoordsCount(int size)
+{
+	if(currentShadow != NULL)
+	{
+		GS(currentShadow)->texCoords.resize(size);
+	}
+}
+
+void OpenGL_Engine::setTexCoords(int texNumber, TexCoords* coords)
+{
+	if(currentShadow != NULL && static_cast<int>(GS(currentShadow)->texCoords.size()) > texNumber)
+	{
+		GS(currentShadow)->texCoords[texNumber] = coords;
+	}
+}
+
+void OpenGL_Engine::setLights(Lights* lights)
+{
+	if(currentShadow != NULL)
+	{
+		GS(currentShadow)->lights = lights;
+	}
+}
+
 /*
 Сердце Графического движка.
 Отвечает за вывод графичесткого элемента.
 */
 
-
-void OpenGL_Engine::process(GraphStorage *e, steel::time globalTime, steel::time time)
+void OpenGL_Engine::process(GraphShadow *e, steel::time globalTime, steel::time time)
 {
 	if(e->positionKind == POSITION_SCREEN)
 	{
@@ -118,7 +245,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 	int size = objects.size();
 
 	for(int i=0; i < size; i++)
-		prepare(getStorage(objects[i]), globalTime, time); /* Update vertexes, faces, ights */
+		prepare(getShadow(objects[i]), globalTime, time); /* Update vertexes, faces, ights */
 
 
 //	if(!ARB_multitexture_supported) 
@@ -140,11 +267,11 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 //	steel::vector<int> elementAlpha;
 
 // В начале выводим только непрозрачные объекты
-	for(svector<Storage*>::iterator it = storages.begin(); it != storages.end(); it++)
+	for(svector<Shadow*>::iterator it = shadows.begin(); it != shadows.end(); it++)
 //		if(!it->blend)
 	{
-			GraphStorage *storage = GS(*it);
-			process(storage, globalTime, time);
+			GraphShadow *shadow = GS(*it);
+			process(shadow, globalTime, time);
 	}
 	/*		else
 		{
@@ -383,125 +510,90 @@ void OpenGL_Engine::processCamera()
     glLoadIdentity();
 }
 
-void OpenGL_Engine::prepare(GraphStorage *storage, steel::time globalTime, steel::time time, matrix34 matrix, GraphObject *parent)
+void OpenGL_Engine::prepare(GraphShadow *shadow, steel::time globalTime, steel::time time, matrix34 matrix, GameObject *parent)
 {
 	info.curTime = globalTime;
 	info.frameLength = time;
-	info.modificationTime = globalFrameNumber;
+//	info.modificationTime = globalFrameNumber;
 	info.cameraEye = camera.eye;
 	info.cameraDirection = camera.center - camera.eye;
 
-	G(storage->object)->ProcessGraph(info);
-	storage->setParent(parent);
-	storage->cache();
+	currentShadow = shadow;
+	shadow->object->updateInformation(this->interfaceId, this);
 
-	if(storage->childrenModificationTime < storage->object->getChildrenModificationTime())
+	shadow->setParent(parent);
+	shadow->cache();
+
+	for EACH(svector<uid>, shadow->children, it)
+		prepare( getShadow(*it), globalTime, time, 
+		matrix,  // TODO
+		shadow->object);
+
+/*	if(shadow->childrenModificationTime < shadow->object->getChildrenModificationTime())
 	{
-		storage->childrenModificationTime = storage->object->getChildrenModificationTime();
+		shadow->childrenModificationTime = shadow->object->getChildrenModificationTime();
 
-		StorageHash newChildrenId;
+		ShadowHash newChildrenId;
 
-		int count = G(storage->object)->getGraphChildrenCount();
+		int count = G(shadow->object)->getGraphChildrenCount();
 		for(int i = 0; i < count; i++) // add new + cache
 		{
-			GraphObject *child = G(storage->object)->getGraphChildren(i);
+			GraphObject *child = G(shadow->object)->getGraphChildren(i);
 			uid id = child->getId();
 			newChildrenId[id] = i;
 
 			if(idHash.find(id) == idHash.end())
 			{
-				// add new object to storage
-				makeStorageForObject(child);
-				makeStorageForChildren(child);
+				// add new object to shadow
+				makeShadowForObject(child);
+				makeShadowForChildren(child);
 
-				storage->children.push_back(id);
+				shadow->children.push_back(id);
 			}
-			getStorage(child)->cache();
+			getShadow(child)->cache();
 		}
-		int size = storage->children.size();
+		int size = shadow->children.size();
 
 		for(int i = 0; i < size; i++)
 		{
-			uid id = storage->children[i];
+			uid id = shadow->children[i];
 			if(newChildrenId.find(id) == newChildrenId.end())
 			{
 				int n = findSid(id);
-				deleteStorageForChildren(n);
-				deleteStorageForObject(n);
-				storage->children[i] = storage->children.back();
-				storage->children.pop_back();
+				deleteShadowForChildren(n);
+				deleteShadowForObject(n);
+				shadow->children[i] = shadow->children.back();
+				shadow->children.pop_back();
 				size--;
 				i--;
 			}
 		}
 	}
 
-	if(storage->lights != NULL)
-	for(Lights::const_iterator it = storage->lights->begin(); it != storage->lights->end(); it++)
+	if(shadow->lights != NULL)
+	for(Lights::const_iterator it = shadow->lights->begin(); it != shadow->lights->end(); it++)
 	{
 		lights.push_back(*it);
-		lights.back().position = storage->position*lights.back().position;
+		lights.back().position = shadow->position*lights.back().position;
 	}
-
-	int count = G(storage->object)->getGraphChildrenCount();
+*/
+/*	int count = G(shadow->object)->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
 	{
-		GraphObject *child = G(storage->object)->getGraphChildren(i);
+		GraphObject *child = G(shadow->object)->getGraphChildren(i);
 		
-		prepare(getStorage(child), globalTime, time);
-	}
-
+		prepare(getShadow(child), globalTime, time);
+	}*/
 }
 
-
-void OpenGL_Engine::makeStorageForChildren(Object *object)
+void OpenGL_Engine::GraphShadow::fill(GameObject *object)
 {
-	int count = G(object)->getGraphChildrenCount();
-	for(int i = 0; i < count; i++)
-	{
-		GraphObject *child = G(object)->getGraphChildren(i);
-		makeStorageForObject(child);
-		makeStorageForChildren(child);
-	}
+	Shadow::fill(object);
 }
 
-void OpenGL_Engine::GraphStorage::fill(Object *object)
+bool OpenGL_Engine::GraphShadow::cache(void)
 {
-	Storage::fill(object);
-}
-
-bool OpenGL_Engine::GraphStorage::cache(void)
-{
-	position = G(object)->getPosition();
-	positionKind = G(object)->getPositionKind();
-//	PositionKind pos = G(object)->getPositionKind();
-
-	if(parent != NULL && positionKind == POSITION_LOCAL)
-	{
-		ObjectPosition parent_matrix = GS(engine->getStorage(G(parent)))->position;
-		position = parent_matrix*position;
-	}
-
-
-	if(Storage::cache())
-	{
-		modificationTime = G(object)->getModificationTime();
-//		aabb frame = object->getFrame();
-//		frame.mul(object_matrix);
-
-// проверка, находится ли frame внутри пирамиды, которую образует угол обзора камеры. Если не попадает, то откидываем этот объект и всех его потомков
-//		objectStorage.visible = isVisible(frame);
-
-		faceMaterials	= G(object)->getFaceMaterials();
-		vertex			= G(object)->getVertexes();
-		normal			= G(object)->getNormals();
-		lines			= G(object)->getLines();
-		lights			= G(object)->getLights();
-		blend			= false;
-		return true;
-	}
-	else
-		return false;
+	return  false;
 }
 
 void OpenGL_Engine::onResize(int width, int height)

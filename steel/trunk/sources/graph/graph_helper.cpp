@@ -15,6 +15,7 @@
 #include "../steel.h"
 #include "graph_helper.h"
 #include "../common/steel_vector.h"
+#include "../engine/engine_types.h"
 
 void GraphHelper::setTime(const steel::time _time) 
 {

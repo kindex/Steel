@@ -5,11 +5,11 @@
 #define STEEL_PRIVATE_H
 
 /* VERSION DEFINITIONS */
-#define VER_STRING	"0.1.1.1"
-#define VER_MAJOR	0
+#define VER_STRING	"1.1.0.0"
+#define VER_MAJOR	1
 #define VER_MINOR	1
-#define VER_RELEASE	1
-#define VER_BUILD	1
+#define VER_RELEASE	0
+#define VER_BUILD	0
 #define COMPANY_NAME	""
 #define FILE_VERSION	""
 #define FILE_DESCRIPTION	"Steel Engine developer version"
@@ -18,6 +18,6 @@
 #define LEGAL_TRADEMARKS	""
 #define ORIGINAL_FILENAME	""
 #define PRODUCT_NAME	"Steel Engine"
-#define PRODUCT_VERSION	"dev"
+#define PRODUCT_VERSION	"1.1.0"
 
 #endif /*STEEL_PRIVATE_H*/

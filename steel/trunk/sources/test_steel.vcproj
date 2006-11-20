@@ -15,14 +15,14 @@
 	<Configurations>
 		<Configuration
 			Name="DebugWin|Win32"
-			OutputDirectory="$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\bin"
+			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
-			BuildLogFile="..\temp.test\$(IntDir)\BuildLog.htm"
+			BuildLogFile="$(IntDir)\BuildLog.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -52,10 +52,8 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				PrecompiledHeaderFile="..\temp/steel.pch"
-				AssemblerListingLocation="..\temp/"
-				ObjectFile="..\temp/"
-				ProgramDataBaseFileName="..\temp/"
+				PrecompiledHeaderFile="$(IntDir)\steel.pch"
+				AssemblerListingLocation="$(IntDir)\"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
@@ -75,13 +73,13 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib  openal32.lib alut.lib"
 				ShowProgress="0"
-				OutputFile="..\temp.test/steel_test.exe"
+				OutputFile="..\bin/$(SolutionName)_VS8_$(ConfigurationName).exe"
 				Version=""
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="..\temp.test/steel.pdb"
+				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
 				GenerateMapFile="true"
 				SubSystem="1"
 				EntryPointSymbol=""
@@ -326,58 +324,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="conf"
-					>
-					<File
-						RelativePath=".\res\conf\conf.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\res\conf\conf.h"
-						>
-					</File>
-					<File
-						RelativePath=".\res\conf\conf_text.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\res\conf\conf_text.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="script"
-					>
-					<File
-						RelativePath=".\res\script\script.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\res\script\script.h"
-						>
-					</File>
-					<File
-						RelativePath=".\res\script\script_text.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\res\script\script_text.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="material"
-					>
-					<File
-						RelativePath=".\res\material\material.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\res\material\material.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="text"
 					>
 					<File
@@ -481,26 +427,6 @@
 			<Filter
 				Name="audio"
 				>
-				<File
-					RelativePath=".\audio\audio_engine.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\audio\audio_engine.h"
-					>
-				</File>
-				<File
-					RelativePath=".\audio\audio_interface.h"
-					>
-				</File>
-				<File
-					RelativePath=".\audio\openal_engine.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\audio\openal_engine.h"
-					>
-				</File>
 				<Filter
 					Name="openal"
 					>
@@ -597,34 +523,6 @@
 			<Filter
 				Name="physic"
 				>
-				<File
-					RelativePath=".\physic\physic_engine.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\physic\physic_engine.h"
-					>
-				</File>
-				<File
-					RelativePath=".\physic\physic_engine_particle.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\physic\physic_engine_path.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\physic\physic_engine_steel.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\physic\physic_engine_steel.h"
-					>
-				</File>
-				<File
-					RelativePath=".\physic\physic_interface.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="input"
@@ -658,19 +556,28 @@
 					>
 				</File>
 				<File
-					RelativePath=".\graph\graph_helper.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\graph\graph_helper.h"
-					>
-				</File>
-				<File
 					RelativePath=".\graph\graph_interface.h"
 					>
 				</File>
 				<File
-					RelativePath=".\graph\types.h"
+					RelativePath=".\graph\graph_types.h"
+					>
+				</File>
+				<File
+					RelativePath=".\graph\material.cpp"
+					>
+					<FileConfiguration
+						Name="DebugWin|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\graph\material.h"
 					>
 				</File>
 				<Filter
@@ -762,22 +669,6 @@
 				Name="objects"
 				>
 				<File
-					RelativePath=".\objects\audio_ambient.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\audio_ambient.h"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\audio_object.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\audio_object.h"
-					>
-				</File>
-				<File
 					RelativePath=".\objects\combiner.cpp"
 					>
 				</File>
@@ -786,108 +677,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\objects\game_obj.cpp"
-					>
-					<FileConfiguration
-						Name="DebugWin|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\objects\game_obj.h"
+					RelativePath=".\objects\scene.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\objects\group.cpp"
-					>
-					<FileConfiguration
-						Name="DebugWin|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\objects\group.h"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\model_obj.cpp"
-					>
-					<FileConfiguration
-						Name="DebugWin|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\objects\model_obj.h"
+					RelativePath=".\objects\scene.h"
 					>
 				</File>
 				<File
@@ -898,158 +692,6 @@
 					RelativePath=".\objects\sphere.h"
 					>
 				</File>
-				<File
-					RelativePath=".\objects\triangle.cpp"
-					>
-					<FileConfiguration
-						Name="DebugWin|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\objects\triangle.h"
-					>
-				</File>
-				<Filter
-					Name="ps"
-					>
-					<File
-						RelativePath=".\objects\ps\animator.cpp"
-						>
-						<FileConfiguration
-							Name="DebugWin|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\objects\ps\animator.h"
-						>
-					</File>
-					<File
-						RelativePath=".\objects\ps\emitter.cpp"
-						>
-						<FileConfiguration
-							Name="DebugWin|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\objects\ps\emitter.h"
-						>
-					</File>
-					<File
-						RelativePath=".\objects\ps\particle_system.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\objects\ps\particle_system.h"
-						>
-					</File>
-					<File
-						RelativePath=".\objects\ps\ps_renderer.cpp"
-						>
-						<FileConfiguration
-							Name="DebugWin|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\objects\ps\ps_renderer.h"
-						>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="test"
@@ -1079,15 +721,27 @@
 					>
 				</File>
 				<File
+					RelativePath=".\engine\engine_types.h"
+					>
+				</File>
+				<File
+					RelativePath=".\engine\game_object.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\engine\game_object.h"
+					>
+				</File>
+				<File
 					RelativePath=".\engine\helper.h"
 					>
 				</File>
 				<File
-					RelativePath=".\engine\object.cpp"
+					RelativePath=".\engine\id_generator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\engine\object.h"
+					RelativePath=".\engine\interface.h"
 					>
 				</File>
 			</Filter>

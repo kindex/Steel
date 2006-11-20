@@ -17,6 +17,7 @@
 
 #include "openal_engine.h"
 #include "../common/logger.h"
+#include "../engine/game_object.h"
 
 
 ALCdevice *pDevice;
@@ -193,34 +194,20 @@ void OpenALEngine::AudioStorage::soundUpdate(void)
 }
 /**/
 
-bool OpenALEngine::inject(/* AudioObject *object */)
+bool OpenALEngine::inject(GameObject *object)
 {
-	
-/*	// если объект не хочет добавляться
-	if(!object->AudioBeforeInject()) 
-		return false;
+	if(!object->isSuportingInterface(interfaceId)) return false;
+
+	// если объект не хочет добавляться
+	if(!object->beforeInject(interfaceId)) return false;
+
 	// кешируем объект
-	if(!makeStorageForObject(object)) 
-		return false;
-	makeStorageForChildren(object);
+	if(!makeShadowForObject(object)) return false;
 	// список глобальных объектов
-*/
-/*	if (AS(object)->getSound() != NULL)
-	{
-		//unsigned int buffer;
-		//unsigned int source;
-		//AudioSound* obj = new AudioSound();
-		alGenBuffers(1, &AS(object)->buffer);
-		alBufferData(AS(object)->buffer, AS(object)->getSound()->format, AS(object)->getSound()->data, AS(object)->getSound()->size, AS(object)->getSound()->frequency);
-		alGenSources(1, &AS(object)->source);
-		alSourcei(AS(object)->source, AL_BUFFER, AS(object)->buffer);
-		AS(object)->position = object->getPosition().getTranslation();
-		objects.push_back(object);
-		AS(object)->sndUpdate();
-		AS(object)->sndPlay(AS(object)->source);
-	}	
-	//objects.push_back(object);
-*/
+
+	setCurrentObject(object);
+	object->bindEngine(interfaceId, this);
+
 	return true;
 }
 
@@ -296,6 +283,7 @@ bool OpenALEngine::soundPlay(Sound* sound)
 	alSourcei (source.source, AL_BUFFER,    buffer.buffer	);
 	CheckALError();
 	alSourcefv(source.source, AL_POSITION, sound->position);
+	alSourcei(source.source, AL_LOOPING, sound->isLoop);
 	CheckALError();
 	alSourcePlay(source.source);
 	CheckALError();
@@ -305,6 +293,49 @@ bool OpenALEngine::soundPlay(Sound* sound)
 bool OpenALEngine::soundUpdate(Sound* sound)
 {
 	return true;
+}
+
+void OpenALEngine::addChild(GameObject* child)
+{
+	if(currentShadow != NULL)
+	{
+		addChild(*currentShadow, child);
+	}
+}
+
+void OpenALEngine::addChild(AudioShadow &shadow, GameObject *child)
+{
+	uid childUid = child->getId();
+	
+	svector<uid>::iterator it = shadow.children.find(childUid);
+
+	if(it != currentShadow->children.end()) return ; // child have been added before
+
+	if(!child->beforeInject(this->interfaceId)) return; // shild don't want to be added
+
+	if(!makeShadowForObject(child)) return;
+
+	shadow.children.push_back(childUid);
+
+	setCurrentObject(child);
+
+	child->bindEngine(this->interfaceId, this);
+
+	currentShadow = &shadow;
+}
+
+bool OpenALEngine::setCurrentObject(GameObject* object)
+{
+	uid id = object->getId();
+	currentShadow = static_cast<AudioShadow*>(getShadow(id));
+	if(currentShadow == NULL)
+	{
+		currentObject = NULL;
+		return false;
+	}
+	currentObject = object;
+
+	return false;
 }
 
 

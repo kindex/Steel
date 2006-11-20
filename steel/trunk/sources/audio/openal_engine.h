@@ -49,15 +49,21 @@ protected:
 //#define A(object) ((AudioObject*)(object))
 //#define AS(object) ((AudioSound*)(object))
 
+	bool soundPlay(Sound* sound);
+	bool soundUpdate(Sound* sound);
 
 	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???
 	ALboolean CheckALCError();
 	ALboolean CheckALError();
 	void updateListener(Listener &listener);
 
-public:
-	bool soundPlay(Sound* sound); 
-	bool soundUpdate(Sound* sound);
+	struct AudioShadow: public Shadow
+	{
+
+		AudioShadow(Engine *aengine): Shadow(aengine) {}
+	};
+	AudioShadow *currentShadow;
+	GameObject *currentObject;
 
 	// to discuss: vector<Sound*> sounds;	-- "playing" sounds
 
@@ -67,11 +73,24 @@ public:
 	void setListener(const Listener &aListener);
 	bool init(Config* _conf);
 	bool deinit(void);
-	bool inject(/*AudioObject *object*/);
+	bool inject(GameObject *object);
 	bool process(void);
 
-	Storage* getStorageClass(Object *object) { return new Storage(this); }
-	void makeStorageForChildren(Object *object) {};
+
+	AudioShadow* getShadowClass(GameObject *object) { return new AudioShadow(this); }
+
+	void addChild(GameObject* child);
+	void addChild(AudioShadow &shadow, GameObject *child);
+
+	void deleteChild(GameObject* child){}
+	void clearChildren(void) {}
+	void setPosition(ObjectPosition) {}
+	void setPositionKind(PositionKind) {}
+	bool setCurrentObject(GameObject* object);
+
+
+//	Storage* getStorageClass(GameObject *object) { return new Storage(this); }
+//	void makeStorageForChildren(GameObject *object) {};
 };
 
 #endif

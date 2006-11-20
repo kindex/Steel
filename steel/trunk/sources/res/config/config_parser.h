@@ -11,7 +11,6 @@
 		Парсер конфигов
 	TODO:
 		custom parser functions
-		config templates, tags
  ************************************************************/
 
 #ifndef __RES__CONFIG_PARSER_H

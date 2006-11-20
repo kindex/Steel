@@ -2,7 +2,7 @@
 	File: objects/ps/particle_system.h
 	Unit: particle_system
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
@@ -15,8 +15,7 @@
 #ifndef __PARTICLE_SYSTEM_H
 #define __PARTICLE_SYSTEM_H
 
-#include "../game_obj.h"
-#include <map>
+#include "../../engine/game_object.h"
 
 class ParticleSystem;
 class ParticleEmitter;
@@ -26,6 +25,7 @@ struct Particle
 {
 	v3 position;
 	v3 velocity;
+	// direction - angle
 	float size;
 };
 
@@ -33,92 +33,73 @@ struct Particle
 struct ParticleSet
 {
 	float countScale;
-	ModificationTime modificationTime;
 
 	steel::svector<Particle*> particles;
-
-	friend class ParticleSystem;
 };
 
-class ParticleProcessor
+class ParticleSystem;
+
+class ParticleProcessor: public GameObject
 {
-protected:
-	OldConfig *conf;
-	ParticleSet *set;
 public:
+	ParticleProcessor(void);
 	virtual ~ParticleProcessor(void) {}
+	virtual void bindParticleSystem(ParticleSystem *a);
+	virtual bool initParticles(void) = 0;
+	bool InitFromConfig(Config *_conf);
+
+protected:
+	Config *conf;
+	ParticleSet *set;
+	ParticleSystem *particleSystem;
 };
 
 // класс для создания новых частиц
 class ParticleEmitter: public ParticleProcessor
 {
-protected:
-	ParticleSystem *particleSystem;
 public:
-	virtual bool init(OldConfig *_conf, ParticleSet *_set, ParticleSystem *_particleSystem);
-	virtual void initParticles(void);
+	bool initParticles(void);
 	virtual void born(Particle &particle) = 0; // создать частицу
 	virtual void kill(int i); // убить частицу с номером i
-	virtual void ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) = 0;
+
+protected:
+	v3 position;
 };
 
 // класс для рисования: множество спрайтов, набор объектов, меташарики
-class ParticleRenderer: public GraphObject, public ParticleProcessor
+class ParticleRenderer: public ParticleProcessor
 {
-protected:
-	GraphObject *particleSystem;
-
-public:
-	virtual bool init(OldConfig *_conf, ParticleSet *_set, GraphObject *_particleSystem);
-	virtual bool initParticles(void) = 0;
 };
 
-// класс, который анимирует частицы
-class ParticleAnimator: public PhysicObject, public ParticleProcessor
+// класс, который анимирует частицы (физика частиц)
+class ParticleAnimator: public ParticleProcessor
 {
-protected:
-	ParticleSystem *particleSystem;
-public:
-	virtual bool init(OldConfig *_conf, ParticleSet *_set, ParticleSystem *_particleSystem);
-	virtual bool initParticles(void) = 0;
 };
 
 // система чатиц
-class ParticleSystem: public GameObj
+class ParticleSystem: public GameObject
 {
-	OldConfig *conf, *emitterConf, *rendererConf, *animatorConf;
-	ParticleSet			 particleSet;
+	Config				*conf;
+	Config				*emitterConf;
+	Config				*rendererConf;
+	Config				*animatorConf;
 	ParticleEmitter		*emitter;
 	ParticleRenderer	*renderer;
 	ParticleAnimator	*animator;
+	ParticleSet			 particleSet;
+
+friend class ParticleProcessor;
 
 public:
-	bool init(ScriptLine	&s);
+	ParticleSystem(void);
 
-	int getPhysicChildrenCount(void) { return animator?1:0; }
-	PhysicObject* getPhysicChildren(int i) { return animator; }
-
-	int getGraphChildrenCount(void) { return renderer?1:0; }
-	GraphObject* getGraphChildren(int i) { return renderer; }
-
-
-	PositionKind getPositionKind(void) { return POSITION_GLOBAL;}
-
-	void setChildrenChangeTime(ModificationTime time) 
-	{ 
-		particleSet.modificationTime = time;
-	}
-
-	ModificationTime getChildrenModificationTime(void) 
-	{ 
-		return 0;
-	}
-
-	void ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime)
-	{
-		emitter->ProcessPhysic(curTime, frameLength, modificationTime);
-	}
-
+	bool InitFromConfig(Config *conf);
+	bool isSuportingInterface(InterfaceId);
+	bool updateInformation(InterfaceId, Engine*);
+	bool beforeInject(InterfaceId);
+	void afterRemove(InterfaceId);
+	void process(ProcessInfo &);
+	void bindEngine(InterfaceId, Engine*);
 };
 
 #endif

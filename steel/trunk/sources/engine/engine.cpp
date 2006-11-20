@@ -1,6 +1,6 @@
 /*id*********************************************************
-	File: engine.h
-	Unit: core
+	File: engine/engine.h
+	Unit: engine
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
@@ -13,100 +13,101 @@
 		Класс Engine (движок) через функцию inject() получает объекты, которые
 		должны быть обработаны, но обрабатывает их только внутри process().
 		Для этого объекты должны поддерживать интервейс (interface) обмена 
-		информацией с движком.
+		информацией с движком. От этого интерфейса наследуется Engine.
  ************************************************************/
 #include "../steel.h"
 #include "engine.h"
+#include "game_object.h"
 
-void Engine::Storage::fill(Object *object)
+void Engine::Shadow::fill(GameObject *object)
 {
 	this->object = object;
 	objectId = object->getId();
-	modificationTime = childrenModificationTime = -1;
+//	modificationTime = childrenModificationTime = -1;
 }
 
-bool Engine::Storage::cache()
+bool Engine::Shadow::cache()
 {
-	ModificationTime newTime = object->getModificationTime();
+/*	ModificationTime newTime = object->getModificationTime();
 	if(modificationTime < newTime)
 	{
 		modificationTime = newTime;
 		return true;
 	}
-	else
+	else*/
 		return false;
 }
 
 
-bool Engine::makeStorageForObject(Object *object)
+bool Engine::makeShadowForObject(GameObject *object)
 {
 	uid objectId = object->getId();
 	if(idHash.find(objectId) != idHash.end())
 	{
-		log_msg("error engine", "Duplicate object " + IntToStr(objectId) + " in storage");
+		log_msg("error engine", "Duplicate object " + IntToStr(objectId) + " in shadow");
 		return false;
 	}
 
-	int storageIndex = storages.size();
+	int shadowIndex = shadows.size();
 	
-	Storage* newStorage = getStorageClass(object);
+	Shadow* newStorage = getShadowClass(object);
 	if(newStorage == NULL)
 	{
-		log_msg("error engine", "Cannot find storage for object " + IntToStr(objectId));
+		log_msg("error engine", "Cannot find shadow for object " + IntToStr(objectId));
 		return false;
 	}
 
-	storages.push_back(newStorage);
+	shadows.push_back(newStorage);
 
-	idHash[objectId] = storageIndex;
-	newStorage->storageIndex = storageIndex;
+	idHash[objectId] = shadowIndex;
+	newStorage->shadowIndex = shadowIndex;
 	newStorage->fill(object);
-	makeStorageForObjectPost(object, newStorage);
+	makeShadowForObjectPost(object, newStorage);
 	return true;
 }
 
-void Engine::deleteStorageForObject(int sid)
+void Engine::deleteShadowForObject(int sid)
 {
-	deleteStorageForObjectPost(sid);
+	deleteShadowForObjectPost(sid);
 
-	Storage *storage = storages[sid];
-	idHash.erase(storage->objectId);
-	delete storage;
+	Shadow *shadow = shadows[sid];
+	idHash.erase(shadow->objectId);
+	delete shadow;
 
-	if(size_t(sid + 1) < storages.size())
+	if(size_t(sid + 1) < shadows.size())
 	{
-		storages[sid] = storages.back();
-		idHash[storages[sid]->objectId] = sid;
+		shadows[sid] = shadows.back();
+		idHash[shadows[sid]->objectId] = sid;
 	}
-	storages.pop_back();
+	shadows.pop_back();
 }
 
-void Engine::deleteStorageForChildren(int sid)
+void Engine::deleteShadowForChildren(int sid)
 {
-	int count = storages[sid]->children.size();
+	int count = shadows[sid]->children.size();
 	for(int i = 0; i < count; i++)
 	{
-		int n = findSid(storages[sid]->children[i]);
-		deleteStorageForChildren(n);
-		deleteStorageForObject(n);
+		int n = findSid(shadows[sid]->children[i]);
+		deleteShadowForChildren(n);
+		deleteShadowForObject(n);
 	}
 }
 
-Engine::Storage* Engine::getStorage(Object *object)
+Engine::Shadow* Engine::getShadow(GameObject *object)
 {
 	uid id = object->getId();
-//	assert(idHash.find(id) != idHash.end(), "Object not found in physic storage");
+//	assert(idHash.find(id) != idHash.end(), "Object not found in physic shadow");
 
 	if(idHash.find(id) != idHash.end())
-		return storages[findSid(id)];
+		return shadows[findSid(id)];
 	else
 		return NULL;
 }
 
-Engine::Storage* Engine::getStorage(uid id)
+Engine::Shadow* Engine::getShadow(uid id)
 {
 	if(idHash.find(id) != idHash.end())
-		return storages[findSid(id)];
+		return shadows[findSid(id)];
 	else
 		return NULL;
 }

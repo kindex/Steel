@@ -51,16 +51,8 @@ struct velocity
 	}
 };
 
-class PhysicObject;
-
-typedef steel::svector<PhysicObject *> PhysicObjectList;
-
-class PhysicObject: public Object
+class PhysicInterface
 {
-//	steel::time	currentTime; // время, в котором находиться объект
-	friend class PhysicEngine;
-	friend class PhysicEngineSteel;
-
 public:
 
 // *** Common ***
@@ -68,21 +60,11 @@ public:
 	// список детей
 	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
 	// возвращает количество детей
-	virtual int getPhysicChildrenCount(void) { return 0; } 
+	virtual void setPhysicChildrenCount(int) = 0; 
 	// ребёнок с указанным номером
-	virtual PhysicObject* getPhysicChildren(int number) { return NULL; }
-
-	// Непосредственно перед добавлением в движок вызывается 
-	virtual bool PhysicBeforeInject(void) { return true;}
-	// После удаления из движка вызывается процедура afterRemove
-	virtual void PhysicAfterRemove(void) {}
-
-	// вызывается перед каждой итерацией обработки. Внутри этой процедуры объект может менять некоторые свои параметры
-	virtual	void ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime) {}
-
+	virtual void setPhysicChildren(int number, PhysicObject*) = 0;
 
 // *** Configuration ***
-
 
 	// Форма объекта и способ проверки и обработки коллизий
 	virtual CollisionType getCollisionType(void) { return COLLISION_NONE; }

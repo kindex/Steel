@@ -15,7 +15,8 @@
 #define __PARICLE_SYSTEM__RENDERER_H
 
 #include "particle_system.h"
-#include "../model_obj.h"
+#include "../../graph/material.h"
+#include "../../graph/graph_interface.h"
 
 typedef	enum
 {
@@ -29,11 +30,11 @@ typedef	enum
 class SpriteRenderer: public ParticleRenderer
 {
 protected:
-	Material	*m;
-	Vertexes	vertex;
+	Material	*material;
+	Vertexes	vertexes;
 	FaceMaterials	face;
 	TexCoords	texCoords;
-	Normals		normal;
+	Normals		normals;
 	v3			eye;
 	SpriteAlign	align;
 	v3			customAlign;
@@ -42,50 +43,20 @@ public:
 	void initSprites(int begin, int end);
 	bool initParticles(void);
 
-
-	Vertexes*	getVertexes(void) { return &vertex; }
-	FaceMaterials* getFaceMaterials() { return &face; }
-	Normals*	getNormals(void) { return &normal; }
-	TexCoords*	getTexCoords(int texNumber) { return &texCoords; }
-
-	aabb getFrame();
-
-	ObjectPosition getPosition(void) { return particleSystem->getPosition(); }
-	PositionKind getPositionKind(void) { return POSITION_GLOBAL; }
-	bool cleanup(void) { return true;}
-	GLines*	getLines(void){ return NULL; }
-	Lights*	getLights(void) { return NULL;}
-
-	void ProcessGraph(const GraphEngineInfo &info);
+	void process(ProcessInfo &);
+	bool updateInformation(InterfaceId, Engine*);
+	aabb getFrame(void);
 };
 
 // каждая частица - отдельная модель (объект)
 class ObjectPSRenderer: public ParticleRenderer
 {
 protected:
-	steel::vector<GameObjModel*> children;
+	steel::vector<GameObject*> children;
 
 public:
 	bool initParticles();
 	
-	int getGraphChildrenCount(void) { return children.size(); }
-	GraphObject* getGraphChildren(int i) { return children[i]; }
-	ModificationTime getChildrenModificationTime(void) { return set->modificationTime; }
-
-	Vertexes*	getVertexes(void) { return NULL; }
-	FaceMaterials* getFaceMaterials(void) { return NULL; }
-	Normals*	getNormals(void) { return NULL; }
-	TexCoords*	getTexCoords(int texNumber) { return NULL; }
-
-	aabb getFrame(void) { return aabb(); } // TODO
-
-	ObjectPosition getPosition(void) { return particleSystem->getPosition(); }
-	PositionKind getPositionKind(void) { return POSITION_GLOBAL; }
-	bool cleanup(void) { return true;}
-	GLines*	getLines(void){ return NULL; }
-	Lights*	getLights(void) { return NULL;}
-
-	void ProcessGraph(const GraphEngineInfo &info);
 };
 
 // ничего не рисует
@@ -94,18 +65,7 @@ class DummyPSRenderer: public ParticleRenderer
 protected:
 public:
 	bool initParticles(void) { return true; }
-	Vertexes*	getVertexes(void) { return NULL; }
-	FaceMaterials* getFaceMaterials(void) { return NULL; }
-	Normals*	getNormals(void) { return NULL; }
-	TexCoords*	getTexCoords(int texNumber) { return NULL; }
 
-	aabb getFrame(void) { return aabb(); } // TODO
-
-	ObjectPosition getPosition(void) { return particleSystem->getPosition(); }
-	PositionKind getPositionKind(void) { return POSITION_GLOBAL; }
-	bool cleanup(void) { return true;}
-	GLines*	getLines(void){ return NULL; }
-	Lights*	getLights(void) { return NULL;}
 };
 
 #endif

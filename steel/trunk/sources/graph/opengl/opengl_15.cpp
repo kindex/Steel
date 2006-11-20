@@ -18,7 +18,7 @@
 #include "gl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / VBO
-void OpenGL_Engine::DrawTriangles_OpenGL15(GraphStorage &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, Triangles *triangles, TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {
 	if(triangles && e.vertex && !triangles->data.empty() && !e.vertex->data.empty())// если есть полигоны и вершины
 	{
@@ -68,7 +68,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(TexCoords3f *coords)
 }
 
 
-/*void OpenGL_Engine::drawElement(GraphStorage &e)
+/*void OpenGL_Engine::drawElement(GraphShadow &e)
 {
 	steel::vector<uid> buffersToDelete;
 
@@ -287,7 +287,7 @@ void OpenGL_Engine::cleanBuffer(uid bufId)
 
 template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2, int elCnt)
 {
-	if(v == NULL) return false;
+	if(v == NULL || v->data.empty()) return false;
 
 	if(GL_EXTENSION_VBO) // Vertex Buffer Object supportd
 	{

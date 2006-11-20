@@ -33,7 +33,7 @@ bool ResStack::push(std::string directory)
 {
 	if(level>100) abort_init("res error", "To many recursive res::add executions (>100)");
 
-	stack.push(directory);
+	dirs.push(directory);
 	level++;
 	steel::log.push();
 
@@ -45,17 +45,33 @@ bool ResStack::pop(void)
 	if(level==0) 
 		abort_init("res error", "Stack underflow");
 	level--;
-	stack.pop();
+	dirs.pop();
 	steel::log.pop();
 	return true;
 }
 
+bool ResStack::pushFullPath(std::string path)
+{
+	std::string baseDirectory;		
+	splitPath(path, baseDirectory, path);
+	return push(baseDirectory);
+}
+
+
+std::string ResStack::getFullName(const std::string &name)
+{
+	std::string t = top();
+	return getFullPath(name, t);
+}
+
+
 std::string ResStack::top(void)
 {
-	if(level==0)
-		return std::string("");
-	else
-		return stack.top();
+	std::string result;
+	if(level > 0)
+		result = dirs.top();
+
+	return result;
 }
 
 
@@ -65,12 +81,13 @@ int ResStack::getLevel(void)
 }
 
 // TODO: обрабатывать /../ и /./
-std::string getFullPath(std::string filename, std::string directory)
+std::string getFullPath(const std::string &filename, const std::string &directory)
 {
 	if((!filename.empty() && filename[0] == '/'))
 	{
-		filename.erase(0,1);
-		return filename;
+		std::string result = filename;
+		result.erase(0,1);
+		return result;
 	}
 	else if(directory.empty())
 		return filename;

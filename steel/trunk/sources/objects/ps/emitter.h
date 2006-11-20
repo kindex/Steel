@@ -20,7 +20,8 @@ class SimpleEmitter: public ParticleEmitter
 {
 public:
 	void born(Particle &particle); // создать частицу
-	void ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime);
+	void process(ProcessInfo &);
+	bool InitFromConfig(Config *_conf);
 };
 
 #endif

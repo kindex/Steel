@@ -18,9 +18,11 @@
 #include "../steel.h"
 #include "../math/line.h"
 #include "../engine/helper.h"
+#include "../engine/game_object.h"
+#include "../engine/engine_types.h"
 #include "graph_interface.h"
 
-class GraphHelper: virtual public EngineHelper, virtual public GraphObject
+class GraphHelper: public GameObject
 {
 	steel::time time;
 

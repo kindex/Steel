@@ -15,26 +15,26 @@
 #define __GAME_MODEL_OBJ_H
 
 #include "../steel.h"
-#include "game_obj.h"
+
+#include "../engine/game_object.h"
+#include "../res/model/model.h"
+
 
 /*
 Рисуемый объект, GraphMesh и PhysicMesh берутся из модели
 Может иметь детей.
 */
-class GameObjModel: public GameObj
+class GameObjectModel: public GameObject
 {
 protected:
 	Model *m;
-	OldConfig *conf;
+	Config *conf;
 	FaceMaterials faceMaterial;
 
 public:
-	GameObjModel()	{ 		m = NULL; conf = NULL;	}
-
-	CollisionType getCollisionType() { return COLLISION_POLYHEDRA; }
+	GameObjectModel()	{ 		m = NULL; conf = NULL;	}
 
 	void assignModel(Model *M)	{		m = M;	}
-	bool init(ScriptLine	&s);
 
 	aabb getFrame();
 	Vertexes*	getVertexes()
@@ -67,7 +67,7 @@ public:
 	{
 		return m->getTexCoords(mapNumber);
 	}
-	OldConfig*		getPMaterial()
+	Config*		getPMaterial()
 	{	
 		return conf;
 	}

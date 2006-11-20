@@ -19,42 +19,26 @@
 #define __GRAPH_ENGINE_H
 
 #include "../steel.h"
-#include "../res/conf/conf.h"
 #include "graph_interface.h"
+#include "../engine/interface.h"
+#include "../engine/game_object.h"
 
 class GraphEngine;
 
-class Camera
+class GraphEngine: public Engine, public GraphInterface
 {
 public:
-    v3 up, eye, center;
 
-public:
-	Camera(void);
-
-    void seteye(const v3 &EYE) { eye = EYE; }
-    void setcenter(const v3 &CENTER) { center = CENTER; }
-	void setup(const v3 &EYE, const v3 &DIR);
-};
-
-class GraphEngine: public Engine
-{
-protected:
-	steel::vector<GraphObject*> objects;
-
-	GraphEngineInfo info;
-public:
 	struct GraphTotalInfo
 	{
 		int vertex, triangle, object, global;
 	} total;
 
-public:
 	Camera camera;
 	virtual void processCamera() = 0;
 	// Collect information about object: how to render it
-	virtual bool inject(GraphObject *object);
-	virtual bool remove(GraphObject *object);
+	virtual bool inject(GameObject *object);
+	virtual bool remove(GameObject *object);
 	
 	virtual bool process(steel::time globalTime, steel::time time) = 0;
 
@@ -62,6 +46,12 @@ public:
 	virtual bool isVisible(aabb box) = 0;
 	// Clear collected information
 	bool clear(void);
+
+protected:
+	steel::vector<GameObject*> objects;
+
+	GraphEngineInfo info;
+
 };
 
 #endif

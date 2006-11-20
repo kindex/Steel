@@ -18,15 +18,20 @@
 #include "../steel.h"
 #include "graph_engine.h"
 
-bool GraphEngine::inject(GraphObject *object)
+bool GraphEngine::inject(GameObject *object)
 {
+	if(!object->isSuportingInterface(interfaceId)) return false;
+
 	// если объект не хочет добавляться
-	if(!object->GraphBeforeInject()) return false;
+	if(!object->beforeInject(interfaceId)) return false;
+
 	// кешируем объект
-	if(!makeStorageForObject(object)) return false;
-	makeStorageForChildren(object);
+	if(!makeShadowForObject(object)) return false;
 	// список глобальных объектов
 	objects.push_back(object);
+
+	setCurrentObject(object);
+	object->bindEngine(interfaceId, this);
 
 	return true;
 }
@@ -42,18 +47,18 @@ bool GraphEngine::clear()
 	return true;
 }
 
-bool GraphEngine::remove(GraphObject *object)
+bool GraphEngine::remove(GameObject *object)
 {
-	deleteStorageForChildren(findSid(object->getId()));
-	deleteStorageForObject(findSid(object->getId()));
+	deleteShadowForChildren(findSid(object->getId()));
+	deleteShadowForObject(findSid(object->getId()));
 	
-	for(steel::vector<GraphObject*>::iterator it = objects.begin(); it != objects.end(); it++)
+	for(steel::vector<GameObject*>::iterator it = objects.begin(); it != objects.end(); it++)
 		if(*it == object)
 		{
 			objects.erase(it);
 			break;
 		}
-	object->GraphAfterRemove();
+	object->afterRemove(interfaceId);
 
 	return true;
 }

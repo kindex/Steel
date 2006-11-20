@@ -16,16 +16,16 @@
 
 #include "particle_system.h"
 
-class UniParticle: public PhysicObject
+class UniParticle: public GameObject
 {
-	OldConfig *conf;
+	Config *conf;
 	Particle *particle;
 public:
 
-	UniParticle(Particle *_particle, OldConfig *_conf) { particle = _particle; conf = _conf;}
+	UniParticle(Particle *_particle, Config *_conf) { particle = _particle; conf = _conf;}
 	void setParticle(Particle *_particle) { particle = _particle; }
 
-	CollisionType getCollisionType() 
+/*	CollisionType getCollisionType() 
 	{ 
 		return COLLISION_PARTICLE; 
 	}
@@ -55,15 +55,16 @@ public:
 	aabb		getPFrame(void)		{	return aabb(); } // TODO
 	bool		cleanupP(void)		{	return true;	}
 	Vertexes*	getPVertexes(void)	{	return NULL;}
-	Triangles*	getTriangles(void)	{	return NULL;}
+	Triangles*	getTriangles(void)	{	return NULL;}*/
 };
 
-class UniPSanimator: public ParticleAnimator
+/*class UniPSanimator: public ParticleAnimator
 {
 	steel::svector<UniParticle*> children;
 
 public:
 	bool initParticles(void);
+
 	int getPhysicChildrenCount(void) { return children.size(); }
 	PhysicObject* getPhysicChildren(int i) { return children[i]; }
 
@@ -77,16 +78,18 @@ public:
 	ProcessKind getProcessKind(void) { return PROCESS_NONE; }
 	void	ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime modificationTime);
 
-	aabb		getPFrame(void)		{	return aabb(); } // TODO
-	bool		cleanupP(void)		{	return true;	}
-	Vertexes*	getPVertexes(void)	{	return NULL;}
-	Triangles*	getTriangles(void)	{	return NULL;}
-	OldConfig*		getPMaterial(void)	{	return NULL;}
-
 	velocity	getVelocity(void) { return velocity(v3(0,0,0),v3(0,0,0));}
 	void		setVelocity(const velocity &v) {}
 
 	float	getMass(void) { return 1.0f;}
 };
+*/
+
+class SimpleAnimator: public ParticleAnimator
+{
+public:
+	bool initParticles(void);
+};
+
 
 #endif

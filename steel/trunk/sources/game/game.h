@@ -22,8 +22,8 @@
 #include "../objects/game_obj.h"
 #include "../objects/group.h"
 
-#include "../physic/physic_engine_steel.h"
 #include "../graph/graph_engine.h"
+#include "../audio/audio_engine.h"
 #include "../graph/graph_helper.h"
 
 class Game; // forward declaration, cross-use
@@ -32,9 +32,6 @@ class Game; // forward declaration, cross-use
 
 #include <string>
 #include <map>
-
-#include "../audio/openal_engine.h"
-#include "../audio/audio_engine.h"
 
 /*
 Класс, задающий правила игры
@@ -54,7 +51,7 @@ class Steel: public Game
 {
 protected:
 // Camera
-	v3	eye, direction, cameraSpeed;
+	v3 eye, direction, cameraSpeed;
 	v3 g;
 	float speedup, speed;
 	steel::time time;
@@ -68,22 +65,16 @@ protected:
 	Config	*conf;
 
 	GraphEngine *graphEngine;
-//	PhysicEngineSteel *physicEngine;
-	PhysicEngine *physicEngine;
-	AudioEngine	 *audioEngine;
+	AudioEngine *audioEngine;
 
 // World - custom objects
-	GameGroup	*world;
-	GraphHelper	*physicHelper;
-//	Sprite		*crosshair;
-	GameObj		*lightTag;
-	GameLight	*light;
+ 	GameObject	*world;
+//	GraphHelper	*physicHelper;
 
 public:
 	Steel(void):
 	input(NULL),	conf(NULL),
-	graphEngine(NULL),	physicEngine(NULL),	audioEngine(NULL),
-	world(NULL),	physicHelper(NULL),	lightTag(NULL),	light(NULL)
+	graphEngine(NULL),	world(NULL)
 	{ } 
 
 	virtual bool init(Config *_conf, Input *_input, std::string params);
@@ -93,11 +84,11 @@ public:
 	bool executeScript(std::string script);
 	bool executeCommand(std::string command);
 
-	void bind(GraphEngine *engine);
-	void bindPhysicEngine(void);
-	void bindAudioEngine(AudioEngine *engine);
+	void bind(GraphEngine*);
+	void bind(AudioEngine*);
+//	void bindPhysicEngine(void);
+//	void bindAudioEngine(AudioEngine *engine);
 	void draw(GraphEngine *engine);
-
 	void insonify(AudioEngine *engine);
 
 	void process(steel::time globalTime, steel::time time);

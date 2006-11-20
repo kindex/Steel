@@ -2,10 +2,9 @@
 	File: graph/graph_interface.h
 	Unit: graph engine
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-		* Kane [J. Anton, kane@mail.berlios.de]
 		* Bond [Andrey Bondarenko]
 	License:
 		Steel Engine License
@@ -18,10 +17,12 @@
 
 #include "../steel.h"
 #include "../engine/engine.h"
+#include "../engine/interface.h"
 
-#include "types.h"
+#include "graph_types.h"
+#include "material.h"
 
-#include "../res/material/material.h"
+#include "material.h"
 
 // материал + треугольники, к которым он относится
 struct FaceMaterial
@@ -32,7 +33,6 @@ struct FaceMaterial
 };
 
 typedef steel::vector<FaceMaterial>	FaceMaterials;
-
 
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 
@@ -45,32 +45,10 @@ typedef steel::vector<FaceMaterial>	FaceMaterials;
 например, как мета-шарики, система частиц
 */
 
-class GraphObject;
-typedef steel::svector<GraphObject*> GraphObjectList;
-
-#define G(object) ((GraphObject*)object)
-
-class GraphObject: public Object
+class GraphInterface: public BaseInterface, public ChildrenInterface, public Interface3D
 {
-protected:
-	int gInjectedCount;
 public:
-// *** Common ***
-	GraphObject(): gInjectedCount(0) {}
-	// список детей
-	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
-	// возвращает количество детей
-	virtual int getGraphChildrenCount(void) { return 0; } 
-	// ребёнок с указанным номером
-	virtual GraphObject* getGraphChildren(int number) { return NULL; }
-
-	// Непосредственно перед добавлением в движок вызывается 
-	virtual bool GraphBeforeInject() { gInjectedCount++; return true;}
-	// После удаления из движка вызывается процедура afterRemove
-	virtual void GraphAfterRemove() {gInjectedCount--;}
-
-	// вызывается перед каждой итерацией обработки. Внутри этой процедуры объект может менять некоторые свои параметры
-	virtual	void ProcessGraph(const GraphEngineInfo &info) {}
+	static const InterfaceId interfaceId = 0x100;
 
 // *** Configuration ***
 
@@ -81,16 +59,17 @@ public:
 	// Следующие функции возврящяют ссылки на массивы данных (NULL if none), и должны 
 	// отвечать за хранние этих данных до следующего вызова этой функции
 	// или вызова cleanup
-	virtual Vertexes*	getVertexes() { return NULL;} // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
-	virtual Normals*	getNormals() { return NULL;} // список нормалей в вершинам
+	virtual void	setVertexes(Vertexes*) = 0; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	virtual void	setNormals(Normals*) = 0; // список нормалей в вершинам
 
-	virtual GLines*		getLines() { return NULL;} // индексы вершин для линий и цвета линий (for debug)
+	virtual void	setLines(GLines*) = 0; // индексы вершин для линий и цвета линий (for debug)
 
 	// массив индексов вершин, которые образуют треугольники (грани) + материалы
-	virtual FaceMaterials* getFaceMaterials() { return NULL;}
-	virtual TexCoords*	getTexCoords(int texNumber) { return NULL;}
+	virtual void	setFaceMaterials(FaceMaterials*) = 0;
+	virtual void	setTexCoordsCount(int) = 0;
+	virtual void	setTexCoords(int texNumber, TexCoords*) = 0;
 
-	virtual Lights*		getLights() { return NULL;}
+	virtual void 	setLights(Lights*) = 0;
 };
 
 #endif

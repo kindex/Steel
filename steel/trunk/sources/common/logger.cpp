@@ -117,8 +117,7 @@ void Logger::msg(std::string keywords, std::string str)
 
 	steel::time total = globalTimer.total();
 	
-	f.fill('0');	f.width(2); 	f << (int)total/60 << ":";
-	f.fill('0');	f.width(2); 	f << (int)total%60 << ".";
+	f.fill('0');	f.width(2); 	f << (int)total << ".";
 	f.fill('0');	f.width(3); 	f << (int)(total*1000)%1000;
  
 	f.width(0); 

@@ -20,16 +20,5 @@
 #ifndef __GAME_GROUP_H
 #define __GAME_GROUP_H
 
-#include "../steel.h"
-#include "game_obj.h"
-
-class GameGroup: public GameObjSet
-{
-public:
-	std::string conf;
-
-	bool init(ScriptLine	&s);
-	bool load(GameObj *global);
-};
 
 #endif
