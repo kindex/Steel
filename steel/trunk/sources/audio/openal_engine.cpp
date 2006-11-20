@@ -137,7 +137,7 @@ void OpenALEngine::setListenerEnvironment(unsigned long environment)
 		//std::cout << "\nCannot set environment.\n";
 	}
 }
-
+  
 
 void OpenALEngine::setListener(const Listener &aListener)
 {
@@ -282,6 +282,23 @@ bool OpenALEngine::process(void)
 
 bool OpenALEngine::soundPlay(Sound* sound)
 {
+	Buffer buffer; //= new Buffer();
+	Source source; //= new Source();
+
+	alGenBuffers(1, &buffer.buffer);
+	CheckALError();
+	alBufferData(buffer.buffer, sound->sound->format, sound->sound->data, sound->sound->size, sound->sound->frequency);
+	CheckALError();
+//		if (sound->data)
+//			free(sound->data);
+	alGenSources(1, &source.source);
+	CheckALError();
+	alSourcei (source.source, AL_BUFFER,    buffer.buffer	);
+	CheckALError();
+	alSourcefv(source.source, AL_POSITION, sound->position);
+	CheckALError();
+	alSourcePlay(source.source);
+	CheckALError();
 	return true;
 }
 

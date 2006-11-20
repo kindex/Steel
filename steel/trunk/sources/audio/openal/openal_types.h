@@ -19,14 +19,20 @@
 
 class Buffer
 {
+public:
+	ALuint buffer;
+
 	ALint frequency;
 	ALint size;
 	ALint bits;
-	ALint channels;
+	ALint format;
 };
 
 class Source
 {
+public:
+	ALuint		source;
+
 	ALfloat		gain;				// Indicate the gain (volume amplification) applied. Range:  ]0.0- ] 
 	ALfloat		minGain;			// Indicate minimum source attenuation. Range:  [0.0 - 1.0]
 	ALfloat		maxGain;			// Indicate maximum source attenuation. Range:  [0.0 - 1.0]
@@ -47,6 +53,7 @@ class Source
 	ALfloat		mSecOffset;			// Source buffer position information
 	ALfloat		byteOffset;			// Source buffer position information
 	ALfloat		sampleOffset;		// Source buffer position information
+	//Buffer	buffer	????
 };
 
 #endif

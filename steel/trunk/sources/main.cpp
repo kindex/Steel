@@ -88,13 +88,13 @@ int main(int argc, char *argv[])
 
 // ******************* GAME *************************
 	Steel game;
-
+	game.bindAudioEngine(audio);
 	if(!game.init(resConfig.add("../conf/game.conf"), input, commandLine)) return 5;
 
 	game.bind(graph);
-	if(audio)
+	if (audio)
 	{
-		game.insonify(audio);
+		game.insonify(audio);		// setting listener
 		game.bindAudioEngine(audio);
 	}
 		

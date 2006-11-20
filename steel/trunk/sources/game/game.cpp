@@ -28,6 +28,8 @@
 
 #include "../res/res_main.h"
 //#include "../objects/kar98k.h"
+#include "../audio/sound.h"
+//#include "audio/audio_object.h"
 
 using namespace std;
 
@@ -197,6 +199,23 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		);
 	world->addChildren(obj5);
 /**/
+
+
+
+
+	Sound* sound = new Sound();
+	sound->sound = resAudio.add("audio/thunder");
+
+	AudioObject* obj = new AudioObject();
+	obj->attachAudioEngine(audioEngine);
+	obj->soundPlay(sound);
+
+
+
+
+
+
+
 	light = new GameLight;
 	light->setProcessKind(PROCESS_NONE);
 	matrix34 m;		m.loadIdentity();		m.setTranslation(eye);		light->setPosition(m);
@@ -594,8 +613,8 @@ void Steel::bindAudioEngine(AudioEngine *engine)
     EAX_ENVIRONMENT_PSYCHOTIC
 	*/
 
-	int count = world->getAudioChildrenCount();
-	for(int i = 0; i < count; i++)
+//	int count = world->getAudioChildrenCount();
+	//for(int i = 0; i < count; i++)
 	{
 //		engine->inject(world->getAudioChildren(i));
 	}

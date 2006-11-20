@@ -12,6 +12,11 @@
 
 #include "audio_object.h"
 
+AudioObject::AudioObject()
+{
+	engine = NULL;
+}
+
 bool AudioObject::soundPlay(Sound* sound)
 {
 	sounds.push_back(sound);

@@ -10,28 +10,15 @@
 		Звуковой движок. Тип звука. Набор параметров.
  ************************************************************/
 
-#include "../res/audio/audio.h"
-#include "../math/vector3d.h"
+#include "sound.h"
 
-#ifndef __SOUND_H
-#define __SOUND_H
-
-class Sound
+Sound::Sound(void)
 {
-public:
-	Sound(void);
-
-//	uid id;
-
-	Audio* sound;
-
-	v3 position;
-
-	float gain;
-	float pitch;
-	bool isLoop;
-	float rolloffFactor;
-	float sourceRelative;
-};
-
-#endif
+	sound = NULL;
+	position = v3(0.0f, 0.0f, 0.0f);
+	gain = 1.0f;
+	pitch = 1.0f;
+	isLoop = false;
+	rolloffFactor = 0.0f;
+	sourceRelative = 0.0f;
+}

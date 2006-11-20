@@ -59,6 +59,8 @@ public:
 	bool soundPlay(Sound* sound); 
 	bool soundUpdate(Sound* sound);
 
+	// to discuss: vector<Sound*> sounds;	-- "playing" sounds
+
 public:
 	
 

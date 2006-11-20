@@ -22,6 +22,7 @@
 class AudioObject: public Object
 {
 public:
+	AudioObject();
 	bool soundPlay(Sound* sound);
 	bool soundStop(Sound* sound);
 

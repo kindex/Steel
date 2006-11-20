@@ -768,6 +768,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\audio\sound.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\audio\sound.h"
 					>
 				</File>
