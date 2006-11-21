@@ -9,6 +9,7 @@ Adviser
 Priority (1 - more, 10 - less)
 Estimated time (h, d, w)
 Deadline (date, project version)
+Target (branch, trunk)
 
 Tasks are ordered by priority.
 

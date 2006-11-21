@@ -1,0 +1,37 @@
+FROM			Alexander Papyshev
+TO			Andrey Molyaiko	
+Number:			0001
+
+Detected Date:		2006-08-09 00:00:01
+
+Problem type:		defect
+Status:			retesting
+
+Resolution:		corrected
+
+Detected in Product:	Steel  Build # 225 
+
+Functional zone:	System_info
+
+Environment:		Windows XP Professional SP2
+ 
+Summary:		Не определяет имя пользователя
+
+Severity:		Low
+
+Problem Repeatable:	yes
+
+Problem Detailed Decription:	Не определяет имя пользователя. В лог-файле не регистрируется имя пользователя. 
+				Некоторые имена регистрируются, но некоторые - нет. Если имя пользователя 
+				является Administrator (встроенный), то его не определяет.
+	 
+Verification type:	log-file 
+
+Problem due date:	2006-08-15
+	 
+Status due date:	2006-08-16
+
+Status Change History:	Kuzmi4 : 2006-08-11 00:24:14 : Rewiev : отослал Def'у
+			Def: 2006-08-15 20:00:20 : Developing : Начал исправлять
+			Def: 2006-08-15 20:54:14 : Corrected : Вроде мсправил.
+	

@@ -1,11 +1,13 @@
-/*id*********************************************************
+﻿/*id*********************************************************
 	File: main.h
 	Unit: core
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 		* Kane [J. Anton, kane@mail.berlios.de]
+		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
 	License:
 		Steel Engine License
 	Description:
