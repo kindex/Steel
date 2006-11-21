@@ -31,7 +31,7 @@ GameObject* findGameObject(const string &_class)
 	if(_class == "combiner") return new Combiner;
 	if(_class == "ps") return new ParticleSystem;
 
-	error("objects", string("game class '") + _class + "' not found");
+	error("objects", string("GameObject class '") + _class + "' not found");
 	return NULL;
 }
 

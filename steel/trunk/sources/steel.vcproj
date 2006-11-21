@@ -114,15 +114,14 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Debug Lib|Win32"
-			OutputDirectory="..\build.debug"
-			IntermediateDirectory="..\temp"
+			Name="lib_debug|Win32"
+			OutputDirectory="..\libs"
+			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
-			BuildLogFile="..\temp\$(IntDir)\BuildLog.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -154,10 +153,8 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				PrecompiledHeaderFile="..\temp/steel.pch"
-				AssemblerListingLocation="..\temp.steel_lib/"
-				ObjectFile="..\temp.steel_lib/"
-				ProgramDataBaseFileName="..\temp.steel_lib/"
+				PrecompiledHeaderFile="$(IntDir)\steel.pch"
+				AssemblerListingLocation="$(IntDir)\"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				Detect64BitPortabilityProblems="false"
@@ -177,7 +174,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="../libs/steel_vc.lib"
+				OutputFile="$(OutDir)\$(SolutionName)_VS8_$(ConfigurationName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -188,7 +185,6 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile="..\temp/steel.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -240,6 +236,8 @@
 				StringPooling="false"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
+				EnableEnhancedInstructionSet="2"
+				FloatingPointModel="2"
 				PrecompiledHeaderFile="$(IntDir)\steel.pch"
 				AssemblerListingLocation="$(IntDir)\"
 				WarningLevel="3"
@@ -290,6 +288,88 @@
 			/>
 			<Tool
 				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="lib_release|Win32"
+			OutputDirectory="..\libs"
+			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
+			ConfigurationType="4"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
+			UseOfMFC="1"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				UseUnicodeResponseFiles="false"
+				AdditionalOptions=" /wd4996"
+				Optimization="4"
+				InlineFunctionExpansion="2"
+				FavorSizeOrSpeed="1"
+				PreprocessorDefinitions="WIN32;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;LIB_OPENAL"
+				MinimalRebuild="false"
+				BasicRuntimeChecks="0"
+				RuntimeLibrary="0"
+				EnableEnhancedInstructionSet="2"
+				FloatingPointModel="2"
+				PrecompiledHeaderFile="$(IntDir)\steel.pch"
+				AssemblerListingLocation="$(IntDir)\"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				Detect64BitPortabilityProblems="false"
+				DebugInformationFormat="0"
+				ShowIncludes="false"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="4105"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\$(SolutionName)_VS8_$(ConfigurationName).lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+			/>
+			<Tool
+				Name="VCFxCopTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -484,7 +564,23 @@
 								/>
 							</FileConfiguration>
 							<FileConfiguration
+								Name="lib_debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									StructMemberAlignment="1"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
 								Name="Release|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									StructMemberAlignment="1"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="lib_release|Win32"
 								>
 								<Tool
 									Name="VCCLCompilerTool"
@@ -775,7 +871,7 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Debug Lib|Win32"
+						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -784,7 +880,7 @@
 						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32"
+						Name="Debug Lib|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -953,7 +1049,7 @@
 							/>
 						</FileConfiguration>
 						<FileConfiguration
-							Name="Debug Lib|Win32"
+							Name="Release|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -962,7 +1058,7 @@
 							/>
 						</FileConfiguration>
 						<FileConfiguration
-							Name="Release|Win32"
+							Name="Debug Lib|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"

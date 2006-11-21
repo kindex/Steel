@@ -30,7 +30,7 @@ protected:
 	ObjectPosition position;
 	PositionKind positionKind;
 public:
-	Combiner(void): graph(NULL) {}
+	Combiner(void): graph(NULL), audio(NULL) {}
 
 	bool isSuportingInterface(InterfaceId id);
 	void bindEngine(InterfaceId id, Engine* engine);

@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-        Молуль для рагрузки текста из строки (std::string)
+		РњРѕР»СѓР»СЊ РґР»СЏ СЂР°РіСЂСѓР·РєРё С‚РµРєСЃС‚Р° РёР· СЃС‚СЂРѕРєРё (std::string)
 **************************************************************************************/
 #ifndef __RES__TEXT_STRING_H
 #define __RES__TEXT_STRING_H

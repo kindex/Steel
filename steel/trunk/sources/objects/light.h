@@ -1,9 +1,8 @@
-
 #ifndef OBJECTS__LIGHT_H
 #define OBJECTS__LIGHT_H
 
 /*
-Источник освещения.
+РСЃС‚РѕС‡РЅРёРє РѕСЃРІРµС‰РµРЅРёСЏ.
 */
 
 class GameLight: public GameObj

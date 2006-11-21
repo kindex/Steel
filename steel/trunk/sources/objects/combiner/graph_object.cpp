@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Физических объектов для Combiner
+		Р¤РёР·РёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ РґР»СЏ Combiner
  ************************************************************/
 
 #include "graph_object.h"
@@ -23,7 +23,7 @@ GraphObject* findGraphObject(const string &_class)
 	if(_class == "box") return new GraphObjectBox;
 	if(_class == "model") return new GraphObjectModel;
 
-	error("objects", string("game class '") + _class + "' not found");
+	error("objects", string("GraphObject class '") + _class + "' not found");
 	return NULL;
 }
 

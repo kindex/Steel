@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Физический аудио-объект.
+		Р¤РёР·РёС‡РµСЃРєРёР№ Р°СѓРґРёРѕ-РѕР±СЉРµРєС‚.
  ************************************************************/
 
 
@@ -18,7 +18,7 @@ AudioObject* findAudioObject(const string &_class)
 {
 	if(_class == "SimpleSound") return new SimpleSound;
 
-	error("objects", string("audio class '") + _class + "' not found");
+	error("objects", string("AudioObject class '") + _class + "' not found");
 	return NULL;
 }
 

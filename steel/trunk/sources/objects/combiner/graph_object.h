@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Физических объектов для Combiner
+		Р¤РёР·РёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ РґР»СЏ Combiner
  ************************************************************/
 
 #ifndef __OBJECTS__COMBINER__GRAPH_OBJECT_H

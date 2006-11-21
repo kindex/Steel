@@ -26,30 +26,37 @@ bool Combiner::InitFromConfig(Config *conf)
 	position.setTranslation(conf->getv3("origin"));
 	positionKind = conf->gets("position_kind", "global") == "local"?POSITION_LOCAL:POSITION_GLOBAL;
 
-	string graphClass = conf->gets("graph.class");
-	graph = findGraphObject(graphClass);
-	if(graph != NULL)
+	Config *graphConf = conf->find("graph");
+	if(graphConf != NULL)
 	{
-		bool ok =  graph->InitFromConfig(conf->find("graph"));
-		if(!ok)
+		string graphClass = graphConf->gets("class");
+		graph = findGraphObject(graphClass);
+		if(graph != NULL)
 		{
-			delete graph; 
-			graph = NULL; 
+			bool ok =  graph->InitFromConfig(graphConf);
+			if(!ok)
+			{
+				delete graph; 
+				graph = NULL; 
+			}
 		}
 	}
 
-	string audioClass = conf->gets("audio.class");
-	audio = findAudioObject(audioClass);
-	if(audio != NULL)
+	Config *audioConf = conf->find("audio");
+	if(audioConf != NULL)
 	{
-		bool ok =  audio->InitFromConfig(conf->find("audio"));
-		if(!ok)
+		string audioClass = audioConf->gets("class");
+		audio = findAudioObject(audioClass);
+		if(audio != NULL)
 		{
-			delete audio; 
-			audio = NULL; 
+			bool ok =  audio->InitFromConfig(audioConf);
+			if(!ok)
+			{
+				delete audio; 
+				audio = NULL; 
+			}
 		}
 	}
-
 
 	return true;
 }
