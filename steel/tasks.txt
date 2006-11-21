@@ -1,17 +1,28 @@
-Task status.
+/*id*********************************************************
+	Unit: Tasks
+	(C) DiVision, 2004-2006
+	Part of: Steel Engine
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
+		* Kane [J. Anton, kane@mail.berlios.de]
+		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
+	Description:
+		Task status.
 
-Task Format:
-ID (revision number on task creation time)
-Name
-Short description
-Target programmers (Open), current programmer (Construction), Tester(Testing), All authors (Released)
-Adviser
-Priority (1 - more, 10 - less)
-Estimated time (h, d, w)
-Deadline (date, project version)
-Target (branch, trunk)
+		Tasks are ordered by priority.
 
-Tasks are ordered by priority.
+		Task Format:
+		ID (revision number on task creation time)
+		Name
+		Short description
+		Target programmers (Open), current programmer (Construction), Tester(Testing), All authors (Released)
+		Adviser (Task author)
+		Priority (1 - more, 10 - less)
+		Estimated time (h, d, w)
+		Deadline (date, project version)
+		Target (branch, trunk)
+ ************************************************************/
 
 Open:
 
