@@ -10,6 +10,8 @@ Priority (1 - more, 10 - less)
 Estimated time (h, d, w)
 Deadline (date, project version)
 
+Tasks are ordered by priority.
+
 Open:
 
 344. JPEG. JPEG file loader same as BMP loader. Def, Dark_Sirius. KindeX. 4. 3d. 20061231 (steel 1.1)
