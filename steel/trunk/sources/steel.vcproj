@@ -115,7 +115,7 @@
 		</Configuration>
 		<Configuration
 			Name="lib_debug|Win32"
-			OutputDirectory="..\libs"
+			OutputDirectory="..\sdk\steel_lib"
 			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
@@ -295,7 +295,7 @@
 		</Configuration>
 		<Configuration
 			Name="lib_release|Win32"
-			OutputDirectory="..\libs"
+			OutputDirectory="..\sdk\steel_lib"
 			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
