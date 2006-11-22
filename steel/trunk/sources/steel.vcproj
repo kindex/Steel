@@ -175,7 +175,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\$(SolutionName)_VS8_$(ConfigurationName).lib"
+				OutputFile="$(OutDir)\steel_VS8_$(ConfigurationName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -357,7 +357,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\$(SolutionName)_VS8_$(ConfigurationName).lib"
+				OutputFile="$(OutDir)\steel_VS8_$(ConfigurationName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
