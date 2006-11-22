@@ -82,5 +82,6 @@ private:
 
 #define EACH(CLASS, OBJECT, IT) (CLASS::iterator IT = OBJECT.begin(); IT != OBJECT.end(); IT++)
 #define EACH_CONST(CLASS, OBJECT, IT) (CLASS::iterator_const IT = OBJECT.begin(); IT != OBJECT.end(); IT++)
+#define EVER (;;)
 
 #endif
