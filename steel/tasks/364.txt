@@ -1,0 +1,6 @@
+QuakeMAP is good because of simple text structure. 
+There are many editors for this format (ex: Valve Hammer).
+This is good format for engine testing.
+
+QuakeMAP class must be Scene class analog.
+
