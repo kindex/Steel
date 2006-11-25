@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Р¤РёР·РёС‡РµСЃРєРёР№ Р°СѓРґРёРѕ-РѕР±СЉРµРєС‚.
+		Физический аудио-объект.
  ************************************************************/
 
 #ifndef __AUDIO_OBJECT_H
@@ -27,7 +27,7 @@ AudioObject* findAudioObject(const string &_class);
 class AudioObject: public GameObject
 {
 public:
-	AudioObject();
+	AudioObject(void);
 	bool isSuportingInterface(InterfaceId id) { return AudioInterface::interfaceId == id; }
 	void bindEngine(InterfaceId, Engine*);
 

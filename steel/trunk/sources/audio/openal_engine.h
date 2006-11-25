@@ -53,14 +53,14 @@ protected:
 	bool soundUpdate(Sound* sound);
 
 	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???
-	ALboolean CheckALCError();
-	ALboolean CheckALError();
+	ALboolean CheckALCError(void);
+	ALboolean CheckALError(void);
 	void updateListener(Listener &listener);
 
 	struct AudioShadow: public Shadow
 	{
 
-		AudioShadow(Engine *aengine): Shadow(aengine) {}
+		AudioShadow(Engine *aEngine): Shadow(aEngine) {}
 	};
 	AudioShadow *currentShadow;
 	GameObject *currentObject;

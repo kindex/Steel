@@ -151,48 +151,6 @@ void OpenALEngine::setListener(const Listener &aListener)
 	alListenerfv(AL_ORIENTATION, orientation);
 }
 
-/**
-void OpenALEngine::AudioStorage::soundPlay(void)
-{
-	alSourcePlay(source);
-}
-
-
-void OpenALEngine::AudioStorage::soundPause(void)
-{
-	alSourcePause(source);
-}
-
-
-void OpenALEngine::AudioStorage::soundStop(void)
-{
-	alSourceStop(source);
-}
-
-
-void OpenALEngine::AudioStorage::soundClose(void)
-{
-	alSourceStop(source);
-	if (alIsSource(source))
-		alDeleteSources(1, &source);
-}
-
-
-void OpenALEngine::AudioStorage::soundUpdate(void)
-{
-	if(sound != NULL)
-	{
-		alSourcef (source, AL_PITCH,    pitch	);
-		alSourcef (source, AL_GAIN,     gain	);
-		alSourcefv(source, AL_POSITION, position);
-	//    alSourcefv(source, AL_VELOCITY, getVelocity()	);
-		alSourcei (source, AL_LOOPING,  isLoop	);
-
-		alSourcef (source, AL_ROLLOFF_FACTOR, rolloffFactor); 
-		alSourcei (source, AL_SOURCE_RELATIVE, sourceRelative);
-	}
-}
-/**/
 
 bool OpenALEngine::inject(GameObject *object)
 {
@@ -211,52 +169,7 @@ bool OpenALEngine::inject(GameObject *object)
 	return true;
 }
 
-/**
-void OpenALEngine::makeStorageForChildren(Object *object)
-{
 
-}
-
-
-void OpenALEngine::AudioStorage::fill(Object *object)
-{
-	Storage::fill(object);
-
-	cache();
-
-	if(sound != NULL)
-	{
-		alGenBuffers(1, &buffer);
-		alBufferData(buffer, sound->format, sound->data, sound->size, sound->frequency);
-//		if (sound->data)
-//			free(sound->data);
-		alGenSources(1, &source);
-		alSourcei (source, AL_BUFFER,    buffer	);
-		soundUpdate();
-	//	soundPlay();			// WHAT THE FUCK IS THIS ??????????
-	}
-
-}
-
-
-bool OpenALEngine::AudioStorage::cache(void)
-{
-	Storage::fill(object);
-
-	sound = A(object)->getSound();
-	position = A(object)->getPosition().getTranslation();
-
-	isLoop = A(object)->isLooped();
-	gain = A(object)->getGain();
-	pitch = A(object)->getPitch();
-
-	rolloffFactor = A(object)->getRolloff();
-	sourceRelative = A(object)->getSourceRelative();
-
-	soundUpdate();
-	return true;
-}
-/**/
 bool OpenALEngine::process(void)
 {
 	// iterator po vsem objectam - kto 4to ho4et

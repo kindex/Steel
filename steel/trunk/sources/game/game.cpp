@@ -155,8 +155,8 @@ void Steel::processKeyboard()
 		if(input->isPressed("s")) 	dir += v3(-1,0,0);
 		if(input->isPressed("a")) 	dir += v3(0, +1, 0);
 		if(input->isPressed("d")) 	dir += v3(0, -1, 0);
-		if(input->isPressed("'")) 	dir += v3(0, 0, +1);
-		if(input->isPressed("/")) 	dir += v3(0, 0, -1);
+		if(input->isPressed("q")) 	dir += v3(0, 0, +1);
+		if(input->isPressed("z")) 	dir += v3(0, 0, -1);
 
 		if(dir.getLength()>EPSILON)
 		{
@@ -245,7 +245,7 @@ void Steel::bind(AudioEngine *engine)
 {
 	audioEngine = engine;
 #ifdef LIB_OPENAL
-	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_GENERIC);
+	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_PLAIN);
 #endif
 	/*
 	EAX_ENVIRONMENT_GENERIC,

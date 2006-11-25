@@ -87,10 +87,10 @@ void Scene::bindEngine(InterfaceId id, Engine* egnine)
 {
 	dynamic_cast<ChildrenInterface*>(egnine)->clearChildren();
 
-	ChildrenInterface &gengine = *dynamic_cast<ChildrenInterface*>(egnine);
+	ChildrenInterface &gEngine = *dynamic_cast<ChildrenInterface*>(egnine);
 	for EACH(svector<GameObject*>, objects, it)
 		if((*it)->isSuportingInterface(id)) 
-			gengine.addChild(*it);
+			gEngine.addChild(*it);
 }
 
 void Scene::process(ProcessInfo &info)
