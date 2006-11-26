@@ -31,6 +31,7 @@ Open:
 344. JPEG. JPEG file loader same as BMP loader. Def, Dark_Sirius. KindeX. 4. 3d. 20061231 (steel 1.1)
 348. Config bug. Error in finding value by templates through parent config. KindeX. KindeX. 5. 1d. 20061201
 367. OpenGL 2.0. Shaders, dynamic lighting (many lights). KindeX. KindeX. 7. 2w.
+369. CD. Collision detection for particles. Def, KindeX. KindeX. 1. 1w.
 
 Construction:
 345. PNG. PNG file loader same as BMP loader. Kane. KindeX. 4. 3d. 20061231 (steel 1.1)
