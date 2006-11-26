@@ -1,0 +1,40 @@
+FROM			[Alexander Papyshev]
+TO			[Andrey Ivanov]	
+Number:			0002
+
+Detected Date:		[2006-11-26 19:59:41]
+
+Problem type:		[defect]
+
+Summary:		[F3 не работает, если нажать F2]	<short description of problem>
+
+Status:			[review]	(review, assigned, developing, testing, retesting delayed, development delayed, closed, cancelled.)
+
+Resolution:		[implementation must be changed]	(corrected, code verified, implementation must be changed etc.)
+
+Detected in Product:	[Steel 371]	<Product Name>  Build # <build/commit> 
+
+Functional zone:	[steel.exe]	<functional part of application>
+
+Environment:		[Def Primary PC (Steel\docs\opengl\testing\all_cards.txt); Windows XP Professional SP2]	<machine name or environment name>
+ 
+Severity:		[High]	<Critical, Fatal, High, Medium, Low>
+
+Problem Repeatable:	[Yes]	<yes or no>
+
+Problem Detailed Decription:
+			[. кака€то проблема с F2-F3. ≈сли нажать F2 то F3 перестает работать.
+			 .	
+			 .]
+	 
+Verification type:	[непосредственно в системе.]	<acceptance, documentation, installation, integration, regression, system>  
+
+Problem due date:	[asap]	<date when problem should be solved>
+	 
+Status due date:	[asap]	<date when current problem status should be changed> 
+
+Status Change History:
+			[.Alexander Papyshev [2006-11-26 20:06:44] : Review : ќтослал  идексу на проверку.
+			 .	
+			 .]	<who>:[when DATE TEME]:Status:Description.
+		
