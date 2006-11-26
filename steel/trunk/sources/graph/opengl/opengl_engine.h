@@ -93,7 +93,7 @@ protected:
 		const Vertexes		*vertexes;
 		const Normals		*normals;
 		const Lights		*lights;
-		unsigned int textureCount;
+		unsigned int		 textureCount;
 		svector<const TexCoords*> texCoords;
 
 		const GLines		*lines;
@@ -104,7 +104,7 @@ protected:
 		float		distance; // расстояние до камеры
 
 		GraphShadow(Engine *engine): Shadow(engine), faceMaterials(NULL), vertexes(NULL), normals(NULL), lights(NULL),
-			lines(NULL), position(ObjectPosition::getIdentity() ) {}
+			lines(NULL), position(ObjectPosition::getIdentity()), textureCount(0) {}
 		void fill(GameObject *object);
 		bool cache(void);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
@@ -167,7 +167,7 @@ protected:
 	// Stuff to delete
 
 	typedef
-		steel::vector<v3>
+		svector<v3>
 		v3List;
 
 	typedef TexCoords3f tangentSpaceLightBufferedArray;
@@ -229,8 +229,8 @@ public:
 
 	
 	void drawBump(GraphShadow &e, const TexCoords *coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image *img);
-	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent);
-	void genTangentSpaceLight(const steel::vector<v3> &sTangent, const steel::vector<v3> &tTangent, const Vertexes &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
+	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, svector<v3> **sTangent, svector<v3> **tTangent);
+	void genTangentSpaceLight(const svector<v3> &sTangent, const svector<v3> &tTangent, const Vertexes &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
 
 //	void drawBump(DrawElement &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int texnum, Image *bump);
 //	void drawReflect(DrawElement &e, matrix34 const matrix, v3 const light, uid bufId);

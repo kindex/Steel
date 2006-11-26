@@ -3,7 +3,7 @@
 class = 'scene'
 objects = 
 (
-	{ //0
+/*	{ //0
 		class = 'combiner'
 		origin = (0 0 0)
 		graph = {
@@ -30,6 +30,7 @@ objects =
 	origin = (0 0 1)
 	graph = [#objects[0].graph] {}
 	}
+*/
 	
 	{//2
 	class = 'combiner'
@@ -44,7 +45,7 @@ objects =
 			}
 		}
 	}
-
+/*
 	{//3
 	class = 'combiner'
 	origin = (0 1 0.5)
@@ -82,6 +83,6 @@ objects =
 		} // graph
 	
 	} // combiner
-	
+*/	
 ) // objects
 } // scene

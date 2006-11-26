@@ -331,7 +331,7 @@ template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2,
 		{
 			glGenBuffersARB(1, &buf.glid);
 
-			if(mode) glEnableClientState ( mode );
+			if(mode > 0) glEnableClientState ( mode );
 			glBindBufferARB(mode2, buf.glid);
 
 			GLenum usage = GL_STATIC_DRAW;

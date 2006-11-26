@@ -39,13 +39,13 @@ struct Light
 	// cube map, orientation
 };
 
-typedef steel::vector<Light>		Lights;
+typedef svector<Light>		Lights;
 
 //	kind : 2d only
 class TexCoords: public BufferedElement
 {
 public:
-	steel::vector<v2>	data;
+	svector<v2>	data;
 
 	TexCoords(): BufferedElement(), data(0) {}
 };
@@ -53,7 +53,7 @@ public:
 class TexCoords3f: public BufferedElement
 {
 public:
-	steel::vector<v3> data;
+	svector<v3> data;
 };
 
 
@@ -66,8 +66,8 @@ public:
 
 struct GLines
 {
-	steel::vector<GLine> index;
-	steel::vector<color4f> color; // line color
+	svector<GLine> index;
+	svector<color4f> color; // line color
 };
 
 typedef Vertexes	Normals;

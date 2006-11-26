@@ -32,7 +32,7 @@ struct FaceMaterial
 	std::string		name;
 };
 
-typedef steel::vector<FaceMaterial>	FaceMaterials;
+typedef svector<FaceMaterial>	FaceMaterials;
 
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 

@@ -24,13 +24,14 @@
 // нарисовать множество полигонов с указанным материалом / Multitexture
 void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
-	if(material && GL_EXTENSION_MULTITEXTURE)
+	if(material != NULL && GL_EXTENSION_MULTITEXTURE)
 	{
-		steel::vector<uid> buffersToDelete;
+		svector<uid> buffersToDelete;
 
 		total.objectCount++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 		int texCount = material->getTextureCount();
 
 		if(texCount>0)
@@ -151,7 +152,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 
 				const TexCoords *coords = e.texCoords[i];
 				assert(coords->data.size() == e.vertexes->data.size(), "TexCoords.size != Vertex.size");
-				if(BindTexCoords) (this->*BindTexCoords)(coords);
+				if(BindTexCoords != NULL) (this->*BindTexCoords)(coords);
 				currentTextureArb++;
 			}
 			else
@@ -169,8 +170,12 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
 
 	   	glPopAttrib();
-		for(steel::vector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
+		glPopClientAttrib();
+
+		for(svector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
+		{
 			cleanBuffer(*it);
+		}
 	}
 }
 
@@ -198,7 +203,7 @@ static v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 }
 
 
-void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent)
+void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, svector<v3> **sTangent, svector<v3> **tTangent)
 { // TODO: mem cleanup
 	int id = vertex->getId();
 	
@@ -281,7 +286,7 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *map
 	}
 };
 
-void OpenGL_Engine::genTangentSpaceLight(steel::vector<v3> const &sTangent, steel::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(svector<v3> const &sTangent, svector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
 {
 	matrix34 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();

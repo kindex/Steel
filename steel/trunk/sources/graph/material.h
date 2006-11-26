@@ -58,7 +58,7 @@ class Material
 protected:
 	Config *conf;
 	bool	blend, shader;
-	steel::vector<Texture> texture;
+	svector<Texture> texture;
 	std::string directory;
 
 public:

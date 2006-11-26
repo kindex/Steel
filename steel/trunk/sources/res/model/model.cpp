@@ -75,7 +75,7 @@ void Model::generateNormals()
 */
 
 
-	steel::vector<v3> facenormal;
+	svector<v3> facenormal;
     facenormal.resize(triangleAll.data.size());
 
     normals.data.resize(vertexes.data.size());
@@ -169,7 +169,7 @@ void Model::generateNormals()
 void Model::updateAABB()
 {
 	frame.clear();
-	for(steel::vector<v3>::iterator it = vertexes.data.begin(); it != vertexes.data.end(); it++)
+	for(svector<v3>::iterator it = vertexes.data.begin(); it != vertexes.data.end(); it++)
 		frame.merge(*it);
 }
 
@@ -177,7 +177,7 @@ void Model::updateAABB()
 float Model::calculateVolume() // вычислить объём
 {
 	float volume = 0;
-	for(steel::vector<Triangle>::iterator it = triangleAll.data.begin(); it != triangleAll.data.end(); it++)
+	for(svector<Triangle>::iterator it = triangleAll.data.begin(); it != triangleAll.data.end(); it++)
 	{
 		v3 a(vertexes.data[it->a[0]]);
 		v3 b(vertexes.data[it->a[1]]);

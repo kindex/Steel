@@ -24,7 +24,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Trian
 		total.objectCount++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
-		int texCount = e.textureCount;
+		int texCount = material->getTextureCount();
 
 		TextureBlendMode inheritedMode = TEXTURE_BLEND_MODE_NONE, currentMode;
 

@@ -183,11 +183,11 @@ void OpenGL_Engine::process(GraphShadow *e, steel::time globalTime, steel::time 
 	m[12] = e->position.data.vector.x;				m[13] = e->position.data.vector.y;				m[14] = e->position.data.vector.z;				m[15] = 1;
 	glLoadMatrixf(m);
 
-	if(conf->geti("drawFace") && e->faceMaterials && DrawFill)
+	if(conf->geti("drawFace") && e->faceMaterials != NULL && DrawFill != NULL)
 		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
 			(this->*DrawFill)(*e, e->faceMaterials->at(i).triangles, e->faceMaterials->at(i).material, total);
 
-	if(conf->geti("drawWire") && e->faceMaterials && DrawWire)
+	if(conf->geti("drawWire") && e->faceMaterials != NULL && DrawWire != NULL)
 		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
 			(this->*DrawWire)(*e, e->faceMaterials->at(i).triangles, total);
 

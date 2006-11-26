@@ -52,7 +52,7 @@ bool GraphEngine::remove(GameObject *object)
 	deleteShadowForChildren(findSid(object->getId()));
 	deleteShadowForObject(findSid(object->getId()));
 	
-	for(steel::vector<GameObject*>::iterator it = objects.begin(); it != objects.end(); it++)
+	for(svector<GameObject*>::iterator it = objects.begin(); it != objects.end(); it++)
 		if(*it == object)
 		{
 			objects.erase(it);

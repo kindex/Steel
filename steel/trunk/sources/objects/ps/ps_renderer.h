@@ -52,7 +52,7 @@ public:
 class ObjectPSRenderer: public ParticleRenderer
 {
 protected:
-	steel::vector<GameObject*> children;
+	svector<GameObject*> children;
 
 public:
 	bool initParticles();

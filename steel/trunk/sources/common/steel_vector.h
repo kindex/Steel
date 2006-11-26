@@ -136,7 +136,8 @@ public:
 
 	T&operator[](size_t i)	{		return data[i];	}
 	const T&operator[](size_t i) const	{		return data[i];	}
-	T& at(size_t i)	{		return data[i];	}
+	T& at(size_t i) {		return data[i];	}
+	const T& at(size_t i) const	{		return data[i];	}
 
 	void pack(void)
 	{
@@ -176,6 +177,8 @@ public:
 
 	T &back(void)	{		return data[_count-1];	}
 	T &front(void)	{		return data[0];	}
+	const T &back(void)	const {		return data[_count-1];	}
+	const T &front(void)	const {		return data[0];	}
 	void erase(const iterator it)
 	{
 		int move = ((data + _count -1) - it)*sizeof(T);

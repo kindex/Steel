@@ -97,7 +97,7 @@ bool Material::InitFromConfig(Config *_conf)
 
 Material::~Material()
 {
-	for(steel::vector<Texture>::iterator it = texture.begin(); it != texture.end(); it++)
+	for(svector<Texture>::iterator it = texture.begin(); it != texture.end(); it++)
 	{
 		if(it->image) resImage.remove(it->image);
 	}

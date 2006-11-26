@@ -53,7 +53,7 @@ public:
 // массив вершин многогранника
 struct Vertexes: public BufferedElement
 {
-	steel::vector<v3> data;
+	svector<v3> data;
 
 	Vertexes(): BufferedElement(), data(0) {}
 };
@@ -61,7 +61,7 @@ struct Vertexes: public BufferedElement
 // массив треугольников многогранника
 struct Triangles: public BufferedElement
 {
-	steel::vector<Triangle> data;
+	svector<Triangle> data;
 
 	Triangles(void): BufferedElement() {}
 };

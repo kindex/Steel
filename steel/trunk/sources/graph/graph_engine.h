@@ -51,7 +51,7 @@ public:
 	bool clear(void);
 
 protected:
-	steel::vector<GameObject*> objects;
+	svector<GameObject*> objects;
 
 	GraphEngineInfo info;
 
