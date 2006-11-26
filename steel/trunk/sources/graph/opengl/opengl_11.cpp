@@ -22,6 +22,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow &e, const 
 	if(triangles != NULL && e.vertexes != NULL && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
 		total.vertexCount += e.vertexes->data.size();
 		total.triangleCount += triangles->data.size();
@@ -45,6 +46,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow &e, const 
 		//Draw All
 		glDrawElements(GL_TRIANGLES, triangles->data.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &triangles->data.front().a[0]);
 
+		glPopClientAttrib();
 		glPopAttrib();
 	}
 }
@@ -199,12 +201,15 @@ void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow &e, const Trian
 		total.triangleCount += triangles->data.size();
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
+
 		glPolygonMode (GL_FRONT, GL_LINE);
 
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
 
 		glDrawElements(GL_TRIANGLES, triangles->data.size()*3/*A,b,c*/, GL_UNSIGNED_INT, &triangles->data.front().a[0]);
 
+		glPopClientAttrib();
 		glPopAttrib();
 	}
 }
@@ -218,12 +223,14 @@ void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphShadow &e, GraphEngin
 		total.triangleCount += e.lines->index.size();
 		
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
 		// TODO color
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
 
 		glDrawElements(GL_LINES, e.lines->index.size()*2, GL_UNSIGNED_INT, &e.lines->index.front().a[0]);
 
+		glPopClientAttrib();
 		glPopAttrib();
     }
 }

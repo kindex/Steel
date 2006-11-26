@@ -23,6 +23,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, const Triangles *tria
 	if(triangles && e.vertexes && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
 		total.vertexCount += e.vertexes->data.size();
 		total.triangleCount += triangles->data.size();
@@ -45,6 +46,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, const Triangles *tria
 			glDrawElements(GL_TRIANGLES, triangles->data.size()*3, GL_UNSIGNED_INT, 0);
 		}
 
+		glPopClientAttrib();
 		glPopAttrib();
 	}
 }

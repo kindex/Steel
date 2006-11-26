@@ -169,13 +169,12 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 		
 		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
 
-	   	glPopAttrib();
-		glPopClientAttrib();
-
 		for(svector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
 		{
 			cleanBuffer(*it);
 		}
+		glPopClientAttrib();
+	   	glPopAttrib();
 	}
 }
 

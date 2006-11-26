@@ -32,6 +32,7 @@ void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphShadow &e, const Trian
 		total.objectCount++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 		
 		GLSL *program = BindShader(material);
 
@@ -82,6 +83,7 @@ void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphShadow &e, const Trian
 			program->unbind();
 		}
 
+		glPopClientAttrib();
 	   	glPopAttrib();
 	}
 }

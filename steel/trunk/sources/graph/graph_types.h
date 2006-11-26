@@ -31,11 +31,24 @@ struct color4f
 	color4f(float R, float G, float B, float A): r(R), g(G), b(B), a(A) {}
 };
 
+typedef enum
+{
+	LIGHT_NONE,
+	LIGHT_DIFFUSE, // omni?
+	LIGHT_TARGET
+} LightType;
+
 struct Light
 {
+	uid id;
+	LightType type;
 	v3 position;
+	v3 direction;
 	color4f color;
 	float distance, intensivity;
+	float rolloffFactor;
+	float rolloffDistance;
+	bool castShadows;
 	// cube map, orientation
 };
 

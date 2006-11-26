@@ -63,7 +63,7 @@ struct Triangles: public BufferedElement
 {
 	svector<Triangle> data;
 
-	Triangles(void): BufferedElement() {}
+	Triangles(void): BufferedElement(), data(0) {}
 };
 
 

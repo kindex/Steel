@@ -24,6 +24,8 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Trian
 		total.objectCount++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
+
 		int texCount = material->getTextureCount();
 
 		TextureBlendMode inheritedMode = TEXTURE_BLEND_MODE_NONE, currentMode;
@@ -32,6 +34,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Trian
 		for(int i=0; i<texCount; i++)
 		{
 			glPushAttrib(GL_ALL_ATTRIB_BITS);
+			glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 			const Texture &texture = *material->getTexture(i); // текущая текстура
 
 			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
@@ -97,8 +100,10 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Trian
 
 // -> (*).  ->*  *(->)
 			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, e.texCoords[i],  total);
-		   	glPopAttrib();
+			glPopClientAttrib();
+			glPopAttrib();
 		}
+		glPopClientAttrib();
 	   	glPopAttrib();
 	}
 }
