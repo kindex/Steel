@@ -3,7 +3,7 @@
 class = 'scene'
 objects = 
 (
-/*	{ //0
+	{ //0
 		class = 'combiner'
 		origin = (0 0 0)
 		graph = {
@@ -13,7 +13,7 @@ objects =
 			triangles = ( (0 2 1) (0 1 2) )
 			material = [sphere/sphere.mat#] {}
 			}
-		audio = 
+/*		audio = 
 		{
 			class = 'SimpleSound'
 			position = (0 0 0);
@@ -24,13 +24,14 @@ objects =
 			rolloffFactor = 0.0;
 			sourceRelative = 0.0;
 		} // audio
+		*/
 	}
 	{ //1
 	class = 'combiner'
 	origin = (0 0 1)
 	graph = [#objects[0].graph] {}
 	}
-*/
+
 	
 	{//2
 	class = 'combiner'
@@ -40,12 +41,19 @@ objects =
 		size = 0.5
 		material =  
 			{
-			format0='color_map'
-			image0='/box/boxes/box1_side_handle_d'
+				blend = 0
+				textures = 
+				(
+					{
+						format = 'color_map'
+						color_map = '/box/boxes/box1_side_handle_d'
+						normal_map = '/box/tr_wall_outside_04_local'
+					}
+				)
 			}
 		}
 	}
-/*
+
 	{//3
 	class = 'combiner'
 	origin = (0 1 0.5)
@@ -83,6 +91,10 @@ objects =
 		} // graph
 	
 	} // combiner
-*/	
+
+	{
+		class = 'light'
+		origin = (3 3 1)
+	}
 ) // objects
 } // scene

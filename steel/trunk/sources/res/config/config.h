@@ -70,7 +70,7 @@ public:
 			double		getd (const std::string &path, const double _default = 0.0f) const;
 			float		getf (const std::string &path, const float  _default = 0.0f) const { return (float)getd(path, (double)_default); } 
 			int			geti (const std::string &path, const int	 _default = 0) const { return (int)getd(path, (double)_default); } 
-	const	v3			getv3(const std::string &path, const v3	 _default = v3(0.0f, 0.0f, 0.0f)) const;
+			v3			getv3(const std::string &path, const v3	 _default = v3(0.0f, 0.0f, 0.0f)) const;
 	const	std::string	gets(const std::string &path, const std::string &_default = std::string()) const;
 	const	ConfigArray*getArray(const std::string &path) const;
 			ConfigArray*getArray(const std::string &path);

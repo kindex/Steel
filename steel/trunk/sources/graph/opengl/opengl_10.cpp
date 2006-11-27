@@ -35,10 +35,10 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Trian
 		{
 			glPushAttrib(GL_ALL_ATTRIB_BITS);
 			glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
-			const Texture &texture = *material->getTexture(i); // текущая текстура
+			const Texture *texture = material->getTexture(i); // текущая текстура
 
 			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
-				currentMode = texture.mode;
+				currentMode = texture->mode;
 			else
 			{
 				currentMode = inheritedMode;
@@ -46,9 +46,8 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Trian
 			}
 
 			// skip texture
-			if(texture.format == TEXTURE_FORMAT_BUMP_MAP
-				|| texture.format == TEXTURE_FORMAT_ENV
-				|| texture.format == TEXTURE_FORMAT_NORMAL_MAP)
+			if(texture->getTextureFormat() != TEXTURE_FORMAT_COLOR_MAP &&
+			   texture->getTextureFormat() != TEXTURE_FORMAT_COLOR)
 			{
 				inheritedMode = currentMode;
 				continue;
@@ -74,29 +73,30 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Trian
 					break;
 			}
 
-			if(texture.format == TEXTURE_FORMAT_COLOR_MAP) 
-				if(BindTexture) (this->*BindTexture)(texture.image, true);
+			if(texture->format == TEXTURE_FORMAT_COLOR_MAP) 
+				if(BindTexture) (this->*BindTexture)(static_cast<const TextureColorMap*>(texture)->color_map, true);
 
-			if(texture.format == TEXTURE_FORMAT_COLOR) 
-				glColor4fv(&texture.color.r);
+			if(texture->format == TEXTURE_FORMAT_COLOR) 
+				glColor4fv(static_cast<const TextureColor*>(texture)->color.getfv());
 
-/*			if(!lights.empty())
+			if(!lights.empty())
 			{
 				glEnable(GL_LIGHTING);
-				for(unsigned int i = 0; i<lights.size() && i<GL_MAX_LIGHTS; i++)
+				for(unsigned int i = 0; i<e.lights.size() && i<GL_MAX_LIGHTS; i++)
 				{
 					glEnable(GL_LIGHT0 + i);
 					float pos[4];
-						glPushMatrix();
-						glLoadIdentity();
-					pos[0] = lights[i].pos.x;
-					pos[1] = lights[i].pos.y;
-					pos[2] = lights[i].pos.z;
+					glPushMatrix();
+					glLoadIdentity();
+					pos[0] = e.lights[i]->position.x;
+					pos[1] = e.lights[i]->position.x;
+					pos[2] = e.lights[i]->position.x;
 					pos[3] = 1.0f;
 					glLightfv(GL_LIGHT0 + i, GL_POSITION, (float*)pos);
-						glPopmatrix();
+					glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, e.lights[i]->light->color.getfv());
+					glPopMatrix();
 				}
-			}*/
+			}
 
 // -> (*).  ->*  *(->)
 			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, e.texCoords[i],  total);

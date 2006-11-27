@@ -23,13 +23,13 @@ void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphShadow &e, const Trian
 {
 	if(material != NULL && GL_EXTENSION_GLSL)
 	{
-		if(!material->isShader())
+//		if(!material->isShader())
 		{
 			OpenGL_Engine::DrawFill_OpenGL13(e, triangles, material, total);
 			return;
 		}
 
-		total.objectCount++;
+/*		total.objectCount++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
@@ -71,14 +71,14 @@ void OpenGL_Engine::DrawFill_OpenGL20(OpenGL_Engine::GraphShadow &e, const Trian
 			program->setUniformVector("camera_eye", camera.eye);
 			program->setUniformVector("camera_dir", (camera.center - camera.eye).getNormalized());
 
-			for(unsigned int i = 0; i < lights.size(); i++)
+/*			for(unsigned int i = 0; i < lights.size(); i++)
 			{
 				std::string pos("light[" + IntToStr(i)+"].position");
 				program->setUniformVector(pos.c_str(), lights[i].position);
 			}
+*/
 
-
-			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
+/*			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
 
 			program->unbind();
 		}
@@ -105,16 +105,16 @@ GLSL *OpenGL_Engine::BindShader(Material *material)
 			buf.loaded = true;
 			buf.glid = shader->getGL_Id();
 			buf.object = (char*)shader;
-		}
+		}*/
 	}
 
-	if(buf.loaded)
+/*	if(buf.loaded)
 	{
 		// setup variables
 		glUseProgramObjectARB(buf.glid);
 		return (GLSL*)buf.object;
 	}
 	*/
-	return NULL;
+//	return NULL;
 }
 

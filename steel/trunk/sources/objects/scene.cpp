@@ -19,6 +19,7 @@
 
 #include "scene.h"
 #include "sphere.h"
+#include "light.h"
 #include "combiner/combiner.h"
 #include "ps/particle_system.h"
 
@@ -30,6 +31,7 @@ GameObject* findGameObject(const string &_class)
 	if(_class == "sphere") return new Sphere;
 	if(_class == "combiner") return new Combiner;
 	if(_class == "ps") return new ParticleSystem;
+	if(_class == "light") return new GameLight;
 
 	error("objects", string("GameObject class '") + _class + "' not found");
 	return NULL;

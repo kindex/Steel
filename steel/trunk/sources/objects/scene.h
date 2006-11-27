@@ -22,7 +22,6 @@ class Scene: public GameObject
 {
 public:
 	bool InitFromConfig(Config *conf);
-
 	bool isSuportingInterface(InterfaceId);
 	void bindEngine(InterfaceId, Engine*);
 	void process(ProcessInfo &);

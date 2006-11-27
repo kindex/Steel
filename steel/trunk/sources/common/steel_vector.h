@@ -110,7 +110,7 @@ public:
 //			memset((char*)data + oldCount*sizeof(T), 0, (_count - oldCount)*sizeof(T));
 			for(size_t i = oldCount; i < _count; i++)
 			{
-				new (&data[i]) T();
+				new (&data[i]) T;
 			}
 		}
 		if(oldCount > _count)

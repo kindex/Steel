@@ -983,6 +983,14 @@
 				Name="objects"
 				>
 				<File
+					RelativePath=".\objects\light.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\objects\light.h"
+					>
+				</File>
+				<File
 					RelativePath=".\objects\scene.cpp"
 					>
 				</File>

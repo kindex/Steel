@@ -116,7 +116,7 @@ struct matrix34
 	
 	v3 getVector(void) { return data.vector; }
 
-	inline void setRotationAxis(const float angle, const v3 axis)	{		setRotationAxis(sin(angle), sin(angle), axis);	}
+	inline void setRotationAxis(const float angle, const v3 axis)	{		setRotationAxis(sin(angle), cos(angle), axis);	}
 	void setRotationAxis(const float sinAngle, const float cosAngle, const v3 axis)
 	{
 		data.matrix.setRotationAxis(sinAngle, cosAngle, axis);

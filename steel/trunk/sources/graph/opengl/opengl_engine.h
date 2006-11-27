@@ -43,6 +43,7 @@ protected:
 	struct GraphShadow;
 	GraphShadow *currentShadow;
 
+
 public: // interface realization
 	bool setCurrentObject(GameObject*);
 	void setPosition(ObjectPosition);
@@ -53,11 +54,14 @@ public: // interface realization
 	void setFaceMaterials(const FaceMaterials*);// массив индексов вершин, которые образуют треугольники (грани) + материалы
 	void setTexCoordsCount(unsigned int);
 	void setTexCoords(unsigned int texNumber, const TexCoords*);
-	void setLights(const Lights*);
 
 	void addChild(GameObject* child);
 	void deleteChild(GameObject* child);
 	void clearChildren(void);
+
+	void addLight(Light*);
+	void removeLight(uid);
+	void updateLight(uid, Light*);
 
 
 protected:
@@ -83,6 +87,7 @@ protected:
 
 #define GS(shadow) (static_cast<GraphShadow*>(shadow))
 
+	struct LightShadow;
 	struct GraphShadow: public Shadow // множество треугольников одного материала
 	{
 		ObjectPosition	position; // global or screen
@@ -92,7 +97,6 @@ protected:
 		const FaceMaterials *faceMaterials;
 		const Vertexes		*vertexes;
 		const Normals		*normals;
-		const Lights		*lights;
 		unsigned int		 textureCount;
 		svector<const TexCoords*> texCoords;
 
@@ -103,18 +107,32 @@ protected:
 		bool		visible;
 		float		distance; // расстояние до камеры
 
-		GraphShadow(Engine *engine): Shadow(engine), faceMaterials(NULL), vertexes(NULL), normals(NULL), lights(NULL),
+		svector<LightShadow*> lights; // lights to this onject
+
+		GraphShadow(Engine *engine): Shadow(engine), faceMaterials(NULL), vertexes(NULL), normals(NULL), 
 			lines(NULL), position(ObjectPosition::getIdentity()), textureCount(0) {}
 		void fill(GameObject *object);
 		bool cache(void);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 	};
 
+	struct LightShadow
+	{
+		v3 position;
+		Light *light;
+		GameObject *object;
+		GraphShadow *shadow;
+		bool changed; // position
+
+		LightShadow(void): light(NULL), object(NULL) {}
+	};
+
+	map<uid, LightShadow*> lights;
+
 	void addChild(GraphShadow &, GameObject*);
 
 	std::map<uid, OpenGL_Buffer> buffer;
 
-	Lights lights;
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image *zeroNormal;
 

@@ -15,12 +15,12 @@
 #include "opengl_glsl.h"
 #include "../../res/res_main.h"
 
-bool GLSL::init(Material *_material)
+bool GLSL::init(Texture *_texture)
 {
 	if(!GL_EXTENSION_GLSL) return false;
 
-	material = _material;
-	conf = material->getConfig();
+/*	texture = _texture;
+	conf = texture->getConfig();
 
 	resStack.push(material->getDirectory());
 
@@ -68,7 +68,7 @@ bool GLSL::init(Material *_material)
 
     if(!linked)
         return false;
-
+*/
 	return true;
 }
 

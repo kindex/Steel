@@ -28,49 +28,45 @@ bool Material::InitFromConfig(Config *_conf)
 	if(_conf == NULL) return false;
 	conf = _conf;
 
-	shader = !conf->gets("vertexShader").empty() && !conf->gets("fragmentShader").empty();
+	blend = conf->geti("blend") > 0;
 
-	texture.clear();
+	textures.clear();
+	ConfigArray *textureConfig = conf->getArray("textures");
 
-	for(int i=0; ; i++)
+	if (textureConfig != NULL)
+	for EACH(ConfigArray, *textureConfig, it)
 	{
-		Texture m;
-		string format = conf->gets("format" + IntToStr(i));
+		Config *texconf = *it;
+		string format = texconf->gets("format");
 
 		if(format.empty()) break;
 
-		string sMode = conf->gets("mode" + IntToStr(i));
-		m.mode = TEXTURE_BLEND_MODE_NONE;
-		if(sMode == "")	m.mode = TEXTURE_BLEND_MODE_REPLACE;
-		if(sMode == "+")m.mode = TEXTURE_BLEND_MODE_ADD;
-		if(sMode == "*")m.mode = TEXTURE_BLEND_MODE_MUL;
-		if(sMode == "blend")m.mode = TEXTURE_BLEND_MODE_BLEND;
+		TextureBlendMode mode;
+		string sMode = texconf->gets("mode");
+		mode = TEXTURE_BLEND_MODE_NONE;
+		if(sMode == "")	mode = TEXTURE_BLEND_MODE_REPLACE;
+		if(sMode == "+")mode = TEXTURE_BLEND_MODE_ADD;
+		if(sMode == "*")mode = TEXTURE_BLEND_MODE_MUL;
+		if(sMode == "blend")mode = TEXTURE_BLEND_MODE_BLEND;
 
 		if(format == "color_map")
 		{
-			string imageName = "/" + conf->getPath("image" + IntToStr(i));
+			TextureColorMap *texture = new TextureColorMap;
+			texture->mode = mode;
+			texture->format = TEXTURE_FORMAT_COLOR_MAP;
 
-			m.image = resImage.add(imageName);
+			texture->color_map = resImage.add("/" + texconf->getPath("color_map"));
+			texture->normal_map = resImage.add("/" + texconf->getPath("normal_map"));
 
-			if(m.image != NULL)
+			if(texture->color_map != NULL)
 			{
-				m.format = TEXTURE_FORMAT_COLOR_MAP;
-				texture.push_back(m);
+				textures.push_back(texture);
+				continue;
 			}
 		}
-		if(format == "bump")
+/*		if(format == "sky")
 		{
 			m.image = resImage.add(conf->gets("image" + IntToStr(i)));
-			if(m.image != NULL)
-			{
-				m.format = TEXTURE_FORMAT_BUMP_MAP;
-				texture.push_back(m);
-			}
-		}
-		if(format == "env")
-		{
-			m.image = resImage.add(conf->gets("image" + IntToStr(i)));
-//			if(!m.image) m.image = resImage.add( dir + "/" + file);
 
 			if(m.image)
 			{
@@ -78,28 +74,27 @@ bool Material::InitFromConfig(Config *_conf)
 				texture.push_back(m);
 			}
 		}
-
+*/
 		if(format == "color")
 		{
-			m.image = NULL;
-			m.format = TEXTURE_FORMAT_COLOR;
-//			m.color = onf->getf(i, 2, 0.0f), conf->getf(i, 3, 0.0f), conf->getf(i, 4, 0.0f), conf->getf(i, 5, 1.0f));
-			texture.push_back(m);
+			TextureColor *texture = new TextureColor;
+			texture->mode = mode;
+			texture->format = TEXTURE_FORMAT_COLOR_MAP;
+			texture->color.set(texconf->getv3("color", v3(1.0f, 0.0f, 0.0f)));
+			textures.push_back(texture);
+			continue;
 		}
 	}
-	if(!texture.empty())
-	{
-		blend = texture[0].mode != TEXTURE_BLEND_MODE_REPLACE;
-	}
-	return !texture.empty(); 
+	return !textures.empty(); 
 }
 
 
 Material::~Material()
 {
-	for(svector<Texture>::iterator it = texture.begin(); it != texture.end(); it++)
+	 // TODO: cleanup
+/*	for(svector<Texture*>::iterator it = textures.begin(); it != textures.end(); it++)
 	{
 		if(it->image) resImage.remove(it->image);
 	}
-	if(conf) resConfig.remove(conf);
+	if(conf) resConfig.remove(conf);*/
 }

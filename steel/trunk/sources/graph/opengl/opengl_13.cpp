@@ -59,10 +59,10 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 		// TODO check OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS
 		for(int i=0; i<texCount; i++)
 		{
-			const Texture &texture = *material->getTexture(i); // текущая текстура
+			const Texture *texture = material->getTexture(i); // текущая текстура
 
 			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
-				currentMode = texture.mode;
+				currentMode = texture->mode;
 			else
 			{
 				currentMode = inheritedMode;
@@ -70,9 +70,8 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 			}
 
 			// skip texture
-			if(texture.format == TEXTURE_FORMAT_BUMP_MAP && !GL_EXTENSION_DOT3
-				|| texture.format == TEXTURE_FORMAT_ENV && !GL_EXTENSION_TEXTURE_CUBE_MAP
-				|| texture.format == TEXTURE_FORMAT_NORMAL_MAP)
+			if(texture->format == TEXTURE_FORMAT_SHADER
+				|| texture->format == TEXTURE_FORMAT_REFLECT && !GL_EXTENSION_TEXTURE_CUBE_MAP)
 			{
 				inheritedMode = currentMode;
 				continue;
@@ -95,7 +94,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 				}
 			}
 
-			if(conf->geti("drawBump") && !lights.empty() && (i==0) && !e.blend && (texture.format == TEXTURE_FORMAT_BUMP_MAP || texture.format == TEXTURE_FORMAT_COLOR_MAP))
+/*			if(conf->geti("drawBump") && !lights.empty() && (i==0) && !e.blend && (texture.format == TEXTURE_FORMAT_BUMP_MAP || texture.format == TEXTURE_FORMAT_COLOR_MAP))
 			{
 				const TexCoords *coords = e.texCoords[i];
 
@@ -108,7 +107,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 
 				if(texture.format == TEXTURE_FORMAT_BUMP_MAP)
 				{
-					drawBump(e, coords, e.position, lights[j].position, bufId, currentTextureArb, texture.image);
+					drawBump(e, coords, e.position, e.lights[j].position, bufId, currentTextureArb, texture.image);
 					currentTextureArb +=2;
 				}
 				else
@@ -124,13 +123,13 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 					currentTextureArb += 3;
 				}
 			}
-			else
-			if(conf->geti("drawReflect") && texture.format == TEXTURE_FORMAT_ENV) // карта отражения
+			else*/
+			if(conf->geti("drawReflect") && texture->format == TEXTURE_FORMAT_REFLECT) // карта отражения
 			{ // загружаем текстуру
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 				glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
-				(this->*BindTexture)(texture.image, true); // Cube texture (auto detect from Image)
+				(this->*BindTexture)(static_cast<const TextureReflect*>(texture)->cube_map, true); // Cube texture (auto detect from Image)
 
 				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_NORMAL_MAP);
                 glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_NORMAL_MAP);
@@ -145,10 +144,10 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 				currentTextureArb += 1;
 			}
 			else
-			if(texture.format == TEXTURE_FORMAT_COLOR_MAP)
+			if(texture->format == TEXTURE_FORMAT_COLOR_MAP)
 			{
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-				if(BindTexture) (this->*BindTexture)(texture.image, true);
+				if(BindTexture) (this->*BindTexture)(static_cast<const TextureColorMap*>(texture)->color_map, true);
 
 				const TexCoords *coords = e.texCoords[i];
 				assert(coords->data.size() == e.vertexes->data.size(), "TexCoords.size != Vertex.size");
@@ -162,8 +161,8 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 				currentTextureArb++;
 			}
 
-			if(texture.format == TEXTURE_FORMAT_COLOR) 
-				glColor4fv(&texture.color.r);
+			if(texture->format == TEXTURE_FORMAT_COLOR)
+				glColor4fv(static_cast<const TextureColor*>(texture)->color.getfv());
 
 		}
 		

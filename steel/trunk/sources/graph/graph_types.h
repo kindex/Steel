@@ -26,16 +26,19 @@ struct color4f
 	float r,g,b,a;
 
 	void set(float R, float G, float B, float A) {r = R; g = G; b = B; a = A;}
+	void set(const v3 rgb) {r = rgb.x; g = rgb.y; b = rgb.z; a = 1.0f;}
 
 	color4f(void) {}
 	color4f(float R, float G, float B, float A): r(R), g(G), b(B), a(A) {}
+
+	const float *getfv(void) const { return &r; }
 };
 
 typedef enum
 {
 	LIGHT_NONE,
 	LIGHT_DIFFUSE, // omni?
-	LIGHT_TARGET
+	LIGHT_TARGET // spot
 } LightType;
 
 struct Light
@@ -43,16 +46,15 @@ struct Light
 	uid id;
 	LightType type;
 	v3 position;
-	v3 direction;
-	color4f color;
-	float distance, intensivity;
-	float rolloffFactor;
-	float rolloffDistance;
+	v3 direction; // orientation? angle, target point?
+	color4f color; // used only rgb
+	float distance, intensivity; // intensivity * color
+	float rolloffFactor; // ??
+	float rolloffDistance; // max distance without rolloff
 	bool castShadows;
-	// cube map, orientation
+	float angle; // LIGHT_TARGET light cone angle
+//	Image *cubeMap; // cube map
 };
-
-typedef svector<Light>		Lights;
 
 //	kind : 2d only
 class TexCoords: public BufferedElement

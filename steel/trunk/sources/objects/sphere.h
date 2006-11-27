@@ -31,13 +31,11 @@ public:
 	virtual ~Sphere(void);
 
 	bool isSuportingInterface(InterfaceId id) { return id == GraphEngine::interfaceId; }
-	
 	bool updateInformation(InterfaceId id, Engine* engine);
 	void bindEngine(InterfaceId, Engine*);
+
 	void ProcessGraph();
-
 	void DeleteTriangle(int n);
-
 };
 
 #endif

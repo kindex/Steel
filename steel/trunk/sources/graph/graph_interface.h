@@ -45,7 +45,15 @@ typedef svector<FaceMaterial>	FaceMaterials;
 например, как мета-шарики, система частиц
 */
 
-class GraphInterface: public BaseInterface, public ChildrenInterface, public Interface3D
+class GraphLightInterface
+{
+public:
+	virtual void addLight(Light*) = 0;
+	virtual void removeLight(uid) = 0;
+	virtual void updateLight(uid, Light*) = 0;
+};
+
+class GraphInterface: public BaseInterface, public ChildrenInterface, public Interface3D, public GraphLightInterface
 {
 public:
 	static const InterfaceId interfaceId = 0x100;
@@ -68,8 +76,6 @@ public:
 	virtual void	setFaceMaterials(const FaceMaterials*) = 0;
 	virtual void	setTexCoordsCount(unsigned int) = 0;
 	virtual void	setTexCoords(unsigned int texNumber, const TexCoords*) = 0;
-
-	virtual void 	setLights(const Lights*) = 0;
 };
 
 #endif

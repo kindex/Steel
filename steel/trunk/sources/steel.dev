@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel Engine
-UnitCount=136
+UnitCount=138
 Type=0
 Ver=1
 ObjFiles=
@@ -1308,9 +1308,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit137]
-FileName=objects\combiner\audio_object.h
+FileName=objects\light.cpp
 CompileCpp=1
-Folder=objects/combiner
+Folder=objects
 Compile=1
 Link=1
 Priority=1000
@@ -1318,9 +1318,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit138]
-FileName=res\audio\wav.cpp
+FileName=objects\light.h
 CompileCpp=1
-Folder=res/audio
+Folder=objects
 Compile=1
 Link=1
 Priority=1000

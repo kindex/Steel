@@ -35,21 +35,42 @@ typedef	enum
 	TEXTURE_FORMAT_NONE,
 	TEXTURE_FORMAT_COLOR_MAP,
 	TEXTURE_FORMAT_COLOR,
-	TEXTURE_FORMAT_ENV,
-	TEXTURE_FORMAT_NORMAL_MAP,
-	TEXTURE_FORMAT_BUMP_MAP
+	TEXTURE_FORMAT_REFLECT,
+	TEXTURE_FORMAT_SHADER
 } TextureFormat;
 
 // одна текстура. Ипользуется при мультитекстутированию
-class Texture
+struct Texture
 {
-public:
-	Image *image;
-
 	TextureBlendMode	mode;
 	TextureFormat		format;
-	color4f				color;
+
+	TextureBlendMode getMode(void) const { return mode; }
+	TextureFormat getTextureFormat(void) const { return format; }
 };
+
+struct TextureColorMap: public Texture
+{
+	Image *color_map;
+	Image *normal_map;
+};
+
+struct TextureReflect: public Texture
+{
+	Image *cube_map;
+};
+
+
+struct TextureColor: public Texture
+{
+	color4f color;
+};
+
+struct TextureShader: public Texture
+{
+	Config	*conf;
+};
+
 
 // материал задаёт множество текстур и типы их наложения
 // или шейдеры для рендеринга моделей
@@ -57,9 +78,8 @@ class Material
 {
 protected:
 	Config *conf;
-	bool	blend, shader;
-	svector<Texture> texture;
-	std::string directory;
+	bool	blend;
+	svector<Texture*> textures;
 
 public:
 	Material(void): conf(NULL) {}
@@ -70,17 +90,10 @@ public:
 	// загружает материал из конфига
 	bool InitFromConfig(Config *config);
 	// получить текстуру с номером number
-	Texture *getTexture(int number) { return &texture[number]; }
+	Texture *getTexture(int number) { return textures[number]; }
+	bool isBlending(void) { return blend; }
 	// получить количество текстур
-	int getTextureCount(void) const { return texture.size();}
-	// указана ли в конфиге материала шейдер для рендеринга
-	bool isShader(void) { return shader; }
-	// получить час конфиг
-	const Config *getConfig(void) const { return conf; };
-	// директория, откуда был загружен материал. 
-	// Нужна для относительного отсчёта файлов, указанных в конфиге
-	std::string getDirectory(void) { return directory;}
-
+	int getTextureCount(void) const { return textures.size();}
 };
 
 #endif

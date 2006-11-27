@@ -201,7 +201,7 @@ double Config::getd(const std::string &path, const double _default) const
 		return value->returnd(_default);
 }
 
-const v3 Config::getv3(const std::string &path, const v3 _default) const
+v3 Config::getv3(const std::string &path, const v3 _default) const
 {
 	const Config *value = find(path);
 	if (value == NULL)

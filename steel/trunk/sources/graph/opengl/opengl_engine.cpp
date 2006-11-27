@@ -31,6 +31,33 @@
 
 using namespace std;
 
+void OpenGL_Engine::addLight(Light* light)
+{
+	if(currentShadow != NULL)
+	{
+		LightShadow *shadow = new LightShadow();
+		shadow->light = light;
+		shadow->shadow = currentShadow;
+		shadow->object = currentShadow->object;
+		shadow->changed = true;
+
+		lights[light->id] = shadow;
+	}
+}
+
+void OpenGL_Engine::removeLight(uid id)
+{
+	map<uid, LightShadow*>::iterator it = lights.find(id);
+	delete it->second;
+	lights.erase(it);
+}
+
+void OpenGL_Engine::updateLight(uid id, Light* light)
+{
+	map<uid, LightShadow*>::iterator it = lights.find(id);
+	it->second->light = light;
+	it->second->changed = true;
+}
 
 bool OpenGL_Engine::setCurrentObject(GameObject* object)
 {
@@ -151,14 +178,6 @@ void OpenGL_Engine::setTexCoords(unsigned int texNumber, const TexCoords* coords
 	}
 }
 
-void OpenGL_Engine::setLights(const Lights* lights)
-{
-	if(currentShadow != NULL)
-	{
-		GS(currentShadow)->lights = lights;
-	}
-}
-
 /*
 Сердце Графического движка.
 Отвечает за вывод графичесткого элемента.
@@ -237,7 +256,6 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 {
 	// TODO repair DC 
 
-	lights.clear();
 	total.vertexCount = 0;
 	total.triangleCount = 0;
 	total.objectCount = 0;
@@ -246,6 +264,19 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 
 	for(int i=0; i < size; i++)
 		prepare(getShadow(objects[i]), globalTime, time); /* Update vertexes, faces, ights */
+
+	for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
+	{
+		jt->second->position = jt->second->shadow->position * jt->second->light->position;
+	}
+
+	for(svector<Shadow*>::iterator it = shadows.begin(); it != shadows.end(); it++)
+	{
+		GraphShadow &shadow = *GS(*it);
+		shadow.lights.clear();
+		for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
+			shadow.lights.push_back(jt->second);
+	}
 
 
 //	if(!ARB_multitexture_supported) 
