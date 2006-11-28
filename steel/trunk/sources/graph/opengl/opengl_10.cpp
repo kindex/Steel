@@ -16,10 +16,79 @@
 #include "opengl_engine.h"
 #include "gl/libext.h"
 
-// нарисовать множество полигонов с указанным материалом / Blend
-void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total)
 {
-	if(material)
+	if(material != NULL)
+	{
+		total.objectCount++;
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
+
+		if(BindTexture != NULL && material->color_map.image != NULL) 
+			(this->*BindTexture)(material->color_map.image, true);
+		else
+			glColor4fv(material->color.getfv());
+
+		if(!lights.empty())
+		{
+			glEnable(GL_LIGHTING);
+			for(unsigned int i = 0; i<e.lights.size() && i<GL_MAX_LIGHTS; i++)
+			{
+				glEnable(GL_LIGHT0 + i);
+				float pos[4];
+
+				glMatrixMode(GL_MODELVIEW);
+				glPushMatrix();
+				glLoadIdentity();
+				pos[0] = e.lights[i]->position.x;
+				pos[1] = e.lights[i]->position.y;
+				pos[2] = e.lights[i]->position.z;
+				pos[3] = 0.0f;
+				glLightfv(GL_LIGHT0 + i, GL_POSITION, (float*)pos);
+				glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, e.lights[i]->light->color.getfv());
+				// TODO: light parameters
+				glPopMatrix();
+			}
+		}
+
+		const TexCoords *texCoords = NULL;
+
+		if(material->color_map.image != NULL)
+		{
+			if(material->color_map.texCoordsUnit < e.texCoords.size())
+				texCoords = e.texCoords[material->color_map.texCoordsUnit];
+			else
+				if(!e.texCoords.empty())
+					texCoords = e.texCoords[0];
+		}
+
+		glMatrixMode(GL_TEXTURE);	glLoadIdentity();
+		if(texCoords != NULL)
+		{
+			glScalef(		material->color_map.texCoordsScale.x,		material->color_map.texCoordsScale.y,		material->color_map.texCoordsScale.z); 
+			glTranslatef(	material->color_map.texCoordsTranslation.x,	material->color_map.texCoordsTranslation.y,	material->color_map.texCoordsTranslation.z); 
+			glRotatef(material->color_map.texCoordsRotation/(float)(M_PI)*180.0f, 0.0f, 0.0f, 1.0f); 
+		}
+
+		if(DrawTriangles != NULL) (this->*DrawTriangles)(e, triangles, texCoords,  total);
+		if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
+
+		if(texCoords != NULL)
+		{
+			glMatrixMode(GL_TEXTURE);	glLoadIdentity();
+		}
+		glPopClientAttrib();
+	   	glPopAttrib();
+		return true;
+	}
+	return false;
+}
+
+
+// нарисовать множество полигонов с указанным материалом / Blend
+/*void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+{
+	if(material != NULL)
 	{
 		total.objectCount++;
 
@@ -107,7 +176,7 @@ void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Trian
 	   	glPopAttrib();
 	}
 }
-
+*/
 // нарисовать множество полигонов с указанным материалом
 void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {

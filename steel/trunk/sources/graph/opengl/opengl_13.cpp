@@ -22,9 +22,9 @@
 
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total)
 {
-	if(material != NULL && GL_EXTENSION_MULTITEXTURE)
+/*	if(material != NULL && GL_EXTENSION_MULTITEXTURE)
 	{
 		svector<uid> buffersToDelete;
 
@@ -124,7 +124,7 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 				}
 			}
 			else*/
-			if(conf->geti("drawReflect") && texture->format == TEXTURE_FORMAT_REFLECT) // карта отражения
+/*			if(conf->geti("drawReflect") && texture->format == TEXTURE_FORMAT_REFLECT) // карта отражения
 			{ // загружаем текстуру
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
@@ -175,6 +175,8 @@ void OpenGL_Engine::DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Trian
 		glPopClientAttrib();
 	   	glPopAttrib();
 	}
+*/
+	return false;
 }
 
 

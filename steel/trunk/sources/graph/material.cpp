@@ -17,77 +17,72 @@
 #include "../common/utils.h"
 using namespace std;
 
-Material::Material(const std::string &matFileName)
+Material *getMaterialClass(std::string _class)
 {
-	InitFromConfig(resConfig.add(matFileName + ".mat"));
+	if (_class == "std") return new MaterialStd;
+//	if (_class == "shader") return new MaterialShader;
+
+	return NULL;
 }
 
 
-bool Material::InitFromConfig(Config *_conf)
+bool MaterialStd::InitFromConfig(Config *_conf)
 {
 	if(_conf == NULL) return false;
 	conf = _conf;
 
 	blend = conf->geti("blend") > 0;
 
-	textures.clear();
-	ConfigArray *textureConfig = conf->getArray("textures");
+/*	TextureBlendMode mode;
+	string sMode = conf->gets("mode");
+	mode = TEXTURE_BLEND_MODE_NONE;
+	if(sMode == "")	mode = TEXTURE_BLEND_MODE_REPLACE;
+	if(sMode == "+")mode = TEXTURE_BLEND_MODE_ADD;
+	if(sMode == "*")mode = TEXTURE_BLEND_MODE_MUL;
+	if(sMode == "blend")mode = TEXTURE_BLEND_MODE_BLEND;
 
-	if (textureConfig != NULL)
-	for EACH(ConfigArray, *textureConfig, it)
-	{
-		Config *texconf = *it;
-		string format = texconf->gets("format");
-
-		if(format.empty()) break;
-
-		TextureBlendMode mode;
-		string sMode = texconf->gets("mode");
-		mode = TEXTURE_BLEND_MODE_NONE;
-		if(sMode == "")	mode = TEXTURE_BLEND_MODE_REPLACE;
-		if(sMode == "+")mode = TEXTURE_BLEND_MODE_ADD;
-		if(sMode == "*")mode = TEXTURE_BLEND_MODE_MUL;
-		if(sMode == "blend")mode = TEXTURE_BLEND_MODE_BLEND;
-
-		if(format == "color_map")
-		{
-			TextureColorMap *texture = new TextureColorMap;
-			texture->mode = mode;
-			texture->format = TEXTURE_FORMAT_COLOR_MAP;
-
-			texture->color_map = resImage.add("/" + texconf->getPath("color_map"));
-			texture->normal_map = resImage.add("/" + texconf->getPath("normal_map"));
-
-			if(texture->color_map != NULL)
-			{
-				textures.push_back(texture);
-				continue;
-			}
-		}
-/*		if(format == "sky")
-		{
-			m.image = resImage.add(conf->gets("image" + IntToStr(i)));
-
-			if(m.image)
-			{
-				m.format = TEXTURE_FORMAT_ENV;
-				texture.push_back(m);
-			}
-		}
+	texture->format = TEXTURE_FORMAT_COLOR_MAP;
 */
-		if(format == "color")
-		{
-			TextureColor *texture = new TextureColor;
-			texture->mode = mode;
-			texture->format = TEXTURE_FORMAT_COLOR_MAP;
-			texture->color.set(texconf->getv3("color", v3(1.0f, 0.0f, 0.0f)));
-			textures.push_back(texture);
-			continue;
-		}
-	}
-	return !textures.empty(); 
+	string name;
+
+	color_map.InitFromConfig(conf->find("color_map"));
+	color_map2.InitFromConfig(conf->find("color_map2"));
+	normal_map.InitFromConfig(conf->find("normal_map"));
+
+	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f)));
+
+	return true; 
 }
 
+bool MaterialStd::Texture::InitFromConfig(Config *config)
+{
+	if(config == NULL) return false;
+	string name = "/" + config->getPath("image"); 
+	if(!name.empty()) image = resImage.add(name);
+	
+	if(image == NULL)
+	{
+		mode = TEXTURE_MODE_NONE;
+		return false;
+	}
+
+	texCoordsUnit		= config->geti ("texCoordsUnit", 0);
+	texCoordsScale		= config->getv3("texCoordsScale", v3(1.0f, 1.0f, 1.0f));
+	texCoordsRotation	= config->getf ("texCoordsRotation", 0.0f);
+	texCoordsTranslation= config->getv3("texCoordsTranslation", v3(0.0f, 0.0f, 0.0f));
+
+	string m = config->gets("mode", "+");
+	if(m == "+") mode = TEXTURE_MODE_ADD;
+	else if(m == "*") mode = TEXTURE_MODE_MUL;
+	else if(m == "blend") mode = TEXTURE_MODE_BLEND;
+	else mode = TEXTURE_MODE_NONE;
+
+	return image != NULL;
+}
+
+MaterialStd::MaterialStd(void): 
+	Material(MATERIAL_STD)
+{}
 
 Material::~Material()
 {
@@ -97,4 +92,21 @@ Material::~Material()
 		if(it->image) resImage.remove(it->image);
 	}
 	if(conf) resConfig.remove(conf);*/
+}
+
+
+Material *createMaterial(Config* conf)
+{
+	if(conf == NULL) return NULL;
+
+	Material *material = getMaterialClass(conf->gets("class"));
+	if(material == NULL) return NULL;
+
+	material->InitFromConfig(conf);
+	return material;
+}
+
+Material *createMaterial(std::string path)
+{
+	return createMaterial(resConfig.add(path));
 }

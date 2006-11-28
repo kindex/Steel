@@ -17,6 +17,12 @@
 #include "opengl_engine.h"
 #include "gl/libext.h"
 
+void OpenGL_Engine::CleanupDrawTriangles_OpenGL15()
+{
+	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+	glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
+}
+
 // нарисовать множество полигонов с указанным материалом / VBO
 void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total)
 {

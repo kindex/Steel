@@ -15,7 +15,7 @@
 #include "opengl_glsl.h"
 #include "../../res/res_main.h"
 
-bool GLSL::init(Texture *_texture)
+bool GLSL::init(MaterialShader *)
 {
 	if(!GL_EXTENSION_GLSL) return false;
 

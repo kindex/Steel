@@ -11,8 +11,8 @@
 		GameObject protottype
 		От этого класса наследуются все игровые объекты.
  ************************************************************/
-#ifndef INTERFACE_H
-#define INTERFACE_H
+#ifndef GAME_OBJECT_H
+#define GAME_OBJECT_H
 
 #include "../steel.h"
 

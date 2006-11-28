@@ -14,9 +14,23 @@
 #include "../../steel.h"
 
 #include "config_parser.h"
+#include "../text/text_string.h"
 #include <math.h>
 
 using namespace std;
+
+Config* parse(std::string str)
+{
+	Config *obj = NULL;
+	TextString file;
+	file.Setup(str);
+	
+	ConfigParser* parser = new ConfigParser();
+	obj = parser->Parse(&file);
+	delete parser;
+
+	return obj;
+}
 
 Config*	ConfigParser::Parse(Text *_file)
 {

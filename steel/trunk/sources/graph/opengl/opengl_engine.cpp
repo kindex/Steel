@@ -31,6 +31,49 @@
 
 using namespace std;
 
+void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+{
+	if(material != NULL)
+	{
+		switch(material->getMaterialType())
+		{
+		case MATERIAL_STD:	
+			if(DrawFill_MaterialStd != NULL)
+			{
+				if((this->*DrawFill_MaterialStd)(e, triangles, static_cast<MaterialStd*>(material), total))
+					return;
+			}
+			break;
+		}
+
+		DrawFill_Material(e, triangles, material->backup, total);
+	}
+}
+
+OpenGL_Engine::OpenGL_Engine(): 
+	BindTexture(NULL), 
+	DrawFill_MaterialStd(NULL), 
+	DrawTriangles(NULL),
+	CleanupDrawTriangles(NULL),
+	BindTexCoords(NULL),
+	BindTexCoords3f(NULL),
+	DrawWire(NULL),
+	DrawLines(NULL),  
+	DrawNormals(NULL),
+	DrawVertexes(NULL),
+	DrawAABB(NULL),
+	
+	windowInformation(NULL),
+
+	CreateOpenGL_Window(NULL),
+	RepairOpenGL_Window(NULL),
+	DeleteOpenGL_Window(NULL),
+	setCaptionOpenGL_Window(NULL),
+	FlushOpenGL_Window(NULL),
+	currentObject(NULL), currentShadow(NULL) 
+{}
+
+
 void OpenGL_Engine::addLight(Light* light)
 {
 	if(currentShadow != NULL)
@@ -202,9 +245,9 @@ void OpenGL_Engine::process(GraphShadow *e, steel::time globalTime, steel::time 
 	m[12] = e->position.data.vector.x;				m[13] = e->position.data.vector.y;				m[14] = e->position.data.vector.z;				m[15] = 1;
 	glLoadMatrixf(m);
 
-	if(conf->geti("drawFace") && e->faceMaterials != NULL && DrawFill != NULL)
+	if(conf->geti("drawFace") && e->faceMaterials != NULL)
 		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
-			(this->*DrawFill)(*e, e->faceMaterials->at(i).triangles, e->faceMaterials->at(i).material, total);
+			DrawFill_Material(*e, e->faceMaterials->at(i).triangles, e->faceMaterials->at(i).material, total);
 
 	if(conf->geti("drawWire") && e->faceMaterials != NULL && DrawWire != NULL)
 		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
@@ -457,7 +500,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	log_msg("graph opengl opengl_info", "Using OpenGL renderer version: " + IntToStr(version));
 
 	BindTexture = &OpenGL_Engine::BindTexture_OpenGL10;
-	DrawFill = &OpenGL_Engine::DrawFill_OpenGL10;
+	DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL10;
 	DrawTriangles = &OpenGL_Engine::DrawTriangles_OpenGL10;
 	DrawWire = &OpenGL_Engine::DrawWire_OpenGL10;
 	DrawLines = &OpenGL_Engine::DrawLines_OpenGL10;
@@ -478,7 +521,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	if(version >= 13)
 	{
 		if(GL_EXTENSION_MULTITEXTURE)
-			DrawFill = &OpenGL_Engine::DrawFill_OpenGL13;
+			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL13;
 	}
 
 	if(version >= 15)
@@ -486,6 +529,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		if(GL_EXTENSION_VBO)
 		{
 			DrawTriangles = &OpenGL_Engine::DrawTriangles_OpenGL15;
+			CleanupDrawTriangles = &OpenGL_Engine::CleanupDrawTriangles_OpenGL15;
 			BindTexCoords = &OpenGL_Engine::BindTexCoords_OpenGL15;
 			BindTexCoords3f = &OpenGL_Engine::BindTexCoords3f_OpenGL15;
 		}
@@ -494,7 +538,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	if(version >= 20)
 	{
 		if(GL_EXTENSION_GLSL)
-			DrawFill = &OpenGL_Engine::DrawFill_OpenGL20;
+			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
 	}
 
 

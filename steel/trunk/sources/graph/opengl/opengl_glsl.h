@@ -24,16 +24,16 @@ class GLSL
 protected:
 	GLuint programId, vertexShaderId, fragmentShaderId;
 	Text *vertexShader, *fragmentShader;
-	Texture *texture;
+	MaterialShader *material;
 	const Config	*conf;
 public:
 	GLSL(void): programId(0), vertexShaderId(0), fragmentShaderId(0),
-		vertexShader(NULL), fragmentShader(NULL), texture(NULL), conf(NULL) {};
+		vertexShader(NULL), fragmentShader(NULL), material(NULL), conf(NULL) {};
 	~GLSL(void);
 
 	bool LoadShader(GLuint shader, Text *text);
 
-	bool init(Texture*);
+	bool init(MaterialShader*);
 	bool isError(void);
 	void loadLog(GLuint object);
 	void bind(void);

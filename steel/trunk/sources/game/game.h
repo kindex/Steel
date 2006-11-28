@@ -19,11 +19,10 @@
 #include "../steel.h"
 #include "../res/res.h"
 
-#include "../objects/game_obj.h"
-#include "../objects/group.h"
-
 #include "../graph/graph_engine.h"
 #include "../audio/audio_engine.h"
+
+#include "../objects/light.h"
 
 
 class Game; // forward declaration, cross-use
@@ -69,18 +68,16 @@ protected:
 
 // World - custom objects
  	GameObject	*world;
+ 	GameLight	*light;
 //	GraphHelper	*physicHelper;
 
 public:
-	Steel(void):
-	input(NULL),	conf(NULL),
-	graphEngine(NULL),	world(NULL)
-	{ } 
+	Steel(void);
 
 	virtual bool init(Config *_conf, Input *_input, std::string params);
 	virtual void deinit(void);
 
-	void processKeyboard();
+	void processKeyboard(void);
 	bool executeScript(std::string script);
 	bool executeCommand(std::string command);
 
@@ -94,7 +91,7 @@ public:
 	void process(steel::time globalTime, steel::time time);
 //	int getCollisionCount() { return physicEngine->total.collisionCount; }
 
-	bool isAlive() {return _alive;} 
+	bool isAlive(void) {return _alive;} 
 	void setspeed(float _speed, steel::time _time) {speed = _speed; time = _time; } 
 	bool createObject(void);
 

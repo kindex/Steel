@@ -25,6 +25,8 @@
 #define LOG_PARSE_ERROR(message)  \
 	errors.push_back(ParseError(std::string(message), std::string(__FUNCTION__), line, charNumber))
 
+Config* parse(std::string);
+
 struct ConfigTag;
 
 class ConfigParser

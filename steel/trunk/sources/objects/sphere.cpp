@@ -94,7 +94,7 @@ Sphere::Sphere()
 	
 	faces = new FaceMaterials(1);
 
-	faces->at(0).material = new Material("/sphere/sphere");
+	faces->at(0).material = createMaterial("/sphere/sphere");
 	faces->at(0).triangles = new Triangles;
 	faces->at(0).triangles->data.resize(height*radius*2);
 	faces->at(0).triangles->setId(objectIdGenerator.genUid());

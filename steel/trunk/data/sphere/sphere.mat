@@ -1,12 +1,9 @@
 #
 {
-
-textures = 
-(
-{
-format='color_map'
-color_map='warn'
+class = 'std'
+color_map = 
+{ 
+	image = 'warn'
 }
-)
 }
 

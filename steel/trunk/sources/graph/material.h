@@ -19,6 +19,79 @@
 #include "graph_types.h"
 #include "../res/config/config.h"
 
+typedef enum
+{
+	MATERIAL_NONE,
+	MATERIAL_STD,
+	MATERIAL_SHADER,
+} MaterialType;
+
+
+// материал задаёт множество текстур и типы их наложения
+// или шейдеры для рендеринга моделей
+class Material
+{
+public:
+//protected:
+	Config *conf;
+	bool	blend;
+	MaterialType type;
+	Material *backup;
+
+public:
+	Material(void): conf(NULL), backup(NULL) {}
+	Material(MaterialType _type): conf(NULL), backup(NULL), type(_type) {}
+	virtual ~Material(void);
+
+	// загружает материал из конфига
+	virtual bool InitFromConfig(Config *config) = 0;
+	// получить текстуру с номером number
+	bool isBlending(void) const { return blend; }
+	MaterialType getMaterialType(void) const { return type; }
+};
+
+typedef enum
+{
+	TEXTURE_MODE_NONE,
+	TEXTURE_MODE_ADD,
+	TEXTURE_MODE_MUL,
+	TEXTURE_MODE_BLEND
+} TextureMode;
+
+class MaterialStd: public Material
+{
+public:
+
+	struct Texture
+	{
+		Image *image;
+		TextureMode mode;
+		unsigned int texCoordsUnit;
+		v3 texCoordsScale;
+		float texCoordsRotation;
+		v3 texCoordsTranslation;
+
+		Texture(void): image(NULL), texCoordsUnit(0) {}
+		bool InitFromConfig(Config *config);
+	};
+
+	bool InitFromConfig(Config *config);
+	MaterialStd(void);
+
+//private:
+	Texture color_map, color_map2, normal_map;
+	color4f color;
+};
+
+class MaterialShader: public Material
+{
+};
+
+class MaterialReflect: public Material
+{
+
+};
+
 //тип смешивания двух текстур
 typedef	enum
 {
@@ -29,71 +102,13 @@ typedef	enum
 	TEXTURE_BLEND_MODE_BLEND
 } TextureBlendMode;
 
-// фрмат текстуры
-typedef	enum
+class MaterialCustom: public Material
 {
-	TEXTURE_FORMAT_NONE,
-	TEXTURE_FORMAT_COLOR_MAP,
-	TEXTURE_FORMAT_COLOR,
-	TEXTURE_FORMAT_REFLECT,
-	TEXTURE_FORMAT_SHADER
-} TextureFormat;
 
-// одна текстура. Ипользуется при мультитекстутированию
-struct Texture
-{
-	TextureBlendMode	mode;
-	TextureFormat		format;
-
-	TextureBlendMode getMode(void) const { return mode; }
-	TextureFormat getTextureFormat(void) const { return format; }
 };
 
-struct TextureColorMap: public Texture
-{
-	Image *color_map;
-	Image *normal_map;
-};
-
-struct TextureReflect: public Texture
-{
-	Image *cube_map;
-};
-
-
-struct TextureColor: public Texture
-{
-	color4f color;
-};
-
-struct TextureShader: public Texture
-{
-	Config	*conf;
-};
-
-
-// материал задаёт множество текстур и типы их наложения
-// или шейдеры для рендеринга моделей
-class Material
-{
-protected:
-	Config *conf;
-	bool	blend;
-	svector<Texture*> textures;
-
-public:
-	Material(void): conf(NULL) {}
-	Material(Config *conf): conf(NULL) { InitFromConfig(conf); }
-	Material(const std::string &matFileName);
-	~Material(void);
-
-	// загружает материал из конфига
-	bool InitFromConfig(Config *config);
-	// получить текстуру с номером number
-	Texture *getTexture(int number) { return textures[number]; }
-	bool isBlending(void) { return blend; }
-	// получить количество текстур
-	int getTextureCount(void) const { return textures.size();}
-};
+Material *getMaterialClass(std::string _class);
+Material *createMaterial(Config*);
+Material *createMaterial(std::string);
 
 #endif

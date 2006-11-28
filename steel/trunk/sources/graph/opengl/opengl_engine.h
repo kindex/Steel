@@ -140,9 +140,9 @@ protected:
 protected:
 	// procedure variables
 	bool (OpenGL_Engine::*BindTexture)(Image *image, bool enable);
-	void (OpenGL_Engine::*DrawFill)(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	bool (OpenGL_Engine::*DrawFill_MaterialStd)(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
-
+	void (OpenGL_Engine::*CleanupDrawTriangles)(void);
 	void (OpenGL_Engine::*BindTexCoords)(const TexCoords *coords);
 	void (OpenGL_Engine::*BindTexCoords3f)(const TexCoords3f *coords);
 
@@ -154,7 +154,7 @@ protected:
 
 	// OpenGL 1.0
 	bool BindTexture_OpenGL10(Image *image, bool enable);
-	void DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	bool DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void DrawWire_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
@@ -171,16 +171,21 @@ protected:
 	void BindTexCoords3f_OpenGL11(const TexCoords3f *coords);
 
 	// OpenGL 1.3
-	void DrawFill_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	bool DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 
 	// OpenGL 1.5
 	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void CleanupDrawTriangles_OpenGL15(void);
 	void BindTexCoords_OpenGL15(const TexCoords *coords);
 	void BindTexCoords3f_OpenGL15(const TexCoords3f *coords);
 
 	// OpenGL 2.0
-	void DrawFill_OpenGL20(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+	bool DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 	GLSL *BindShader(Material *shader);
+
+	// Uni
+	void DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+
 
 	// Stuff to delete
 
@@ -206,28 +211,7 @@ protected:
 	 steel::time time;
 
 public:
-	OpenGL_Engine(): 
-		BindTexture(NULL), 
-		DrawFill(NULL), 
-		DrawTriangles(NULL),
-		BindTexCoords(NULL),
-		BindTexCoords3f(NULL),
-		DrawWire(NULL),
-		DrawLines(NULL),  
-		DrawNormals(NULL),
-		DrawVertexes(NULL),
-		DrawAABB(NULL),
-
-		
-		windowInformation(NULL),
-
-		CreateOpenGL_Window(NULL),
-		RepairOpenGL_Window(NULL),
-		DeleteOpenGL_Window(NULL),
-		setCaptionOpenGL_Window(NULL),
-		FlushOpenGL_Window(NULL),
-		currentObject(NULL), currentShadow(NULL) 
-		{}
+	OpenGL_Engine(void);
 
 	virtual void processCamera(void);
 	virtual bool init(Config* _conf, Input *input);

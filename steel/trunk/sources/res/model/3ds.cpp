@@ -298,11 +298,7 @@ bool Model_3DS::init(const std::string name, const std::string dir)
 
 		string mat = it->name;
 		
-		Config *materialConfig = resConfig.add(mat + ".mat");
-		if(materialConfig != NULL)
-			it->material = new Material(materialConfig);
-		else
-			it->material = NULL;
+		it->material = createMaterial(resConfig.add(mat + ".mat"));
 	}
 
 	return true;

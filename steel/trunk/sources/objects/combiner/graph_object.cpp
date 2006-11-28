@@ -61,7 +61,7 @@ bool GraphObjectMesh::InitFromConfig(Config *conf)
 
 	Material *m = NULL;
 	if(materialConfig != NULL)
-		m = new Material(materialConfig);
+		m = createMaterial(materialConfig);
 
 	int vert = vertexesConfig->size();
 	int trg  = trianglesConfig->size();
@@ -103,7 +103,7 @@ bool GraphObjectBox::InitFromConfig(Config *conf)
 
 	Material *m = NULL;
 	if(materialConfig != NULL)
-		m = new Material(materialConfig);
+		m = createMaterial(materialConfig);
 
 	int vert = 6*4;
 	int trg  = 12;

@@ -43,6 +43,7 @@ typedef enum
 
 struct Light
 {
+
 	uid id;
 	LightType type;
 	v3 position;
@@ -54,6 +55,8 @@ struct Light
 	bool castShadows;
 	float angle; // LIGHT_TARGET light cone angle
 //	Image *cubeMap; // cube map
+
+	Light() { id = objectIdGenerator.genUid(); }
 };
 
 //	kind : 2d only

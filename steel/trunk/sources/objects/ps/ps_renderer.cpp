@@ -117,7 +117,7 @@ void SpriteRenderer::initSprites(int begin, int end)
 
 bool SpriteRenderer::initParticles()
 {
-	material = new Material(conf->find("material"));
+	material = createMaterial(conf->find("material"));
 
 	std::string salign = conf->gets("align", "screen"); // align;
 	if(salign == "screen")	align = SPRITE_ALIGN_SCREEN; else

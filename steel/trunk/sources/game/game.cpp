@@ -23,6 +23,7 @@
 #include "../objects/scene.h"
 #include "../audio/openal_engine.h"
 //#include "../objects/kar98k.h"
+#include "../res/config/config_parser.h"
 
 using namespace std;
 
@@ -71,6 +72,8 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		return false;
 	}
 	
+	light = new GameLight();
+	light->InitFromConfig(parse("{ class ='light'; origin = (0 0 0) }"));
 	
 
 // ******************* PHYSIC **************************
@@ -92,6 +95,12 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 
 	return true;
 }
+
+Steel::Steel(void):
+	input(NULL),	conf(NULL),
+	graphEngine(NULL),	world(NULL),
+	light(NULL)
+{} 
 
 
 void Steel::handleEventKeyDown(std::string key)
@@ -239,6 +248,8 @@ void Steel::bind(GraphEngine *engine)
 	graphEngine = engine;
 	if(world != NULL)
 		engine->inject(world);
+	if(light != NULL)
+		engine->inject(light);
 }
 
 void Steel::bind(AudioEngine *engine)
@@ -283,6 +294,9 @@ void Steel::bind(AudioEngine *engine)
 void Steel::draw(GraphEngine *graph)
 {
 	direction.normalize();
+
+	if(light != NULL)
+		light->setPosition(eye);
 
 	graph->camera.setup(eye, direction);
 	graph->processCamera();

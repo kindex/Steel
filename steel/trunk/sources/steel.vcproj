@@ -1142,6 +1142,14 @@
 				RelativePath="..\data\1.scene"
 				>
 			</File>
+			<Filter
+				Name="sphere"
+				>
+				<File
+					RelativePath="..\data\sphere\sphere.mat"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="conf"

@@ -3,7 +3,7 @@
 class = 'scene'
 objects = 
 (
-	{ //0
+/*	{ //0
 		class = 'combiner'
 		origin = (0 0 0)
 		graph = {
@@ -13,7 +13,7 @@ objects =
 			triangles = ( (0 2 1) (0 1 2) )
 			material = [sphere/sphere.mat#] {}
 			}
-/*		audio = 
+		audio = 
 		{
 			class = 'SimpleSound'
 			position = (0 0 0);
@@ -24,14 +24,14 @@ objects =
 			rolloffFactor = 0.0;
 			sourceRelative = 0.0;
 		} // audio
-		*/
+		
 	}
 	{ //1
 	class = 'combiner'
 	origin = (0 0 1)
 	graph = [#objects[0].graph] {}
 	}
-
+*/
 	
 	{//2
 	class = 'combiner'
@@ -41,26 +41,40 @@ objects =
 		size = 0.5
 		material =  
 			{
+				class = 'std'
 				blend = 0
-				textures = 
-				(
-					{
-						format = 'color_map'
-						color_map = '/box/boxes/box1_side_handle_d'
-						normal_map = '/box/tr_wall_outside_04_local'
-					}
-				)
+				color_map =
+				{ 
+					image = '/box/boxes/box1_side_handle_d'
+					texCoordsRotation = 0.0
+					texCoordsScale = (1 1 1)
+					texCoordsTranslation = (0 0 0)
+				}
+				color_map2 = // microtexture
+				{ 
+					mode = '+'
+//					image = '/box/boxes/box1_side_handle_d'
+					texCoordsScale = (0.01 0.01 1)
+				}
+				normal_map = 
+				{
+					image = '/box/tr_wall_outside_04_local'
+				}
+				normal_map2 = 
+				{
+					image = '/box/tr_wall_outside_04_local'
+				}
 			}
 		}
 	}
 
-	{//3
+/*	{//3
 	class = 'combiner'
 	origin = (0 1 0.5)
 	graph = [#objects[2].graph] {}
 	}
-
-	{//4
+*/
+/*	{//4
 	class = 'ps'
 	emitter = 
 		{
@@ -81,6 +95,7 @@ objects =
 			} // material
 		} // emitter
 	} // ps
+*/
 	{
 	class = 'combiner'
 	origin = (0 0 -21)
@@ -92,9 +107,9 @@ objects =
 	
 	} // combiner
 
-	{
+/*	{
 		class = 'light'
 		origin = (3 3 1)
-	}
+	}*/
 ) // objects
 } // scene
