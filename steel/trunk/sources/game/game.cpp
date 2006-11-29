@@ -22,7 +22,6 @@
 #include "../res/res_main.h"
 #include "../objects/scene.h"
 #include "../audio/openal_engine.h"
-//#include "../objects/kar98k.h"
 #include "../res/config/config_parser.h"
 
 using namespace std;
@@ -77,16 +76,6 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 	
 
 // ******************* PHYSIC **************************
-//	physicHelper  = new GraphHelper;
-
-//	physicEngine = new PhysicEngine3D;
-//	physicEngine = new PhysicEngineSteel;
-
-/*	if(!physicEngine->init(conf->find("physic"))) return 1;
-	this->bindPhysicEngine();*/
-
-	g = conf->getv3("g");
-//	physicEngine->setGravitation(g);
 
 	_alive = true;
 	paused = conf->geti("paused", 0) == 1;
@@ -229,20 +218,6 @@ void Steel::process(steel::time globalTime, steel::time time)
 	}
 }
 
-/*v3	Game::getGlobalPosition(std::string obj)
-{
-	matrix4 global;
-	GameObj *g = tag[obj];
-	while(g)
-	{
-		matrix4 local = g->getPMatrix();
-		global = local*global;
-		g = g->getParent();
-	}
-	return global*v3();
-}
-*/
-
 void Steel::bind(GraphEngine *engine)
 {
 	graphEngine = engine;
@@ -314,13 +289,6 @@ void Steel::insonify(AudioEngine *_audioEngine)
 
 void Steel::deinit()
 {
-/*	if(physicEngine)
-	{
-		physicEngine->deinit();
-		delete physicEngine;
-		physicEngine = NULL;
-	}
-	*/
 }
 
 
