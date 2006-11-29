@@ -1,0 +1,1602 @@
+﻿[2006-06-12 19:38:42] *** .Kind has changed the chat topic to "Steel Engine" ***
+[2006-06-12 19:40:35] .Kind says: предлагаю следующий график: утром и днём отдыхаемм
+с 18 до 22 пишем движок, с 22 до 24 играем а потом спать
+[2006-06-12 19:41:20] DEF says: o, vernulsja
+[2006-06-12 19:41:32] DEF says: davaj addoni stavj, nado ferrari obkatatj
+[2006-06-12 19:42:10] DEF says: vrode ne plohoj grafik, tolko s takim grafikom mi daleko ne uedem :)
+[2006-06-12 19:42:44] .Kind says: то есть с 18 до 22 командная работа
+[2006-06-12 19:42:53] .Kind says: а до этого индивидуальная
+[2006-06-12 19:43:01] .Kind says: план на эту неделю
+[2006-06-12 19:43:11] ..KUZ says: otdihatj nado no4ju
+[2006-06-12 19:43:34] .Kind says: я под отдыхом называю спорт, ремонт и т.д.
+[2006-06-12 19:44:11] DEF says: O! remont
+[2006-06-12 19:44:22] DEF says: vsem nado delatj, kak ja ponjal,
+[2006-06-12 19:52:36] .Kind says: прочитал доки?
+[2006-06-12 19:59:18] DEF says: d
+[2006-06-12 19:59:19] DEF says: da
+[2006-06-12 20:10:15] .Kind says: кто проводит свадьбу?
+[2006-06-12 20:27:03] DEF says: 4ego?
+[2006-06-12 20:29:04] .Kind says: как называется человек, который проводит свадьбу?
+[2006-06-12 20:29:37] DEF says: tamada?
+[2006-06-12 20:29:43] DEF says: svjas4ennik?
+[2006-06-12 20:30:51] .Kind says: забей
+[2006-06-12 21:37:53] ..KUZ says: antifa6ist 4toli?
+[2006-06-12 21:38:07] .Kind says: нет
+[2006-06-12 22:10:37] DEF says: back
+[2006-06-12 22:11:05] DEF says: na ftp novij top gear
+[2006-06-12 22:11:12] DEF says: 300 s 4em-to metrov
+[2006-06-13 21:02:47] .Kind says: починил matrix34...
+[2006-06-13 21:13:46] .Kind says: кто тут есть??
+[2006-06-13 21:14:34] ..KUZ says: nikogo netu
+[2006-06-13 21:14:39] ..KUZ says: Ti razve ne ponjal?
+[2006-06-13 21:15:31] .Kind says: неа
+[2006-06-13 21:15:38] DEF says: menja tozhe net
+[2006-06-13 21:15:45] .Kind says: нужна помощь
+[2006-06-13 21:15:53] DEF says: da? 4to imenno?
+[2006-06-13 21:16:31] .Kind says: надо протестировать матрицы
+[2006-06-13 21:18:29] DEF says: ja metrici ne pomnju sovsem
+[2006-06-13 21:19:04] .Kind says: ты же тестер
+[2006-06-13 21:19:14] .Kind says: в руки спецификацию и вперёд
+[2006-06-13 21:19:15] ..KUZ says: v excele peremnoz i proverj progu
+[2006-06-13 21:23:27] DEF says: vo vo escel - eto to 4to nado
+[2006-06-13 21:24:03] .Kind says: я программер а не тестер
+[2006-06-13 21:24:18] .Kind says: вы что, не выполняете мои задания??
+[2006-06-13 21:26:55] DEF says: kuzmi4 pomozhet, ja budu 4erez 30 minut, nado gostej provoditj
+[2006-06-13 21:27:16] ..KUZ says: eto gosti, kotorie v4era pri6li?
+[2006-06-13 21:28:14] .Kind says: я же не гоорю что это надо делать немедленно
+[2006-06-13 22:20:18] DEF says: back
+[2006-06-13 22:20:34] DEF says: na ulice prosto ne vinosimo
+[2006-06-13 22:31:08] ..KUZ says: Def, eto gosti, kotorie v4era pri6li?
+[2006-06-13 22:42:18] DEF says: a 4to za gosti v4era pri6li?
+[2006-06-13 22:42:39] ..KUZ says: nu Ti ze v4era daze buhatj s nami otkazalsja
+[2006-06-13 22:43:25] DEF says: s vami?
+[2006-06-13 22:43:34] DEF says: ja voobs4e buhatj otkazalsja
+[2006-06-13 22:44:09] DEF says: kogda registracija? Poda4a docov?
+[2006-06-13 22:44:48] ..KUZ says: a u Tebja doci estj 4toli?
+[2006-06-13 22:45:15] DEF says: koro4e, s magistraturoj kogda razbiratsja?
+[2006-06-13 22:45:35] ..KUZ says: ja es4e ne znaju kuda idti
+[2006-06-13 22:46:42] DEF says: ti 4isla znae6
+[2006-06-13 22:46:54] ..KUZ says: kakie 4isla?
+[2006-06-13 22:47:01] DEF says: nedeli
+[2006-06-13 22:47:05] DEF says: mesjaca
+[2006-06-13 22:47:08] ..KUZ says: ne ponjal?
+[2006-06-13 22:47:22] ..KUZ says: segodnja vot 13 6-ogo mesjaca
+[2006-06-13 22:47:29] ..KUZ says: zavtra budet 14
+[2006-06-13 22:47:34] ..KUZ says: poslezavtra 15
+[2006-06-13 22:47:37] ..KUZ says: i t d
+[2006-06-13 22:47:48] DEF says: kogda dokumenti podavatj?
+[2006-06-13 22:47:51] ..KUZ says: znaju
+[2006-06-13 22:48:07] DEF says: kogda?
+[2006-06-13 22:48:09] ..KUZ says: no zabil
+[2006-06-13 23:03:10] DEF says: Prog020040 Sagatavots eksmatrikulacijai 2006.pavasara
+[2006-06-13 23:03:12] DEF says: :D
+[2006-06-13 23:03:22] ..KUZ says: eto otkuda?
+[2006-06-13 23:03:26] DEF says: luis
+[2006-06-13 23:03:35] DEF says: na webct ne puskajut
+[2006-06-13 23:05:01] ..KUZ says: menja toze
+[2006-06-13 23:05:11] ..KUZ says: ja 4as nazad i tuda i tuda zahodil
+[2006-06-13 23:05:19] ..KUZ says: no na webct uze vse
+[2006-06-13 23:05:26] DEF says: nas poterli na webct, zhenka govorit
+[2006-06-13 23:05:45] ..KUZ says: ja ili segodnja utrom ili v4era ve4erom na webct za6el
+[2006-06-13 23:05:54] ..KUZ says: tam Straujums tipa pozdravil
+[2006-06-13 23:06:03] DEF says: da, znaju
+[2006-06-13 23:06:04] ..KUZ says: poslednee soobs4enie eto bilo
+[2006-06-13 23:06:10] ..KUZ says: nu vot i vse
+[2006-06-13 23:08:18] DEF says: mda
+[2006-06-13 23:10:23] ..KUZ says: Pieteikumu iesniegsana notiek no 10. lidz 14. julijam fakultates
+[2006-06-13 23:10:46] ..KUZ says: Fizikas un matematikas fakultate 
+Datorzinatnes MSP 10.07.-14.07. 10.07., 13.07., 14.07. 9.00-13.00
+11.07.,12.07. 13.00-17.00 Raina bulv. 29,
+411. telpa Diplomu konkurss 24.07.-28.07. 24.07., 27.07., 28.07. 
+9.00-13.00
+25.07.,26.07. 13.00-17.00 Raina bulv. 29,
+411. telpa
+[2006-06-13 23:18:08] .Kind says: вам не звонили из универа?
+[2006-06-13 23:18:17] ..KUZ says: nu mne zvonili
+[2006-06-13 23:18:22] ..KUZ says: a nas4et 4ego?
+[2006-06-13 23:19:19] ..KUZ says: a nas4et 4ego?
+[2006-06-13 23:20:05] .Kind says: насчёт конкурса бак
+[2006-06-13 23:20:10] ..KUZ says: da
+[2006-06-13 23:28:34] .Kind says: что лучше? licence брит., license амер. ??
+[2006-06-13 23:28:47] ..KUZ says: amep
+[2006-06-14 19:55:00] .Kind says: как успехи?
+[2006-06-16 12:36:22] DEF says: http://www.ixbt.com/news/hard/index.shtml?06/30/27
+[2006-06-16 12:36:27] DEF says: Microsoft: Билл Гейтс уходит от дел
+[2006-06-20 13:14:13] DEF says: http://www.ixbt.com/video2/ageia_physx_review.shtml
+[2006-06-20 13:18:25] DEF says: http://www.ixbt.com/games/itogi/itogi-19-06-2006.shtml
+[2006-06-20 14:03:39] DEF says: Freeware proekt, delaet 4 4eloveka. http://penumbragame.com/
+[2006-06-20 14:04:10] DEF says: takuju grafiku mi uzhe sej4as mozzhem sdelatj
+[2006-06-20 19:45:23] *** ..KUZ added Def@Work to this chat ***
+[2006-06-20 19:45:33] Def@Work says: f:\steel\steel\trunk\code\game\../physic/physic_engine_ps.h(24) : fatal error C1083: Cannot open include file: 'ext/hash_map': No such file or directory
+[2006-06-20 19:45:52] Def@Work says: posle update ne kompilitsja
+[2006-06-20 20:19:45] .Kind says: VS.2005 ?
+[2006-06-20 20:20:33] DEF says: da
+[2006-06-20 20:21:07] DEF says: 4to za 'ext/hash_map' ?
+[2006-06-20 20:21:18] .Kind says: #ifdef COMPILER_VS8
+ #include <hash_map>
+#endif
+
+#ifdef COMPILER_DEVCPP
+ #include <ext/hash_map>
+#endif
+[2006-06-20 20:21:21] .Kind says: найди это
+[2006-06-20 20:21:42] .Kind says: открой _cpp.h
+[2006-06-20 20:22:49] .Kind says: нет, даже steel Properties/Configuration prop/preprocessor/preprocessor definitions
+[2006-06-20 20:22:57] .Kind says: что у тебя там?
+[2006-06-20 20:23:16] .Kind says: ах ты блин. ты небось в Release компилишь??
+[2006-06-20 20:24:49] DEF says: da
+[2006-06-20 20:26:47] .Kind says: компили в DEbug
+[2006-06-20 20:26:58] DEF says: da, otkompililos
+[2006-06-20 20:29:56] DEF says: kakie operacii s vektorami, i kak oni pi6utsja?
+[2006-06-20 20:30:09] *** DEF has changed the chat topic to "151" ***
+[2006-06-20 20:30:31] DEF says: Kind, v Topic kladi versiju commita
+[2006-06-20 20:30:57] DEF says: 4tobi za6el, i srazu jasno stalo, 4to nado update delatj
+[2006-06-20 20:39:37] *** .Kind has changed the chat topic to "http://division.kindex.lv:82/" ***
+[2006-06-21 00:15:36] .Kind says: я изменил формат лог файла. Читайте design document
+[2006-06-21 00:15:50] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/" ***
+[2006-06-21 01:18:50] DEF says: Commit bil?
+[2006-06-21 01:18:57] .Kind says: да
+[2006-06-21 01:19:06] DEF says: Update delatj? Kinj eto v toppik
+[2006-06-21 01:19:32] DEF says: v Exigene tak i delali, novij bild - v Topik kidali
+[2006-06-21 01:20:01] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Build: 153" ***
+[2006-06-21 01:20:08] DEF says: Thanx
+[2006-06-21 16:04:27] DEF says: Kind, to 4to nado: http://www.ixbt.com/video2/nvperfkit2.shtml
+[2006-06-21 16:05:01] DEF says: monitoring video karti i processa renderinga
+[2006-06-21 19:44:43] .Kind says: я ухожу в отпуск, так что движок оставляю на вас
+[2006-06-21 19:45:07] ..KUZ says: на сколько уходишь?
+[2006-06-21 19:45:51] .Kind says: пока не востановлю здоровье
+[2006-06-21 19:46:03] ..KUZ says: а что случилось?
+[2006-06-21 19:46:13] .Kind says: выдохся я
+[2006-06-21 19:46:21] ..KUZ says: ясно
+[2006-06-21 19:47:34] ..KUZ says: а в течении этого времени с Тобой можно будет консультироваться?
+[2006-06-21 19:47:46] .Kind says: да
+[2006-06-21 19:47:54] ..KUZ says: это хорошо
+[2006-06-22 00:20:07] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Build: 154" ***
+[2006-06-22 00:20:19] .Kind says: зацените логфайл
+[2006-06-22 00:20:42] DEF says: ja uzhe zacenil
+[2006-06-22 00:20:50] DEF says: mne ponravilosj
+[2006-06-22 00:21:14] .Kind says: в 154 билде?
+[2006-06-22 01:24:29] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Build: 155" ***
+[2006-06-25 01:44:44] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Build: 156" ***
+[2006-06-25 02:04:54] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Build: 157" ***
+[2006-06-25 15:13:37] .Kind says: до меня только сейчас дошло, что Деф никогда не протестирует матрицы.
+[2006-06-25 15:29:10] DEF says: :)
+[2006-06-25 15:29:28] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Build: 158" ***
+[2006-06-28 21:31:03] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Build: 160" ***
+[2006-06-29 01:15:23] .Kind says: новая ветка у Кузмича
+[2006-06-30 01:43:54] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Build: 162" ***
+[2006-07-04 22:38:46] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Build: 165" ***
+[2006-07-04 22:39:06] .Kind says: Система частиц с изменяемым количеством частиц
+[2006-07-04 22:39:28] DEF says: kruto
+[2006-07-04 22:39:55] .Kind says: переделал для это этого структуру движка
+[2006-07-04 22:57:30] .Kind says: крека теперб нет
+[2006-07-04 22:57:32] .Kind says: крека теперю нет
+[2006-07-04 22:57:48] DEF says: 4ego?
+[2006-07-04 22:58:00] DEF says: kakogo kreka?
+[2006-07-04 22:58:16] .Kind says: блин. ошибся окном. Крека для Worms
+[2006-07-04 22:58:26] DEF says: jasno
+[2006-07-06 00:00:18] .Kind says: я добавил audio.cpp
+[2006-07-06 00:00:44] DEF says: Build: 166 ?
+[2006-07-06 00:00:57] .Kind says: билд не рабочий
+[2006-07-06 00:00:59] .Kind says: 168
+[2006-07-06 00:01:11] .Kind says: транк 166
+[2006-07-06 00:02:46] DEF says: na4inaet napominatj Exigen - ne rabo4ie Buildi, semi-buildi (polu build, testovaja realizacija kakogoto algoritma dlja testinga)
+[2006-07-06 00:03:19] .Kind says: это не билд
+[2006-07-06 00:03:27] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Revision: 165" ***
+[2006-07-06 00:03:29] DEF says: nu eto ponjatno
+[2006-07-06 00:03:36] DEF says: mi tak nazivaem
+[2006-07-06 00:09:35] DEF says: http://www.ixbt.com/games/crysis-pre.shtml
+[2006-07-06 22:16:44] .Kind says: 3. сходить на выставку роз в Музее Природы
+[2006-07-06 22:16:50] .Kind says: есть предложение 
+1. поехать на море на выходных
+2. посмотреть всем вместе финал
+3. сходить на выставку роз в Музее Природы
+[2006-07-06 22:17:19] DEF says: Tak, na cveti ja ne pojdu, u menja allergija
+[2006-07-06 22:17:35] DEF says: na more lu46e v budni
+[2006-07-06 22:17:51] .Kind says: людей боишься?
+[2006-07-06 22:17:54] .Kind says: поехали завтра
+[2006-07-06 22:18:19] DEF says: k tomuzhe na vihodnih govorjat budet pobit reekord pro6logo leta  +35C
+[2006-07-06 22:18:20] .Kind says: не
+[2006-07-06 22:18:49] .Kind says: достал меня Скайп своим интерфейсом. я уже третир раз путаю чаты
+[2006-07-12 00:23:29] *** .Kind has changed the chat topic to "Steel Engine: http://division.kindex.lv:82/ Revision: 169" ***
+[2006-07-12 00:58:15] .Kind says: соглашения и стилях
+[2006-07-12 10:45:26] .Kind says: http://sourceforge.net/softwaremap/trove_list.php?stquery=&sort=group_ranking&sortdir=desc&offset=0&form_cat=80
+[2006-07-12 10:45:49] .Kind says: есть идея заняться уже готовым проектом для повышения квалификации
+[2006-07-12 10:46:11] .Kind says: такой опят можно записать в CV
+[2006-07-12 19:19:07] ..KUZ says: записать то все можно - но кто его официально зарегистрирует?
+[2006-07-13 12:43:06] .Kind says: лидеры того рпоекта
+[2006-07-13 12:43:25] .Kind says: приколи, у тебя будет написано, что ты делал ядро линукса
+[2006-07-17 13:57:18] .Kind says: Я хочу в среду сделать встречу
+[2006-07-17 14:32:29] *** .Kind has changed the chat topic to "Steel Engine: Meet: 19 jul 19-00 [ http://division.kindex.lv:82/ Revision: 169 ]" ***
+[2006-07-17 14:32:41] *** .Kind added Anton, Ormr Ulfarson to this chat ***
+[2006-07-17 14:37:47] ..KUZ says: тема встречи?
+[2006-07-17 14:38:33] .Kind says: Встреча будет ориентировочно в среду, 19 июля в 19-00 на курсах. До этого елательно прочитать документацию. Будем обсуждать соглашение о стилях, я расскажу о дизайне системы, дам простенькие задания.
+[2006-07-17 14:38:58] ..KUZ says: ок
+[2006-07-17 14:39:04] DEF says: ok
+[2006-07-17 14:40:18] .Kind says: вчера был в Лиепае на кончерте Анти. Слючайно пробалтался про игру - все музыканты предложили написать саундтрек :)
+[2006-07-17 14:41:00] DEF says: dlja Biljarda 4erez god??? :D Ili dlja tan4ikov ? :D
+[2006-07-17 14:41:18] .Kind says: для чего угодно
+[2006-07-17 14:44:08] DEF says: Muzikantov i zvukorezhisserov nastojatelno ne rekomenduetsja bratj v 6tat. Eto najemnie rabotniki na neskolko nedelj blizhe k koncu proekta.
+[2006-07-17 14:44:49] .Kind says: не умничай. Люди рвутся работать лучше нас. Вот в чём проблема
+[2006-07-17 14:45:05] DEF says: eto kak?
+[2006-07-17 14:45:44] .Kind says: меня порадают люди, которые похали в Лиепаю, со своими инструментами, сами оплатили дорогу, и ничего за это не получили.
+[2006-07-17 14:46:24] .Kind says: на концерте было 100 чаловек
+[2006-07-17 14:47:16] DEF says: kuzmi4u tozhe nado poigratj gde popalo i 4to popalo i emu za eto nikto ne platit
+[2006-07-17 14:48:02] DEF says: ja posmotrel Nabula device. Posmotrel neskolko proektov
+[2006-07-17 14:48:17] ..KUZ says: можно в старую ригу пойти где много иностранцев и там поиграть
+[2006-07-17 14:48:54] DEF says: kuzmi4 na eto ne pojdet :)
+[2006-07-17 14:49:03] DEF says: ladno
+[2006-07-17 14:49:14] DEF says: zadanie po Nebula device daval?
+[2006-07-17 14:49:35] DEF says: v tehnologi4eskom plane dvizhok o4enj otstalij
+[2006-07-17 14:49:53] DEF says: net nikakih osobih grafi4eskih navorotov
+[2006-07-17 14:50:11] DEF says: zato on 4erezvi4ajno gibkij
+[2006-07-17 14:50:48] DEF says: strategiju videl, 3d action, RPG tipa WOW, e paru tupih arkad, po4ti 2D
+[2006-07-17 14:51:03] DEF says: skrolleri estj
+[2006-07-17 14:59:55] .Kind says: Кузмич, они не барды, а кибер-метал играют
+[2006-07-17 15:00:54] .Kind says: я про тебя, Кузмич рассказал, они тебя анонистом назвали, потому что ты играешь сам и ничего больше
+[2006-07-17 15:02:35] DEF says: :D
+[2006-07-17 15:03:11] DEF says: ti skazal 4to kuzmi4 igraet tolko 4uzhoe i ne poet ?
+[2006-07-17 15:03:47] .Kind says: да
+[2006-07-17 15:05:23] DEF says: po4ti vse eti "muzikanti" muziku na4ali pisatj ran6e, 4em igratj.
+[2006-07-17 15:05:36] DEF says: Frooty Loops i tak dalee
+[2006-07-17 15:06:06] .Kind says: некоторые эти музыканты имеют музыкальное образование.
+[2006-07-17 15:06:39] DEF says: samo soboj, 4to etj takie
+[2006-07-17 15:06:59] DEF says: kuzmit tozhe 9 let v muzikalnom klasse otu4ilsja
+[2006-07-17 15:09:00] .Kind says: к чему ты клонишь?
+[2006-07-17 15:09:47] DEF says: muzikant ot vseh ostalnih otli4aetsja 4em to drugim, krome Muzobrazovanija i umenija igratj na instrumente
+[2006-07-17 15:11:08] .Kind says: Кузмич - музыкант?
+[2006-07-17 15:11:24] DEF says: skoree vsego net
+[2006-07-17 15:30:32] ..KUZ says: "играешь сам" - всмысле? а как еще играть?
+[2006-07-17 15:32:12] ..KUZ says: и что за "кибер-метал"?
+[2006-07-17 15:32:24] DEF says: hrenj kakajato :D
+[2006-07-17 15:32:40] ..KUZ says: блин, в мое время ничего такого не было
+[2006-07-17 15:32:54] DEF says: naverno tipa Rammstein tolko bez gitar i barabanov
+[2006-07-17 15:33:00] DEF says: :D
+[2006-07-17 15:33:11] ..KUZ says: во во
+[2006-07-17 15:33:28] ..KUZ says: и "музыка" на Frooty Loops
+[2006-07-17 15:33:52] ..KUZ says: это уже не музыканты, а кибер-музыканты
+[2006-07-17 15:33:59] ..KUZ says: не путацте понятия
+[2006-07-17 15:34:13] DEF says: Znakomij "metallist" skazal - mne nravitsja vse, gde net Solo i NAvoro4ennih barabanov
+[2006-07-17 15:34:30] DEF says: tolko eto ne metall
+[2006-07-17 15:34:36] ..KUZ says: навороченных - это каких?
+[2006-07-17 15:34:49] DEF says: slayer, sepultura
+[2006-07-17 15:34:56] ..KUZ says: да ну
+[2006-07-17 15:35:03] ..KUZ says: там нормальные барабаны
+[2006-07-17 15:35:13] ..KUZ says: и какая sepultura?
+[2006-07-17 15:35:18] DEF says: dlja nego navoro4ennie
+[2006-07-17 15:35:21] DEF says: :D
+[2006-07-17 15:36:19] ..KUZ says: вот там Mortician я еще понимаю
+[2006-07-17 15:36:33] DEF says: KiberMetal skoree vsego maksimalno dalek ot Classic Metal iz vseh podzhanrov Metalla
+[2006-07-17 15:37:29] ..KUZ says: ага и еще прибавь к этому rap-metal, techno-metal, pop-metal и тд
+[2006-07-17 15:37:38] ..KUZ says: не ребята, это не метал
+[2006-07-17 15:37:55] DEF says: i voobs4e eto steel Engine Chat
+[2006-07-17 15:37:57] ..KUZ says: что-то вы пошли не в ту сторону
+[2006-07-17 15:38:00] DEF says: Fleim zakrili
+[2006-07-17 15:38:03] ..KUZ says: во во
+[2006-07-17 18:57:18] .Kind says: Anti: http://warez.kindex.lv:82/Music.ftp/_Black%20Friday/Anti/
+[2006-07-17 18:59:44] .Kind says: Def, не стоит называть хренью то, чего ты не понимаешь или не любишь.
+[2006-07-17 19:04:51] DEF says: ja ne sli6a ni razu! Poetomu ja konkretno i ne govorju.
+[2006-07-17 19:05:47] .Kind says: к вашему сведенью: в Латвии есть всего 3 хороших барабаньшика, и играют они сразу в нескольких группах
+[2006-07-17 19:07:11] DEF says: nu ja ne o4enj udivlen :) V mire vsego 15-20 realno horo6ih rock barabans4ikov. Estj es4e reggae i tak dalee.
+[2006-07-19 23:35:57] *** .Kind has changed the chat topic to "Steel Engine: Meet: 19 jul 19-00 [ http://division.kindex.lv:82/ Revision: 170 ]" ***
+[2006-07-19 23:36:17] *** .Kind has changed the chat topic to "Steel Engine: Meet: 26 jul 19-00 [ http://division.kindex.lv:82/ Revision: 170 ]" ***
+[2006-07-23 22:56:48] Anton says: ./physic/physic_engine_3d.cpp << вот там есть такой PhysicInterface, где он объявлен?
+[2006-07-23 22:57:32] Anton says: я подправил исходники, теперь оно у меня компилируется
+[2006-07-23 22:58:36] Anton says: и ещё я туда вписал (в steel.h) автоопределение директив, чтобы в ручную не вбивать :)
+[2006-07-23 22:58:53] *** Anton has changed the chat topic to "Steel Engine: Meet: 26 jul 19-00 [ http://division.kindex.lv:82/ Revision: 171 ]" ***
+[2006-07-23 23:02:09] Anton says: Вот.. надеюсь от этого у вас собираться не перестал (blush)
+[2006-07-23 23:46:04] DEF says: a 4to Ti dobavil?
+[2006-07-23 23:59:59] Anton says: куда? в steel.h?
+[2006-07-24 00:01:12] Anton says: #if`ов понаписал
+[2006-07-24 00:03:09] DEF says: Ti version history ne sdelal? Bilo bi ne ploho Imetj fail Version Overview, gde budet napisano, 4em novij Commit otli4aetsja ot starogo. Ob etom mi kakto es4e ne dumali
+[2006-07-24 00:03:36] Anton says: tak eto v opisanijah k kommitu estj..
+[2006-07-24 00:04:29] DEF says: Esli bi svoimi slovami napisal bilo bi lu46e
+[2006-07-24 00:04:47] DEF says: ob etom mi budem es4e govoritj, sej4as vse ok
+[2006-07-24 00:05:19] Anton says: =]
+[2006-07-24 00:05:19] Anton says: r165 | kindex | 2006-07-04 22:37:23 +0300 (Втр, 04 Июл 2006) | 2 lines
+
+PhysicInterface -> PhysicObject
+PhysicEngine cleanup + comment
+[2006-07-24 00:05:31] Anton says: а вот и PhysicInterface
+[2006-07-24 00:05:35] DEF says: Vsem vse stalo jasno :)
+[2006-07-24 00:06:15] Anton says: ну ладн, тогда я спать :)
+[2006-07-24 00:06:23] DEF says: ja kak raz o tom i govorju, 4to nado bi pisatj v fail, kak eto u nas s dokumentaciej
+[2006-07-24 00:06:42] DEF says: good night
+[2006-07-24 00:06:44] Anton says: ну наверное, но не в html..
+[2006-07-24 00:07:02] Anton says: ворд такой супер код генерит :)
+[2006-07-24 00:07:22] DEF says: fuu, ja dazhe dumatj ne ho4u
+[2006-07-24 00:07:42] Anton says: ладн, пока :)
+[2006-07-24 00:07:51] DEF says: see you
+[2006-07-24 13:27:45] DEF says: AMD и ATI подтвердили планы объединения; покупатель заплатит 4,2 млрд. долл. наличными
+[2006-07-24 13:27:51] DEF says: AMD и ATI подтвердили планы объединения; покупатель заплатит 4,2 млрд. долл. наличными
+[2006-07-24 13:28:08] DEF says: http://www.ixbt.com/news/all/index.shtml?06/51/74
+[2006-07-25 13:23:18] .Kind says: i'm back
+[2006-07-25 13:23:29] DEF says: good
+[2006-07-25 13:24:51] .Kind says: physic_engine_3d.cpp не должен компилироваться. он устарел
+[2006-07-25 13:28:08] .Kind says: так, надо в документаци указать формат текстовый фалов. CR LF или что другое
+[2006-07-25 13:31:56] .Kind says: у меня не компилируется
+[2006-07-25 14:18:57] .Kind says: жду подтверждения о завтрашней встрече
+[2006-07-25 14:22:12] *** .Kind has changed the chat topic to "Steel Engine: Meet: 26 jul 19-00 [ http://division.kindex.lv:82/ Revision: 172 ]" ***
+[2006-07-25 17:06:27] DEF says: ok
+[2006-07-26 12:30:05] .Kind says: я сказал Дефу что у меня нет телефона Антона, но он меня проигнорировал
+[2006-07-27 13:15:27] *** .Kind has changed the chat topic to "Steel Engine: Meet: 2 aug 19-00 [ http://division.kindex.lv:82/ Revision: 174 ]" ***
+[2006-07-28 10:58:24] ..KUZ says: если трейдмарки писать в оригинале, то почему тогда файл opengl_engine.cpp так называется?
+[2006-07-28 12:16:00] DEF says: tut vse normalno. U nas v failah bol6ih bukv bith ne mozhet vedj. Mo ne hotim tak.
+[2006-07-28 12:16:25] DEF says: openGL_engine a ne openglengine
+[2006-07-28 12:16:31] DEF says: openGL_engine a ne openGLengine
+[2006-07-28 12:16:41] ..KUZ says: ну и внутри файлов тоже можно тогда придти к соглашению
+[2006-07-28 12:17:42] DEF says: NV_register, ATI_color
+[2006-07-28 12:17:48] DEF says: o 4em mi tem sporili?
+[2006-07-28 12:17:51] DEF says: tam
+[2006-07-28 12:18:05] DEF says: nazvanie funkcij i procedur?
+[2006-07-28 12:18:22] ..KUZ says: трейдмарки
+[2006-07-28 12:18:36] DEF says: s treidmarkami vse ponjatno
+[2006-07-28 12:18:40] DEF says: o 4em mi sporili
+[2006-07-28 12:18:47] DEF says: ?
+[2006-07-28 12:18:50] ..KUZ says: о трейдмарках
+[2006-07-28 12:18:54] DEF says: net
+[2006-07-28 12:19:07] ..KUZ says: так как трейдмарки писать?
+[2006-07-28 12:19:37] DEF says: openAL_sound
+[2006-07-28 12:19:47] DEF says: tak i pisatj - mi ob etom i govorili
+[2006-07-28 12:19:53] ..KUZ says: а почему тогда opengl_engine.cpp?
+[2006-07-28 12:20:09] DEF says: v failah ne mozhet bitj bol6ih bukv
+[2006-07-28 12:20:25] ..KUZ says: ну так и в коде маленькими писать можно
+[2006-07-28 12:20:42] DEF says: nelzja - tam 4itatj 4asto nado
+[2006-07-28 12:20:57] ..KUZ says: а почему в файлаж тогда можно?
+[2006-07-28 12:21:19] DEF says: fail pi6etsja odin raz i navsegda
+[2006-07-28 12:21:38] DEF says: mi tak re6ili, 4to format failov takoj
+[2006-07-28 12:22:00] ..KUZ says: а почему насчет кода тоже тук решить нельзя?
+[2006-07-28 12:22:14] DEF says: re6ili uzhe
+[2006-07-28 12:22:31] DEF says: openGL_engine a ne openglengine
+[2006-07-28 12:22:35] DEF says: openGL_engine a ne openGLengine
+[2006-07-28 12:22:54] ..KUZ says: короче пишите как хотите
+[2006-07-28 12:23:09] DEF says: openDVD_player();
+[2006-07-28 12:25:27] ..KUZ says: http://geosoft.no/development/cppstyle.html
+[2006-07-28 12:30:02] DEF says: http://www.macadamian.com/index.php?option=com_content&task=view&id=34&Itemid=37
+[2006-07-28 12:30:40] DEF says: Ja s4itaju, 4to pisatj nado tak, 4tobi bilo ponjatno
+[2006-07-28 12:31:30] DEF says: pri4em popal v ljubuju 4astj faila - i ponjal, 4to tam napisano
+[2006-07-28 12:32:14] DEF says: i 4tobi bilo o4evidno, 4to eto openal_engine a ne opengl_engine po nazvanijam peremennih i funkcij
+[2006-07-28 12:32:17] ..KUZ says: вот Тебе и задание - составить стандарт на основе этого
+[2006-07-28 12:32:38] ..KUZ says: ну во встроенных там понятно
+[2006-07-28 12:33:19] DEF says: esli slova na4inajut slivatsja - nado ih razdelitj _
+[2006-07-28 12:33:33] DEF says: no takoe bivaet tolko v slu4ae abbriviatur
+[2006-07-28 12:34:00] DEF says: openDvdPlayer
+[2006-07-28 12:34:23] DEF says: li4no mne eto ne nrevitsja, tak kak nado do4itivatj do konca slova 4tobi ponjatj 4to eto
+[2006-07-28 12:34:55] DEF says: openDVD_Player ili openDVD_player - ne vazhno, no namnogo ponjatnee
+[2006-07-28 12:35:22] DEF says: dazhe na slovo smotretj ne nado, 4tobi ponjatj 4to eto openDVD_player
+[2006-07-28 12:35:32] DEF says: Ti soglasen?
+[2006-07-28 12:36:16] ..KUZ says: мне больше нравится openDvdPlayer
+[2006-07-28 12:36:43] DEF says: Ale, narod, soglasni, 4to mozhno na4atj putaj openDvdPlayer i vse takoe?
+[2006-07-28 12:36:57] ..KUZ says: потому что в случае openDVD_Player тут не понятно что происходит: открыть двд и причем тут плэйер?
+[2006-07-28 12:37:13] DEF says: 4ego?
+[2006-07-28 12:37:23] ..KUZ says: DVDPlayer делитьл нельзя
+[2006-07-28 12:37:32] ..KUZ says: open_DVDPlayer
+[2006-07-28 12:37:36] ..KUZ says: только так
+[2006-07-28 12:37:43] ..KUZ says: но я и так не согласен
+[2006-07-28 12:38:11] DEF says: nu esli ja etot kod na uvizhu - pi6i kak ho4e6 :)
+[2006-07-28 12:39:31] DEF says: openIEEE1394b_Connection
+[2006-07-28 12:40:38] DEF says: kak ti eto napi6e6?
+[2006-07-28 12:42:45] DEF says: AU!
+[2006-07-28 12:43:50] ..KUZ says: openIEEE1394bConnection
+[2006-07-28 12:44:40] DEF says: po4emu otdelitj no he4e6?
+[2006-07-28 12:46:14] ..KUZ says: да просто ксли много "_", то в глазах рябить начинает
+[2006-07-28 12:46:41] DEF says: ne mnogo, a odna tolko i tolko posle Abbriveatur
+[2006-07-28 12:46:59] DEF says: openWiFi_Connection
+[2006-07-28 12:47:23] ..KUZ says: вот здесь опять не понятно
+[2006-07-28 12:47:29] ..KUZ says: openWiFi
+[2006-07-28 12:47:42] ..KUZ says: но причем здесь Connection?
+[2006-07-28 12:49:11] DEF says: tak ponjatnee
+[2006-07-28 13:03:52] DEF says: U vseh 2-3 fps v poslednem commite?
+[2006-07-28 13:03:58] DEF says: kuzmi4, kompilil?
+[2006-07-28 13:04:10] .Kind says: DEF, да пара фпс
+[2006-07-28 13:04:16] .Kind says: зато у всех идёт
+[2006-07-28 13:04:27] .Kind says: надо переписывать
+[2006-07-28 13:04:42] DEF says: na forteke idet?
+[2006-07-28 13:04:53] DEF says: net bufera i multitesture?
+[2006-07-28 13:05:00] .Kind says: да
+[2006-07-28 13:37:05] DEF says: http://www.ixbt.com/news/hard/index.shtml?06/54/42
+[2006-07-28 13:37:08] DEF says: (beer)
+[2006-07-28 13:50:40] .Kind says: если тормозит, нажмите F2 и F3
+[2006-07-28 13:50:59] DEF says: vot ne pomagaet
+[2006-07-28 13:52:23] DEF says: bol6e 2h fps ne podnimaetsja, dazhe esli ni4ego ne risuetsja
+[2006-07-28 13:52:31] DEF says: kuzmi4, proveritj mozhe6?
+[2006-07-28 13:52:43] ..KUZ says: сейчас нет
+[2006-07-28 13:52:50] DEF says: na GeForce2
+[2006-07-28 13:53:06] .Kind says: тормозит шина при перекачивании изображений
+[2006-07-28 13:53:08] ..KUZ says: а у меня что?
+[2006-07-28 13:53:39] DEF says: agp?
+[2006-07-28 13:54:07] .Kind says: да. Я убрал все оптимизации
+[2006-07-28 13:56:19] DEF says: hmm
+[2006-07-28 13:56:36] .Kind says: нет кеша текстур
+[2006-07-28 13:56:43] DEF says: 2.1 Gb/sec tormozit?
+[2006-07-28 13:57:15] .Kind says: нет. тормозит много вызовов OpenGL
+[2006-07-28 13:57:25] DEF says: naverno eto vsetali Latency
+[2006-07-28 13:57:39] DEF says: GPU beret iz RAM
+[2006-07-28 13:58:08] .Kind says: нет, я каждый раз пересоздаю картинку
+[2006-07-28 17:49:34] *** .Kind has changed the chat topic to "Steel Engine: Meet: 2 aug 19-00 [ http://division.kindex.lv:82/ Revision: 178 ]" ***
+[2006-07-28 17:49:44] .Kind says: наслаждайтесь скоростью :)
+[2006-07-28 17:52:19] .Kind says: вы меня порадовали сегодня активностью :)
+[2006-07-29 14:24:49] *** .Kind has changed the chat topic to "Steel Engine: Meet: 2 aug 19-00 [ http://division.kindex.lv:82/ Revision: 180 ]" ***
+[2006-07-29 14:38:35] *** .Kind has changed the chat topic to "Steel Engine: Meet: 2 aug 19-00 [ http://division.kindex.lv:82/ Revision: 181 ]" ***
+[2006-07-29 14:41:55] .Kind says: прошу всех в 181 версии запустить движок и скинуть сюда информацию о версии OpenGL и расширениях из steel.log файла
+[2006-07-29 14:42:06] .Kind says: 00:00.219 Video mode has been set! (792x573x32)   [ opengl graph ]
+00:00.219 Renderer: GeForce 6600 GT/PCI/SSE2/3DNOW!  [ graph opengl ]
+00:00.219 Version: 2.0.1     [ graph opengl ]
+00:00.219 Vendor: NVIDIA Corporation    [ graph opengl ]
+[2006-07-29 14:42:35] DEF says: 00:00.280 Video mode has been set! (792x573x32)   [ opengl graph ]
+00:00.280 Renderer: RADEON 9800 Pro x86/MMX/3DNow!/SSE  [ graph opengl ]
+00:00.280 Version: 2.0.5396 WinXP Release   [ graph opengl ]
+00:00.280 Vendor: ATI Technologies Inc.    [ graph opengl ]
+[2006-07-29 14:43:16] DEF says: KIND! U tebje SSE2 estj okazivaetsja!
+[2006-07-29 14:43:26] .Kind says: да
+[2006-07-29 14:43:34] .Kind says: ну так Sempron 3100+
+[2006-07-29 14:43:50] DEF says: ja k babu6ke poehal
+[2006-07-29 14:43:52] DEF says: :)
+[2006-07-29 19:50:52] *** .Kind has changed the chat topic to "Steel Engine: Meet: 2 aug 19-00 [ http://division.kindex.lv:82/ Revision: 184 ]" ***
+[2006-07-29 19:51:08] .Kind says: читайте Conception
+[2006-07-29 20:38:42] .Kind says: в тестовей ветке res-audio есть звук!!!!
+[2006-07-29 20:39:46] DEF says: kuzmi4?
+[2006-07-29 20:40:08] .Kind says: да, его работа :)
+[2006-07-29 20:40:17] DEF says: otli4no
+[2006-07-29 21:12:23] Ormr Ulfarson says: а звук-то не микшируеццо )
+[2006-07-29 21:12:40] Ormr Ulfarson says: прерывает один и играет второй..
+[2006-07-29 21:12:59] DEF says: testovaja zhe vetka
+[2006-07-29 21:13:24] ..KUZ says: это не прерывает один и играет второй, а играет один и тот же
+[2006-07-29 21:14:40] Ormr Ulfarson says: KindeX: играть надо не звуки-ресурсы, а объекты
+[2006-07-29 21:17:17] DEF says: 4ego?
+[2006-07-29 21:18:52] Ormr Ulfarson says: это Киндекс написал
+[2006-07-29 21:20:00] Ormr Ulfarson says: 00:00.469 Renderer: RADEON X300 x86/MMX/3DNow!/SSE2[ graph opengl ]
+00:00.469 Version: 2.0.5220 WinXP Release
+[ graph opengl ]
+00:00.469 Vendor: ATI Technologies Inc.
+[ graph opengl ]
+[2006-07-30 16:12:22] .Kind says: 00:00.110 Renderer: RIVA TNT2/AGP/SSE2    [ graph opengl ]
+00:00.110 Version: 1.4.1     [ graph opengl ]
+00:00.110 Vendor: NVIDIA Corporation    [ graph opengl ]
+[2006-07-30 16:12:57] DEF says: eto gde?
+[2006-07-30 16:13:09] DEF says: v forteke?
+[2006-07-30 16:13:13] DEF says: na starih?
+[2006-07-30 16:13:29] DEF says: tam Estj es4e Intel Extreme 1 & 2
+[2006-07-30 16:14:07] .Kind says: нет. Это 1 класс. Там, где у тебя Q3 тормозил
+[2006-07-30 16:14:14] DEF says: a
+[2006-07-30 16:15:16] .Kind says: 00:00.285 Renderer: Intel Brookdale-G    [ graph opengl ]
+00:00.285 Version: 1.3.0 - Build 4.13.10.3510   [ graph opengl ]
+00:00.285 Vendor: Intel      [ graph opengl ]
+[2006-07-30 16:18:57] DEF says: eto gde?
+[2006-07-30 16:19:04] DEF says: ja fail sostavljaju
+[2006-07-30 16:19:22] DEF says: Viestur 1
+[2006-07-30 16:19:23] DEF says: ?
+[2006-07-30 16:19:25] DEF says: :)
+[2006-07-30 16:20:45] .Kind says: да
+[2006-07-30 16:21:54] DEF says: Kuz, Commit&Compile Engine, then paste here 6,7,8,9 strings from log file \steel\trunk\steel.log
+[2006-07-30 16:26:39] .Kind says: def, нужен собрать в одном фале карты + версии + расширения
+[2006-07-30 16:26:41] .Kind says: положи
+[2006-07-30 16:26:51] .Kind says: это в docs/opengl
+[2006-07-30 16:27:22] DEF says: ja poka delaju kollekciju KOpij iz log failov
+[2006-07-30 16:28:40] DEF says: gde ja tebe raz6irenija vozmu? Nado 4tobi vse delali ADD svoego logfaila s unikanim Imenem WHO_VIDEOADAPTER.txt
+[2006-07-30 16:28:58] DEF says: def_Radeon9800Pro.txt
+[2006-07-30 16:29:02] DEF says: naprimer
+[2006-07-30 16:29:43] DEF says: po4emu tak nelzja sdelatj - po log failam?
+[2006-07-30 16:29:50] DEF says: potom soberem v odin
+[2006-07-30 16:30:01] .Kind says: ok, delaj
+[2006-07-30 16:38:49] DEF says: sozdal diru testing v \steel\trunk\docs\
+[2006-07-30 16:38:58] .Kind says: a kommit?
+[2006-07-30 16:39:00] DEF says: tuda kinul svoj log def_ATIRadeon9800.log
+[2006-07-30 16:39:18] DEF says: posle add commit nado delatj?
+[2006-07-30 16:39:23] .Kind says: da
+[2006-07-30 16:44:53] DEF says: кидать не steel.log, a log/opengl.log
+[2006-07-30 18:28:14] Anton says: 00:00.364 Renderer: GeForce FX 5200/AGP/SSE2                    [ graph opengl ]
+00:00.364 Version: 2.0.2 NVIDIA 87.62                           [ graph opengl ]
+00:00.364 Vendor: NVIDIA Corporation                            [ graph opengl ]
+00:00.364 Detected OpenGL version code: 20                      [ graph opengl ]
+00:00.366 Using OpenGL renderer version: 1.1                    [ graph opengl ]
+u menja vot :)
+[2006-07-30 18:39:54] .Kind says: закоммитишь в trunk сам?
+[2006-07-30 18:40:01] .Kind says: trunk/docs/opengl/testing
+[2006-07-30 18:40:02] Anton says: da
+[2006-07-30 18:40:05] Anton says: 10 min
+[2006-07-30 19:02:22] .Kind says: в какой проге удобно рисовать графы? мне нужен граф зависимостей h-файлов движка
+[2006-07-30 19:04:39] .Kind says: Антон, твой лог ничего не дал, так как там нет используемых расширений
+[2006-07-30 19:05:20] DEF says: Anton, polozhi  log/opengl.log
+[2006-07-30 19:05:31] .Kind says: не поможет
+[2006-07-30 19:05:44] DEF says: po4emu??
+[2006-07-30 19:05:54] DEF says: staroe jadro?
+[2006-07-30 19:05:57] .Kind says: в Линукс версии нет расширений
+[2006-07-30 19:06:04] DEF says: odnako
+[2006-07-30 19:06:09] .Kind says: именно у нас в движке
+[2006-07-30 19:08:54] DEF says: Kuzmi4? Do it ASAP. We do not have NV15-20 Core Information
+[2006-07-30 20:13:55] .Kind says: народ, как вам концепция?
+[2006-07-30 20:14:32] .Kind says: Антон, я изменил вывод расширений. Теперь можешь проверить. Смотреть в файл log/opengl_info.log
+[2006-07-30 20:15:06] *** .Kind has changed the chat topic to "Steel Engine: Meet: 2 aug 19-00 [ http://division.kindex.lv:82/ Revision: 196 ]" ***
+[2006-07-30 20:17:00] *** .Kind has changed the chat topic to "Steel Engine: Meet: 2 aug 19-00 [ Revision: 196 (opengl extensions info) ]" ***
+[2006-07-31 11:09:48] Anton says: буду дома - посмотрю :)
+[2006-07-31 19:01:02] Anton says: [anton@balticom-144-19 code]$ glxinfo
+name of display: :0.0
+display: :0  screen: 0
+direct rendering: Yes
+server glx vendor string: NVIDIA Corporation
+server glx version string: 1.4
+server glx extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_SGIX_fbconfig,
+    GLX_SGIX_pbuffer, GLX_SGI_video_sync, GLX_SGI_swap_control,
+...... вот типа такого нужно?
+[2006-07-31 19:01:52] .Kind says: нет. не glx расшмрения, а OpenGL расширения
+[2006-07-31 19:02:00] .Kind says: короче весь opengl_info.log
+[2006-07-31 19:03:02] Anton says: он сам генерится? у меня не используются те файлы, что в проекте (glext.h)
+[2006-07-31 19:03:12] Anton says: он системный использует
+[2006-07-31 19:03:30] Anton says: OpenGL vendor string: NVIDIA Corporation
+OpenGL renderer string: GeForce FX 5200/AGP/SSE2
+OpenGL version string: 2.0.2 NVIDIA 87.62
+OpenGL extensions:
+    GL_ARB_depth_texture, GL_ARB_fragment_program,
+    GL_ARB_fragment_program_shadow, GL_ARB_fragment_shader,
+    GL_ARB_half_float_pixel, GL_ARB_imaging, GL_ARB_multisample,
+    GL_ARB_multitexture, GL_ARB_occlusion_query, GL_ARB_pixel_buffer_object,
+    GL_ARB_point_parameters, GL_ARB_point_sprite, GL_ARB_shadow,
+    GL_ARB_shader_objects, GL_ARB_shading_language_100,
+    GL_ARB_texture_border_clamp, GL_ARB_texture_compression,
+    GL_ARB_texture_cube_map, GL_ARB_texture_env_add,
+    GL_ARB_texture_env_combine, GL_ARB_texture_env_dot3,
+    GL_ARB_texture_mirrored_repeat, GL_ARB_texture_rectangle,
+    GL_ARB_transpose_matrix, GL_ARB_vertex_buffer_object,
+    GL_ARB_vertex_program, GL_ARB_vertex_shader, GL_ARB_window_pos,
+    GL_S3_s3tc, GL_EXT_texture_env_add, GL_EXT_abgr, GL_EXT_bgra,
+    GL_EXT_blend_color, GL_EXT_blend_func_separate, GL_EXT_blend_minmax,
+    GL_EXT_blend_subtract, GL_EXT_compiled_vertex_array, GL_EXT_Cg_shader,
+    GL_EXT_draw_range_elements, GL_EXT_fog_coord, GL_EXT_framebuffer_object,
+    GL_EXT_multi_draw_arrays, GL_EXT_packed_depth_stencil,
+    GL_EXT_packed_pixels, GL_EXT_paletted_texture, GL_EXT_pixel_buffer_object,
+    GL_EXT_point_parameters, GL_EXT_rescale_normal, GL_EXT_secondary_color,
+    GL_EXT_separate_specular_color, GL_EXT_shadow_funcs,
+    GL_EXT_shared_texture_palette, GL_EXT_stencil_two_side,
+    GL_EXT_stencil_wrap, GL_EXT_texture3D, GL_EXT_texture_compression_s3tc,
+    GL_EXT_texture_cube_map, GL_EXT_texture_edge_clamp,
+    GL_EXT_texture_env_combine, GL_EXT_texture_env_dot3,
+    GL_EXT_texture_filter_anisotropic, GL_EXT_texture_lod,
+    GL_EXT_texture_lod_bias, GL_EXT_texture_object, GL_EXT_texture_sRGB,
+    GL_EXT_timer_query, GL_EXT_vertex_array, GL_HP_occlusion_test,
+    GL_IBM_rasterpos_clip, GL_IBM_texture_mirrored_repeat,
+    GL_KTX_buffer_region, GL_NV_blend_square, GL_NV_copy_depth_to_color,
+    GL_NV_depth_clamp, GL_NV_fence, GL_NV_float_buffer, GL_NV_fog_distance,
+    GL_NV_fragment_program, GL_NV_fragment_program_option, GL_NV_half_float,
+    GL_NV_light_max_exponent, GL_NV_multisample_filter_hint,
+    GL_NV_occlusion_query, GL_NV_packed_depth_stencil, GL_NV_pixel_data_range,
+    GL_NV_point_sprite, GL_NV_primitive_restart, GL_NV_register_combiners,
+    GL_NV_register_combiners2, GL_NV_texgen_reflection,
+    GL_NV_texture_compression_vtc, GL_NV_texture_env_combine4,
+    GL_NV_texture_expand_normal, GL_NV_texture_rectangle,
+    GL_NV_texture_shader, GL_NV_texture_shader2, GL_NV_texture_shader3,
+    GL_NV_vertex_array_range, GL_NV_vertex_array_range2, GL_NV_vertex_program,
+    GL_NV_vertex_program1_1, GL_NV_vertex_program2,
+    GL_NV_vertex_program2_option, GL_SGIS_generate_mipmap,
+    GL_SGIS_texture_lod, GL_SGIX_depth_texture, GL_SGIX_shadow,
+    GL_SUN_slice_accum
+[2006-07-31 19:03:42] DEF says: Da, to 4to nado
+[2006-07-31 19:04:00] DEF says: 4eto mnogovato :^)
+[2006-07-31 19:04:18] Anton says: это вывод glxinfo :)
+[2006-07-31 19:10:37] Anton says: return isExtensionSupported ( ext, glXQueryExtensionsString ( display, screen ) );
+[2006-07-31 19:10:45] Anton says: isExtension... это от куда?
+[2006-07-31 19:11:23] .Kind says: замени на OpenGL_ExtensionsIsSupported
+[2006-07-31 19:14:01] Anton says: какие новые файлы появились?
+[2006-07-31 19:15:22] .Kind says: в смысле?
+[2006-07-31 19:15:34] .Kind says: всё что в репозитории
+[2006-07-31 19:15:34] Anton says: ну .cpp новые
+[2006-07-31 19:15:53] Anton says: что добавить в список для компиляции :)
+[2006-07-31 19:16:06] .Kind says: graph/opengl/opegl_10
+[2006-07-31 19:16:07] .Kind says: graph/opengl/opegl_11
+[2006-07-31 19:16:08] .Kind says: graph/opengl/opegl_13
+[2006-07-31 19:16:10] .Kind says: graph/opengl/opegl_15
+[2006-07-31 19:16:21] Anton says: game/game.cpp:87: undefined reference to `Sphere::Sphere()' вот это например
+[2006-07-31 19:16:25] .Kind says: objects/sphere
+[2006-07-31 19:16:29] .Kind says: objects/combiner
+[2006-07-31 19:20:54] Anton says: во..
+[2006-07-31 19:21:00] Anton says: вижу комнату :)
+[2006-07-31 19:21:28] .Kind says: (party)
+[2006-07-31 19:23:32] Anton says: он сам лог по файлам растосовывает?
+[2006-07-31 19:23:49] .Kind says: да
+[2006-07-31 19:24:15] Anton says: стильно :)
+[2006-07-31 19:24:44] Anton says: cp opengl_info.log ../docs/opengl/testing/nvidia_fx5200.log
+сейчас коммитить?
+[2006-07-31 19:25:06] .Kind says: не к спеху
+[2006-07-31 19:25:56] Anton says: ок, а как он файлы создаёт? по пробелам разделяет описание лога?
+[2006-07-31 19:26:09] .Kind says: да
+[2006-07-31 19:26:12] Anton says: opegl.log ;)
+[2006-07-31 19:26:12] .Kind says: keywords
+[2006-07-31 19:26:48] Anton says: маленькими буквами писать? reywords?
+[2006-07-31 19:26:59] .Kind says: да
+[2006-07-31 19:27:33] Anton says: ок, а то у меня SDL.log и  sdl.log :)
+[2006-07-31 19:35:27] Anton says: в VC++ есть макросы __FUNCTION__ и __LINE__ ?
+[2006-07-31 19:35:40] Anton says: и __FILE__
+[2006-07-31 19:37:03] .Kind says: вроде да
+[2006-07-31 19:37:34] Anton says: тогда я их в логгер error() добавлю
+[2006-07-31 19:38:42] .Kind says: давай
+[2006-08-01 17:16:21] .Kind says: какая тема встерчи?
+[2006-08-01 17:16:54] Anton says: гм..
+[2006-08-01 17:17:08] Anton says: не знаю :)
+[2006-08-01 17:17:41] ..KUZ says: не понял - это Киндекс спрашивает какая тема встречи???
+[2006-08-01 17:18:06] DEF says: Moe predlozhenie - poprobovatj vstre4u v skype provesti.
+[2006-08-01 17:18:07] .Kind says: ну я смотрю, чего вы предложите
+[2006-08-01 17:18:22] DEF says: Tolko dlja etogo temu nado podhodjas4uju :)
+[2006-08-01 17:18:28] Anton says: и давай может на 18:30 перенесём?
+[2006-08-01 17:18:43] .Kind says: можно на 18-30
+[2006-08-01 17:19:02] DEF says: ok
+[2006-08-01 17:19:23] *** .Kind has changed the chat topic to "Steel Engine: Meet: 2 aug 18-30 [ Revision: 199 ]" ***
+[2006-08-01 17:19:48] Anton says: на полчаса больше можно будет посидеть :)
+[2006-08-01 17:21:05] .Kind says: надо Def_lv из этого чата выкинуть
+[2006-08-01 17:21:16] ..KUZ says: как?
+[2006-08-01 17:21:25] ..KUZ says: надо чтобы он сам ушел
+[2006-08-01 17:21:33] ..KUZ says: только так
+[2006-08-01 17:21:51] DEF says: za4em vikidivatj?
+[2006-08-01 17:21:58] .Kind says: а зачем он?
+[2006-08-01 17:22:05] ..KUZ says: я его добавил
+[2006-08-01 17:22:08] ..KUZ says: он попросил
+[2006-08-01 17:22:11] DEF says: tam messagi skaplivajutsja
+[2006-08-01 17:22:12] Anton says: раздвоение личности :)
+[2006-08-01 17:22:13] .Kind says: безопаснее удалить
+[2006-08-01 17:22:18] ..KUZ says: во во
+[2006-08-01 17:24:40] .Kind says: я знаю тему встречи!
+[2006-08-01 17:24:46] ..KUZ says: ну?
+[2006-08-01 17:24:57] .Kind says: будем отмечать юбилейный коммит
+[2006-08-01 17:25:03] DEF says: :D
+[2006-08-01 17:25:11] DEF says: eto ne dlja Skype
+[2006-08-01 17:25:17] DEF says: (beer)
+[2006-08-01 17:26:07] Anton says: юбилейный - это 256 :)
+[2006-08-01 17:26:28] DEF says: eto drugoj jubilej
+[2006-08-01 17:26:35] .Kind says: юбилеев много. 200, 222, 233, 250, 256, 266...
+[2006-08-01 17:26:45] DEF says: esli na 2 delitsja - jubilej
+[2006-08-01 17:26:51] DEF says: esli ne 3 - tozhe
+[2006-08-01 17:26:57] ..KUZ says: ага и если на 1
+[2006-08-01 17:27:06] Anton says: если просто делится
+[2006-08-01 17:27:06] DEF says: esli prostoe 4islo - tozhe
+[2006-08-01 17:27:38] ..KUZ says: тогда возникает вопрос - а какой тогда неюбилейный?
+[2006-08-01 17:27:38] Anton says: на само себя
+[2006-08-01 17:27:50] DEF says: predlagaju superjubilej - esli delitsja na 200
+[2006-08-01 17:27:56] Anton says: тот, который на себя не делится
+[2006-08-01 17:28:06] ..KUZ says: ответ не правильный
+[2006-08-01 17:28:07] DEF says: i Ultrajubilej - esli delitsja na 256
+[2006-08-01 17:28:10] Anton says: т.е. 0
+[2006-08-01 17:28:16] ..KUZ says: неюбилейный тот, которого еще нет
+[2006-08-01 17:28:21] .Kind says: ко дню программера должны сделать 256 коммитов. Учитывая то, что движок начали писчать 1 января - получается 1 коммит в день
+[2006-08-01 17:28:39] DEF says: :O
+[2006-08-01 17:28:50] Anton says: 13 сентября?
+[2006-08-01 17:28:52] .Kind says: да
+[2006-08-01 17:29:03] ..KUZ says: сделаем
+[2006-08-01 17:29:06] Anton says: :)
+[2006-08-01 17:29:11] DEF says: esli mi s kuzmi4em na4nem delatj commiti, to sdelaem bol6e
+[2006-08-01 17:29:12] .Kind says: :D
+[2006-08-01 17:29:16] ..KUZ says: я думаю даже больше будет
+[2006-08-01 17:29:27] ..KUZ says: а я уже начал тогда
+[2006-08-01 17:29:44] Anton says: так нужно под фанфары и красую ленточку 265 закоммитить
+[2006-08-01 17:29:46] .Kind says: 5 commit/week/programmer
+[2006-08-01 17:29:53] Anton says: 256
+[2006-08-01 17:30:11] DEF says: mozhno specifikaciju obs4uju napisatj i po zvukovomu dvizhku
+[2006-08-01 17:31:30] DEF says: zvukovaja koncepciju poka otstaet
+[2006-08-01 17:32:10] .Kind says: да. это 1
+[2006-08-01 17:32:29] DEF says: horo6o re6itj ispolzovatj li 3D geometriju dlja obs4eta Acoustics Environment ili ostavitj 2D
+[2006-08-01 17:33:15] DEF says: Kstati sej4as po4ti vstre4a v Skype i polu4aetsja :)
+[2006-08-01 17:33:41] DEF says: vse v online i vse govorjat
+[2006-08-01 17:34:47] ..KUZ says: это предвстеча
+[2006-08-01 17:35:30] .Kind says: Def, удалишь своего клона?
+[2006-08-01 17:35:35] DEF says: ok
+[2006-08-01 17:36:33] ..KUZ says: :O Дефа клонировали!!!!
+[2006-08-01 19:33:29] *** .Kind has changed the chat topic to "Steel Engine: Meet: 2 aug 18-30 [ Revision: 200 ]" ***
+[2006-08-02 13:15:59] DEF says: http://antwrp.gsfc.nasa.gov/apod/image/0512/eunight2_pv_big.jpg
+[2006-08-02 13:16:56] DEF says: Fotografija Evropi no4ju so specialnogo sputnika:) S kompjuternoj  obrabotkoj.
+[2006-08-02 13:17:53] Anton says: v CivIV takajaze estj :)
+[2006-08-02 13:18:06] DEF says: Rigu na6el :)
+[2006-08-02 13:18:14] Anton says: uhu
+[2006-08-02 13:18:46] Anton says: i Jelgavu, Ventspils, Liepaju i Daugavpils
+[2006-08-02 13:19:10] DEF says: da, estj
+[2006-08-02 13:19:51] DEF says: В реальности такое зрелище увидеть не доведется. На искусственной композиции полностью отсутствует облачность, и сильно завышена контрастность, для того чтобы подчеркнуть ярко освещенные земные города.
+[2006-08-02 13:20:19] Anton says: nu et jasno
+[2006-08-02 13:20:42] DEF says: Kak v kiberpankovskih i pro4ih fantasti4eskih filmah :)
+[2006-08-02 13:21:35] DEF says: Kak japonija vigljadit - dazhe dumatj ne ho4etsja
+[2006-08-02 13:21:48] Anton says: usa posmotri =]
+[2006-08-02 13:22:00] DEF says: gde?
+[2006-08-02 13:22:09] Anton says: hz :)
+[2006-08-02 13:22:58] DEF says: podnimisj na v korenj direktorii :) Oni ne zakrili dostup :D
+[2006-08-02 13:26:36] DEF says: http://antwrp.gsfc.nasa.gov/apod/ap060710.html
+[2006-08-02 13:31:19] DEF says: http://antwrp.gsfc.nasa.gov/apod/image/0608/titanrain_garlick_big.jpg
+[2006-08-02 13:31:35] DEF says: Methane Rain on Titan
+[2006-08-02 13:32:45] Anton says: tipa fotka :D
+[2006-08-02 13:33:04] DEF says: modelj i rendering po nej :)
+[2006-08-02 13:33:48] DEF says: tam es4e napisano bilo - Cold Methane Rain, a 4to , bivaet Hot Methane Rain? :D
+[2006-08-02 13:34:03] Anton says: nu esli podogretj
+[2006-08-02 13:34:06] Anton says: i v vide plazmi
+[2006-08-02 13:34:12] Anton says: plazma gun
+[2006-08-02 13:40:33] DEF says: liquid methane  ?182,5 °C при 1 атм
+[2006-08-02 13:41:03] Anton says: nu tak nagretj do +10^6
+[2006-08-02 17:12:27] .Kind says: Нам главное начать, потом продолжить и углубить
+[2006-08-02 17:17:31] ..KUZ says: это про что?
+[2006-08-02 17:17:37] ..KUZ says: про метан?
+[2006-08-02 17:17:51] .Kind says: про движок
+[2006-08-02 17:17:54] ..KUZ says: ааа
+[2006-08-02 17:18:39] ..KUZ says: я буду где-то до 20:30
+[2006-08-02 17:42:39] DEF says: ja tozhe gde-to do 20:30 - budu smotretj kak kuzmi4 budet nadrivatsja :D
+[2006-08-02 17:50:04] ..KUZ says: бери тогда деньги на тролейбас
+[2006-08-02 17:50:12] ..KUZ says: чтобы до Бора доехать
+[2006-08-02 17:50:19] DEF says: eto ponjatno
+[2006-08-02 17:50:21] .Kind says: моник повезёте?
+[2006-08-02 17:50:24] ..KUZ says: да
+[2006-08-02 17:50:29] .Kind says: круто
+[2006-08-02 17:50:32] .Kind says: молодцы
+[2006-08-02 17:50:34] DEF says: 28.5 Kg
+[2006-08-02 17:50:39] ..KUZ says: 26ю
+[2006-08-02 17:50:42] ..KUZ says: 26.5
+[2006-08-02 17:50:52] ..KUZ says: Weight (monitor only) 
+25.8 kg (56 lbs 14 oz)
+
+Weight (with packaging) 
+29.2 kg (64 lbs 6 oz)
+[2006-08-02 17:51:54] Anton says: "сильные программисты" (с) :)
+[2006-08-02 17:52:02] DEF says: (flex)
+[2006-08-03 15:21:06] .Kind says: Встречи программистов постепенно превращаются в распивание пива. Надо заканчивать это дело. Причём я на встрече 2 раза сказал, что обсуждаем какую-то херню, но меня проигнорировали. Итого, встречи будем собирать только в экстренном случае. А так хватает чата и документации. Но проблема в том, что никто кроме меня документацию не уважает (не пишет и не исправляет её).
+"Главное не достигнуть успеха, а отрезать пути к поражению, и успех сам придет." А что же делать сейчас, когда всё бьют себя в грудь, активно работают 2 дня, а потом ссылаются на (женский список: некогда, не сейчас, голова болит, жарко, холодно, мама сказала...). Обезопаситься от провала - ввести правило, обязывающее каждого программиста делать хотя бы 1 коммит в неделю. Постоянно отчитываться о прогрессе в выполнении задания. Если этого не будет - программист будет исключаться из команды. А то прошло 2 месяца, а результата нет. Видимого прогресса не то, чтобы нет, а даже наоборот - многие возможности исчезли из-за изменения архитектуры. Их надо переделывать, что намного эффективнее реализации с нуля, но для этого надо работать.
+
+Чувствую, останусь только я в проекте. Как всегда, один и непобедим.
+[2006-08-03 15:22:39] DEF says: :^)
+[2006-08-03 15:23:02] Anton says: сегодня вечером будет коммит :)
+[2006-08-03 15:25:24] .Kind says: А я пишу код каждый день. Я поймал тот азарт, котоый был еще в школе, когда я в год делал по несколько игрушек, без всяких заморочек, вроде геймдизайна. А сейчас... 4 года и никакого результата.
+[2006-08-03 21:54:38] *** .Kind has changed the chat topic to "Steel Engine: [ Revision: 202 ]" ***
+[2006-08-03 21:54:57] .Kind says: bump + environment mapping
+[2006-08-03 21:55:19] .Kind says: я переименовал директорию res в data, чтобы не путать её с дирой code/res
+[2006-08-04 09:20:14] .Kind says: http://www.novodex.com/licensing.html
+[2006-08-04 11:48:57] ..KUZ says: вот бы мне поймать тот азарт, который был еще в школе, когда я интегралы блал и дифуры решал...
+[2006-08-04 15:00:26] .Kind says: надо работать, войти а ритм. Когда привыкнешь - придётся отвыкать чтобы перестать. Привыкание занимает 20-40 дней
+[2006-08-04 15:01:04] ..KUZ says: зачем тогда отвыкать если привыкнешь?
+[2006-08-04 15:01:30] .Kind says: ну это к примеру
+[2006-08-04 15:01:44] .Kind says: и так почти в любой области
+[2006-08-04 15:02:08] .Kind says: надо заставить разум что-то делать, а потом он это скинет на подсознание и будет всё происходить автоматом
+[2006-08-04 16:51:30] *** Def@Work left this chat ***
+[2006-08-04 18:43:50] *** .Kind has changed the chat topic to "Steel Engine: [ Revision: 206 ]" ***
+[2006-08-04 22:38:10] *** Anton has changed the chat topic to "Steel Engine: [ Revision: 208 ]" ***
+[2006-08-05 15:22:14] *** .Kind has changed the chat topic to "Steel Engine: [ Revision: 210 ]" ***
+[2006-08-05 15:23:34] .Kind says: Новый проект intro. Ищите в самом корне репозитория. Этот проект использует откомпилированынй движок (steel.lib) и все заголовки движка.
+[2006-08-05 15:24:08] .Kind says: компилируется в intro.exe. Компилируется пока только под VC++ 2005
+[2006-08-06 23:21:01] .Kind says: от Дефа и Ульфа коммита так и не получил
+[2006-08-06 23:21:33] DEF says: a ja mogu perepisatj fail main.cpp ?
+[2006-08-06 23:21:40] DEF says: sej4as prjamo i sdelaju
+[2006-08-06 23:21:55] .Kind says: не переписать, а проапдейтить
+[2006-08-07 15:36:32] .Kind says: требую от вас недельного отчёта. И впредь каждую неделю жду от вас отчёта с пятницы до воскресения. Пишите в этот канал. Я тоже буду отчитываться.
+[2006-08-07 15:36:57] DEF says: Yes, ser !
+[2006-08-07 15:39:55] .Kind says: Отчёт за первыю неделю августа: сделал несколько версий рендерера для OpenGL 1.0, 1.1,1.3, 1.5. Теперь движок идёт на любых компах. Написал концепцию. Новый тип ресурса - текстовый файл. Новый проект на основе steel engine - division intro. Сейчас внедряю шейдеры и тени.
+[2006-08-07 15:40:19] .Kind says: и еще напишите план на следующую неделю
+[2006-08-07 15:43:52] DEF says: Kind, ne poterjaj tehnologiju tenevih objemov bez otse4enija. Prigoditsja, esli nado budet delatj fonari kak v HL1 (pomni6 signalizacija krasnaja pod potolkom krutilasj v laboratorii? I lu4i lazerov hodili po laboratorii?)
+[2006-08-07 15:44:58] .Kind says: да
+[2006-08-07 15:46:18] DEF says: ja budu otve4atj za scenarij i postanovku sceni v intro
+[2006-08-07 15:48:19] .Kind says: а программить?
+[2006-08-07 15:48:25] DEF says: i programmitj
+[2006-08-07 15:48:43] .Kind says: что именно?
+[2006-08-07 15:49:15] DEF says: 4to imenno programmitj? mne nado zakon4itj to, 4to ja v dannij moment delaju
+[2006-08-07 19:32:36] *** .Kind has changed the chat topic to "Steel Engine: [ Revision: 220 (system_info) ]" ***
+[2006-08-07 22:36:41] *** DEF has changed the chat topic to "Steel Engine Chat: [ Revision: 221 (windows_info) ]" ***
+[2006-08-07 23:02:34] *** DEF has changed the chat topic to "Steel Engine Chat: [ Revision: 222 (Raw System Yime @ Logger) ]" ***
+[2006-08-07 23:03:04] *** DEF has changed the chat topic to "Steel Engine Chat: [ Revision: 222 (Raw System Time @ Logger) ]" ***
+[2006-08-07 23:03:14] DEF says: (think)
+[2006-08-07 23:03:54] .Kind says: не стоит флудить коммитами.
+[2006-08-07 23:04:31] Anton says: a razve v loggere ne bilo vremeni?
+[2006-08-07 23:04:45] DEF says: Ti zhe poprosil vremja dobavitj, vot ja i dobavil
+[2006-08-07 23:05:09] .Kind says: было, но не так как я хотел
+[2006-08-07 23:05:35] .Kind says: юбилейный коммит
+[2006-08-07 23:05:39] Anton says: a imena fajlov i nomera strok rabotajut?
+[2006-08-07 23:05:52] Anton says: v error() ?
+[2006-08-07 23:05:55] .Kind says: не тестил
+[2006-08-07 23:06:06] Anton says: no on kompilitsja?
+[2006-08-07 23:06:09] Anton says: zna4it rabotajet :)
+[2006-08-07 23:06:16] Anton says: posmotri sdl.log
+[2006-08-07 23:06:22] .Kind says: (я бещ очков...Фигово  видно)
+[2006-08-07 23:06:23] Anton says: tam odin error dolzen bitj
+[2006-08-07 23:06:33] DEF says: kind, soberi poslednij commit
+[2006-08-07 23:06:37] .Kind says: под виндой нет sdl
+[2006-08-07 23:06:39] DEF says: posmotri
+[2006-08-07 23:06:46] Anton says: :(
+[2006-08-07 23:07:00] .Kind says: в смысле без него работает
+[2006-08-07 23:07:39] .Kind says: main.obj : error LNK2019: unresolved external symbol "int __cdecl DetectWindowsVersion(void)" (?DetectWindowsVersion@@YAHXZ) referenced in function _main
+[2006-08-07 23:08:00] Anton says: ой..
+[2006-08-07 23:08:17] Anton says: толко в #if ... это впишите :)
+[2006-08-07 23:08:43] .Kind says: Def даже в #ifndef COMMON__SYSTEM_INFO_H не врубился
+[2006-08-07 23:09:00] .Kind says: а ты хочешь такое :)
+[2006-08-07 23:09:17] Anton says: ;)
+[2006-08-07 23:09:26] Anton says: тогда пусть steel.h посмотрит
+[2006-08-07 23:09:50] .Kind says: ничего, будет писать - научится
+[2006-08-07 23:09:55] Anton says: для профилактики :)
+[2006-08-07 23:09:58] .Kind says: ведь тоже такие были
+[2006-08-07 23:10:23] Anton says: дефайны это сила
+[2006-08-07 23:10:30] .Kind says: Def, всё, что ты не понимал, а потом понял - комменти
+[2006-08-07 23:10:33] Anton says: #if 0 особенно
+[2006-08-07 23:10:38] .Kind says: :)
+[2006-08-07 23:10:55] Anton says: вместо комментов :)
+[2006-08-07 23:12:01] .Kind says: Def, терпи. Если готов сделать коммит, подожди пару часиков
+[2006-08-07 23:19:36] DEF says: za4em mne delatj Commit?
+[2006-08-07 23:19:48] DEF says: u menja vse kompilit
+[2006-08-07 23:19:58] .Kind says: у меня нет
+[2006-08-07 23:19:58] DEF says: po4emu u tebja ne rabotaet?
+[2006-08-07 23:20:05] .Kind says: см. ошибку
+[2006-08-07 23:20:18] DEF says: levaja kakajato o6ibka
+[2006-08-07 23:20:26] .Kind says: хе
+[2006-08-07 23:20:31] .Kind says: нет, всё ок
+[2006-08-07 23:20:41] .Kind says: просто нет библиотеки
+[2006-08-07 23:20:42] DEF says: 4to takoe  __cdecl
+[2006-08-07 23:20:49] .Kind says: хз
+[2006-08-07 23:21:10] DEF says: a v 4em problema?
+[2006-08-07 23:22:43] DEF says: mne nado uznatj, 4to u vas v sekcii [ windows_info ]
+[2006-08-07 23:22:59] .Kind says: где?
+[2006-08-07 23:23:29] .Kind says: а у тебя в Dev-C++ компилит?
+[2006-08-07 23:23:39] DEF says: u menja ego NET
+[2006-08-07 23:23:42] DEF says: :D
+[2006-08-07 23:24:16] .Kind says: а зря
+[2006-08-07 23:24:30] .Kind says: компиль перед коммитом там
+[2006-08-07 23:24:46] DEF says: Windows .NET Server estj u kogonitj>
+[2006-08-07 23:24:47] DEF says: ?
+[2006-08-07 23:25:04] DEF says: nu priehali, etot otstoj es4e stavitj :)
+[2006-08-07 23:25:20] .Kind says: есть
+[2006-08-07 23:25:30] DEF says: tam mozhe6 zapustitj?
+[2006-08-07 23:25:41] .Kind says: так не компилится же
+[2006-08-07 23:26:06] DEF says: (headbang)
+[2006-08-07 23:26:11] DEF says: 4e tekoe ?
+[2006-08-07 23:26:17] DEF says: LINK error etot?
+[2006-08-07 23:28:07] Anton says: аха
+[2006-08-07 23:28:35] .Kind says: эх. надо тебя учить
+[2006-08-07 23:29:16] Anton says: главное, чтобы у меня этой ошибки не появилось ;)
+[2006-08-07 23:29:58] .Kind says: хехе. у тебя будет другая
+[2006-08-07 23:30:22] Anton says: а вот какая, это всегда сюрприз
+[2006-08-07 23:30:26] .Kind says: undefined function
+[2006-08-07 23:30:34] DEF says: system_info.obj : error LNK2019: unresolved external symbol __imp__GetUserNameA@8 referenced in function "int __cdecl CollectSystemInfo(void)" (?CollectSystemInfo@@YAHXZ)
+[2006-08-07 23:30:42] DEF says: u menja eto :)
+[2006-08-07 23:30:49] .Kind says: или даже cant find file windows.h
+[2006-08-07 23:30:56] Anton says: а ты компилил перед коммитом?
+[2006-08-07 23:31:08] DEF says: kto ja?
+[2006-08-07 23:31:13] Anton says: вот скорее всего про windows.h ;)
+[2006-08-07 23:31:19] Anton says: ага
+[2006-08-07 23:31:25] DEF says: u menja i sej4as kompilitsja
+[2006-08-07 23:31:38] DEF says: v debug v VS2005
+[2006-08-07 23:32:29] Anton says: кста, там в хелпе наверное написано, что такое __cdecl
+[2006-08-07 23:33:55] Anton says: по поводу *.png
+[2006-08-07 23:34:06] Anton says: он у меня с собой тянет libpng :)
+[2006-08-07 23:34:14] DEF says: a kto mne skazhet, po4emu u menja i u kindexa o6ibki v raznih mestah?
+[2006-08-07 23:34:16] .Kind says: хм
+[2006-08-07 23:34:17] Anton says: так что будьте готовы
+[2006-08-07 23:35:03] .Kind says: а исходники?
+[2006-08-07 23:35:09] DEF says: ?
+[2006-08-07 23:35:18] Anton says: чего? www.libpng.org вроде
+[2006-08-07 23:35:49] .Kind says: ок
+[2006-08-07 23:37:13] Anton says: там где-то dll должны быть
+[2006-08-07 23:44:22] Anton says: common/logger.cpp:43: error: 'SYSTEMTIME' was not declared in this scope
+common/logger.cpp:43: error: expected `;' before 'sm'
+common/logger.cpp:44: error: 'sm' was not declared in this scope
+common/logger.cpp:44: error: 'GetLocalTime' was not declared in this scope
+[2006-08-07 23:44:23] Anton says: :D
+[2006-08-07 23:44:40] Anton says: это конечно круто..
+[2006-08-07 23:44:54] DEF says: a huli u menja raboteat vse ??
+/
+[2006-08-07 23:45:07] Anton says: потому что ты писал
+[2006-08-07 23:45:09] .Kind says: пишешь не по стандарту
+[2006-08-07 23:45:19] Anton says: ман POSIX ;)
+[2006-08-07 23:45:24] .Kind says: #include "win_info.h" -> #include <win_info.h>
+[2006-08-07 23:45:38] Anton says: неа
+[2006-08-07 23:45:41] .Kind says: например
+[2006-08-07 23:45:42] DEF says: 4e?
+[2006-08-07 23:45:44] Anton says: это у него
+[2006-08-07 23:45:47] Anton says: в common
+[2006-08-07 23:46:00] Anton says: #include "common/win_info.h"
+[2006-08-07 23:46:14] DEF says: v logger.cpp ja dobavil #include <Windows.h>
+[2006-08-07 23:46:30] .Kind says: нафиг?
+[2006-08-07 23:46:31] DEF says: a logger.h ne manjal
+[2006-08-07 23:46:43] Anton says: а это ничего, что у меня нет такого файла? :)
+[2006-08-07 23:46:44] DEF says: 4tobi SYSTEMTIME sm;
+ GetLocalTime(&sm);
+[2006-08-07 23:47:09] .Kind says: где ты это нарыл?
+[2006-08-07 23:47:24] DEF says: 4to ja naril?
+[2006-08-07 23:47:42] .Kind says: .DEF says: 4tobi SYSTEMTIME sm;
+ GetLocalTime(&sm);
+[2006-08-07 23:47:46] DEF says: GetLocalTime eto po Win 32 API help
+[2006-08-07 23:47:47] Anton says: а что эта функция делает?
+[2006-08-07 23:48:04] .Kind says: пиши нп POSIX
+[2006-08-07 23:48:07] .Kind says: а не под Win32
+[2006-08-07 23:48:54] DEF says: nu blin, windows.h nado ispolzovatj
+[2006-08-07 23:49:08] DEF says: i tam dolzhno bitj
+[2006-08-07 23:49:11] .Kind says: да
+[2006-08-07 23:49:21] .Kind says: у Антона в линухах
+[2006-08-07 23:49:36] DEF says: a v linuhah eto vse ne pojdet
+[2006-08-07 23:49:46] DEF says: eto dazhe smisla ne imeet
+[2006-08-07 23:49:52] .Kind says: а раньше шло
+[2006-08-07 23:49:56] Anton says: прошлый коммит работад :)
+[2006-08-07 23:50:00] Anton says: работал
+[2006-08-07 23:50:13] DEF says: eto kak eto?
+[2006-08-07 23:50:24] Anton says: ну..
+[2006-08-07 23:50:27] DEF says: Windows type pod linuhom ne pojdet
+[2006-08-07 23:50:33] Anton says: скомпилировал и запустил
+[2006-08-07 23:50:45] Anton says: а там не зря куча #ifdef
+[2006-08-07 23:50:48] DEF says: i u tebja operativu s4italo?
+[2006-08-07 23:51:03] Anton says: где?
+[2006-08-07 23:51:08] Anton says: я не видел
+[2006-08-07 23:51:43] Anton says:  #include <time.h>
+
+       time_t time(time_t *t);
+[2006-08-07 23:51:54] Anton says: struct tm *localtime(const time_t *timep);
+[2006-08-07 23:52:02] Anton says: struct tm {
+                      int     tm_sec;         /* seconds */
+                      int     tm_min;         /* minutes */
+                      int     tm_hour;        /* hours */
+                      int     tm_mday;        /* day of the month */
+                      int     tm_mon;         /* month */
+                      int     tm_year;        /* year */
+                      int     tm_wday;        /* day of the week */
+                      int     tm_yday;        /* day in the year */
+                      int     tm_isdst;       /* daylight saving time */
+              };
+[2006-08-07 23:52:17] Anton says: там у тебя чтото типа этого?
+[2006-08-07 23:52:28] DEF says: da
+[2006-08-07 23:53:08] Anton says: тогда потом перепишу..
+[2006-08-07 23:56:43] Anton says: а сейчас - я спать :)
+[2006-08-07 23:56:56] DEF says: nu, blin, spokojnoj no4i
+[2006-08-07 23:57:01] Anton says: :)
+[2006-08-08 14:06:59] DEF says: http://www.ixbt.com/video2/tech_ss2.shtml
+[2006-08-08 15:30:57] *** .Kind has changed the chat topic to "Steel Engine Chat: [ Revision: 224 (Raw System Time @ Logger: fixed) ]" ***
+[2006-08-08 17:10:35] ..KUZ says: Отчет за первую неделю августа 2006 года.
+Определены основные требования wav-загрузчика,в следствии чего он был полностью переписан. В результате загрузчик wav-файлов полностью не зависит от звукового движка.
+Также были переопределены параметры wav-ресурса. Появилась возможность загружать и проигрывать звук.
+[2006-08-08 20:55:11] *** .Kind has changed the chat topic to "Steel Engine Chat: [ Revision: 225 Shaders ]" ***
+[2006-08-08 20:55:15] *** .Kind has changed the chat topic to "Steel Engine Chat: [ Revision: 225 GLSL Shaders ]" ***
+[2006-08-08 20:58:53] .Kind says: если шарик красный - значит работают шейдеры
+[2006-08-08 21:04:11] DEF says: kind, pohozhe s tesursami kakajato problema
+[2006-08-08 21:08:44] .Kind says: где?
+[2006-08-08 21:25:44] DEF says: u menja viletaet steel
+[2006-08-08 23:01:56] Anton says: народ, все дефайны определены в steel.h, по-этому перед #if нужно сделать #include этого файла :)
+[2006-08-08 23:07:53] .Kind says: разве. я думал в проекте все дефайны
+[2006-08-08 23:09:29] Anton says: там автоматически они определяются.. у меня они все берутся из steel.h..
+[2006-08-08 23:09:47] Anton says: лучше писать #include, надёжние
+[2006-08-08 23:10:15] Anton says: steel вылетает при запуске..
+[2006-08-08 23:10:48] .Kind says: сомотри лог
+[2006-08-08 23:11:04] Anton says: чёто про материалы
+[2006-08-08 23:11:13] DEF says: da, tozhe 4to i u menja
+[2006-08-08 23:11:14] Anton says: может я не всё updateнул
+[2006-08-08 23:11:20] DEF says: sdelaj revert na res
+[2006-08-08 23:11:39] DEF says: tfu
+[2006-08-08 23:12:00] DEF says: na data
+[2006-08-08 23:12:27] .Kind says: я изменил формат хранения материала
+[2006-08-08 23:12:31] DEF says: problema v room script
+[2006-08-08 23:12:37] DEF says: u menja bila
+[2006-08-08 23:12:39] .Kind says: в новом вормате только sphere
+[2006-08-08 23:13:16] Anton says: update помог :)
+[2006-08-08 23:13:24] .Kind says: делай revert на data
+[2006-08-08 23:13:48] Anton says: так должно быть?
+[2006-08-08 23:13:50] .Kind says: да
+[2006-08-08 23:13:59] Anton says: :)
+[2006-08-08 23:14:05] Anton says: а чего он дырявый?
+[2006-08-08 23:14:06] DEF says: a 4to ti vidi6?
+[2006-08-08 23:14:20] DEF says: kraznij, dirjavij, i 6evelitsja ? :)
+[2006-08-08 23:14:23] .Kind says: я тестировал изменяемые формы
+[2006-08-08 23:14:35] Anton says: да :)
+[2006-08-08 23:16:02] .Kind says: еще пара шагов и будет 15ая демка :)
+[2006-08-08 23:17:12] Anton says: DEF, вот так и живём :)
+[2006-08-08 23:17:39] DEF says: skype pod linuhom normalno?
+[2006-08-08 23:17:47] Anton says: ага
+[2006-08-08 23:22:38] Anton says: ~300 FPS это нормально?
+[2006-08-09 19:54:32] *** DEF has changed the chat topic to "Steel Engine Chat: [ Revision: 229 PTRs ]" ***
+[2006-08-09 19:55:14] DEF says: \Steel\steel\trunk\docs\testing
+[2006-08-09 19:56:44] DEF says: PTR Form.txt budet so vremenem optimizirovatsja pod na6i potrebnosti
+[2006-08-09 19:58:49] DEF says: faili nazvani ne po standartu, poka ne menjatj!
+[2006-08-10 19:07:50] *** .Kind has changed the chat topic to "Steel Engine Chat: [ Revision: 230 PTRs ]" ***
+[2006-08-10 23:42:25] *** .Kind has changed the chat topic to "Steel Engine Chat: [ Revision: 232 test shader: pseudo flashlight ]" ***
+[2006-08-13 21:38:28] Anton says: отчёт..
+[2006-08-13 21:38:46] Anton says: таакс.. ну я где-то 50% загрузки png написал
+[2006-08-13 21:39:12] Anton says: именил некомпилируемые куски кода
+[2006-08-13 21:39:48] Anton says: когда натыкался на файл в cp1251, переводил в UTF8
+[2006-08-13 21:40:14] Anton says: гм..
+[2006-08-13 21:40:50] Anton says: избавляюсь от warning'ов компилятора в некоторых кусках кода
+[2006-08-13 21:41:44] Anton says: сделал, чтобы логгер ошибок error() писал строчку, файл и функцию, где был вызван макрос
+[2006-08-13 21:42:13] Anton says: + он сам добавляет "error" в keywords
+[2006-08-13 21:42:24] Anton says: вот вроде всё
+[2006-08-13 21:42:40] DEF says: molodec
+[2006-08-13 21:42:48] DEF says: time perepisal?
+[2006-08-13 21:43:13] Anton says: в логгере? да
+[2006-08-13 21:43:25] DEF says: ok
+[2006-08-13 21:43:32] Anton says: только ещё вроде не закоммитил это дело
+[2006-08-13 21:43:33] DEF says: commit?
+[2006-08-13 21:43:44] DEF says: menjaj Title (Subje)
+[2006-08-13 21:44:05] Anton says: я коммита не делал ещё
+[2006-08-13 21:45:55] Anton says: тайтл, в смысле топик в скайпе?
+[2006-08-13 21:45:59] DEF says: da
+[2006-08-13 21:46:12] .Kind says: Отчёт: изучил шейдеры, ввёл поддрежку шейдеров, начал писать шейдер для динамического освещения, спалил видюху. План на неделю: починить видюху и дописать освещение, +возможно сделать тени
+[2006-08-13 21:46:15] Anton says: через часик, когда коммит сделаю
+[2006-08-13 21:47:51] DEF says: a ja sdelal System_info, windows_info, napisal paru dokumentov. Plan : ispravitj ptr d0001, dopisatj 2 dokumenta
+[2006-08-13 22:38:06] ..KUZ says: Отчет за 20060807 - 20060813.
+
+Были написаны основные структуры звукового движка. Появилась возможность создавать один или более звуковых источников, изменять их и проигрывать их. Также можно создавать слушателя и изменять его параметры. В лог-файл стали отображаться ключевые моменты работы OpenAL.
+[2006-08-15 18:43:45] .Kind says: Кузмич, пиши комменты к коммитам?
+[2006-08-15 18:43:50] .Kind says: Кузмич, пиши комменты к коммитам!!
+[2006-08-15 18:44:44] ..KUZ says: ладно
+[2006-08-15 18:49:27] .Kind says: У мебя в ветке First-chance exception at 0x00000000 in steel.exe: 0xC0000005: Access violation reading location 0x00000000. Что-то в графическом движке или ресурсах не впорядке
+[2006-08-15 19:08:41] DEF says: http://www.dtf.ru/articles/print.php?id=41261
+[2006-08-15 19:08:45] .Kind says: 1904| <Darth> Кнофиги - в xml
+1904| <Darth> А так - struct'ы
+1904| * Joins: [ ACRSoft ] (a@ircnet-30003.etk.ru)
+1905| * Joins: [ PAKETA ] (PAKETA@server.wedro.org)
+1905| * ChanServ sets mode: +v PAKETA
+1905| <KindeX> слишком мощно
+1905| <zz|sergant> Darth: в памяти то не будешь DOM дерево xml хранить то
+1905| <Darth> А что мощного? Отпарзили xml - и храним в виде struct'а
+1906| <zz|sergant> в виде какого struct'a ?
+1906| <Darth> Ну не совсем... Вобщем - вытаскиваем все из конфига
+1906| <KindeX> Darth, ini-файлы. var=value
+1907| <Darth> А у меня все в xml, даже это.
+1907| <Darth> А для INI в WinAip функции есть
+1907| <Darth> *WinApi
+1907| <zz|sergant> Darth: ну, а дальше ? скажем массив пойнтов, массив ректов, строки, и т.п. В каких структурах хранить будешь ?
+1907| <zz|sergant> или у тебя в конфигах только int'ы ?
+1907| <Darth> СТОП! Зачем массив поинтов и т.д?
+[2006-08-15 19:10:04] DEF says: http://www.dtf.ru/articles/print.php?id=41261
+[2006-08-15 19:11:36] DEF says: Как мне однажды удалось объяснить суть аудиопрограммисту - профессия стала популярной лишь в последние пять лет, - звук в игре управляется игровыми событиями
+[2006-08-15 19:11:52] DEF says: Kuzmi4! Tvoja professija populjarna! :)
+[2006-08-15 19:13:02] .Kind says: кстати, предлагаю завтра встречу у меня дома сделать. Му с кузмичём интегрируем его ветку
+[2006-08-15 19:13:15] DEF says: blin
+[2006-08-15 19:13:32] DEF says: nu davajte, ja v 18:00 ot4alivaju v Piter
+[2006-08-15 21:07:53] *** DEF has changed the chat topic to "Steel Engine Chat: [ Revision: 243 PTR d4_0001 retesting. ]" ***
+[2006-08-15 21:08:13] DEF says: kuzmi4, sdelaj retest d4_0001
+[2006-08-15 21:12:40] DEF says: Kind! Sdelaj Update
+[2006-08-15 21:23:32] .Kind says: сделал
+[2006-08-15 21:23:37] .Kind says: много чего появилось
+[2006-08-15 21:24:19] DEF says: s4a es4e predetsja delatj
+[2006-08-15 21:24:23] DEF says: commit
+[2006-08-15 21:30:39] *** DEF has changed the chat topic to "Steel Engine Chat: [ Revision: 244 PTR d4_0001 retesting. ]" ***
+[2006-08-15 21:42:33] DEF says: (headbang)
+[2006-08-15 21:42:48] DEF says: nenavizhu SVN (devil)
+[2006-08-15 21:42:55] Anton says: ?
+[2006-08-15 21:42:58] DEF says: no on o4enj nuzhen
+[2006-08-15 21:43:06] Anton says: a 4to takoje?
+[2006-08-15 21:43:20] DEF says: da tut s rename, delete, add problemi
+[2006-08-15 21:43:27] DEF says: bili
+[2006-08-15 21:43:34] DEF says: 3 kommita sjelo
+[2006-08-15 21:43:45] DEF says: zakomitil odno, a u vseh - drugoe
+[2006-08-15 21:44:05] Anton says: nu v CVS voob6e rename direktorij nelza delatj bilo :)
+[2006-08-15 21:45:29] DEF says: F:\Steel\steel\trunk\docs\testing 
+soderzhit: description; forms; ptr_base ?
+[2006-08-15 21:45:41] Anton says: em.. hz :)
+[2006-08-15 21:46:01] DEF says: dolzhno soderzhatj, koro4e :)
+[2006-08-15 21:46:13] Anton says: sdelatj svn st na nego
+[2006-08-15 21:46:23] Anton says: esli napisano 4to update to dolzno bitj
+[2006-08-15 22:30:31] DEF says: http://www.ixbt.com/games/itogi/itogi-14-08-2006.shtml
+[2006-08-15 22:30:47] DEF says: important!
+[2006-08-16 17:04:42] DEF says: vse, vsem poka, pi6ite novosti 4erez SMS :)
+[2006-08-17 21:59:31] *** Anton has changed the chat topic to "Steel Engine Chat: [ Revision: 247 ]" ***
+[2006-08-20 15:40:29] .Kind says: я на этой неделе не занимался движком. Жду видюху
+[2006-08-20 21:50:09] ..KUZ says: Отчет за 20060814 - 20060820.
+Раза три менялись звуковые структуры. Появилось нечто, являющееся основой главного звукового движка. Появилась возможность создавать config-файл и грузить звуки согласно информации в нем. Работает в тестовом режиме. Возможны некоторые ошибки, хотя маловероятно. С пятницы по понедельник проектом не занимался в связи с проблемами с головой.
+[2006-08-21 10:58:37] Anton says: Ja prakti4eski na etoj nedele ni4ego ne delal :(
+[2006-08-21 12:01:25] ..KUZ says: уже на этой ничего не делал?
+[2006-08-21 12:05:14] Anton says: nu v smisle na toj, 4to v4era zakon4ilasj..
+[2006-08-21 14:26:36] DEF says: BACK
+[2006-08-21 14:26:42] DEF says: (rosk)
+[2006-08-21 14:26:45] DEF says: (rock)
+[2006-08-21 14:58:40] .Kind says: Деф дома?
+[2006-08-21 14:59:01] ..KUZ says: (rock) - не видишь?
+[2006-08-21 15:04:02] DEF says: Doma
+[2006-08-23 12:47:05] DEF says: http://www.ixbt.com/games/itogi/itogi-21-08-2006.shtml
+[2006-08-23 12:47:19] DEF says: important
+[2006-08-23 13:18:04] DEF says: Pristavki Vse blizhe k PC - teperj im nado monitor (po4ti objazatelno), upgraidi dlja zheleza, pat4i dlja softa, podklju4enie k Internetu. Kuda idem?
+[2006-08-23 13:44:07] .Kind says: Деф, не путай понятия
+PC - это комп для работы всё-таки
+[2006-08-23 13:44:47] .Kind says: по идее, ноуты должны называться PC
+[2006-08-23 13:45:21] DEF says: Eto Bill Gates putaet ponjatija, a ne ja
+[2006-08-23 13:45:45] .Kind says: он редко ошибается
+[2006-08-23 13:46:06] DEF says: nu s Tablet PC on poka o6ibsja
+[2006-08-23 13:46:32] DEF says: a s Media Center - poka ne ponjatno
+[2006-08-23 13:48:29] .Kind says: да еще PC у нас может быть серваком...
+[2006-08-23 13:48:54] .Kind says: а на мопеде можно грузы доставлять
+[2006-08-23 13:49:12] DEF says: nu u nas vse mozhet ispolnjatj raznie roli. Poka mi molode, kak govoritsja :)
+[2006-08-23 13:49:12] .Kind says: и не нужен для этого грузовик
+[2006-08-23 13:49:41] .Kind says: просто названия не соответствуют целям
+[2006-08-23 13:49:56] .Kind says: названия соответствуют формам
+[2006-08-23 13:50:36] .Kind says: если вдруг свечи от Мерса станут подходить к BMV, ты же не станешь говорить, к чему мы катимся??
+[2006-08-23 13:50:48] .Kind says: вем теперь они отличаются?
+[2006-08-23 13:51:01] DEF says: :)
+[2006-08-23 13:51:37] DEF says: 4erez paru let doma za kompom prosto tak ne porabotae6
+[2006-08-23 13:51:48] DEF says: Vista Home porezhet vse 4to mozhno
+[2006-08-23 13:51:52] .Kind says: да, будут рабочие станции
+[2006-08-23 13:52:07] .Kind says: офисные машинки
+[2006-08-23 13:52:21] DEF says: vot pro eto ja i govorju - kuda mi katimsja
+[2006-08-23 13:52:31] .Kind says: нафига офисной машине хард на 300 и супер-видюха?
+[2006-08-23 13:53:39] DEF says: ostanutsja tolko Noutbuki, Workstations, i To 4tp sej4as pristavki - Media Centri
+[2006-08-23 13:54:07] DEF says: v USA ofisnie ma6inki na nouti uzhe zamenili po4ti :)
+[2006-08-23 13:54:08] .Kind says: я не против
+[2006-08-23 13:57:18] DEF says: mobili i PDA soljutsja
+[2006-08-24 11:31:20] DEF says: !!! 
+http://www.ixbt.com/video2/r580plus-part1.shtml
+[2006-08-24 11:33:13] DEF says: Es4e odin 6ag vpered. GDDR4; Core - 650Mhz, Ram - 2000Mhz
+[2006-08-24 13:22:25] .Kind says: шаг качественнный или количественный?
+[2006-08-24 13:24:30] DEF says: nikakoj. Na meste.
+[2006-08-24 13:25:51] DEF says: GPU <-> RAM - 64Gb/s
+[2006-08-24 13:25:59] DEF says: dalo 10% prirosta
+[2006-08-24 13:26:26] DEF says: GeForce 7950GX2, 1GB (445Ls v Jete), ne sdelal vse ravno
+[2006-08-24 13:26:32] .Kind says: я вот всё жду новой версии шейдеров: текстурных и пиксельных, которые имеют информацию о топологии модели
+[2006-08-24 13:26:53] DEF says: a 3.0?
+[2006-08-24 13:27:04] .Kind says: нет
+[2006-08-24 13:27:08] .Kind says: таких еще нет
+[2006-08-24 13:27:19] .Kind says: но по моему, это логичное продолжение
+[2006-08-24 13:27:39] DEF says: v DirectX 10 budet 4.0
+[2006-08-24 13:27:51] DEF says: 4erez polgoda-god
+[2006-08-26 02:11:33] .Kind says: у меня видюха GeForce 7600GT, так что ждите красивую графику :) или даже не ждите, а помогайте
+[2006-08-26 02:12:49] DEF says: 4ego tak dolgo v offline bil?
+[2006-08-26 02:13:02] DEF says: 7600GT (rock)
+[2006-08-26 02:13:07] .Kind says: да я всё время онлайн
+[2006-08-28 17:53:53] .Kind says: отчётов не будет?
+[2006-08-28 17:54:30] ..KUZ says: каких отчетов - я писал уже
+[2006-08-28 17:54:44] .Kind says: за прошлую неделю
+[2006-08-28 17:54:50] ..KUZ says: я писал уже
+[2006-08-28 17:54:54] ..KUZ says: в пятницу
+[2006-08-28 17:55:29] .Kind says: не вижу
+[2006-08-28 17:55:35] ..KUZ says: ну бля
+[2006-08-28 17:55:45] ..KUZ says: [2006.08.25 17:38:40] Andrey Movlyaiko says: Отчет за 20060820 - 20060826
+
+Протесщено, дописано - работает. А если серьёзно, 
+то исправлены многие ошибки, появилась возможность 
+загружать файлы, используя config-файл со всеми 
+параметрами. Единственная проблема - название 
+файла, которая будет решатся в ближайшее время. 
+Config-файл со временем будет развиваться.
+[2006-08-28 17:56:12] ..KUZ says: у меня тогда нета не было - млжет не дошел, хотя у меня в чате он есть
+[2006-08-28 17:56:13] .Kind says: странно, у меня не было
+[2006-08-28 17:56:33] ..KUZ says: а кстати у меня пишет not delivered yet почемуто
+[2006-08-28 17:57:44] .Kind says: мой отчёт: я починил видюху, с Дефом встретились поповоду нового проекта WURPS, который будет использовать наш движок.
+[2006-08-28 17:58:20] ..KUZ says: а почему Ты в понедельник отчет пишешь :) ?
+[2006-08-28 17:58:43] ..KUZ says: Ты же говорил, что с пятницы по воскресенье
+[2006-08-28 17:58:51] .Kind says: а я забыл
+[2006-08-28 17:59:28] ..KUZ says: ну блин...
+[2006-08-28 17:59:49] ..KUZ says: главный в партии и забыл... пример должен подавать всем
+[2006-08-28 18:00:28] .Kind says: я всего лишь человек.
+[2006-08-28 18:04:47] ..KUZ says: и все тоже человеки
+[2006-08-28 18:05:00] ..KUZ says: один я получаюсь левый какой-то
+[2006-08-28 19:17:06] DEF says: Kuzmi4, ti vsegda levij kakojto :)
+[2006-08-28 19:52:25] .Kind says: не согласен. Кузмич правый
+[2006-08-28 20:06:50] DEF says: ultrapravij
+[2006-08-28 20:09:37] DEF says: http://www.ixbt.com/games/itogi/itogi-28-08-2006.shtml
+[2006-08-28 20:09:44] DEF says: Important
+[2006-09-02 15:07:47] .Kind says: я не понимаю логики в steelAbstract и SteelError
+[2006-09-02 15:09:00] .Kind says: почему SE_SDL_INIT должен быть виден во всём проекте, даже если мы не используем SDL? Надо менять систему ошибок
+[2006-09-02 15:15:05] .Kind says: и зачем нам директивы STEEL_OS_WIN32 и STEEL_OS ? Не кажется ли вам, что они дублируют друг друга?
+[2006-09-02 15:15:21] .Kind says: короче, у меня trunk не компилируется
+[2006-09-02 15:15:42] .Kind says: предлагаю полностью убрать SteelAbstract
+[2006-09-03 21:41:06] ..KUZ says: отчет за 20060827 - 20060903
+
+В принципе ничего нового не написал. Немного изменил структуру config-файла. Сделал коммит.
+[2006-09-03 21:41:33] ..KUZ says: естоь вероятность, что некоторы файлов не ххватает
+[2006-09-03 22:54:29] .Kind says: Отчёт: думал над системой освещения, нашел баг с тенями в HalfLife2, пытался скомпилировать движок - столкнулся с проблемами. Надо их решать. В планах написать динамическое освещение
+[2006-09-03 22:55:55] Anton says: Ну у меня на 85% где-то закончен загрузчик png.. На следующей недели можно будет тестить..
+[2006-09-03 22:58:56] DEF says: Ja dumal po povodu organizacii komandi, dumal, 4to skoro PTR mozhet prigoditsja. Nado dlja Worma doki koe-kakie napisatj. Nado bi najti es4e odin vne6nij projekt, tipa WURPS, najti modellera i hudozhnika v komandu DEVELOPMENTA (to estj k nam). Nu es4e do tehnodemo biljarda ostalosj 2 mesjaca.
+[2006-09-03 23:00:16] .Kind says: с Ворма надл потребовать концепцию
+[2006-09-03 23:00:18] DEF says: Nado Intro i Demo sdelatj, poka bez sjuzheta.
+[2006-09-03 23:01:15] DEF says: A, Igorja nado soblaznitj i sovratitj v DeVelopment
+[2006-09-03 23:03:49] .Kind says: что начит "Надо делать"?
+[2006-09-03 23:03:55] .Kind says: да, завтра поговорим
+[2006-09-03 23:04:33] DEF says: nam v 11
+[2006-09-03 23:04:59] .Kind says: ок
+[2006-09-03 23:05:08] .Kind says: что начит "Надо делать" в твоём понимании?
+[2006-09-03 23:05:17] .Kind says: к чему обязывает эта фраза?
+[2006-09-03 23:06:14] DEF says: Ne znaju, tak govorjat. esli ne sdelaem, nam vsem budet huzhe. $isto psihologi4eski, hotjabi. 4to net rezultata, kotorij dostupen komuto es4e krome nas.
+[2006-09-03 23:07:20] .Kind says: а какие действия надо для этого предпринять?
+[2006-09-03 23:07:46] .Kind says: во, а давай я тебя назначу главным в Интро
+[2006-09-04 23:05:44] .Kind says: При добавлении нового файла не забывайте вставлять шапку, которая описана в соглашении о стилях. Создавайте текстовый файл в кодировке UTF-8.
+[2006-09-04 23:29:40] .Kind says: STEEL_OS – отвечает за компиляцию для под определённую ОС (OS_WIN32, OS_LINUX)
+STEEL_COMPILER – содержит идентификатор компилятора (COMPILER _VS8, COMPILER _GCC, COMPILER _DEVCPP)
+STEEL_OPENGL_API – содержит информацию о способе создания окна для OpenGL (OPENGL_WINAPI, OPENGL_SQL)
+Эти директивы выставляются в проектных файлах как параметры компилятора (-D), а не определяются внутри кода.
+[2006-09-04 23:30:24] Anton says: эм.. ок :)
+[2006-09-04 23:30:47] .Kind says: я скоро закомичу свои изменения
+[2006-09-04 23:30:57] .Kind says: я это исправил для винды
+[2006-09-04 23:31:04] .Kind says: подожди пока
+[2006-09-05 00:07:40] .Kind says: у меня не получается завтавить DevC++ работать с UTF8
+[2006-09-05 00:08:09] .Kind says: он ругается на первык 3 символа и не видит русских букв
+[2006-09-05 00:31:46] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 251 - UTF-8" ***
+[2006-09-05 00:32:49] .Kind says: Кузмич. [2006.09.09 11:34:29] Kuzmi4: File Creation.
+[2006-09-05 00:33:03] .Kind says: такое писат не надо, так как всё это видно в репозитории
+[2006-09-05 00:34:29] .Kind says: от направления камеры ориентация относительно ушей источников звука не меняется
+[2006-09-05 06:30:33] ..KUZ says: естественно не меняется
+[2006-09-05 06:31:18] ..KUZ says: только координаты считает
+[2006-09-05 20:03:22] Anton says: KindeX, первые 3 символа - это винда так обозначает, что это юникод..
+[2006-09-05 20:08:55] ..KUZ says: то есть можно из удалить??
+[2006-09-05 20:09:12] Anton says: из?
+[2006-09-05 20:09:31] ..KUZ says: из начала файла
+[2006-09-05 20:09:58] Anton says: ну.. хз, линуксу на это пофиг
+[2006-09-05 20:12:31] ..KUZ says: я думал это в стандарте
+[2006-09-05 20:12:35] ..KUZ says: (я киндекс)
+[2006-09-05 20:13:31] Anton says: только для Майкрософт..
+[2006-09-05 22:46:25] .Kind says: ты чо-нибудь исправлял?
+[2006-09-05 22:46:57] Anton says: последнию неделю полтору ничего не коммитил
+[2006-09-05 22:47:34] .Kind says: ок, я исправлю это
+[2006-09-05 23:22:46] .Kind says: предлагаю ввести правило: заниматься движком каждый день по часу
+[2006-09-05 23:22:53] .Kind says: перед сном
+[2006-09-06 00:46:28] DEF says: http://www.ixbt.com/video2/tech_trl.shtml
+[2006-09-06 01:22:47] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 253 - UTF-8" ***
+[2006-09-06 17:51:38] Anton says: ещё 3 ревизии :)
+[2006-09-06 21:52:51] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 254 - Compile under Linux" ***
+[2006-09-08 00:45:37] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 258 - code conventions" ***
+[2006-09-08 00:46:26] .Kind says: теперь code conventions находится в /docs, а не /steel/trunk/docs
+[2006-09-08 00:47:04] .Kind says: я слил старый вариант и вариант Кузмича. Изучите. На следующей встрече обсудим
+[2006-09-08 00:47:19] .Kind says: встреча в среду
+[2006-09-08 00:47:36] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 258 - code conventions. Meet:" ***
+[2006-09-08 00:47:59] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 258 - code conventions. Meet: 13 в 20-00. День программиста" ***
+[2006-09-08 00:48:09] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 258 - code conventions. Meet: 13.09 в 20-00. День программиста" ***
+[2006-09-08 13:18:52] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 259 - engine::storage. Meet: 13.09 в 20-00. День программиста" ***
+[2006-09-09 01:03:08] .Kind says: что вы думаете по поводу code conventions?
+[2006-09-09 01:03:08] .Kind says: ва
+[2006-09-09 09:10:48] .Kind says: Отчёт: привёл в поряжок движок: определил директивы (STELL_OS и т.п.), подправил воодные комменты в файлах, перевёл все файлы в UTF-8.
+Идею со storage перевёл на более низкий уровень. Теперь это в engine. 
+В планах: избавиться от классов OpenGL_WIN_Engine и SQL_Engine. Сдлеать движение по траектории и на основе этого делать дему. Параллельно делать динамическое освещение.
+К концу этого хочу иметь звуковой движок и загрузку jpeg и png
+[2006-09-09 16:17:47] ..KUZ says: Деф, не хочешь на базу и в 636 сходить?
+[2006-09-09 16:19:18] ..KUZ says: ой бля не туда написал
+[2006-09-09 23:22:06] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 261 - SDL+WinAPI video. Meet: 13.09 в 20-00. День программиста" ***
+[2006-09-10 22:17:21] ..KUZ says: Отчет за 20060904 - 20060910.
+
+В связи со всеми праздниками и новым графиком учебы снизилась производительность труда и как следствие небольшой output. Добавил ориентацию слушателя. Нет точной уверенности правильности работы ориентации. Не тестировал. Необходимо тестировать с ушами. Но звук меняется. Далее собираюсь официально сделать поддержку EAX2.0 и раскоментить код связанный с этим. Особой нодобности в этом нет, но можно начинать что-то крутить с окружающей средой. Пока все.
+[2006-09-10 23:18:51] .Kind says: что думаете про мит?
+[2006-09-10 23:19:07] ..KUZ says: живы будем - можно делать
+[2006-09-10 23:19:41] .Kind says: я думаю сделать неформальный мит в пабе
+[2006-09-10 23:19:52] .Kind says: пиво, другие программисты
+[2006-09-10 23:20:08] ..KUZ says: [2006.09.08 00:46:14] KindeX says: я слил старый вариант и вариант Кузмича. Изучите. На следующей встрече обсудим
+
+--> как это понимать?
+[2006-09-10 23:20:29] .Kind says: это про документацию
+[2006-09-10 23:20:32] .Kind says: code conventions
+[2006-09-10 23:20:40] ..KUZ says: а, я то думал про ветки
+[2006-09-10 23:20:46] ..KUZ says: теперь понял
+[2006-09-11 06:37:52] ..KUZ says: живой кто есть?
+[2006-09-11 06:38:05] ..KUZ says: почему от Дефа не было отчета?
+[2006-09-12 17:45:20] DEF says: http://www.ixbt.com/games/itogi/itogi-11-09-2006.shtml
+[2006-09-12 17:48:00] DEF says: Igorj prav :) PS3 v Evrope ne budet :)
+[2006-09-12 21:00:55] ..KUZ says: рекорд - steel - 577 error(s), 24 warning(s)
+[2006-09-12 21:01:04] DEF says: :)
+[2006-09-12 21:01:17] .Kind says: слил ветки?
+[2006-09-12 21:02:11] ..KUZ says: нет
+[2006-09-12 21:02:21] ..KUZ says: это кое че поменял
+[2006-09-12 21:02:43] ..KUZ says: а как я Тебе их солью?
+[2006-09-12 21:02:58] .Kind says: завтра покажу
+[2006-09-12 21:03:04] ..KUZ says: ну вот
+[2006-09-12 21:03:13] ..KUZ says: я сейчас готовлю все к сливанию
+[2006-09-12 21:03:36] ..KUZ says: хочу убедиться в работоспособности
+[2006-09-12 21:03:45] ..KUZ says: но 
+steel - 577 error(s), 24 warning(s)
+мне не нравится
+[2006-09-12 21:05:56] .Kind says: исправляй
+[2006-09-13 17:31:31] DEF says: .
+    --=== THE GREAT COMMIT DAY ===--
+[2006-09-13 22:41:25] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 270: Audio in trunk" ***
+[2006-09-13 22:55:34] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 271: Audio in trunk" ***
+[2006-09-14 01:55:15] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 272: Particle system" ***
+[2006-09-14 12:42:50] .Kind says: В последней ревизии есть баг с физикой систем частиц.
+[2006-09-14 12:45:27] .Kind says: Баг проявляется только при компиляции на DevC++
+[2006-09-14 12:45:54] .Kind says: Def, приготовь PTR
+[2006-09-14 23:40:10] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 273: Particle system" ***
+[2006-09-14 23:40:16] .Kind says: исправил баг
+[2006-09-14 23:40:20] .Kind says: делаем update
+[2006-09-15 09:47:33] ..KUZ says: а Деф PTR сделал по этой прийине?
+[2006-09-15 09:47:38] ..KUZ says: а Деф PTR сделал по этой причине?
+[2006-09-15 13:27:56] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 274: build rules" ***
+[2006-09-15 23:36:31] .Kind says: Отчёт: изабился от классов OnenGL_WIN_Engine и аналогичных. С Кузмичём внедрили звук.
+Сделал выравнивание по экрану.
+В планах удалить лишние классы, сделать более удобный способ создания уровней, движение по траектории, освещение.
+Делаем дему: лабиринт.
+В течении месяца хорошо бы сделать полноченную физику для шариков.
+[2006-09-15 23:36:46] *** .Kind has changed the chat topic to "Steel Engine Chat.  Revision: 277: screen alignment" ***
+[2006-09-16 13:40:54] .Kind says: воспринимаемая скорость работы программы зависит в большей мере от времени отклика на действие пользователя (feedback), чем от реальной скорости работы.
+[2006-09-16 13:42:10] DEF says: eto ti k 4emu? ja tolko na fps smotrju...
+[2006-09-16 13:42:21] .Kind says: а зря
+[2006-09-16 13:42:46] .Kind says: это хитрость, которая позволяет сделать игру приятнее
+[2006-09-16 13:42:50] .Kind says: например, GTA3
+[2006-09-16 13:43:13] .Kind says: где здания грузяться в фоновом режиме
+[2006-09-16 13:44:00] DEF says: da, zanju, no eto plohaja otimizacija.
+[2006-09-16 13:44:47] DEF says: no po drugomu togda nikak bilo ;(
+[2006-09-16 13:44:55] .Kind says: или пример с курсором мыши, русиемый игрой, или аппаратным курсором. Второй вариант намного приятнее
+[2006-09-16 13:49:39] .Kind says: что важнее, fps или gameplay?
+[2006-09-16 13:50:03] DEF says: Kind, eto k 4emu tebja probilo? K tomu, 4to u nas ne budet bol6e 20 Fps? v Latviju zavezli partiju 750Gb Seagate :)
+[2006-09-16 13:51:59] .Kind says: если все кадры одного размера, то 60 FPS должно хватать. То есть, нет задержки более 1/60 сек
+[2006-09-16 13:52:13] DEF says: kone4no
+[2006-09-16 13:52:21] DEF says: eto i estj optimum
+[2006-09-16 13:52:44] .Kind says: я думаю, что это максимум
+[2006-09-16 13:52:56] DEF says: Carmack voobs4e limiter postavil, 4tobi bol6e ne billo
+[2006-09-16 13:53:47] DEF says: dlja single player
+[2006-09-16 14:04:07] .Kind says: Def, Насчёт шейдеров: разберись с RenderMonkey
+[2006-09-16 14:04:17] .Kind says: жду отчёта
+[2006-09-16 14:13:43] DEF says: ok, poprobuju
+[13:09:18] DEF says: Приснилось, что Мы аналог СТАЛКЕРА сделали раньше оригинала. Использовали Золик, Юрмалу и Юглу в качестве антуража. Теперь уже проснувшись: Постапокалипсис. 2006 год. Карибский кризис 14 октября 1962 года... 27 октября 1962 года, в ответ на то, что над Кубой был сбит разведывательный самолет У-2, пилотируемый Рудольфом Андерсоном, а другой У-2 был перехвачен над Сибирью, когда ВВС США, пренебрегли приказом Президента США прекратить все полёты над советской территорией, СССР нанесли первый удар ...
+[13:11:46] .Kind says: круто
+[2006-09-21 17:31:17] DEF says: http://www.ixbt.com/news/all/index.shtml?06/85/88 (dance)Time is never stopping.
+[2006-09-21 23:05:20] .Kind says: пишу новые конфиги. Пока всё хорошо. Но вот с наследованием структур могут быть проблеммы
+[2006-09-21 23:05:57] .Kind says: мне нравится писать пасмер :) Почти дословный перевод формальной спецификации
+[2006-09-21 23:07:19] DEF says: http://www.tomshardware.com/2006/09/10/four_cores_on_the_rampage/ fuckin' future is cummin'.
+[2006-09-21 23:07:36] DEF says: Quad cores ;( in TEST
+[2006-09-21 23:09:23] .Kind says: а что в этом плохого?
+[2006-09-21 23:09:29] DEF says: Ja ne dumal, 4to doberemsja do sledujus4ego tehnologi4eskogo barjera za 1.5 Goda! 8 jader - uzhe bessmislenno. Poetomu opjatj gonka 4astot na4netsja ...
+[2006-09-21 23:10:50] .Kind says: а что делать
+[2006-09-21 23:11:03] .Kind says: с природой не поспоришь
+[2006-09-21 23:11:40] .Kind says: мне Зоник 5 лет назад говорил, что 3 Ghz предел. я ему не верил
+[2006-09-21 23:12:23] DEF says: Когда современная экономика сломает себе хребет? Делат в 2 раза дороже в 2 раза быстрее ...
+[2006-09-21 23:15:38] .Kind says: насчёт 8ми процв согласен
+[2006-09-22 19:44:35] ..KUZ says: [00:05:14] KindeX says: мне нравится писать пасмер
+
+Киндексу нравится писать ПАСМЕР!!!
+[2006-09-22 21:24:13] .Kind says: парсер
+[2006-09-22 22:14:38] .Kind says: как назвать класс, который объединяет в себе struct, array и set
+[2006-09-22 22:14:41] .Kind says: ?
+[2006-09-22 22:23:55] DEF says: SARS (chuckle)
+[2006-09-22 22:24:09] DEF says: SarrS
+[2006-09-22 22:24:19] DEF says: 4to on budet delatj?
+[2006-09-22 22:25:02] .Kind says: { 
+          material = ..
+          model = ‘model/box’
+          scale = (10 10 1)
+          texcoord_scale = (0.1 0.1 1)
+    }
+вот пример
+[2006-09-22 22:25:19] .Kind says: scale и texcoord_scale тоже самое
+[2006-09-22 22:25:42] .Kind says: scale = (10 10 1)
+синоним
+          scale = (0=10 1=10 2=1)
+[2006-09-22 22:25:59] DEF says: eto material 4to;li?
+[2006-09-22 22:26:14] .Kind says: это пример конфига
+[2006-09-22 22:26:38] DEF says: unifiedConfStruct
+[2006-09-22 22:27:47] .Kind says: я назвал Array, по аналогии с PHP
+[2006-09-22 22:27:59] .Kind says: там очень похожие массивы
+[2006-09-23 12:13:18] ..KUZ says: Отчет за 2006098 - 20060924
+
+Добавил основные параметры в AudioSoundRes. Сделал так, что они работают. 
+Народ добавьте какой-нибудь объект, чтобы он двигался - надо звук тестить.
+[2006-09-23 12:13:49] ..KUZ says: в AudioSourceRes
+[2006-09-23 12:13:52] ..KUZ says: gthtgenfk
+[2006-09-23 12:14:00] ..KUZ says: перепутал
+[2006-09-23 12:42:46] .Kind says: Отчёт: разработал и частично реализовал новую версию конфигов. Пробная версия конфигов достпна в транке. Еще неделя уйдёт на доделывание конфигов и изменению форматов хранения уровней, материалов, моделей.
+Это в свою очередь откроет дорогу к шейдерам (2 недели) и движению по траектории (1 неделя).
+По оценкам через месяц должнаб быть готова основа для демы. За неделю можно сделать первую дему. К этому времени должен быть уже хорошо сделан звук вместе с влиянием окружающей среды на звучание, динамическое освещение, движение по траектории.
+[2006-09-23 12:45:59] .Kind says: после этого еще неделя уйдёт на простые колизии, что откроет дорогу к WURPS. Колиизии шаров позволят сделать прототип бильярда.
+В это время будем набирать программистов в команду, делать вторую дему.
+Дополнительно к этому времени надо иметь JPEG, PNG, ASE загрузчики и должна быть документация.
+Это должно быть готово к 13 ноября.
+[2006-09-23 12:49:58] .Kind says: Задания: 
+DEF - JPEG, шейдёры, изменение частоты обновления экрана
+Anton - PNG, Linux
+Кузмич - весь звук, OGG
+Ulf - интеграция python
+KindeX  - всё остальное
+комментарии?
+[2006-09-23 12:50:34] DEF says: ok
+[2006-09-23 12:50:40] ..KUZ says: акцепт
+[2006-09-23 12:51:06] .Kind says: кто берёт ASE?
+[2006-09-23 13:44:23] .Kind says: http://kindex.livejournal.com/18667.html#cutid1
+[2006-10-01 17:31:03] DEF says: http://www.ixbt.com/games/itogi/itogi-25-09-2006.shtml
+[2006-10-01 17:31:16] DEF says: Games iТоги недели
+[2006-10-01 21:27:13] .Kind says: Отчёт за всех: никто ничего не делал по проекту
+[2006-10-01 21:28:24] DEF says: da
+[2006-10-01 22:00:18] ..KUZ says: я начал реализовывать ogg
+[2006-10-01 22:00:42] ..KUZ says: но вы меня прервали :D
+[2006-10-01 22:02:05] DEF says: 4em interesno?
+[2006-10-01 22:02:17] ..KUZ says: МОНом
+[2006-10-01 22:02:23] ..KUZ says: что не помнишь?
+[2006-10-01 22:02:45] DEF says: eto bilo v sredu
+[2006-10-02 10:07:23] .Kind says: да кстати
+[2006-10-02 10:07:32] .Kind says: я тоже тогда начал писать конфиги
+[2006-10-02 10:07:39] .Kind says: но пришлось играть
+[2006-10-02 10:07:48] ..KUZ says: ну вот, а Ты говоришь, ничего не сделали
+[2006-10-02 10:08:03] ..KUZ says: вернее не сделали - это правильно, но всетаки делали
+[2006-10-02 10:08:12] .Kind says: Отчёт: играли в MoH
+[2006-10-09 05:47:50] ..KUZ says: Отчет за 20061002 - 20061008
+
+Нашел серьёзную недоработку в архитектуре. Думаю как исправить. Нарисовал диаграмму основных классов Steel Engine. Параллельно пишу загрузку и обработку *.ogg файлов в отдельном проекте.
+[2006-10-09 11:18:40] .Kind says: Отчёт: ничего не делал по проекту
+[2006-10-09 11:21:21] Anton says: Очень сожалею, но я тоже, не успел с пнг
+[2006-10-09 16:46:54] .Kind says: как у тебя вообще дела?
+[2006-10-09 18:51:39] Anton says: да вроде хорошо, только с режимом "универ - работа - дом - кровать" пора завязывать..
+[2006-10-09 20:46:25] .Kind says: да, сложно. мне это только предстоит
+[2006-10-09 22:36:35] *** .Kind has changed the chat topic to "Steel Engine Chat: 296: new Config in use in class Steel" ***
+[2006-10-09 22:37:25] .Kind says: показан пример работы новых конфигов в классе Steel. Конфиги пока без шаблонов.
+[2006-10-09 22:39:59] .Kind says: я всё же разделил struct и array чтобы было меньше путанницы.
+[2006-10-15 20:48:26] ..KUZ says: Отчет за 20061009 - 20061015
+
+Обсудили диаграммы классов.
+Окончательно запутался с AudioAmbient.
+В очередной раз переписал. Необходимо
+добавить новые параметры звука.
+[2006-10-16 08:43:16] .Kind says: Отчёт: довёл до ума конфиги. Осталось только придумать и написать шаблоны  и внедрить их всюду, где можно.
+[2006-10-16 08:49:14] *** .Kind has changed the chat topic to "Steel Engine Chat: 299: Configs" ***
+[2006-10-17 15:18:32] *** ..KUZ has changed the chat topic to "Steel Engine Chat: --= 300 =--" ***
+[2006-10-20 11:02:56] *** ..KUZ has changed the chat topic to "Steel Engine Chat : 301 : new audio parameters" ***
+[2006-10-22 09:30:18] ..KUZ says: Отчет за 20061016 - 20061022
+
+Появилась новая версия диаграмм классов. 
+Добавил методы и атрибуты. Обсудили с 
+Андрюхой. Придумал как делать ambient. 
+Добавил несколько параметров к звуку. Исправил 
+ошибку (недоработку). Теперь звуки и слушатель 
+появляются там где надо. Начал делать новый 
+объект "автомат" (в интерпретации Андрюхи). 
+Коммит пока делать не буду, пока не работает.
+[2006-10-22 12:28:43] .Kind says: Отчёт: config refactoring. ПОявились идеи по изменению Audio интерфейса.
+[2006-10-22 12:43:42] .Kind says: возможно следует изменить класическую схему, когда звуковой движок каждый кадр обрабатывает все объекты и засекает все изменения. Возможно удобнее и быстрее будет, если объект будет сам говорить движку, когда начинают играть звуки
+[2006-10-22 12:43:58] ..KUZ says: во во
+[2006-10-22 12:44:00] ..KUZ says: я согласен
+[2006-10-22 12:44:04] .Kind says: а в движке есть только список играющих в данный момент звуков
+[2006-10-22 12:44:20] ..KUZ says: тк, пока движок опросит все объекты - уходит время
+[2006-10-22 12:46:17] .Kind says: я чувствую архитектура еще пару раз изменится :)
+[2006-10-23 23:27:50] *** .Kind has changed the chat topic to "Steel Engine Chat # r303 : Config" ***
+[2006-10-23 23:31:48] .Kind says: сделал шаблоны для конфигов.
+[2006-10-23 23:32:17] .Kind says: теперь надо проработать форматы хранения, в основном уровня и материалов
+[2006-10-23 23:33:08] .Kind says: и еще важная новость: возможно у нас будет заказ по созданию простенькой игры за деньги.
+[2006-10-23 23:33:19] .Kind says: подробности уточняем
+[2006-10-27 20:20:29] *** .Kind has changed the chat topic to "Steel Engine Chat # r304 : RENAME CODE -> SOURCES" ***
+[2006-10-28 00:26:23] *** .Kind has changed the chat topic to "Steel Engine Chat # r310 : Self Test" ***
+[2006-10-28 23:23:30] .Kind says: как вам селфтесты?
+[2006-10-28 23:24:14] DEF says: ?
+[2006-10-28 23:24:43] DEF says: soobs4enie Steel Engine Chat # r310 u menja pojavilosj tolko 4to :)
+[2006-10-28 23:25:12] .Kind says: глюки Скайпа
+[2006-10-29 02:06:14] *** .Kind has changed the chat topic to "Steel Engine Chat # r312 : ConfigTest" ***
+[2006-10-29 21:37:11] ..KUZ says: Отчет за 20061023 - 20061029
+
+Обновил диаграммы классов. Пишу "винтовку".
+Обсудили архитектуру. Возможно все поменяется.
+Комит делать не буду - не работает.
+P.S. Как я и говорил, проект заморозится на 
+неделю.
+[2006-10-29 22:34:27] .Kind says: Отчёт: дописал конфиги. Теперь работаю шаблоны как и ожидалось. 
+Ввёл систему автотестов. (самотестирование). Частично парсер конфигом теперь себя тестирует. 
+Теперь надо разрабатывать формат хранения уровней, моделей, материалов
+[2006-10-30 15:43:56] *** .Kind has changed the chat topic to "Steel Engine Chat # r318 :Docs: scene file format" ***
+[2006-10-30 15:44:31] *** .Kind has changed the chat topic to "Steel Engine Chat # r318 docs: scene file format" ***
+[2006-10-30 21:02:47] .Kind says: прошу вас глянуть на пример описания сцены и оставить свой отзыв тут. Это 5 минут работы
+[2006-10-30 21:15:27] .Kind says: docs/file_formats_internal/scene
+[2006-10-30 21:29:41] DEF says: v principe estj voprosi
+[2006-10-30 21:30:29] .Kind says: я сулшаю
+[2006-10-30 21:30:32] DEF says: 4to eto zna4it?
+Описание физического взаимодействия
+Описание звучания (ambient)
+[2006-10-30 21:31:09] .Kind says: 1 - всё, что связанно с физикой объекта
+[2006-10-30 21:31:18] DEF says: mozhno postavtj Nevidimij, Nefizi4eskij objekt, kotorij budet zvu4atj?
+[2006-10-30 21:31:19] .Kind says: движение, столкновения
+[2006-10-30 21:31:26] .Kind says: да
+[2006-10-30 21:31:28] DEF says: ok
+[2006-10-30 21:31:35] .Kind says: любые комбинации
+[2006-10-30 21:32:01] DEF says: a trigger kak objekt?
+[2006-10-30 21:32:24] DEF says: dlja zapuska dejstvija
+[2006-10-30 21:33:02] DEF says: primer - lift
+[2006-10-30 21:33:17] .Kind says: не знаю
+[2006-10-30 21:33:18] DEF says: Vigljadit, zvu4it, sus4estvuet
+[2006-10-30 21:33:25] .Kind says: это уже игровая логика
+[2006-10-30 21:33:44] DEF says: za6li vnutrj, skript
+[2006-10-30 21:34:13] DEF says: no eta logika v scene!
+[2006-10-30 21:34:24] .Kind says: а как описывать действие?
+[2006-10-30 21:34:37] DEF says: eto nado dumatj :)
+[2006-10-30 21:34:52] DEF says: ssilka na skript
+[2006-10-30 21:34:57] DEF says: ili es4e kak
+[2006-10-30 21:35:27] DEF says: obsudim posle kontrolnoj?
+[2006-10-30 21:37:49] .Kind says: да
+[2006-11-05 22:28:56] ..KUZ says: Отчет за 20061030 - 20061105
+
+Установил OpenAL 1.1. Разрабатываю новую архитектуру.
+[2006-11-06 00:08:28] ..KUZ says: Дополнение к отчету:
+
+все запорол НАХРЕН!!!! изза этого долбанного SVN!!!
+
+(headbang)
+[2006-11-06 00:09:07] DEF says: 4to slu4ilosj?
+[2006-11-06 00:10:15] ..KUZ says: gbpltw ckexbkcz
+[2006-11-06 00:10:22] ..KUZ says: пиздец случился
+[2006-11-06 00:10:33] ..KUZ says: все запорол
+[2006-11-06 00:12:27] DEF says: kakim obrazom? 4to imenno slu4ilosj?
+[2006-11-06 08:16:36] ..KUZ says: народ! просьба не делать коммиты пока я не сделаю! а то ситуация обостряется и я вообще не разгребу
+[2006-11-06 08:24:02] ..KUZ says: кто выставил Debug lib configuration? или это у меня глюки?
+[2006-11-06 12:41:21] DEF says: kto vistavil ne znaju, no sam na eto naporolsja okolo 4eh dnej nazad
+[2006-11-06 12:42:06] DEF says: Ja togda ofigenno prikololsja - kogda exe nado vibiratj iz gotovih, sama ona na kompilitsja
+[2006-11-06 14:56:44] *** ..KUZ has changed the chat topic to "Steel Engine Chat # 319 : OpenAL 1.1" ***
+[2006-11-06 14:59:54] *** ..KUZ has changed the chat topic to "Steel Engine Chat # 320 : OpenAL 1.1 : fixed" ***
+[2006-11-08 17:09:53] DEF says: GeForce 8800 (g80_nv50). Снятие эмбарго и коммерческой тайны 8 ноября 2006 в 22 часа. Самые большие изменения в графическом железе за последние несколько лет!
+[2006-11-08 21:00:27] DEF says: http://www.ixbt.com/video2/g80-part1.shtml
+[2006-11-08 21:00:59] DEF says: 128 6ejderinh processorov!
+[2006-11-10 00:31:19] .Kind says: мне не нравится GameObj. Думаю сделаю его абстрактным
+[2006-11-10 14:08:04] ..KUZ says: мне тоже не нравится: я как начал убирать все, так из этого GameObj такой мат пошел...
+[2006-11-10 23:03:27] *** ..KUZ has changed the chat topic to "Steel Engine Chat # 321 : Foundation of the new Audio Architecture" ***
+[2006-11-11 11:35:37] .Kind says: [BRANCH-CREATE] branches/new_architecture
+Появились новые идеи по изменению архитектуры. Хочу перенести интерфейс из объекта в движок, что выглядит логичнее.
+[2006-11-11 14:18:24] DEF says: ti pro GUI govori6?
+[2006-11-11 14:20:59] .Kind says: я про архитектуру движка говрю
+[2006-11-11 14:21:18] DEF says: Хочу перенести интерфей - pro kakoj interfeis re4j idet?
+[2006-11-11 17:20:52] ..KUZ says: Ты главное поменяй название interface на object
+[2006-11-11 19:16:33] .Kind says: там всё еще круче.
+[2006-11-11 19:17:32] ..KUZ says: ну я имею ввиду чтобы не было так, что файл называется interface.h, а в нем декларация класса Object
+[2006-11-11 22:29:30] .Kind says: Object -> GameObject
+[2006-11-11 22:29:41] .Kind says: и будет класс Interface
+[2006-11-11 22:29:57] .Kind says: его будет использовать Engine
+[2006-11-11 22:30:09] ..KUZ says: ну Ты смотри только чтобы название класса совпадало с названием файла
+[2006-11-11 22:30:22] ..KUZ says: а то будет как Деф придумал тогда
+[2006-11-11 23:44:56] ..KUZ says: Отчет за 20061106 - 20061112
+
+Изменилось все. Звука пока больше нет. Начал делать новую архитектуру. Добавил некоторые файлы.
+[2006-11-12 14:53:43] .Kind says: в ветке new_architecture доступен работающий прототип новой архитектуры (пока только графика)
+[2006-11-12 15:01:37] *** .Kind has changed the chat topic to "Steel Engine Chat # 326 :New architecture first working example (branch)" ***
+[2006-11-12 23:41:12] .Kind says: Начал вводить новый формат хранения уровня, и как обычно бывает, именно при реализации понимаешь, что выбранный алгоритм неверен. Я давно чувствовал, что что-то в архитектуре не так. Она не очень понятна и удобна, зато эффективна. Была.
+Сейчас мы делаем презентацию по предмету Sistemu projekteshana. В книге нашёл интересную идею: бывают два типа интерфейсов: client-server и p2p. Никогда не думал об использовании движка как сервера. Короче, я перенёс интерфейс из игрового объекта в движок, что намного естественнее. В итоге, вместо демки к 13 ноября я сделал большой шаг назад в плане возможностей движка. Но это временно. Новая архитектура мне нравится - и это главное.
+
+Предыдущий варинат использовал множественное наследование, вроде
+class GameObject: public virtual GraphObject, public virtual PhysicObject, public virtual AudioObject
+
+Кроме того, я хотел в наследуемых объектах объединять возможности нескольких других объектов (вид - готовая модель, звук, физика - движение по траектории), используя множественное наследование. Это очень громоздко.
+Была идея использовать Combiner, который вместо наследования использует композицию и этих же классов.
+Новая архитектура лишена этих глюков. Раньше движок опрашивал объект по всем нужным параметрам, теперь сам объект сообщает движку всё, что считает необходимым сообщить. Будем считать, что у нас не будет тупых движков, которые не используют всю информацию об объекте.
+[2006-11-12 23:41:24] .Kind says: вместо отчёта
+[2006-11-16 01:33:24] *** .Kind has changed the chat topic to "Steel Engine Chat # 332 :New Combiner Game Object (new architecture) [branch]" ***
+[2006-11-16 01:35:10] .Kind says: осталось добавить поддержку подобъектов, и новая архитектура будет не хуже старой. Потом добавить системы частиц, пару стандартных игровых объектов. Потом переписать аудои движок под новую архитектуру, и первая демка будет готова :)
+[2006-11-16 22:33:35] *** ..KUZ has changed the chat topic to "Steel Engine Chat # 333 : quick fix" ***
+[2006-11-18 23:38:46] .Kind says: *** Steel Engine 1.1.0 (2006 dec ??) 
+многие кардинальные изменения архитектуры. База для первых демок
+
++Object Shadow: кеш игровый обхектов в движке
++Passive engine interface: интерфйс был перенесён в движок, что упростило использование объектов (Client-Server архитектура)
++Config: новый формат хранения конфигов с шаблонами
+-resModel, resConf, resScript: убраны старые форматы ресурсов. Теперь всё это умеет делать Config.
++Scene file format: Формт хранения сцены основе новых конфигов
+-physic: временно убрана физика для тестирования новой архитектуры
++self test: система самотестирования на примере конфигов
++3D audio
++steel lib: использование движка во внешних проектах как static lib
++3D OpenGL engine: автоопреденение возможностей видеокарты, поддержка OpenGL 1.0, 1.1, 1.3, 1.5, 2.0. GLSL
+
+
+*** Steel Engine 1.0.1 (2006 june 10, r148, steel_demo-14-r1-particle_system)
+выпушена как баналаврская работы KindeX'a и Def'a. Отточка архитектуры
+
++3D Collision detection: polygonal objects
++Particle System
+
+
+*** Steel Engine 1.0.0 (2006 April 05; steel_demo-09-r1-internal_demo1)
+первый релиз. Динамическое освещение
+
++3D OpenGL engine: dynamic lighting, bump-mapping
++Interface-Engine arhirecture
+[2006-11-18 23:39:11] .Kind says: в декабре я планирую выпустить 1.1 версию движка
+[2006-11-18 23:40:34] DEF says: dumaju, versuja dolzhna bitj vi6e
+[2006-11-18 23:41:04] DEF says: esli 4estno eto uzhe polu4aetsja vtoroe pokolenie dvizhnka
+[2006-11-18 23:42:45] .Kind says: а первое какое?
+[2006-11-18 23:43:10] .Kind says: до, что было до 2006 года - не Steel engine
+[2006-11-18 23:44:09] DEF says: ne, ja ne pro eto. Skolko raz SILNO menjalasj arhitektura?
+[2006-11-18 23:44:44] DEF says: dumaju kazhdoe izmanenie dobavljaet 0.1 k versii
+[2006-11-18 23:45:15] .Kind says: к релизу да. А у нас не было релизов. Всё что сейчас есть - прототип
+[2006-11-20 08:10:13] *** ..KUZ has changed the chat topic to "Steel Engine Chat # 340 : sound appears again" ***
+[2006-11-20 08:24:56] ..KUZ says: Отчет за 20061113 - 20061119
+
+Появился звук в новой архитектуре, а также появилось много проблем, котопые надо разгребать.
+[2006-11-20 09:28:39] .Kind says: Отчёт: разработал новую архитекруру. Она себя хорошо показала, экономия кода и усилий при использовании движка стало в 2 раза меньше.
+[2006-11-20 19:01:11] *** .Kind has changed the chat topic to "Steel Engine Chat # 343 : steel 1.1 alpha (new arch, sound)" ***
+[2006-11-20 19:01:55] .Kind says: поздравляю с вуходом алфа версии steel 1.1
+почти всё готово для 1.1
+[2006-11-20 20:00:26] DEF says: (rock)
+[2006-11-20 20:26:33] ..KUZ says: (rock) (beer) (rock)
+[2006-11-20 23:15:38] *** .Kind has changed the chat topic to "Steel Engine Chat # 345 : steel 1.1 alpha (new arch, sound)" ***
+[2006-11-20 23:15:45] .Kind says: аываыы
+[2006-11-20 23:15:49] .Kind says: аыв
+[2006-11-20 23:16:24] .Kind says: гляньте на файлик steel/status.txt
+В нём список заданий
+[2006-11-23 22:52:12] *** .Kind has changed the chat topic to "Steel Engine Chat # 364 : steel 1.1 alpha" ***
+[2006-11-23 22:52:23] .Kind says: я переименовал project intro -> demo
+[2006-11-23 22:52:55] .Kind says: все ресурсы  и демы лучше пихать туда
+[2006-11-23 22:55:35] .Kind says: Деф, на тебе сценарий для демок, а также ресурсы (картинки, модели). Можешь уже пробовать делать сцену. Сообщай, если чего не хватает
+[2006-11-25 23:22:21] *** ..KUZ has changed the chat topic to "Steel Engine Chat # 366 : steel 1.1 alpha" ***
+[2006-11-25 23:37:47] *** ..KUZ has changed the chat topic to "Steel Engine Chat # 367 : steel 1.1 alpha" ***
+[2006-11-26 19:39:19] .Kind says: Андрюха, у меня с источниками освещения таже самая история, что и с Sound
+[2006-11-26 21:06:22] ..KUZ says: ааа, что именно?
+[2006-11-26 21:08:13] .Kind says: ну так это тоже самое
+[2006-11-26 21:08:22] .Kind says: Light = SoundSource
+[2006-11-26 21:08:34] ..KUZ says: ну по сути да, согласен\
+[2006-11-26 22:08:26] ..KUZ says: Отчет за 20061120 - 20061126
+
+Потер чуть мусор. Нарисовал структуру для звука. Работаю над введением новой (внутренней) структуры для звука. Появились проблемы требующие обсуждения.
+[2006-11-26 23:06:30] .Kind says: Отчёт: подправил все проектные файлы, переименовал проект intro в demo, начал делать освещение. Ну и самое главное - мы слили ветки.
+[2006-11-26 23:25:14] .Kind says: texture
+[2006-11-26 23:25:20] .Kind says: cannot convert from 'Texture *' to 'Texture *'
+[2006-11-26 23:25:31] .Kind says: вот что мне пишет VS 2005
+[2006-11-27 00:11:10] ..KUZ says: всмысле?
+[2006-11-27 00:11:25] ..KUZ says: что за говно???
+[2006-11-27 00:11:47] ..KUZ says: rebuild сделай
+[2006-11-27 00:12:36] .Kind says: да не, всё ок. просто сообщение об ошибке тупое
+[2006-11-27 00:35:26] *** .Kind has changed the chat topic to "Steel Engine Chat # 373 : OpenGL 1.1 ligthting" ***
+[2006-11-28 22:59:47] *** .Kind has changed the chat topic to "Steel Engine Chat # 376 : OpenGL 1.1 ligthting" ***
+[2006-11-28 23:07:11] .Kind says: наконецто что-то я придумал с материалами
+[2006-11-28 23:07:27] .Kind says: как их задавать
