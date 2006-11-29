@@ -82,7 +82,12 @@ int main(int argc, char *argv[])
 #ifdef LIB_OPENAL
 	audio = new OpenALEngine();
 #endif
-	if(audio && !audio->init(resConfig.add("../conf/audio")))return 4;
+	if(audio != NULL && !audio->init(resConfig.add("../conf/audio")))
+	{
+		delete audio;
+		audio = NULL;
+//		return 4;
+	}
 
 
 // ******************* GAME *************************
@@ -91,7 +96,7 @@ int main(int argc, char *argv[])
 	if(!game.init(resConfig.add("../conf/game.conf"), input, commandLine)) return 5;
 
 	game.bind(graph);
-	if(audio)
+	if(audio != NULL)
 	{
 		game.bind(audio);
 		game.insonify(audio);
@@ -129,7 +134,7 @@ int main(int argc, char *argv[])
 		}
 
 		game.draw(graph);
-		if(audio) game.insonify(audio);
+		if(audio != NULL) game.insonify(audio);
 
 		timer.incframe();
 
