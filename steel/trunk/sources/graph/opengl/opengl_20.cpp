@@ -52,6 +52,8 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			program->unbind();
 		}
 
+		if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
+
 		glPopClientAttrib();
 	   	glPopAttrib();
 		return true;
