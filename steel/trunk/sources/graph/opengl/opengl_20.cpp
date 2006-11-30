@@ -23,97 +23,84 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 {
 	if(material != NULL && GL_EXTENSION_GLSL)
 	{
-//		if(!material->isShader())
-		{
-			return OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(e, triangles, material, total);
-		}
-
-/*		total.objectCount++;
+		total.objectCount++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 		
-		GLSL *program = BindShader(material);
+		GLSL *program = BindShader(&shaderStd);
 
-		if(program)
+		if(program != NULL)
 		{
-			int texCount = material->getTextureCount();
+			(this->*BindTexCoords)(e.getTexCoords(material->color_map));
 
-			for(int i=0; i<texCount; i++)
-			{
-				const Texture &texture = *material->getTexture(i); // текущая текстура
-
-				glActiveTextureARB(GL_TEXTURE0_ARB + i);
-				glClientActiveTextureARB(GL_TEXTURE0_ARB + i);
-
-				if(texture.format == TEXTURE_FORMAT_COLOR_MAP)
-				{
-					const TexCoords *coords = e.texCoords[i];
-
-					(this->*BindTexture)(texture.image, false);
-
-					std::string name2("image" + IntToStr(i));
-					const char *name = name2.c_str();
-					if(!program->setTexture(name, i))
-					{
-						error("glsl error", std::string("Cannot find texture '") + name + "' in shader");
-					}
-
-					(this->*BindTexCoords)(coords);
-				}
-				else
-				{
-					if(BindTexCoords) (this->*BindTexCoords)(NULL);
-				}
-			}
+			bindTextureToShader(program, "color_map", 0, material->color_map.image);
+			bindTextureToShader(program, "normal_map", 1, material->normal_map.image);
 
 			program->setUniformVector("camera_eye", camera.eye);
 			program->setUniformVector("camera_dir", (camera.center - camera.eye).getNormalized());
 
-/*			for(unsigned int i = 0; i < lights.size(); i++)
+			for(unsigned int i = 0; i < e.lights.size(); i++)
 			{
 				std::string pos("light[" + IntToStr(i)+"].position");
-				program->setUniformVector(pos.c_str(), lights[i].position);
+				program->setUniformVector(pos.c_str(), e.lights[i]->position);
 			}
-*/
 
-/*			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
+
+			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
 
 			program->unbind();
 		}
 
 		glPopClientAttrib();
 	   	glPopAttrib();
+		return true;
+	}
+	return false;
+}
+
+void OpenGL_Engine::bindTextureToShader(GLSL *program, const char *name, int imageNum, Image *image)
+{
+	if(image != NULL)
+	{
+		glActiveTextureARB(GL_TEXTURE0_ARB + imageNum);
+		glClientActiveTextureARB(GL_TEXTURE0_ARB + imageNum);
+
+		(this->*BindTexture)(image, false);
+
+		if(!program->setTexture(name, imageNum))
+		{
+			error("glsl error", std::string("Cannot find texture '") + name + "' in shader");
+		}
 	}
 }
 
 
-GLSL *OpenGL_Engine::BindShader(Material *material)
+GLSL *OpenGL_Engine::BindShader(Shader *shader)
 {
-	if(!material->isShader()) return NULL;
 // TODO:
-/*	uid id = material->getId(); 
+	uid id = shader->getId(); 
 
 	OpenGL_Buffer &buf = buffer[id];
 
 	if(!buf.loaded)
 	{
-		GLSL *shader = new GLSL;
-		if(shader->init(material))
+		GLSL *GLSL_Shader = new GLSL;
+		if(GLSL_Shader->init(shader))
 		{
 			buf.loaded = true;
-			buf.glid = shader->getGL_Id();
-			buf.object = (char*)shader;
-		}*/
+			buf.glid = GLSL_Shader->getGL_Id();
+			buf.object = (char*)GLSL_Shader;
+		}
 	}
 
-/*	if(buf.loaded)
+	if(buf.loaded)
 	{
 		// setup variables
 		glUseProgramObjectARB(buf.glid);
 		return (GLSL*)buf.object;
 	}
-	*/
+	
 	return false;
 }
 

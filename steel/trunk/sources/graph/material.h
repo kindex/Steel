@@ -16,6 +16,7 @@
 
 #include "../steel.h"
 #include "../res/image/image.h"
+#include "../res/text/text.h"
 #include "graph_types.h"
 #include "../res/config/config.h"
 
@@ -33,16 +34,18 @@ class Material
 {
 public:
 //protected:
+	uid		id;
 	Config *conf;
 	bool	blend;
 	MaterialType type;
 	Material *backup;
 
 public:
-	Material(void): conf(NULL), backup(NULL) {}
+	Material(void): conf(NULL), backup(NULL)  { id = id = objectIdGenerator.genUid(); }
 	Material(MaterialType _type): conf(NULL), backup(NULL), type(_type) {}
 	virtual ~Material(void);
 
+	virtual uid	 getId(void)				{ return id; }
 	// загружает материал из конфига
 	virtual bool InitFromConfig(Config *config) = 0;
 	// получить текстуру с номером number
@@ -100,13 +103,22 @@ public:
 	color4f color;
 };
 
-class MaterialShader: public Material
+struct Shader
 {
+	uid		id;
+	Text	*vertexShader;
+	Text	*fragmentShader;
+
+	Shader(void): vertexShader(NULL), fragmentShader(NULL) { id = id = objectIdGenerator.genUid(); }
+
+	virtual uid	 getId(void)				{ return id; }
 };
 
-class MaterialReflect: public Material
+class MaterialShader: public Material
 {
+	Shader shader;
 
+	bool InitFromConfig(Config *config);
 };
 
 //тип смешивания двух текстур

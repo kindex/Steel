@@ -15,35 +15,17 @@
 #include "opengl_glsl.h"
 #include "../../res/res_main.h"
 
-bool GLSL::init(MaterialShader *)
+bool GLSL::init(Shader *_shader)
 {
 	if(!GL_EXTENSION_GLSL) return false;
 
-/*	texture = _texture;
-	conf = texture->getConfig();
-
-	resStack.push(material->getDirectory());
-
-	vertexShader = resText.add(conf->gets("vertexShader"));
-	if(vertexShader == NULL) 
-	{
-		resStack.pop();
-		return false;
-	}
-	fragmentShader = resText.add(conf->gets("fragmentShader"));
-	if(fragmentShader == NULL)
-	{
-		resStack.pop();
-		return false;
-	}
-
-	resStack.pop();
+	shader = _shader;
 
 	programId = glCreateProgramObjectARB();
 	if(isError()) return false;
 
     vertexShaderId = glCreateShaderObjectARB (GL_VERTEX_SHADER_ARB);
-   	if(!LoadShader(vertexShaderId, vertexShader))
+   	if(!LoadShader(vertexShaderId, shader->vertexShader))
 	{
 		loadLog(programId);
 		return false;
@@ -51,7 +33,7 @@ bool GLSL::init(MaterialShader *)
     glAttachObjectARB(programId, vertexShaderId);
 
     fragmentShaderId = glCreateShaderObjectARB (GL_FRAGMENT_SHADER_ARB);
-   	if(!LoadShader(fragmentShaderId, fragmentShader))
+   	if(!LoadShader(fragmentShaderId, shader->fragmentShader))
 		return false;
     glAttachObjectARB(programId, fragmentShaderId);
 
@@ -68,7 +50,7 @@ bool GLSL::init(MaterialShader *)
 
     if(!linked)
         return false;
-*/
+
 	return true;
 }
 
@@ -279,3 +261,4 @@ int     GLSL :: locForUniformName ( const char * name )
 {
     return glGetUniformLocationARB ( programId, name );
 }
+

@@ -553,7 +553,11 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	if(version >= 20)
 	{
 		if(GL_EXTENSION_GLSL)
+		{
 			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
+			shaderStd.vertexShader = resText.add("std.vsh");
+			shaderStd.fragmentShader = resText.add("std.fsh");
+		}
 	}
 
 

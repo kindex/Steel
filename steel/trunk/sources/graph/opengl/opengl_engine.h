@@ -137,6 +137,7 @@ protected:
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image *zeroNormal;
+	Shader shaderStd;
 
 
 protected:
@@ -183,7 +184,8 @@ protected:
 
 	// OpenGL 2.0
 	bool DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
-	GLSL *BindShader(Material *shader);
+	GLSL *BindShader(Shader *);
+	void bindTextureToShader(GLSL *program, const char *name, int imageNum, Image *image);
 
 	// Uni
 	void DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
