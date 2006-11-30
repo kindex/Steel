@@ -58,11 +58,18 @@ typedef enum
 	TEXTURE_MODE_BLEND
 } TextureMode;
 
+typedef enum
+{
+	TEXTURE_REFLECT_NONE,
+	TEXTURE_REFLECT_MIRROR,
+	TEXTURE_REFLECT_SKY
+} TextureReflectType;
+
 class MaterialStd: public Material
 {
 public:
 
-	struct Texture
+	struct TextureStd
 	{
 		Image *image;
 		TextureMode mode;
@@ -71,7 +78,16 @@ public:
 		float texCoordsRotation;
 		v3 texCoordsTranslation;
 
-		Texture(void): image(NULL), texCoordsUnit(0) {}
+		TextureStd(void): image(NULL), texCoordsUnit(0) {}
+		bool InitFromConfig(Config *config);
+	};
+
+	struct TextureReflect
+	{
+		Image *image;
+		TextureReflectType type;
+
+		TextureReflect(void): image(NULL) {}
 		bool InitFromConfig(Config *config);
 	};
 
@@ -79,7 +95,8 @@ public:
 	MaterialStd(void);
 
 //private:
-	Texture color_map, color_map2, normal_map;
+	TextureStd color_map, color_map2, normal_map;
+	TextureReflect reflect_map;
 	color4f color;
 };
 

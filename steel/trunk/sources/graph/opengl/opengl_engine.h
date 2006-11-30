@@ -113,6 +113,8 @@ protected:
 			lines(NULL), position(ObjectPosition::getIdentity()), textureCount(0) {}
 		void fill(GameObject *object);
 		bool cache(void);
+
+		const TexCoords* getTexCoords(const MaterialStd::TextureStd &texture);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 	};
 

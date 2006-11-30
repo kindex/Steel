@@ -36,6 +36,8 @@ public:
 	void bindEngine(InterfaceId id, Engine* engine);
 	bool updateInformation(InterfaceId id, Engine* engine);
 	bool InitFromConfig(Config *conf);
+
+	void process(ProcessInfo &);
 };
 
 #endif

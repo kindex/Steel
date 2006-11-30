@@ -48,13 +48,14 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 	color_map.InitFromConfig(conf->find("color_map"));
 	color_map2.InitFromConfig(conf->find("color_map2"));
 	normal_map.InitFromConfig(conf->find("normal_map"));
+	reflect_map.InitFromConfig(conf->find("reflect_map"));
 
 	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f)));
 
 	return true; 
 }
 
-bool MaterialStd::Texture::InitFromConfig(Config *config)
+bool MaterialStd::TextureStd::InitFromConfig(Config *config)
 {
 	if(config == NULL) return false;
 	string name = "/" + config->getPath("image"); 
@@ -79,6 +80,23 @@ bool MaterialStd::Texture::InitFromConfig(Config *config)
 
 	return image != NULL;
 }
+
+bool MaterialStd::TextureReflect::InitFromConfig(Config *config)
+{
+	if(config == NULL) return false;
+	string name = "/" + config->getPath("image"); 
+	if(!name.empty()) image = resImage.add(name);
+
+
+	string m = config->gets("type", "mirror");
+	if(m == "sky") type = TEXTURE_REFLECT_SKY;
+	if(m == "mirror") type = TEXTURE_REFLECT_SKY;
+	else type = TEXTURE_REFLECT_MIRROR;
+
+	return image != NULL;
+
+}
+
 
 MaterialStd::MaterialStd(void): 
 	Material(MATERIAL_STD)

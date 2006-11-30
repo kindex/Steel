@@ -24,9 +24,109 @@
 // нарисовать множество полигонов с указанным материалом / Multitexture
 bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total)
 {
+	if(material != NULL && GL_EXTENSION_MULTITEXTURE)
+	{
+		total.objectCount++;
+
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
+
+		svector<uid> buffersToDelete;
+
+		bool bump_map = material->normal_map.image != NULL && conf->geti("drawBump") && !e.lights.empty() && e.normals != NULL && GL_EXTENSION_DOT3 && GL_EXTENSION_TEXTURE_CUBE_MAP;
+		bool color_map = material->color_map.image != NULL && conf->geti("drawTexture");
+		bool reflect_map = material->reflect_map.image != NULL && conf->geti("drawReflect") && GL_EXTENSION_TEXTURE_CUBE_MAP;
+		int currentTextureArb = 0;
+
+		if(bump_map)
+		{
+			const TexCoords *texCoords = e.getTexCoords(material->normal_map);
+
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+			uid bufId = objectIdGenerator.genUid();
+			buffersToDelete.push_back(bufId);
+
+			drawBump(e, texCoords, e.position, e.lights[0]->position, bufId, currentTextureArb, material->normal_map.image);
+			currentTextureArb +=2;
+		}
+
+		if(color_map)
+		{
+			glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
+			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
+			glDisable(GL_TEXTURE_COORD_ARRAY);
+
+			GLint mode = GL_REPLACE;
+			if(currentTextureArb > 0)
+				mode = GL_MODULATE;
+
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+
+			(this->*BindTexture)(material->color_map.image, true);
+
+			const TexCoords *texCoords = NULL;
+
+			if(material->color_map.texCoordsUnit < e.texCoords.size())
+				texCoords = e.texCoords[material->color_map.texCoordsUnit];
+			else
+				if(!e.texCoords.empty())
+					texCoords = e.texCoords[0];
+
+			assert(texCoords->data.size() == e.vertexes->data.size(), "TexCoords.size != Vertex.size");
+			if(BindTexCoords != NULL) (this->*BindTexCoords)(texCoords);
+			currentTextureArb++;
+		}
+
+		if(reflect_map) // карта отражения
+		{
+			GLint mode = GL_REPLACE;
+			if(currentTextureArb > 0)
+				mode = GL_MODULATE;
+
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+			glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
+			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
+
+			(this->*BindTexture)(material->reflect_map.image, true); // Cube texture (auto detect from Image)
+
+			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_EXT);
+            glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_EXT);
+            glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_EXT);
+
+			glEnable(GL_TEXTURE_GEN_S);
+            glEnable(GL_TEXTURE_GEN_T);
+            glEnable(GL_TEXTURE_GEN_R);
+
+//			glEnable(GL_AUTO_NORMAL);
+//			glEnable(GL_NORMALIZE);
+
+			currentTextureArb += 1;
+		}
+
+
+		if(!color_map)
+			glColor4fv(material->color.getfv());
+
+		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
+
+		if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
+
+		for(svector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
+		{
+			cleanBuffer(*it);
+		}
+
+		glPopClientAttrib();
+	   	glPopAttrib();
+
+		return true;
+	}
+	return false;
+}
+
 /*	if(material != NULL && GL_EXTENSION_MULTITEXTURE)
 	{
-		svector<uid> buffersToDelete;
 
 		total.objectCount++;
 
@@ -94,91 +194,22 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 				}
 			}
 
-/*			if(conf->geti("drawBump") && !lights.empty() && (i==0) && !e.blend && (texture.format == TEXTURE_FORMAT_BUMP_MAP || texture.format == TEXTURE_FORMAT_COLOR_MAP))
-			{
-				const TexCoords *coords = e.texCoords[i];
-
-				int j = 0;
-
-				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-				uid bufId = objectIdGenerator.genUid();
-				buffersToDelete.push_back(bufId);
-
-				if(texture.format == TEXTURE_FORMAT_BUMP_MAP)
-				{
-					drawBump(e, coords, e.position, e.lights[j].position, bufId, currentTextureArb, texture.image);
-					currentTextureArb +=2;
-				}
-				else
-				{
-					drawBump(e, coords, e.position, lights[j].position, bufId, currentTextureArb, zeroNormal);
-					glActiveTextureARB(GL_TEXTURE2_ARB + currentTextureArb);
-					glClientActiveTextureARB(GL_TEXTURE2_ARB + currentTextureArb);
-					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-					
-					(this->*BindTexture)(texture.image, true); // 2D texture (auto detect from Image)
-
-					(this->*BindTexCoords)(coords);
-					currentTextureArb += 3;
-				}
-			}
-			else*/
-/*			if(conf->geti("drawReflect") && texture->format == TEXTURE_FORMAT_REFLECT) // карта отражения
-			{ // загружаем текстуру
-				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-				glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
-				glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
-				(this->*BindTexture)(static_cast<const TextureReflect*>(texture)->cube_map, true); // Cube texture (auto detect from Image)
-
-				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_NORMAL_MAP);
-                glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_NORMAL_MAP);
-                glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_NORMAL_MAP);
-
-				glEnable(GL_TEXTURE_GEN_S); 
-                glEnable(GL_TEXTURE_GEN_T); 
-                glEnable(GL_TEXTURE_GEN_R); 
-
-//                glEnable(GL_NORMALIZE);
-
-				currentTextureArb += 1;
-			}
 			else
-			if(texture->format == TEXTURE_FORMAT_COLOR_MAP)
-			{
-				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-				if(BindTexture) (this->*BindTexture)(static_cast<const TextureColorMap*>(texture)->color_map, true);
 
-				const TexCoords *coords = e.texCoords[i];
-				assert(coords->data.size() == e.vertexes->data.size(), "TexCoords.size != Vertex.size");
-				if(BindTexCoords != NULL) (this->*BindTexCoords)(coords);
-				currentTextureArb++;
-			}
-			else
 			{
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 				if(BindTexCoords) (this->*BindTexCoords)(NULL);
 				currentTextureArb++;
 			}
 
-			if(texture->format == TEXTURE_FORMAT_COLOR)
-				glColor4fv(static_cast<const TextureColor*>(texture)->color.getfv());
-
-		}
+	}
 		
 		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
 
-		for(svector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
-		{
-			cleanBuffer(*it);
-		}
 		glPopClientAttrib();
 	   	glPopAttrib();
 	}
 */
-	return false;
-}
-
 
 
 static v3 getstangent(v2 A, v3 B, v3 N, v2 S)

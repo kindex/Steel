@@ -55,11 +55,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 
 		if(material->color_map.image != NULL)
 		{
-			if(material->color_map.texCoordsUnit < e.texCoords.size())
-				texCoords = e.texCoords[material->color_map.texCoordsUnit];
-			else
-				if(!e.texCoords.empty())
-					texCoords = e.texCoords[0];
+			texCoords = e.getTexCoords(material->color_map);
 		}
 
 		glMatrixMode(GL_TEXTURE);	glLoadIdentity();

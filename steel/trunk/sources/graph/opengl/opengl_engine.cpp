@@ -31,6 +31,17 @@
 
 using namespace std;
 
+const TexCoords* OpenGL_Engine::GraphShadow::getTexCoords(const MaterialStd::TextureStd &texture)
+{
+	if(texture.texCoordsUnit < texCoords.size())
+		return texCoords[texture.texCoordsUnit];
+	else
+		if(!texCoords.empty())
+			return texCoords[0];
+	return NULL;
+}
+
+
 void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
 {
 	if(material != NULL)
@@ -371,6 +382,10 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 		(this->*FlushOpenGL_Window)();
 //		swapBuffers();
 	}
+
+	GLenum errorCode = glGetError();
+	if(errorCode != 0)
+		log_msg("error opengl", string("OpenGL error #") + IntToStr(errorCode));
 
 	return true;
 }

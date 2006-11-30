@@ -93,3 +93,10 @@ bool Combiner::updateInformation(InterfaceId id, Engine* engine)
 	}
 	return false;
 }
+
+void Combiner::process(ProcessInfo &)
+{
+//	matrix34 rot = 	matrix34::CreateRotationMatrix(0.01, v3(0,0,1));
+//	position =  position * rot;
+//	position.data.vector += v3(0,0, 0.01);
+}

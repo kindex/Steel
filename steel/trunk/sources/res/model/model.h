@@ -33,6 +33,8 @@ public:
 	const FaceMaterials *getFaceMaterials(void) const { return &faceMaterials; }
 	const TexCoords	*getTexCoords(int mapNumber) const;
 
+	friend class GraphObjectModel; // TEMP:
+
 protected:
 	aabb				frame;
     Vertexes			vertexes;    // Vertexes

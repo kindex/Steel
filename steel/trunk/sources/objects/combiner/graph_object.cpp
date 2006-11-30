@@ -43,6 +43,7 @@ void GraphObjectCustom::bindEngine(InterfaceId id, Engine* engine)
 	{
 		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
 		gengine.setVertexes(vertexes);
+		gengine.setNormals(normals);
 		gengine.setFaceMaterials(faces);
 		gengine.setTexCoordsCount(1);
 		gengine.setTexCoords(0, texCoords);
@@ -109,6 +110,7 @@ bool GraphObjectBox::InitFromConfig(Config *conf)
 	int trg  = 12;
 
 	vertexes = new Vertexes; vertexes->changed = false;	
+	normals = new Vertexes; normals->changed = false;	
 	texCoords = new TexCoords; texCoords->changed = false;
 
 #define t(a, b, c, d, e) vertexes->data.push_back(v3(a*0.5f*s, b*0.5f*s, c*0.5f*s)); texCoords->data.push_back(v2(d, e))
@@ -141,6 +143,17 @@ bool GraphObjectBox::InitFromConfig(Config *conf)
 		if(i*3+2 < (int)vertexes->data.size())
 		faces->at(0).triangles->data[i].set(i*3, i*3+1, i*3+2);
 
+	normals->data.resize(vertexes->data.size());
+	for EACH(svector<Triangle>, faces->at(0).triangles->data, it)
+	{
+		v3 a = vertexes->data[it->a[1]] - vertexes->data[it->a[0]];
+		v3 b = vertexes->data[it->a[2]] - vertexes->data[it->a[0]];
+		v3 normal = (a*b).getNormalized();
+		normals->data[it->a[0]] = normal;
+		normals->data[it->a[1]] = normal;
+		normals->data[it->a[2]] = normal;
+	}
+
 	return true;
 }
 
@@ -153,6 +166,12 @@ bool GraphObjectModel::InitFromConfig(Config *conf)
 	if(conf == NULL) return false;
 	
 	model = resModel.add(conf->getPath("file"));
+
+	Config *material = conf->find("material");
+	if(material != NULL)
+	{
+		model->faceMaterials[0].material = createMaterial(material);
+	}
 
 	return model != NULL;
 }
