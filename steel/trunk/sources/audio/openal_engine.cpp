@@ -56,6 +56,12 @@ ALboolean OpenALEngine::CheckALError()
 
 bool OpenALEngine::init(Config* _conf)
 {
+	conf = _conf;
+	if(conf == NULL)
+	{
+		log_msg("openal init error", "config not found");
+		return false;
+	}
 	log_msg("openal init", "Initializing OpenAL...");
 
 	// open default sound device

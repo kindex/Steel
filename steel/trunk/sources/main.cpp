@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 #ifdef LIB_OPENAL
 	audio = new OpenALEngine();
 #endif
-	if(audio != NULL && !audio->init(resConfig.add("../conf/audio")))
+	if(audio != NULL && !audio->init(resConfig.add("../conf/audio.conf")))
 	{
 		delete audio;
 		audio = NULL;
