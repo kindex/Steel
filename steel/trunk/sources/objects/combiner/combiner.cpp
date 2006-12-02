@@ -94,9 +94,19 @@ bool Combiner::updateInformation(InterfaceId id, Engine* engine)
 	return false;
 }
 
-void Combiner::process(ProcessInfo &)
+void Combiner::process(ProcessInfo &info)
 {
-	matrix34 rot = 	matrix34::CreateRotationMatrix(0.01, v3(0,0,1));
+	matrix34 rot = 	matrix34::CreateRotationMatrix(0.01f, v3(1.0f, 0.0f, 1.0f));
+
+	//if (position.getTranslation().x > 10)
+	//	position.setTranslation(v3(position.getTranslation().x - 0.01f, 0.0f, 0.0f));
+	
+	//if (position.getTranslation().x < 0)
+	//	position.setTranslation(v3(position.getTranslation().x + 0.01f, 0.0f, 0.0f));
+
+	//position.setTranslation(v3(position.getTranslation().x - 3*sin(position.getTranslation().x), 0.0f, 0.0f));	// - "double" effect !!!
+	position.setTranslation(v3(position.getTranslation().x - 0.1f * sin(info.curTime), 0.0f, 0.0f));
+	//position.setTranslation(v3(position.getTranslation().x - 0.1f * sin(info.curTime), position.getTranslation().y - 0.1f * sin(info.curTime/4), 0.0f));
+
 	position =  position * rot;
-//	position.data.vector += v3(0,0, 0.01);
 }

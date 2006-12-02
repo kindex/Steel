@@ -20,6 +20,6 @@ Sound::Sound(void)
 	pitch = 1.0f;
 	isLoop = false;
 	rolloffFactor = 0.0f;
-	sourceRelative = 0.0f;
+	sourceRelative = 0;
 }
 

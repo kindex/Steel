@@ -4,40 +4,52 @@ class = 'scene'
 objects = 
 (
 
-	{//2
+	{	//2
 	class = 'combiner'
 	origin = (1 1 0.5)
 	graph = {
-		class = 'box'
-		file = 'model/teapot'
-		size = 0.5
-		material =  
-			{
-				class = 'std'
-				blend = 0
-				color_map =
-				{ 
-					image = '/box/boxes/box1_side_handle_d'
-					texCoordsRotation = 0.0
-					texCoordsScale = (1 1 1)
-					texCoordsTranslation = (0 0 0)
-				}
-				color_map2 = // microtexture
-				{ 
-					mode = '+'
-//					image = '/box/boxes/box1_side_handle_d'
-					texCoordsScale = (0.01 0.01 1)
-				}
-				normal_map = 
+			class = 'box'
+			file = 'model/teapot'
+			size = 0.5
+			material =  
 				{
-					image = '/box/boxes/tr_wall_outside_04_local'
+					class = 'std'
+					blend = 0
+					color_map =
+					{ 
+						image = '/box/boxes/box1_side_handle_d'
+						texCoordsRotation = 0.0
+						texCoordsScale = (1 1 1)
+						texCoordsTranslation = (0 0 0)
+					}
+					color_map2 = // microtexture
+					{ 
+						mode = '+'
+	//					image = '/box/boxes/box1_side_handle_d'
+						texCoordsScale = (0.01 0.01 1)
+					}
+					normal_map = 
+					{
+						image = '/box/boxes/tr_wall_outside_04_local'
+					}
+					reflect_map = 
+					{
+	//					image = '/image/env/tsccity'
+					}
 				}
-				reflect_map = 
-				{
-//					image = '/image/env/tsccity'
-				}
-			}
 		}
+	audio = 
+		{
+			class = 'SimpleSound'
+			position = (1 1 0.5);
+			file = 'audio/test4';
+			gain = 1.0;
+			pitch = 1.0;
+			isLoop = 1;
+			rolloffFactor = 0.0;
+			sourceRelative = 0;
+		} // audio
+	
 	}
 
 
@@ -55,12 +67,12 @@ objects =
 		{
 			class = 'SimpleSound'
 			position = (0 0 0);
-			file = 'audio/tank';
-			gain = 1.0;
+			file = 'audio/test4';
+			gain = 0.0;
 			pitch = 1.0;
 			isLoop = 1;
 			rolloffFactor = 0.0;
-			sourceRelative = 0.0;
+			sourceRelative = 0;
 		} // audio
 		
 	}

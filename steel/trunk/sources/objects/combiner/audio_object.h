@@ -37,17 +37,7 @@ protected:
 
 private:
 	AudioInterface* engine;
-	vector<Sound*> sounds;	// ???
-};
-
-class SimpleSound: public AudioObject
-{
-public:
-	bool InitFromConfig(Config *);
-	void bindEngine(InterfaceId, Engine*);
-
-protected:
-	Sound *originalSound;
+	vector<Sound*> sounds;	// ???						// ???
 };
 
 #endif

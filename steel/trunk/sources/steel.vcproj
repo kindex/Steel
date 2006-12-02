@@ -1096,6 +1096,14 @@
 						RelativePath=".\objects\combiner\graph_object.h"
 						>
 					</File>
+					<File
+						RelativePath=".\objects\combiner\simple_sound.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\objects\combiner\simple_sound.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

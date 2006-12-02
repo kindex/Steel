@@ -31,7 +31,7 @@ public:
 	float pitch;
 	bool isLoop;
 	float rolloffFactor;
-	float sourceRelative;
+	int sourceRelative;
 };
 
 #endif

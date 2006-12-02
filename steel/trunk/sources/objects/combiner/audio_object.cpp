@@ -13,6 +13,7 @@
 
 
 #include "audio_object.h"
+#include "simple_sound.h"
 
 AudioObject* findAudioObject(const string &_class)
 {
@@ -42,30 +43,4 @@ void AudioObject::bindEngine(InterfaceId id, Engine* aEngine)
 	}
 }
 
-bool SimpleSound::InitFromConfig(Config *conf)
-{
-	if(conf == NULL) return false;
-	
-	originalSound = new Sound();
 
-	originalSound->position = conf->getv3("position");
-	originalSound->gain = conf->getf("gain", 1.0f);
-	originalSound->pitch = conf->getf("pitch", 1.0f);
-	originalSound->isLoop = conf->geti("isLoop", 0) > 0;
-	originalSound->rolloffFactor = conf->getf("rolloffFactor", 0.0f);
-	originalSound->sourceRelative = conf->getf("sourceRelative", 0.0f);
-
-	originalSound->sound = resAudio.add(conf->getPath("file"));
-
-
-	return true;
-}
-
-void SimpleSound::bindEngine(InterfaceId id, Engine* aEngine)
-{
-	if(id == AudioInterface::interfaceId)
-	{
-		AudioObject::bindEngine(id, aEngine);
-		soundPlay(originalSound);
-	}
-}

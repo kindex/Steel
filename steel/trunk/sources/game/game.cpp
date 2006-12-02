@@ -193,9 +193,9 @@ void Steel::process(steel::time globalTime, steel::time time)
 	processKeyboard();
 
 	cameraSpeed = 
-	moveSpeed.x*direction
-	+ moveSpeed.y*v3(-direction.y, direction.x, 0).getNormalized()
-	+ moveSpeed.z*v3(0, 0, 1);
+					moveSpeed.x*direction
+					+ moveSpeed.y*v3(-direction.y, direction.x, 0).getNormalized()
+					+ moveSpeed.z*v3(0, 0, 1);
 
 	eye += cameraSpeed*(float)speed;
 	
