@@ -1,4 +1,4 @@
-FROM			[Alexander Papyshev]
+п»їFROM			[Alexander Papyshev]
 TO			[Andrey Ivanov]	
 Number:			0002
 
@@ -6,7 +6,7 @@ Detected Date:		[2006-11-26 19:59:41]
 
 Problem type:		[defect]
 
-Summary:		[F3 не работает, если нажать F2]	<short description of problem>
+Summary:		[F3 РЅРµ СЂР°Р±РѕС‚Р°РµС‚, РµСЃР»Рё РЅР°Р¶Р°С‚СЊ F2]	<short description of problem>
 
 Status:			[review]	(review, assigned, developing, testing, retesting delayed, development delayed, closed, cancelled.)
 
@@ -23,18 +23,25 @@ Severity:		[High]	<Critical, Fatal, High, Medium, Low>
 Problem Repeatable:	[Yes]	<yes or no>
 
 Problem Detailed Decription:
-			[. какаято проблема с F2-F3. Если нажать F2 то F3 перестает работать.
+			[. РєР°РєР°СЏС‚Рѕ РїСЂРѕР±Р»РµРјР° СЃ F2-F3. Р•СЃР»Рё РЅР°Р¶Р°С‚СЊ F2 С‚Рѕ F3 РїРµСЂРµСЃС‚Р°РµС‚ СЂР°Р±РѕС‚Р°С‚СЊ.
 			 .	
 			 .]
 	 
-Verification type:	[непосредственно в системе.]	<acceptance, documentation, installation, integration, regression, system>  
+Verification type:	[РЅРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РІ СЃРёСЃС‚РµРјРµ.]	<acceptance, documentation, installation, integration, regression, system>  
 
 Problem due date:	[asap]	<date when problem should be solved>
 	 
 Status due date:	[asap]	<date when current problem status should be changed> 
 
 Status Change History:
-			[.Alexander Papyshev [2006-11-26 20:06:44] : Review : Отослал Кидексу на проверку.
+			[.
+			  Alexander Papyshev [2006-11-26 20:06:44] : Review : РћС‚РѕСЃР»Р°Р» РљРёРґРµРєСЃСѓ РЅР° РїСЂРѕРІРµСЂРєСѓ.
+			  Andrey Ivanov [2006-11-27 21:06:44] : Developing : РќР° РїРѕРІС‚РѕСЂСЏРµС‚СЃСЏ РЅР° Nvidia
+			  Andrey Ivanov [2006-11-28 20:16:14] : Developing : FIXed
+			  Alexander Papyshev [2006-11-29 22:14:54] : Retesting : РќРёС‡РµРіРѕ РЅРµ РёР·РјРµРЅРёР»РѕСЃСЊ.
+			  Andrey Ivanov [2006-11-30 19:01:24] : Developing : FIXed
+			  Alexander Papyshev [2006-11-30 10:06:44] : Retesting : Corrected.	
+ 			  Alexander Papyshev [2006-12-06 11:32:35] : Closed.
 			 .	
 			 .]	<who>:[when DATE TEME]:Status:Description.
 		

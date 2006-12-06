@@ -1,13 +1,13 @@
-FROM			Andrey Molyaiko
-TO			Alexander Papyshev	
+FROM			Alexander Papyshev
+TO			Andrey Molyaiko	
 Number:			0001
 
 Detected Date:		2006-08-09 00:00:01
 
 Problem type:		defect
-Status:			review
+Status:			retesting
 
-Resolution:		implementation must be changed
+Resolution:		corrected
 
 Detected in Product:	Steel  Build # 225 
 
@@ -27,9 +27,12 @@ Problem Detailed Decription:	Не определяет имя пользователя. В лог-файле не реги
 	 
 Verification type:	log-file 
 
-Problem due date:	2 - 3 дня после определения проблемы
+Problem due date:	2006-08-15
 	 
-Status due date:	2006-08-11
+Status due date:	2006-08-16
 
 Status Change History:	Kuzmi4 : 2006-08-11 00:24:14 : Rewiev : отослал Def'у
+			Def: 2006-08-15 20:00:20 : Developing : Начал исправлять
+			Def: 2006-08-15 20:54:14 : Corrected : Вроде мсправил.
+			Def: 2006-12-06 11:27:53 : Closed	
 	
