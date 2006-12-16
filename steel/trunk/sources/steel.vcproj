@@ -956,11 +956,11 @@
 						Name="gl"
 						>
 						<File
-							RelativePath=".\graph\opengl\gl\glext.h"
+							RelativePath=".\graph\opengl\gl\GLee.c"
 							>
 						</File>
 						<File
-							RelativePath=".\graph\opengl\gl\glxext.h"
+							RelativePath=".\graph\opengl\gl\GLee.h"
 							>
 						</File>
 						<File
@@ -1147,6 +1147,14 @@
 			>
 			<File
 				RelativePath="..\data\1.scene"
+				>
+			</File>
+			<File
+				RelativePath="..\data\std.fsh"
+				>
+			</File>
+			<File
+				RelativePath="..\data\std.vsh"
 				>
 			</File>
 			<Filter

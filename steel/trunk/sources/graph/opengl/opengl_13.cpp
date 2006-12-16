@@ -234,23 +234,23 @@ static v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 }
 
 
-void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, svector<v3> **sTangent, svector<v3> **tTangent)
+void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *texcoord, const FaceMaterials *faceMaterials, Normals const *normal, Tangents **sTangent, Tangents **tTangent)
 { // TODO: mem cleanup
 	int id = vertex->getId();
 	
 	if(!vertex->wasChanged() && id>0 && tangentSpaceCache.find(id) != tangentSpaceCache.end())
 	{
-		*sTangent = tangentSpaceCache[id].s;
-		*tTangent = tangentSpaceCache[id].t;
+		*sTangent = &tangentSpaceCache[id].t;
+		*tTangent = &tangentSpaceCache[id].b;
 		return;
 	}
 
-	if(!vertex || !mapcoord || mapcoord->data.empty()) return;
+	if(!vertex || !texcoord || texcoord->data.empty()) return;
 
     unsigned int size = vertex->data.size();
 //    tangentSpaceLight.resize(s); // TODO
 
-	v3List *S, *T;
+/*	v3List *S, *T;
 	S = new v3List(size);
 	T = new v3List(size);
 	v3List &s = *S;
@@ -279,27 +279,27 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *map
 
 			e = a;
 			// vertex a (vector ab)
-			me = mapcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
+			me = texcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
 
-			f = b;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+			f = b;  s[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
 			// vertex a (vector ac)
-			f = c;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-			f = b;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
-			f = c;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
+			f = c;  s[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+			f = b;  t[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
+			f = c;  t[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
 
 			e = b;
-			me = mapcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
-			f = a;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-			f = c;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-			f = a;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
-			f = c;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
+			me = texcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
+			f = a;  s[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+			f = c;  s[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+			f = a;  t[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
+			f = c;  t[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
 
 			e = c;
-			me = mapcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
-			f = a;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-			f = b;  s[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
-			f = a;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
-			f = b;  t[e] += getstangent(mapcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
+			me = texcoord->data[e]; ve = vertex->data[e];		ne = normal->data[e];
+			f = a;  s[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+			f = b;  s[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(1.0, 0.0));
+			f = a;  t[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
+			f = b;  t[e] += getstangent(texcoord->data[f]-me, vertex->data[f] - ve, ne, v2(0.0, -1.0));
 		}
 	}
     for (unsigned int i=0; i<size; i++)
@@ -315,9 +315,89 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *map
 		tangentSpaceCache[id].s = S;
 		tangentSpaceCache[id].t = T;
 	}
+*/
+	v3 *tan1 = new v3[size * 2];
+    v3 *tan2 = tan1 + size;
+
+	memset(tan1, 0, size * sizeof(v3) * 2);
+    
+	for(FaceMaterials::const_iterator it = faceMaterials->begin(); it != faceMaterials->end(); it++)
+	{
+		Triangles *triangle = it->triangles;
+		
+
+		for (unsigned int a=0; a < triangle->data.size(); a++)
+		{
+			long i1 = triangle->data[a].a[0];
+			long i2 = triangle->data[a].a[1];
+			long i3 = triangle->data[a].a[2];
+        
+			const v3& vertex1 = vertex->data[i1];
+			const v3& vertex2 = vertex->data[i2];
+			const v3& vertex3 = vertex->data[i3];
+        
+			const v2& w1 = texcoord->data[i1];
+			const v2& w2 = texcoord->data[i2];
+			const v2& w3 = texcoord->data[i3];
+        
+			float x1 = vertex2.x - vertex1.x;
+			float x2 = vertex3.x - vertex1.x;
+			float y1 = vertex2.y - vertex1.y;
+			float y2 = vertex3.y - vertex1.y;
+			float z1 = vertex2.z - vertex1.z;
+			float z2 = vertex3.z - vertex1.z;
+        
+			float s1 = w2.x - w1.x;
+			float s2 = w3.x - w1.x;
+			float t1 = w2.y - w1.y;
+			float t2 = w3.y - w1.y;
+        
+			float r = 1.0F / (s1 * t2 - s2 * t1);
+			v3 sdir((t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r,
+					(t2 * z1 - t1 * z2) * r);
+			v3 tdir((s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r,
+					(s1 * z2 - s2 * z1) * r);
+        
+        tan1[i1] += sdir;
+        tan1[i2] += sdir;
+        tan1[i3] += sdir;
+        
+        tan2[i1] += tdir;
+        tan2[i2] += tdir;
+        tan2[i3] += tdir;
+
+    }
+	}
+
+	svector<v3> &S = tangentSpaceCache[id].t.data;
+	svector<v3> &T = tangentSpaceCache[id].b.data;
+	S.resize(size);
+	T.resize(size);
+
+
+	for (long a = 0; a < (int)vertex->data.size(); a++)
+    {
+		const v3& n = normal->data[a];
+        v3 t = tan1[a];
+        
+        // Gram-Schmidt orthogonalize
+		t = (t - n * (n.dotProduct(t))).getNormalized();
+		v3 b = n * t;
+
+		S[a] = t;
+		T[a] = b;
+        
+        // Calculate handedness
+//        tangent[a].w = (Dot(Cross(n, t), tan2[a]) < 0.0F) ? -1.0F : 1.0F;
+    }
+
+    delete[] tan1;
+
+	*sTangent = &tangentSpaceCache[id].t;
+	*tTangent = &tangentSpaceCache[id].b;
 };
 
-void OpenGL_Engine::genTangentSpaceLight(svector<v3> const &sTangent, svector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(const Tangents &sTangent, const Tangents &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
 {
 	matrix34 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
@@ -330,10 +410,9 @@ void OpenGL_Engine::genTangentSpaceLight(svector<v3> const &sTangent, svector<v3
     for (unsigned int i=0; i<vertex.data.size(); i++)
     {
 		v3 lightVector =  objectLightPosition - vertex.data[i];
-		tl[i].x = sTangent[i].dotProduct(lightVector); // scalar product
-		tl[i].y = tTangent[i].dotProduct(lightVector);
+		tl[i].x = sTangent.data[i].dotProduct(lightVector); // scalar product
+		tl[i].y = tTangent.data[i].dotProduct(lightVector);
 		tl[i].z = normal.data[i].dotProduct(lightVector);
-		
     }
 }
 
@@ -414,7 +493,7 @@ void OpenGL_Engine::drawBump(GraphShadow &e, const TexCoords *coords, matrix34 c
 	tangentSpaceLight.id = bufId;
 	tangentSpaceLight.data.resize(e.vertexes->data.size());
 
-	v3List *sTangent, *tTangent;
+	Tangents *sTangent, *tTangent;
 
 	getTangentSpace(e.vertexes, coords, e.faceMaterials, e.normals, &sTangent, &tTangent);
 	genTangentSpaceLight(*sTangent, *tTangent, *e.vertexes, *e.normals, matrix, light, tangentSpaceLight.data);

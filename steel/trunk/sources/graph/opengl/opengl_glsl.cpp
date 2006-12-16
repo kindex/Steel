@@ -14,6 +14,7 @@
 #include "../../steel.h"
 #include "opengl_glsl.h"
 #include "../../res/res_main.h"
+#include <gl/glu.h>
 
 bool GLSL::init(Shader *_shader)
 {

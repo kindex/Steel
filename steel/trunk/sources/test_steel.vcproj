@@ -14,7 +14,7 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="DebugWin|Win32"
+			Name="Debug|Win32"
 			OutputDirectory="..\bin"
 			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
 			ConfigurationType="1"
@@ -71,7 +71,108 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib  openal32.lib alut.lib"
+				AdditionalDependencies="opengl32.lib ../sdk/libs/openal32.lib ../sdk/libs/eaxguid.lib ../sdk/libs/eax.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
+				ShowProgress="0"
+				OutputFile="..\bin/$(SolutionName)_VS8_$(ConfigurationName).exe"
+				Version=""
+				LinkIncremental="2"
+				SuppressStartupBanner="true"
+				IgnoreAllDefaultLibraries="false"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
+				GenerateMapFile="true"
+				SubSystem="1"
+				EntryPointSymbol=""
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile="..\temp/steel.bsc"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="..\bin"
+			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
+			UseOfMFC="1"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			BuildLogFile="$(IntDir)\BuildLog.htm"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\Debug/steel.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				InlineFunctionExpansion="2"
+				FavorSizeOrSpeed="1"
+				PreprocessorDefinitions="WIN32;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;LIB_OPENAL"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="1"
+				PrecompiledHeaderFile="$(IntDir)\steel.pch"
+				AssemblerListingLocation="$(IntDir)\"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="4105"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="opengl32.lib ../sdk/libs/openal32.lib ../sdk/libs/eaxguid.lib ../sdk/libs/eax.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
 				ShowProgress="0"
 				OutputFile="..\bin/$(SolutionName)_VS8_$(ConfigurationName).exe"
 				Version=""
@@ -230,7 +331,7 @@
 						RelativePath=".\res\image\bmp.cpp"
 						>
 						<FileConfiguration
-							Name="DebugWin|Win32"
+							Name="Debug|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -246,7 +347,7 @@
 							/>
 						</FileConfiguration>
 						<FileConfiguration
-							Name="Debug|Win32"
+							Name="DebugWin|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -290,6 +391,22 @@
 						RelativePath=".\res\image\tga.h"
 						>
 					</File>
+					<Filter
+						Name="bmp"
+						>
+						<File
+							RelativePath=".\res\image\bmp\bmp_load.cpp"
+							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									StructMemberAlignment="1"
+								/>
+							</FileConfiguration>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="model"
@@ -509,18 +626,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="game"
-				>
-				<File
-					RelativePath=".\game\game.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\game\game.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="physic"
 				>
 			</Filter>
@@ -664,34 +769,6 @@
 						</File>
 					</Filter>
 				</Filter>
-			</Filter>
-			<Filter
-				Name="objects"
-				>
-				<File
-					RelativePath=".\objects\combiner.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\combiner.h"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\scene.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\scene.h"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\sphere.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\sphere.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="test"

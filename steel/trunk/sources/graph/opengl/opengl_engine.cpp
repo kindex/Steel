@@ -28,6 +28,7 @@
 #include "../../res/res_main.h"
 
 #include <algorithm>
+#include <gl/glu.h>
 
 using namespace std;
 

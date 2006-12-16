@@ -56,6 +56,7 @@ ALboolean OpenALEngine::CheckALError()
 
 bool OpenALEngine::init(Config* _conf)
 {
+	return false;
 	conf = _conf;
 	if(conf == NULL)
 	{

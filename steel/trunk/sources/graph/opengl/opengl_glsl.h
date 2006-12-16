@@ -32,6 +32,7 @@ public:
 
 	~GLSL(void);
 
+	GLuint getProgramId(void) { return programId; }
 	bool LoadShader(GLuint shader, Text *text);
 
 	bool init(Shader*);
@@ -60,6 +61,7 @@ public:
     //Vector4D    getUniformVector  ( int loc            );
 
     int         locForUniformName ( const char * name );
+
 };
 
 

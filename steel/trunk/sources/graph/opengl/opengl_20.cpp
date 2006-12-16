@@ -47,6 +47,27 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			}
 
 
+			Tangents *sTangent, *tTangent;
+			getTangentSpace(e.vertexes, e.getTexCoords(material->normal_map), e.faceMaterials, e.normals, &sTangent, &tTangent);
+
+			GLuint index = glGetAttribLocationARB(program->getProgramId(),"tangent");
+			glUseProgramObjectARB(program->getProgramId()); 
+			glBindAttribLocationARB(program->getProgramId(), index, "tangent");
+
+			if(sTangent != NULL)	
+			{ 
+				glActiveTextureARB(GL_TEXTURE0_ARB + 7);
+				glClientActiveTextureARB(GL_TEXTURE0_ARB + 7);
+				if(BindVBO(sTangent, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+					glTexCoordPointer(3, GL_FLOAT, 0,0);
+			}
+
+/*			if(BindVBO(sTangent, GL_VERTEX_ATTRIB_ARRAY_POINTER, GL_ARRAY_BUFFER_ARB, 3))
+			{
+				glEnableVertexAttribArrayARB(index); 
+				glVertexAttribPointerARB(index, 3, GL_FLOAT, GL_FALSE, GL_VERTEX_ATTRIB_ARRAY_POINTER, &sTangent->data[0].x);
+			}
+*/	
 			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
 
 			program->unbind();

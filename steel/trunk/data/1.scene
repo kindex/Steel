@@ -76,12 +76,29 @@ objects =
 		} // audio
 		
 	}
+*/
+
 	{ //1
 	class = 'combiner'
 	origin = (0 0 1)
 	graph = [#objects[0].graph] {}
 	}
-*/
+	{ //1
+	class = 'combiner'
+	origin = (0 0 2)
+	graph = [#objects[0].graph] {}
+	}
+	{ //1
+	class = 'combiner'
+	origin = (0 1 0)
+	graph = [#objects[0].graph] {}
+	}
+	{ //1
+	class = 'combiner'
+	origin = (3 0 0)
+	graph = [#objects[0].graph] {}
+	}
+
 	
 
 /*	{//3
