@@ -234,7 +234,7 @@ static v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 }
 
 
-void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *texcoord, const FaceMaterials *faceMaterials, Normals const *normal, Tangents **sTangent, Tangents **tTangent)
+void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *texcoord, const FaceMaterials *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent)
 { // TODO: mem cleanup
 	int id = vertex->getId();
 	
@@ -397,7 +397,7 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 	*tTangent = &tangentSpaceCache[id].b;
 };
 
-void OpenGL_Engine::genTangentSpaceLight(const Tangents &sTangent, const Tangents &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
 {
 	matrix34 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
@@ -493,7 +493,7 @@ void OpenGL_Engine::drawBump(GraphShadow &e, const TexCoords *coords, matrix34 c
 	tangentSpaceLight.id = bufId;
 	tangentSpaceLight.data.resize(e.vertexes->data.size());
 
-	Tangents *sTangent, *tTangent;
+	TexCoords3f *sTangent, *tTangent;
 
 	getTangentSpace(e.vertexes, coords, e.faceMaterials, e.normals, &sTangent, &tTangent);
 	genTangentSpaceLight(*sTangent, *tTangent, *e.vertexes, *e.normals, matrix, light, tangentSpaceLight.data);

@@ -956,14 +956,6 @@
 						Name="gl"
 						>
 						<File
-							RelativePath=".\graph\opengl\gl\GLee.c"
-							>
-						</File>
-						<File
-							RelativePath=".\graph\opengl\gl\GLee.h"
-							>
-						</File>
-						<File
 							RelativePath=".\graph\opengl\gl\libext.cpp"
 							>
 						</File>

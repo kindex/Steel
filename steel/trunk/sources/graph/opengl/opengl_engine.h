@@ -197,15 +197,9 @@ protected:
 
 	typedef TexCoords3f tangentSpaceLightBufferedArray;
 
-	struct Tangents: public BufferedElement
-	{
-		svector<v3> data;
-		Tangents(): BufferedElement(), data(0) {}
-	};
-
 	struct TangentSpaceCache
 	{
-		Tangents t, b;
+		TexCoords3f t, b;
 	};
 
 	typedef 
@@ -238,8 +232,8 @@ public:
 
 	
 	void drawBump(GraphShadow &e, const TexCoords *coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image *img);
-	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, Tangents **sTangent, Tangents **tTangent);
-	void genTangentSpaceLight(const Tangents &sTangent, const Tangents &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
+	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent);
+	void genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
 
 //	void drawBump(DrawElement &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int texnum, Image *bump);
 //	void drawReflect(DrawElement &e, matrix34 const matrix, v3 const light, uid bufId);
@@ -301,79 +295,5 @@ public:
 #endif
 
 };
-
-template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2, int elCnt)
-{
-	if(v == NULL || v->data.empty()) return false;
-
-	if(GL_EXTENSION_VBO) // Vertex Buffer Object supportd
-	{
-		uid	id = v->getId();
-		if(id == 0) 
-		{
-			if(mode) glEnableClientState(mode);
-			glBindBufferARB(mode2, 0);
-			return false;
-		}
-
-		bool loaded = false;
-		if(buffer.find(id) != buffer.end())
-			loaded = buffer[id].loaded;
-
-		OpenGL_Buffer &buf = buffer[id];
-
-		if(loaded && buf.size != v->data.size())
-		{
-			glDeleteBuffersARB(1, &buf.glid);
-			buf.loaded = false;
-			loaded = false;
-		}
-
-		if(loaded)
-		{
-			glBindBufferARB(mode2, buf.glid);
-			if(v->changed)
-			{
-				glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->data.size(), &v->data.front());
-				buf.loadCnt++;
-			}
-
-			if(mode)glEnableClientState(mode);
-
-			buf.lastUsedTime = time;
-			buf.usedCnt++;
-//			buf.temp = false;
-		}
-		else
-		{
-			glGenBuffersARB(1, &buf.glid);
-
-			if(mode > 0) glEnableClientState ( mode );
-			glBindBufferARB(mode2, buf.glid);
-
-			GLenum usage = GL_STATIC_DRAW;
-			if(v->changed)
-				usage = GL_STREAM_DRAW;
-
-			glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
-			buf.size = v->data.size();
-	
-			buf.loaded = true;
-			buf.loadCnt++;
-			if(mode2 == GL_ARRAY_BUFFER_ARB)
-				buf.kind = OpenGL_Buffer::array;
-			if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
-				buf.kind = OpenGL_Buffer::index;
-
-//			buf.temp = false;
-			buf.lastUsedTime = time;
-			buf.usedCnt++;
-		}
-		return true;
-	}  
-	else
-		return false;
-}
-
 
 #endif
