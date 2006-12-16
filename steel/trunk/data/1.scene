@@ -6,11 +6,11 @@ objects =
 
 	{	//2
 	class = 'combiner'
-	origin = (1 1 0.5)
+	origin = (0 0 -10)
 	graph = {
 			class = 'box'
 			file = 'model/teapot'
-			size = 0.5
+			size = 10
 			material =  
 				{
 					class = 'std'
@@ -78,71 +78,20 @@ objects =
 	}
 */
 
-	{ //1
-	class = 'combiner'
-	origin = (0 0 1)
-	graph = [#objects[0].graph] {}
+	[#objects[0]] {
+		origin = (0 0 10)
 	}
-	{ //1
-	class = 'combiner'
-	origin = (0 0 2)
-	graph = [#objects[0].graph] {}
+	[#objects[0]] {
+		origin = (0 10 0)
 	}
-	{ //1
-	class = 'combiner'
-	origin = (0 1 0)
-	graph = [#objects[0].graph] {}
+	[#objects[0]] {
+		origin = (0 -10 0)
 	}
-	{ //1
-	class = 'combiner'
-	origin = (3 0 0)
-	graph = [#objects[0].graph] {}
+	[#objects[0]] {
+		origin = (10 0 0)
 	}
-
-	
-
-/*	{//3
-	class = 'combiner'
-	origin = (0 1 0.5)
-	graph = [#objects[2].graph] {}
+	[#objects[0]] {
+		origin = (-10 0 0)
 	}
-*/
-/*	{//4
-	class = 'ps'
-	emitter = 
-		{
-		class = 'SimpleEmitter'
-		particle_size = 0.1
-		} // emitter
-	animator = 
-		{
-		class = 'SimpleAnimator'
-		} // emitter
-	renderer = 
-		{
-		class = 'SpriteRenderer'
-		material = {
-			format0='color_map'
-			image0='/particle_system/wsmoke'
-			mode0 = '+'
-			} // material
-		} // emitter
-	} // ps
-*/
-/*	{
-	class = 'combiner'
-	origin = (0 0 -21)
-	graph =
-		{
-			class = 'model'
-			file = 'wall/wall1_model'
-		} // graph
-	
-	} // combiner
-*/
-/*	{
-		class = 'light'
-		origin = (3 3 1)
-	}*/
 ) // objects
 } // scene

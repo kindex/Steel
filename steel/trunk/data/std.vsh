@@ -2,11 +2,13 @@
 // vertex shader
 //
 
-varying	vec3 pixel_position;
-varying	vec3 pixel_normal;
+varying	vec3 pixel_position; // global
+varying	vec3 pixel_normal; // global
 
-varying vec3 lightDir; 	  // interpolated surface local coordinate light direction 
-varying vec3 viewDir;     // interpolated surface local coordinate view direction
+varying vec3 lightDir; 	  // TBN space
+varying vec3 viewDir;     // tbn
+varying vec3 viewDirGlobal;     // global
+varying vec3 lightDirGlobal;  // global
 
 uniform struct
 {
@@ -24,28 +26,28 @@ void main(void)
     vec3 lightVec;
     vec3 r;
     vec3 v;
-    vec3 localLightPos;
     vec3 binormal;
     
-	pixel_position = vec3 ( gl_ModelViewMatrix * gl_Vertex );
-	pixel_normal = normalize ( gl_NormalMatrix * gl_Normal );					// transformed n
-
+	pixel_position = vec3 ( gl_ModelViewMatrix * gl_Vertex ); // global
+	pixel_normal = normalize ( gl_NormalMatrix * gl_Normal ); // global
 	
 	gl_Position = ftransform();
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 	gl_TexCoord[1] = gl_MultiTexCoord1;
 	
-	localLightPos = light[0].position - pixel_position;
-	viewDir = pixel_position - camera_eye;
+	lightDirGlobal = normalize(light[0].position - pixel_position); // global
+	viewDirGlobal = pixel_position - camera_eye; // global
 
-//	localLightPos = (gl_ModelViewMatrixInverse * vec4(localLightPos, 1.0)).xyz;
-	
 	t = gl_NormalMatrix * gl_MultiTexCoord7.xyz;
 	n = gl_NormalMatrix * gl_Normal.xyz;
 	b = cross(n, t);
 	
-	lightDir.x = dot(t, localLightPos);
-	lightDir.y = dot(b, localLightPos);
-	lightDir.z = dot(n, localLightPos);
+	lightDir.x = dot(t, lightDirGlobal);
+	lightDir.y = dot(b, lightDirGlobal);
+	lightDir.z = dot(n, lightDirGlobal);
+
+	viewDir.x = dot(t, viewDirGlobal);
+	viewDir.y = dot(b, viewDirGlobal);
+	viewDir.z = dot(n, viewDirGlobal);
 
 }
