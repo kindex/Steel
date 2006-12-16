@@ -50,10 +50,6 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			TexCoords3f *sTangent, *tTangent;
 			getTangentSpace(e.vertexes, e.getTexCoords(material->normal_map), e.faceMaterials, e.normals, &sTangent, &tTangent);
 
-			GLuint index = glGetAttribLocationARB(program->getProgramId(),"tangent");
-			glUseProgramObjectARB(program->getProgramId()); 
-			glBindAttribLocationARB(program->getProgramId(), index, "tangent");
-
 			if(sTangent != NULL)	
 			{ 
 				glActiveTextureARB(GL_TEXTURE0_ARB + 7);
