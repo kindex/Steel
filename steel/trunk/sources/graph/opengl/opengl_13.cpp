@@ -382,7 +382,7 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
         
         // Gram-Schmidt orthogonalize
 		t = (t - n * (n.dotProduct(t))).getNormalized();
-		v3 b = n * t;
+		v3 b = t * n;
 
 		S[a] = t;
 		T[a] = b;

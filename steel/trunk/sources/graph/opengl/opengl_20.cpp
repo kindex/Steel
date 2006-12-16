@@ -62,12 +62,6 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 				(this->*BindTexCoords3f)(sTangent);
 			}
 
-/*			if(BindVBO(sTangent, GL_VERTEX_ATTRIB_ARRAY_POINTER, GL_ARRAY_BUFFER_ARB, 3))
-			{
-				glEnableVertexAttribArrayARB(index); 
-				glVertexAttribPointerARB(index, 3, GL_FLOAT, GL_FALSE, GL_VERTEX_ATTRIB_ARRAY_POINTER, &sTangent->data[0].x);
-			}
-*/	
 			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
 
 			program->unbind();

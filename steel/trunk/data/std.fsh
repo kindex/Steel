@@ -12,9 +12,7 @@ varying	vec3 pixel_position;
 varying	vec3 pixel_normal;
 
 varying vec3 lightDir;    // interpolated surface local coordinate light direction 
-varying vec3 viewDir;     // interpolated surface local coordinate view direction
-
-varying vec3 tangentA;
+varying vec3 viewDir;
 
 uniform struct
 {
@@ -29,30 +27,27 @@ void main (void)
     float intensity;
     float spec;
     float d;
-    vec3 lightDirNormalized;
 
-	lightDirNormalized = normalize(lightDir);
-
+	vec3 lightDirN = normalize(lightDir);
+	vec3 viewDirN = normalize(viewDir);
+	
     // Fetch normal from normal map
     norm = vec3(texture2D(normal_map, vec2(gl_TexCoord[0])));
     norm = (norm - 0.5) * 2.0;
     norm.y = -norm.y;
-    intensity = max(dot(lightDirNormalized, norm), 0.0) * 1.0;
+    norm = normalize(norm);
+    intensity = max(dot(lightDirN, norm), 0.0) * 1.0;
 
     // Compute specular reflection component
-    d = 2.0 * dot(lightDirNormalized, norm);
-    r = d * norm;
-    r = lightDir - r;
-    spec = pow(max(dot(r, viewDir), 0.0) , 6.0) * 0.0;
-    intensity += min(spec, 1.0);
-
     
-//    intensity = dot(lightDirNormalized, vec3(0.0, 0.0, 1.0));
+    r = reflect(norm, viewDirN);
+    spec = pow(max(dot(r, lightDirN), 0.0), 100.0) * 2.0;
+    intensity += spec;
 
-     // Compute color value
-    color = vec3(texture2D(color_map, vec2(gl_TexCoord[0])))*clamp(intensity, 0.0, 1.0);
+    color = vec3(texture2D(color_map, vec2(gl_TexCoord[0])))*max(intensity, 0.0);
 
  
+//	color = lightDir;
  
     // Write out final fragment color
     gl_FragColor = vec4(color, 1.0);

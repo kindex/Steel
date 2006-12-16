@@ -215,6 +215,10 @@ void Steel::process(steel::time globalTime, steel::time time)
 
 		if(framesToPass>0) framesToPass--;
 		else framesToPass = 0;
+
+		if(light != NULL)
+			light->setPosition(eye);
+
 	}
 }
 
@@ -269,9 +273,6 @@ void Steel::bind(AudioEngine *engine)
 void Steel::draw(GraphEngine *graph)
 {
 	direction.normalize();
-
-	if(light != NULL)
-		light->setPosition(eye);
 
 	graph->camera.setup(eye, direction);
 	graph->processCamera();

@@ -109,5 +109,5 @@ void Combiner::process(ProcessInfo &info)
 //	position.setTranslation(v3(- 0.1f * sin(info.curTime), 0.0f, 0.0f));
 	//position.setTranslation(v3(position.getTranslation().x - 0.1f * sin(info.curTime), position.getTranslation().y - 0.1f * sin(info.curTime/4), 0.0f));
 
-	position = position * rot;
+//	position = position * rot;
 }
