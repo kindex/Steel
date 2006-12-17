@@ -15,17 +15,17 @@ objects =
 				{
 					class = 'std'
 					blend = 0
-					color_map =
+					diffuse_map =
 					{ 
-						image = '/box/boxes/box1_side_handle_d'
+						image = '/box/boxes/tr_wall_outside_04_d'
 						texCoordsRotation = 0.0
 						texCoordsScale = (1 1 1)
 						texCoordsTranslation = (0 0 0)
 					}
-					color_map2 = // microtexture
+					diffuse2_map = // microtexture
 					{ 
 						mode = '+'
-	//					image = '/box/boxes/box1_side_handle_d'
+	//					image = '/box/boxes/tr_wall_outside_04_d'
 						texCoordsScale = (0.01 0.01 1)
 					}
 					normal_map = 
@@ -35,6 +35,14 @@ objects =
 					reflect_map = 
 					{
 	//					image = '/image/env/tsccity'
+					}
+					specular_map = 
+					{
+						image = '/box/boxes/tr_wall_outside_04_s'
+					}
+					emission_map = 
+					{
+						image = '/box/boxes/tr_wall_outside_04_e'
 					}
 				}
 		}

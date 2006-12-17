@@ -45,10 +45,12 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 */
 	string name;
 
-	color_map.InitFromConfig(conf->find("color_map"));
-	color_map2.InitFromConfig(conf->find("color_map2"));
+	diffuse_map.InitFromConfig(conf->find("diffuse_map"));
+	diffuse2_map.InitFromConfig(conf->find("diffuse2_map"));
 	normal_map.InitFromConfig(conf->find("normal_map"));
 	reflect_map.InitFromConfig(conf->find("reflect_map"));
+	specular_map.InitFromConfig(conf->find("specular_map"));
+	emission_map.InitFromConfig(conf->find("emission_map"));
 
 	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f)));
 

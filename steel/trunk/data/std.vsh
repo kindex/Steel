@@ -10,6 +10,9 @@ varying vec3 viewDir;     // tbn
 varying vec3 viewDirGlobal;     // global
 varying vec3 lightDirGlobal;  // global
 
+varying vec2 texCoord0;
+varying vec2 texCoord1;
+
 uniform struct
 {
 	vec3 position;
@@ -32,8 +35,8 @@ void main(void)
 	pixel_normal = normalize ( gl_NormalMatrix * gl_Normal ); // global
 	
 	gl_Position = ftransform();
-	gl_TexCoord[0] = gl_MultiTexCoord0;
-	gl_TexCoord[1] = gl_MultiTexCoord1;
+	texCoord0 = gl_MultiTexCoord0.xy;
+	texCoord1 = gl_MultiTexCoord1.xy;
 	
 	lightDirGlobal = normalize(light[0].position - pixel_position); // global
 	viewDirGlobal = pixel_position - camera_eye; // global

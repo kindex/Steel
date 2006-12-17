@@ -1,7 +1,7 @@
 #
 {
 class = 'std'
-color_map = 
+diffuse_map = 
 { 
 	image = 'warn'
 }

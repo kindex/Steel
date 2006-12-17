@@ -98,7 +98,7 @@ public:
 	MaterialStd(void);
 
 //private:
-	TextureStd color_map, color_map2, normal_map;
+	TextureStd diffuse_map, diffuse2_map, normal_map, specular_map, emission_map;
 	TextureReflect reflect_map;
 	color4f color;
 };

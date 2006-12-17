@@ -32,10 +32,13 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 
 		if(program != NULL)
 		{
-			(this->*BindTexCoords)(e.getTexCoords(material->color_map));
+			(this->*BindTexCoords)(e.getTexCoords(material->diffuse_map));
 
-			bindTextureToShader(program, "color_map", 0, material->color_map.image);
-			bindTextureToShader(program, "normal_map", 1, material->normal_map.image);
+			bindTextureToShader(program, "diffuse_map", 0, material->diffuse_map.image);
+			bindTextureToShader(program, "diffuse2_map", 1, material->diffuse2_map.image);
+			bindTextureToShader(program, "normal_map", 2, material->normal_map.image);
+			bindTextureToShader(program, "emission_map", 3, material->emission_map.image);
+			bindTextureToShader(program, "specular_map", 4, material->specular_map.image);
 
 			program->setUniformVector("camera_eye", camera.eye);
 			program->setUniformVector("camera_dir", (camera.center - camera.eye).getNormalized());

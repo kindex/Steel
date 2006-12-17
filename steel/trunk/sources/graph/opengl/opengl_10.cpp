@@ -24,8 +24,8 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
-		if(BindTexture != NULL && material->color_map.image != NULL) 
-			(this->*BindTexture)(material->color_map.image, true);
+		if(BindTexture != NULL && material->diffuse_map.image != NULL) 
+			(this->*BindTexture)(material->diffuse_map.image, true);
 		else
 			glColor4fv(material->color.getfv());
 
@@ -53,17 +53,17 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 
 		const TexCoords *texCoords = NULL;
 
-		if(material->color_map.image != NULL)
+		if(material->diffuse_map.image != NULL)
 		{
-			texCoords = e.getTexCoords(material->color_map);
+			texCoords = e.getTexCoords(material->diffuse_map);
 		}
 
 		glMatrixMode(GL_TEXTURE);	glLoadIdentity();
 		if(texCoords != NULL)
 		{
-			glScalef(		material->color_map.texCoordsScale.x,		material->color_map.texCoordsScale.y,		material->color_map.texCoordsScale.z); 
-			glTranslatef(	material->color_map.texCoordsTranslation.x,	material->color_map.texCoordsTranslation.y,	material->color_map.texCoordsTranslation.z); 
-			glRotatef(material->color_map.texCoordsRotation/(float)(M_PI)*180.0f, 0.0f, 0.0f, 1.0f); 
+			glScalef(		material->diffuse_map.texCoordsScale.x,		material->diffuse_map.texCoordsScale.y,		material->diffuse_map.texCoordsScale.z); 
+			glTranslatef(	material->diffuse_map.texCoordsTranslation.x,	material->diffuse_map.texCoordsTranslation.y,	material->diffuse_map.texCoordsTranslation.z); 
+			glRotatef(material->diffuse_map.texCoordsRotation/(float)(M_PI)*180.0f, 0.0f, 0.0f, 1.0f); 
 		}
 
 		if(DrawTriangles != NULL) (this->*DrawTriangles)(e, triangles, texCoords,  total);
@@ -139,7 +139,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 			}
 
 			if(texture->format == TEXTURE_FORMAT_COLOR_MAP) 
-				if(BindTexture) (this->*BindTexture)(static_cast<const TextureColorMap*>(texture)->color_map, true);
+				if(BindTexture) (this->*BindTexture)(static_cast<const TextureColorMap*>(texture)->diffuse_map, true);
 
 			if(texture->format == TEXTURE_FORMAT_COLOR) 
 				glColor4fv(static_cast<const TextureColor*>(texture)->color.getfv());

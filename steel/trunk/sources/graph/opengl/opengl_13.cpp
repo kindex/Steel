@@ -34,7 +34,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 		svector<uid> buffersToDelete;
 
 		bool bump_map = material->normal_map.image != NULL && conf->geti("drawBump") && !e.lights.empty() && e.normals != NULL && GL_EXTENSION_DOT3 && GL_EXTENSION_TEXTURE_CUBE_MAP;
-		bool color_map = material->color_map.image != NULL && conf->geti("drawTexture");
+		bool diffuse_map = material->diffuse_map.image != NULL && conf->geti("drawTexture");
 		bool reflect_map = material->reflect_map.image != NULL && conf->geti("drawReflect") && GL_EXTENSION_TEXTURE_CUBE_MAP;
 		int currentTextureArb = 0;
 
@@ -51,7 +51,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 			currentTextureArb +=2;
 		}
 
-		if(color_map)
+		if(diffuse_map)
 		{
 			glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
@@ -63,12 +63,12 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 
 			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 
-			(this->*BindTexture)(material->color_map.image, true);
+			(this->*BindTexture)(material->diffuse_map.image, true);
 
 			const TexCoords *texCoords = NULL;
 
-			if(material->color_map.texCoordsUnit < e.texCoords.size())
-				texCoords = e.texCoords[material->color_map.texCoordsUnit];
+			if(material->diffuse_map.texCoordsUnit < e.texCoords.size())
+				texCoords = e.texCoords[material->diffuse_map.texCoordsUnit];
 			else
 				if(!e.texCoords.empty())
 					texCoords = e.texCoords[0];
@@ -105,7 +105,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 		}
 
 
-		if(!color_map)
+		if(!diffuse_map)
 			glColor4fv(material->color.getfv());
 
 		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
