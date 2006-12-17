@@ -33,7 +33,7 @@ public:
 
 	virtual bool isSuportingInterface(InterfaceId) { return false; }
 	virtual bool beforeInject(InterfaceId) { return true; }
-	virtual void afterRemove(InterfaceId) {}
+	virtual void afterRemove(InterfaceId, Engine*) {}
 	
 	virtual bool updateInformation(InterfaceId, Engine*) { return false; }
 	virtual void bindEngine(InterfaceId, Engine*) { }

@@ -81,7 +81,7 @@ struct v3
 		return ((float*)(&x))[i];
 	}
 
-	inline float* get3fv() const {return (float*)this;}
+	inline float* getfv() const {return (float*)this;}
 
 	inline void loadZero(void)	{	x=y=z=0.0f;	}
 	inline void loadOne(void)	{	x=y=z=1.0f;	}

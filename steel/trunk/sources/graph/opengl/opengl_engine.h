@@ -124,7 +124,7 @@ protected:
 		GraphShadow *shadow;
 		bool changed; // position
 
-		LightShadow(void): light(NULL), object(NULL) {}
+		LightShadow(void);
 	};
 
 	map<uid, LightShadow*> lights;

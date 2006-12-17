@@ -15,16 +15,22 @@ class GameLight: public GameObject
 protected:
 	Light *light;
 	ObjectPosition position;
+	bool enabled;
+	GraphInterface *engine;
 public:
-	GameLight(void): light(NULL) { position.loadIdentity(); }
+	GameLight(void): light(NULL), engine(NULL), enabled(false) { position.loadIdentity(); }
 	~GameLight(void)	{		delete light;	}
 
 	bool InitFromConfig(Config *conf);
 	bool isSuportingInterface(InterfaceId);
 	void bindEngine(InterfaceId, Engine*);
+	void afterRemove(InterfaceId, Engine*);
 	bool updateInformation(InterfaceId id, Engine* engine);
 
 	void setPosition(const v3 _position) { position.setTranslation(_position); }
+	void enable();
+	void disable();
+	void toggleEnable();
 };
 
 #endif

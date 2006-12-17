@@ -98,6 +98,11 @@ public:
 	MaterialStd(void);
 
 //private:
+	float specularPower;
+	float speculark;
+	float diffusek;
+	float emissionk;
+
 	TextureStd diffuse_map, diffuse2_map, normal_map, specular_map, emission_map;
 	TextureReflect reflect_map;
 	color4f color;

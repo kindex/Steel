@@ -21,6 +21,7 @@ objects =
 						texCoordsRotation = 0.0
 						texCoordsScale = (1 1 1)
 						texCoordsTranslation = (0 0 0)
+						k = 1
 					}
 					diffuse2_map = // microtexture
 					{ 
@@ -39,10 +40,13 @@ objects =
 					specular_map = 
 					{
 						image = '/box/boxes/tr_wall_outside_04_s'
+						power = 40
+						k = 1
 					}
 					emission_map = 
 					{
 						image = '/box/boxes/tr_wall_outside_04_e'
+						k = 1
 					}
 				}
 		}
@@ -100,6 +104,20 @@ objects =
 	}
 	[#objects[0]] {
 		origin = (-10 0 0)
+	}
+	
+	{
+		class = 'light'
+		origin = (-4.5 -4.5 -4.5)
+		constantAttenuation = 0.0
+		linearAttenuation = 0.01
+		quadraticAttenuation = 0.0
+		minDistance = 10
+		maxDistance = 100
+//		ambient = (0 0 0)
+		diffuse = (1 1 1)
+		specular = (1 1 1)
+		k = 0.1
 	}
 ) // objects
 } // scene

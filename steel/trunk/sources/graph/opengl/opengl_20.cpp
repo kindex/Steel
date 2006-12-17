@@ -40,14 +40,36 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			bindTextureToShader(program, "emission_map", 3, material->emission_map.image);
 			bindTextureToShader(program, "specular_map", 4, material->specular_map.image);
 
+			program->setUniformFloat("material.specularPower", material->specularPower);
+			program->setUniformFloat("material.speculark", material->speculark);
+			program->setUniformFloat("material.diffusek", material->diffusek);
+			program->setUniformFloat("material.emissionk", material->emissionk);
+
 			program->setUniformVector("camera.position", camera.getPosition());
 			program->setUniformVector("camera.direction", camera.getDirection());
 			program->setUniformVector("camera.upVector", camera.getUpVector());
 
-			for(unsigned int i = 0; i < e.lights.size(); i++)
+			int lightCount = (int)e.lights.size();
+			if (lightCount > 4) lightCount = 4;
+
+			program->setUniformInt("lightCount", lightCount);
+			for(int i = 0; i < lightCount; i++)
 			{
-				std::string pos("light[" + IntToStr(i)+"].position");
-				program->setUniformVector(pos.c_str(), e.lights[i]->position);
+				glLightfv(GL_LIGHT0 + i, GL_POSITION, e.lights[i]->position.getfv());
+				glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, e.lights[i]->light->constantAttenuation);
+				glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, e.lights[i]->light->linearAttenuation);
+				glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, e.lights[i]->light->quadraticAttenuation);
+
+//				glLightfv(GL_LIGHT0 + i, GL_AMBIENT, e.lights[i]->light->ambient.getfv());
+				glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, e.lights[i]->light->diffuse.getfv());
+				glLightfv(GL_LIGHT0 + i, GL_SPECULAR, e.lights[i]->light->specular.getfv());
+
+//				glLightf(GL_LIGHT0 + i, GL_SPOT_CUTOFF, e.lights[i]->light->maxDistance);
+				float spot[4];
+				spot[0] = e.lights[i]->light->minDistance;
+				spot[1] = e.lights[i]->light->maxDistance;
+				spot[2] = e.lights[i]->light->k;
+				glLightfv(GL_LIGHT0 + i, GL_AMBIENT, spot);
 			}
 
 

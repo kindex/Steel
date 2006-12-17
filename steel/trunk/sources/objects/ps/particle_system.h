@@ -97,7 +97,7 @@ public:
 	bool isSuportingInterface(InterfaceId);
 	bool updateInformation(InterfaceId, Engine*);
 	bool beforeInject(InterfaceId);
-	void afterRemove(InterfaceId);
+	void afterRemove(InterfaceId, Engine*);
 	void process(ProcessInfo &);
 	void bindEngine(InterfaceId, Engine*);
 };

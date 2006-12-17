@@ -54,6 +54,11 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 
 	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f)));
 
+	specularPower = conf->getf("specular_map.power", 16.0);
+	speculark = conf->getf("specular_map.k", 1.0);
+	diffusek = conf->getf("diffuse_map.k", 1.0);
+	emissionk = conf->getf("emission_map.k", 1.0);
+
 	return true; 
 }
 

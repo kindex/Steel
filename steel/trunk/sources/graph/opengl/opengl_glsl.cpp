@@ -42,14 +42,17 @@ bool GLSL::init(Shader *_shader)
     GLint   linked;
     glLinkProgramARB(programId);
 
-	if(isError())
+	if (isError())
+	{
 		return false;
+	}
+
 
     glGetObjectParameterivARB(programId, GL_OBJECT_LINK_STATUS_ARB, &linked);
 
     loadLog(programId);
 
-    if(!linked)
+    if (!linked)
         return false;
 
 	return true;
@@ -105,13 +108,13 @@ void GLSL::loadLog(GLuint object)
 
     glGetObjectParameterivARB ( object, GL_OBJECT_INFO_LOG_LENGTH_ARB, &logLength );
 
-    if(isError())          // check for OpenGL errors
+    if (isError())          // check for OpenGL errors
         return;
 
-    if(logLength < 1 )
+    if (logLength < 1 )
         return;
                                     // try to avoid allocating buffer
-    if ( logLength > (int)sizeof ( buffer ) )
+    if (logLength > (int)sizeof(buffer))
     {
         infoLog = (GLcharARB*) malloc ( logLength );
 

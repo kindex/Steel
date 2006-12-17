@@ -44,20 +44,27 @@ typedef enum
 
 struct Light
 {
-
 	uid id;
 	LightType type;
 	v3 position;
 	v3 direction; // orientation? angle, target point?
-	color4f color; // used only rgb
-	float distance, intensivity; // intensivity * color
-	float rolloffFactor; // ??
-	float rolloffDistance; // max distance without rolloff
+
+	float intensivity; // intensivity * color
+	float constantAttenuation;
+	float linearAttenuation;
+	float quadraticAttenuation;
+	float minDistance; // max distance without rolloff
+	float maxDistance; // max distance without rolloff
+	v3 ambient;
+	v3 diffuse;
+	v3 specular;
+	float k;
+
 	bool castShadows;
 	float angle; // LIGHT_TARGET light cone angle
 //	Image *cubeMap; // cube map
 
-	Light() { id = objectIdGenerator.genUid(); }
+	Light(void);
 };
 
 //	kind : 2d only

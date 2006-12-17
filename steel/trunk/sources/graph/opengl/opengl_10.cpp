@@ -45,7 +45,13 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 				pos[2] = e.lights[i]->position.z;
 				pos[3] = 0.0f;
 				glLightfv(GL_LIGHT0 + i, GL_POSITION, (float*)pos);
-				glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, e.lights[i]->light->color.getfv());
+				glLightfv(GL_LIGHT0 + i, GL_POSITION, e.lights[i]->position.getfv());
+				glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, e.lights[i]->light->constantAttenuation);
+				glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, e.lights[i]->light->linearAttenuation);
+				glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, e.lights[i]->light->quadraticAttenuation);
+				glLightfv(GL_LIGHT0 + i, GL_AMBIENT, e.lights[i]->light->ambient.getfv());
+				glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, e.lights[i]->light->diffuse.getfv());
+				glLightfv(GL_LIGHT0 + i, GL_SPECULAR, e.lights[i]->light->specular.getfv());
 				// TODO: light parameters
 				glPopMatrix();
 			}

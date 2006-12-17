@@ -58,7 +58,7 @@ bool GraphEngine::remove(GameObject *object)
 			objects.erase(it);
 			break;
 		}
-	object->afterRemove(interfaceId);
+	object->afterRemove(interfaceId, this);
 
 	return true;
 }
@@ -69,4 +69,15 @@ Camera::Camera():
 		position(0.0, 0.0, 0.0), 
 		direction(v3(1.0, 0.0, 0.0))
 {
+}
+
+Light::Light(void):
+	constantAttenuation(0.0f),
+	linearAttenuation(0.0f),
+	quadraticAttenuation(0.0f),
+	minDistance(0.1f),
+	maxDistance(100.0f),
+	k(1.0f)
+{ 
+	id = objectIdGenerator.genUid(); 
 }

@@ -556,8 +556,8 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		if(GL_EXTENSION_GLSL)
 		{
 			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
-			shaderStd.vertexShader = resText.add("material/std.vsh");
-			shaderStd.fragmentShader = resText.add("material/std.fsh");
+			shaderStd.vertexShader = resText.add("material/std.vert");
+			shaderStd.fragmentShader = resText.add("material/std.frag");
 		}
 	}
 
@@ -701,3 +701,8 @@ void OpenGL_Engine::onResize(int width, int height)
 	if(RepairOpenGL_Window)
 		(this->*RepairOpenGL_Window)();
 }
+
+OpenGL_Engine::LightShadow::LightShadow(void): 
+	light(NULL), 
+	object(NULL)
+{}

@@ -152,9 +152,9 @@ bool ParticleSystem::beforeInject(InterfaceId id)
 	return false;
 }
 
-void ParticleSystem::afterRemove(InterfaceId)
+void ParticleSystem::afterRemove(InterfaceId, Engine* engine)
 {
-	if(id == GraphInterface::interfaceId) renderer->afterRemove(id);
+	if (id == GraphInterface::interfaceId) renderer->afterRemove(id, engine);
 }
 
 void ParticleSystem::process(ProcessInfo &info)

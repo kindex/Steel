@@ -9,30 +9,32 @@ uniform struct
 	vec3 upVector;
 } camera;
 
-uniform struct
-{
-	vec3 position;
-} light[10];
+uniform int lightCount;
 
+varying vec3 lightDir[4];// TBN space
+
+varying vec3 viewDir;     // tbn
 
 varying	vec3 pixel_position; // global
 varying	vec3 pixel_normal; // global
 
-
-varying vec3 lightDir; 	  // TBN space
-varying vec3 viewDir;     // tbn
 varying vec3 viewDirGlobal;     // global
-varying vec3 lightDirGlobal;  // global
 
 varying vec2 texCoord0;
 varying vec2 texCoord1;
-	
+
+vec3 t,b,n;
+
+void calcLightDir(in int i)
+{
+	vec3 lightDirGlobal = normalize(vec3(gl_LightSource[i].position) - pixel_position); // global
+	lightDir[i] = vec3(	dot(t, lightDirGlobal),
+						dot(b, lightDirGlobal),
+						dot(n, lightDirGlobal));
+}
 
 void main(void)
 {
-    vec3 t;
-    vec3 b;
-    vec3 n;
     vec3 pos;
     vec3 lightVec;
     vec3 r;
@@ -46,19 +48,30 @@ void main(void)
 	texCoord0 = gl_MultiTexCoord0.xy;
 	texCoord1 = gl_MultiTexCoord1.xy;
 	
-	lightDirGlobal = normalize(light[0].position - pixel_position); // global
-	viewDirGlobal = pixel_position - camera.position; // global
-
 	t = gl_NormalMatrix * gl_MultiTexCoord7.xyz;
 	n = gl_NormalMatrix * gl_Normal.xyz;
 	b = cross(n, t);
 	
-	lightDir.x = dot(t, lightDirGlobal);
-	lightDir.y = dot(b, lightDirGlobal);
-	lightDir.z = dot(n, lightDirGlobal);
-
+	viewDirGlobal = pixel_position - camera.position; // global
 	viewDir.x = dot(t, viewDirGlobal);
 	viewDir.y = dot(b, viewDirGlobal);
 	viewDir.z = dot(n, viewDirGlobal);
 
+
+	if (lightCount > 0)
+	{
+	calcLightDir(0);
+	if (lightCount > 1)
+	{
+	calcLightDir(1);
+	if (lightCount > 2)
+	{
+	calcLightDir(2);
+	if (lightCount > 3)
+	{
+	calcLightDir(3);
+	}
+	}
+	}
+	}
 }

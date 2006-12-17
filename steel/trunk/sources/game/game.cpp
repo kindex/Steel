@@ -72,8 +72,10 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 	}
 	
 	light = new GameLight();
-	light->InitFromConfig(parse("{ class ='light'; origin = (0 0 0) }"));
-	
+	light->InitFromConfig(resConfig.add("flashlight.conf"));
+	light->enable();
+	if(light != NULL)
+		light->setPosition(eye);
 
 // ******************* PHYSIC **************************
 
@@ -94,43 +96,52 @@ Steel::Steel(void):
 
 void Steel::handleEventKeyDown(std::string key)
 {
-	if(key == "escape") _alive = false;
-	if(key == "pause") paused = !paused;
-	if(key == "n") framesToPass = 1;
+	if (key == "escape") _alive = false;
+	if (key == "pause") paused = !paused;
+	if (key == "n") framesToPass = 1;
 
 /*	if(key == "f1") physicEngine->conf->toggle("helperDrawLines");*/
-	if(key == "f2") graphEngine->conf->toggle("drawFace");
-	if(key == "f3") graphEngine->conf->toggle("drawWire");
-	if(key == "f4") graphEngine->conf->toggle("drawBump");
-	if(key == "f5") graphEngine->conf->toggle("drawVertexes");
-	if(key == "f7") graphEngine->conf->toggle("drawNormals");
-	if(key == "f8") graphEngine->conf->toggle("drawAABB");
+	if (key == "f2") graphEngine->conf->toggle("drawFace");
+	if (key == "f3") graphEngine->conf->toggle("drawWire");
+	if (key == "f4") graphEngine->conf->toggle("drawBump");
+	if (key == "f5") graphEngine->conf->toggle("drawVertexes");
+	if (key == "f7") graphEngine->conf->toggle("drawNormals");
+	if (key == "f8") graphEngine->conf->toggle("drawAABB");
 
-	if(key == "f6") 
+	if (key == "f6") 
 	{
 		graphEngine->conf->toggle("clearColor");
 		graphEngine->conf->toggle("clearDepth");
 	}
 
-	if(key == "1") speedup = 0.01f;
-	if(key == "2") speedup = 0.05f;
-	if(key == "3") speedup = 0.2f;
-	if(key == "4") speedup = 0.5f;
-	if(key == "5") speedup = 1;
-	if(key == "6") speedup = 2;
-	if(key == "7") speedup = 5;
-	if(key == "8") speedup = 20;
-	if(key == "9") speedup = 50;
+	if (key == "1") speedup = 0.01f;
+	if (key == "2") speedup = 0.05f;
+	if (key == "3") speedup = 0.2f;
+	if (key == "4") speedup = 0.5f;
+	if (key == "5") speedup = 1;
+	if (key == "6") speedup = 2;
+	if (key == "7") speedup = 5;
+	if (key == "8") speedup = 20;
+	if (key == "9") speedup = 50;
 
-	if(key == "g")
+	if (key == "g")
 	{
-		if(g.getSquaredLengthd()>EPSILON)
+		if (g.getSquaredLengthd()>EPSILON)
 			g.loadZero();
 		else
 			g = conf->getv3("g");
 
 //		physicEngine->setGravitation(g);
 	}
+
+	if (key == "f")
+	{
+		if (light != NULL)
+		{
+			light->toggleEnable();
+		}
+	}
+
 
 	if(key == "mouse1" && !conf->getf("automaticGun"))
 		createObject();

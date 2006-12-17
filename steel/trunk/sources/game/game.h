@@ -68,6 +68,7 @@ protected:
 
 // World - custom objects
  	GameObject	*world;
+
  	GameLight	*light;
 //	GraphHelper	*physicHelper;
 
