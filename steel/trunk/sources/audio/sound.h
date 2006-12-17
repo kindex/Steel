@@ -25,6 +25,7 @@ public:
 
 	Audio* sound;
 
+	uid id;
 	v3 position;
 
 	float gain;

@@ -56,7 +56,6 @@ ALboolean OpenALEngine::CheckALError()
 
 bool OpenALEngine::init(Config* _conf)
 {
-	return false;
 	conf = _conf;
 	if(conf == NULL)
 	{
@@ -65,9 +64,11 @@ bool OpenALEngine::init(Config* _conf)
 	}
 	log_msg("openal init", "Initializing OpenAL...");
 
+
+
 	// open default sound device
 	log_msg("openal init", "Opening default sound device...");
-	pDevice = alcOpenDevice(NULL);
+	pDevice = alcOpenDevice(NULL);//alcOpenDevice((ALchar*)"DirectSound3D");
 	// check for errors
 	if (!pDevice)
 	{
@@ -75,6 +76,13 @@ bool OpenALEngine::init(Config* _conf)
 		return false;
 	}
 	log_msg("openal init", "OK  Default sound device is present!");
+//	log_msg("openal init", alcGetString((pDevice),ALC_DEVICE_SPECIFIER) );
+//	log_msg("openal init", alcGetString((pDevice),ALC_DEFAULT_DEVICE_SPECIFIER) );
+//	log_msg("openal init", alcGetString((pDevice),ALC_EXTENSIONS) );
+//	log_msg("openal init", alcGetString((pDevice),ALC_CAPTURE_DEVICE_SPECIFIER) );
+//	log_msg("openal init", alcGetString((pDevice),ALC_MINOR_VERSION) );
+
+	
 
 	// creating rendering context
 	log_msg("openal init", "Creating rendering context...");
@@ -88,7 +96,53 @@ bool OpenALEngine::init(Config* _conf)
 
 	alcMakeContextCurrent(pContext);
 
+	masterVolume = conf->getf("mastervolume", 1.0f);
+
 	log_msg("openal init", "OpenAL has been initialized!");
+
+
+	/**/
+// TESTING
+	log_msg("openal init", "\tVendor: " + (string)(ALchar *)alGetString(AL_VENDOR));
+	log_msg("openal init", "\tVersion: " + (string)(ALchar *)alGetString(AL_VERSION));
+	log_msg("openal init", "\tRenderer: " + (string)(ALchar *)alGetString(AL_RENDERER));
+	log_msg("openal init", "\tExtensions: " + (string)(ALchar *)alGetString(AL_EXTENSIONS));
+
+	const ALchar *pCDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
+	if (pCDeviceList)
+	{
+		log_msg("openal init","\nAvailable Capture Devices are:");
+
+		while (*pCDeviceList)
+		{
+			log_msg("openal init", pCDeviceList);
+			pCDeviceList += strlen(pCDeviceList) + 1;
+		}
+	}
+	else
+		log_msg("openal init", "!!!!! no capture devices");
+
+	const ALchar *pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+	if (pDeviceList)
+	{
+		log_msg("openal init",  "\nAvailable Devices are:");
+
+		while (*pDeviceList)
+		{
+			log_msg("openal init", pDeviceList);
+			pDeviceList += strlen(pDeviceList) + 1;
+		}
+	}
+	log_msg("openal init", "\nDefault capture device:");
+	log_msg("openal init", alcGetString(NULL, ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER));
+
+	log_msg("openal init", "\nDefault device:");
+	log_msg("openal init", alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER));
+
+
+/**/
+
+
 
 /**/
 	// check for EAX 2.0 support
@@ -189,29 +243,42 @@ bool OpenALEngine::process(void)
 
 bool OpenALEngine::soundPlay(Sound* sound)
 {
-	Buffer buffer; //= new Buffer();
-	Source source; //= new Source();
+	AudioShadow* shadow = new AudioShadow(this);
+	//buffer = new Buffer();
+	//source = new Source();
 
-	alGenBuffers(1, &buffer.buffer);
+	alGenBuffers(1, &shadow->buffer.buffer);
 	CheckALError();
-	alBufferData(buffer.buffer, sound->sound->format, sound->sound->data, sound->sound->size, sound->sound->frequency);
+	alBufferData(shadow->buffer.buffer, sound->sound->format, sound->sound->data, sound->sound->size, sound->sound->frequency);
 	CheckALError();
 //		if (sound->data)
 //			free(sound->data);
-	alGenSources(1, &source.source);
+	alGenSources(1, &shadow->source.source);
 	CheckALError();
-	alSourcei (source.source, AL_BUFFER,    buffer.buffer	);
+	alSourcei (shadow->source.source, AL_BUFFER,    shadow->buffer.buffer	);
 	CheckALError();
-	alSourcefv(source.source, AL_POSITION, sound->position);
-	alSourcei(source.source, AL_LOOPING, sound->isLoop);
+	shadows[sound->id] = shadow;
+
+	// update or set parameters
+	//alSourcefv(shadow->source.source, AL_POSITION, sound->position);
+	//alSourcei(shadow->source.source, AL_LOOPING, sound->isLoop);
+	soundUpdate(sound);
 	CheckALError();
-	alSourcePlay(source.source);
+	
+	alSourcePlay(shadow->source.source);
 	CheckALError();
+	
 	return true;
 }
 
 bool OpenALEngine::soundUpdate(Sound* sound)
 {
+	alSourcefv(shadows[sound->id]->source.source, AL_POSITION, sound->position);
+	alSourcei(shadows[sound->id]->source.source, AL_LOOPING, sound->isLoop);
+	alSourcef(shadows[sound->id]->source.source, AL_GAIN, sound->gain);
+	alSourcef(shadows[sound->id]->source.source, AL_PITCH, sound->pitch);
+	alSourcef(shadows[sound->id]->source.source, AL_ROLLOFF_FACTOR, sound->rolloffFactor);
+	alSourcei(shadows[sound->id]->source.source, AL_SOURCE_RELATIVE, sound->sourceRelative);
 	return true;
 }
 

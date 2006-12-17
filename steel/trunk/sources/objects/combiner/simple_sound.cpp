@@ -20,13 +20,15 @@ bool SimpleSound::InitFromConfig(Config *conf)
 	originalSound = new Sound();
 
 	originalSound->position = conf->getv3("position");
-	originalSound->gain = conf->getf("gain", 1.0f);
+	//float master = engine->getMasterVolume(); 
+	originalSound->gain = conf->getf("gain", 1.0f); //* master;
 	originalSound->pitch = conf->getf("pitch", 1.0f);
 	originalSound->isLoop = conf->geti("isLoop", 0) > 0;
 	originalSound->rolloffFactor = conf->getf("rolloffFactor", 0.0f);
 	originalSound->sourceRelative = conf->geti("sourceRelative", 0);
 
 	originalSound->sound = resAudio.add(conf->getPath("file"));
+	//engine->soundPlay(originalSound);
 
 
 	return true;

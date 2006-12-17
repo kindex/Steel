@@ -30,13 +30,14 @@ public:
 	AudioObject(void);
 	bool isSuportingInterface(InterfaceId id) { return AudioInterface::interfaceId == id; }
 	void bindEngine(InterfaceId, Engine*);
-
+	
 protected:
+	AudioInterface* engine;
 	bool soundPlay(Sound* sound);
 	bool soundStop(Sound* sound);
 
 private:
-	AudioInterface* engine;
+	
 	vector<Sound*> sounds;	// ???						// ???
 };
 

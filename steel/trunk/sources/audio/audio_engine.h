@@ -53,7 +53,7 @@ protected:
 //	svector<AudioObject*> objects;
 
 public:
-	AudioEngine(void) {}
+	AudioEngine(void) :  masterVolume(1.0f) {}
 
 	virtual bool init(Config *_conf) = 0;
 	virtual bool clear(void) { return true; } 
@@ -64,11 +64,16 @@ public:
 	virtual bool process(void) = 0;
 	virtual bool inject(GameObject *object) = 0;
 
-//============================
+	float getMasterVolume(void) { return masterVolume; }
+
+	
+	//============================
 
 	Listener listener;
 //	std::vector<AudioConfig> config;		// audio configs
 
+protected:
+	float masterVolume;
 
 	//AudioObjectList sources;
 

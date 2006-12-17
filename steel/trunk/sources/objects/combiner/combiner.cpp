@@ -91,6 +91,12 @@ bool Combiner::updateInformation(InterfaceId id, Engine* engine)
 		dynamic_cast<GraphInterface*>(engine)->setPosition(position);
 		return graph->updateInformation(id, engine);
 	}
+	// test audio update
+	if (id == AudioInterface::interfaceId && audio != NULL)
+	{
+		dynamic_cast<AudioInterface*>(engine)->setPosition(position);
+		return audio->updateInformation(id, engine);
+	}
 	return false;
 }
 

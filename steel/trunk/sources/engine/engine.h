@@ -66,7 +66,7 @@ protected:
 		// список детей объекта (uid)
 		svector<uid> children;
 
-		Shadow(Engine *aengine): object(NULL), parent(NULL), engine(aengine) {}
+		Shadow(Engine *aEngine): object(NULL), parent(NULL), engine(aEngine) {}
 		virtual void fill(GameObject *object);
 		// овновляюет место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
 		// возвращает true, если была обнавлена вся информация

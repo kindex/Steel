@@ -21,5 +21,6 @@ Sound::Sound(void)
 	isLoop = false;
 	rolloffFactor = 0.0f;
 	sourceRelative = 0;
+	id = objectIdGenerator.genUid();
 }
 

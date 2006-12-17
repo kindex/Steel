@@ -56,9 +56,9 @@ objects =
 			position = (1 1 0.5);
 			file = 'audio/test4';
 			gain = 1.0;
-			pitch = 1.0;
+			pitch = 2.0;
 			isLoop = 1;
-			rolloffFactor = 0.0;
+			rolloffFactor = 1.0;
 			sourceRelative = 0;
 		} // audio
 	

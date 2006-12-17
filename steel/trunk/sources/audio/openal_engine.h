@@ -57,13 +57,20 @@ protected:
 	ALboolean CheckALError(void);
 	void updateListener(Listener &listener);
 
+// AUDIO SHADOW ==============================
 	struct AudioShadow: public Shadow
 	{
-
+		Sound* sound;
+		Buffer buffer;
+		Source source;
 		AudioShadow(Engine *aEngine): Shadow(aEngine) {}
 	};
+// AUDIO SHADOW ==============================
+
 	AudioShadow *currentShadow;
 	GameObject *currentObject;
+
+	map<uid, AudioShadow*> shadows;
 
 	// to discuss: vector<Sound*> sounds;	-- "playing" sounds
 
@@ -88,6 +95,12 @@ public:
 	void setPositionKind(PositionKind) {}
 	bool setCurrentObject(GameObject* object);
 
+	
+
+	// Configuration/Option Parameters
+	bool enabledEAX;
+	//float masterVolume;
+	
 
 //	Storage* getStorageClass(GameObject *object) { return new Storage(this); }
 //	void makeStorageForChildren(GameObject *object) {};
