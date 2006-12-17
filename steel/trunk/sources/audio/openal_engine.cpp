@@ -107,7 +107,7 @@ bool OpenALEngine::init(Config* _conf)
 	log_msg("openal init", "\tVersion: " + (string)(ALchar *)alGetString(AL_VERSION));
 	log_msg("openal init", "\tRenderer: " + (string)(ALchar *)alGetString(AL_RENDERER));
 	log_msg("openal init", "\tExtensions: " + (string)(ALchar *)alGetString(AL_EXTENSIONS));
-
+/**/
 	const ALchar *pCDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
 	if (pCDeviceList)
 	{
@@ -133,11 +133,20 @@ bool OpenALEngine::init(Config* _conf)
 			pDeviceList += strlen(pDeviceList) + 1;
 		}
 	}
+	else
+		log_msg("openal init", "!!!!! no devices");
 	log_msg("openal init", "\nDefault capture device:");
-	log_msg("openal init", alcGetString(NULL, ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER));
+	if (pCDeviceList)
+		log_msg("openal init", alcGetString(NULL, ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER));
+	else
+		log_msg("openal init", "no default capture device");
 
 	log_msg("openal init", "\nDefault device:");
-	log_msg("openal init", alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER));
+	if (pDeviceList)
+		log_msg("openal init", alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER));
+	else
+		log_msg("openal init", "no default device");
+
 
 
 /**/
