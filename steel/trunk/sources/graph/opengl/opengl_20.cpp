@@ -40,8 +40,9 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			bindTextureToShader(program, "emission_map", 3, material->emission_map.image);
 			bindTextureToShader(program, "specular_map", 4, material->specular_map.image);
 
-			program->setUniformVector("camera_eye", camera.eye);
-			program->setUniformVector("camera_dir", (camera.center - camera.eye).getNormalized());
+			program->setUniformVector("camera.position", camera.getPosition());
+			program->setUniformVector("camera.direction", camera.getDirection());
+			program->setUniformVector("camera.upVector", camera.getUpVector());
 
 			for(unsigned int i = 0; i < e.lights.size(); i++)
 			{

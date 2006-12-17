@@ -1142,11 +1142,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\data\std.fsh"
+				RelativePath="..\data\std.frag"
 				>
 			</File>
 			<File
-				RelativePath="..\data\std.vsh"
+				RelativePath="..\data\std.vert"
 				>
 			</File>
 			<Filter

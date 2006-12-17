@@ -2,8 +2,22 @@
 // vertex shader
 //
 
+uniform struct 
+{
+	vec3 position;
+	vec3 direction;
+	vec3 upVector;
+} camera;
+
+uniform struct
+{
+	vec3 position;
+} light[10];
+
+
 varying	vec3 pixel_position; // global
 varying	vec3 pixel_normal; // global
+
 
 varying vec3 lightDir; 	  // TBN space
 varying vec3 viewDir;     // tbn
@@ -12,13 +26,7 @@ varying vec3 lightDirGlobal;  // global
 
 varying vec2 texCoord0;
 varying vec2 texCoord1;
-
-uniform struct
-{
-	vec3 position;
-} light[10];
 	
-uniform vec3 camera_eye;
 
 void main(void)
 {
@@ -39,7 +47,7 @@ void main(void)
 	texCoord1 = gl_MultiTexCoord1.xy;
 	
 	lightDirGlobal = normalize(light[0].position - pixel_position); // global
-	viewDirGlobal = pixel_position - camera_eye; // global
+	viewDirGlobal = pixel_position - camera.position; // global
 
 	t = gl_NormalMatrix * gl_MultiTexCoord7.xyz;
 	n = gl_NormalMatrix * gl_Normal.xyz;

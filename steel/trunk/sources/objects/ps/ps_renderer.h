@@ -35,7 +35,7 @@ protected:
 	FaceMaterials	face;
 	TexCoords	texCoords;
 	Normals		normals;
-	v3			eye;
+	v3			cameraPosition;
 	SpriteAlign	align;
 	v3			customAlign;
 public:

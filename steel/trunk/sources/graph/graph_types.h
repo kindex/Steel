@@ -15,6 +15,7 @@
 
 #include "../steel.h"
 #include "../engine/engine_types.h"
+#include "../engine/interface.h"
 #include "../math/aabb.h"
 #include "../math/maths.h"
 #include "../math/vector3d.h"
@@ -95,8 +96,7 @@ struct GraphEngineInfo
 	steel::time curTime;
 	steel::time frameLength;
 //	ModificationTime modificationTime;
-	v3 cameraEye;
-	v3 cameraDirection;
+	Camera* camera;
 };
 
 

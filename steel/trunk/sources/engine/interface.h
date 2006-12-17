@@ -59,25 +59,5 @@ public:
 	virtual void clearChildren(void) = 0;
 };
 
-class Camera
-{
-public:
-    v3 up, eye, center;
-
-public:
-	Camera(void);
-
-    void seteye(const v3 &EYE) { eye = EYE; }
-    void setcenter(const v3 &CENTER) { center = CENTER; }
-	void setup(const v3 &EYE, const v3 &DIR);
-	v3	direction(void) { return (center-eye).getNormalized(); }
-};
-
-struct ProcessInfo
-{
-	steel::time curTime;
-	steel::time frameLength;
-	Camera *camera;
-};
 
 #endif

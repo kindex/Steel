@@ -274,7 +274,8 @@ void Steel::draw(GraphEngine *graph)
 {
 	direction.normalize();
 
-	graph->camera.setup(eye, direction);
+	graph->camera.setPosition(eye);
+	graph->camera.setDirection(direction);
 	graph->processCamera();
 	graph->process(0,0);
 }

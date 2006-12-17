@@ -64,15 +64,9 @@ bool GraphEngine::remove(GameObject *object)
 }
 
 
-void Camera::setup(const v3 &EYE, const v3 &DIR)
-{
-	eye = EYE;
-	center = EYE + DIR;
-}
-
 Camera::Camera(): 
-		up(v3(0.0, 0.0, 1.0)), 
-		eye(10.0, 10.0, 1.0), 
-		center(v3(0.0, 0.0, 0.0)) 
+		upVector(v3(0.0, 0.0, 1.0)), 
+		position(0.0, 0.0, 0.0), 
+		direction(v3(1.0, 0.0, 0.0))
 {
 }

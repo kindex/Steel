@@ -18,7 +18,7 @@ void SpriteRenderer::process(ProcessInfo &info)
 {
 	initSprites(vertexes.data.size()/4, set->particles.size());
 
-	eye = info.camera->eye;
+	cameraPosition = info.camera->getPosition();
 
 	int cnt = set->particles.size();
 	for(int i=0; i<cnt; i++)
@@ -33,10 +33,10 @@ void SpriteRenderer::process(ProcessInfo &info)
 //pos – положение спрайта
 		switch(align)
 		{
-			case SPRITE_ALIGN_SCREEN: dir = -info.camera->direction(); break;
-			case SPRITE_ALIGN_CAMERA: dir = info.camera->eye - pos; break;
-			case SPRITE_ALIGN_Z: dir = info.camera->eye - pos; dir.z = 0; break;
-			case SPRITE_ALIGN_CUSTOM: dir = customAlign; break;
+			case SPRITE_ALIGN_SCREEN:	dir = -info.camera->getDirection(); break;
+			case SPRITE_ALIGN_CAMERA:	dir = info.camera->getPosition() - pos; break;
+			case SPRITE_ALIGN_Z:		dir = info.camera->getPosition() - pos; dir.z = 0; break;
+			case SPRITE_ALIGN_CUSTOM:	dir = customAlign; break;
 		}
 
 		dir.normalize();

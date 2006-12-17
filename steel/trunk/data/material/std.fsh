@@ -2,14 +2,18 @@
 // fragment shader
 //
 
+uniform struct 
+{
+	vec3 position;
+	vec3 direction;
+	vec3 upVector;
+} camera; // global
+
 uniform sampler2D diffuse_map;
 uniform sampler2D diffuse2_map;
 uniform sampler2D normal_map;
 uniform sampler2D emission_map;
 uniform sampler2D specular_map;
-
-uniform	vec3 camera_dir;// global
-uniform	vec3 camera_eye;// global
 
 varying	vec3 pixel_position;// global
 varying	vec3 pixel_normal; // global
@@ -49,7 +53,7 @@ void main (void)
     norm = (norm - 0.5) * 2.0;
     norm.y = -norm.y;
     norm = normalize(norm); // TBN
-    intensity = max(dot(lightDirN, norm), 0.0) * 1.0;
+    intensity = max(dot(lightDirN, norm), 0.0) * 3.0;
     color += vec3(texture2D(diffuse_map, texCoord0))*max(intensity, 0.0)*lightAttenuation;
 
     // Compute specular reflection component
@@ -57,11 +61,9 @@ void main (void)
     r = reflect(viewDirN, norm);
     
     spec = max(dot(r, lightDirN), 0.0);
-    spec = pow(spec, 6.0) * 2.0;
+    spec = pow(spec, 6.0) * 4.0;
     
     color += spec * vec3(texture2D(specular_map, texCoord0));
-
-
 
     // Write out final fragment color
     gl_FragColor = vec4(color, 1.0);

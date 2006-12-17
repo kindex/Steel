@@ -556,8 +556,8 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		if(GL_EXTENSION_GLSL)
 		{
 			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
-			shaderStd.vertexShader = resText.add("std.vsh");
-			shaderStd.fragmentShader = resText.add("std.fsh");
+			shaderStd.vertexShader = resText.add("material/std.vsh");
+			shaderStd.fragmentShader = resText.add("material/std.fsh");
 		}
 	}
 
@@ -597,9 +597,13 @@ void OpenGL_Engine::processCamera()
 
 	gluPerspective(conf->getd("camera.fov"), cameraAspectRatio, conf->getd("camera.min_dist"), conf->getd("camera.max_dist"));
 
-    gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, 
-			camera.center.x, camera.center.y, camera.center.z, 
-			camera.up.x, camera.up.y, camera.up.z);
+	v3 cameraPosition = camera.getPosition();
+	v3 cameraCenter = cameraPosition + camera.getDirection();
+	v3 cameraUp = camera.getUpVector();
+
+    gluLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z,
+			cameraCenter.x, cameraCenter.y, cameraCenter.z,
+			cameraUp.x, cameraUp.y, cameraUp.z);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -610,8 +614,7 @@ void OpenGL_Engine::prepare(GraphShadow *shadow, steel::time globalTime, steel::
 	info.curTime = globalTime;
 	info.frameLength = time;
 //	info.modificationTime = globalFrameNumber;
-	info.cameraEye = camera.eye;
-	info.cameraDirection = camera.center - camera.eye;
+	info.camera = &camera;
 
 	currentShadow = shadow;
 	shadow->object->updateInformation(this->interfaceId, this);

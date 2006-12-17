@@ -66,5 +66,30 @@ struct Triangles: public BufferedElement
 	Triangles(void): BufferedElement(), data(0) {}
 };
 
+class Camera
+{
+public:
+	Camera(void);
+
+    void setPosition(const v3 &_position) { position = _position; }
+	void setDirection(const v3& _direction) { direction = _direction.getNormalized(); }
+    void setUpVector(const v3& _upVector) { upVector = _upVector.getNormalized(); }
+	v3	getDirection(void) { return direction; }
+	v3  getPosition(void) { return position; }
+	v3  getUpVector(void) { return upVector; }
+
+private:
+    v3 position; // camera eye
+	v3 direction;
+	v3 upVector;
+};
+
+struct ProcessInfo
+{
+	steel::time curTime;
+	steel::time frameLength;
+	Camera *camera;
+};
+
 
 #endif
