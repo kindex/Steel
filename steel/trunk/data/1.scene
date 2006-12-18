@@ -41,7 +41,7 @@ objects =
 					{
 						image = '/box/boxes/tr_wall_outside_04_s'
 						power = 40
-						k = 1
+						k = 3
 					}
 					emission_map = 
 					{
