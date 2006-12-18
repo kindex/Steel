@@ -1,4 +1,725 @@
-﻿[2006-06-12 19:38:42] *** .Kind has changed the chat topic to "Steel Engine" ***
+﻿[2006.01.07 15:39:54] * KindeX added Alexander Papyshev, Andrey Movlyaiko to this chat
+[2006.01.07 15:40:06] * KindeX has changed the chat topic to "Steel engine"
+[2006.01.07 15:40:18] KindeX says: Встреча будет 2005.01.09 20:00 в Progmeistars
+[2006.01.09 15:01:03] ulfhednar says: ok
+[2006.01.09 15:01:07] ulfhednar says: postarajus'
+[2006.01.09 15:01:13] ulfhednar says: ksta
+[2006.01.09 15:01:24] KindeX says: да?
+[2006.01.09 15:01:26] ulfhednar says: kindex... tak tam est' zakrytye razdely na forume?
+[2006.01.09 15:01:32] KindeX says: нет
+[2006.01.09 15:01:36] ulfhednar says: mm.. jasn
+[2006.01.09 15:01:45] KindeX says: я минут 30 назад всё открыл
+[2006.01.09 15:01:51] ulfhednar says: scha gljanem
+[2006.01.09 15:04:00] ulfhednar says: Andrjuha, chto tam s forumom?
+[2006.01.09 15:04:15] KindeX says: ну да
+[2006.01.09 15:04:23] KindeX says: я тут устроил перестановку....
+[2006.01.09 15:04:27] KindeX says: скоро будет
+[2006.01.09 15:04:30] def_lv says: ja ne mogu ra6e 21:00.
+[2006.01.09 15:04:36] def_lv says: :D
+[2006.01.09 15:05:43] def_lv says: v4era, Kind, Ti skazal, 4to budet v 21:00
+[2006.01.09 15:06:01] KindeX says: да, встреча в 21
+[2006.01.09 15:06:17] def_lv says: a eto kak ponkatj? : Встреча будет 2005.01.09 20:00 в Progmeistars
+[2006.01.09 15:06:48] KindeX says: устарела информация
+[2006.01.09 15:07:07] def_lv says: (doh)
+[2006.01.09 15:07:26] KindeX says: читайте новсти - я там понаписал всего
+[2006.01.09 15:07:51] KindeX says: и комменты пишите
+[2006.01.09 15:08:19] def_lv says: address es4e raz daj. URL.
+[2006.01.09 15:08:41] * KindeX has changed the chat topic to "Steel engine [ http://division.kindex.lv ]"
+[2006.01.09 15:57:50] def_lv says: !!!!!! MILESTONES !!!!!!!! Kind, pereimenuj vetku! U Tebja MAILstones!
+[2006.01.09 16:15:41] KindeX says: ok
+[2006.01.09 16:18:01] def_lv says: izmenenija jestj
+[2006.01.09 16:18:11] KindeX says: вижу
+[2006.01.09 16:22:24] KindeX says: мне так понравилась одна фраза на форуме одном. Я там давно не был и решил проверить, залогинился и мне написали: Ааа, не забыл нас KindeX :)
+[2006.01.09 16:22:42] ulfhednar says: ))
+[2006.01.09 16:44:23] def_lv says: PASCAL GAME DEVELOPMENT COMPETITION na nehe.gamedav.net
+[2006.01.09 16:44:30] def_lv says: PASCAL GAME DEVELOPMENT COMPETITION na nehe.gamedev.net
+[2006.01.09 16:44:47] def_lv says: Kind! Oto6li DoomRF tuda!
+[2006.01.09 16:45:05] ulfhednar says: RF forever!
+[2006.01.09 16:45:23] ulfhednar says: vspomnit' by molodost' )
+[2006.01.09 17:51:06] def_lv says: Lu46ije 3D Action igri sezona, sdelannije na6imi budus4imi konkurentami (rossija):
+[2006.01.09 17:51:19] def_lv says: Вивисектор: Зверь Внутри [http://www.ixbt.com/games/vivisector.shtml]
+[2006.01.09 17:51:32] def_lv says: Cold War [http://www.ixbt.com/games/coldwar.shtml]
+[2006.01.09 17:52:13] def_lv says: kak minimum Posmotrite screen6oti, po4itajte Плюсы:Минусы:
+[2006.01.10 13:44:48] def_lv says: a 4to vse mol4at? So v4era6nego dnja?
+[2006.01.10 15:41:43] KindeX says: а Влад помог капот открыть - и теперь заряжаю аккуиулятор!
+[2006.01.10 16:07:21] def_lv says: аккуиулятор? Kruto.
+[2006.01.10 16:17:25] KindeX says: 64 Ah
+[2006.01.10 16:17:40] def_lv says: аккуиулятор? Uveren?
+[2006.01.10 16:17:54] KindeX says: да, написано
+[2006.01.10 16:18:35] KindeX says: 12 V
+[2006.01.10 16:18:47] KindeX says: а у меня чисто случайно дома есть зарядка для аккумулятора :)
+[2006.01.10 17:25:39] def_lv says: Forum: Newlinks appended.
+[2006.01.11 14:11:09] def_lv says: Hi 2 all! http://www.dtf.ru/articles/print.php?id=37760
+[2006.01.12 02:54:54] KindeX says: у меня появилась идея, что у нас есть главный программист, но нет главного гейм-дизайнера
+[2006.01.12 13:25:53] def_lv says: Estj u nas Vse
+[2006.01.12 14:04:46] KindeX says: кто Главный дизайнер?
+[2006.01.12 14:05:04] def_lv says: Ja! I 4to s togo?
+[2006.01.12 14:06:15] def_lv says: Nam Absolutno ne4ego dizajnitj.
+[2006.01.12 14:06:52] KindeX says: но всё же
+[2006.01.12 14:07:15] KindeX says: делая движок, мы его делаем для RF2  - во-первых
+[2006.01.12 14:07:28] def_lv says: U nas vse raspredeleno uzhe nas 4[3] 4eloveka
+[2006.01.12 14:07:35] KindeX says: и у нас пока разные представления об этой игре
+[2006.01.12 14:07:57] def_lv says: o kakoj? Mi igru ne delajem sej4as nikakuju.
+[2006.01.12 14:08:06] KindeX says: в том-то и дело
+[2006.01.12 14:08:20] KindeX says: мне кажется что это не совсем правильно
+[2006.01.12 14:08:27] def_lv says: S Intro zhe vse jasno
+[2006.01.12 14:08:33] def_lv says: I s demo tozhe
+[2006.01.12 14:08:53] KindeX says: нало как-то описать это всё. Я почитал статью на DTF, и вот пришел к такому выводу
+[2006.01.12 14:09:09] def_lv says: eto vse eto 4to?
+[2006.01.12 14:09:13] KindeX says: тебе ясно. Ёрмику - нет
+[2006.01.12 14:09:27] def_lv says: komu komu?
+[2006.01.12 14:09:29] KindeX says: мне наполовину, и не факт что у нас одно понятие
+[2006.01.12 14:09:35] KindeX says: Dark Sirius
+[2006.01.12 14:09:58] KindeX says: ты понял эти ошибки?
+[2006.01.12 14:10:19] def_lv says: da. No Dima poka tolko na nih natikalsja.
+[2006.01.12 14:11:05] KindeX says: и опять же, как я заметил, мы мыслим фичами, а не геймплеем
+[2006.01.12 14:11:14] def_lv says: Nam nado o6ibki razrabotki izbegatj, a ne dizajna.
+[2006.01.12 14:11:22] KindeX says: или отталкиваемся от того, что делаем баки
+[2006.01.12 14:11:30] KindeX says: какая глобальная цель?
+[2006.01.12 14:11:49] def_lv says: Fdf i ja mislim gameplay'em.
+[2006.01.12 14:12:24] KindeX says: и не только мыслить
+[2006.01.12 14:12:36] KindeX says: а еще донести до до всех членов команды
+[2006.01.12 14:12:48] KindeX says: а то вдруг с 2d переходим на 3D
+[2006.01.12 14:12:56] KindeX says: геймплей не меняется??
+[2006.01.12 14:13:16] def_lv says: Demoscena, skriptovaja animacija na dvizhke, i tak dalee.
+[2006.01.12 14:13:40] def_lv says: Ja vedj vetku na forume sozdal.
+[2006.01.12 14:14:01] KindeX says: ты не понимаешь о чём я говорю
+[2006.01.12 14:14:10] KindeX says: я геймдизайнер тоже
+[2006.01.12 14:14:14] def_lv says: Ja ponimaju.
+[2006.01.12 14:15:20] def_lv says: Poka mi ne re6ili, 4to mi delajem, ne nado vsej komande objasnjatj 4to mi delajem!
+[2006.01.12 14:15:48] KindeX says: делайте - мф сами пока не знаем что
+[2006.01.12 14:18:25] def_lv says: Poka u nas detskije bolezni. I podhod sverh-neprofessionalnij.
+[2006.01.12 14:18:55] def_lv says: Horo6o, 4to Dimka vse vremja u4itsja na o6ibkah, tolko medlennee.
+[2006.01.12 14:18:59] KindeX says: вначале надо платить зарплату, ну или хотябы представлять, что нам платят
+[2006.01.12 14:19:50] def_lv says: net, etogo ne budet. Ne v Latvii. Ne bez 1 gotovogo igrovogo projekta. Ne bez izvestnosti. Nu i tak dalee.
+[2006.01.12 14:22:59] def_lv says: vot, kind, mo6li im pomotretj Doom RF http://www.pascalgamedevelopment.com/competitions/PGDCompetition2005.html
+[2006.01.12 14:23:34] def_lv says: Ja dumaju, 4to na BP 7.0 u nih net projektov ;)
+[2006.01.12 14:31:05] def_lv says: nado prosto zanimatsja projektom, i vse.
+[2006.01.15 21:01:43] KindeX says: Вопрос: процелура из движка, которой мы передаём интерфейс, и она узнаёт всё, что её надо для рисования объекта. Как её назвать. Варианты: inject (по аналогии с двигателем - инжектор), feed, ... ?
+[2006.01.15 21:57:53] KindeX says: я реализовал открытие окна!
+[2006.01.16 02:25:27] KindeX says: Народ!!! До майлстона 5 дней!!! А вы даже не поставили Visual Studio. Непорядок.
+[2006.01.16 02:25:41] KindeX says: [2006-01-12 13:31:02] Def говорит : nado prosto zanimatsja projektom, i vse.
+[2006.01.16 02:26:38] KindeX says: milestone: 2005.02.17 - Intro, graph engine demo
+Загрузка моделей, текстур, звуков. Простая анимаия (заскриптованая в воде).
+На этом этапе каждый сможет заниматься своей частью движка, так как основа уже будет заложена. На этой основе будем делать бакалаврские работы.
+
+Как демонстрация наших возможностей реализуем интро на этом движке.
+[2006.01.16 02:26:47] KindeX says: Мы успеем?
+[2006.01.16 02:27:22] KindeX says: Я понимаю, в всех жёны, дети. Но надо хоть по чуть-чуть делать. Хоть по 5 минут в день. А то не сдвинемся с места.
+[2006.01.16 02:28:22] KindeX says: ;(
+[2006.01.16 13:53:30] Alexander Papyshev says: Uspeem.
+[2006.01.16 16:11:13] KindeX says: кроме меня и Кузмича - никто ничего не делает
+[2006.01.16 16:12:16] Alexander Papyshev says: Sej4as samoje glvanoje - eto 4tobi Kuzmi4 zvuk sdelal.
+[2006.01.16 16:12:34] KindeX says: ошибаешься.
+[2006.01.16 16:12:42] KindeX says: и без звука всё получится
+[2006.01.16 16:12:49] KindeX says: графика нужна!
+[2006.01.16 16:13:11] Alexander Papyshev says: Ti vsedj grafikoj zanimaj6sja na etot mooment
+[2006.01.16 16:13:56] KindeX says: а физикой кто?
+[2006.01.16 16:14:20] Alexander Papyshev says: U nas net fizike sej4as.
+[2006.01.16 16:14:25] Alexander Papyshev says: Ja vot 4to sdelalL
+[2006.01.16 16:16:07] Alexander Papyshev says: A 4to eto? stell.exe? Arhiv?
+[2006.01.16 16:16:22] KindeX says: нет
+[2006.01.16 16:16:29] KindeX says: проверь, запускается?
+[2006.01.16 16:16:56] Alexander Papyshev says: U manja dazhe peso4nije 4asi ne pojavljajutsja. ni4ego net voobs4e, budto faila net.
+[2006.01.16 16:17:07] Alexander Papyshev says: ja havatj po6el
+[2006.01.16 16:17:18] Alexander Papyshev says: budu 4erez 20 min.
+[2006.01.16 16:17:19] KindeX says: я тоже
+[2006.01.16 16:26:02] Andrey Movlyaiko says: u blin, vse havatj u6li...
+[2006.01.16 16:27:22] Andrey Movlyaiko says: zvyk nado nakladivatj na grafiku!
+[2006.01.16 16:27:31] Andrey Movlyaiko says: grafika - eto osnova dlja zvuka
+[2006.01.16 16:28:18] KindeX says: вот вот
+[2006.01.16 16:28:31] KindeX says: поставит ХР ?
+[2006.01.16 16:28:34] Andrey Movlyaiko says: ja kstati postavil Visual Studio 2005
+[2006.01.16 16:28:36] Andrey Movlyaiko says: da
+[2006.01.16 16:28:39] KindeX says: молодец!
+[2006.01.16 16:29:05] Andrey Movlyaiko says: vsjo utro stavil s sinimi ekranami...
+[2006.01.16 16:29:16] Andrey Movlyaiko says: raza 4 navernoe
+[2006.01.16 16:29:25] KindeX says: а чего так?
+[2006.01.16 16:30:06] Andrey Movlyaiko says: da ja ne znaju, navernoe 4eto otkrito bilo vo vremja instaljacii
+[2006.01.16 16:31:38] KindeX says: читай форум/Core
+[2006.01.16 16:31:49] Andrey Movlyaiko says: ok
+[2006.01.16 16:33:13] KindeX says: Встреча: 
+2005.01.18 21:00 Progmeistars
+Обсудить milestone (а есть русское название?), движок управления.
+KindeX покажет графический движок. Каждый его опробует. Кузмич напишет по аналогии с графическим движком звуковой движок.
+
+Team+Bond
+[2006.01.16 16:34:00] Andrey Movlyaiko says: eto sreda 4toli?
+[2006.01.16 16:34:19] KindeX says: да
+[2006.01.16 16:34:34] KindeX says: можешь?
+[2006.01.16 16:34:51] Andrey Movlyaiko says: 4to dvizok napisatj ili v sredu bitj?
+[2006.01.16 16:35:01] KindeX says: в среду быть
+[2006.01.16 16:35:05] Andrey Movlyaiko says: da
+[2006.01.16 16:35:14] Andrey Movlyaiko says: without any problems
+[2006.01.16 16:35:33] KindeX says: можешь разобраться с моим движком
+[2006.01.16 16:35:52] Andrey Movlyaiko says: eto to 4to Ti poslal? <steel.exe>?
+[2006.01.16 16:35:59] KindeX says: главные файлы: engine и graph/graph_engine
+[2006.01.16 16:36:02] KindeX says: да
+[2006.01.16 16:36:08] Andrey Movlyaiko says: posmotrju
+[2006.01.16 16:36:12] KindeX says: steel.rar
+[2006.01.16 16:38:23] Andrey Movlyaiko says: a eto 4to? Ti ze posilal uze
+[2006.01.16 16:38:51] KindeX says: сорри, там глюк.
+[2006.01.16 16:39:03] Andrey Movlyaiko says: v pervom arhive?
+[2006.01.16 16:39:07] KindeX says: да
+[2006.01.16 16:39:09] Andrey Movlyaiko says: ok
+[2006.01.17 16:25:59] KindeX says: предлагаю переуменовать  Milestone в checkpoint
+[2006.01.17 16:26:11] Alexander Papyshev says: net
+[2006.01.17 16:26:38] KindeX says: понятнее
+[2006.01.17 16:26:39] Alexander Papyshev says: fignja. U VSEH Milestones. A u nas checkpoint?
+[2006.01.17 16:26:52] Alexander Papyshev says: Dlja menja check point menee ponjaten
+[2006.01.17 16:26:54] KindeX says: майлстоун - криво еслово
+[2006.01.17 16:26:57] KindeX says: не русское
+[2006.01.17 16:27:04] KindeX says: а чекпоинт - вполне
+[2006.01.17 16:27:11] Alexander Papyshev says: 4ekpoint jes4e krivee
+[2006.01.17 16:27:25] Alexander Papyshev says: I smisl ne sovpadajet
+[2006.01.17 16:27:32] KindeX says: чекпоинт - более обширное понятие, чем майлстон
+[2006.01.17 16:27:53] KindeX says: ты ХР поставил?
+[2006.01.17 16:28:06] Alexander Papyshev says: krome kak v gonkah, gde 4ekpoint ispolzujetsja?
+[2006.01.17 16:28:41] Alexander Papyshev says: postavil, no uzhe snes. Catalyst - drova ATI mne SNESLI XP.
+[2006.01.17 16:28:53] Alexander Papyshev says: Segodnja perestavlju jes4e raz
+[2006.01.17 16:30:26] Alexander Papyshev says: edinstvennoje, 4to ja mogu predlozheitj - eto Milestones podelitj na checkpoints
+[2006.01.17 16:33:21] Andrey Movlyaiko says: ni milestone, ni checkpoint oba ne po russki
+[2006.01.17 16:33:26] Alexander Papyshev says: vovo
+[2006.01.17 16:33:39] Andrey Movlyaiko says: po4emu neljzja nazvatj prosto : etap razrabotki?
+[2006.01.17 16:33:46] Andrey Movlyaiko says: i na russkom, i ponjatno
+[2006.01.17 16:33:49] Alexander Papyshev says: Na samom dele v razrabotke NIGDE ne dolzhen ispolzovatsja russkij jazik
+[2006.01.17 16:34:24] Andrey Movlyaiko says: po4emu?
+[2006.01.17 16:34:32] Andrey Movlyaiko says: mi ze na russkom obs4aemsja?
+[2006.01.17 16:34:38] Alexander Papyshev says: Moje predlozhenija takoje: po pjatnicam Check points, raz v mesjac Milestone.
+[2006.01.17 16:34:56] Andrey Movlyaiko says: ne, checkpoint slovo plohoe
+[2006.01.17 16:35:26] Andrey Movlyaiko says: ja dumaju nado ne dumatj kak delatj 5to-to, a nado delatj 4to-to
+[2006.01.17 16:35:50] Alexander Papyshev says: Po mne u nas poka 1 Milestone : kogda Intro.
+[2006.01.17 16:36:34] Andrey Movlyaiko says: a po mne - u nas poka ni4ego net
+[2006.01.17 16:36:51] Alexander Papyshev says: sovmestnogo - da
+[2006.01.17 16:37:15] Alexander Papyshev says: na samom dele u nas pojavilisj problemi. S riskami oblomilisj
+[2006.01.17 16:37:42] Andrey Movlyaiko says: interpretiruj
+[2006.01.17 16:38:27] Alexander Papyshev says: Nu ja poka ne videl Prilozhenija 2005.net 4tobi 6ol u kogoto. Ja tut na rabote na 5 kompah proveril
+[2006.01.17 16:38:46] Andrey Movlyaiko says: on bez NET Framework ne pojdet
+[2006.01.17 16:41:45] Alexander Papyshev says: a takije prilozhenija razrabativatj nelzja
+[2006.01.17 16:42:22] Alexander Papyshev says: KINDEX! 4to nas4et framework skaze6?
+[2006.01.17 16:42:33] Andrey Movlyaiko says: Kindex away
+[2006.01.17 16:42:41] Alexander Papyshev says: Eto ne moi problemi
+[2006.01.17 16:43:05] Alexander Papyshev says: Esli Mi perejdem obratno na Builder, Ti, Kuzmi4, bude6 dovolen men6e vseh.
+[2006.01.17 16:43:44] Andrey Movlyaiko says: pridetsja v readme.txt v requirements pisatj NET Framework
+[2006.01.17 16:44:24] Alexander Papyshev says: vot TAk delatj nelzja. Togda net raznici, Java ili VS2005.
+[2006.01.17 16:44:44] Andrey Movlyaiko says: pri4em tut java?
+[2006.01.17 16:44:57] Alexander Papyshev says: Jesli nado stavitj storonee prilozhenije, 4toby zarabotalo na6e - eto tupik.
+[2006.01.17 16:45:05] Alexander Papyshev says: Eto uzhe Java
+[2006.01.17 16:45:18] Andrey Movlyaiko says: daa?
+[2006.01.17 16:45:30] Andrey Movlyaiko says: a kak ze drova dlja vidjuhi naprimer?
+[2006.01.17 16:45:54] Alexander Papyshev says: Oni stavjatsja s Windowsom
+[2006.01.17 16:46:10] Alexander Papyshev says: I mi ih ne rasprostranjajem
+[2006.01.17 16:46:10] Andrey Movlyaiko says: net, directx 9 naprimer
+[2006.01.17 16:46:26] Alexander Papyshev says: !!!! mi ih ne rasprostranjajem !!!!
+[2006.01.17 16:46:35] Andrey Movlyaiko says: i framework mi toze ne rasprostranjaem
+[2006.01.17 16:46:51] Alexander Papyshev says: A budem vinuzhdeni.
+[2006.01.17 16:46:55] Andrey Movlyaiko says: nu es4e poka ne izvestno nas4et etogo
+[2006.01.17 16:47:01] Andrey Movlyaiko says: kak-to ze mozno sdelatj
+[2006.01.17 16:47:14] Alexander Papyshev says: koro4e!
+[2006.01.17 16:47:45] Alexander Papyshev says: idi na NEHE, ka4aj Visual Studio projekt, kompilj, kidaj mne.
+[2006.01.17 16:48:15] Andrey Movlyaiko says: a 4ego imenno ka4atj?
+[2006.01.17 17:09:56] Alexander Papyshev says: Sro4no!
+[2006.01.17 17:11:05] Alexander Papyshev says: +-------------------------------------------------------------------------------------+
+|                                                                                                                   |
+|           Razobratsja s sovmestimostju Visual Studio 2005                          |
+[2006.01.17 17:11:19] Alexander Papyshev says: +-------------------------------------------------------------------------------------+
+[2006.01.18 00:41:43] KindeX says: у меня всё получилось. Статическая компиляция. Завтра дам проект
+[2006.01.18 11:46:25] Andrey Movlyaiko says: nado imenno 4tobi pokazal kak delatj
+[2006.01.18 13:30:09] Alexander Papyshev says: [23:41:35] KindeX says: у меня всё получилось. Статическая компиляция. Завтра дам проект
+[2006.01.18 13:30:14] Alexander Papyshev says: I gde on?
+[2006.01.18 13:41:05] Andrey Movlyaiko says: ve4erom obsudim
+[2006.01.18 14:09:45] KindeX says: я тут
+[2006.01.18 14:10:05] Alexander Papyshev says: davaj exe
+[2006.01.18 14:11:57] Alexander Papyshev says: DAA!!!
+[2006.01.18 14:12:16] Alexander Papyshev says: 30 kadrov!
+[2006.01.18 14:12:23] KindeX says: у меня 100
+[2006.01.18 14:12:26] Alexander Papyshev says: Kuz! u tebja skolko?
+[2006.01.18 14:12:48] Alexander Papyshev says: doma posmotrju
+[2006.01.18 14:13:02] Alexander Papyshev says: a 4ego tak malo? S4et4ik glju4it?
+[2006.01.18 14:13:11] Alexander Papyshev says: Ili ograni3itelj jestj?
+[2006.01.18 14:13:19] KindeX says: хз
+[2006.01.18 14:13:31] KindeX says: не на это я делаю упор
+[2006.01.18 14:13:36] KindeX says: врменени НЕТ !!
+[2006.01.18 14:14:14] Alexander Papyshev says: Bistro kompilitj v VS mozhno?
+[2006.01.18 14:14:36] Alexander Papyshev says: Ja, kak ponjal. on build kazhdij raz delajet.
+[2006.01.18 14:15:01] KindeX says: ты его поставил?
+[2006.01.18 14:15:06] Alexander Papyshev says: Kindex, kinj kuzmi4u!
+[2006.01.18 14:15:13] Alexander Papyshev says: steel.exe
+[2006.01.18 14:15:26] KindeX says: кинул
+[2006.01.18 14:15:35] Alexander Papyshev says: Kuz, nu i kak?
+[2006.01.18 14:19:01] Andrey Movlyaiko says: idet
+[2006.01.18 14:19:10] Alexander Papyshev says: skolko kadrov?
+[2006.01.18 14:19:18] Alexander Papyshev says: 80-90?
+[2006.01.18 14:19:31] Andrey Movlyaiko says: <80
+[2006.01.18 14:19:36] Andrey Movlyaiko says: 70-80
+[2006.01.18 14:19:47] Alexander Papyshev says: ugadal po4ti
+[2006.01.18 14:20:52] Alexander Papyshev says: U menja komp gde-to v 15 raz medlenee kindexovskogo i 5-6 medlenee kuzmo4a.
+[2006.01.18 14:20:59] Alexander Papyshev says: I u manja 30.
+[2006.01.18 14:21:28] Alexander Papyshev says: U kindexa 100, u kuzmi4a - 75
+[2006.01.18 14:22:05] Alexander Papyshev says: Otli4nija rezultati, no gde-to jestj butilo4noje gorli6ko, ne svjazannoje s grafikoj voobs4e.
+[2006.01.18 14:28:54] KindeX says: блан
+[2006.01.18 14:29:01] Alexander Papyshev says: ?
+[2006.01.18 14:29:08] KindeX says: блин ДЕФ, ты уже своим горлшком достал
+[2006.01.18 14:29:40] KindeX says: если название: узкое место системы
+[2006.01.18 14:29:53] KindeX says: и вообще он с графико не работает !
+[2006.01.18 14:29:58] Andrey Movlyaiko says: ne objazateljno gorli6ko ot butilki
+[2006.01.18 14:30:09] KindeX says: я еше раз говорю - там не в этом соль, что он быкву А выводит
+[2006.01.18 16:06:54] KindeX says: Вспомнил. Есть хорошие аналоги камней: deadline, срок
+[2006.01.18 16:10:27] Alexander Papyshev says: Putj k RELEASE, delitsja na MILESTONEs, MILESTONES mohno delitj na Checkpoints. DEADLINE - data pered RELEASE, Pered MILESTONEami DEADLINEov ne stavjat. Za nedelju Do Deadline i do RELEASE vse vremja nazivajetsja CRUNCH TIME.
+[2006.01.18 16:12:58] Alexander Papyshev says: PACANI, jesli vse znajut, 4to ne nado pridumivatj VELOSIPED, eto ne zna4it, 4to nado pridumavatj MOTOCIKL!
+[2006.01.18 16:15:56] Alexander Papyshev says: WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+[2006.01.18 18:27:39] Andrey Movlyaiko says: za4em pridumivatj motocikl, kogda mozno pridumatj es4e odin velosiped
+[2006.01.20 16:02:45] KindeX says: настройте на форуме чтобы получать по почте ответы
+[2006.01.23 00:46:04] KindeX says: Вопрос: что нам следует делать в начале: писать код, проектировать, администрирование (форум, фтп, контроль версий, органиховывать встречи), набирать команду? Расставьте в порядке понижения приоритета
+[2006.01.23 02:37:33] KindeX says: http://antimult.ru/antimults/antipr/017vm/antimult017-vm.swf.zip
+[2006.01.23 12:06:44] Andrey Movlyaiko says: Voobs4e vrode kak prinjato 
+1. proektirovanie
+2. napisanie koda
+3. nabiranie komandi
+[2006.01.23 12:06:47] Andrey Movlyaiko says: NO...
+[2006.01.23 12:06:58] Andrey Movlyaiko says: u nas vse kak ne u ljudej
+[2006.01.23 12:07:02] Andrey Movlyaiko says: poetomu:
+[2006.01.23 12:13:22] Andrey Movlyaiko says: Sna4ala napisanie koda sovmestno s proektirovaniem, t.e. po hodu napisanija koda pridumivaem kakie-nibudj novie ves4i, modificiruem starie, optimiziruem...
+Nas4et administrirovanija: eto nado vsegda, hotjabi raz v nedelju (dlja tekus4ej situacii odnogo raza v nedelju dostato4no). No neobhodimo razvivatj i drugie sposobi komunikacii naprimer, Skype conference.
+Poslednjaja vstre4a pokazala, 4to vstre4i provoditj lu46e dnem. Kontrolj versij i sinhronizacija - eto toze krajne nuznaja ves4 i eto nado umetj delatj v polevih uslovijah.
+A nas4et nabora komandi, to u nas sej4as ljudej bolee 4em dostato4no. Nado pomnitj, 4to 4em bol6e 4elovek, tem sloznee to ze administrirovanie... i esli 4to, vinovatih ne najti
+
+Ja hotel eto vse v forum napisatj, no ne na6el kuda, esli mne kto-nibudj skazet kuda, to ja perepi6u.
+[2006.01.23 12:16:34] Andrey Movlyaiko says: i es4e sovet vsem:
+
+ne nado dumatj kak delatj, nado delatj
+[2006.01.23 15:17:06] KindeX says: неотсортированные идеи кидай в Ideas на форуме
+[2006.01.23 15:17:23] KindeX says: меня больше волнует SVN. Я хочу как можно раньше перейти
+[2006.01.23 15:17:49] KindeX says: читайте http://svnbook.red-bean.com/nightly/en/svn.branchmerge.html
+[2006.01.23 15:18:01] KindeX says: когда будем встречу делать?
+[2006.01.23 15:52:34] Alexander Papyshev says: Kumi4! ho4e6 Managerom u nas porabotatj nedeljku-druguju? Zamesto FDFa?
+[2006.01.23 15:52:45] Alexander Papyshev says: Soglasen so vsem , 4to Ti napisal
+[2006.01.23 15:53:22] Alexander Papyshev says: Es4e 2-3 ves4i i budet Manifest Extremalnogo Programmirovanija.
+[2006.01.23 16:11:53] KindeX says: да, только вот слово программирование нам пока не подходит
+[2006.01.23 16:16:18] Andrey Movlyaiko says: Andrjuha, ja vstavil zvuk v to , 4to Ti napisal, no...
+[2006.01.23 16:16:25] Andrey Movlyaiko says: v .exe vse ravno zvuka net
+[2006.01.23 16:16:32] Andrey Movlyaiko says: kak Ti takoe objasni6?
+[2006.01.23 16:16:44] Alexander Papyshev says: da, dela ...
+[2006.01.23 16:17:08] KindeX says: хз
+[2006.01.23 16:17:11] KindeX says: надо смотреть
+[2006.01.23 16:17:39] Alexander Papyshev says: nigde ne rabotajet. Principialno. Protes4eno.
+[2006.01.23 16:18:04] Alexander Papyshev says: Mozhet gromkostj vse-taki na 0? Ili isto4nik zvuka o4enj daleko ot slu6atelja?
+[2006.01.23 16:18:37] Andrey Movlyaiko says: net, tak neposredstvenno v editore esli zapuskatj, to vse rabotaet
+[2006.01.23 16:18:41] Andrey Movlyaiko says: v etom i prikol
+[2006.01.23 16:19:13] KindeX says: а если запускать как Ctrl+F5 ?
+[2006.01.23 16:19:34] Andrey Movlyaiko says: rabotaet
+[2006.01.23 16:19:52] Andrey Movlyaiko says: i pri debug i pri release
+[2006.01.23 16:20:04] Andrey Movlyaiko says: tolko v exe zvuka net
+[2006.01.23 16:20:06] KindeX says: а если exe запустить отдельно, когда среда запушена?
+[2006.01.23 16:20:14] Andrey Movlyaiko says: a ja kak delaju
+[2006.01.23 16:22:13] KindeX says: пришли мне  -я вечером гляну
+[2006.01.23 16:22:29] Andrey Movlyaiko says: nu togda popozze
+[2006.01.23 16:23:00] KindeX says: ок. Читайте про SVN. Даю 3 дня. То есть к червергу все должны знать как с ним работать
+[2006.01.23 16:23:24] Andrey Movlyaiko says: a kakoj swegodnja denj?
+[2006.01.23 16:23:32] KindeX says: пон
+[2006.01.30 00:02:10] KindeX says: Dear Andrejs, 
+
+Through February 1, thirty Brainbench certifications are available to you at no cost through sponsorships made by 
+our partners (including the just released Project Management (2005), the very popular C#, and Healthcare tests like Medical Billing and ICD-9 and CPT Coding). Typically $49.95, these tests are available to you absolutely free. Upgrade your resume - impress your boss - show off to your friends - and it will cost you nothing but your own time investment. 
+
+To see the full list, go to: 
+
+http://consumerurl.brainbench.com/t/52UW/ULI6/7V/JQFFWF
+[2006.01.30 13:32:56] Alexander Papyshev says: Kuz! 4to-to eto napominajet, da? Brainbench certifications are available to you ...
+[2006.01.30 13:33:44] KindeX says: мне нужен программер, который знает С#
+[2006.01.30 13:35:15] KindeX says: Def, как тебе новый программер?
+[2006.01.30 13:35:24] KindeX says: мне он не очень понравился....
+[2006.01.30 13:35:35] Alexander Papyshev says: On poka tolko kandidat
+[2006.01.30 13:36:57] Alexander Papyshev says: No on uzhe lu46e nekotorih
+[2006.01.31 17:36:28] KindeX says: в пятницу мит в 21-00 на курсах
+[2006.01.31 17:36:55] Andrey Movlyaiko says: ok
+[2006.01.31 17:38:22] Alexander Papyshev says: ok
+[2006.02.03 14:35:03] KindeX says: У меня нет слов. В разделе встречи на форуме, я везде ставил 2005ый год. И никто не заметил....
+[2006.02.03 14:57:48] Alexander Papyshev says: kruto. Zato ja na forum voobs4e zajti ne mogu uzhe nedelju. S Inetom 4to-to/
+[2006.02.03 16:41:15] KindeX says: а сейчас?
+[2006.02.03 16:41:20] KindeX says: как хард?
+[2006.02.03 16:58:09] Alexander Papyshev says: nikak
+[2006.02.03 16:58:17] Alexander Papyshev says: particij net
+[2006.02.03 16:58:35] Alexander Papyshev says: partition pagic ne zapustajetsja, esli ego vidit
+[2006.02.06 16:28:32] * KindeX added Anton to this chat
+[2006.02.06 16:28:48] KindeX says: Завтра в 19-30 на курсах будет встреча
+[2006.02.06 16:29:31] Andrey Movlyaiko says: Andrjuha, mozet lu46e utrom sdelatj?
+[2006.02.06 16:29:44] KindeX says: хм...
+[2006.02.06 16:29:47] KindeX says: я не против
+[2006.02.06 16:29:52] KindeX says: во сколько?
+[2006.02.06 16:29:53] Andrey Movlyaiko says: nu i vot
+[2006.02.06 16:30:03] Andrey Movlyaiko says: Def vseavno ni4ego ne delaet
+[2006.02.06 16:30:23] Andrey Movlyaiko says: nu s 10 do 12 na4atj nado
+[2006.02.06 16:48:01] Alexander Papyshev says: a ja ne mogu, ja s 10 na rabote.
+[2006.02.06 16:48:15] Alexander Papyshev says: novoje raspisanije
+[2006.02.06 16:48:24] Andrey Movlyaiko says: i do skolki?
+[2006.02.06 16:48:38] Alexander Papyshev says: do 18:00-19:00
+[2006.02.06 19:07:20] KindeX says: встчеа в 19-30
+[2006.02.06 19:07:29] Anton says: завтра?
+[2006.02.06 19:07:33] Alexander Papyshev says: ok
+[2006.02.06 19:07:45] Anton says: буду :)
+[2006.02.06 23:07:15] Anton says: ничего, если я раньше приеду? к 19:00?
+[2006.02.06 23:07:32] KindeX says: приезжай
+[2006.02.06 23:07:40] KindeX says: но не факт, что мы будем
+[2006.02.06 23:07:47] Anton says: ок
+[2006.02.06 23:08:01] Anton says: у меня универ в 18 заканчивается
+[2006.02.06 23:08:16] Anton says: за час дотопаю :)
+[2006.02.06 23:11:55] Anton says: что нибудь кроме себя нести надо?
+[2006.02.06 23:12:29] KindeX says: неси код, которые написал
+[2006.02.22 17:22:43] KindeX says: Through March 1, thirty Brainbench certifications are 
+available to you at no cost through sponsorships made by our 
+partners (including Project Management (2005), the very 
+popular Computer Technical Support, and Healthcare tests 
+like Medical Billing and ICD-9 and CPT Coding). Typically 
+$49.95, these tests are available to you absolutely free. 
+Upgrade your resume - impress your boss - show off to your 
+friends - and it will cost you nothing but your own time 
+investment. 
+
+And don't forget to tell your friends! 
+
+To see the full list, go to: 
+
+http://consumerurl.brainbench.com/t/4VT8/SUQJ/28/UL88R8
+[2006.03.16 03:18:48] KindeX says: Ура. У нас есть первое демо.
+[2006.03.16 03:19:08] KindeX says: смотрите в репозитории demo/01_white_teapot
+[2006.03.16 15:41:03] KindeX says: Проблема такая: пока не получается сделать свободно летающую камеру, не получается возвращять мышь в центр окна. Работает, но тормозит
+[2006.03.16 15:42:06] Alexander Papyshev says: 4erez 4to mi6u delali? SDL?
+[2006.03.16 15:42:12] Alexander Papyshev says: ili kak tam>
+[2006.03.16 15:42:14] Alexander Papyshev says: ?
+[2006.03.16 15:42:19] KindeX says: да
+[2006.03.16 15:44:10] Alexander Papyshev says: prosto link: http://www.libsdl.org/opengl/index.php
+[2006.03.16 16:36:55] KindeX says: когда будешь заниматься игрой?
+[2006.03.16 16:37:19] Alexander Papyshev says: da hotj segodnja mozhno na4inatj
+[2006.03.16 16:39:14] KindeX says: поставил VS 2005 ?
+[2006.03.16 16:39:39] Alexander Papyshev says: net poka. Ja perestavil 3 dnja nazad vsju sistemu
+[2006.03.16 21:43:48] * KindeX added DEF to this chat
+[2006.03.16 23:33:28] ekanee says: u menja viletajet.. na Res::add.. eto tolko u menja? :/
+[2006.03.16 23:34:18] ekanee says: bool ok = loader->init(name, loadBefore, loadAfter);
+[2006.03.16 23:34:21] ekanee says: vot tut esli to4nee
+[2006.03.16 23:34:41] KindeX says: хм...
+[2006.03.16 23:35:08] ekanee says: terminate called without an active exception
+Аварийный останов
+
+[2006.03.16 23:35:39] KindeX says: можешь узнать значения параметров?
+[2006.03.16 23:35:47] ekanee says: 6as..
+[2006.03.16 23:38:46] KindeX says: есть готовый рагрузчик настроек из текстовых файлов?
+[2006.03.16 23:38:57] ekanee says: tolko na C
+[2006.03.16 23:39:08] KindeX says: откуда?
+[2006.03.16 23:39:26] ekanee says: iz odnogo mojego projekta
+[2006.03.16 23:51:53] KindeX says: как она работет? obj[0].assign((Model*)res->operator[]("teapot"));
+[2006.03.17 00:06:24] KindeX says: template<class _Dummy>
+ const typename _Iosb<_Dummy>::_Openmode _Iosb<_Dummy>::binary;
+[2006.03.17 18:42:30] KindeX says: смотрите на форуме mileson'ы
+[2006.03.17 18:43:02] KindeX says: прошу всех подготовиться, сейчас надо поднажать всем, чтобы потом могли работать раздельно
+[2006.03.19 21:56:15] KindeX says: texture mapping работает
+[2006.03.19 21:57:02] DEF says: Na Tvoej vidjuhe ??
+[2006.03.19 21:57:14] KindeX says: а какая разница?
+[2006.03.19 21:57:20] KindeX says: OpenGL 1.0
+[2006.03.19 21:57:33] KindeX says: OpenGL 1.1
+[2006.03.19 21:57:40] DEF says: a, zna4it hotj kakojto Gl estj]
+[2006.03.19 21:57:53] KindeX says: GF 2 MX 400
+[2006.03.19 21:58:19] DEF says: 4to za GF 2 MX 400?
+[2006.03.19 21:58:22] KindeX says: я на TNT2 в HL играл, и даже очень хорошо
+[2006.03.19 21:58:34] KindeX says: Кузмича видюха
+[2006.03.19 21:58:44] DEF says: a, on tebe dal uzhe?
+[2006.03.19 21:58:49] KindeX says: да
+[2006.03.20 00:24:49] KindeX says: нужно устраивать встречу
+[2006.03.20 00:26:27] DEF says: ne zavtra
+[2006.03.20 00:28:46] DEF says: 20.03, 21.03, 22.03, 23.03, 24.03
+[2006.03.20 00:29:06] DEF says: Pustj kazhdij viberet 2 lu46ih dlja sebja dnja
+[2006.03.20 00:29:29] KindeX says: день рождения и новый год
+[2006.03.20 12:02:38] KindeX says: Я могу в среду и четверг. Предлагаю выбрать день недели, в который мы будем собираться еженедельно
+[2006.03.20 22:41:02] KindeX says: я заболел
+[2006.03.20 22:53:25] KindeX says: гляньте в trunk. Я прикололся :) Чайник выворачивается на изнанку.
+Антон или Кузмич, заставьте ДЕфа поставить Visual Studio i SVN. Пускай хотябы почитает код. 
+У меня в планах сделать интро на этой неделе
+[2006.03.22 12:21:25] KindeX says: чего молчим??
+[2006.03.22 16:22:03] Alexander Papyshev says: poisk v Google: steel core, po4ti vse ssilki - Ammunition Type. Pervaja ssilka - na: AK-47.net: 7.62x39 Steel Core Tests. ;)
+[2006.03.22 17:22:21] Alexander Papyshev says: IMPORTANT! http://www.ixbt.com/news/hard/index.shtml?05/78/89
+[2006.03.23 15:30:08] Alexander Papyshev says: KIndex, napi6i, plz, VSE izvestnije Tebe ograni4enija dvizhka na dannij moment.
+[2006.03.23 15:30:35] Alexander Papyshev says: Ti nemekal na to, 4to poka budet ograni4eno koli4estvo objektov.
+[2006.03.23 15:35:44] KindeX says: ограничение: макс 64к треугольников в одной модели
+[2006.03.23 15:42:37] Alexander Papyshev says: kakie es4e potencialnije ograni4enija?
+[2006.03.23 15:43:09] Alexander Papyshev says: 500vizovov OpenGL na kadr ...
+[2006.03.23 15:43:28] KindeX says: это не ограничения
+[2006.03.23 15:43:31] KindeX says: а совет
+[2006.03.23 15:52:50] Alexander Papyshev says: jasno
+[2006.03.23 15:53:20] Alexander Papyshev says: Bilo bi neploho imetj 4estnij PerPixel Osves4enie
+[2006.03.23 15:53:56] KindeX says: конечно. Только кто этим будет заниматься?
+[2006.03.23 15:54:24] Alexander Papyshev says: bez 6eiderov eto mozhno sdelatj normalno?
+[2006.03.23 15:55:37] Alexander Papyshev says: mozhno budet sdelatj steel.exe i steel-glsl.exe
+[2006.03.23 15:55:56] Alexander Papyshev says: kak sej4as farcry32.exe i farcry64.exe
+[2006.03.23 15:57:51] KindeX says: кто будет это делать?
+[2006.03.23 15:58:16] Alexander Papyshev says: a kto u nas sistemnij programmist?
+[2006.03.23 15:58:30] Alexander Papyshev says: glavnij programmist?
+[2006.03.23 15:58:32] KindeX says: это графика
+[2006.03.23 15:58:49] KindeX says: это как раз то, что можно делать в стороне
+[2006.03.23 15:58:54] Alexander Papyshev says: da poka neponjatno 4to eto. I kak eto na4atj ispolzovatj
+[2006.03.23 15:59:19] Alexander Papyshev says: no s 6eiderami poka razbiratsja ne budem
+[2006.03.23 15:59:28] KindeX says: неа. Сейчас надо изменить всего лишь OpenGL_Renderer
+[2006.03.23 16:00:08] Alexander Papyshev says: kak tam s tenjami?
+[2006.03.23 16:00:33] KindeX says: аналогично
+[2006.03.23 16:00:57] Alexander Papyshev says: opjatj negri
+[2006.03.23 16:05:10] Alexander Papyshev says: Carey odna iz teh, kto v brjukah vigljadit uzhe neprili4no ;)
+[2006.03.23 16:05:30] KindeX says: это что?
+[2006.03.23 16:05:43] Alexander Papyshev says: sorry (blush)
+[2006.03.23 16:05:49] Alexander Papyshev says: :D
+[2006.03.23 16:05:53] Alexander Papyshev says: ne tuda ....
+[2006.03.24 14:15:08] KindeX says: я изменил порт SSH с 22 на 2222 на сервере. Измените путь к репозиторию
+[2006.03.25 11:14:40] Anton says: гм.. а как это сделать? и при этом не потерять коммит..
+[2006.03.25 11:16:27] Anton says: What have you expected to see?
+This is America!  а это что такое? ;)
+[2006.03.25 11:27:32] KindeX says: da, i web-server теперь на 82 порту :)
+[2006.03.25 11:28:15] Anton says: хакнули?
+[2006.03.25 11:28:22] KindeX says: нет
+[2006.03.25 11:28:31] KindeX says: еще нет :)
+[2006.03.25 11:28:36] Anton says: :)
+[2006.03.25 11:29:06] Anton says: так как в svn порт поменять? кроме как правкой .svn/* ?
+[2006.03.25 11:29:09] KindeX says: я у себя просто в PuTTY поменял порт - и всё заработало
+[2006.03.25 11:30:26] Anton says: sed и find спасёт отца русской демократии :D
+[2006.03.25 11:31:02] KindeX says: а switch сделать?
+[2006.03.25 11:32:18] Anton says: хм.. попробуем..
+[2006.03.25 11:32:40] KindeX says: думаю не поможет
+[2006.03.25 12:07:45] Anton says: уф.. сделал :)
+[2006.03.26 23:08:12] KindeX says: http://steel.kindex.lv:82/06_reflect.rar
+[2006.03.26 23:08:22] KindeX says: я закончил графический движок
+[2006.03.26 23:09:57] KindeX says: в среду встреча
+[2006.03.26 23:19:07] KindeX says: Деф, у тебя есть проект?
+[2006.03.26 23:47:07] DEF says: u menja so vsem nikak
+[2006.03.26 23:47:10] DEF says: u nas sessija
+[2006.03.26 23:49:55] DEF says: refresh rate menjatj estj vozmozhnostj v OpenGL?
+[2006.03.26 23:53:00] DEF says: dvizhok ne optimizirovan ;)
+[2006.03.26 23:53:21] DEF says: 320*200 - 73 Fps; 1280*1024 - 72 fps.
+[2006.03.26 23:53:29] KindeX says: refresh - это проблема дров
+[2006.03.26 23:53:43] KindeX says: в каком месте не оптимизирован?
+[2006.03.26 23:54:08] KindeX says: у тебя слабый процессор
+[2006.03.26 23:54:23] DEF says: proizvoditelnostje ne zavisit ot grafiki. A eto grafi4eatkij dvizhok
+[2006.03.26 23:54:39] KindeX says: выбери проц и проиграй в q3
+[2006.03.26 23:54:53] DEF says: 500fps
+[2006.03.26 23:55:00] DEF says: u menja
+[2006.03.26 23:55:08] KindeX says: бещ проца??
+[2006.03.26 23:55:10] KindeX says: без проца??
+[2006.03.26 23:55:12] DEF says: s procom
+[2006.03.26 23:55:28] KindeX says: а там есть бамп?
+[2006.03.26 23:55:39] DEF says: tolko tam proizvoditelnostj zavisit ot VideoKarti i drov
+[2006.03.26 23:56:03] KindeX says: спасибо за доброе слово Деф
+[2006.03.26 23:56:09] KindeX says: сам будешь всё писать
+[2006.03.26 23:56:29] DEF says: ladno, esli NE PRI KAKIH obstojatelstvah skorostj ne upadet - ja snumu pritenzii
+[2006.03.26 23:56:46] DEF says: s fizikoj i AI u nas budet 15 Fps.
+[2006.03.26 23:57:19] DEF says: ja prosto o4enj horo6o znaju po4emu v Rossii ne mogut napisatj dvizhok
+[2006.03.26 23:57:20] KindeX says: зато сиситемы частиц не будут тормозить - их просто не будет
+[2006.03.26 23:57:34] DEF says: i u nas tazhe problem
+[2006.03.27 00:01:12] DEF says: kind, 06_reflect rabotaet bistree na 20%
+[2006.03.27 00:01:21] DEF says: Ti 4to-to optimiziroval?
+[2006.03.27 00:02:14] KindeX says: да, убрал бамп с чайника
+[2006.03.27 00:02:36] KindeX says: забей. Граф движок - это просто заглушка
+[2006.03.27 15:26:22] KindeX says: когда будем делать встречу?
+[2006.03.27 15:26:29] KindeX says: все могут в среду?
+[2006.03.27 16:23:02] DEF says: ja ne mogu v sredu
+[2006.03.27 16:23:14] DEF says: i kuzmi4 tozhe ne dolzhen mo4
+[2006.03.27 16:24:09] Andrey Movlyaiko says: interesno kak eto ja ne dolzen mo4...
+[2006.03.27 16:24:25] DEF says: nu u nas ekzamen v 4etverg
+[2006.03.27 16:25:18] Andrey Movlyaiko says: tak eto v 4etverg
+[2006.03.27 19:11:11] KindeX says: и каков итог? мне звонить Бонду?
+[2006.03.28 13:12:26] KindeX says: завтра в 19-30 на курсах встреча
+[2006.03.28 13:12:39] DEF says: ja ne budu
+[2006.03.28 13:13:05] KindeX says: день перед экзаменом надо отдыхать
+[2006.03.28 13:13:11] DEF says: ja ne budu
+[2006.03.28 14:35:08] KindeX says: почему?
+[2006.03.29 13:47:16] Andrey Movlyaiko says: Andrjuha, nado vstre4u perenositj
+[2006.03.29 13:52:19] DEF says: Def uvidel zatmenie!
+[2006.03.29 13:59:54] DEF says: toto ja dumaju, 4to svetit kakto stranno
+[2006.03.29 14:00:34] DEF says: ne tak jarko dlja 14:00 konca marta
+[2006.03.29 14:00:49] DEF says: a nad zemlej visoko
+[2006.03.29 14:00:58] DEF says: zakrito na 20-25&
+[2006.03.29 14:03:08] DEF says: LUna - snizu-sleva
+[2006.03.29 14:03:16] DEF says: ot centra solnca
+[2006.03.29 15:40:56] KindeX says: уже нет
+[2006.03.29 15:40:59] KindeX says: опоздал я
+[2006.03.29 15:41:41] DEF says: v 14:50 uzhe ne bilo
+[2006.03.30 12:06:49] KindeX says: Штирлиц шел коридорами гестапо. Он повернулся направо потом налево и вдруг -
+услышал подозрительный шум.
+“Что я дурак,что ли”-подумал он и сохранился.
+[2006.03.30 12:07:02] KindeX says: А может сделать игру про Штирлица??
+[2006.03.30 15:33:23] DEF says: http://www.ixbt.com/news/hard/index.shtml?05/83/56
+[2006.03.30 16:13:25] KindeX says: с 1 апреля :)
+[2006.03.30 16:13:38] Andrey Movlyaiko says: kakim?
+[2006.03.30 16:13:45] DEF says: Aga, segodnja 30.03
+[2006.03.30 16:13:50] Andrey Movlyaiko says: zakusovatj nado
+[2006.03.30 16:13:52] KindeX says: линк Дефа
+[2006.03.30 16:14:05] DEF says: ne ponjal?
+[2006.03.30 16:14:15] KindeX says: как экзамен?
+[2006.03.30 16:14:23] DEF says: eto oficialnie dannije, i pojavilisj oni uzhe davno.
+[2006.03.30 16:15:47] DEF says: na pervoe aprelja zhdem Octo-SLI. 8 Geforce 7900. ;)
+[2006.03.30 16:16:48] DEF says: kak tam nas4et ftp2? kak tuda popastj?
+[2006.03.30 16:18:46] KindeX says: никак
+[2006.03.30 16:18:50] KindeX says: не до этого сейчас
+[2006.03.30 16:19:00] KindeX says: как экзамен??
+[2006.03.30 16:19:13] DEF says: da 4ego ob etom govoritj?
+[2006.03.30 16:19:27] DEF says: nikak
+[2006.03.30 16:22:47] KindeX says: не здали?
+[2006.03.31 16:07:05] KindeX says: я изменил именя файлов в trunk с VECTOR на vector
+[2006.03.31 22:17:41] KindeX says: я скомпилил проект на DevC++
+[2006.03.31 22:23:32] DEF says: da? I kak?
+[2006.03.31 22:24:48] KindeX says: с SDL не очень пока дружит
+[2006.04.01 10:16:52] Anton says: devc++? eto gcc 4toli?
+[2006.04.01 11:01:04] KindeX says: da
+[2006.04.01 11:01:26] Anton says: a kak sobiral? vru4nuju ili skriptom?
+[2006.04.01 13:06:35] KindeX says: там есть steel.dev в транке
+[2006.04.01 13:06:45] KindeX says: IDE сама всё собирает
+[2006.04.01 13:06:56] Anton says: ясно..
+[2006.04.01 13:07:20] Anton says: вот почему виндовс makefile не любит :)
+[2006.04.01 17:33:31] Anton says: Какой путь к репозиторию?
+[2006.04.01 17:34:18] KindeX says: ssh+svn://user@kindex.lv/var/svn/steel
+[2006.04.01 17:34:31] KindeX says: ili svn+ssh
+[2006.04.01 17:34:40] Anton says: svn+ssh
+[2006.04.01 17:34:43] Anton says: 2222 порт?
+[2006.04.01 17:34:47] KindeX says: да
+[2006.04.01 17:35:00] Anton says: ок, спс :)
+[2006.04.02 13:30:24] DEF says: doom internal files.rar :
+Ja sdelal podborku specialnih failov
+fx - jazik opisanija speceffektov
+Gui - opisanie Interfeisa
+Map - opisanie urovnja
+Materials - zadanie materialov
+Particles - zadanie sistem 4astic
+Script 
+    Ai - Jazik skriptovanija Ai
+    Map - jazik skriptovanija Karti
+    Weapon - jazik skriptovanija Oruzhija
+Shaders - jazik 6eiderov
+Sound - jazik zadanija zvukov.
+===================
+Eti tekstovije strukturi opisivajut objekti i ih vzaimodejstvie v Doom3 Engine
+[2006.04.02 13:30:53] DEF says: Tam estj 4to posmotretj (podsmotretj) VSEM!
+[2006.04.02 13:31:18] DEF says: mozhno polozhitj na FTP, esli nado
+[2006.04.02 13:34:45] KindeX says: не очень
+[2006.04.02 13:36:36] DEF says: ne vse primeri horo6i
+[2006.04.02 13:36:46] DEF says: zato AI u nih zdorovo zadaetsja
+[2006.04.02 13:36:56] DEF says: i Gui
+[2006.04.02 13:37:16] KindeX says: мне не нравится, что у каждого типа свой формат
+[2006.04.02 13:37:44] DEF says: da, dlja nas eto ploho
+[2006.04.02 13:38:11] DEF says: a tam gde po 40-50 4elovek v otdele, i u kazhdogo otdela svoj format - eto uzhe drugoe delo
+[2006.04.02 16:19:19] KindeX says: смотрим новую демку http://steel.kindex.lv:82/08_kinematix.rar
+[2006.04.02 16:19:42] KindeX says: зачцениваем res/room/room.script
+[2006.04.02 20:57:50] DEF says: ftp.kindex.lv/UPLOAD/def/Doom3/music/
+[2006.04.02 21:02:55] KindeX says: ftp://warez:warez@kindex.lv:2121/UPLOAD/def/Doom3/music/
+[2006.04.02 21:04:15] DEF says: Recommended: e1m8, Sonic Clang/cdoomtheme.mp3
+[2006.04.02 21:04:54] KindeX says: я с неё и начал слушать :)
+[2006.04.02 21:05:47] KindeX says: теперь можно нажать на Space и Enter в окне
+[2006.04.02 21:08:35] KindeX says: гранж :)
+[2006.04.02 21:08:53] DEF says: Metall. sam ti grandz
+[2006.04.02 21:09:22] KindeX says: 2 песни спёрты и Alice in Chains
+[2006.04.02 21:09:33] DEF says: which one?
+[2006.04.02 21:09:35] KindeX says: 2 песни спёрты у Alice in Chains
+[2006.04.02 21:09:38] DEF says: which one?
+[2006.04.02 21:10:48] DEF says: u nas estj parser? Nado 4tobu Kuzmi4 zagruzhal SoundScene iz faila.
+[2006.04.02 21:10:48] KindeX says: Doom2 - 23, 25
+[2006.04.04 02:46:42] DEF says: В некоторых компаниях принято собирать проект не каждый день, а раз в неделю. Эта система ошибочна, т.к. в случае «поломки» в проекте на текущей неделе, может пройти ещё пара недель до следующей удачной сборки. В таком случае компания теряет все преимущества системы ежедневной сборки проекта
+[2006.04.04 02:46:47] DEF says: На большинстве проектов есть система штрафов за срыв выпуска очередной сборки. В самом начале проекта стоит четко дать понять, что сохранение рабочего проекта является задачей самого высокого приоритета. Срыв выпуска очередной сборки может быть исключением, но ни как не правилом. Настаивайте на том, чтоб разработчики оставляли все дела до тех пор, пока система опять не заработает. В случае частого срыва сборки (выпуска не рабочей сборки) достаточно трудно вернуть проект в нормальное русло.
+[2006.04.04 02:46:53] DEF says: На других проектах виновные разработчики должны носить искусственные козлиные рога или вносить определенную сумму в «фонд морального духа» (примеры взяты из истории реальных компаний).
+[2006.04.04 02:47:00] DEF says: на некоторых проектах вводятся более серьезные штрафные санкции. Например, разработчики компании Microsoft, состоящие в проектах с высоким приоритетом (Windows NT, Windows 95, Excel), носили пейджеры и, в случае обнаружения проверки, они должны были прибыть на работу. Даже если поломка или ошибка были обнаружены в 3 утра.
+[2006.04.04 02:47:08] DEF says: все сложные системы последнего времени подвергались ежедневным сборкам и прогонке дымовых тестов. К моменту своего выпуска, Microsoft Windows NT 3.0 содержала в 40 000 файлах 5,6 миллионов строк. Полная сборка занимала 19 часов и выполнялась на нескольких компьютерах. Несмотря на это, разработчики умудрялись ежедневно собирать систему.
+[2006.04.04 03:25:31] KindeX says: витники в системе
+[2006.04.04 03:27:16] KindeX says: у нас проект занимает 200 Kb
+[2006.04.04 03:29:30] KindeX says: и пишет его 1 человек под настроение
+[2006.04.05 21:21:11] KindeX says: http://steel.kindex.lv:82/09_kinematic_demo.rar
+[2006.04.05 21:21:32] DEF says: Def:// Good. Really good.
+[2006.04.06 15:32:58] KindeX says: есть предложение собраться сегодня, отметить экзамены, и обсудить демку
+[2006.04.06 16:24:15] DEF says: A Ti postavj FlashPoint+resistance. Ja dosatl komponenti American Army emuljatora. Nastojas4ee oruzhie s pros4etom ballistiki. Vot tak.
+[2006.04.06 16:24:32] DEF says: vse boepripasi nastojas4ie
+[2006.04.06 16:24:45] KindeX says: надо уметь отдыхать
+[2006.04.06 16:24:59] KindeX says: (без компа)
+[2006.04.06 16:27:36] DEF says: nado
+[2006.04.06 16:27:45] DEF says: tolko ne no4ju i bez alkogolja
+[2006.04.06 16:28:53] Andrey Movlyaiko says: praviljno, Andrjuha - nado umetj otdihatj bez kompa
+[2006.04.06 16:29:16] Andrey Movlyaiko says: s4as konkretnij dozdj budet
+[2006.04.06 16:29:20] Andrey Movlyaiko says: u nas temno
+[2006.04.06 16:30:31] KindeX says: ну так что? давайте сегодня
+[2006.04.06 16:30:43] DEF says: uzhe pozdno
+[2006.04.06 16:30:50] Andrey Movlyaiko says: blin, u meja sneg povalil konkretno
+[2006.04.06 16:30:52] KindeX says: Деф, никто в тебя никогда насильно не вливает алкоголь
+[2006.04.06 16:30:57] KindeX says: хватит придумывать
+[2006.04.06 16:30:59] DEF says: aga
+[2006.04.06 16:31:02] DEF says: :)
+[2006.04.06 16:31:10] KindeX says: что поздно? 16-31
+[2006.04.06 16:31:29] DEF says: nu i kuda pojdem?
+[2006.04.06 16:31:31] Andrey Movlyaiko says: a u meja 15:31
+[2006.04.06 16:31:38] Andrey Movlyaiko says: ja po staromu vremeni zivu
+[2006.04.06 16:31:53] KindeX says: да не важно куда
+[2006.04.06 16:31:59] Andrey Movlyaiko says: v les
+[2006.04.06 16:32:09] KindeX says: в столовую универа
+[2006.04.06 16:32:18] KindeX says: да, или в лес
+[2006.04.06 16:32:23] Andrey Movlyaiko says: серьезно?
+[2006.04.06 16:32:31] Andrey Movlyaiko says: тогда я за
+[2006.04.06 16:32:33] KindeX says: сядем в 10ку, и до конца
+[2006.04.06 16:32:45] Andrey Movlyaiko says: куда сядем?
+[2006.04.06 16:32:53] KindeX says: трамвай
+[2006.04.06 16:33:11] DEF says: ja v magazin u6el.
+[2006.04.06 16:33:13] Andrey Movlyaiko says: я вообще хотел на море съездить
+[2006.04.06 16:33:23] DEF says: shoditj
+[2006.04.06 16:33:28] DEF says: na more
+[2006.04.06 16:33:34] Andrey Movlyaiko says: sjezditj
+[2006.04.06 16:33:42] Andrey Movlyaiko says: odnu ves4 posmotetj nado
+[2006.04.06 16:34:12] Andrey Movlyaiko says: nu tak 4to, Andrjuha, budem 4eto organizovivatj?
+[2006.04.06 16:34:25] KindeX says: конечно
+[2006.04.06 16:34:32] KindeX says: можем на Ретро бал пойти
+[2006.04.06 16:34:44] Andrey Movlyaiko says: eto 4to takoe? i gde?
+[2006.04.06 16:34:55] KindeX says: http://fizmati.lv/forums/forumdisplay.php?fid=117
+[2006.04.06 16:35:02] Andrey Movlyaiko says: da nu
+[2006.04.06 16:35:15] KindeX says: Sodien tatad notika sede, kura nolemam vairakas svarigas lietas. Tatad 6.aprili FMF kopa ar SZF fakultati riko Retro balli, kas notiks FMF telpas Zellu iela 8, plkst 20.00.
+Programma: speles DJ Vecaa elpa, kurs speleja ari pagajuso gadu pietiekami labi. Ieejas maksa bus 1 Ls. Bus ari galdinji bet par tiem nebus teikts afisas, laba pieredze no Valentindienas balles, jo tad ir cilvekiem kur pasedet un kur iedzert - lai nav jadzer kojas, dzivoklos u.t.t, bet lai nak laicigi uz balli. Bija pozitivas atsaukmes par to.
+
+Tika ari domats par konkursiem - un atkal ir radusas labas idejas bet tas es negribetu te publicet.
+[2006.04.06 16:35:42] Andrey Movlyaiko says: opjatj negri
+[2006.04.06 16:36:23] Andrey Movlyaiko says: mozno v staroj rige zanikatsja v guiness naprimer
+[2006.04.06 16:36:28] KindeX says: ок, давай тогда у Дефа собираемся где-нить в 18
+[2006.04.06 16:36:36] Andrey Movlyaiko says: ili es4e kuda-nibudj
+[2006.04.06 16:36:52] Andrey Movlyaiko says: ok, togda u defa v 18
+[2006.04.06 16:36:58] Andrey Movlyaiko says: a Def znaet ob etom?
+[2006.04.06 16:37:10] Andrey Movlyaiko says: blin, nado bilo po zakritoj linii govoritj
+[2006.04.06 16:37:10] KindeX says: нет
+[2006.04.06 16:37:13] Andrey Movlyaiko says: :D
+[2006.04.06 16:43:25] Anton says: матрица вас слышит :D
+[2006.04.06 16:48:11] Anton says: input/input_sdl.h:22: error: no matching function for call to 'InputSDL::init(std::string&, Game*&)'
+input/input.h:28: note: candidates are: bool Input::init(ResCollection*, std::string)
+
+[2006.04.06 16:48:43] Anton says: объявлена как bool init(ResCollection *_res, std::string _conf);
+[2006.04.06 16:49:03] Anton says: вызывается как: if(!Input::init(_conf, _game)) return false;
+[2006.04.06 16:49:12] KindeX says: ты в транке?
+[2006.04.06 16:49:15] Anton says: да
+[2006.04.06 16:49:56] Anton says: это ещё дебагится?
+[2006.04.06 16:50:13] KindeX says: я полностью избавился от SDL
+[2006.04.06 16:50:28] Anton says: м? зачем?
+[2006.04.06 16:50:56] KindeX says: под DevC++ не компилилось
+[2006.04.06 16:51:08] KindeX says: да и так всё олично работает под Виндой
+[2006.04.06 16:51:18] KindeX says: но можно сделать и под SDL
+[2006.04.06 16:51:22] KindeX says: не проблема
+[2006.04.06 16:51:26] Anton says: эм.. а чем VC не устраивает?
+[2006.04.06 16:51:51] Anton says: ну ладн.. так этот код уже не апдейтится?
+[2006.04.06 16:52:18] KindeX says: bool init(ResCollection *_res, std::string _conf);
+[2006.04.06 16:52:32] KindeX says: параметры не те
+[2006.04.06 16:52:42] Anton says: вижу :)
+[2006.04.06 16:52:45] KindeX says: смотри как в input_win
+[2006.04.06 16:52:49] Anton says: ок
+[2006.04.06 16:53:05] KindeX says: можешь всё по аналоги делать
+[2006.04.06 16:53:12] KindeX says: видел демку?
+[2006.04.06 16:53:30] Anton says: нет.. я ещё не скомпилил :)
+[2006.04.07 20:41:05] KindeX says: http://steel.kindex.lv:82/09_internal_demo_1.rar
+[2006.04.08 01:02:01] DEF says: smotel
+[2006.04.08 01:02:04] DEF says: smotrel
+[2006.04.08 01:02:12] DEF says: na samom dele stalo veselee.
+[2006.04.08 01:02:33] DEF says: tolko teperj ho4etsja drugie algoritmi osves4enija i Teni.
+[2006.04.08 01:03:29] DEF says: I eti navoro4ennije figuri s Environmental Mapping nado pri4esatj - tam problemi s ploskostjami. Oni sli6kom slozhnie
+
+
+
+
+
+
+
+[2006-06-12 19:38:42] *** .Kind has changed the chat topic to "Steel Engine" ***
 [2006-06-12 19:40:35] .Kind says: предлагаю следующий график: утром и днём отдыхаемм
 с 18 до 22 пишем движок, с 22 до 24 играем а потом спать
 [2006-06-12 19:41:20] DEF says: o, vernulsja
@@ -1600,3 +2321,253 @@ class GameObject: public virtual GraphObject, public virtual PhysicObject, publi
 [2006-11-28 22:59:47] *** .Kind has changed the chat topic to "Steel Engine Chat # 376 : OpenGL 1.1 ligthting" ***
 [2006-11-28 23:07:11] .Kind says: наконецто что-то я придумал с материалами
 [2006-11-28 23:07:27] .Kind says: как их задавать
+
+[2006-11-29 22:26:37]  *** KindeX added .Kuzmi4 to this chat ***
+[2006-11-29 22:27:04] .DEF says: ne ponjal
+[2006-11-29 22:27:07] .DEF says: ?
+[2006-11-29 22:27:30] KindeX says: канал по движку переносится сюда
+[2006-11-29 22:28:40] .DEF says: ee
+[2006-11-29 22:29:13] KindeX says: то, что я давно хотел
+[2006-11-29 22:29:18] KindeX says: канал с модерированием
+[2006-11-29 22:29:24] KindeX says: могу вас выкинуть :)
+[2006-11-29 22:29:42] .DEF says: vikinj
+[2006-11-29 22:29:55] .DEF says: a na starom kanale uzhe ne mozhe6 ?
+[2006-11-29 22:30:14] .DEF says: to estj teperj mozhe6 na starom kanale vikidivatj?
+[2006-11-29 22:30:23] KindeX says: нет
+[2006-11-29 22:30:29] KindeX says: напиши что-нибудь туда
+[2006-11-29 22:30:31] .DEF says: vikinj menja, protestitj
+[2006-11-29 22:30:40] KindeX says: так?
+[2006-11-29 22:30:53] KindeX says: могу сделать Eject + Ban
+[2006-11-29 22:31:38] KindeX says: пиши
+[2006-11-29 22:32:21] .DEF says: pi6u
+[2006-11-29 22:32:29] .DEF says: klass
+[2006-11-29 22:32:42] .DEF says: u4itivaja to 4to ja pod starim skajpom
+[2006-11-29 22:35:02] KindeX says: это они молодцы
+[2006-11-29 22:35:12] .DEF says: :)
+[2006-11-29 22:35:25] KindeX says: я тебя выкинул польностью из test?
+[2006-11-29 22:35:29] .DEF sent file "SteelEngineChat [20060612-20061128].txt" to members of this chat
+[2006-11-29 22:35:40] .DEF says: dumaju eto prigoditsja
+[2006-11-29 22:35:43] .DEF says: :)
+[2006-11-29 22:35:57] .DEF says: esli u kogo estj ran6e - posmotrite, plz
+[2006-11-29 22:37:05] .Kuzmi4 says: раньне нет
+[2006-11-29 22:37:12] .Kuzmi4 says: у меня вообще с 20061022 :)
+[2006-11-29 22:37:56] KindeX says: нету
+[2006-11-29 22:38:49] .DEF says: emocii estj novie v 3 ?
+[2006-11-29 22:39:01]  *** KindeX has changed the chat topic to "Steel Engine (" ***
+[2006-11-29 22:39:02] .Kuzmi4 says: вообще у меня есть в отдельном файле с 2006.01.07
+[2006-11-29 22:39:17] .DEF says: o, starij 4at
+[2006-11-29 22:39:21]  *** KindeX has changed the chat topic to "Steel Engine [378]: Steel engine chat log" ***
+[2006-11-29 22:39:31] .Kuzmi4 says: и первое "сообщение" - [2006.01.07 15:39:54] * KindeX added Alexander Papyshev, Andrey Movlyaiko to this chat
+[2006-11-29 22:39:37] KindeX says: оо
+[2006-11-29 22:39:37] .DEF says: :O
+[2006-11-29 22:39:49] .DEF says: kinj, ili podpat4 etot
+[2006-11-29 22:40:00] KindeX says: выйдите из старого чата
+[2006-11-29 22:40:20] KindeX says: Кузмич, добавь в репозиторий старй лог
+[2006-11-29 22:40:40] .DEF says: podpat4 etot i dobavj
+[2006-11-29 22:40:49] .DEF says: ili 2 faila lu46e
+[2006-11-29 22:40:56] .DEF says: tolko nazovi takzhe
+[2006-11-29 22:41:14] KindeX says: нет, один файл
+[2006-11-29 22:41:19] KindeX says: кодировка UTF-8
+[2006-11-29 22:41:45] .DEF says: tolko pered tem kak komititj, daj posmotretj
+[2006-11-29 22:43:58] .DEF says: main.cpp v kakoj kodiro4ke?
+[2006-11-29 22:48:06] .DEF says: prosto esli ja sam v utf-8 sohranjaju, ja mogu pro4itatj, a ishodniki u menja ne otkrivaet normalno ...
+[2006-11-29 22:53:10] KindeX says: исправил колировку в main.cpp
+[2006-11-29 23:26:21] KindeX says: 01.094 Initializing OpenAL...    [ openal init ]
+01.094 Opening default sound device...   [ openal init ]
+02.031 ERROR: Default sound device not present!  [ openal init ]
+[2006-11-30 01:42:38]  *** KindeX has changed the chat topic to "Steel Engine [381]: Bump" ***
+[2006-11-30 02:59:54]  *** KindeX has changed the chat topic to "Steel Engine [382]: Bump (shader)" ***
+[2006-11-30 03:12:05] KindeX says: (party)
+наконец-то. Bump через шейдеры
+[2006-11-30 12:04:38] .Kuzmi4 says: [11/29/2006 23:26:23] KindeX says: 01.094 Initializing OpenAL...    [ openal init ]
+01.094 Opening default sound device...   [ openal init ]
+02.031 ERROR: Default sound device not present!  [ openal init ]
+
+-- это откуда?
+[2006-11-30 12:05:01] KindeX says: это из моего лог файла
+[2006-11-30 12:05:06] .Kuzmi4 says: я понимаю
+[2006-11-30 12:05:10] .Kuzmi4 says: какой комп?
+[2006-11-30 12:06:00] KindeX says: что тебя интересует?
+[2006-11-30 12:06:40] .Kuzmi4 says: звуковуха
+[2006-11-30 12:07:33] KindeX says: Sound Balster Live
+nForce встроенная
+c-media
+[2006-11-30 12:07:39] KindeX says: 3 звуковухи
+[2006-11-30 12:08:01] .Kuzmi4 says: вот может он дефолтную выбрать не может
+[2006-11-30 12:08:34] KindeX says: audio.conf кто-то стёр
+[2006-11-30 12:08:45] .Kuzmi4 says: ???
+[2006-11-30 12:14:01] KindeX says: куда он делся?
+[2006-11-30 12:15:25] KindeX says: в репозитории его нет и небыло
+[2006-12-01 10:55:18]  *** KindeX has changed the chat topic to "Steel Engine [384]: +audio.conf" ***
+[2006-12-01 10:55:53] KindeX says: Def, измени PTR
+[2006-12-02 06:37:05] .Kuzmi4 says: 00.733 Entering main loop     [ core ]
+00.733 OpenGL error #1282     [ error opengl ]
+00.750 Main loop: first frame passed    [ core ]
+00.750 OpenGL error #1282     [ error opengl ]
+00.766 OpenGL error #1282     [ error opengl ]
+...
+02.219 OpenGL error #1282     [ error opengl ]
+02.219 Exit from main loop     [ core ]
+02.219 OpenGL engine has been stopped!   [ opengl graph ]
+[2006-12-02 09:16:22] .Kuzmi4 says: народ, чтото у вас глючит...
+[2006-12-02 10:09:45]  *** .Kuzmi4 has changed the chat topic to "Steel Engine [385]: simple_sound files added" ***
+[2006-12-05 22:35:50] KindeX says: Def, измени PTR 0002
+Kuzmi4, сделай так, чтобы в лог файл выводились все звуковые девайсы, а в конфиге можно было выбирать нужный, а также включать/выключать EAX, настраивать громкость.
+[2006-12-06 11:25:04] .Kuzmi4 says: настраивать громкость - всмысле? ьам же есть
+[2006-12-06 11:40:55]  *** .DEF has changed the chat topic to "Steel Engine [386]: all PTRs fixed" ***
+[2006-12-06 12:38:18] KindeX says: где есть?
+[2006-12-06 12:38:45] .Kuzmi4 says: gain
+[2006-12-06 12:38:53] .Kuzmi4 says: а, стоп
+[2006-12-06 12:39:14] KindeX says: общая громкость
+[2006-12-06 12:39:19] .Kuzmi4 says: илилТы хочешь общую громкость, относительно которой все будет ставиться?
+[2006-12-06 12:39:20] .Kuzmi4 says: да
+[2006-12-06 19:52:24] .DEF says: MASTER VOLUME
+[2006-12-06 19:52:30] .Kuzmi4 says: да
+[2006-12-06 19:52:37] .DEF says: po dru-gomu eto lu46e ne nazivatj :)
+[2006-12-06 19:52:54] .Kuzmi4 says: а это и есть master volume
+[2006-12-06 19:53:35] .DEF says: nu kto ne znaet, i u nego horo6aja fantazija mozhet pridumatj i NEstandartnoe obozna4enie
+[2006-12-06 19:54:01] .Kuzmi4 says: это без проблем
+[2006-12-06 19:54:23] .DEF says: galvēnais skaļums (chuckle)
+[2006-12-06 19:54:44] .Kuzmi4 says: нууу приехали
+[2006-12-06 19:55:53] .Kuzmi4 says: ага, maģistra skaļums :D
+[2006-12-16 01:35:01] KindeX says: OpenGL всё же сыроват еще. Не могу использовать VBO и вершинные атрибуты для передачи бинормали внутрь шейдера-бампа. Пришлось передовать текстурными координатами. Bump на GLSL есть.
+[2006-12-16 01:40:56] .DEF says: Ti oficialno ne mozhe6 ispolzovatj ?
+[2006-12-16 01:41:13] .DEF says: Nu eto gde-to napisano, 4to eto nelzja sdelatj ?
+[2006-12-16 01:41:20] KindeX says: а хрен их поймёшь. не могу найти толковую документацию
+[2006-12-16 01:41:27] .DEF says: I dlja 4ego tebe eto ?
+[2006-12-16 01:41:36] KindeX says: для бампа
+[2006-12-16 01:41:49] KindeX says: нет ни одного нормаьного источника
+[2006-12-16 01:41:50] .DEF says: nu 4to ti delae6, kakoj 6eider? Prosto bump ?
+[2006-12-16 01:42:04] KindeX says: всезде одно и тоже - бла бла бла. друг с друга списали
+[2006-12-16 01:42:14] KindeX says: в стиле линуксовых манов
+[2006-12-16 01:42:21] KindeX says: просто бамп делаю
+[2006-12-16 01:42:26] .DEF says: a ishodniki posmotretj? Smotrel ?
+[2006-12-16 01:42:34] KindeX says: чьи?
+[2006-12-16 01:42:49] .DEF says: nu s knizhnki hotjabi
+[2006-12-16 01:43:47] KindeX says: там нету такого
+[2006-12-16 01:44:31] KindeX says: ни одного примера использования glVertexAttribPointer
+[2006-12-16 01:44:49] .DEF says: jasno
+[2006-12-16 01:45:15] KindeX says: вместе с VBO
+[2006-12-16 01:45:33] .DEF says: kind, rekomendacija - vse 4to mozhno sdelatj bez 6eiderov lu46e delatj bez 6eiderov. Ili ti ne tak dumae6?
+[2006-12-16 01:46:56] KindeX says: а я блин 3 дня думал что я дурак и неправильно написал шейдер
+[2006-12-16 01:47:19] KindeX says: я хочу иметь 1 стандартный шейдер для начала
+[2006-12-16 01:47:38] KindeX says: StdShader - металл, обчное освещение
+[2006-12-16 01:48:40] KindeX says: color_map, normal_map, micro_map, reflect_map
+[2006-12-16 01:50:25]  *** KindeX has changed the chat topic to "Steel Engine [388]: StdShader" ***
+[2006-12-16 01:50:34] KindeX says: глянь на шейдер
+[2006-12-16 14:55:31]  *** KindeX has changed the chat topic to "Steel Engine [391]: StdShader" ***
+[2006-12-17 17:35:29]  *** KindeX has changed the chat topic to "Steel Engine [391]: StdShader / ftp://division:asdef@kindex.lv:2121/" ***
+[2006-12-17 21:36:35]  *** KindeX has changed the chat topic to "Steel Engine [395]: OpenGL 2.0 / ftp://division:asdef@kindex.lv:2121/" ***
+[2006-12-17 21:37:11] KindeX says: Def, я сдела задние 367. Твоё задание протестирвать его.
+[2006-12-17 22:39:54] KindeX says: у меня вылетает движок на строчке 
+pDevice = alcOpenDevice(NULL);
+[2006-12-17 22:41:55] KindeX says: почему тут нет никаких сообщений от вас?
+[2006-12-17 22:42:50] KindeX says: вот мой лог
+Started Logging @ [ 2006-12-17 22:40:55.640 ]
+00.328 Initializing OpenAL...    [ openal init ]
+00.328 Opening default sound device...   [ openal init ]
+[2006-12-17 22:45:38] KindeX says: может быть надо проинсталлировать OpenAL?
+[2006-12-17 22:54:30] KindeX says: Def, ты поставил OpenAL ?
+[2006-12-17 22:58:15] KindeX says: писать сюда
+[2006-12-17 22:58:21] KindeX says: устроиили 3 привата
+[22:52:32]  *** KindeX has changed the chat topic to "Steel Engine [398]: OpenAL crash fix" ***
+[22:54:30] KindeX says: Отчёт: после долгого перерыва всё же сделал динамическое освещение через шейдер
+
+ [2006.12.16 21:20:11] Andrey Movlyaiko says: [01:46:19] DEF says: ... vse 4to mozhno sdelatj bez 6eiderov lu46e delatj bez 6eiderov...
+(y)
+[2006.12.16 21:57:41] Andrey Movlyaiko says: короче надо делать так, чтобы быстро и эффективно работало. Народ, вспомните хороших и плохих программеров на примере GTA SA (как говорил Деф). Там есть шейдеры, но идет она почемуто везде. Шейдер, как я понимаю, это "программа", которая отдельно выполняется на видеокарте, но ее можно и всунуть в основной код. Короче чето я запутался. Идею уловили?
+[2006.12.16 21:58:11] DEF says: net
+[2006.12.16 21:58:27] Andrey Movlyaiko says: чего нет?
+[2006.12.16 21:58:41] DEF says: Ne ulovil ja ideju.
+[2006.12.16 21:58:54] Andrey Movlyaiko says: быстро и эффективно
+[2006.12.16 21:59:05] Andrey Movlyaiko says: и по возможности везде
+[2006.12.16 21:59:40] Andrey Movlyaiko says: и по возможности везде чтобы работало
+[2006.12.16 21:59:40] DEF says: nu tak vot, "4istih" 6eiderov, v SA net. To estj tam net 6eiderov, kotorie ispolnjajutsja na video karte. Vot i vse.
+[2006.12.16 21:59:49] Andrey Movlyaiko says: во во
+[2006.12.16 22:00:25] DEF says: I voobs4e SA - plohoj primer :)
+[2006.12.16 22:00:48] DEF says: DOOM III i Unreal - vot horo6ie primeri
+[2006.12.16 22:01:11] Andrey Movlyaiko says: ну эти я плохо знаю
+[2006.12.16 22:07:23] DEF says: rasskazivaju :) Na primere D3 (ili Q3) - idet vezde (pod linuxom tozhe). DAzhe na pristavkah. Ispolzuet VSE predusmotrennie tehnologii. Esli dvizhok ne na6el 4to-to v zheleze - ne ispolzuet eto, ili emuliruet na CPU. Eto esdinstvennie dvizhki, kotorie vigljadat dovolno sovremenno na sledujus4em pokolenii. D3 2002 goda voobs4e rekordsmen.
+[2006.12.16 22:07:46] Andrey Movlyaiko says: D3 - doom?
+[2006.12.16 22:07:52] DEF says: da
+[2006.12.16 22:58:56] Andrey Movlyaiko says: Отчет за 20061211 - 200617
+
+Пофиксил загрузку аудио конфига. Теперь все параметры считываются и обрабатываются. 
+Начал изменять проигрывание звука. Теперь создается AudioShadow (название класса
+еще надо уточнить). Разобрался с map'ом, по крайне мере понял что это такое. 
+Теперь динамичски загружаетсф звук. Скоро быдет update.
+[2006.12.16 22:59:40] DEF says: 4to za AudioShadow ?!!
+[2006.12.16 22:59:41] Andrey Movlyaiko says: ну и еще можно задавать из конфига master vlume, он считывается, но не обрабатывается...
+[2006.12.17 16:43:24] DEF has changed the chat topic to "Steel Engine [393]: StdShader + ATI Fix + 4-layer Textures"
+[2006.12.17 16:43:43] DEF says: skoro 400 ij kommit
+[2006.12.17 16:45:10] Andrey Movlyaiko says: мой будет :)
+[2006.12.17 21:44:34] Andrey Movlyaiko has changed the chat topic to "Steel Engine [396]: OpenAL Info"
+[2006.12.17 21:45:12] Andrey Movlyaiko says: так, народделайте update, запускаете, и присылаете мне файл openal.log!
+[2006.12.17 21:45:15] Andrey Movlyaiko says: срочно!!!
+[2006.12.17 23:03:54] DEF says: rev#395 u menja ne idet
+[2006.12.17 23:04:00] DEF says: ne i ne viletaet
+[2006.12.17 23:04:11] Andrey Movlyaiko says: чего?
+[2006.12.17 23:04:18] DEF says: eto dlja kindexa
+[2006.12.17 23:04:35] DEF says: rev#396 - Unhandled Exception
+[2006.12.17 23:04:50] DEF says: kstati, tebja ne u4ili Exceptions obrabativatj ?
+[2006.12.17 23:07:20] Andrey Movlyaiko says: так что мне делать?
+[2006.12.17 23:08:56] DEF says: Vse, u menja ne idut 2 poslednii revizii. 4to vi tam s proektom nadelali ?
+[2006.12.17 23:08:58] Andrey Movlyaiko says: Андрюха можешь прислать openal.log когда ошибка вылетает?
+[2006.12.17 23:09:33] Andrey Movlyaiko says: да там конфликты какието были...
+[2006.12.17 23:10:13] DEF says: Tolko 4to ebnulo iz kolonok, uzhe posle togo kak ja debugger ubil 5 minut nazad
+[2006.12.17 23:10:50] Andrey Movlyaiko says: Деф, Ты ctrl+f5 запустил?
+[2006.12.17 23:11:11] DEF says: i tak i tak i 4erez Ctrl + alt + f5 i reliz i debug
+[2006.12.17 23:11:29] Andrey Movlyaiko says: и что?
+[2006.12.17 23:11:40] DEF says: unhandled
+[2006.12.17 23:11:48] DEF says: ve6aetsja na 30 sekund
+[2006.12.17 23:11:54] Andrey Movlyaiko says: чтото у Тебя не то, у нас с Киндексом почти одинаково
+[2006.12.17 23:12:29] Andrey Movlyaiko says: Андрюха можешь прислать openal.log когда ошибка вылетает?
+[2006.12.17 23:12:53] DEF says: tak 4to u menaj v logom ne tak? Imho vse v porjadke
+[2006.12.17 23:13:07] Andrey Movlyaiko says: лог у Тебя не законченный
+[2006.12.17 23:13:21] DEF says: kone4no
+[2006.12.17 23:13:27] Andrey Movlyaiko says: у Тебя на default devices вырубается
+[2006.12.17 23:13:36] DEF says: Ti zhe exception ne lovi6
+[2006.12.17 23:13:48] Andrey Movlyaiko says: нахрена его ловить?
+[2006.12.17 23:14:13] DEF says: nado, tak prinjato
+[2006.12.17 23:14:25] Andrey Movlyaiko says: надо делать нормально
+[2006.12.17 23:15:07] DEF says: nu tak ja o tom i govorju. V exe za takoe 6traf v 200 Ls mozhno zaplatitj, a v FMF prosto ruki oborvut
+[2006.12.17 23:15:16] DEF says: FMS
+[2006.12.17 23:15:34] DEF says: Exceptioni nado lovitj vsegda, ibo eto FATAL
+[2006.12.17 23:15:47] Andrey Movlyaiko says: как вот это у Тебя могло появиться:
+
+00.265 !!!!! no capture devices    [ openal init ]
+
+???
+[2006.12.17 23:15:56] DEF says: mol4a
+[2006.12.17 23:16:03] DEF says: UNHENDLED EXCEPTION
+[2006.12.17 23:16:29] DEF says: Rasskazatj 4to eto takoe ? Kogda Dizassembler zapusketsja ?
+[2006.12.17 23:16:41] Andrey Movlyaiko says: а кто не знает?
+[2006.12.17 23:16:44] DEF says: I process ubitj 20 sekund ?
+[2006.12.17 23:16:59] DEF says: a MSVC ne dostupen
+[2006.12.17 23:21:50] DEF says: Kind, a po4emu tvoj ne idet kommit ?
+[2006.12.17 23:24:15] Andrey Movlyaiko has changed the chat topic to "Steel Engine [397]: OpenAL Info -- ашч"
+[2006.12.17 23:24:22] Andrey Movlyaiko has changed the chat topic to "Steel Engine [397]: OpenAL Info -- fix"
+[2006.12.17 23:24:34] Andrey Movlyaiko says: срочно делайте апдейт и смотрите
+[2006.12.17 23:24:39] Andrey Movlyaiko says: и слушайте
+[2006.12.17 23:27:44] DEF says: zvuk estj
+[2006.12.17 23:27:50] DEF says: izobrazhenija net
+[2006.12.17 23:28:25] Andrey Movlyaiko says: izobrazhenija net
+
+-- ????
+[2006.12.17 23:28:34] DEF says: nu eto kindex uzhe :)
+[2006.12.17 23:28:37] Andrey Movlyaiko says: Андрюха?
+[2006.12.17 23:28:46] Andrey Movlyaiko says: так у меня есть изображение
+[2006.12.17 23:28:50] Andrey Movlyaiko says: типа гиперкуб
+[2006.12.17 23:28:59] DEF says: a kakaja u tebja revizija ?
+[2006.12.17 23:29:17] Andrey Movlyaiko says: написано 395
+[2006.12.17 23:31:20] DEF says: ESC ne rabotaet, tolko endtask
+[2006.12.17 23:31:34] DEF says: kuz, sdelaj update
+[2006.12.17 23:31:42] Andrey Movlyaiko says: во, кстати, у меня тоже один оаз сегодня не работал
+[2006.12.17 23:32:29] DEF says: oficialno : OpenGL 2.0 ne rabotaet
+[2006.12.17 23:32:30] Andrey Movlyaiko says: да ничего не проапдейтил
+[2006.12.17 23:32:50] DEF says: u tebja zhe dolzhno bitj 397
+[2006.12.17 23:33:07] Andrey Movlyaiko says: да, теперь 397
+[2006.12.17 23:37:14] Andrey Movlyaiko says: я дисконект
+[2006.12.17 23:37:20] DEF says: ok
+[22:59:26] Andrey Movlyaiko says: тест
+
