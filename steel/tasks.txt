@@ -22,7 +22,7 @@
 		Estimated time (h, d, w)
 		Deadline (date, project version)
 		Target (branch, trunk)
- ************************************************************/
+*************************************************************/
 
 ** Open ********************************************************************************************
 
@@ -32,6 +32,7 @@
 401. OpenGL: shadows. / KindeX. KindeX. [4]. (3d).
 402. OpenGL: blending. Glass, sprites (with correct lighting). Sort blending polygons. / KindeX. KindeX. [4]. (3d).
 348. Config bug. Error in finding value by templates through parent config. / KindeX. KindeX. [5]. (1d). 20061201
+404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. KindeX. [6]. (1w).
 369. CD. Collision detection for particles. / Def, KindeX. KindeX. [7]. (1w).
 400. Config comments. Load comment from config to dump configs with comments. / *. KindeX. [9]. (3h).
 
