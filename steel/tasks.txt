@@ -37,6 +37,7 @@
 404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. KindeX. [6]. (1w).
 369. CD. Collision detection for particles. / Def, KindeX. KindeX. [7]. (1w).
 400. Config comments. Load comment from config to dump configs with comments. / *. KindeX. [9]. (3h).
+411. OpenGL: custom normal map mipmap levels. / *. KindeX. [9]. (3h).
 
 ** Construction ************************************************************************************
 345. PNG. PNG file loader same as BMP loader. / Kane. KindeX. 4. 3d. 20061231 (steel 1.1)

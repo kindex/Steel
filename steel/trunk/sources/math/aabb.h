@@ -24,25 +24,26 @@
 #undef min
 #undef max
 
-struct aabb3 // AABB 3D
+struct AABB3 // AABB 3D
 {
 	v3 min, max;
 
-	aabb3(void) { clear(); }
-	aabb3(const v3 _min, const v3 _max): min(_min), max(_max) {}
-	aabb3(const v3 point): min(point), max(point) {}
+	AABB3(void) { clear(); }
+	AABB3(const v3 _min, const v3 _max): min(_min), max(_max) {}
+	AABB3(const v3 point): min(point), max(point) {}
 	bool empty(void) const { return min.x>max.x + EPSILON || min.y>max.y + EPSILON || min.z>max.z + EPSILON;  }
 	void clear(void);
 	void getVertexes(steel::svector<v3> &dest) const;
 
     void merge(const v3 point);
-    void merge(const aabb3 &second);
-	bool intersect(aabb3 const &second);
+    void merge(const AABB3 &second);
+	bool intersect(AABB3 const &second);
 	void mul(const matrix34 &matrix);
 	void add(v3 direction);
-	void cross(const aabb3 second);
+	void cross(const AABB3 second);
+	bool isCrossingSphere(const v3 center, const float radiuss);
 };
 
-typedef aabb3 aabb;
+typedef AABB3 AABB;
 
 #endif

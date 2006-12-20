@@ -45,7 +45,7 @@ public:
 
 	void process(ProcessInfo &);
 	bool updateInformation(InterfaceId, Engine*);
-	aabb getFrame(void);
+	AABB getFrame(void);
 };
 
 // каждая частица - отдельная модель (объект)

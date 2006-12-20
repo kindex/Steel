@@ -52,6 +52,7 @@ public: // interface realization
 	void setFaceMaterials(const FaceMaterials*);// массив индексов вершин, которые образуют треугольники (грани) + материалы
 	void setTexCoordsCount(unsigned int);
 	void setTexCoords(unsigned int texNumber, const TexCoords*);
+	void setAABB(const AABB &box);
 
 	void addChild(GameObject* child);
 	void deleteChild(GameObject* child);
@@ -100,15 +101,17 @@ protected:
 
 		const GLines		*lines;
 
-		aabb		frame;
+		AABB		aabb;
+		bool		aabbCalculated;
 		bool		blend; // true if blending
 		bool		visible;
 		float		distance; // расстояние до камеры
 
 		svector<LightShadow*> lights; // lights to this onject
 
-		GraphShadow(Engine *engine): Shadow(engine), faceMaterials(NULL), vertexes(NULL), normals(NULL), 
-			lines(NULL), position(ObjectPosition::getIdentity()), textureCount(0) {}
+		GraphShadow(Engine *engine);
+		void calculateAABB(void);
+		bool isCrossingLight(const LightShadow*);
 		void fill(GameObject *object);
 		bool cache(void);
 
@@ -221,7 +224,7 @@ public:
 
 	void prepare(GraphShadow *shadow, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
 
-	bool isVisible(aabb box);
+	bool isVisible(AABB box);
 
 	void process(GraphShadow *e, steel::time globalTime, steel::time time);
 	

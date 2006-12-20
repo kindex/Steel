@@ -283,7 +283,7 @@ void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEng
 	if(e.normals != NULL && e.vertexes != NULL && e.vertexes->data.size() == e.normals->data.size())
 	{
 		glColor3f(0,0,1);
-		aabb &f = e.frame;
+		AABB &f = e.aabb;
 		float diag = (f.max-f.min).getLength()*0.05f;
 		if(diag > 1) diag = 1.0f;		
 		if(diag<EPSILON) diag = 0.01f;
@@ -325,7 +325,7 @@ void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEn
 // нарисовать AABB
 void OpenGL_Engine::DrawAABB_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
 {
-	aabb &c = e.frame;
+	AABB &c = e.aabb;
 	if(c.empty()) return;
 
 	glColor3f(1.0f, 0.8f, 0.8f);

@@ -36,7 +36,7 @@ public:
 	friend class GraphObjectModel; // TEMP:
 
 protected:
-	aabb				frame;
+	AABB				frame;
     Vertexes			vertexes;    // Vertexes
 
     Triangles			triangleAll;        // Triangles

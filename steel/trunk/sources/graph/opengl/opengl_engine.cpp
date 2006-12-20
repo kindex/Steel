@@ -86,152 +86,7 @@ OpenGL_Engine::OpenGL_Engine():
 {}
 
 
-void OpenGL_Engine::addLight(Light* light)
-{
-	if(currentShadow != NULL)
-	{
-		LightShadow *shadow = new LightShadow();
-		shadow->light = light;
-		shadow->shadow = currentShadow;
-		shadow->object = currentShadow->object;
-		shadow->changed = true;
 
-		lights[light->id] = shadow;
-	}
-}
-
-void OpenGL_Engine::removeLight(uid id)
-{
-	map<uid, LightShadow*>::iterator it = lights.find(id);
-	delete it->second;
-	lights.erase(it);
-}
-
-void OpenGL_Engine::updateLight(uid id, Light* light)
-{
-	map<uid, LightShadow*>::iterator it = lights.find(id);
-	it->second->light = light;
-	it->second->changed = true;
-}
-
-bool OpenGL_Engine::setCurrentObject(GameObject* object)
-{
-	uid id = object->getId();
-	currentShadow = getShadow(id);
-	if(currentShadow == NULL)
-	{
-		currentObject = NULL;
-		return false;
-	}
-	currentObject = object;
-
-	return false;
-}
-
-void OpenGL_Engine::setPosition(ObjectPosition position)
-{
-	if(currentShadow != NULL)
-	{
-		GS(currentShadow)->position = position;
-	}
-}
-
-void OpenGL_Engine::setPositionKind(PositionKind kind)
-{
-	if(currentShadow != NULL)
-	{
-		currentShadow->positionKind = kind;
-	}
-}
-
-
-void OpenGL_Engine::addChild(GameObject* child)
-{
-	if(currentShadow != NULL)
-	{
-		addChild(*currentShadow, child);
-	}
-}
-
-void OpenGL_Engine::addChild(GraphShadow &shadow, GameObject *child)
-{
-	uid childUid = child->getId();
-	
-	svector<uid>::iterator it = shadow.children.find(childUid);
-
-	if(it != currentShadow->children.end()) return ; // child have been added before
-
-	if(!child->beforeInject(this->interfaceId)) return; // shild don't want to be added
-
-	if(!makeShadowForObject(child)) return;
-
-	shadow.children.push_back(childUid);
-
-	setCurrentObject(child);
-
-	child->bindEngine(this->interfaceId, this);
-
-	currentShadow = &shadow;
-}
-
-
-void OpenGL_Engine::deleteChild(GameObject* child)
-{
-	// TODO:
-}
-
-void OpenGL_Engine::clearChildren(void)
-{
-	// TODO:
-}
-
-void OpenGL_Engine::setVertexes(const Vertexes* vertexes) // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
-{
-	if(currentShadow != NULL)
-	{
-		GS(currentShadow)->vertexes = vertexes;
-	}
-}
-
-void OpenGL_Engine::setNormals(const Normals* normals) // список нормалей в вершинам
-{
-	if(currentShadow != NULL)
-	{
-		GS(currentShadow)->normals = normals;
-	}
-}
-void OpenGL_Engine::setLines(const GLines* lines) // индексы вершин для линий и цвета линий (for debug)
-{
-	if(currentShadow != NULL)
-	{
-		GS(currentShadow)->lines = lines;
-	}
-
-}
-
-void OpenGL_Engine::setFaceMaterials(const FaceMaterials* faceMaterials)// массив индексов вершин, которые образуют треугольники (грани) + материалы
-{
-	if(currentShadow != NULL)
-	{
-		GS(currentShadow)->faceMaterials = faceMaterials;
-	}
-}
-
-void OpenGL_Engine::setTexCoordsCount(unsigned int size)
-{
-	if(currentShadow != NULL)
-	{
-		GS(currentShadow)->texCoords.resize(size);
-	}
-}
-
-void OpenGL_Engine::setTexCoords(unsigned int texNumber, const TexCoords* coords)
-{
-	if(currentShadow != NULL && static_cast<int>(GS(currentShadow)->texCoords.size()) > texNumber)
-	{
-		GS(currentShadow)->texCoords[texNumber] = coords;
-	}
-}
 
 /*
 Сердце Графического движка.
@@ -284,7 +139,7 @@ void OpenGL_Engine::process(GraphShadow *e, steel::time globalTime, steel::time 
 
 
 
-bool OpenGL_Engine::isVisible(aabb box)
+bool OpenGL_Engine::isVisible(AABB aabb)
 {
 /*	matrix34 proj; TODO
 	glGetFloatv(GL_PROJECTION_MATRIX, proj.a);
@@ -318,7 +173,9 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 	int size = objects.size();
 
 	for(int i=0; i < size; i++)
+	{
 		prepare(getShadow(objects[i]), globalTime, time); /* Update vertexes, faces, ights */
+	}
 
 	for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
 	{
@@ -329,26 +186,25 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 	{
 		GraphShadow &shadow = *GS(*it);
 		shadow.lights.clear();
+		if (!shadow.aabb.empty())
+		{
 		for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
-			shadow.lights.push_back(jt->second);
+			if (shadow.isCrossingLight(jt->second))
+			{
+				shadow.lights.push_back(jt->second);
+			}
+			else
+			{
+				int x = 0.1;
+			}
+		}
 	}
-
-
-//	if(!ARB_multitexture_supported) 
-//		conf->setup("drawBump", 0);
 
 	GLbitfield clear = 0;
 	if(conf->geti("clearColor", 1))	clear |= GL_COLOR_BUFFER_BIT;
 	if(conf->geti("clearDepth", 1))	clear |= GL_DEPTH_BUFFER_BIT;
 	if(clear)
 		glClear(clear);
-
-/*
-	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHTING);
-
-	glLightfv( GL_LIGHT0, GL_POSITION, v4( camera.center ));*/
-
 
 //	steel::vector<int> elementAlpha;
 
@@ -381,7 +237,6 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 	{
 //		glFlush(); // TODO: flush in thread
 		(this->*FlushOpenGL_Window)();
-//		swapBuffers();
 	}
 
 	GLenum errorCode = glGetError();
@@ -627,6 +482,11 @@ void OpenGL_Engine::prepare(GraphShadow *shadow, steel::time globalTime, steel::
 		matrix,  // TODO
 		shadow->object);
 
+	if (!shadow->aabbCalculated)
+	{
+		shadow->calculateAABB();
+	}
+
 /*	if(shadow->childrenModificationTime < shadow->object->getChildrenModificationTime())
 	{
 		shadow->childrenModificationTime = shadow->object->getChildrenModificationTime();
@@ -668,12 +528,6 @@ void OpenGL_Engine::prepare(GraphShadow *shadow, steel::time globalTime, steel::
 		}
 	}
 
-	if(shadow->lights != NULL)
-	for(Lights::const_iterator it = shadow->lights->begin(); it != shadow->lights->end(); it++)
-	{
-		lights.push_back(*it);
-		lights.back().position = shadow->position*lights.back().position;
-	}
 */
 /*	int count = G(shadow->object)->getGraphChildrenCount();
 	for(int i = 0; i < count; i++)
@@ -706,3 +560,35 @@ OpenGL_Engine::LightShadow::LightShadow(void):
 	light(NULL), 
 	object(NULL)
 {}
+
+OpenGL_Engine::GraphShadow::GraphShadow(Engine *engine): 
+	Shadow(engine), 
+	faceMaterials(NULL), 
+	vertexes(NULL), 
+	normals(NULL), 
+	lines(NULL), 
+	position(ObjectPosition::getIdentity()), 
+	textureCount(0), 
+	aabbCalculated(false) 
+{}
+
+void OpenGL_Engine::GraphShadow::calculateAABB(void)
+{
+	aabb.clear();
+
+	if (vertexes != NULL)
+	{
+		for EACH_CONST(svector<v3>, vertexes->data, i)
+		{
+			aabb.merge(*i);
+		}
+	}
+	aabbCalculated = true;
+}
+
+bool OpenGL_Engine::GraphShadow::isCrossingLight(const LightShadow* light)
+{
+	AABB realaabb = aabb;
+	realaabb.mul(position);
+	return realaabb.isCrossingSphere(light->position, light->light->maxDistance);
+}

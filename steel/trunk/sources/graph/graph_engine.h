@@ -46,7 +46,7 @@ public:
 	virtual bool process(steel::time globalTime, steel::time time) = 0;
 
 	// Draw colelcted information. May be called few times without recollection information
-	virtual bool isVisible(aabb box) = 0;
+	virtual bool isVisible(AABB box) = 0;
 	// Clear collected information
 	bool clear(void);
 
@@ -54,7 +54,6 @@ protected:
 	svector<GameObject*> objects;
 
 	GraphEngineInfo info;
-
 };
 
 #endif

@@ -11,7 +11,7 @@ uniform struct
 
 uniform int lightCount;
 
-varying vec3 lightDir[4];// TBN space
+varying vec3 lightDir[5];// TBN space
 
 varying vec3 viewDir;     // tbn
 
@@ -57,21 +57,19 @@ void main(void)
 	viewDir.y = dot(b, viewDirGlobal);
 	viewDir.z = dot(n, viewDirGlobal);
 
-
-	if (lightCount > 0)
-	{
-	calcLightDir(0);
-	if (lightCount > 1)
-	{
-	calcLightDir(1);
-	if (lightCount > 2)
-	{
-	calcLightDir(2);
-	if (lightCount > 3)
-	{
-	calcLightDir(3);
-	}
-	}
-	}
+	if (lightCount > 0){
+		calcLightDir(0);
+		if (lightCount > 1)	{
+			calcLightDir(1);
+			if (lightCount > 2)	{
+				calcLightDir(2);
+				if (lightCount > 3)	{
+					calcLightDir(3);
+					if (lightCount > 4)	{
+						calcLightDir(4);
+					}
+				}
+			}
+		}
 	}
 }

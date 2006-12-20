@@ -105,19 +105,32 @@ objects =
 	[#objects[0]] {
 		origin = (-10 0 0)
 	}
-	
-/*	{
-		class = 'light'
+
+	[light.conf#] {
 		origin = (-4.5 -4.5 -4.5)
-		constantAttenuation = 0.0
-		linearAttenuation = 0.0
-		quadraticAttenuation = 0.01
-		minDistance = 1
-		maxDistance = 100
-		diffuse = (1 1 1)
-		specular = (1 1 1)
-		k = 1
-	}*/
+	}
+	[light.conf#] {
+		origin = (-4.5 -4.5 +4.5)
+	}
+	[light.conf#] {
+		origin = (-4.5 +4.5 -4.5)
+	}
+	[light.conf#] {
+		origin = (-4.5 +4.5 +4.5)
+	}
+	[light.conf#] {
+		origin = (+4.5 -4.5 -4.5)
+	}
+	[light.conf#] {
+		origin = (+4.5 -4.5 +4.5)
+	}
+	[light.conf#] {
+		origin = (+4.5 +4.5 -4.5)
+	}
+	[light.conf#] {
+		origin = (+4.5 +4.5 +4.5)
+	}
+
 	
 ) // objects
 } // scene

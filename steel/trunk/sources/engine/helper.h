@@ -36,7 +36,7 @@ public:
 	virtual void setTime(const steel::time _time) = 0;
 	virtual void drawLine(const Line line, const steel::time duration, const steel::time fade, const color4f color) = 0;
 	virtual void drawVector(const Line line, const steel::time duration, const steel::time fade, const color4f color) = 0;
-	virtual void drawBox(const aabb box, const steel::time duration, const steel::time fade, const color4f color) = 0;
+	virtual void drawBox(const AABB box, const steel::time duration, const steel::time fade, const color4f color) = 0;
 };
 
 #endif

@@ -23,7 +23,7 @@ bool intersect(float amin, float amax, float bmin, float bmax)
 		amin  < amax+ EPSILON;
 }
 
-void aabb::clear()
+void AABB3::clear()
 { 
 	min.x = +INF; 
 	min.y = +INF; 
@@ -33,14 +33,14 @@ void aabb::clear()
 	max.z = -INF;
 }
 
-void aabb::add(v3 a)
+void AABB3::add(v3 a)
 {
 	if(a.x>0) max.x += a.x; else min.x += a.x;
 	if(a.y>0) max.y += a.y; else min.y += a.y;
 	if(a.z>0) max.z += a.z; else min.z += a.z;
 }
 
-bool aabb::intersect(aabb const &second)
+bool AABB3::intersect(AABB3 const &second)
 {
     return
 	::intersect(min.x, max.x, second.min.x, second.max.x)
@@ -50,7 +50,7 @@ bool aabb::intersect(aabb const &second)
 	::intersect(min.z, max.z, second.min.z, second.max.z);
 }
 
-void aabb::mul(const matrix34 &matrix)
+void AABB3::mul(const matrix34 &matrix)
 {
 	steel::svector<v3> v;
 	getVertexes(v);
@@ -61,7 +61,7 @@ void aabb::mul(const matrix34 &matrix)
 }
 
 
-void aabb::merge(const v3 point)
+void AABB3::merge(const v3 point)
 {
     if (min.x > point.x) min.x = point.x;
     if (min.y > point.y) min.y = point.y;
@@ -72,7 +72,7 @@ void aabb::merge(const v3 point)
     if (max.z < point.z) max.z = point.z;
 }
 
-void aabb::merge(aabb const &second)
+void AABB3::merge(AABB const &second)
 {
 	if (min.x > second.min.x) min.x = second.min.x;
 	if (min.y > second.min.y) min.y = second.min.y;
@@ -83,7 +83,7 @@ void aabb::merge(aabb const &second)
 	if (max.z < second.max.z) max.z = second.max.z;
  }
 
-void aabb::getVertexes(steel::svector<v3> &dest) const
+void AABB3::getVertexes(steel::svector<v3> &dest) const
 {
 	dest.resize(8);
 	const v3 &a = min; 
@@ -99,7 +99,7 @@ void aabb::getVertexes(steel::svector<v3> &dest) const
 	dest[7].set(b.x, b.y, b.z);
 }
 
-void aabb::cross(const aabb3 b)
+void AABB3::cross(const AABB3 b)
 {
 	if(b.min.x > min.x) min.x = b.min.x;
 	if(b.min.y > min.y) min.y = b.min.y;
@@ -108,4 +108,12 @@ void aabb::cross(const aabb3 b)
 	if(b.max.x < max.x) max.x = b.max.x;
 	if(b.max.y < max.y) max.y = b.max.y;
 	if(b.max.z < max.z) max.z = b.max.z;
+}
+
+// false when not crossing 
+// true crossing or not crossing
+bool AABB3::isCrossingSphere(const v3 center, const float radiuss)
+{
+	AABB3 aabb(center - v3(radiuss, radiuss, radiuss), center + v3(radiuss, radiuss, radiuss));
+	return this->intersect(aabb);
 }

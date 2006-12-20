@@ -933,6 +933,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\graph\opengl\opengl_interface.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\graph\opengl\opengl_sdl_engine.cpp"
 						>
 					</File>

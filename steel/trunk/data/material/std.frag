@@ -28,7 +28,7 @@ uniform struct
 	sampler2D map;
 	sampler3D cube_map;
 	float k;
-} lights[4];
+} lights[5];
 
 uniform sampler2D diffuse_map;
 uniform sampler2D diffuse2_map;
@@ -36,7 +36,6 @@ uniform sampler2D normal_map;
 uniform sampler2D emission_map;
 uniform sampler2D specular_map;
 
-varying vec3 lightDir[4];// TBN space
 
 varying vec3 viewDir;     // tbn
 
@@ -47,6 +46,7 @@ varying vec3 lightDirGlobal;  // global
 
 varying vec2 texCoord0;
 varying vec2 texCoord1;
+varying vec3 lightDir[5];// TBN space
 
     vec3 norm;
     vec3 r;
@@ -69,29 +69,29 @@ vec3 calcLighting(in int i)
 	}
 	else
 	{
-	if (distFromLight < lights[i].maxDistance) distFromLight = lights[i].maxDistance; // minDistance
+		if (distFromLight < lights[i].minDistance) distFromLight = lights[i].minDistance; // minDistance
 	
-    attenuation = lights[i].k / ( 
-		gl_LightSource[i].constantAttenuation +
-		lights[i].sqrtAttenuation * sqrt(distFromLight) +
-		gl_LightSource[i].linearAttenuation * distFromLight +
-		gl_LightSource[i].quadraticAttenuation * distFromLight*distFromLight
-		);
+		attenuation = lights[i].k / ( 
+			gl_LightSource[i].constantAttenuation +
+			lights[i].sqrtAttenuation * sqrt(distFromLight) +
+			gl_LightSource[i].linearAttenuation * distFromLight +
+			gl_LightSource[i].quadraticAttenuation * distFromLight*distFromLight
+			);
 
-	localcolor = vec3(0.0, 0.0, 0.0); //gl_LightSource[i].ambient;
-       
-	vec3 lightDirN = lightDir[i]; // TBN
-	lightDirN = normalize(lightDirN);
-	
-	intensity = max(dot(lightDirN, norm), 0.0) * material.diffusek;
-	
-	localcolor = vec3(texture2D(diffuse_map, texCoord0))*max(intensity, 0.0)*gl_LightSource[i].diffuse.rgb;
-    
-	spec = max(dot(r, lightDirN), 0.0);
-	spec = pow(spec, material.specularPower) * material.speculark;
-    
-	localcolor += spec * vec3(texture2D(specular_map, texCoord0))*gl_LightSource[i].specular.rgb;
-	localcolor *= attenuation;
+		localcolor = vec3(0.0, 0.0, 0.0); //gl_LightSource[i].ambient;
+	       
+		vec3 lightDirN = lightDir[i]; // TBN
+		lightDirN = normalize(lightDirN);
+		
+		intensity = max(dot(lightDirN, norm), 0.0) * material.diffusek;
+		
+		localcolor = vec3(texture2D(diffuse_map, texCoord0))*max(intensity, 0.0)*gl_LightSource[i].diffuse.rgb;
+	    
+		spec = max(dot(r, lightDirN), 0.0);
+		spec = pow(spec, material.specularPower) * material.speculark;
+	    
+		localcolor += spec * vec3(texture2D(specular_map, texCoord0))*gl_LightSource[i].specular.rgb;
+		localcolor *= attenuation;
 	}
 	
 	return localcolor;
@@ -111,21 +111,20 @@ void main (void)
     norm = normalize(norm); // TBN
     r = reflect(viewDirN, norm);
 
-	if (lightCount > 0)
-	{
+	if (lightCount > 0)	{
 		color += calcLighting(0);
-	if (lightCount > 1)
-	{
-		color += calcLighting(1);
-	if (lightCount > 2)
-	{
-		color += calcLighting(2);
-	}
-	if (lightCount > 3)
-	{
-		color += calcLighting(3);
-	}
-	}
+		if (lightCount > 1)	{
+			color += calcLighting(1);
+			if (lightCount > 2)	{
+				color += calcLighting(2);
+				if (lightCount > 3)	{
+					color += calcLighting(3);
+					if (lightCount > 4)	{
+						color += calcLighting(4);
+					}
+				}
+			}
+		}
 	}
 	
 	

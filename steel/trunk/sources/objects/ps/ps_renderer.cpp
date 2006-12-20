@@ -61,9 +61,9 @@ void SpriteRenderer::process(ProcessInfo &info)
 	}
 }
 
-aabb SpriteRenderer::getFrame(void)
+AABB SpriteRenderer::getFrame(void)
 {
-	aabb frame;
+	AABB frame;
 	for EACH(svector<v3>, vertexes.data, it)
 		frame.merge(*it);
 

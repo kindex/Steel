@@ -76,6 +76,7 @@ public:
 	virtual void	setFaceMaterials(const FaceMaterials*) = 0;
 	virtual void	setTexCoordsCount(unsigned int) = 0;
 	virtual void	setTexCoords(unsigned int texNumber, const TexCoords*) = 0;
+	virtual void	setAABB(const AABB&) = 0;
 };
 
 #endif
