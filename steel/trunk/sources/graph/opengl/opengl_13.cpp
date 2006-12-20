@@ -397,14 +397,14 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 	*tTangent = &tangentSpaceCache[id].b;
 };
 
-void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	svector<v3> &tangentSpaceLight)
 {
 	matrix34 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
 
 	v3 objectLightPosition = inverseModelMatrix*light;
 
-	v3List &tl = tangentSpaceLight;
+	svector<v3> &tl = tangentSpaceLight;
 
     // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
     for (unsigned int i=0; i<vertex.data.size(); i++)

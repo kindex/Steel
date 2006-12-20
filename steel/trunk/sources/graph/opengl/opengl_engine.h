@@ -36,13 +36,8 @@
 
 class OpenGL_Engine: public GraphEngine
 {
-protected:
-	GameObject *currentObject;
-	struct GraphShadow;
-	GraphShadow *currentShadow;
-
-
-public: // interface realization
+// ******************* GRAPH INTERFACE *************************
+public:
 	bool setCurrentObject(GameObject*);
 	void setPosition(ObjectPosition);
 	void setPositionKind(PositionKind);
@@ -54,15 +49,18 @@ public: // interface realization
 	void setTexCoords(unsigned int texNumber, const TexCoords*);
 	void setAABB(const AABB &box);
 
-	void addChild(GameObject* child);
-	void deleteChild(GameObject* child);
-	void clearChildren(void);
-
 	void addLight(Light*);
 	void removeLight(uid);
 	void updateLight(uid, Light*);
 
 
+// ******************* CHILDREN INTERFACE *************************
+	void addChild(GameObject* child);
+	void deleteChild(GameObject* child);
+	void clearChildren(void);
+
+
+// ********************* SHADOWS *************************
 protected:
 	struct OpenGL_Buffer
 	{
@@ -131,18 +129,19 @@ protected:
 	};
 
 	map<uid, LightShadow*> lights;
-
-	void addChild(GraphShadow &, GameObject*);
-
 	std::map<uid, OpenGL_Buffer> buffer;
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image *zeroNormal;
 	Shader shaderStd;
 
+private:
+	GraphShadow *currentShadow;
+	void addChild(GraphShadow &, GameObject*);
+
 
 protected:
-	// procedure variables
+// ******************* SERVICES *******************
 	bool (OpenGL_Engine::*BindTexture)(Image *image, bool enable);
 	bool (OpenGL_Engine::*DrawFill_MaterialStd)(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
@@ -156,7 +155,7 @@ protected:
 	void (OpenGL_Engine::*DrawVertexes)(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawAABB)(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
 
-	// OpenGL 1.0
+// ******************* OpenGL 1.0 *******************
 	bool BindTexture_OpenGL10(Image *image, bool enable);
 	bool DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
@@ -166,7 +165,8 @@ protected:
 	void DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
 	void DrawAABB_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
 
-	// OpenGL 1.1
+
+// ******************* OpenGL 1.1 *******************
 	bool BindTexture_OpenGL11(Image *image, bool enable);
 	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void DrawWire_OpenGL11(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, GraphEngine::GraphTotalInfo &total);
@@ -174,29 +174,12 @@ protected:
 	void BindTexCoords_OpenGL11(const TexCoords *coords);
 	void BindTexCoords3f_OpenGL11(const TexCoords3f *coords);
 
-	// OpenGL 1.3
+// ******************* OpenGL 1.3 *******************
 	bool DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 
-	// OpenGL 1.5
-	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
-	void CleanupDrawTriangles_OpenGL15(void);
-	void BindTexCoords_OpenGL15(const TexCoords *coords);
-	void BindTexCoords3f_OpenGL15(const TexCoords3f *coords);
-
-	// OpenGL 2.0
-	bool DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
-	GLSL *BindShader(Shader *);
-	void bindTextureToShader(GLSL *program, const char *name, int imageNum, Image *image);
-
-	// Uni
-	void DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
-
-
-	// Stuff to delete
-
-	typedef
-		svector<v3>
-		v3List;
+	void drawBump(GraphShadow &e, const TexCoords *coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image *img);
+	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent);
+	void genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light, svector<v3> &tangentSpaceLight);
 
 	typedef TexCoords3f tangentSpaceLightBufferedArray;
 
@@ -211,66 +194,50 @@ protected:
 
 	 tangentCache tangentSpaceCache;
 
-	 bool focused;
-	 steel::time time;
-
-public:
-	OpenGL_Engine(void);
-
-	virtual void processCamera(void);
-	virtual bool init(Config* _conf, Input *input);
-	virtual bool process(steel::time globalTime, steel::time time);
-	virtual bool deinit(void);
-
-	void prepare(GraphShadow *shadow, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
-
-	bool isVisible(AABB box);
-
-	void process(GraphShadow *e, steel::time globalTime, steel::time time);
-	
-//	void drawFaces(DrawElement &e);
-//	void drawNormals(DrawElement &e);
-//	void drawVertexes(DrawElement &e);
-//	void drawAABB(DrawElement &e, matrix34 matrix);
-
-	
-	void drawBump(GraphShadow &e, const TexCoords *coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image *img);
-	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent);
-	void genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
-
-//	void drawBump(DrawElement &e, TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int texnum, Image *bump);
-//	void drawReflect(DrawElement &e, matrix34 const matrix, v3 const light, uid bufId);
-
-//	bool drawDiffuse(DrawElement &e, matrix34 const matrix, v3 const light);
-//	void drawDistColor(DrawElement &e, matrix34 const matrix, v3 const light, float const distance);
-
-//	void getTangentSpace(Vertexes const *vertex, TexCoords const *mapcoord, Triangles const *triangle, Normals const *normal, steel::vector<v3> **sTangent, steel::vector<v3> **tTangent);
-//	void genTangentSpaceLight(steel::vector<v3> const &sTangent, steel::vector<v3> const &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3List &tangentSpaceLight);
-//	void genTangentSpaceSphere(Vertexes const &vertex, Normals	const &normal, matrix34 const matrix, const v3 _camera,	v3List &tangentSpaceLight);
-
-	//void genTangentSpaceSphere(steel::vector<v3> const &sTangent, steel::vector<v3> const &tTangent, Vertexes const &vertex, Normals	const &normal, matrix34 const matrix, const v3 camera,	v3List **tangentSpaceLight);
-
-//	GLuint getCubeMap(std::string imageName);
+// ******************* OpenGL 1.5 *******************
+	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
+	void CleanupDrawTriangles_OpenGL15(void);
+	void BindTexCoords_OpenGL15(const TexCoords *coords);
+	void BindTexCoords3f_OpenGL15(const TexCoords3f *coords);
 
 	template<class Class> bool BindVBO(Class *v, int mode, int mode2, int elCnt);
 	void cleanBuffer(uid bufId);
-/*	bool bindTexCoords(MapCoord *coord);
-	bool bindVertexes(Vertexes *v);*/
+// ******************* OpenGL 2.0 *******************
+	bool DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
+	GLSL *BindShader(Shader *);
+	void bindTextureToShader(GLSL *program, const char *name, int imageNum, Image *image);
 
+// ******************* OpenGL all *******************
+	void DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
+
+	bool focused;
+	steel::time time;
+
+public:
+// ****************** GRAPG ENGINE ***********************
+	OpenGL_Engine(void);
+
+	void processCamera(void);
+	bool init(Config* _conf, Input *input);
+	bool process(steel::time globalTime, steel::time time);
+	bool deinit(void);
+
+	void prepare(GraphShadow *shadow, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
+	void process(GraphShadow *e, steel::time globalTime, steel::time time);
+	bool isVisible(AABB box);
+	
 	GraphShadow* getShadow(GameObject *object) { return (GraphShadow*)Engine::getShadow(object); }
 	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id); }
 	 
 	Shadow* getShadowClass(GameObject *object) { return new GraphShadow(this); }
 
-	void onResize(int width, int height);
 
-	struct WindowInformation
-	{
-	};
-
+// ****************** WINDOW FUNCTION **********************
+	struct WindowInformation {};
 	WindowInformation *windowInformation;
-	// Window management functions
+
 	bool isFocusedOpenGL_Window(void) { return focused; }
+	void onResize(int width, int height);
 
 	bool (OpenGL_Engine::*CreateOpenGL_Window)(Input *input);
 	bool (OpenGL_Engine::*RepairOpenGL_Window)(void);

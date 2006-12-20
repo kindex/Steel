@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel Engine
-UnitCount=140
+UnitCount=141
 Type=0
 Ver=1
 ObjFiles=
@@ -1348,9 +1348,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit141]
-FileName=res\config\config.cpp
+FileName=graph\opengl\opengl_interface.cpp
 CompileCpp=1
-Folder=res/config
+Folder=graph/opengl
 Compile=1
 Link=1
 Priority=1000

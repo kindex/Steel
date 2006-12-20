@@ -49,10 +49,8 @@ bool OpenGL_Engine::setCurrentObject(GameObject* object)
 	currentShadow = getShadow(id);
 	if(currentShadow == NULL)
 	{
-		currentObject = NULL;
 		return false;
 	}
-	currentObject = object;
 
 	return false;
 }

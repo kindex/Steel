@@ -82,7 +82,7 @@ OpenGL_Engine::OpenGL_Engine():
 	DeleteOpenGL_Window(NULL),
 	setCaptionOpenGL_Window(NULL),
 	FlushOpenGL_Window(NULL),
-	currentObject(NULL), currentShadow(NULL) 
+	currentShadow(NULL) 
 {}
 
 
@@ -192,10 +192,6 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 			if (shadow.isCrossingLight(jt->second))
 			{
 				shadow.lights.push_back(jt->second);
-			}
-			else
-			{
-				int x = 0.1;
 			}
 		}
 	}
