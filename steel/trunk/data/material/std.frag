@@ -19,6 +19,17 @@ uniform struct
 	float emissionk;
 } material;
 
+uniform struct
+{
+	int type;
+	float sqrtAttenuation;
+	float minDistance;
+	float maxDistance;
+	sampler2D map;
+	sampler3D cube_map;
+	float k;
+} lights[4];
+
 uniform sampler2D diffuse_map;
 uniform sampler2D diffuse2_map;
 uniform sampler2D normal_map;
@@ -52,17 +63,20 @@ vec3 calcLighting(in int i)
 	vec3 localcolor;
 	float attenuation;
 	
-	if (distFromLight > gl_LightSource[i].ambient.y)
+	if (distFromLight > lights[i].maxDistance)
 	{
 		localcolor = vec3(0.0, 0.0, 0.0);
 	}
 	else
 	{
-	if (distFromLight < gl_LightSource[i].ambient.x) distFromLight = gl_LightSource[i].ambient.x;
+	if (distFromLight < lights[i].maxDistance) distFromLight = lights[i].maxDistance; // minDistance
 	
-    attenuation = gl_LightSource[i].ambient.z / ( gl_LightSource[i].constantAttenuation +
-       gl_LightSource[i].linearAttenuation * distFromLight +
-       gl_LightSource[i].quadraticAttenuation * distFromLight * distFromLight);
+    attenuation = lights[i].k / ( 
+		gl_LightSource[i].constantAttenuation +
+		lights[i].sqrtAttenuation * sqrt(distFromLight) +
+		gl_LightSource[i].linearAttenuation * distFromLight +
+		gl_LightSource[i].quadraticAttenuation * distFromLight*distFromLight
+		);
 
 	localcolor = vec3(0.0, 0.0, 0.0); //gl_LightSource[i].ambient;
        

@@ -18,7 +18,7 @@
 		Short description
 		Target programmers (Open), current programmer (Construction), Tester(Testing), All authors (Released)
 		Adviser (Task author)
-		Priority (1 - more, 10 - less)
+		Priority (1 - critical important, 10 - useless)
 		Estimated time (h, d, w)
 		Deadline (date, project version)
 		Target (branch, trunk)
@@ -27,13 +27,13 @@
 ** Open ********************************************************************************************
 
 368. Path Kinematic. Physic Engine - Object movement by trajectory. / KindeX. KindeX. [1]. (1w).
+406. Kinematics: add simple rotation and path movement to objects (combiner). Local coordinate system. / KindeX. KindeX. [1]. (1d).
 364. Quake MAP. Quake MAP (scene) loader. / *. KindeX. [3]. (3d).
 344. JPEG. JPEG file loader same as BMP loader. / Def, Dark_Sirius, Kuzmi4. KindeX. [4]. (3d). 20061231 (steel 1.1)
 405. ASE. ASE scene file loader. / Def, Dark_Sirius, Kuzmi4. KindeX. [4]. (3d).
 401. OpenGL: shadows. / KindeX. KindeX. [4]. (3d).
 402. OpenGL: blending. Glass, sprites (with correct lighting). Sort blending polygons. / KindeX. KindeX. [4]. (3d).
 348. Config bug. Error in finding value by templates through parent config. / KindeX. KindeX. [5]. (1d). 20061201
-406. Kinematics: add simple rotation and path movement to objects (combiner). Local coordinate system. / KindeX. KindeX. [5]. (1d).
 404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. KindeX. [6]. (1w).
 369. CD. Collision detection for particles. / Def, KindeX. KindeX. [7]. (1w).
 400. Config comments. Load comment from config to dump configs with comments. / *. KindeX. [9]. (3h).

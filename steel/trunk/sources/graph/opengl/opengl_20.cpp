@@ -17,6 +17,7 @@
 #include "opengl_glsl.h"
 #include "opengl_engine.h"
 #include "gl/libext.h"
+#include <string>
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
 bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total)
@@ -55,21 +56,25 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			program->setUniformInt("lightCount", lightCount);
 			for(int i = 0; i < lightCount; i++)
 			{
-				glLightfv(GL_LIGHT0 + i, GL_POSITION, e.lights[i]->position.getfv());
+				float pos[4];
+				pos[0] = e.lights[i]->position.x;
+				pos[1] = e.lights[i]->position.y;
+				pos[2] = e.lights[i]->position.z;
+				pos[3] = 0.0f;
+				glLightfv(GL_LIGHT0 + i, GL_POSITION, (float*)pos);
 				glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, e.lights[i]->light->constantAttenuation);
 				glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, e.lights[i]->light->linearAttenuation);
 				glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, e.lights[i]->light->quadraticAttenuation);
 
-//				glLightfv(GL_LIGHT0 + i, GL_AMBIENT, e.lights[i]->light->ambient.getfv());
+				glLightfv(GL_LIGHT0 + i, GL_AMBIENT, e.lights[i]->light->ambient.getfv());
 				glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, e.lights[i]->light->diffuse.getfv());
 				glLightfv(GL_LIGHT0 + i, GL_SPECULAR, e.lights[i]->light->specular.getfv());
 
-//				glLightf(GL_LIGHT0 + i, GL_SPOT_CUTOFF, e.lights[i]->light->maxDistance);
-				float spot[4];
-				spot[0] = e.lights[i]->light->minDistance;
-				spot[1] = e.lights[i]->light->maxDistance;
-				spot[2] = e.lights[i]->light->k;
-				glLightfv(GL_LIGHT0 + i, GL_AMBIENT, spot);
+				std::string lighti = std::string("lights[") + IntToStr(i) + "]";
+				program->setUniformFloat(lighti + ".k", e.lights[i]->light->k);
+				program->setUniformFloat(lighti + ".minDistance", e.lights[i]->light->minDistance);
+				program->setUniformFloat(lighti + ".maxDistance", e.lights[i]->light->maxDistance);
+				program->setUniformFloat(lighti + ".sqrtAttenuation", e.lights[i]->light->sqrtAttenuation);
 			}
 
 

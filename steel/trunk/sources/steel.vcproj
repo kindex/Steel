@@ -1141,6 +1141,10 @@
 				RelativePath="..\data\1.scene"
 				>
 			</File>
+			<File
+				RelativePath="..\data\flashlight.conf"
+				>
+			</File>
 			<Filter
 				Name="sphere"
 				>

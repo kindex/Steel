@@ -12,6 +12,7 @@ bool GameLight::InitFromConfig(Config *conf)
 	light->position.loadZero();
 
 	light->constantAttenuation = conf->getf("constantAttenuation", 0.0f);
+	light->sqrtAttenuation = conf->getf("sqrtAttenuation", 0.0f);
 	light->linearAttenuation = conf->getf("linearAttenuation", 1.0f);
 	light->quadraticAttenuation = conf->getf("quadraticAttenuation", 0.0f);
 

@@ -51,6 +51,7 @@ struct Light
 
 	float intensivity; // intensivity * color
 	float constantAttenuation;
+	float sqrtAttenuation;
 	float linearAttenuation;
 	float quadraticAttenuation;
 	float minDistance; // max distance without rolloff

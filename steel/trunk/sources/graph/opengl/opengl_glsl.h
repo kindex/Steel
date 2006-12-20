@@ -50,7 +50,7 @@ public:
     bool        setUniformVector  ( int loc,            const v3& value );
     bool        setUniformVector  ( const char * name, const v2& value  );
     bool        setUniformVector  ( int loc,            const v2& value );
-    bool        setUniformFloat   ( const char * name, float value            );
+    bool        setUniformFloat   (const std::string &name, float value);
     bool        setUniformFloat   ( int loc,            float value           );
 //    bool        setUniformMatrix  ( const char * name, const Matrix4x4& value );
     bool        setUniformMatrix  ( const char * name, const matrix33&  value );

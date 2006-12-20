@@ -199,14 +199,16 @@ bool    GLSL :: setUniformVector  ( int loc, const v2& value )
     return true;
 }
 
-bool    GLSL :: setUniformFloat ( const char * name, float value )
+bool GLSL::setUniformFloat(const std::string &name, float value)
 {
-    int loc = glGetUniformLocationARB ( programId, name );
+	int loc = glGetUniformLocationARB(programId, name.c_str());
 
-    if ( loc < 0 )
+    if (loc < 0)
+	{
         return false;
+	}
 
-    glUniform1fARB ( loc, value );
+    glUniform1fARB(loc, value);
 
     return true;
 }

@@ -50,18 +50,18 @@ objects =
 					}
 				}
 		}
-	audio = 
+/*	audio = 
 		{
 			class = 'SimpleSound'
 			position = (1 1 0.5);
 			file = 'audio/test4';
 			gain = 1.0;
-			pitch = 2.0;
+			pitch = 1.0;
 			isLoop = 1;
 			rolloffFactor = 1.0;
 			sourceRelative = 0;
 		} // audio
-	
+*/
 	}
 
 
@@ -106,18 +106,18 @@ objects =
 		origin = (-10 0 0)
 	}
 	
-	{
+/*	{
 		class = 'light'
 		origin = (-4.5 -4.5 -4.5)
 		constantAttenuation = 0.0
-		linearAttenuation = 0.01
-		quadraticAttenuation = 0.0
-		minDistance = 10
+		linearAttenuation = 0.0
+		quadraticAttenuation = 0.01
+		minDistance = 1
 		maxDistance = 100
-//		ambient = (0 0 0)
 		diffuse = (1 1 1)
 		specular = (1 1 1)
-		k = 0.1
-	}
+		k = 1
+	}*/
+	
 ) // objects
 } // scene
