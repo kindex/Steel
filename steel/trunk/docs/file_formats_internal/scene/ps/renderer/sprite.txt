@@ -1,0 +1,7 @@
+steel::SpriteRenderer
+
+class = 'sprite'
+
+material
+align	{'screen', 'z', 'camera', 'custom'}
+

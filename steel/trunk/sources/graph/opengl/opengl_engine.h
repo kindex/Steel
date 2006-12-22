@@ -146,7 +146,7 @@ protected:
 	bool (OpenGL_Engine::*DrawFill_MaterialStd)(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*CleanupDrawTriangles)(void);
-	void (OpenGL_Engine::*BindTexCoords)(const TexCoords *coords);
+	void (OpenGL_Engine::*BindTexCoords)(const TexCoords *coords, const TextureMatrix* textureMatrix);
 	void (OpenGL_Engine::*BindTexCoords3f)(const TexCoords3f *coords);
 
 	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, GraphEngine::GraphTotalInfo &total);
@@ -171,7 +171,7 @@ protected:
 	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void DrawWire_OpenGL11(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, GraphEngine::GraphTotalInfo &total);
 	void DrawLines_OpenGL11(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total);
-	void BindTexCoords_OpenGL11(const TexCoords *coords);
+	void BindTexCoords_OpenGL11(const TexCoords *coords, const TextureMatrix* textureMatrix);
 	void BindTexCoords3f_OpenGL11(const TexCoords3f *coords);
 
 // ******************* OpenGL 1.3 *******************
@@ -197,8 +197,10 @@ protected:
 // ******************* OpenGL 1.5 *******************
 	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
 	void CleanupDrawTriangles_OpenGL15(void);
-	void BindTexCoords_OpenGL15(const TexCoords *coords);
+	void BindTexCoords_OpenGL15(const TexCoords *coords, const TextureMatrix* textureMatrix);
 	void BindTexCoords3f_OpenGL15(const TexCoords3f *coords);
+	int textureMatrixLevel;
+
 
 	template<class Class> bool BindVBO(Class *v, int mode, int mode2, int elCnt);
 	void cleanBuffer(uid bufId);
@@ -206,6 +208,7 @@ protected:
 	bool DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 	GLSL *BindShader(Shader *);
 	void bindTextureToShader(GLSL *program, const char *name, int imageNum, Image *image);
+	void unbindTexCoords(void);
 
 // ******************* OpenGL all *******************
 	void DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);

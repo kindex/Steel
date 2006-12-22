@@ -33,7 +33,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 
 		if(program != NULL)
 		{
-			(this->*BindTexCoords)(e.getTexCoords(material->diffuse_map));
+			(this->*BindTexCoords)(e.getTexCoords(material->diffuse_map), &material->diffuse_map.textureMatrix);
 
 			bindTextureToShader(program, "diffuse_map", 0, material->diffuse_map.image);
 			bindTextureToShader(program, "diffuse2_map", 1, material->diffuse2_map.image);
@@ -42,9 +42,9 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			bindTextureToShader(program, "specular_map", 4, material->specular_map.image);
 
 			program->setUniformFloat("material.specularPower", material->specularPower);
-			program->setUniformFloat("material.speculark", material->speculark);
-			program->setUniformFloat("material.diffusek", material->diffusek);
-			program->setUniformFloat("material.emissionk", material->emissionk);
+			program->setUniformFloat("material.speculark", material->specular_map.k);
+			program->setUniformFloat("material.diffusek", material->diffuse_map.k);
+			program->setUniformFloat("material.emissionk", material->emission_map.k);
 
 			program->setUniformVector("camera.position", camera.getPosition());
 			program->setUniformVector("camera.direction", camera.getDirection());
@@ -95,6 +95,8 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 		}
 
 		if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
+
+		unbindTexCoords();
 
 		glPopClientAttrib();
 	   	glPopAttrib();

@@ -57,12 +57,23 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, const Triangles *tria
 	}
 }
 
-void OpenGL_Engine::BindTexCoords_OpenGL15(const TexCoords *coords)
+void OpenGL_Engine::BindTexCoords_OpenGL15(const TexCoords *coords, const TextureMatrix* textureMatrix)
 {
 	if(coords != NULL)	
 	{ 
 		if(BindVBO(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+		{
 			glTexCoordPointer(2, GL_FLOAT, 0,0);
+
+			if (textureMatrix != NULL && textureMatrixLevel == 0)
+			{
+				glMatrixMode(GL_TEXTURE);	glLoadIdentity();
+				glScalef(		textureMatrix->texCoordsScale.x,		textureMatrix->texCoordsScale.y,		textureMatrix->texCoordsScale.z); 
+				glTranslatef(	textureMatrix->texCoordsTranslation.x,	textureMatrix->texCoordsTranslation.y,	textureMatrix->texCoordsTranslation.z); 
+				glRotatef(		textureMatrix->texCoordsRotation/(float)(M_PI)*180.0f, 0.0f, 0.0f, 1.0f); 
+				textureMatrixLevel++;
+			}
+		}
 	}
 }
 

@@ -68,20 +68,28 @@ typedef enum
 	TEXTURE_REFLECT_SKY
 } TextureReflectType;
 
+struct TextureMatrix
+{
+	v3 texCoordsScale;
+	v3 texCoordsTranslation;
+	float texCoordsRotation;
+};
+
+
 class MaterialStd: public Material
 {
 public:
+	MaterialStd(void);
+	bool InitFromConfig(Config *config);
 
 	struct TextureStd
 	{
 		Image *image;
-		TextureMode mode;
 		unsigned int texCoordsUnit;
-		v3 texCoordsScale;
-		float texCoordsRotation;
-		v3 texCoordsTranslation;
+		TextureMatrix textureMatrix;
+		float k;
 
-		TextureStd(void): image(NULL), texCoordsUnit(0) {}
+		TextureStd(void): image(NULL), texCoordsUnit(0), k(0.0) {}
 		bool InitFromConfig(Config *config);
 	};
 
@@ -94,17 +102,11 @@ public:
 		bool InitFromConfig(Config *config);
 	};
 
-	bool InitFromConfig(Config *config);
-	MaterialStd(void);
-
 //private:
 	float specularPower;
-	float speculark;
-	float diffusek;
-	float emissionk;
+
 
 	TextureStd diffuse_map, diffuse2_map, normal_map, specular_map, emission_map;
-	TextureReflect reflect_map;
 	color4f color;
 };
 

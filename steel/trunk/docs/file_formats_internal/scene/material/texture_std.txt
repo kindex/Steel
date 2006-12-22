@@ -1,0 +1,11 @@
+steel::MaterialStd::TextureStd
+
+
+image			path	Path to image
+k			float	texture brightness multiplier [1.0]
+?texCoordsUnit		int	TextureCoordinate source unit (0..7)
+?texCoordsScale		v3	[1 1 1]
+?texCoordsRotation	float	[0]
+?texCoordsTranslation	v3	[0 0 0]
+
+

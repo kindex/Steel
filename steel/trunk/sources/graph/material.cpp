@@ -48,16 +48,13 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 	diffuse_map.InitFromConfig(conf->find("diffuse_map"));
 	diffuse2_map.InitFromConfig(conf->find("diffuse2_map"));
 	normal_map.InitFromConfig(conf->find("normal_map"));
-	reflect_map.InitFromConfig(conf->find("reflect_map"));
+//	reflect_map.InitFromConfig(conf->find("reflect_map"));
 	specular_map.InitFromConfig(conf->find("specular_map"));
 	emission_map.InitFromConfig(conf->find("emission_map"));
 
-	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f)));
+	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f))); // TODO:
 
 	specularPower = conf->getf("specular_map.power", 16.0);
-	speculark = conf->getf("specular_map.k", 1.0);
-	diffusek = conf->getf("diffuse_map.k", 1.0);
-	emissionk = conf->getf("emission_map.k", 1.0);
 
 	return true; 
 }
@@ -70,20 +67,14 @@ bool MaterialStd::TextureStd::InitFromConfig(Config *config)
 	
 	if(image == NULL)
 	{
-		mode = TEXTURE_MODE_NONE;
 		return false;
 	}
+	k					= config->getf ("k", 1.0f);
 
 	texCoordsUnit		= config->geti ("texCoordsUnit", 0);
-	texCoordsScale		= config->getv3("texCoordsScale", v3(1.0f, 1.0f, 1.0f));
-	texCoordsRotation	= config->getf ("texCoordsRotation", 0.0f);
-	texCoordsTranslation= config->getv3("texCoordsTranslation", v3(0.0f, 0.0f, 0.0f));
-
-	string m = config->gets("mode", "+");
-	if(m == "+") mode = TEXTURE_MODE_ADD;
-	else if(m == "*") mode = TEXTURE_MODE_MUL;
-	else if(m == "blend") mode = TEXTURE_MODE_BLEND;
-	else mode = TEXTURE_MODE_NONE;
+	textureMatrix.texCoordsScale		= config->getv3("texCoordsScale", v3(1.0f, 1.0f, 1.0f));
+	textureMatrix.texCoordsRotation	= config->getf ("texCoordsRotation", 0.0f);
+	textureMatrix.texCoordsTranslation= config->getv3("texCoordsTranslation", v3(0.0f, 0.0f, 0.0f));
 
 	return image != NULL;
 }

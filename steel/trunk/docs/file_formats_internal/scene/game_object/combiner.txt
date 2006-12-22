@@ -1,0 +1,13 @@
+﻿steel::Combiner
+
+Класс, который позволяет компоновать раздичные реализации графики и звучания
+в одном игровом объекте при помощи композиции.
+
+class	string	'combiner'
+origin	v3
+
+position_kind {'global', 'local'}	['global']
+
+graph	graph_object
+audio	audio_object
+

@@ -35,7 +35,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 
 		bool bump_map = material->normal_map.image != NULL && conf->geti("drawBump") && !e.lights.empty() && e.normals != NULL && GL_EXTENSION_DOT3 && GL_EXTENSION_TEXTURE_CUBE_MAP;
 		bool diffuse_map = material->diffuse_map.image != NULL && conf->geti("drawTexture");
-		bool reflect_map = material->reflect_map.image != NULL && conf->geti("drawReflect") && GL_EXTENSION_TEXTURE_CUBE_MAP;
+		//bool reflect_map = material->reflect_map.image != NULL && conf->geti("drawReflect") && GL_EXTENSION_TEXTURE_CUBE_MAP;
 		int currentTextureArb = 0;
 
 		if(bump_map)
@@ -74,11 +74,11 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 					texCoords = e.texCoords[0];
 
 			assert(texCoords->data.size() == e.vertexes->data.size(), "TexCoords.size != Vertex.size");
-			if(BindTexCoords != NULL) (this->*BindTexCoords)(texCoords);
+			if(BindTexCoords != NULL) (this->*BindTexCoords)(texCoords, &material->diffuse_map.textureMatrix);
 			currentTextureArb++;
 		}
 
-		if(reflect_map) // карта отражения
+/*		if(reflect_map) // карта отражения
 		{
 			GLint mode = GL_REPLACE;
 			if(currentTextureArb > 0)
@@ -103,7 +103,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 
 			currentTextureArb += 1;
 		}
-
+*/
 
 		if(!diffuse_map)
 			glColor4fv(material->color.getfv());
@@ -116,6 +116,8 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 		{
 			cleanBuffer(*it);
 		}
+		
+		unbindTexCoords();
 
 		glPopClientAttrib();
 	   	glPopAttrib();
@@ -504,7 +506,7 @@ void OpenGL_Engine::drawBump(GraphShadow &e, const TexCoords *coords, matrix34 c
 	glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb + 1);
 	(this->*BindTexture)(img, true);
 
-	if(BindTexCoords) (this->*BindTexCoords)(coords);
+	if(BindTexCoords) (this->*BindTexCoords)(coords, NULL);
 	
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
 	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);

@@ -64,21 +64,11 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 			texCoords = e.getTexCoords(material->diffuse_map);
 		}
 
-		glMatrixMode(GL_TEXTURE);	glLoadIdentity();
-		if(texCoords != NULL)
-		{
-			glScalef(		material->diffuse_map.texCoordsScale.x,		material->diffuse_map.texCoordsScale.y,		material->diffuse_map.texCoordsScale.z); 
-			glTranslatef(	material->diffuse_map.texCoordsTranslation.x,	material->diffuse_map.texCoordsTranslation.y,	material->diffuse_map.texCoordsTranslation.z); 
-			glRotatef(material->diffuse_map.texCoordsRotation/(float)(M_PI)*180.0f, 0.0f, 0.0f, 1.0f); 
-		}
-
 		if(DrawTriangles != NULL) (this->*DrawTriangles)(e, triangles, texCoords,  total);
 		if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
 
-		if(texCoords != NULL)
-		{
-			glMatrixMode(GL_TEXTURE);	glLoadIdentity();
-		}
+		unbindTexCoords();
+
 		glPopClientAttrib();
 	   	glPopAttrib();
 		return true;

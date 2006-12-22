@@ -411,7 +411,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 			shaderStd.fragmentShader = resText.add("material/std.frag");
 		}
 	}
-
+	textureMatrixLevel = 0;
 
 	normalisationCubeMap	= generateNormalisationCubeMap();
 	zeroNormal = resImage.add("zero");
@@ -587,4 +587,13 @@ bool OpenGL_Engine::GraphShadow::isCrossingLight(const LightShadow* light)
 	AABB realaabb = aabb;
 	realaabb.mul(position);
 	return realaabb.isCrossingSphere(light->position, light->light->maxDistance);
+}
+
+void OpenGL_Engine::unbindTexCoords(void)
+{
+	if (textureMatrixLevel > 0)
+	{
+		glMatrixMode(GL_TEXTURE);	glLoadIdentity();
+		textureMatrixLevel = 0;
+	}
 }

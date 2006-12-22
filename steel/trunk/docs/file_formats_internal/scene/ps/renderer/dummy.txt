@@ -1,0 +1,7 @@
+steel::DummyPSRenderer
+
+?
+
+class = 'dummy'
+
+

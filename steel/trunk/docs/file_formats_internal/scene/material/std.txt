@@ -1,0 +1,20 @@
+﻿steel::MaterialStd
+
+Стандартная модель освещения.
+1.0 std opengl lighting model
+1.3 Bump
+2.0 std shader
+
+class = 'std'
+blend		bool		прозрачность [0]
+
+?color		v3
+
+diffuse_map	texture_std
+diffuse2_map	texture_std	microtexture
+normal_map	texture_std
+specular_map	texture_std
+emission_map	texture_std
+
+specular_map.power	float	степень блика (болше - блик ярче) [16]
+

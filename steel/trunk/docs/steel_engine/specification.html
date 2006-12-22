@@ -427,7 +427,7 @@ table.MsoTableGrid
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
 <!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="11266"/>
+ <o:shapedefaults v:ext="edit" spidmax="12290"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -453,73 +453,93 @@ class=GramE>на</span> несколько логических частей:</p
 <h2><span class=SpellE>Core</span></h2>
 
 <p style='margin-bottom:0cm;margin-bottom:.0001pt'>Отвечает за связь,
-инициализацию модулей, <span class=SpellE>multithreading</span>. Передаёт управление
-движку для обработки мира игры на короткое время.</p>
+инициализацию модулей, <span class=SpellE>multithreading</span>. Передаёт
+управление движку для обработки мира игры на короткое время.</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo2;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>зациклившаяся
-часть движка не должна повесить весь движок.</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>зациклившаяся
+часть движка не должна повесить весь движок.<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo2;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Процессоры
-должны нагружаться равномерно</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Процессоры
+должны нагружаться равномерно<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo2;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Процессор
-не должен простаивать</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Процессор
+не должен простаивать<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo2;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>кросплатформенность</span></p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span style='background:lime;
+mso-highlight:lime'>кросплатформенность</span></span><span style='background:
+lime;mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo2;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>консоль
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>консоль
 позволяет узнавать и изменять большинство параметров всех объектов и движков на
-лету</p>
+лету<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level2 lfo2;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>лог-файл<span
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>лог-файл<span
 class=GramE>.</span> <span class=GramE>к</span>лючевые слова для фильтрации
-сообщений.</p>
+сообщений.<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level2 lfo2;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>встроенные
-<span class=SpellE>скриптовой</span> язык для описания поведения объектов (<span
-lang=EN-US style='mso-ansi-language:EN-US'>python</span>, <span lang=EN-US
-style='mso-ansi-language:EN-US'>ruby</span>).</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>встроенные
+<span class=SpellE>скриптовой</span> язык для описания поведения объектов (</span><span
+lang=EN-US style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>python</span><span
+style='background:lime;mso-highlight:lime'>, </span><span lang=EN-US
+style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>ruby</span><span
+style='background:lime;mso-highlight:lime'>).<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level2 lfo2;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>права
-<span class=SpellE>скрипта</span> (права доступа)<span lang=EN-US
-style='mso-ansi-language:EN-US'>.</span></p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>права
+<span class=SpellE>скрипта</span> (права доступа)</span><span lang=EN-US
+style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>.</span><span
+style='background:lime;mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level2 lfo2;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>в
-лог выводится информация о системе.</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>в
+лог выводится информация о <span class=SpellE>системе.</span><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l4 level1 lfo2;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>6.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>конфиги</span></p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE>конфиги</span>. <span
+class=SpellE>Пресеты</span>. Иерархия <span class=SpellE>пресетов</span>.
+Относительные и абсолютные изменения параметров <span class=GramE>во</span>
+внутренних <span class=SpellE>пресетах</span>.<span style='background:lime;
+mso-highlight:lime'><o:p></o:p></span></p>
+
+<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
+margin-left:18.0pt;margin-bottom:.0001pt;text-indent:0cm'><o:p>&nbsp;</o:p></p>
 
 <p style='margin-bottom:0cm;margin-bottom:.0001pt'><o:p>&nbsp;</o:p></p>
 
@@ -534,34 +554,40 @@ D3D)</p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>Рендеринг</span> одного мира в двух окнах</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span style='background:lime;
+mso-highlight:lime'>Рендеринг</span></span><span style='background:lime;
+mso-highlight:lime'> одного мира в двух окнах<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
 tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Объекты
-могут быть сдвинуты, повёрнуты, отмасштабированы</p>
+могут быть сдвинуты, <span style='background:lime;mso-highlight:lime'>повёрнуты,
+отмасштабированы</span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Иерархия
-объектов. Все трансформации родителя передаются и детям.</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Иерархия
+объектов. Все трансформации родителя передаются и детям.<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Отсечение
-невидимых объектов.</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Отсечение
+невидимых объектов.<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Должен
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Должен
 оперировать только с той информацией, которая ему нужна. Если каркас объекта не
-попадает в камеру, то не стоит узнавать точную форму объекта.</p>
+попадает в камеру, то не стоит узнавать точную форму объекта.<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
@@ -571,40 +597,35 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>7.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>В
-материале указывается:</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>В материале указывается:<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>diffuse</span> текстура (<span class=SpellE>color</span> <span
-class=SpellE>map</span>)</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span style='background:yellow;
+mso-highlight:yellow'>diffuse</span></span><span style='background:yellow;
+mso-highlight:yellow'> текстура (<span class=SpellE>color</span> <span
+class=SpellE>map</span>)<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>bump</span> (<span class=SpellE>normal</span> <span class=SpellE>map</span>)</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span style='background:yellow;
+mso-highlight:yellow'>bump</span></span><span style='background:yellow;
+mso-highlight:yellow'> (<span class=SpellE>normal</span> <span class=SpellE>map</span>)<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>illuminating</span></p>
-
-<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
-margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>карта
-преломления (<span class=SpellE>reflect</span>)</p>
-
-<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
-margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>shader</span></span></p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span lang=EN-US
+style='background:yellow;mso-highlight:yellow;mso-ansi-language:EN-US'>emmision</span></span><span
+style='background:yellow;mso-highlight:yellow'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
@@ -614,28 +635,38 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>9.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Тени</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Тени<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>10.<span
-style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>Туман</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>10.<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Туман<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>11.<span
-style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>Объект
-может состоять из набора спрайтов</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>11.<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Объект
+может состоять из набора спрайтов<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>12.<span
-style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>Минимальная
-функциональность на <span lang=EN-US style='mso-ansi-language:EN-US'>OpenGL</span>
-1.1, средняя на <span lang=EN-US style='mso-ansi-language:EN-US'>OpenGL</span><span
-lang=EN-US> </span>1.3 и полная на <span lang=EN-US style='mso-ansi-language:
-EN-US'>OpenGL</span><span lang=EN-US> </span>2.0</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>12.<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>Минимальная функциональность на </span><span lang=EN-US
+style='background:yellow;mso-highlight:yellow;mso-ansi-language:EN-US'>OpenGL</span><span
+style='background:yellow;mso-highlight:yellow'> 1.1, средняя на </span><span
+lang=EN-US style='background:yellow;mso-highlight:yellow;mso-ansi-language:
+EN-US'>OpenGL</span><span lang=EN-US style='background:yellow;mso-highlight:
+yellow'> </span><span style='background:yellow;mso-highlight:yellow'>1.3 и
+полная на </span><span lang=EN-US style='background:yellow;mso-highlight:yellow;
+mso-ansi-language:EN-US'>OpenGL</span><span lang=EN-US style='background:yellow;
+mso-highlight:yellow'> </span><span style='background:yellow;mso-highlight:
+yellow'>2.0<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
@@ -644,188 +675,228 @@ style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>тексту
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>программно
-генерируемые</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>программно
+генерируемые<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>анимированные
-(<span class=SpellE>видеотекстуры</span>)</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>анимированные
+(<span class=SpellE>видеотекстуры</span>)<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>преломление
-изображения (стекло, огонь)</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>преломление
+изображения (стекло, огонь)<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>мониторы
-с изображением с камер (<span lang=EN-US style='mso-ansi-language:EN-US'>render</span><span
-lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>to</span><span
-lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>texture</span>)</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>мониторы
+с изображением с камер (</span><span lang=EN-US style='background:lime;
+mso-highlight:lime;mso-ansi-language:EN-US'>render</span><span lang=EN-US
+style='background:lime;mso-highlight:lime'> </span><span lang=EN-US
+style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>to</span><span
+lang=EN-US style='background:lime;mso-highlight:lime'> </span><span lang=EN-US
+style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>texture</span><span
+style='background:lime;mso-highlight:lime'>)<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>14.<span
-style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>изменение
-разрешения экрана на лету</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>14.<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>изменение
+разрешения экрана на лету<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>fullscreen</span></span><span
-lang=EN-US style='mso-ansi-language:EN-US'> to window mode</span></p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span lang=EN-US
+style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>fullscreen</span></span><span
+lang=EN-US style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>
+to window mode</span><span style='background:lime;mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level2 lfo4;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>выставление
-<span lang=EN-US style='mso-ansi-language:EN-US'>refresh rate</span></p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>выставление
+</span><span lang=EN-US style='background:lime;mso-highlight:lime;mso-ansi-language:
+EN-US'>refresh rate</span><span style='background:lime;mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>15.<span
-style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>Всевозможные
-настройки графики (сглаживание, <span class=SpellE><span lang=EN-US
-style='mso-ansi-language:EN-US'>antialiasing</span></span>, <span lang=EN-US
-style='mso-ansi-language:EN-US'>etc</span>)</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>15.<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Всевозможные
+настройки графики (сглаживание, </span><span class=SpellE><span lang=EN-US
+style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>antialiasing</span></span><span
+style='background:lime;mso-highlight:lime'>, </span><span lang=EN-US
+style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>etc</span><span
+style='background:lime;mso-highlight:lime'>)<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>16.<span
-style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><![endif]>В
-правильном порядке выводить полупрозрачные полигоны</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>16.<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>В
+правильном порядке выводить полупрозрачные полигоны<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>восстанавливать
-контекст <span class=SpellE>рендеринга</span> при его потере</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>17.<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>восстанавливать
+контекст <span class=SpellE>рендеринга</span> при его потере<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>при
-минимизировании окна (потере фокуса) отпускать мышь и ставить на паузу</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>18.<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>при
+минимизировании окна (потере фокуса) отпускать мышь и ставить на паузу<o:p></o:p></span></p>
 
 <h2><span class=SpellE>Physic</span> <span class=SpellE>Engine</span></h2>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo6;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Кинематика</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Кинематика<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Движение
-по прямой линии</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Движение
+по прямой линии<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Свободное
-падение</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Свободное
+падение<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Движение
-по заранее просчитанной траектории (по рельсам)</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Движение
+по заранее просчитанной траектории (по рельсам)<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Придание
-ускорения телам</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Придание
+ускорения телам<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Неподвижные
-объекты (пол, стены)</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Неподвижные
+объекты (пол, стены)<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo6;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Определение
-коллизий</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Определение
+коллизий<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>для
-частиц <span lang=EN-US style='mso-ansi-language:EN-US'>(LJ, gravity)</span></p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>для
+частиц </span><span lang=EN-US style='background:lime;mso-highlight:lime;
+mso-ansi-language:EN-US'>(LJ, gravity)</span><span style='background:lime;
+mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>для
-сфер</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>для
+сфер<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>для
-многогранников</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>для
+многогранников<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>для
-каждого типа с каждым</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>для
+каждого типа с каждым<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo6;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Динамика</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Динамика<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Изменение
-скорости тел по законам Ньютона при ударе</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Изменение
+скорости тел по законам Ньютона при ударе<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Изменение
-скорости и вращения тел при ударе</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Изменение
+скорости и вращения тел при ударе<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo6;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Иерархия</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Иерархия<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>кластеры
-(комнаты). Переход в соседние комнаты.</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>кластеры
+(комнаты). Переход в соседние комнаты.<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>домены
-коллизий</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>домены
+коллизий<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level2 lfo6;
-tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>прилипание
-объектов к родителю. Сила связи</p>
+tab-stops:list 72.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>прилипание
+объектов к родителю. Сила связи<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l0 level1 lfo6;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Может
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Может
 изменять форму объектов (например, от попадания пули). Разделение и разрушение
-объектов</p>
+объектов<o:p></o:p></span></p>
 
 <h2><span class=SpellE>Audio</span> <span class=SpellE>Engine</span><span
 lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h2>
@@ -863,9 +934,10 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>6.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Отражения
-звука первого порядка на основе виртуальных источников</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>Отражения
+звука первого порядка на основе виртуальных источников<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
@@ -878,13 +950,6 @@ margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 
 tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>8.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Реверберация
 на основе <span lang=EN-US style='mso-ansi-language:EN-US'>EAX 2.0</span></p>
-
-<p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
-margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l5 level1 lfo8;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>9.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><o:p>&nbsp;</o:p></p>
-
-<p style='margin-bottom:0cm;margin-bottom:.0001pt'><o:p>&nbsp;</o:p></p>
 
 <h2><span class=SpellE>Resources</span></h2>
 
@@ -914,22 +979,28 @@ class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>tga</span></span><
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
-tab-stops:list 108.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>jp</span><span lang=EN-US style='mso-ansi-language:EN-US'>e</span><span
-class=SpellE>g</span></p>
+tab-stops:list 108.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span style='background:lime;
+mso-highlight:lime'>jp</span></span><span lang=EN-US style='background:lime;
+mso-highlight:lime;mso-ansi-language:EN-US'>e</span><span class=SpellE><span
+style='background:lime;mso-highlight:lime'>g</span></span><span
+style='background:lime;mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
-tab-stops:list 108.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>png</span></p>
+tab-stops:list 108.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span style='background:lime;
+mso-highlight:lime'>png</span></span><span style='background:lime;mso-highlight:
+lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
-tab-stops:list 108.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
-EN-US'><span style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>from
+tab-stops:list 108.0pt'><![if !supportLists]><span lang=EN-US style='background:
+lime;mso-highlight:lime;mso-ansi-language:EN-US'><span style='mso-list:Ignore'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span
+lang=EN-US style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>from
 quake wad-file (<span class=SpellE>pcx</span>)<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
@@ -945,34 +1016,44 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
-tab-stops:list 108.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>lightwave</span></p>
+tab-stops:list 108.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span style='background:lime;
+mso-highlight:lime'>lightwave</span></span><span style='background:lime;
+mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
-tab-stops:list 108.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>ase</span></span><span
-lang=EN-US style='mso-ansi-language:EN-US'> (text format)</span></p>
+tab-stops:list 108.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span lang=EN-US
+style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>ase</span></span><span
+lang=EN-US style='background:lime;mso-highlight:lime;mso-ansi-language:EN-US'>
+(text format)</span><span style='background:lime;mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
-tab-stops:list 108.0pt'><![if !supportLists]><span style='mso-list:Ignore'>4.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-lang=EN-US style='mso-ansi-language:EN-US'>lightmap/3Dmax rendering</span></p>
+tab-stops:list 108.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span lang=EN-US style='background:lime;
+mso-highlight:lime;mso-ansi-language:EN-US'>lightmap/3Dmax rendering</span><span
+style='background:lime;mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
-tab-stops:list 108.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-lang=EN-US style='mso-ansi-language:EN-US'>quake map (text format)</span></p>
+tab-stops:list 108.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span lang=EN-US style='background:lime;
+mso-highlight:lime;mso-ansi-language:EN-US'>quake map (text format)</span><span
+style='background:lime;mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
-tab-stops:list 108.0pt'><![if !supportLists]><span style='mso-list:Ignore'>6.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-lang=EN-US style='mso-ansi-language:EN-US'>quake bsp</span></p>
+tab-stops:list 108.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span lang=EN-US style='background:lime;
+mso-highlight:lime;mso-ansi-language:EN-US'>quake bsp</span><span
+style='background:lime;mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level2 lfo10;
@@ -988,15 +1069,18 @@ class=SpellE>wav</span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
-tab-stops:list 108.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>ogg</span></p>
+tab-stops:list 108.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span class=SpellE><span style='background:lime;
+mso-highlight:lime'>ogg</span></span><span style='background:lime;mso-highlight:
+lime'><o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:108.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level3 lfo10;
-tab-stops:list 108.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>загрузка
-только нужной части звука</p>
+tab-stops:list 108.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>загрузка
+только нужной части звука<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level2 lfo10;
@@ -1008,28 +1092,28 @@ class=SpellE>material</span></p>
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level2 lfo10;
 tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>5.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>level</span> – набор моделей, триггеров и правил поведения
-объектов. <span class=SpellE>Пресеты</span>. Иерархия <span class=SpellE>пресетов</span>.
-Относительные и абсолютные изменения параметров <span class=GramE>во</span>
-внутренних <span class=SpellE>пресетах</span>.</p>
+class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>scene</span></span>
+– набор моделей, триггеров и правил поведения объектов. </p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level2 lfo10;
 tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-list:Ignore'>6.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-class=SpellE>конфиги</span>. Приоритет настроек.</p>
+class=SpellE>конфиги</span><span lang=EN-US style='mso-ansi-language:EN-US'>.</span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level1 lfo10;
 tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>загрузка
-из файловой системы, архива (<span class=SpellE>zip</span>, <span class=SpellE>tar</span>)</p>
+из файловой системы, <span style='background:lime;mso-highlight:lime'>архива (<span
+class=SpellE>zip</span>, <span class=SpellE>tar</span>)</span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level1 lfo10;
-tab-stops:list 36.0pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>выгрузка
-неиспользуемых ресурсов</p>
+tab-stops:list 36.0pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>выгрузка
+неиспользуемых ресурсов<o:p></o:p></span></p>
 
 <p style='mso-margin-top-alt:auto;margin-right:0cm;margin-bottom:0cm;
 margin-left:36.0pt;margin-bottom:.0001pt;text-indent:-18.0pt;mso-list:l1 level1 lfo10;
@@ -1050,7 +1134,7 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 <p style='margin-left:53.4pt;text-indent:-18.0pt;mso-list:l3 level1 lfo12;
 tab-stops:list 53.4pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>полигональная
-модель, универсальная физика</p>
+модель, <span style='background:lime;mso-highlight:lime'>универсальная физика</span></p>
 
 <p style='margin-left:89.4pt;text-indent:-18.0pt;mso-list:l3 level2 lfo12;
 tab-stops:list 89.4pt'><![if !supportLists]><span style='mso-list:Ignore'>a.<span
@@ -1063,75 +1147,96 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></spa
 форма и количество полигонов</p>
 
 <p style='margin-left:53.4pt;text-indent:-18.0pt;mso-list:l3 level1 lfo12;
-tab-stops:list 53.4pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>системы
-частиц</p>
+tab-stops:list 53.4pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>системы частиц<o:p></o:p></span></p>
 
 <p style='margin-left:89.4pt;text-indent:-18.0pt;mso-list:l3 level2 lfo12;
-tab-stops:list 89.4pt'><![if !supportLists]><span style='mso-list:Ignore'>a.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>различные
-типы эмиттера</p>
+tab-stops:list 89.4pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>различные типы эмиттера<o:p></o:p></span></p>
 
 <p style='margin-left:89.4pt;text-indent:-18.0pt;mso-list:l3 level2 lfo12;
-tab-stops:list 89.4pt'><![if !supportLists]><span style='mso-list:Ignore'>b.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>различные
-типы физики</p>
+tab-stops:list 89.4pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>различные типы физики<o:p></o:p></span></p>
 
 <p style='margin-left:125.4pt;text-indent:-125.4pt;mso-text-indent-alt:-9.0pt;
 mso-list:l3 level3 lfo12;tab-stops:list 125.4pt'><![if !supportLists]><span
-style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='background:yellow;mso-highlight:yellow'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]>универсальная физика</p>
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>универсальная физика<o:p></o:p></span></p>
 
 <p style='margin-left:161.4pt;text-indent:-18.0pt;mso-list:l3 level4 lfo12;
-tab-stops:list 161.4pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-lang=EN-US style='mso-ansi-language:EN-US'>LJ</span></p>
+tab-stops:list 161.4pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span lang=EN-US style='background:yellow;
+mso-highlight:yellow;mso-ansi-language:EN-US'>LJ</span><span style='background:
+yellow;mso-highlight:yellow'><o:p></o:p></span></p>
 
 <p style='margin-left:161.4pt;text-indent:-18.0pt;mso-list:l3 level4 lfo12;
-tab-stops:list 161.4pt'><![if !supportLists]><span style='mso-list:Ignore'>2.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-lang=EN-US style='mso-ansi-language:EN-US'>gravity</span></p>
+tab-stops:list 161.4pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span lang=EN-US style='background:yellow;
+mso-highlight:yellow;mso-ansi-language:EN-US'>gravity</span><span
+style='background:yellow;mso-highlight:yellow'><o:p></o:p></span></p>
 
 <p style='margin-left:161.4pt;text-indent:-18.0pt;mso-list:l3 level4 lfo12;
-tab-stops:list 161.4pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>пружинная
-связь</p>
+tab-stops:list 161.4pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>пружинная связь<o:p></o:p></span></p>
 
 <p style='margin-left:125.4pt;text-indent:-125.4pt;mso-text-indent-alt:-9.0pt;
 mso-list:l3 level3 lfo12;tab-stops:list 125.4pt'><![if !supportLists]><span
-style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='background:yellow;mso-highlight:yellow'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]>простая быстрая физика для графических систем частиц</p>
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>простая быстрая физика для графических систем частиц<o:p></o:p></span></p>
 
 <p style='margin-left:89.4pt;text-indent:-18.0pt;mso-list:l3 level2 lfo12;
-tab-stops:list 89.4pt'><![if !supportLists]><span style='mso-list:Ignore'>c.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>различный
-<span class=SpellE>рендеринг</span></p>
+tab-stops:list 89.4pt'><![if !supportLists]><span style='background:yellow;
+mso-highlight:yellow'><span style='mso-list:Ignore'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>различный <span class=SpellE>рендеринг</span><o:p></o:p></span></p>
 
 <p style='margin-left:125.4pt;text-indent:-125.4pt;mso-text-indent-alt:-9.0pt;
 mso-list:l3 level3 lfo12;tab-stops:list 125.4pt'><![if !supportLists]><span
-style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='background:yellow;mso-highlight:yellow'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>sprite
-system</span></p>
+</span></span></span><![endif]><span lang=EN-US style='background:yellow;
+mso-highlight:yellow;mso-ansi-language:EN-US'>sprite system</span><span
+style='background:yellow;mso-highlight:yellow'><o:p></o:p></span></p>
 
 <p style='margin-left:125.4pt;text-indent:-125.4pt;mso-text-indent-alt:-9.0pt;
 mso-list:l3 level3 lfo12;tab-stops:list 125.4pt'><![if !supportLists]><span
-style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='background:yellow;mso-highlight:yellow'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]>каждая частица – объект</p>
+</span></span></span><![endif]><span style='background:yellow;mso-highlight:
+yellow'>каждая частица – объект<o:p></o:p></span></p>
 
 <p style='margin-left:125.4pt;text-indent:-125.4pt;mso-text-indent-alt:-9.0pt;
 mso-list:l3 level3 lfo12;tab-stops:list 125.4pt'><![if !supportLists]><span
-style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='background:lime;mso-highlight:lime'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>iii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>meatballs</span></p>
+</span></span></span><![endif]><span lang=EN-US style='background:lime;
+mso-highlight:lime;mso-ansi-language:EN-US'>meatballs</span><span
+style='background:lime;mso-highlight:lime'><o:p></o:p></span></p>
 
 <p style='margin-left:53.4pt;text-indent:-18.0pt;mso-list:l3 level1 lfo12;
-tab-stops:list 53.4pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>скелетная
-анимация</p>
+tab-stops:list 53.4pt'><![if !supportLists]><span style='background:lime;
+mso-highlight:lime'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='background:lime;mso-highlight:lime'>скелетная
+анимация<o:p></o:p></span></p>
 
 <h1>Составители</h1>
 

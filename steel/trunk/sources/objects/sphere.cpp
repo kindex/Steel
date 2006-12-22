@@ -15,6 +15,17 @@
 #include "sphere.h"
 #include "../res/res_main.h"
 
+Sphere::Sphere(void):
+	vertexes(NULL),
+	normals(NULL),
+	faces(NULL),
+	texCoords0(NULL),
+	texCoords1(NULL),
+	graphEngine(NULL)
+{}
+
+
+
 void Sphere::bindEngine(InterfaceId id, Engine* engine)
 {
 	if(id == GraphInterface::interfaceId)
@@ -33,6 +44,7 @@ bool Sphere::updateInformation(InterfaceId id, Engine* engine)
 		ProcessGraph();
 		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
 
+		gengine.setPosition(position);
 		gengine.setVertexes(vertexes);
 		gengine.setNormals(normals);
 		gengine.setFaceMaterials(faces);
@@ -45,11 +57,8 @@ bool Sphere::updateInformation(InterfaceId id, Engine* engine)
 }
 
 
-Sphere::Sphere()
+void Sphere::createSphere()
 {
-	int height = 12;
-	int radius = 16;
-
 	vertexes = new Vertexes;
 	vertexes->setId(objectIdGenerator.genUid());
 	vertexes->setChanged(true);
@@ -94,7 +103,7 @@ Sphere::Sphere()
 	
 	faces = new FaceMaterials(1);
 
-	faces->at(0).material = createMaterial("/sphere/sphere");
+	faces->at(0).material = createMaterial(conf->find("material"));
 	faces->at(0).triangles = new Triangles;
 	faces->at(0).triangles->data.resize(height*radius*2);
 	faces->at(0).triangles->setId(objectIdGenerator.genUid());
@@ -156,4 +165,22 @@ void Sphere::DeleteTriangle(int n)
 	faces->at(0).triangles->data[n] = faces->at(0).triangles->data.back();
 	faces->at(0).triangles->data.pop_back();
 	// TODO delete vertexes
+}
+
+bool Sphere::InitFromConfig(Config *_conf)
+{
+	conf = _conf;
+	if (conf == NULL) return false;
+
+	v3 origin =  conf->getv3("origin");
+	position.loadIdentity();
+	position.setTranslation(origin);
+
+	size = conf->getf("size", 1.0f);
+	height = conf->geti("height", 12);
+	radius = conf->geti("radius", 16);
+
+	createSphere();
+
+	return true;
 }

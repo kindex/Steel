@@ -24,7 +24,15 @@ bool GameLight::InitFromConfig(Config *conf)
 	light->maxDistance = conf->getf("maxDistance");
 	light->k = conf->getf("k");
 
-	enable();
+	bool enabled = conf->geti("enabled", 1) > 0;
+	if (enabled)
+	{
+		enable();
+	}
+	else
+	{
+		disable();
+	}
 
 	return true;
 }

@@ -35,6 +35,7 @@ public:
 	GraphObjectModel(void);
 	bool InitFromConfig(Config *conf);
 	void bindEngine(InterfaceId, Engine*);
+
 protected:
 	Model *model;
 };

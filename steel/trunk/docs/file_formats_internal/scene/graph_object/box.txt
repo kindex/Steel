@@ -1,0 +1,9 @@
+steel::GraphObjectBox
+
+Модель - прямоугольный параллелепипел 
+
+class = 'box'
+
+size		v3		[1,1,1]
+material	material
+

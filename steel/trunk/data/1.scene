@@ -10,7 +10,7 @@ objects =
 	graph = {
 			class = 'box'
 			file = 'model/teapot'
-			size = 10
+			size = (10, 10, 10)
 			material =  
 				{
 					class = 'std'
@@ -19,7 +19,7 @@ objects =
 					{ 
 						image = '/box/boxes/tr_wall_outside_04_d'
 						texCoordsRotation = 0.0
-						texCoordsScale = (1 1 1)
+						texCoordsScale = (10 10 1)
 						texCoordsTranslation = (0 0 0)
 						k = 1
 					}
@@ -131,6 +131,21 @@ objects =
 		origin = (+4.5 +4.5 +4.5)
 	}
 
-	
+	{
+		class = 'sphere'
+		origin = (3 3 3)
+		material = [#objects[0].graph.material] {
+
+					diffuse_map =
+					{ 
+						image = '/box/boxes/tr_wall_outside_04_d'
+						texCoordsRotation = 0.0
+						texCoordsScale = (1 1 1)
+						texCoordsTranslation = (0 0 0)
+						k = 1
+					}
+}
+	}
+		
 ) // objects
 } // scene

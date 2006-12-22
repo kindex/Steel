@@ -20,12 +20,6 @@
 
 class Sphere: public GameObject
 {
-protected:
-	Vertexes *vertexes, *normals;
-	FaceMaterials *faces;
-	TexCoords *texCoords0, *texCoords1;
-	GraphEngine *graphEngine;
-
 public:
 	Sphere(void);
 	virtual ~Sphere(void);
@@ -34,8 +28,25 @@ public:
 	bool updateInformation(InterfaceId id, Engine* engine);
 	void bindEngine(InterfaceId, Engine*);
 
-	void ProcessGraph();
+	void ProcessGraph(void);
 	void DeleteTriangle(int n);
+	bool InitFromConfig(Config*);
+
+private:
+	void createSphere(void);
+
+	float size;
+	int height;
+	int radius;
+
+	ObjectPosition position;
+	Config	*conf;
+
+	Vertexes *vertexes, *normals;
+	FaceMaterials *faces;
+	TexCoords *texCoords0, *texCoords1;
+	GraphEngine *graphEngine;
+
 };
 
 #endif

@@ -1,0 +1,22 @@
+﻿steel::GameLight
+
+1 источник освещения
+
+class			string	'light'
+origin			v3
+
+constantAttenuation	float
+sqrtAttenuation		float
+linearAttenuation	float		[1]
+quadraticAttenuation	float
+
+ambient			v3	color	[(0,0,0)]
+diffuse			v3	color	[(1,1,1)]
+specular		v3	color	[(1,1,1)]
+
+minDistance		float	dist = max(dist, minDistance)
+maxDistance		float	максимальный радиус действия
+k			float	Общий коеффициент яркости
+
+enabled			bool		[1]
+

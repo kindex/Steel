@@ -25,7 +25,7 @@
 
 ParticleEmitter* findParticleEmitter(const string &_class)
 {
-	if(_class == "SimpleEmitter") return new SimpleEmitter;
+	if(_class == "simple") return new SimpleEmitter;
 
 	error("ps", string("ParticleEmitter class '") + _class + "' not found");
 	return NULL;
@@ -34,7 +34,7 @@ ParticleEmitter* findParticleEmitter(const string &_class)
 ParticleAnimator* findParticleAnimator(const string &_class)
 {
 //	if(_class == "UniPSanimator") return new UniPSanimator;
-	if(_class == "SimpleAnimator") return new SimpleAnimator;
+	if(_class == "simple") return new SimpleAnimator;
 
 	error("ps", string("ParticleAnimator class '") + _class + "' not found");
 	return NULL;
@@ -42,9 +42,9 @@ ParticleAnimator* findParticleAnimator(const string &_class)
 
 ParticleRenderer* findParticleRenderer(const string &_class)
 {
-	if(_class == "SpriteRenderer") return new SpriteRenderer;
-	if(_class == "ObjectPSRenderer") return new ObjectPSRenderer;
-	if(_class == "DummyPSRenderer") return new DummyPSRenderer;
+	if(_class == "sprite") return new SpriteRenderer;
+	if(_class == "object") return new ObjectPSRenderer;
+	if(_class == "dummy") return new DummyPSRenderer;
 
 	error("ps", string("ParticleRenderer class '") + _class + "' not found");
 	return NULL;

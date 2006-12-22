@@ -100,7 +100,7 @@ bool GraphObjectBox::InitFromConfig(Config *conf)
 	if(conf == NULL) return false;
 	
 	Config *materialConfig = conf->find("material");
-	float s = conf->getf("size", 1.0f);
+	v3 size = conf->getv3("size", v3(1.0f, 1.0f, 1.0f));
 
 	Material *m = NULL;
 	if(materialConfig != NULL)
@@ -113,7 +113,7 @@ bool GraphObjectBox::InitFromConfig(Config *conf)
 	normals = new Vertexes; normals->changed = false;	
 	texCoords = new TexCoords; texCoords->changed = false;
 
-#define t(a, b, c, d, e) vertexes->data.push_back(v3(a*0.5f*s, b*0.5f*s, c*0.5f*s)); texCoords->data.push_back(v2(d, e))
+#define t(a, b, c, d, e) vertexes->data.push_back(v3(a*0.5f*size.x, b*0.5f*size.y, c*0.5f*size.z)); texCoords->data.push_back(v2(d, e))
 
 	t(-1, -1, -1, 0, 0);	t(+1, -1, -1, 1, 0);	t(+1, -1, +1, 1, 1);
 	t(-1, -1, -1, 0, 0);	t(+1, -1, +1, 1, 1);	t(-1, -1, +1, 0, 1);

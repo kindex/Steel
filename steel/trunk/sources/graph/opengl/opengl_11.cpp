@@ -51,7 +51,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow &e, const 
 	}
 }
 
-void OpenGL_Engine::BindTexCoords_OpenGL11(const TexCoords *coords)
+void OpenGL_Engine::BindTexCoords_OpenGL11(const TexCoords *coords, const TextureMatrix* textureMatrix)
 {
 	if(coords != NULL)
 	{ 
@@ -59,7 +59,16 @@ void OpenGL_Engine::BindTexCoords_OpenGL11(const TexCoords *coords)
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
 	}
 	else
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY); 
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	if (textureMatrix != NULL && textureMatrixLevel == 0)
+	{
+		glMatrixMode(GL_TEXTURE);	glLoadIdentity();
+		glScalef(		textureMatrix->texCoordsScale.x,		textureMatrix->texCoordsScale.y,		textureMatrix->texCoordsScale.z); 
+		glTranslatef(	textureMatrix->texCoordsTranslation.x,	textureMatrix->texCoordsTranslation.y,	textureMatrix->texCoordsTranslation.z); 
+		glRotatef(		textureMatrix->texCoordsRotation/(float)(M_PI)*180.0f, 0.0f, 0.0f, 1.0f); 
+		textureMatrixLevel++;
+	}
 }
 
 void OpenGL_Engine::BindTexCoords3f_OpenGL11(const TexCoords3f *coords)

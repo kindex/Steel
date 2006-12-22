@@ -1,0 +1,12 @@
+steel::ParticleSystem
+
+Particle System
+
+class = 'ps'
+
+emitter		emitter
+renderer	renderer
+animator	animator
+
+?countScale
+

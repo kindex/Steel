@@ -1,0 +1,9 @@
+﻿steel::GraphObjectModel
+
+Модель загружается из внешнего файла
+
+class = 'model'
+
+file		path	Path to 3D-model (mesh)
+material	material
+

@@ -1,0 +1,5 @@
+steel::ObjectPSRenderer
+
+?
+
+class = 'object'
