@@ -17,7 +17,8 @@ objects =
 					blend = 0
 					diffuse_map =
 					{ 
-						image = '/box/boxes/tr_wall_outside_04_d'
+						//image = '/box/boxes/tr_wall_outside_04_d'
+						image = '/box/boxes/test'
 						texCoordsRotation = 0.0
 						texCoordsScale = (10 10 1)
 						texCoordsTranslation = (0 0 0)
