@@ -17,7 +17,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\bin"
-			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
+			IntermediateDirectory="..\temp\$(SolutionName).VS8.$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
@@ -74,7 +74,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="opengl32.lib ../sdk/libs/openal32.lib ../sdk/libs/eaxguid.lib ../sdk/libs/eax.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
 				ShowProgress="0"
-				OutputFile="..\bin/$(SolutionName)_VS8_$(ConfigurationName).exe"
+				OutputFile="..\bin/$(SolutionName).VS8.$(ConfigurationName).exe"
 				Version="1.1.0"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -117,7 +117,7 @@
 		<Configuration
 			Name="lib_debug|Win32"
 			OutputDirectory="..\sdk\steel_lib"
-			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
+			IntermediateDirectory="..\temp\$(SolutionName).VS8.$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
@@ -175,7 +175,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\steel_VS8_$(ConfigurationName).lib"
+				OutputFile="$(OutDir)\steel.VS8.$(ConfigurationName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -197,7 +197,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="..\bin"
-			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
+			IntermediateDirectory="..\temp\$(SolutionName).VS8.$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="1"
@@ -258,7 +258,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="opengl32.lib ../sdk/libs/openal32.lib ../sdk/libs/eaxguid.lib ../sdk/libs/eax.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
-				OutputFile="..\bin/$(SolutionName)_VS8_$(ConfigurationName).exe"
+				OutputFile="..\bin/$(SolutionName).VS8.$(ConfigurationName).exe"
 				Version="1.1.0"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -296,7 +296,7 @@
 		<Configuration
 			Name="lib_release|Win32"
 			OutputDirectory="..\sdk\steel_lib"
-			IntermediateDirectory="..\temp\$(SolutionName)_VS8_$(ConfigurationName)"
+			IntermediateDirectory="..\temp\$(SolutionName).VS8.$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="1"
@@ -356,7 +356,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\steel_VS8_$(ConfigurationName).lib"
+				OutputFile="$(OutDir)\steel.VS8.$(ConfigurationName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"

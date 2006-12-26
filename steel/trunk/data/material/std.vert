@@ -45,7 +45,7 @@ void main(void)
 	pixel_normal = normalize ( gl_NormalMatrix * gl_Normal ); // global
 	
 	gl_Position = ftransform();
-	texCoord0 = gl_TextureMatrix[0] * vec4(gl_MultiTexCoord0.xy, 0.0, 1.0);
+	texCoord0 = (gl_TextureMatrix[0] * vec4(gl_MultiTexCoord0.xy, 0.0, 1.0)).xy;
 	texCoord1 = gl_MultiTexCoord1.xy;
 	
 	t = gl_NormalMatrix * gl_MultiTexCoord7.xyz;
