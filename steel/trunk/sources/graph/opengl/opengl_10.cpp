@@ -29,34 +29,6 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 		else
 			glColor4fv(material->color.getfv());
 
-		if(!lights.empty())
-		{
-			glEnable(GL_LIGHTING);
-			for(unsigned int i = 0; i<e.lights.size() && i<GL_MAX_LIGHTS; i++)
-			{
-				glEnable(GL_LIGHT0 + i);
-				float pos[4];
-
-				glMatrixMode(GL_MODELVIEW);
-				glPushMatrix();
-				glLoadIdentity();
-				pos[0] = e.lights[i]->position.x;
-				pos[1] = e.lights[i]->position.y;
-				pos[2] = e.lights[i]->position.z;
-				pos[3] = 0.0f;
-				glLightfv(GL_LIGHT0 + i, GL_POSITION, (float*)pos);
-				glLightfv(GL_LIGHT0 + i, GL_POSITION, e.lights[i]->position.getfv());
-				glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, e.lights[i]->light->constantAttenuation);
-				glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, e.lights[i]->light->linearAttenuation);
-				glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, e.lights[i]->light->quadraticAttenuation);
-				glLightfv(GL_LIGHT0 + i, GL_AMBIENT, e.lights[i]->light->ambient.getfv());
-				glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, e.lights[i]->light->diffuse.getfv());
-				glLightfv(GL_LIGHT0 + i, GL_SPECULAR, e.lights[i]->light->specular.getfv());
-				// TODO: light parameters
-				glPopMatrix();
-			}
-		}
-
 		const TexCoords *texCoords = NULL;
 
 		if(material->diffuse_map.image != NULL)
