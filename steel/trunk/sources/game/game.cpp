@@ -24,6 +24,7 @@
 #include "../audio/openal_engine.h"
 #include "../res/config/config_parser.h"
 
+
 using namespace std;
 
 
@@ -76,6 +77,10 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 	light->enable();
 	if(light != NULL)
 		light->setPosition(eye);
+
+
+	rifle = new Kar98k();
+	
 
 // ******************* PHYSIC **************************
 
@@ -159,6 +164,8 @@ void Steel::processKeyboard()
 		if(input->isPressed("mouse1") && conf->getf("automaticGun"))
 			createObject();
 
+		if (input->isPressed("mouse1")) 
+			rifle->fire();
 		v3 dir(0,0,0);
 		if(input->isPressed("w")) 	dir += v3(1,0,0);
 		if(input->isPressed("s")) 	dir += v3(-1,0,0);
@@ -245,9 +252,9 @@ void Steel::bind(GraphEngine *engine)
 void Steel::bind(AudioEngine *engine)
 {
 	audioEngine = engine;
-#ifdef LIB_OPENAL
-	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_PLAIN);
-#endif
+//#ifdef LIB_OPENAL
+	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_GENERIC);
+//#endif
 	/*
 	EAX_ENVIRONMENT_GENERIC,
     EAX_ENVIRONMENT_PADDEDCELL,

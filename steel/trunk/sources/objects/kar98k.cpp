@@ -22,17 +22,19 @@ Kar98k::Kar98k(void)
 	magazine = 5;		// rounds
 	weight = 3900;		// g
 	length = 1.11f;		// m
-//	AudioSourceRes* auFire = new AudioSourceRes();
-//	auFire->setSound(resAudio.add("audio/kar98k/wpnfire_k98_1b"));
-//	AudioSourceRes* auReload = new AudioSourceRes();
-//	auReload->setSound(resAudio.add("audio/kar98k/kar98_reload"));
-//	AudioSourceRes* auRechamber = new AudioSourceRes();
-//	auRechamber->setSound(resAudio.add("audio/kar98k/kar98_rechamber"));
+	sndFire = new Sound();
+	sndFire->sound = resAudio.add("audio/kar98k/wpnfire_k98_1b");
+	sndReload = new Sound();
+	sndReload->sound = resAudio.add("audio/kar98k/kar98_reload");
+	sndRechamber = new Sound();
+	sndRechamber->sound = resAudio.add("audio/kar98k/kar98_rechamber");
+	kar98k = new SimpleSound();
 }
 
 void Kar98k::fire(void)
 {
 	magazine--;
+	kar98k->soundPlay(sndFire);
 //	auFire->setStatus("play");
 	// fireSound play
 }

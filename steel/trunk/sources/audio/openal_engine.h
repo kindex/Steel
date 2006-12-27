@@ -50,6 +50,8 @@ protected:
 //#define AS(object) ((AudioSound*)(object))
 
 	bool soundPlay(Sound* sound);
+	bool soundStop(Sound* sound);
+	bool soundPause(Sound* sound);
 	bool soundUpdate(Sound* sound);
 
 	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???
@@ -60,7 +62,7 @@ protected:
 // AUDIO SHADOW ==============================
 	struct AudioShadow: public Shadow
 	{
-		Sound* sound;
+		//Sound* sound;
 		Buffer buffer;
 		Source source;
 		AudioShadow(Engine *aEngine): Shadow(aEngine) {}

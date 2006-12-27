@@ -742,7 +742,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\audio\openal_types.h"
+						RelativePath=".\audio\openal\openal_types.h"
 						>
 					</File>
 				</Filter>
@@ -977,6 +977,14 @@
 			<Filter
 				Name="objects"
 				>
+				<File
+					RelativePath=".\objects\kar98k.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\objects\kar98k.h"
+					>
+				</File>
 				<File
 					RelativePath=".\objects\light.cpp"
 					>

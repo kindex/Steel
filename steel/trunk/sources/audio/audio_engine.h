@@ -74,6 +74,7 @@ public:
 
 protected:
 	float masterVolume;
+	bool enabled;
 
 	//AudioObjectList sources;
 

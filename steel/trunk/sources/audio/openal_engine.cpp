@@ -62,6 +62,12 @@ bool OpenALEngine::init(Config* _conf)
 		log_msg("openal init error", "config not found");
 		return false;
 	}
+
+	enabled = conf->geti("enabled", 1);
+	if (!enabled)
+		return false;
+	enabledEAX = conf->geti("EAX", 0);
+
 	log_msg("openal init", "Initializing OpenAL...");
 
 
@@ -152,27 +158,31 @@ bool OpenALEngine::init(Config* _conf)
 /**/
 
 
-
-/**/
+	if (enabledEAX)
+	{
 	// check for EAX 2.0 support
-	log_msg("openal init", "Checking for EAX 2.0 support...");
-	if ( !alIsExtensionPresent((/*ALubyte* */ ALchar*)"EAX2.0") )
-	{
-//		std::cout << "\nNo EAX found!\n";
-		log_msg("openal init", "ERROR: No EAX 2.0 found!");
-        return false; 
+		log_msg("openal init", "Checking for EAX 2.0 support...");
+		if ( !alIsExtensionPresent((ALchar*)"EAX2.0") )
+		{
+	//		std::cout << "\nNo EAX found!\n";
+			log_msg("openal init", "ERROR: No EAX 2.0 found!");
+			enabledEAX = 0;
+		//	return false; 
+		}
 	}
-
-	m_EAXSet = (EAXSet)alGetProcAddress((/*ALubyte* */ ALchar*)"EAXSet");
-    m_EAXGet = (EAXGet)alGetProcAddress((/*ALubyte* */ ALchar*)"EAXGet");
-
-	if ( !m_EAXSet || !m_EAXGet )
+	if (enabledEAX)
 	{
-		log_msg("openal init", "ERROR: EAX internal problems!");
-		//std::cout << "\nEAX problems.\n";
-        return false;
-	}
-	log_msg("openal init", "EAX 2.0 has been initialized!");
+		m_EAXSet = (EAXSet)alGetProcAddress((ALchar*)"EAXSet");
+		m_EAXGet = (EAXGet)alGetProcAddress((ALchar*)"EAXGet");
+
+		if ( !m_EAXSet || !m_EAXGet )
+		{
+			log_msg("openal init", "ERROR: EAX internal problems!");
+			//std::cout << "\nEAX problems.\n";
+			return false;
+		}
+		log_msg("openal init", "EAX 2.0 has been initialized!");
+	};
 /**/
 	return true;
 }
@@ -182,7 +192,16 @@ bool OpenALEngine::deinit(void)
 	// clear all buffers and sources
 //	for (TBuf::iterator i = buffers.begin(); i != buffers.end(); i++)
 //		alDeleteBuffers(1, &i->second.ID);
+	
+	for (map<uid, AudioShadow*>::iterator it = shadows.begin(); it != shadows.end(); it++)
+	{
+		alDeleteBuffers(1, &it->second->buffer.buffer);
+		alDeleteSources(1, &it->second->source.source);
+	}
+
 	// shut down context
+	if (enabledEAX)
+		setListenerEnvironment(EAX_ENVIRONMENT_GENERIC);
 	log_msg("openal deinit", "Shutting down audio cntext...");
 	alcMakeContextCurrent(NULL);
 	// destroy context
@@ -196,16 +215,19 @@ bool OpenALEngine::deinit(void)
 
 void OpenALEngine::setListenerEnvironment(unsigned long environment)
 {
-	if ( m_EAXSet )
-         m_EAXSet(&DSPROPSETID_EAX_ListenerProperties,
-                        DSPROPERTY_EAXLISTENER_ENVIRONMENT,
-                        0,
-                        &environment,
-                        sizeof(unsigned long));
-	else
+	if (enabledEAX)
 	{
-		log_msg("openal audio", "ERROR: Cannot set environment!");
-		//std::cout << "\nCannot set environment.\n";
+		if ( m_EAXSet )
+			 m_EAXSet(&DSPROPSETID_EAX_ListenerProperties,
+							DSPROPERTY_EAXLISTENER_ENVIRONMENT,
+							0,
+							&environment,
+							sizeof(unsigned long));
+		else
+		{
+			log_msg("openal audio", "ERROR: Cannot set environment!");
+			//std::cout << "\nCannot set environment.\n";
+		}
 	}
 }
   
@@ -252,42 +274,87 @@ bool OpenALEngine::process(void)
 
 bool OpenALEngine::soundPlay(Sound* sound)
 {
-	AudioShadow* shadow = new AudioShadow(this);
-	//buffer = new Buffer();
-	//source = new Source();
+	/*
+	if (!shadows.empty())
+	{
+		map<uid, AudioShadow*>::iterator it = shadows.find(sound->id);
+		if (it->second->buffer.buffer != 0)
+		{
+			alSourceStop(it->second->source.source);
+			alSourcePlay(it->second->source.source);
+		}
+		return true;
+	}
+	*/
 
-	alGenBuffers(1, &shadow->buffer.buffer);
-	CheckALError();
-	alBufferData(shadow->buffer.buffer, sound->sound->format, sound->sound->data, sound->sound->size, sound->sound->frequency);
-	CheckALError();
-//		if (sound->data)
-//			free(sound->data);
-	alGenSources(1, &shadow->source.source);
-	CheckALError();
-	alSourcei (shadow->source.source, AL_BUFFER,    shadow->buffer.buffer	);
-	CheckALError();
-	shadows[sound->id] = shadow;
+	map<uid, AudioShadow*>::iterator it = shadows.find(sound->id);
+	if (it != shadows.end())
+	{
+		alSourceStop(it->second->source.source);
+		alSourcePlay(it->second->source.source);
+	}
+	else
+	{
+		AudioShadow* shadow = new AudioShadow(this);
+		//buffer = new Buffer();
+		//source = new Source();
 
-	// update or set parameters
-	//alSourcefv(shadow->source.source, AL_POSITION, sound->position);
-	//alSourcei(shadow->source.source, AL_LOOPING, sound->isLoop);
-	soundUpdate(sound);
-	CheckALError();
-	
-	alSourcePlay(shadow->source.source);
-	CheckALError();
-	
+		alGenBuffers(1, &shadow->buffer.buffer);
+		CheckALError();
+		alBufferData(shadow->buffer.buffer, sound->sound->format, sound->sound->data, sound->sound->size, sound->sound->frequency);
+		CheckALError();
+	//		if (sound->data)
+	//			free(sound->data);
+		alGenSources(1, &shadow->source.source);
+		CheckALError();
+		alSourcei (shadow->source.source, AL_BUFFER,    shadow->buffer.buffer	);
+		CheckALError();
+		shadows[sound->id] = shadow;
+
+		// update or set parameters
+		//alSourcefv(shadow->source.source, AL_POSITION, sound->position);
+		//alSourcei(shadow->source.source, AL_LOOPING, sound->isLoop);
+		soundUpdate(sound);
+		//soundStop(sound);
+		CheckALError();
+		
+		alSourcePlay(shadow->source.source);
+		CheckALError();
+	}
+	return true;
+}
+
+bool OpenALEngine::soundStop(Sound* sound)
+{
+	map<uid, AudioShadow*>::iterator it = shadows.find(sound->id);
+	alSourceStop(it->second->source.source);
+	return true;
+}
+
+bool OpenALEngine::soundPause(Sound* sound)
+{
+	map<uid, AudioShadow*>::iterator it = shadows.find(sound->id);
+	alSourcePause(it->second->source.source);
 	return true;
 }
 
 bool OpenALEngine::soundUpdate(Sound* sound)
 {
-	alSourcefv(shadows[sound->id]->source.source, AL_POSITION, sound->position);
-	alSourcei(shadows[sound->id]->source.source, AL_LOOPING, sound->isLoop);
-	alSourcef(shadows[sound->id]->source.source, AL_GAIN, sound->gain);
-	alSourcef(shadows[sound->id]->source.source, AL_PITCH, sound->pitch);
-	alSourcef(shadows[sound->id]->source.source, AL_ROLLOFF_FACTOR, sound->rolloffFactor);
-	alSourcei(shadows[sound->id]->source.source, AL_SOURCE_RELATIVE, sound->sourceRelative);
+	map<uid, AudioShadow*>::iterator it = shadows.find(sound->id);
+	alSourcefv(it->second->source.source, AL_POSITION, sound->position);
+	alSourcei(it->second->source.source, AL_LOOPING, sound->isLoop);
+	alSourcef(it->second->source.source, AL_GAIN, sound->gain);
+	alSourcef(it->second->source.source, AL_PITCH, sound->pitch);
+	alSourcef(it->second->source.source, AL_ROLLOFF_FACTOR, sound->rolloffFactor);
+	alSourcei(it->second->source.source, AL_SOURCE_RELATIVE, sound->sourceRelative);
+/*
+	alSourcef(it->second->source.source, AL_REFERENCE_DISTANCE, 5 );
+	alSourcef( it->second->source.source, AL_MAX_DISTANCE, 10 );
+	//alSourcefv( it->second->source.source, AL_DIRECTION, direction );
+    alSourcef( it->second->source.source, AL_CONE_INNER_ANGLE, 18 );
+    alSourcef( it->second->source.source, AL_CONE_OUTER_ANGLE, 18 );
+    alSourcef( it->second->source.source, AL_CONE_OUTER_GAIN, 0.5f);
+*/
 	return true;
 }
 

@@ -102,6 +102,7 @@ int main(int argc, char *argv[])
 		game.insonify(audio);
 	}
 		
+	game.rifle->kar98k->engine = audio;
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
@@ -168,12 +169,12 @@ int main(int argc, char *argv[])
 	graph->deinit();
 	delete graph;
 
-/*	if(audio) 
+/**/	if(audio) 
 	{
 		audio->deinit();
 		delete audio;
 	}
-*/
+/**/
 	steel::log.close();
 	return 0;
 }

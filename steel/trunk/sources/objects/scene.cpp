@@ -23,6 +23,8 @@
 #include "combiner/combiner.h"
 #include "ps/particle_system.h"
 
+#include "kar98k.h"
+
 using namespace std;
 
 GameObject* findGameObject(const string &_class)
@@ -32,6 +34,7 @@ GameObject* findGameObject(const string &_class)
 	if(_class == "combiner") return new Combiner;
 	if(_class == "ps") return new ParticleSystem;
 	if(_class == "light") return new GameLight;
+	//if (_class == "kar98k") return new Kar98k();
 
 	error("objects", string("GameObject class '") + _class + "' not found");
 	return NULL;

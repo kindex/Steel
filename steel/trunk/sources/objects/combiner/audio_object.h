@@ -31,10 +31,11 @@ public:
 	bool isSuportingInterface(InterfaceId id) { return AudioInterface::interfaceId == id; }
 	void bindEngine(InterfaceId, Engine*);
 	
-protected:
+//protected:
 	AudioInterface* engine;
 	bool soundPlay(Sound* sound);
 	bool soundStop(Sound* sound);
+	bool soundPause(Sound* sound);
 
 private:
 	

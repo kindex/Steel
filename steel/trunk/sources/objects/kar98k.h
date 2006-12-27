@@ -14,15 +14,18 @@
 #ifndef KAR98K_H
 #define KAR98K_H
 
-#include "combiner.h"
+#include "combiner/combiner.h"
+#include "combiner/simple_sound.h"
 
 class Kar98k : public Combiner
 {
 public:
 	Kar98k(void);
+	//~Kar98k(void);
 	void reload(void);
 	void rechamber(void);
 	void fire(void);
+		AudioObject* kar98k;
 
 private:
 	float caliber;		// = 7.92 mm;
@@ -31,9 +34,11 @@ private:
 	int magazine;		// magazine = 5 rounds
 	float weight;		// weight = 3900 g
 	float length;		// length = 1.11 m
-//	AudioSourceRes* auRechamber;
-//	AudioSourceRes* auReload;
-//	AudioSourceRes* auFire;
+
+	//AudioObject* kar98k;
+	Sound* sndRechamber;
+	Sound* sndReload;
+	Sound* sndFire;
 };
 
 #endif

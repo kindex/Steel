@@ -35,6 +35,18 @@ bool AudioObject::soundPlay(Sound* sound)
 	return true;
 }
 
+bool AudioObject::soundStop(Sound* sound)
+{
+	engine->soundStop(sound);
+	return true;
+}
+
+bool AudioObject::soundPause(Sound* sound)
+{
+	engine->soundPause(sound);
+	return true;
+}
+
 void AudioObject::bindEngine(InterfaceId id, Engine* aEngine)
 {
 	if(id == AudioInterface::interfaceId)

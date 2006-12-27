@@ -24,6 +24,8 @@ public:
 	static const InterfaceId interfaceId = 0x200;
 
 	virtual bool soundPlay(Sound* sound) = 0;
+	virtual bool soundStop(Sound* sound) = 0;
+	virtual bool soundPause(Sound* sound) = 0;
 	virtual bool soundUpdate(Sound* sound) = 0;
 
 	virtual float getMasterVolume(void) = 0;
