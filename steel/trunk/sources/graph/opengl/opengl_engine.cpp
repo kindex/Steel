@@ -23,7 +23,7 @@
 #include "../../common/logger.h"
 
 #include "../../res/image/image.h"
-#include "gl/libext.h"
+#include "../../libs/opengl/libext.h"
 #include "ext/normalisation_cube_map.h"
 #include "../../res/res_main.h"
 

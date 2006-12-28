@@ -16,7 +16,7 @@
 
 #include "../../steel.h"
 #include "../graph_engine.h"
-#include "gl/libext.h"
+#include "../../libs/opengl/libext.h"
 #include "../../res/text/text.h"
 
 class GLSL

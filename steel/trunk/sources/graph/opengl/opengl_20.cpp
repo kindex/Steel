@@ -16,7 +16,7 @@
 #include "../../steel.h"
 #include "opengl_glsl.h"
 #include "opengl_engine.h"
-#include "gl/libext.h"
+#include "../../libs/opengl/libext.h"
 #include <string>
 
 // нарисовать множество полигонов с указанным материалом / Multitexture

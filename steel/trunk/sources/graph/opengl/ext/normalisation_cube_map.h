@@ -21,7 +21,7 @@
 	#define GLX_GLXEXT_LEGACY
 #endif
 
-#include "../gl/libext.h"
+#include "../../../libs/opengl/libext.h"
 
 GLuint generateNormalisationCubeMap(void);
 

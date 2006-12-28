@@ -27,7 +27,7 @@
 //#include <GL/glaux.h>		// Header File For The Glaux Library
 #elif STEEL_OS == OS_WIN32
 #include <windows.h>		// Header File For Windows
-#include "gl/libext.h"		// Header File For The Glaux Library
+#include "../../libs/opengl/libext.h"		// Header File For The Glaux Library
 #endif
 
 #include "../graph_engine.h"

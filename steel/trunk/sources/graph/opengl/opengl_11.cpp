@@ -14,7 +14,7 @@
 
 #include "../../steel.h"
 #include "opengl_engine.h"
-#include "gl/libext.h"
+#include "../../libs/opengl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / glVertexPointer
 void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total)

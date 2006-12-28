@@ -14,7 +14,7 @@
 
 #include "../../steel.h"
 #include "opengl_engine.h"
-#include "gl/libext.h"
+#include "../../libs/opengl/libext.h"
 
 bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total)
 {

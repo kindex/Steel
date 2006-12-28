@@ -15,7 +15,7 @@
 #ifndef __LIB_EXT__
 #define __LIB_EXT__
 
-#include "../../../steel.h"
+#include "../../steel.h"
 
 #ifdef  _WIN32
     #include    <windows.h>
