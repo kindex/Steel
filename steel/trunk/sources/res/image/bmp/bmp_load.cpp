@@ -22,11 +22,11 @@ typedef unsigned short word; // 2 bytes
 typedef unsigned long dword; // 4 bytes
 
 typedef struct { // 14 bytes
-	unsigned char	bfType[2];		
-	dword	bfSize;
-	word	bfReserved1;
-	word	bfReserved2;
- 	dword	bfOffbits;
+	unsigned char	bfType[2];	//2	
+	dword	bfSize;				//4
+	word	bfReserved1;		//2
+	word	bfReserved2;		//2
+ 	dword	bfOffbits;			//4
 
 } bmpBITMAPFILEHEADER;
 
@@ -65,7 +65,7 @@ bool BMP::init(const std::string name)
 	bmpBITMAPFILEHEADER fh; // file header
 	bmpBITMAPINFOHEADER ih;
 
-	cassert(sizeof(fh)== 14);
+//	cassert(sizeof(fh)== 14);
 
 //	int tty2 = sizeof(ih);
 	std::string file = name;
@@ -84,8 +84,7 @@ bool BMP::init(const std::string name)
 	f.read(&fh.bfReserved1, 2);
 	f.read(&fh.bfReserved2, 2);
     f.read(&fh.bfOffbits, 4);
-
-	f.read((char*)&ih.biSize, sizeof(ih.biSize));
+	f.read(&ih.biSize, 4);
 
 	int siz = ih.biSize-sizeof(ih.biSize);
 

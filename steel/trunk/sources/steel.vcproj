@@ -542,6 +542,14 @@
 						>
 					</File>
 					<File
+						RelativePath=".\res\image\jpeg.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\image\jpeg.h"
+						>
+					</File>
+					<File
 						RelativePath=".\res\image\tga.cpp"
 						>
 					</File>
@@ -556,23 +564,7 @@
 							RelativePath=".\res\image\bmp\bmp_load.cpp"
 							>
 							<FileConfiguration
-								Name="Debug|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-									StructMemberAlignment="1"
-								/>
-							</FileConfiguration>
-							<FileConfiguration
 								Name="lib_debug|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-									StructMemberAlignment="1"
-								/>
-							</FileConfiguration>
-							<FileConfiguration
-								Name="Release|Win32"
 								>
 								<Tool
 									Name="VCCLCompilerTool"
@@ -1133,50 +1125,6 @@
 				Name="libs"
 				>
 				<Filter
-					Name="nv_util"
-					>
-					<File
-						RelativePath=".\libs\nv_util\nv_ase.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\nv_util\nv_ase.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\nv_util\nv_jpeg.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\nv_util\nv_jpeg.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\nv_util\nv_tga.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\nv_util\nv_tga.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\nv_util\nv_unzip.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\nv_util\nv_unzip.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\nv_util\nv_util.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\nv_util\nv_util.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="opengl"
 					>
 					<File
@@ -1197,178 +1145,6 @@
 					</File>
 					<File
 						RelativePath=".\libs\opengl\wglext.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="unzip"
-					>
-					<File
-						RelativePath=".\libs\unzip\adler32.c"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\crc32.c"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\infblock.c"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\infblock.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\infcodes.c"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\infcodes.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\inffast.c"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\inffast.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\inffixed.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\inflate.c"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\inftrees.c"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\inftrees.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\infutil.c"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\infutil.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\unzip.c"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\unzip.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\zutil.c"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\unzip\zutil.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="jpeg"
-					>
-					<File
-						RelativePath=".\libs\jpeg\jconfig.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\jpeg\jerror.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\jpeg\jinclude.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\jpeg\jmorecfg.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\jpeg\jpegint.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\jpeg\jpeglib.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="glh"
-					>
-					<File
-						RelativePath=".\libs\glh\glh_array.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_convenience.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_cube_map.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_glut.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_glut2.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_glut_callfunc.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_glut_replay.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_glut_text.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_interactors.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_linear.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_mipmaps.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_obs.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\glh\glh_text.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="zlib"
-					>
-					<File
-						RelativePath=".\libs\zlib\zconf.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libs\zlib\zlib.h"
 						>
 					</File>
 				</Filter>
