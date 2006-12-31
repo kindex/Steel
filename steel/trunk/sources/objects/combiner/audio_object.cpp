@@ -17,7 +17,7 @@
 
 AudioObject* findAudioObject(const string &_class)
 {
-	if(_class == "SimpleSound") return new SimpleSound;
+	if(_class == "simple") return new SimpleSound;
 
 	error("objects", string("audio class '") + _class + "' not found");
 	return NULL;

@@ -247,7 +247,7 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 		return;
 	}
 
-	if(!vertex || !texcoord || texcoord->data.empty()) return;
+	if(!vertex || !texcoord || texcoord->data.size() != vertex->data.size()) return;
 
     unsigned int size = vertex->data.size();
 //    tangentSpaceLight.resize(s); // TODO

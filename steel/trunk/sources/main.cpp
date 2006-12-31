@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 	if(!test())
 	{
 		steel::log.close();
-		return 0;
+		return 99;
 	}
 
 	Timer timer;

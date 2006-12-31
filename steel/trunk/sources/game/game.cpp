@@ -76,11 +76,9 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 	light->InitFromConfig(resConfig.add("flashlight.conf"));
 	light->enable();
 	if(light != NULL)
+	{
 		light->setPosition(eye);
-
-
-	rifle = new Kar98k();
-	
+	}
 
 // ******************* PHYSIC **************************
 
@@ -93,8 +91,10 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 }
 
 Steel::Steel(void):
-	input(NULL),	conf(NULL),
-	graphEngine(NULL),	world(NULL),
+	input(NULL),
+	conf(NULL),
+	graphEngine(NULL),
+	world(NULL),
 	light(NULL)
 {} 
 
@@ -229,14 +229,16 @@ void Steel::process(steel::time globalTime, steel::time time)
 
 		world->process(info);
 
-		totalPhysicTime += frame;
+//		totalPhysicTime += frame;
+		totalPhysicTime = globalTime;
 
 		if(framesToPass>0) framesToPass--;
 		else framesToPass = 0;
 
 		if(light != NULL)
+		{
 			light->setPosition(eye);
-
+		}
 	}
 }
 
@@ -244,9 +246,13 @@ void Steel::bind(GraphEngine *engine)
 {
 	graphEngine = engine;
 	if(world != NULL)
+	{
 		engine->inject(world);
+	}
 	if(light != NULL)
+	{
 		engine->inject(light);
+	}
 }
 
 void Steel::bind(AudioEngine *engine)

@@ -274,7 +274,9 @@ bool Model_3DS::init(const std::string name, const std::string dir)
 	rstream f;
 	
 	if(!f.open(dir + "/" + name, "3ds"))
-			return false;
+	{
+		return false;
+	}
 
 	svector<chainProcessor> t;
 	t.push_back(chainProcessor(0x4D4D, chain_4d4d));

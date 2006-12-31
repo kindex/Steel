@@ -21,9 +21,13 @@ class SimpleSound: public AudioObject
 public:
 	bool InitFromConfig(Config *);
 	void bindEngine(InterfaceId, Engine*);
+	void process(ProcessInfo&);
+
 
 protected:
-	Sound* originalSound;		// must be vector		// ???
+	Sound*	originalSound;		// must be vector		// ???
+	float	delay;
+	bool	started;
 };
 
 #endif

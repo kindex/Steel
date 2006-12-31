@@ -113,7 +113,7 @@ ConfigTag* ConfigParser::ParseTag()
 			else
 				LOG_PARSE_ERROR(string("Empty path to template"));
 		}
-		else if(c>='0' && c<='9' || c>='A' && c<='Z' || c>='a' && c<='z' || c =='[' || c == ']' || c == '.' || c == '#' || c == '/')
+		else if(c == '_' || c == '-' || c>='0' && c<='9' || c>='A' && c<='Z' || c>='a' && c<='z' || c =='[' || c == ']' || c == '.' || c == '#' || c == '/')
 		{
 			collector += c;
 			if(c == '[')

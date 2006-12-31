@@ -133,6 +133,9 @@ protected:
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image *zeroNormal;
+	Image *black;
+	Image *white;
+	Image *none;
 	Shader shaderStd;
 
 private:

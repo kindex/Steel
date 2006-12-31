@@ -28,8 +28,9 @@ bool SimpleSound::InitFromConfig(Config *conf)
 	originalSound->sourceRelative = conf->geti("sourceRelative", 0);
 
 	originalSound->sound = resAudio.add(conf->getPath("file"));
+	delay = conf->getf("delay", 0.0);
+	started = false;
 	//engine->soundPlay(originalSound);
-
 
 	return true;
 }
@@ -39,6 +40,20 @@ void SimpleSound::bindEngine(InterfaceId id, Engine* aEngine)
 	if(id == AudioInterface::interfaceId)
 	{		
 		AudioObject::bindEngine(id, aEngine);
-		soundPlay(originalSound);
+		if (delay <= 0.0 && !started)
+		{
+			soundPlay(originalSound);
+			started = true;
+		}
 	}
 }
+
+void SimpleSound::process(ProcessInfo& info)
+{
+	if (!started && info.curTime > delay)
+	{
+		soundPlay(originalSound);
+		started = true;
+	}
+}
+

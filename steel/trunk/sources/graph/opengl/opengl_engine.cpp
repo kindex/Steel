@@ -415,6 +415,9 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 
 	normalisationCubeMap	= generateNormalisationCubeMap();
 	zeroNormal = resImage.add("zero");
+	white = resImage.add("white");
+	black = resImage.add("black");
+	none = resImage.add("none");
 	if(!zeroNormal)
 	{
 		log_msg("error graph res", "Zero normal map not found");

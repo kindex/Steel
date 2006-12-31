@@ -63,10 +63,10 @@ bool OpenALEngine::init(Config* _conf)
 		return false;
 	}
 
-	enabled = conf->geti("enabled", 1);
+	enabled = conf->getb("enabled", true);
 	if (!enabled)
 		return false;
-	enabledEAX = conf->geti("EAX", 0);
+	enabledEAX = conf->getb("EAX", false);
 
 	log_msg("openal init", "Initializing OpenAL...");
 

@@ -20,11 +20,11 @@ bool GameLight::InitFromConfig(Config *conf)
 	light->diffuse = conf->getv3("diffuse", v3(1.0f, 1.0f, 1.0f));
 	light->specular = conf->getv3("specular", v3(1.0f, 1.0f, 1.0f));
 
-	light->minDistance = conf->getf("minDistance");
-	light->maxDistance = conf->getf("maxDistance");
-	light->k = conf->getf("k");
+	light->minDistance = conf->getf("minDistance", 1.0f);
+	light->maxDistance = conf->getf("maxDistance", 10.0f);
+	light->k = conf->getf("k", 1.0f);
 
-	bool enabled = conf->geti("enabled", 1) > 0;
+	bool enabled = conf->getb("enabled", true);
 	if (enabled)
 	{
 		enable();
@@ -48,7 +48,7 @@ void GameLight::bindEngine(InterfaceId id, Engine* engine)
 	{
 		this->engine = dynamic_cast<GraphInterface*>(engine);
 		this->engine->setPosition(position);
-		if (enabled) this->engine->addLight(light);
+		if (enabled && light != NULL) this->engine->addLight(light);
 	}
 }
 
