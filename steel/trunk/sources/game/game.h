@@ -79,8 +79,6 @@ public:
 	virtual void deinit(void);
 
 	void processKeyboard(void);
-	bool executeScript(std::string script);
-	bool executeCommand(std::string command);
 
 	void bind(GraphEngine*);
 	void bind(AudioEngine*);

@@ -31,19 +31,30 @@ AudioObject::AudioObject(void):
 bool AudioObject::soundPlay(Sound* sound)
 {
 	sounds.push_back(sound);
-	engine->soundPlay(sound);
+	if (engine != NULL)
+	{
+		engine->soundPlay(sound);
+	}
+
 	return true;
 }
 
 bool AudioObject::soundStop(Sound* sound)
 {
-	engine->soundStop(sound);
+	if (engine != NULL)
+	{
+		engine->soundStop(sound);
+	}
+
 	return true;
 }
 
 bool AudioObject::soundPause(Sound* sound)
 {
-	engine->soundPause(sound);
+	if (engine != NULL)
+	{
+		engine->soundPause(sound);
+	}
 	return true;
 }
 
@@ -52,6 +63,7 @@ void AudioObject::bindEngine(InterfaceId id, Engine* aEngine)
 	if(id == AudioInterface::interfaceId)
 	{
 		engine = dynamic_cast<AudioInterface*>(aEngine);
+		// TODO: start playing all scheduled sounds in sounds array
 	}
 }
 

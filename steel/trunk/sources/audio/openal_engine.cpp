@@ -65,12 +65,12 @@ bool OpenALEngine::init(Config* _conf)
 
 	enabled = conf->getb("enabled", true);
 	if (!enabled)
+	{
 		return false;
+	}
 	enabledEAX = conf->getb("EAX", false);
 
 	log_msg("openal init", "Initializing OpenAL...");
-
-
 
 	// open default sound device
 	log_msg("openal init", "Opening default sound device...");

@@ -68,12 +68,37 @@ void Config::toggle(const std::string &path)
 }
 
 // TODO: trace path, create if none
-void Config::setValued(const std::string &path, double value)
+void Config::setValued(const std::string& path, double value)
 {
 	Config *c = find(path);
 	if(c != NULL)
-		if(c->getType() == CONFIG_VALUE_NUMBER)
-			((ConfigNumber*)c)->setValue(value);
+	{
+		switch (c->getType())
+		{
+		case CONFIG_VALUE_NUMBER:
+			static_cast<ConfigNumber*>(c)->setValue(value);
+			break;
+		case CONFIG_VALUE_STRING:
+			static_cast<ConfigString*>(c)->setValue(FloatToStr(value));
+			break;
+		}
+	}
+}
+void Config::setValues(const std::string& path, const std::string& value)
+{
+	Config *c = find(path);
+	if(c != NULL)
+	{
+		switch (c->getType())
+		{
+		case CONFIG_VALUE_STRING:
+			static_cast<ConfigString*>(c)->setValue(value);
+			break;
+		case CONFIG_VALUE_NUMBER:
+			static_cast<ConfigNumber*>(c)->setValue(atoi(value.c_str()));
+			break;
+		}
+	}
 }
 
 
@@ -98,7 +123,7 @@ const Config* Config::findInTemplate(const std::string &path) const
 		{
 			const Config *globalTemplate;
 			if(!templates[i].configId.empty())
-				globalTemplate = resConfig.add(templates[i].configId);
+				globalTemplate = resConfig.add(createPath(getConfigFilePath(), templates[i].configId));
 			else
 				globalTemplate = getRoot();
 			if(globalTemplate != NULL)
@@ -136,7 +161,7 @@ Config* Config::findInTemplate(const std::string &path)
 		{
 			Config *globalTemplate;
 			if(!templates[i].configId.empty())
-				globalTemplate = resConfig.add(templates[i].configId);
+				globalTemplate = resConfig.add(createPath(getConfigFilePath(), templates[i].configId));
 			else
 				globalTemplate = getRoot();
 			if(globalTemplate != NULL)
@@ -560,13 +585,17 @@ const v3 ConfigArray::returnv3(const v3 _default) const
 
 void ConfigArray::setFilePath(const std::string &_file)
 {
+	file = _file;
 	for(iterator it = begin(); it != end(); it++)
 		(*it)->setFilePath(_file);
 }
 
 void ConfigStruct::setFilePath(const std::string &_file)
 {
+	file = _file;
 	for(std::map<std::string, Config*>::iterator it = set.begin(); it != set.end(); it++)
+	{
 		it->second->setFilePath(_file);
+	}
 }
 

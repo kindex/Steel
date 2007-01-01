@@ -52,4 +52,6 @@ std::string strtr(const char *s, char a, char b);
 // escape escapedChar and \ in base string. (Ex: escape(a'b\c, ') => a\'b\\c)
 std::string escape(std::string base, char escapedChar);
 
+std::string trim(std::string string);
+
 #endif

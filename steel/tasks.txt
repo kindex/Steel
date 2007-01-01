@@ -29,6 +29,8 @@
 368. Path Kinematic. Physic Engine - Object movement by trajectory. / KindeX. KindeX. [1]. (1w).
 406. Kinematics: add simple rotation and path movement to objects (combiner). Local coordinate system. / KindeX. KindeX. [1]. (1d).
 364. Quake MAP. Quake MAP (scene) loader. / *. KindeX. [3]. (3d).
+344. JPEG. JPEG file loader same as BMP loader. / KindeX. [3]. (3d). 20061231 (steel 1.1)
+405. ASE. ASE scene file loader. / KindeX. [3]. (3d).
 401. OpenGL: shadows. / KindeX. KindeX. [4]. (3d).
 402. OpenGL: blending. Glass, sprites (with correct lighting). Sort blending polygons. / KindeX. KindeX. [4]. (3d).
 348. Config bug. Error in finding value by templates through parent config. / KindeX. KindeX. [5]. (1d). 20061201
@@ -41,8 +43,6 @@
 ** Construction ************************************************************************************
 345. PNG. PNG file loader same as BMP loader. / Kane. KindeX. 4. 3d. 20061231 (steel 1.1)
 367. OpenGL 2.0. Shaders, dynamic lighting (many lights). / KindeX.
-344. JPEG. JPEG file loader same as BMP loader. / KindeX. [4]. (3d). 20061231 (steel 1.1)
-405. ASE. ASE scene file loader. / KindeX. [4]. (3d).
 
 
 ** Done Construction *******************************************************************************

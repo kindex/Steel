@@ -200,3 +200,13 @@ string escape(string base, char escapedChar)
 	}
 	return res;
 }
+
+std::string trim(std::string string)
+{
+	int i = string.find_first_not_of(" ");
+	string.erase(0, i);
+	i = string.find_last_not_of(" ");
+	string.erase(i+1, string.npos);
+
+	return string;
+}

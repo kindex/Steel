@@ -36,11 +36,6 @@ bool Steel::init(Config *_conf, Input *_input, std::string params)
 		log_msg("error game res", "Cannot load game config");
 		return false;
 	}
-	if(!executeScript(params))
-	{
-		log_msg("core error", "Cannor execute script");
-		return false;
-	}
 
 	input = _input; 
 	input->setGame(this);
@@ -320,44 +315,5 @@ void Steel::handleEventKeyUp(std::string key)
 {
 }
 
-bool Steel::executeScript(std::string script)
-{
-	log_msg("console", "ExecScript: '" + script + "'");
-
-	svector<string> lines;
-	explode(';', script, lines);
-	for(svector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
-		if(!executeCommand(*it)) return false;
-	return true;
-}
-
-bool Steel::executeCommand(std::string command)
-{
-	if(command.empty()) return true;
-	log_msg("console", "ExecCommand: '" + command + "'");
-
-	// var=value
-
-	svector<string> token;
-	explode('=', command, token);
-	if(token.size() != 2) return false;
-	svector<string> var;
-	explode('.', token[0], var);
-	if(var.size() == 1)
-	{
-//		conf->setup(var[0], token[1]);
-		log_msg("script", var[0] + " = " + token[1]);
-		return true;
-	}
-	else
-	if(var.size() == 2)
-	{
-// TODO: change engine params (graph, physic)
-		return false;
-
-	}
-	else
-		return false;
-}
 
 

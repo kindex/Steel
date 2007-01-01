@@ -35,6 +35,49 @@ using namespace std;
 
 std::string commandLine;
 
+bool executeCommand(Config* conf, std::string command)
+{
+	if(command.empty()) return true;
+	log_msg("console", "ExecCommand: '" + command + "'");
+
+	// var=value
+
+	svector<string> token;
+	explode('=', command, token);
+	if(token.size() != 2) return false;
+
+	token[0] = trim(token[0]);
+	token[1] = trim(token[1]);
+	Config* oldValue = conf->find(token[0]);
+	if (oldValue == NULL)
+	{
+		log_msg("script", "'" + token[0] + "' not found");
+		return false;
+	}
+	else
+	{
+		oldValue->setValues(token[0], token[1]);
+		return true;
+	}
+}
+
+
+bool executeScript(Config* conf, std::string script)
+{
+	log_msg("console", "ExecScript: '" + script + "'");
+
+	svector<string> lines;
+	explode(';', script, lines);
+	for(svector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
+	{
+		if(!executeCommand(conf, *it))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 #if (STEEL_COMPILER == COMPILER_GCC) && (STEEL_OS == OS_WIN32)
 int main1(int argc, char *argv[])
 #else
@@ -71,29 +114,44 @@ int main(int argc, char *argv[])
 
 	float speed = 0.01f; // 100 FPS
 
+	Config* steelConfig = resConfig.add("../conf/steel.conf");
+	if (steelConfig == NULL)
+	{
+		error("steel.conf", "Fatal error: conf/steel.conf was not found");
+		return 1;
+	}
+	executeScript(steelConfig, commandLine);
+
 // ******************* INPUT ************************
-	Input *input = new Input;
-	if(!input->init(resConfig.add("../conf/input.conf"))) return 2;
+	Input* input = new Input;
+	if(!input->init(steelConfig->find("input")))
+	{
+		error("steel.conf", "Fatal error: cannot find input config");
+		return 2;
+	}
 // ******************* GRAPH ************************
-	OpenGL_Engine *graph = new OpenGL_Engine();
-	if(!graph->init(resConfig.add("../conf/opengl.conf"), input)) return 3;
+	OpenGL_Engine* graph = new OpenGL_Engine();
+	if(!graph->init(steelConfig->find("graph"), input))
+	{
+		error("steel.conf", "Fatal error: cannot find graph config");
+		return 3;
+	}
 // ******************* AUDIO ************************
 	AudioEngine *audio = NULL;
 #ifdef LIB_OPENAL
 	audio = new OpenALEngine();
 #endif
-	if(audio != NULL && !audio->init(resConfig.add("../conf/audio.conf")))
+	if(audio != NULL && !audio->init(steelConfig->find("audio")))
 	{
+		error("steel.conf", "Warning: cannot find audio config");
 		delete audio;
 		audio = NULL;
-//		return 4;
 	}
-
 
 // ******************* GAME *************************
 	Steel game;
 
-	if(!game.init(resConfig.add("../conf/game.conf"), input, commandLine)) return 5;
+	if(!game.init(steelConfig, input, commandLine)) return 5;
 
 	game.bind(graph);
 	if(audio != NULL)

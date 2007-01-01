@@ -55,6 +55,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 {
 	::hInstance = hInstance;
 
+	commandLine = lpCmdLine;
+
 	return main(0, NULL);
 }
 #endif	// STEEL_COMPILER

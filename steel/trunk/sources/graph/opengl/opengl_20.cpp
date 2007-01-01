@@ -36,8 +36,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			(this->*BindTexCoords)(e.getTexCoords(material->diffuse_map), &material->diffuse_map.textureMatrix);
 
 			bindTextureToShader(program, "diffuse_map", 0, material->diffuse_map.image ? material->diffuse_map.image : none);
-			bindTextureToShader(program, "diffuse2_map", 1, material->diffuse2_map.image ? material->diffuse2_map.image : black);
-			
+//			bindTextureToShader(program, "diffuse2_map", 1, material->diffuse2_map.image ? material->diffuse2_map.image : black);
 			bindTextureToShader(program, "normal_map", 2, material->normal_map.image ? material->normal_map.image : zeroNormal);
 			bindTextureToShader(program, "emission_map", 3, material->emission_map.image ? material->emission_map.image : black);
 			bindTextureToShader(program, "specular_map", 4, material->specular_map.image ? material->specular_map.image : white);
