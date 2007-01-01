@@ -88,7 +88,7 @@ void explode(char delimiter, const std::string s, svector<string> &res)
 }
 
 // concat array of string into one string
-string implode(const char delimiter, const svector<std::string> elements)
+string implode(const char delimiter, const svector<std::string>& elements)
 {
 	if(elements.empty()) return "";
 
@@ -115,7 +115,7 @@ std::string getPath(std::string fullpath)
 }
 
 // split full path to path + filename
-void splitPath(std::string fullpath, std::string &path, std::string &filename)
+void splitPath(std::string fullpath, std::string& path, std::string& filename)
 {
 	svector<std::string> apath;
 	explode('/', fullpath, apath);
@@ -124,7 +124,7 @@ void splitPath(std::string fullpath, std::string &path, std::string &filename)
 	path = implode('/', apath);
 }
 
-std::string createPath(std::string dir, std::string filename)
+std::string createPath(const std::string& dir, const std::string& filename)
 {
 	if(!filename.empty() && filename[0] == '/')
 		return filename;

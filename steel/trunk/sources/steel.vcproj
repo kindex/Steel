@@ -689,6 +689,14 @@
 						RelativePath=".\res\config\config_parser.h"
 						>
 					</File>
+					<File
+						RelativePath=".\res\config\config_setup.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\res\config\config_setup.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

@@ -22,7 +22,9 @@ using namespace std;
 Config* ResCollectionConfig::addForce(std::string name, bool pop)
 {
 	std::string baseDirectory;
-	splitPath(name, baseDirectory, name);
+	std::string newName;
+	splitPath(name, baseDirectory, newName);
+	name = newName;
 	resStack.push(baseDirectory);
 	std::string fullResName = createPath(baseDirectory, name);
 

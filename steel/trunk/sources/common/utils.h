@@ -33,15 +33,15 @@ std::string FloatToStr(double a);
 std::string IntToStr(int a);
 
 // split string into array of strings with delimiter
-void explode(char delimiter, const std::string s, svector<std::string> &result);
+void explode(char delimiter, const std::string s, svector<std::string>& result);
 // concat array of string into one string
-std::string implode(const char delimiter, const svector<std::string> elements);
+std::string implode(const char delimiter, const svector<std::string>& elements);
 
 // вернуть диреторию, в которой находится файл (выбросить имя файла из полного пути)
 std::string getPath(std::string fullpath);
 // split full path to path + filename
 void splitPath(std::string fullpath, std::string &path, std::string &filename);
-std::string createPath(std::string dir, std::string filename);
+std::string createPath(const std::string& dir, const std::string& filename);
 
 // delete file in directory
 void deleteFiles(std::string dir, std::string mask);

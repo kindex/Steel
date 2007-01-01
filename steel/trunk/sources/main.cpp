@@ -30,53 +30,12 @@
 #include "main.h"
 #include "graph/opengl/opengl_engine.h"
 #include "audio/openal_engine.h"
+#include "res/config/config_setup.h"
 
 using namespace std;
 
 std::string commandLine;
 
-bool executeCommand(Config* conf, std::string command)
-{
-	if(command.empty()) return true;
-	log_msg("console", "ExecCommand: '" + command + "'");
-
-	// var=value
-
-	svector<string> token;
-	explode('=', command, token);
-	if(token.size() != 2) return false;
-
-	token[0] = trim(token[0]);
-	token[1] = trim(token[1]);
-	Config* oldValue = conf->find(token[0]);
-	if (oldValue == NULL)
-	{
-		log_msg("script", "'" + token[0] + "' not found");
-		return false;
-	}
-	else
-	{
-		oldValue->setValues(token[0], token[1]);
-		return true;
-	}
-}
-
-
-bool executeScript(Config* conf, std::string script)
-{
-	log_msg("console", "ExecScript: '" + script + "'");
-
-	svector<string> lines;
-	explode(';', script, lines);
-	for(svector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
-	{
-		if(!executeCommand(conf, *it))
-		{
-			return false;
-		}
-	}
-	return true;
-}
 
 #if (STEEL_COMPILER == COMPILER_GCC) && (STEEL_OS == OS_WIN32)
 int main1(int argc, char *argv[])
