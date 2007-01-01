@@ -1,7 +1,7 @@
 [Project]
 FileName=steel.dev
 Name=Steel Engine
-UnitCount=190
+UnitCount=141
 Type=0
 Ver=1
 ObjFiles=
@@ -20,7 +20,7 @@ ObjectOutput=..\temp\steel_devcpp_release\
 OverrideOutput=1
 OverrideOutputName=steel_devcpp_release.exe
 HostApplication=
-Folders=audio,audio/openal,common,engine,game,graph,graph/opengl,graph/opengl/extensions,input,libs,libs/glh,libs/jpeg,libs/nv_util,libs/opengl,libs/unzip,libs/zlib,math,objects,objects/combiner,objects/ps,physic,res,res/audio,res/config,res/image,res/image/bmp,res/model,res/text
+Folders=audio,audio/openal,common,engine,game,graph,graph/opengl,graph/opengl/extensions,input,libs,libs/opengl,math,objects,objects/combiner,objects/ps,physic,res,res/audio,res/config,res/image,res/image/bmp,res/model,res/text
 CommandLine=
 UseCustomMakefile=0
 CustomMakefile=

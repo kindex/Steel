@@ -32,7 +32,6 @@ class Game; // forward declaration, cross-use
 #include <string>
 #include <map>
 
-#include "../objects/kar98k.h"
 /*
 Класс, задающий правила игры
 */
@@ -103,8 +102,6 @@ public:
 	virtual void handleEventKeyUp(std::string key);
 
 	virtual void handleMouse(double dx, double dy);
-
-	Kar98k* rifle;
 };
 
 #endif

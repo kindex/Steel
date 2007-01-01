@@ -164,8 +164,6 @@ void Steel::processKeyboard()
 		if(input->isPressed("mouse1") && conf->getf("automaticGun"))
 			createObject();
 
-		if (input->isPressed("mouse1")) 
-			rifle->fire();
 		v3 dir(0,0,0);
 		if(input->isPressed("w")) 	dir += v3(1,0,0);
 		if(input->isPressed("s")) 	dir += v3(-1,0,0);

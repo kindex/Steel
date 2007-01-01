@@ -102,8 +102,6 @@ int main(int argc, char *argv[])
 		game.insonify(audio);
 	}
 		
-	game.rifle->kar98k->engine = audio;
-
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
 	log_msg("core", "Entering main loop");
