@@ -17,7 +17,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="..\bin"
-			IntermediateDirectory="..\temp\$(SolutionName).VS8.$(ConfigurationName)"
+			IntermediateDirectory="..\..\temp\$(SolutionName).VS8.$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="1"
@@ -114,7 +114,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\bin"
-			IntermediateDirectory="..\temp\$(SolutionName).VS8.$(ConfigurationName)"
+			IntermediateDirectory="..\..\temp\$(SolutionName).VS8.$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
@@ -219,23 +219,23 @@
 			Name="sources"
 			>
 			<File
-				RelativePath=".\demo.cpp"
+				RelativePath="..\sources\demo.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\demo.h"
+				RelativePath="..\sources\demo.h"
 				>
 			</File>
 			<File
-				RelativePath=".\main.cpp"
+				RelativePath="..\sources\main.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\main.h"
+				RelativePath="..\sources\main.h"
 				>
 			</File>
 			<File
-				RelativePath=".\test.cpp"
+				RelativePath="..\sources\test.cpp"
 				>
 			</File>
 		</Filter>
@@ -275,11 +275,11 @@
 			Name="18_weapon"
 			>
 			<File
-				RelativePath=".\18_weapon\kar98k.cpp"
+				RelativePath="..\sources\18_weapon\kar98k.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\18_weapon\kar98k.h"
+				RelativePath="..\sources\18_weapon\kar98k.h"
 				>
 			</File>
 		</Filter>

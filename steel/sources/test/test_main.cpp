@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: main.cpp
+	File: test/test_main.cpp
 	Unit: core
 	Part of: Steel engine
 	(C) DiVision, 2004-2006
@@ -11,8 +11,7 @@
 	License:
 		Steel Engine License
 	Description:
-		main() создаёт игровые классы, коллеццию ресурсов, загружет 
-		плагины, содержит главный цикл игры.
+		запускаемы файл тестовй системы steel engine.
  ************************************************************/
 
 #include "../steel.h"
@@ -28,8 +27,6 @@
 
 #include "../res/test_res/test_res.h"
 #include "../common/test_common/test_svector.h"
-
-bool test(void);
 
 std::string commandLine;
 
@@ -51,8 +48,6 @@ int main(int argc, char *argv[])
 	#if STEEL_OS == OS_WIN32
 		DetectWindowsVersion();
 	#endif
-
-	test();
 
 	TEST(Res);
 	TEST(svector);
