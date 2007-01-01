@@ -34,10 +34,10 @@ class Engine
 public:
 	Config *conf;
 
-	virtual ~Engine(void) {}
+	virtual ~Engine() {}
 //	virtual bool init(std::string _conf) = 0; // initialization
 
-	virtual bool clear(void) = 0; 
+	virtual bool clear() = 0; 
 //	protottype: virtual bool inject(Object *object) { return false; }; // add object to process by engine
 //	virtual	bool remove(Object *object);
 //	virtual bool process() = 0; // add object to process by engine
@@ -70,8 +70,8 @@ protected:
 		virtual void fill(GameObject *object);
 		// овновляюет место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
 		// возвращает true, если была обнавлена вся информация
-		virtual bool cache(void);
-		virtual ~Shadow(void) {}
+		virtual bool cache();
+		virtual ~Shadow() {}
 		virtual void setParent(GameObject *aparent) {parent = aparent; }
 	};
 	// кеш объектов

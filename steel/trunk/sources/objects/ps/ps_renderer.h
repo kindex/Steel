@@ -39,13 +39,13 @@ protected:
 	SpriteAlign	align;
 	v3			customAlign;
 public:
-	void initSprites(void);
+	void initSprites();
 	void initSprites(int begin, int end);
-	bool initParticles(void);
+	bool initParticles();
 
 	void process(ProcessInfo &);
 	bool updateInformation(InterfaceId, Engine*);
-	AABB getFrame(void);
+	AABB getFrame();
 };
 
 // каждая частица - отдельная модель (объект)
@@ -64,7 +64,7 @@ class DummyPSRenderer: public ParticleRenderer
 {
 protected:
 public:
-	bool initParticles(void) { return true; }
+	bool initParticles() { return true; }
 
 };
 

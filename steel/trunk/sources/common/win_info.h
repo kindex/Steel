@@ -15,7 +15,7 @@
 
 #include "../steel.h"
 #if STEEL_OS == OS_WIN32
-	void DetectWindowsVersion(void);
+	void DetectWindowsVersion();
 #endif
 
 #endif

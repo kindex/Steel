@@ -30,7 +30,7 @@ struct v3simple
 	{
 		return ((float*)(&x))[i];
 	}
-	operator v3(void) const;
+	operator v3() const;
 
 	static inline v3simple get(float X, float Y, float Z) { v3simple temp; temp.x = X; temp.y = Y; temp.z = Z;  return temp; }
 	static inline v3simple get(float *v) { v3simple temp; temp.x = v[0]; temp.y = v[1]; temp.z = v[2];  return temp; }
@@ -40,12 +40,12 @@ struct v3simple
 	inline void operator-=(const v3 & a);
 	inline void operator*=(const float a);
 	inline void operator/=(const float a);
-	inline void loadZero(void)	{	x = y = z = 0.0f;	}
-	inline void loadOne(void)	{	x = y = z = 1.0f;	}
+	inline void loadZero()	{	x = y = z = 0.0f;	}
+	inline void loadOne()	{	x = y = z = 1.0f;	}
 
 	//unary operators
-	inline v3simple operator-(void) const {return get(-x, -y, -z);}
-	inline v3simple operator+(void) const {return *this;}
+	inline v3simple operator-() const {return get(-x, -y, -z);}
+	inline v3simple operator+() const {return *this;}
 };
 
 
@@ -54,7 +54,7 @@ struct v3
 	//member variables
 	float x, y, z;
 	//constructors
-	inline v3(void)	{} // не инициализирует ничего (для повышения производительности)
+	inline v3()	{} // не инициализирует ничего (для повышения производительности)
 	inline v3(float X, float Y, float Z)	{ x = X; y = Y; z = Z; }
 
 	inline void set(float X, float Y, float Z) {	x = X;	y = Y;	z = Z;	}
@@ -67,9 +67,9 @@ struct v3
 	static inline v3 get(float X, float Y, float Z) { v3 temp; temp.x = X; temp.y = Y; temp.z = Z;  return temp; }
 	static inline v3 get(float *v) { v3 temp; temp.x = v[0]; temp.y = v[1]; temp.z = v[2];  return temp; }
 
-	inline float getX(void) const {return x;}	//public accessor functions
-	inline float getY(void) const {return y;}	//inline, const
-	inline float getZ(void) const {return z;}
+	inline float getX() const {return x;}	//public accessor functions
+	inline float getY() const {return y;}	//inline, const
+	inline float getZ() const {return z;}
 
 	// доступ к полям: 0 - x, 1 - y, 2 - z
 	float& operator[](int i)
@@ -83,8 +83,8 @@ struct v3
 
 	inline float* getfv() const {return (float*)this;}
 
-	inline void loadZero(void)	{	x=y=z=0.0f;	}
-	inline void loadOne(void)	{	x=y=z=1.0f;	}
+	inline void loadZero()	{	x=y=z=0.0f;	}
+	inline void loadOne()	{	x=y=z=1.0f;	}
 	
 	//vector algebra
 	inline v3 vectorProduct(const v3 & a) const
@@ -95,8 +95,8 @@ struct v3
 	inline float dotProduct(const v3 & A) const	{	return x*A.x + y*A.y + z*A.z;	}
 	inline float operator&(const v3 a) const		{	return dotProduct(a);	}
 
-	void normalize(void);
-	v3 getNormalized(void) const;
+	void normalize();
+	v3 getNormalized() const;
 	
 	inline float getLength() const
 	{	return (float)sqrt(((double)x*(double)x)+((double)y*(double)y)+((double)z*(double)z));	}
@@ -120,8 +120,8 @@ struct v3
 	v3 getRotatedAxis(double angle, const v3 & axis) const;
 
 	//pack to [0,1] for color
-	void packTo01(void);
-	v3 getPackedTo01(void) const;
+	void packTo01();
+	v3 getPackedTo01() const;
 
 	//linear interpolate
 	v3 lerp(const v3 & v2, float factor) const
@@ -190,8 +190,8 @@ struct v3
 	}
 
 	//unary operators
-	inline v3 operator-(void) const {return get(-x, -y, -z);}
-	inline v3 operator+(void) const {return *this;}
+	inline v3 operator-() const {return get(-x, -y, -z);}
+	inline v3 operator+() const {return *this;}
 
 	//cast to pointer to a (float *) for glVertex3fv etc
 	inline operator float* () const {return (float*) this;}

@@ -37,8 +37,8 @@
 
 bool OpenGL_ExtensionsIsSupported(const char *ext);
 //void OpenGL_ExtensionsInitAssertExtensions(const char *extList);
-void OpenGL_ExtensionsInit(void);
-void OpenGL_ExtensionsPrintfInfo(void);
+void OpenGL_ExtensionsInit();
+void OpenGL_ExtensionsPrintfInfo();
 
 extern bool GL_EXTENSION_MULTITEXTURE;
 extern int	GL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS;

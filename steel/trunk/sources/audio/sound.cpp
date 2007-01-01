@@ -12,7 +12,7 @@
 
 #include "sound.h"
 
-Sound::Sound(void)
+Sound::Sound()
 {
 	sound = NULL;
 	position = v3(0.0f, 0.0f, 0.0f);

@@ -49,7 +49,7 @@ void UniPSanimator::ProcessPhysic(steel::time curTime, steel::time frameLength, 
 }
 */
 
-bool SimpleAnimator::initParticles(void)
+bool SimpleAnimator::initParticles()
 {
 	return true;
 }

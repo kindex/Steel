@@ -55,8 +55,8 @@ protected:
 	bool soundUpdate(Sound* sound);
 
 	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???
-	ALboolean CheckALCError(void);
-	ALboolean CheckALError(void);
+	ALboolean CheckALCError();
+	ALboolean CheckALError();
 	void updateListener(Listener &listener);
 
 // AUDIO SHADOW ==============================
@@ -81,9 +81,9 @@ public:
 
 	void setListener(const Listener &aListener);
 	bool init(Config* _conf);
-	bool deinit(void);
+	bool deinit();
 	bool inject(GameObject *object);
-	bool process(void);
+	bool process();
 
 
 	AudioShadow* getShadowClass(GameObject *object) { return new AudioShadow(this); }
@@ -92,7 +92,7 @@ public:
 	void addChild(AudioShadow &shadow, GameObject *child);
 
 	void deleteChild(GameObject* child){}
-	void clearChildren(void) {}
+	void clearChildren() {}
 	void setPosition(ObjectPosition) {}
 	void setPositionKind(PositionKind) {}
 	bool setCurrentObject(GameObject* object);

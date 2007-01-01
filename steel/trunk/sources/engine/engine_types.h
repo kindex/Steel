@@ -43,10 +43,10 @@ public:
 	// уникальный идентификатор для массива данных
 	uid		id;
 public:
-	BufferedElement(void): changed(true) { id = objectIdGenerator.genUid(); }
-	uid		getId(void) const { return id; }
+	BufferedElement(): changed(true) { id = objectIdGenerator.genUid(); }
+	uid		getId() const { return id; }
 	void	setId(uid _id) { id = _id; changed = false; }
-	bool	wasChanged(void) const { return changed; }
+	bool	wasChanged() const { return changed; }
 	void	setChanged(bool _changed) {changed = _changed; }
 };
 
@@ -63,20 +63,20 @@ struct Triangles: public BufferedElement
 {
 	svector<Triangle> data;
 
-	Triangles(void): BufferedElement(), data(0) {}
+	Triangles(): BufferedElement(), data(0) {}
 };
 
 class Camera
 {
 public:
-	Camera(void);
+	Camera();
 
     void setPosition(const v3 &_position) { position = _position; }
 	void setDirection(const v3& _direction) { direction = _direction.getNormalized(); }
     void setUpVector(const v3& _upVector) { upVector = _upVector.getNormalized(); }
-	v3	getDirection(void) { return direction; }
-	v3  getPosition(void) { return position; }
-	v3  getUpVector(void) { return upVector; }
+	v3	getDirection() { return direction; }
+	v3  getPosition() { return position; }
+	v3  getUpVector() { return upVector; }
 
 private:
     v3 position; // camera eye

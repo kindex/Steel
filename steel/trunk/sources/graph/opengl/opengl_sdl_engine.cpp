@@ -30,7 +30,7 @@ struct WindowInformationSDL: public OpenGL_Engine::WindowInformation
 {
 	SDL_Surface *surface;	// SDL surface
 
-	WindowInformationSDL(void): surface(NULL) {}
+	WindowInformationSDL(): surface(NULL) {}
 };
 
 

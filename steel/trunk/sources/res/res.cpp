@@ -40,7 +40,7 @@ bool ResStack::push(std::string directory)
 	return true;
 }
 
-bool ResStack::pop(void)
+bool ResStack::pop()
 {
 	if(level==0) 
 		abort_init("res error", "Stack underflow");
@@ -65,7 +65,7 @@ std::string ResStack::getFullName(const std::string &name)
 }
 
 
-std::string ResStack::top(void)
+std::string ResStack::top()
 {
 	std::string result;
 	if(level > 0)
@@ -75,7 +75,7 @@ std::string ResStack::top(void)
 }
 
 
-int ResStack::getLevel(void)
+int ResStack::getLevel()
 {
 	return level;
 }

@@ -73,16 +73,16 @@ protected:
 //	GraphHelper	*physicHelper;
 
 public:
-	Steel(void);
+	Steel();
 
 	virtual bool init(Config *_conf, Input *_input);
-	virtual void deinit(void);
+	virtual void deinit();
 
-	void processKeyboard(void);
+	void processKeyboard();
 
 	void bind(GraphEngine*);
 	void bind(AudioEngine*);
-//	void bindPhysicEngine(void);
+//	void bindPhysicEngine();
 //	void bindAudioEngine(AudioEngine *engine);
 	void draw(GraphEngine *engine);
 	void insonify(AudioEngine *engine);
@@ -90,9 +90,9 @@ public:
 	void process(steel::time globalTime, steel::time time);
 //	int getCollisionCount() { return physicEngine->total.collisionCount; }
 
-	bool isAlive(void) {return _alive;} 
+	bool isAlive() {return _alive;} 
 	void setspeed(float _speed, steel::time _time) {speed = _speed; time = _time; } 
-	bool createObject(void);
+	bool createObject();
 
 	v3	getGlobalPosition(std::string obj);
 

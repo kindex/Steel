@@ -28,11 +28,11 @@ struct AABB3 // AABB 3D
 {
 	v3 min, max;
 
-	AABB3(void) { clear(); }
+	AABB3() { clear(); }
 	AABB3(const v3 _min, const v3 _max): min(_min), max(_max) {}
 	AABB3(const v3 point): min(point), max(point) {}
-	bool empty(void) const { return min.x>max.x + EPSILON || min.y>max.y + EPSILON || min.z>max.z + EPSILON;  }
-	void clear(void);
+	bool empty() const { return min.x>max.x + EPSILON || min.y>max.y + EPSILON || min.z>max.z + EPSILON;  }
+	void clear();
 	void getVertexes(steel::svector<v3> &dest) const;
 
     void merge(const v3 point);

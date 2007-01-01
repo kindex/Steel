@@ -57,7 +57,7 @@ public:
 // ******************* CHILDREN INTERFACE *************************
 	void addChild(GameObject* child);
 	void deleteChild(GameObject* child);
-	void clearChildren(void);
+	void clearChildren();
 
 
 // ********************* SHADOWS *************************
@@ -108,10 +108,10 @@ protected:
 		svector<LightShadow*> lights; // lights to this onject
 
 		GraphShadow(Engine *engine);
-		void calculateAABB(void);
+		void calculateAABB();
 		bool isCrossingLight(const LightShadow*);
 		void fill(GameObject *object);
-		bool cache(void);
+		bool cache();
 
 		const TexCoords* getTexCoords(const MaterialStd::TextureStd &texture);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
@@ -125,7 +125,7 @@ protected:
 		GraphShadow *shadow;
 		bool changed; // position
 
-		LightShadow(void);
+		LightShadow();
 	};
 
 	map<uid, LightShadow*> lights;
@@ -148,7 +148,7 @@ protected:
 	bool (OpenGL_Engine::*BindTexture)(Image *image, bool enable);
 	bool (OpenGL_Engine::*DrawFill_MaterialStd)(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
-	void (OpenGL_Engine::*CleanupDrawTriangles)(void);
+	void (OpenGL_Engine::*CleanupDrawTriangles)();
 	void (OpenGL_Engine::*BindTexCoords)(const TexCoords *coords, const TextureMatrix* textureMatrix);
 	void (OpenGL_Engine::*BindTexCoords3f)(const TexCoords3f *coords);
 
@@ -199,7 +199,7 @@ protected:
 
 // ******************* OpenGL 1.5 *******************
 	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total);
-	void CleanupDrawTriangles_OpenGL15(void);
+	void CleanupDrawTriangles_OpenGL15();
 	void BindTexCoords_OpenGL15(const TexCoords *coords, const TextureMatrix* textureMatrix);
 	void BindTexCoords3f_OpenGL15(const TexCoords3f *coords);
 	int textureMatrixLevel;
@@ -211,7 +211,7 @@ protected:
 	bool DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total);
 	GLSL *BindShader(Shader *);
 	void bindTextureToShader(GLSL *program, const char *name, int imageNum, Image *image);
-	void unbindTexCoords(void);
+	void unbindTexCoords();
 
 // ******************* OpenGL all *******************
 	void DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total);
@@ -221,12 +221,12 @@ protected:
 
 public:
 // ****************** GRAPG ENGINE ***********************
-	OpenGL_Engine(void);
+	OpenGL_Engine();
 
-	void processCamera(void);
+	void processCamera();
 	bool init(Config* _conf, Input *input);
 	bool process(steel::time globalTime, steel::time time);
-	bool deinit(void);
+	bool deinit();
 
 	void prepare(GraphShadow *shadow, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
 	void process(GraphShadow *e, steel::time globalTime, steel::time time);
@@ -242,31 +242,31 @@ public:
 	struct WindowInformation {};
 	WindowInformation *windowInformation;
 
-	bool isFocusedOpenGL_Window(void) { return focused; }
+	bool isFocusedOpenGL_Window() { return focused; }
 	void onResize(int width, int height);
 
 	bool (OpenGL_Engine::*CreateOpenGL_Window)(Input *input);
-	bool (OpenGL_Engine::*RepairOpenGL_Window)(void);
-	bool (OpenGL_Engine::*DeleteOpenGL_Window)(void);
+	bool (OpenGL_Engine::*RepairOpenGL_Window)();
+	bool (OpenGL_Engine::*DeleteOpenGL_Window)();
 	bool (OpenGL_Engine::*setCaptionOpenGL_Window)(std::string caption);
-	bool (OpenGL_Engine::*FlushOpenGL_Window)(void); // Swap buffers
+	bool (OpenGL_Engine::*FlushOpenGL_Window)(); // Swap buffers
 
 #ifdef LIB_SDL
-	void UseSDL(void);
+	void UseSDL();
 
 	bool CreateOpenGL_Window_SDL(Input *input);
-	bool FlushOpenGL_Window_SDL(void); // Swap buffers
-	bool DeleteOpenGL_Window_SDL(void);
+	bool FlushOpenGL_Window_SDL(); // Swap buffers
+	bool DeleteOpenGL_Window_SDL();
 	bool setCaptionOpenGL_Window_SDL(std::string caption);
 #endif
 
 #if STEEL_OS == OS_WIN32
-	void UseWinAPI(void);
+	void UseWinAPI();
 
 	bool CreateOpenGL_Window_WinAPI(Input *input);
-	bool FlushOpenGL_Window_WinAPI(void); // Swap buffers
-	bool DeleteOpenGL_Window_WinAPI(void);
-	bool RepairOpenGL_Window_WinAPI(void);
+	bool FlushOpenGL_Window_WinAPI(); // Swap buffers
+	bool DeleteOpenGL_Window_WinAPI();
+	bool RepairOpenGL_Window_WinAPI();
 	bool setCaptionOpenGL_Window_WinAPI(std::string caption);
 #endif
 

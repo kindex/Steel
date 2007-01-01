@@ -34,8 +34,8 @@ struct matrix34
 		v3simple vector;
 	} data;
 
-	void loadIdentity(void);
-	void loadZero(void);
+	void loadIdentity();
+	void loadZero();
 
 	static const inline matrix34 get(float _00, float _01, float _02, float _10, float _11, float _12, float _20, float _21, float _22,	float _x, float _y, float _z)
 	{
@@ -48,7 +48,7 @@ struct matrix34
 		return t;
 	}
 
-	inline static const matrix34	getIdentity(void)
+	inline static const matrix34	getIdentity()
 	{ 
 		return get(1,0,0, 0,1,0, 0,0,1, 0,0,0); 
 	}
@@ -103,7 +103,7 @@ struct matrix34
 	}
 
 	inline void setTranslation(v3 row) 	{		setRow(3, row);	}
-	inline v3 getTranslation(void) const 	{	return getRow(3);	}
+	inline v3 getTranslation() const 	{	return getRow(3);	}
 
 	void operator*=(const matrix34 operand);
 	inline matrix34 operator*(const matrix34 operand) const	{ matrix34 m = *this; m *= operand; return m; }
@@ -112,9 +112,9 @@ struct matrix34
 	{ 
 		return  this->data.matrix*operand + v3(data.vector);
 	}
-	matrix33 &getMatrix33(void) { return data.matrix; }
+	matrix33 &getMatrix33() { return data.matrix; }
 	
-	v3 getVector(void) { return data.vector; }
+	v3 getVector() { return data.vector; }
 
 	inline void setRotationAxis(const float angle, const v3 axis)	{		setRotationAxis(sin(angle), cos(angle), axis);	}
 	void setRotationAxis(const float sinAngle, const float cosAngle, const v3 axis)
@@ -129,7 +129,7 @@ struct matrix34
 		operand.data.vector = -data.vector;
 	}
 
-	inline matrix34 getInverse(void) const
+	inline matrix34 getInverse() const
 	{
 		matrix34 temp;
 		getInverse(temp);

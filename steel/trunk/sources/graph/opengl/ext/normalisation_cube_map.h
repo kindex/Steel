@@ -23,6 +23,6 @@
 
 #include "../../../libs/opengl/libext.h"
 
-GLuint generateNormalisationCubeMap(void);
+GLuint generateNormalisationCubeMap();
 
 #endif

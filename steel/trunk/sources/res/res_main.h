@@ -32,6 +32,6 @@ extern ResCollection<Text>		resText;
 extern ResCollection<Audio>		resAudio;
 
 
-bool registerResources(void);
+bool registerResources();
 
 #endif

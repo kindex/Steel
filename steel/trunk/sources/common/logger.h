@@ -27,7 +27,7 @@ struct GlobalErrors
 	int errorCount;
 	int warningCount;
 
-	GlobalErrors(void): errorCount(0), warningCount(0) {}
+	GlobalErrors(): errorCount(0), warningCount(0) {}
 };
 
 extern GlobalErrors globalErrors;
@@ -105,7 +105,7 @@ public:
 
 	//	Открытие файла лога и иницализация таймера, true в случае успеха.
 	bool open(std::string filename);
-	bool close(void);
+	bool close();
 
 /*
 	Добавление сообщения в файл, перед текстом ставится время от начала открытия лог-файла. 
@@ -118,10 +118,10 @@ public:
 
 	// вывод без ключевых слов
 	void out(std::string str);
-	void push(void) { level++;}
-	void pop(void){ level--;}
+	void push() { level++;}
+	void pop(){ level--;}
 	void setLevel(int _level) { level = _level; }
-	int getLevel(void) { return level;}
+	int getLevel() { return level;}
 };
 
 

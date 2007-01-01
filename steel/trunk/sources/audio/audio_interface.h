@@ -28,7 +28,7 @@ public:
 	virtual bool soundPause(Sound* sound) = 0;
 	virtual bool soundUpdate(Sound* sound) = 0;
 
-	virtual float getMasterVolume(void) = 0;
+	virtual float getMasterVolume() = 0;
 };
 
 

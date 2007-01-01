@@ -44,7 +44,7 @@ protected:
 	int cx, cy, lastdx, lastdy;
 
 public:
-	Input(void):
+	Input():
 		game(NULL),
 		conf(NULL),
 		CaptureMouse(NULL),
@@ -52,36 +52,36 @@ public:
 		Process(NULL)
 		{}
 
-	virtual ~Input(void) {}
+	virtual ~Input() {}
 	virtual bool init(Config* _conf);
 	virtual void setGame(Game *_game) { game = _game; }
 
 	virtual bool isPressed(std::string key);
-	virtual bool isAlive(void) { return alive; }
+	virtual bool isAlive() { return alive; }
 	virtual void getMouseDelta(double &dx, double &dy);
 	virtual void setMouseCenter(int _cx, int _cy) { cx = _cx; cy = _cy; }
-	virtual bool isMouseCaptured(void) { return mouseCaptured; }
+	virtual bool isMouseCaptured() { return mouseCaptured; }
 
-	void (Input::*CaptureMouse)(void);
-	void (Input::*FreeMouse)(void);
-	void (Input::*Process)(void);
+	void (Input::*CaptureMouse)();
+	void (Input::*FreeMouse)();
+	void (Input::*Process)();
 
 #if STEEL_OS == OS_WIN32
-	void UseWinAPI(void);
+	void UseWinAPI();
 
-	void CaptureMouse_WinAPI(void);
-	void FreeMouse_WinAPI(void);
-	void Process_WinAPI(void);
+	void CaptureMouse_WinAPI();
+	void FreeMouse_WinAPI();
+	void Process_WinAPI();
 	LRESULT CALLBACK ProcessMessage_WinAPI(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	std::string DecodeKey_WinAPI(MSG p);
 #endif
 
 #ifdef LIB_SDL
-	void UseSDL(void);
+	void UseSDL();
 
-	void CaptureMouse_SDL(void);
-	void FreeMouse_SDL(void);
-	void Process_SDL(void);
+	void CaptureMouse_SDL();
+	void FreeMouse_SDL();
+	void Process_SDL();
 #endif
 
 };

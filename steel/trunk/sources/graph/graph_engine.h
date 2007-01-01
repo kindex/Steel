@@ -48,7 +48,7 @@ public:
 	// Draw colelcted information. May be called few times without recollection information
 	virtual bool isVisible(AABB box) = 0;
 	// Clear collected information
-	bool clear(void);
+	bool clear();
 
 protected:
 	svector<GameObject*> objects;

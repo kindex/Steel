@@ -32,10 +32,10 @@ typedef enum
 
 struct ConfigTemplate
 {
-	ConfigTemplate(void): local(true) {}
+	ConfigTemplate(): local(true) {}
 	ConfigTemplate(const std::string &FullPath);
 
-	const std::string Dump(void) const;
+	const std::string Dump() const;
 
 	std::string localPath;
 	std::string configId;
@@ -47,13 +47,13 @@ class ConfigArray;
 class Config: public Res
 {
 public:
-	Config(void): valueIsSet(false), parent(NULL){}
+	Config(): valueIsSet(false), parent(NULL){}
 	Config(ConfigValueType _type, bool _valueIsSet): type(_type), valueIsSet(_valueIsSet), parent(NULL) {}
 
 	// common
-	virtual ConfigValueType getType(void) const { return type; }
-	virtual std::string		getShortId(void) const { return id; }
-	virtual std::string		getFullId(void) const { return file + "#" + id; }
+	virtual ConfigValueType getType() const { return type; }
+	virtual std::string		getShortId() const { return id; }
+	virtual std::string		getFullId() const { return file + "#" + id; }
 
 	// Config Base types
 	virtual double		returnd(const double _default = 0.0f) const { return _default; }
@@ -83,7 +83,7 @@ public:
 	virtual std::string Dump(int level = 0) { return DumpPrefix(level) + DumpThis(level); }
 	
 	// директория, из которой был загружен конфиг
-	std::string getConfigFilePath(void) const;
+	std::string getConfigFilePath() const;
 	virtual void setFilePath(const std::string &_file) { file = _file; }
 
 	friend class ConfigParser;
@@ -95,16 +95,16 @@ protected:
 	virtual Config* findInTemplate(const std::string &path);
 
 	virtual std::string genFullId(std::string someConfigId) const;
-	const Config* getParent(void) const { return parent; }
-	Config* getParent(void) { return parent; }
+	const Config* getParent() const { return parent; }
+	Config* getParent() { return parent; }
 	void setParent(Config *_parent) { parent = _parent; }
 
 	const std::string getIndent(int level) const;
 	virtual const std::string DumpPrefix(int level = 0) const;
 	virtual const std::string DumpThis(int level = 0) const = 0;
 	void setFile(std::string _file) { file = _file; }
-	const Config *getRoot(void) const;
-	Config *getRoot(void);
+	const Config *getRoot() const;
+	Config *getRoot();
 
 	bool valueIsSet;
 	ConfigValueType type;
@@ -117,7 +117,7 @@ protected:
 class ConfigNull: public Config
 {
 public:
-	ConfigNull(void): Config(CONFIG_VALUE_NULL, false) {}
+	ConfigNull(): Config(CONFIG_VALUE_NULL, false) {}
 
 	const Config	*findInThis(const std::string &path) const { return NULL; }
 	Config			*findInThis(const std::string &path) { return NULL; }
@@ -137,7 +137,7 @@ public:
 class ConfigNumber: public ConfigSimple
 {
 public:
-	ConfigNumber(void): ConfigSimple(CONFIG_VALUE_NUMBER, false) { }
+	ConfigNumber(): ConfigSimple(CONFIG_VALUE_NUMBER, false) { }
 	ConfigNumber(double newValue): ConfigSimple(CONFIG_VALUE_NUMBER, true), value(newValue) {}
 	
 	void	setValue(double newValue) { value = newValue; }
@@ -155,7 +155,7 @@ protected:
 class ConfigString: public ConfigSimple
 {
 public:
-	ConfigString(void): ConfigSimple(CONFIG_VALUE_STRING, false) {}
+	ConfigString(): ConfigSimple(CONFIG_VALUE_STRING, false) {}
 	ConfigString(const std::string &newValue): ConfigSimple(CONFIG_VALUE_STRING, true), value(newValue) {}
 
 	void	setValue(const std::string &newValue) { value = newValue; }
@@ -180,7 +180,7 @@ public:
 class ConfigStruct: public ConfigCompound
 {
 public:
-	ConfigStruct(void): ConfigCompound(CONFIG_VALUE_STRUCT) { }
+	ConfigStruct(): ConfigCompound(CONFIG_VALUE_STRUCT) { }
 
 	void setValue(const std::string &key, Config *value) { set[key] = value; }
 	
@@ -200,7 +200,7 @@ protected:
 class ConfigArray: public ConfigCompound
 {
 public:
-	ConfigArray(void): ConfigCompound(CONFIG_VALUE_ARRAY) {}
+	ConfigArray(): ConfigCompound(CONFIG_VALUE_ARRAY) {}
 	
 	void push(Config* newValue) { set.push_back(newValue); }
 
@@ -209,7 +209,7 @@ public:
 	const v3 returnv3(const v3 _default = v3(0.0f, 0.0f, 0.0f)) const;
 	const Config* getArrayElement(const size_t index) const;
 	Config* getArrayElement(const size_t index);
-	size_t size(void) const { return set.size(); }
+	size_t size() const { return set.size(); }
 
 	const std::string DumpThis(int level) const;
 	void setFilePath(const std::string &_file);
@@ -217,8 +217,8 @@ public:
 // iterators
 	typedef svector<Config*>::iterator iterator;
 	typedef svector<Config*>::const_iterator const_iterator;
-	iterator begin(void) const { return set.begin(); }
-	iterator end(void) const { return set.end(); }
+	iterator begin() const { return set.begin(); }
+	iterator end() const { return set.end(); }
 protected:
 
 	svector<Config*> set;

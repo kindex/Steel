@@ -26,7 +26,7 @@
 struct Line3 // Line 3D
 {	v3	base, a;
 
-	Line3(void) {}
+	Line3() {}
 	Line3(v3 _base, v3 _a): base(_base), a(_a) {}
 	v3 point(const float s) const  { return base + a*s; }
 };

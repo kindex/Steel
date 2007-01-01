@@ -38,7 +38,7 @@ struct WindowInformationWinAPI: public OpenGL_Engine::WindowInformation
 	DWORD	dwStyle;
 	Input	*input;
 
-	WindowInformationWinAPI(void): input(NULL) {}
+	WindowInformationWinAPI(): input(NULL) {}
 };
 
 bool OpenGL_Engine::RepairOpenGL_Window_WinAPI() // repair window on resize

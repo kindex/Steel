@@ -51,7 +51,7 @@ ParticleRenderer* findParticleRenderer(const string &_class)
 }
 
 
-ParticleProcessor::ParticleProcessor(void): 
+ParticleProcessor::ParticleProcessor(): 
 	conf(NULL), 
 	set(NULL), 
 	particleSystem(NULL) 
@@ -70,7 +70,7 @@ bool ParticleProcessor::InitFromConfig(Config *_conf)
 }
 
 
-ParticleSystem::ParticleSystem(void):
+ParticleSystem::ParticleSystem():
 	conf(NULL),
 	emitterConf(NULL),
 	rendererConf(NULL),

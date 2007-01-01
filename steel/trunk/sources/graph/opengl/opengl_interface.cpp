@@ -107,7 +107,7 @@ void OpenGL_Engine::deleteChild(GameObject* child)
 	// TODO:
 }
 
-void OpenGL_Engine::clearChildren(void)
+void OpenGL_Engine::clearChildren()
 {
 	// TODO:
 }

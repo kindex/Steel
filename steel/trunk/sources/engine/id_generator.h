@@ -21,8 +21,8 @@ class IdGenerator
 protected:
 	uid freeId;
 public:
-	IdGenerator(void) { freeId = 1; }
-	uid genUid(void);
+	IdGenerator() { freeId = 1; }
+	uid genUid();
 };
 
 extern IdGenerator objectIdGenerator;

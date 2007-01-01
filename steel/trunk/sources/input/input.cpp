@@ -22,7 +22,7 @@ bool Input::isPressed(std::string key)
 }
 
 #if STEEL_OS == OS_WIN32
-void Input::UseWinAPI(void)
+void Input::UseWinAPI()
 {
 	CaptureMouse = &Input::CaptureMouse_WinAPI;
 	FreeMouse = &Input::FreeMouse_WinAPI;
@@ -33,7 +33,7 @@ void Input::UseWinAPI(void)
 #endif
 
 #ifdef LIB_SDL
-void Input::UseSDL(void)
+void Input::UseSDL()
 {
 	CaptureMouse = &Input::CaptureMouse_SDL;
 	FreeMouse = &Input::FreeMouse_SDL;

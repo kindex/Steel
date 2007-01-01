@@ -187,7 +187,7 @@ bool OpenALEngine::init(Config* _conf)
 	return true;
 }
 
-bool OpenALEngine::deinit(void)
+bool OpenALEngine::deinit()
 {
 	// clear all buffers and sources
 //	for (TBuf::iterator i = buffers.begin(); i != buffers.end(); i++)
@@ -262,7 +262,7 @@ bool OpenALEngine::inject(GameObject *object)
 }
 
 
-bool OpenALEngine::process(void)
+bool OpenALEngine::process()
 {
 	// iterator po vsem objectam - kto 4to ho4et
 //	for (int i = 0; i < objects.size(); i++)

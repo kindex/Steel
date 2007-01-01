@@ -28,21 +28,21 @@ class Timer
 
 public:
 // Время в секундах от момента clear, исключая промежутки между pause и resume
-	steel::time total(void) 
+	steel::time total() 
 	{ 
 		return (steel::time)((timestamp() - startTime) - skip);
 	}
 
 // Абсолютное время
-	virtual double timestamp(void);
+	virtual double timestamp();
 // Обнулить таймер
-	virtual void start(void);
-	virtual void pause(void)
+	virtual void start();
+	virtual void pause()
 	{
 		active		= false;
 		pausedTime = timestamp();
 	}
-	virtual void resume(void)
+	virtual void resume()
 	{
 		if(!active)
 		{
@@ -51,10 +51,10 @@ public:
 		}
 	}
 // Сообщение таймеру о том, что кадр был обработан и следует обновить FPS
-	virtual void incframe(void);
+	virtual void incframe();
 // Вернуть текушее количество кадров в секунду (FPS)
-	virtual steel::time getfps(void);
-	virtual std::string getfps_s(void);
+	virtual steel::time getfps();
+	virtual std::string getfps_s();
 };
 
 extern Timer globalTimer;

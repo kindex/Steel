@@ -21,19 +21,19 @@
 class Sphere: public GameObject
 {
 public:
-	Sphere(void);
-	virtual ~Sphere(void);
+	Sphere();
+	virtual ~Sphere();
 
 	bool isSuportingInterface(InterfaceId id) { return id == GraphEngine::interfaceId; }
 	bool updateInformation(InterfaceId id, Engine* engine);
 	void bindEngine(InterfaceId, Engine*);
 
-	void ProcessGraph(void);
+	void ProcessGraph();
 	void DeleteTriangle(int n);
 	bool InitFromConfig(Config*);
 
 private:
-	void createSphere(void);
+	void createSphere();
 
 	float size;
 	int height;

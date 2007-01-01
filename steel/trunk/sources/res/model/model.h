@@ -25,12 +25,12 @@
 class Model: public Res
 {
 public:
-	float calculateVolume(void); // вычислить объём
-	float getVolume(void); // вычислить объём
+	float calculateVolume(); // вычислить объём
+	float getVolume(); // вычислить объём
 
-	const Vertexes *getVertexes(void) const { return &vertexes; }
-	const Normals *getNormals(void) const { return &normals; }
-	const FaceMaterials *getFaceMaterials(void) const { return &faceMaterials; }
+	const Vertexes *getVertexes() const { return &vertexes; }
+	const Normals *getNormals() const { return &normals; }
+	const FaceMaterials *getFaceMaterials() const { return &faceMaterials; }
 	const TexCoords	*getTexCoords(int mapNumber) const;
 
 	friend class GraphObjectModel; // TEMP:
@@ -48,23 +48,23 @@ protected:
 	std::string			name;
 	float				volume;
 
-    Model(void): name(), volume(-1) { }
-    void updateMaterial(void);
-    void updateNormals(void);
-	void updateAABB(void);
-    void updateTangentSpace(void);
-    void update(void)
+    Model(): name(), volume(-1) { }
+    void updateMaterial();
+    void updateNormals();
+	void updateAABB();
+    void updateTangentSpace();
+    void update()
     {
         updateNormals();
         updateMaterial();
         updateTangentSpace();
     }
-    void updatetangentSpaceLight(void);
-    void updateReflectCoords(void);
+    void updatetangentSpaceLight();
+    void updateReflectCoords();
     void updateSphereMap(v3 &center);
     int duplicateVertex(int src, v3 newnormal);
 
-	void generateNormals(void);
+	void generateNormals();
 };
 
 #endif

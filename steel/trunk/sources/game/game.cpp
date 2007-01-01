@@ -85,7 +85,7 @@ bool Steel::init(Config *_conf, Input *_input)
 	return true;
 }
 
-Steel::Steel(void):
+Steel::Steel():
 	input(NULL),
 	conf(NULL),
 	graphEngine(NULL),

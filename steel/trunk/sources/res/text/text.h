@@ -33,21 +33,21 @@ protected:
 	TextFormat format;
 
 public:
-	Text(void): text(NULL), length(0) {}
+	Text(): text(NULL), length(0) {}
 
 	// сам текст в виде z-terminated string (в конце /0)
-	char *getText(void) const
+	char *getText() const
 	{ 
 		return text; 
 	}
 
 	// длина текста без /0
-	int getLength(void) const
+	int getLength() const
 	{ 
 		return length; 
 	}
 
-	TextFormat getFormat(void) const
+	TextFormat getFormat() const
 	{
 		return TEXT_ASCII;
 	}
@@ -62,7 +62,7 @@ public:
 		if(text) { delete [] text; length = 0; text = NULL; }
 	}
 
-	~Text(void)
+	~Text()
 	{
 		if(text) delete [] text; 
 	}

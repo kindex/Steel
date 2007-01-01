@@ -29,7 +29,7 @@ GraphObject* findGraphObject(const string &_class)
 
 // ***************** Custom *****************
 
-GraphObjectCustom::GraphObjectCustom(void): 
+GraphObjectCustom::GraphObjectCustom(): 
 	vertexes(NULL), 
 	normals(NULL), 
 	faces(NULL),
@@ -157,7 +157,7 @@ bool GraphObjectBox::InitFromConfig(Config *conf)
 	return true;
 }
 
-GraphObjectModel::GraphObjectModel(void): 
+GraphObjectModel::GraphObjectModel(): 
 	model(NULL) 
 {}
 

@@ -32,7 +32,7 @@ public:
 class GraphObjectModel: public GraphObject
 {
 public:
-	GraphObjectModel(void);
+	GraphObjectModel();
 	bool InitFromConfig(Config *conf);
 	void bindEngine(InterfaceId, Engine*);
 
@@ -43,7 +43,7 @@ protected:
 class GraphObjectCustom: public GraphObject
 {
 public:
-	GraphObjectCustom(void);
+	GraphObjectCustom();
 
 	void bindEngine(InterfaceId, Engine*);
 protected:

@@ -46,10 +46,10 @@ protected:
 	ImageFormat		format;
 public:
 
-	Image(void): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; dimension = IMAGE_DIMENSION_NONE; format = IMAGE_FORMAT_NONE; }
-    ~Image(void) { unload(); }
+	Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; dimension = IMAGE_DIMENSION_NONE; format = IMAGE_FORMAT_NONE; }
+    ~Image() { unload(); }
 
-    bool unload(void)
+    bool unload()
 	{
 		if (bitmap != NULL)
 			delete bitmap;
@@ -60,24 +60,24 @@ public:
 
     bool createImage(int WIDTH, int HEIGHT, int BPP);
 
-    void flipV(void); // perevernut' Vertikalno |
-    void flipH(void); // perevernut' <->
+    void flipV(); // perevernut' Vertikalno |
+    void flipH(); // perevernut' <->
 
     void putpixel		(float x, float y, float r, float g, float b);
     void putpixelalfa	(float x, float y, float r, float g, float b, float alfa);
     void putpixeladd	(float x, float y, float r, float g, float b);
     void clear			(float r, float g, float b);
 
-	int getWidth(void)	{ return width; }
-	int getHeight(void)	{ return height; }
-	int getBpp(void)	{ return bpp; }
-	unsigned char* getBitmap(void) { return bitmap; }
+	int getWidth()	{ return width; }
+	int getHeight()	{ return height; }
+	int getBpp()	{ return bpp; }
+	unsigned char* getBitmap() { return bitmap; }
 
-	void convertFromHeightMapToNormalMap(void);
+	void convertFromHeightMapToNormalMap();
 
-	ImageDimension	getDimension(void) { return dimension; }
+	ImageDimension	getDimension() { return dimension; }
 	void setDimension(ImageDimension _dimension) { dimension = _dimension; }
-	ImageFormat	getFormat(void) { return format; }
+	ImageFormat	getFormat() { return format; }
 	void setFormat(ImageFormat _format) { format = _format; }
 };
 

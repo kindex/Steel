@@ -42,10 +42,10 @@ class ParticleSystem;
 class ParticleProcessor: public GameObject
 {
 public:
-	ParticleProcessor(void);
-	virtual ~ParticleProcessor(void) {}
+	ParticleProcessor();
+	virtual ~ParticleProcessor() {}
 	virtual void bindParticleSystem(ParticleSystem *a);
-	virtual bool initParticles(void) = 0;
+	virtual bool initParticles() = 0;
 	bool InitFromConfig(Config *_conf);
 
 protected:
@@ -58,7 +58,7 @@ protected:
 class ParticleEmitter: public ParticleProcessor
 {
 public:
-	bool initParticles(void);
+	bool initParticles();
 	virtual void born(Particle &particle) = 0; // создать частицу
 	virtual void kill(int i); // убить частицу с номером i
 
@@ -91,7 +91,7 @@ class ParticleSystem: public GameObject
 friend class ParticleProcessor;
 
 public:
-	ParticleSystem(void);
+	ParticleSystem();
 
 	bool InitFromConfig(Config *conf);
 	bool isSuportingInterface(InterfaceId);

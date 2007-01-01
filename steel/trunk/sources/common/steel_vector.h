@@ -62,7 +62,7 @@ public:
 	typedef T* iterator;
 	typedef iterator const_iterator;
 
-	svector(void) 
+	svector() 
 	{ 
 		_size = _count = 0; 
 		data = NULL; 
@@ -99,7 +99,7 @@ public:
 		data = (T*)malloc(_size*sizeof(T)); 
 	}
 
-	~svector(void) 
+	~svector() 
 	{
 		while (_count > 0)
 		{
@@ -145,22 +145,22 @@ public:
 
 	}
 	
-	void clear(void)
+	void clear()
 	{
 		resize(0);
 		pack();
 	}
 
-	size_t size(void) const { return _count; }
-	size_t capacity(void) const { return _size; }
-	bool empty(void) const { return _count==0; }
+	size_t size() const { return _count; }
+	size_t capacity() const { return _size; }
+	bool empty() const { return _count==0; }
 
 	T&operator[](size_t i)	{		return data[i];	}
 	const T&operator[](size_t i) const	{		return data[i];	}
 	T& at(size_t i) {		return data[i];	}
 	const T& at(size_t i) const	{		return data[i];	}
 
-	void pack(void)
+	void pack()
 	{
 		if(_count < _size)
 		{
@@ -175,12 +175,12 @@ public:
 		data[_count-1] = newItem;
 	}
 	
-	void pop_back(void)
+	void pop_back()
 	{
 		resize(_count - 1);
 	}
 
-	iterator begin(void) const
+	iterator begin() const
 	{ 
 		if(_count == 0)
 			return NULL;
@@ -188,7 +188,7 @@ public:
 			return data; 
 	}
 
-	iterator end(void) const
+	iterator end() const
 	{ 
 		if(_count == 0)
 			return NULL;
@@ -196,10 +196,10 @@ public:
 			return data + _count;
 	}
 
-	T &back(void)	{		return data[_count-1];	}
-	T &front(void)	{		return data[0];	}
-	const T &back(void)	const {		return data[_count-1];	}
-	const T &front(void)	const {		return data[0];	}
+	T &back()	{		return data[_count-1];	}
+	T &front()	{		return data[0];	}
+	const T &back()	const {		return data[_count-1];	}
+	const T &front()	const {		return data[0];	}
 	void erase(const iterator it)
 	{
 		int move = ((data + _count -1) - it)*sizeof(T);

@@ -25,24 +25,24 @@ protected:
 	GLuint programId, vertexShaderId, fragmentShaderId;
 	Shader *shader;
 public:
-	GLSL(void): programId(0), vertexShaderId(0), fragmentShaderId(0)
+	GLSL(): programId(0), vertexShaderId(0), fragmentShaderId(0)
 		, shader(NULL)
 		//, conf(NULL) 
 	{};
 
-	~GLSL(void);
+	~GLSL();
 
-	GLuint getProgramId(void) { return programId; }
+	GLuint getProgramId() { return programId; }
 	bool LoadShader(GLuint shader, Text *text);
 
 	bool init(Shader*);
-	bool isError(void);
+	bool isError();
 	void loadLog(GLuint object);
-	void bind(void);
-	void unbind(void);
+	void bind();
+	void unbind();
 	bool setTexture(const char *name, int texNum);
 
-	GLuint getGL_Id(void) { return programId;}
+	GLuint getGL_Id() { return programId;}
 
 //    bool        setUniformVector  ( const char * name, const Vector4D& value  );
 //    bool        setUniformVector  ( int loc,            const Vector4D& value );

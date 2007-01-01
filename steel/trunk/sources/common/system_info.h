@@ -15,7 +15,7 @@
 
 #include "../steel.h"
 #if STEEL_OS == OS_WIN32
-void CollectSystemInfo(void);
+void CollectSystemInfo();
 #else
 #define CollectSystemInfo() ;
 #endif

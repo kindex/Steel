@@ -15,7 +15,7 @@
 #include "sphere.h"
 #include "../res/res_main.h"
 
-Sphere::Sphere(void):
+Sphere::Sphere():
 	vertexes(NULL),
 	normals(NULL),
 	faces(NULL),

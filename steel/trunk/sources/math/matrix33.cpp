@@ -103,7 +103,7 @@ void matrix33::operator /=(const float operand)
 	data.a[8] /= operand;
 }
 
-void matrix33::loadZero(void)
+void matrix33::loadZero()
 {
 	memset(data.a, 0, 12*sizeof(float));
 }

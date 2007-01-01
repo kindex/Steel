@@ -28,13 +28,13 @@ protected:
 	bool failed;
 
 public:
-	rstream(void): failed(true) {}
+	rstream(): failed(true) {}
 	rstream(std::string s, std::string ext = "", ios_base::openmode _Mode = std::ios::binary) 
 	{ 
 		open(s, ext, _Mode);
 	}
 	
-	bool fail(void) { return failed || std::ifstream::fail(); }
+	bool fail() { return failed || std::ifstream::fail(); }
 	bool open(std::string s, std::string ext = "", ios_base::openmode _Mode = std::ios::binary);
 
 	void read(void *dest, int size);

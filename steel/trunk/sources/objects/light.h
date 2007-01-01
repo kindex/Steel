@@ -18,8 +18,8 @@ protected:
 	bool enabled;
 	GraphInterface *engine;
 public:
-	GameLight(void): light(NULL), engine(NULL), enabled(false) { position.loadIdentity(); }
-	~GameLight(void)	{		delete light;	}
+	GameLight(): light(NULL), engine(NULL), enabled(false) { position.loadIdentity(); }
+	~GameLight()	{		delete light;	}
 
 	bool InitFromConfig(Config *conf);
 	bool isSuportingInterface(InterfaceId);

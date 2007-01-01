@@ -43,9 +43,9 @@ public:
 	bool	push(std::string directory);
 	bool	pushFullPath(std::string path);
 
-	bool	pop(void);
-	int		getLevel(void);
-	std::string top(void);
+	bool	pop();
+	int		getLevel();
+	std::string top();
 	std::string getFullName(const std::string &name);
 
 	template<class T>
@@ -71,9 +71,9 @@ protected:
 public:
 //	virtual bool init(const std::string name, const std::string dir) = 0;
 
-	uid	getId(void) { return resId; }
+	uid	getId() { return resId; }
 	void setId(uid id) { resId = id; }
-	virtual ~Res(void) {}
+	virtual ~Res() {}
 };
 
 
@@ -90,7 +90,7 @@ template<class T>
 class ResCollection
 {
 public:
-	ResCollection(void) {}
+	ResCollection() {}
 
 	inline T* operator[] (const std::string& name);// Вернуть ресурс по полному имени
 	inline T* get(const std::string& name) { return operator[](name); }  // Вернуть ресурс по полному имени
@@ -103,7 +103,7 @@ public:
 	bool remove(T* object);
 
 	// У процедуры add есть второй параметр типа bool. Если он равняется false, то после загрузки ресурса текущая директория не восстанавливается и надо это делать вручную с помощью вызова pop.
-	void pop(void) { resStack.pop(); }
+	void pop() { resStack.pop(); }
 
 
 protected:

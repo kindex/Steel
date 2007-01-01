@@ -68,7 +68,7 @@
 using namespace std;
 
 #if STEEL_OS == OS_WIN32
-void DetectWindowsVersion(void) 
+void DetectWindowsVersion() 
 { 
 	//	cout << "File open pattern by Def." << endl; 
 	    

@@ -29,10 +29,10 @@ struct color4f
 	void set(float R, float G, float B, float A) {r = R; g = G; b = B; a = A;}
 	void set(const v3 rgb) {r = rgb.x; g = rgb.y; b = rgb.z; a = 1.0f;}
 
-	color4f(void) {}
+	color4f() {}
 	color4f(float R, float G, float B, float A): r(R), g(G), b(B), a(A) {}
 
-	const float *getfv(void) const { return &r; }
+	const float *getfv() const { return &r; }
 };
 
 typedef enum
@@ -65,7 +65,7 @@ struct Light
 	float angle; // LIGHT_TARGET light cone angle
 //	Image *cubeMap; // cube map
 
-	Light(void);
+	Light();
 };
 
 //	kind : 2d only

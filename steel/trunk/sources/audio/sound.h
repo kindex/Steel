@@ -19,7 +19,7 @@
 class Sound
 {
 public:
-	Sound(void);
+	Sound();
 
 //	uid id;
 

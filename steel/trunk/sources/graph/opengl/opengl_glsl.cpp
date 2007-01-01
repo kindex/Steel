@@ -137,12 +137,12 @@ void GLSL::loadLog(GLuint object)
         free ( infoLog );
 }
 
-void GLSL::bind(void)
+void GLSL::bind()
 {
 	glUseProgramObjectARB(programId);
 }
 
-void GLSL::unbind(void)
+void GLSL::unbind()
 {
 	glUseProgramObjectARB(0);
 }

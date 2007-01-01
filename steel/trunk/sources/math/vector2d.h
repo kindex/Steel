@@ -20,10 +20,10 @@ class v2
 {
 public:
 	//constructors
-	v2(void)	:	x(0.0f), y(0.0f){}
+	v2()	:	x(0.0f), y(0.0f){}
 	v2(float newX, float newY):	x(newX), y(newY)	{}
 	v2(const v2 & operand)	:	x(operand.x), y(operand.y)	{}
-	~v2(void) {}	//empty
+	~v2() {}	//empty
 
 	void set(float newX, float newY){	x=newX;	y=newY;	}
 
@@ -31,18 +31,18 @@ public:
 	void setX(float newX) {x = newX;}
 	void setY(float newY) {y = newY;}
 
-	float getX(void) const {return x;}	//public accessor functions
-	float getY(void) const {return y;}	//inline, const
+	float getX() const {return x;}	//public accessor functions
+	float getY() const {return y;}	//inline, const
 
-	void loadZero(void) { x=0.0; y=0.0; }
-	void loadOne(void);					//fill with (1, 1)
+	void loadZero() { x=0.0; y=0.0; }
+	void loadOne();					//fill with (1, 1)
 
-	void normalize(void); // set length to 1
-	v2 getNormalized(void) const;
+	void normalize(); // set length to 1
+	v2 getNormalized() const;
 
-	float getLength(void) const {	return (float)sqrt((x*x)+(y*y));	}
+	float getLength() const {	return (float)sqrt((x*x)+(y*y));	}
 
-	float getSquaredLength(void) const
+	float getSquaredLength() const
 	{	return (x*x)+(y*y);	}
 
 	//linear interpolate
@@ -85,12 +85,12 @@ public:
 	}
 
 	//unary operators
-	v2 operator-(void) const {return v2(-x, -y);}
-	v2 operator+(void) const {return *this;}
+	v2 operator-() const {return v2(-x, -y);}
+	v2 operator+() const {return *this;}
 
 	//cast to pointer to a (float *) for glVertex3fv etc
-	operator float* (void) const {return (float*) this;}
-	operator const float* (void) const {return (const float*) this;}
+	operator float* () const {return (float*) this;}
+	operator const float* () const {return (const float*) this;}
 
     void rotate(float sinA, float cosA)
     {
@@ -99,8 +99,8 @@ public:
         x = xx;
     }
     void rotate(float A)    { rotate(sin(A),cos(A));    }
-    v2 rot90(void) { return v2(-y, x);}
-    v2 rot_90(void) { return v2(y, -x);}
+    v2 rot90() { return v2(-y, x);}
+    v2 rot_90() { return v2(y, -x);}
 
 	//member variables
 	float x, y;

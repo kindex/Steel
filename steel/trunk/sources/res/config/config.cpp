@@ -179,7 +179,7 @@ Config* Config::findInTemplate(const std::string &path)
 }
 
 
-const Config* Config::getRoot(void) const
+const Config* Config::getRoot() const
 {
 	const Config *a = this;
 	const Config *b = this;
@@ -191,7 +191,7 @@ const Config* Config::getRoot(void) const
 	return b;
 }
 
-Config* Config::getRoot(void)
+Config* Config::getRoot()
 {
 	Config *a = this;
 	Config *b = this;
@@ -274,7 +274,7 @@ ConfigArray* Config::getArray(const std::string &path)
 		return NULL;
 }
 
-std::string Config::getConfigFilePath(void) const
+std::string Config::getConfigFilePath() const
 {
 	string path, name;
 	splitPath(file, path, name);
@@ -349,7 +349,7 @@ const string Config::getIndent(int level) const
 	return res;
 }
 
-const std::string ConfigTemplate::Dump(void) const
+const std::string ConfigTemplate::Dump() const
 {
 	if(local) return localPath;
 	else return configId + "#" + localPath;

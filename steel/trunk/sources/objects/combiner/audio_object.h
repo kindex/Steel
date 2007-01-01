@@ -27,7 +27,7 @@ AudioObject* findAudioObject(const string &_class);
 class AudioObject: public GameObject
 {
 public:
-	AudioObject(void);
+	AudioObject();
 	bool isSuportingInterface(InterfaceId id) { return AudioInterface::interfaceId == id; }
 	void bindEngine(InterfaceId, Engine*);
 	

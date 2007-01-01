@@ -61,7 +61,7 @@ Config*	ConfigParser::Parse(Text *_file)
 	return res;
 }
 
-Config* ConfigParser::ParseConfig(void)
+Config* ConfigParser::ParseConfig()
 {
 	SkipSpaces();
 	char c = seec();
@@ -225,7 +225,7 @@ string ConfigParser::getAlpha(const char *text, int &position)
 }
 
 
-ConfigStruct* ConfigParser::ParseStruct(void)
+ConfigStruct* ConfigParser::ParseStruct()
 {
 	char c = getc();
 	if(c != '{')
@@ -289,7 +289,7 @@ ConfigStruct* ConfigParser::ParseStruct(void)
 }
 
 
-ConfigArray* ConfigParser::ParseArray(void)
+ConfigArray* ConfigParser::ParseArray()
 {
 	char c = seec();
 	if(c != '(')
@@ -535,13 +535,13 @@ bool ConfigParser::isDigit(char c)
 }
 
 
-char ConfigParser::seec(void)
+char ConfigParser::seec()
 {
 	char c = file->getChar(position);
 	return c;
 }
 
-char ConfigParser::getc(void)
+char ConfigParser::getc()
 {
 	// TODO: UTF-8 line length
 
@@ -559,14 +559,14 @@ char ConfigParser::getc(void)
 	return c;
 }
 
-void ConfigParser::ungetc(void)
+void ConfigParser::ungetc()
 {
 	position--;
 	line = prevLine;
 	charNumber = prevCharNumber;
 }
 
-string ConfigParser::ParseError::getMessage(void)
+string ConfigParser::ParseError::getMessage()
 {
 	return message + " (" +  IntToStr(line) + ":" + IntToStr(charNumber) + ") [" + sender + "]";
 }

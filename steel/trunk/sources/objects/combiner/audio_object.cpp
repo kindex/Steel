@@ -24,7 +24,7 @@ AudioObject* findAudioObject(const string &_class)
 }
 
 
-AudioObject::AudioObject(void): 
+AudioObject::AudioObject(): 
 	engine(NULL)
 {}
 

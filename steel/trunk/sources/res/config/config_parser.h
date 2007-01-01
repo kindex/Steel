@@ -32,33 +32,33 @@ struct ConfigTag;
 class ConfigParser
 {
 public:
-	ConfigParser(void): file(NULL) {}
+	ConfigParser(): file(NULL) {}
 
 	Config*	Parse(Text *file);
 
-	Config*			ParseConfig(void);
-	ConfigTag*		ParseTag(void);
-	Config*			ParseValue(void);
+	Config*			ParseConfig();
+	ConfigTag*		ParseTag();
+	Config*			ParseValue();
 	
 	static double	getNumber(const char *text, int &position);
-	double			ParseNumber(void);
-	Config*			ParseNull(void);
+	double			ParseNumber();
+	Config*			ParseNull();
 	
 	static std::string	getAlpha(const char *text, int &position);
-	std::string		ParseAlpha(void);
-	std::string		ParseString(void);
+	std::string		ParseAlpha();
+	std::string		ParseString();
 
-	void			SkipSpaces(void);
-	ConfigStruct*	ParseStruct(void);
-	ConfigArray*	ParseArray(void);
+	void			SkipSpaces();
+	ConfigStruct*	ParseStruct();
+	ConfigArray*	ParseArray();
 
 	static bool isFirstAlpha(char c);
 	static bool isDigit(char c);
 
 protected:
-	char getc(void);
-	void ungetc(void);
-	char seec(void);
+	char getc();
+	void ungetc();
+	char seec();
 
 	struct ParseError
 	{
@@ -66,10 +66,10 @@ protected:
 		std::string sender;
 		int line, charNumber;
 
-		ParseError(void) {}
+		ParseError() {}
 		ParseError(std::string _message, std::string _sender, int _line, int _charNumber): message(_message), sender(_sender), line(_line), charNumber(_charNumber) {}
 
-		std::string getMessage(void);
+		std::string getMessage();
 	};
 
 	Text *file;

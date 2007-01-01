@@ -61,7 +61,7 @@ void SpriteRenderer::process(ProcessInfo &info)
 	}
 }
 
-AABB SpriteRenderer::getFrame(void)
+AABB SpriteRenderer::getFrame()
 {
 	AABB frame;
 	for EACH(svector<v3>, vertexes.data, it)
@@ -70,7 +70,7 @@ AABB SpriteRenderer::getFrame(void)
 	return frame;
 }
 
-void SpriteRenderer::initSprites(void)
+void SpriteRenderer::initSprites()
 {
 	face.resize(1);		
 	face[0].material = material;

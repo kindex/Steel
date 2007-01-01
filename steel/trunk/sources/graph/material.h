@@ -41,16 +41,16 @@ public:
 	Material *backup;
 
 public:
-	Material(void): conf(NULL), backup(NULL)  { id = id = objectIdGenerator.genUid(); }
+	Material(): conf(NULL), backup(NULL)  { id = id = objectIdGenerator.genUid(); }
 	Material(MaterialType _type): conf(NULL), backup(NULL), type(_type) {}
-	virtual ~Material(void);
+	virtual ~Material();
 
-	virtual uid	 getId(void)				{ return id; }
+	virtual uid	 getId()				{ return id; }
 	// загружает материал из конфига
 	virtual bool InitFromConfig(Config *config) = 0;
 	// получить текстуру с номером number
-	bool isBlending(void) const { return blend; }
-	MaterialType getMaterialType(void) const { return type; }
+	bool isBlending() const { return blend; }
+	MaterialType getMaterialType() const { return type; }
 };
 
 typedef enum
@@ -79,7 +79,7 @@ struct TextureMatrix
 class MaterialStd: public Material
 {
 public:
-	MaterialStd(void);
+	MaterialStd();
 	bool InitFromConfig(Config *config);
 
 	struct TextureStd
@@ -89,7 +89,7 @@ public:
 		TextureMatrix textureMatrix;
 		float k;
 
-		TextureStd(void): image(NULL), texCoordsUnit(0), k(0.0) {}
+		TextureStd(): image(NULL), texCoordsUnit(0), k(0.0) {}
 		bool InitFromConfig(Config *config);
 	};
 
@@ -98,7 +98,7 @@ public:
 		Image *image;
 		TextureReflectType type;
 
-		TextureReflect(void): image(NULL) {}
+		TextureReflect(): image(NULL) {}
 		bool InitFromConfig(Config *config);
 	};
 
@@ -116,9 +116,9 @@ struct Shader
 	Text	*vertexShader;
 	Text	*fragmentShader;
 
-	Shader(void): vertexShader(NULL), fragmentShader(NULL) { id = id = objectIdGenerator.genUid(); }
+	Shader(): vertexShader(NULL), fragmentShader(NULL) { id = id = objectIdGenerator.genUid(); }
 
-	virtual uid	 getId(void)				{ return id; }
+	virtual uid	 getId()				{ return id; }
 };
 
 class MaterialShader: public Material

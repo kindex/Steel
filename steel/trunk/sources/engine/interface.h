@@ -56,7 +56,7 @@ class ChildrenInterface
 public:
 	virtual void addChild(GameObject* child) = 0;
 	virtual void deleteChild(GameObject* child) = 0;
-	virtual void clearChildren(void) = 0;
+	virtual void clearChildren() = 0;
 };
 
 

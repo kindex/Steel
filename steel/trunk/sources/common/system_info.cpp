@@ -35,7 +35,7 @@ LONG RegQueryValueEx(
 using namespace std;
 
 /*
- double CPUSpeed(void) 
+ double CPUSpeed() 
   { 
     WORD dwTimerHi, dwTimerLo; 
     asm
@@ -57,7 +57,7 @@ using namespace std;
   }
 */
 
-void CollectSystemInfo(void)
+void CollectSystemInfo()
 {   
 	char szThis[300];
 	int pathLenght = GetModuleFileName(NULL, szThis, 300); // http://www.sources.ru/msdn/library/getmodulefilename.shtml
@@ -142,7 +142,7 @@ void CollectSystemInfo(void)
 		log_msg("system_info",  "Computer name:  " + string(lpszSystemInfo1));
    
 /*	// Получаем и отображаем имя пользователя.
-	// unresolved external symbol __imp__GetUserNameA@8 referenced in function "void __cdecl CollectSystemInfo(void)" (?CollectSystemInfo@@YAXXZ)
+	// unresolved external symbol __imp__GetUserNameA@8 referenced in function "void __cdecl CollectSystemInfo()" (?CollectSystemInfo@@YAXXZ)
 	if( GetUserName(lpszSystemInfo2, &cchBuff2) )
 		log_msg("system_info",  "User name:  " + string(lpszSystemInfo2));
 */

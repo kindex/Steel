@@ -14,13 +14,13 @@
 #include "matrix34.h"
 #include <memory.h>
 
-void matrix34::loadIdentity(void)
+void matrix34::loadIdentity()
 {
 	data.matrix.loadIdentity();
 	data.vector.x = data.vector.y = data.vector.z = 0.0f;
 }
 
-void matrix34::loadZero(void)
+void matrix34::loadZero()
 {
 	data.matrix.loadZero();
 	data.vector.x = data.vector.y = data.vector.z = 0.0f;

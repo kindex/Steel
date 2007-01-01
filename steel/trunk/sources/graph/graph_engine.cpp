@@ -71,7 +71,7 @@ Camera::Camera():
 {
 }
 
-Light::Light(void):
+Light::Light():
 	constantAttenuation(0.0f),
 	sqrtAttenuation(0.0f),
 	linearAttenuation(0.0f),

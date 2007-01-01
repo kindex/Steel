@@ -243,7 +243,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 }
 
 #if STEEL_OS == OS_WIN32
-void OpenGL_Engine::UseWinAPI(void)
+void OpenGL_Engine::UseWinAPI()
 {
 	CreateOpenGL_Window = &OpenGL_Engine::CreateOpenGL_Window_WinAPI;
 	RepairOpenGL_Window = &OpenGL_Engine::RepairOpenGL_Window_WinAPI;
@@ -255,7 +255,7 @@ void OpenGL_Engine::UseWinAPI(void)
 #endif
 
 #ifdef LIB_SDL
-void OpenGL_Engine::UseSDL(void)
+void OpenGL_Engine::UseSDL()
 {
 	CreateOpenGL_Window = &OpenGL_Engine::CreateOpenGL_Window_SDL;
 	RepairOpenGL_Window = NULL;
@@ -542,7 +542,7 @@ void OpenGL_Engine::GraphShadow::fill(GameObject *object)
 	Shadow::fill(object);
 }
 
-bool OpenGL_Engine::GraphShadow::cache(void)
+bool OpenGL_Engine::GraphShadow::cache()
 {
 	return  false;
 }
@@ -555,7 +555,7 @@ void OpenGL_Engine::onResize(int width, int height)
 		(this->*RepairOpenGL_Window)();
 }
 
-OpenGL_Engine::LightShadow::LightShadow(void): 
+OpenGL_Engine::LightShadow::LightShadow(): 
 	light(NULL), 
 	object(NULL)
 {}
@@ -571,7 +571,7 @@ OpenGL_Engine::GraphShadow::GraphShadow(Engine *engine):
 	aabbCalculated(false) 
 {}
 
-void OpenGL_Engine::GraphShadow::calculateAABB(void)
+void OpenGL_Engine::GraphShadow::calculateAABB()
 {
 	aabb.clear();
 
@@ -592,7 +592,7 @@ bool OpenGL_Engine::GraphShadow::isCrossingLight(const LightShadow* light)
 	return realaabb.isCrossingSphere(light->position, light->light->maxDistance);
 }
 
-void OpenGL_Engine::unbindTexCoords(void)
+void OpenGL_Engine::unbindTexCoords()
 {
 	if (textureMatrixLevel > 0)
 	{

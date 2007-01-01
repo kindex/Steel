@@ -20,7 +20,7 @@
 class TextString: public Text
 {
 public:
-	TextString(void) {}
+	TextString() {}
 	TextString(const std::string original);
 
 	void Setup(const std::string original);

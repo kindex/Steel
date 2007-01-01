@@ -53,18 +53,18 @@ protected:
 //	svector<AudioObject*> objects;
 
 public:
-	AudioEngine(void) :  masterVolume(1.0f) {}
+	AudioEngine() :  masterVolume(1.0f) {}
 
 	virtual bool init(Config *_conf) = 0;
-	virtual bool clear(void) { return true; } 
-	virtual bool deinit(void) = 0;
+	virtual bool clear() { return true; } 
+	virtual bool deinit() = 0;
 	virtual void setListener(const Listener &aListener) { listener = aListener; }
 	virtual void setListenerEnvironment(unsigned long environment) = 0;
 
-	virtual bool process(void) = 0;
+	virtual bool process() = 0;
 	virtual bool inject(GameObject *object) = 0;
 
-	float getMasterVolume(void) { return masterVolume; }
+	float getMasterVolume() { return masterVolume; }
 
 	
 	//============================

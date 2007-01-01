@@ -51,7 +51,7 @@ struct Plane
 {
 	v3 base, a, b;
 
-	Plane(void) {}
+	Plane() {}
 	Plane(v3 _base, v3 _a, v3 _b): base(_base), a(_a), b(_b) {}
 	v3 point(const float s, const float t) const { return base + a*s + b*t; }
 

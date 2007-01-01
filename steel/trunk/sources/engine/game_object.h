@@ -25,11 +25,11 @@ protected:
 	uid id;
 public:
 	// дефолтовый конструктор присваюивает уникальный идентификатор.
-	GameObject(void) { id = objectIdGenerator.genUid(); }
-	virtual ~GameObject(void) {}
+	GameObject() { id = objectIdGenerator.genUid(); }
+	virtual ~GameObject() {}
 
 	// Object unique identifier
-	virtual uid	 getId(void)				{ return id; }
+	virtual uid	 getId()				{ return id; }
 
 	virtual bool isSuportingInterface(InterfaceId) { return false; }
 	virtual bool beforeInject(InterfaceId) { return true; }

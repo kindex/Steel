@@ -31,11 +31,11 @@ struct matrix33
 //		v3simple v[3];
 	} data;
 
-//	inline matrix33(void) {}
+//	inline matrix33() {}
 //	matrix33(const float _00,	const float _01,	const float _02,	const float _10,	const float _11,	const float _12,	const float _20,	const float _21,	const float _22);
 
-	void loadIdentity(void);
-	void loadZero(void);
+	void loadIdentity();
+	void loadZero();
 
 	void operator+=(const matrix33 operand);
 	inline matrix33 operator+(const matrix33 operand) const	{ matrix33 m = *this; m += operand; return m; }
@@ -74,7 +74,7 @@ struct matrix33
 	void setScale(const v3 scale);
 
 	// возвращает обратнрую матрицу
-	matrix33 getInverse(void) const
+	matrix33 getInverse() const
 	{
 		matrix33 temp;
 		getInverse(temp);

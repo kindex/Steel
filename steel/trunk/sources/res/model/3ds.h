@@ -25,7 +25,7 @@ typedef int(F)(Model_3DS&, rstream&, int);
 
 struct chainProcessor
 {
-	chainProcessor(void): tag(0) {}
+	chainProcessor(): tag(0) {}
 	chainProcessor(unsigned short TAG, F _F): tag(TAG), f(_F) {}
 
 	unsigned short tag;

@@ -96,7 +96,7 @@ bool MaterialStd::TextureReflect::InitFromConfig(Config *config)
 }
 
 
-MaterialStd::MaterialStd(void): 
+MaterialStd::MaterialStd(): 
 	Material(MATERIAL_STD)
 {}
 
