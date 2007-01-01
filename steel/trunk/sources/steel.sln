@@ -5,20 +5,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Steel Engine", "steel.vcpro
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Win32 = Debug|Win32
-		Release|Win32 = Release|Win32
 		lib_debug|Win32 = lib_debug|Win32
 		lib_release|Win32 = lib_release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}.Debug|Win32.Build.0 = Debug|Win32
 		{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}.lib_debug|Win32.ActiveCfg = lib_debug|Win32
 		{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}.lib_debug|Win32.Build.0 = lib_debug|Win32
 		{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}.lib_release|Win32.ActiveCfg = lib_release|Win32
 		{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}.lib_release|Win32.Build.0 = lib_release|Win32
-		{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}.Release|Win32.ActiveCfg = Release|Win32
-		{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

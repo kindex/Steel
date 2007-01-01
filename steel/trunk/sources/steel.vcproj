@@ -384,23 +384,7 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath=".\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\main.h"
-				>
-			</File>
-			<File
-				RelativePath=".\steel.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\steel.h"
-				>
-			</File>
-			<File
-				RelativePath=".\test.cpp"
 				>
 			</File>
 			<Filter
@@ -759,10 +743,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\common\steel_vector.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\common\steel_vector.h"
 					>
 				</File>
@@ -961,14 +941,6 @@
 			<Filter
 				Name="objects"
 				>
-				<File
-					RelativePath=".\objects\kar98k.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\objects\kar98k.h"
-					>
-				</File>
 				<File
 					RelativePath=".\objects\light.cpp"
 					>
