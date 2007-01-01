@@ -75,7 +75,7 @@ protected:
 public:
 	Steel(void);
 
-	virtual bool init(Config *_conf, Input *_input, std::string params);
+	virtual bool init(Config *_conf, Input *_input);
 	virtual void deinit(void);
 
 	void processKeyboard(void);

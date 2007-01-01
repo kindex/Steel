@@ -69,7 +69,11 @@ public:
 		_size = original._size;
 		_count = original._count;
 		data = (T*)malloc(_size * sizeof(T));
-		memcpy(data, original.data, _count* sizeof(T));
+//		memcpy(data, original.data, _count* sizeof(T));
+		for (size_t i = 0; i < _count; i++)
+		{
+			new (&data[i]) T(original.data[i]);
+		}
 	}
 
 	svector& operator=(const svector& original)
@@ -77,7 +81,11 @@ public:
 		_size = original._size;
 		_count = original._count;
 		data = (T*)malloc(_size * sizeof(T));
-		memcpy(data, original.data, _count* sizeof(T));
+//		memcpy(data, original.data, _count* sizeof(T));
+		for (size_t i = 0; i < _count; i++)
+		{
+			new (&data[i]) T(original.data[i]);
+		}
 		return *this;
 	}
 

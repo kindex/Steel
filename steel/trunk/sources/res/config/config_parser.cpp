@@ -131,7 +131,10 @@ ConfigTag* ConfigParser::ParseTag()
 	}
 	if(!collector.empty())
 	{
-		if(tag == NULL) tag = new ConfigTag;
+		if(tag == NULL) 
+		{
+			tag = new ConfigTag();
+		}
 		tag->templates.push_back(collector);
 	}
 

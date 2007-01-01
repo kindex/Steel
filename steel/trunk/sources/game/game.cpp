@@ -28,7 +28,7 @@
 using namespace std;
 
 
-bool Steel::init(Config *_conf, Input *_input, std::string params)
+bool Steel::init(Config *_conf, Input *_input)
 {
 	conf = _conf;
 	if(!conf)
@@ -314,6 +314,3 @@ void Steel::deinit()
 void Steel::handleEventKeyUp(std::string key)
 {
 }
-
-
-
