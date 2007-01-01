@@ -4,7 +4,7 @@ class = 'scene'
 objects = 
 (
 
-	{	//2
+	{
 	class = 'combiner'
 	origin = (0 0 -10)
 	graph = {
@@ -145,7 +145,7 @@ objects =
 						texCoordsTranslation = (0 0 0)
 						k = 1
 					}
-}
+		}
 	}
 		
 ) // objects

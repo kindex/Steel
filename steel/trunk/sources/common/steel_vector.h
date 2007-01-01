@@ -63,17 +63,16 @@ public:
 	typedef iterator const_iterator;
 
 	svector(void) { _size = _count = 0; data = NULL; }
-/*	svector(const svector &original)
-	{ 
-		free(data);
 
+	svector(const svector &original)
+	{ 
 		_size = original._size;
 		_count = original._count;
 		data = (T*)malloc(_size * sizeof(T));
 		memcpy(data, original.data, _count* sizeof(T));
-	}*/
+	}
 
-	svector& operator=(const svector &original)
+	svector& operator=(const svector& original)
 	{ 
 		_size = original._size;
 		_count = original._count;
@@ -86,6 +85,16 @@ public:
 	{ 
 		_size = _count = initSize; 
 		data = (T*)malloc(_size*sizeof(T)); 
+	}
+
+	~svector(void) 
+	{
+		while (_count > 0)
+		{
+			_count--;
+			data[_count].~T();
+		}
+		free(data);
 	}
 
 	void resize(size_t newCount)

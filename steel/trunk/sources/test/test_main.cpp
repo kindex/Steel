@@ -27,6 +27,7 @@
 #include "tester.h"
 
 #include "../res/test_res/test_res.h"
+#include "../common/test_common/test_svector.h"
 
 bool test(void);
 
@@ -54,6 +55,7 @@ int main(int argc, char *argv[])
 	test();
 
 	TEST(Res);
+	TEST(svector);
 
 	testInfo.report();
 

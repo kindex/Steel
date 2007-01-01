@@ -74,7 +74,10 @@ bool Scene::InitFromConfig(Config *conf)
 	for EACH(ConfigArray, objectsArray, it)
 	{
 		GameObject *newObject = createGameObject(*it);
-		objects.push_back(newObject);
+		if (newObject != NULL)
+		{
+			objects.push_back(newObject);
+		}
 	}
 
 	return true;
@@ -94,8 +97,12 @@ void Scene::bindEngine(InterfaceId id, Engine* egnine)
 
 	ChildrenInterface &gEngine = *dynamic_cast<ChildrenInterface*>(egnine);
 	for EACH(svector<GameObject*>, objects, it)
-		if((*it)->isSuportingInterface(id)) 
+	{
+		if ((*it)->isSuportingInterface(id)) 
+		{
 			gEngine.addChild(*it);
+		}
+	}
 }
 
 void Scene::process(ProcessInfo &info)

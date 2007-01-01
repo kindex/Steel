@@ -83,12 +83,6 @@ void explode(char delimiter, const std::string s, svector<string> &res)
 		else
 			start++;
 
-		string* T = NULL;
-
-		//int x = errno;
-		T = (string*)realloc(T, 32);
-		//int y = errno;
-
 		res.push_back(s.substr(last, start - last - 1));
 	}
 }

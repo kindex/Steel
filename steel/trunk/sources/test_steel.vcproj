@@ -624,6 +624,18 @@
 					RelativePath=".\common\win_info.h"
 					>
 				</File>
+				<Filter
+					Name="test_common"
+					>
+					<File
+						RelativePath=".\common\test_common\test_svector.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\common\test_common\test_svector.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="physic"
@@ -725,6 +737,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\graph\opengl\opengl_interface.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\graph\opengl\opengl_sdl_engine.cpp"
 						>
 					</File>
@@ -741,30 +757,6 @@
 						</File>
 						<File
 							RelativePath=".\graph\opengl\ext\normalisation_cube_map.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="gl"
-						>
-						<File
-							RelativePath=".\graph\opengl\gl\glext.h"
-							>
-						</File>
-						<File
-							RelativePath=".\graph\opengl\gl\glxext.h"
-							>
-						</File>
-						<File
-							RelativePath=".\graph\opengl\gl\libext.cpp"
-							>
-						</File>
-						<File
-							RelativePath=".\graph\opengl\gl\libext.h"
-							>
-						</File>
-						<File
-							RelativePath=".\graph\opengl\gl\wglext.h"
 							>
 						</File>
 					</Filter>
@@ -821,6 +813,34 @@
 					RelativePath=".\engine\interface.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="libs"
+				>
+				<Filter
+					Name="opengl"
+					>
+					<File
+						RelativePath=".\libs\opengl\glext.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libs\opengl\glxext.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libs\opengl\libext.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libs\opengl\libext.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libs\opengl\wglext.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
