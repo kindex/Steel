@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 // ******************* GAME *************************
 	Steel game;
 
-	if(!game.init(steelConfig, input, commandLine)) return 5;
+	if(!game.init(steelConfig, input)) return 5;
 
 	game.bind(graph);
 	if(audio != NULL)

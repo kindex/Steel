@@ -62,7 +62,11 @@ public:
 	typedef T* iterator;
 	typedef iterator const_iterator;
 
-	svector(void) { _size = _count = 0; data = NULL; }
+	svector(void) 
+	{ 
+		_size = _count = 0; 
+		data = NULL; 
+	}
 
 	svector(const svector &original)
 	{ 
