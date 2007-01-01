@@ -1,0 +1,66 @@
+# Main scene 
+{
+class = 'scene'
+objects = 
+(
+{
+class = 'combiner'
+origin = (20 0 0)
+graph = {
+	class = 'model'
+	file = 'steel'
+}
+
+}
+
+{
+class = 'light'
+origin = (15 7 3)
+k = 10
+sqrtAttenuation = 0.1
+maxDitance = 20
+}
+
+[#objects[1]]{
+origin = (15 -7 3)
+}
+
+[#objects[2]]{
+origin = (15 0 5)
+}
+
+{
+class = 'combiner'
+audio = 
+	{
+		class = 'simple';
+		position = (0 0 0);
+		file = 'hellsing';
+		gain = 0.6;
+		pitch = 1.0;
+		isLoop = 0;
+		rolloffFactor = 0.0;
+		sourceRelative = 1;
+	} // audio
+}
+
+{
+class = 'combiner'
+audio = 
+	{
+		class = 'simple';
+		position = (0 0 0);
+		file = 'Cult_of_Luna_Inside_Fort_Meade';
+		gain = 1.0;
+		pitch = 1.0;
+		isLoop = 1;
+		rolloffFactor = 0.0;
+		sourceRelative = 0;
+		delay = 25
+	} // audio
+
+}
+
+
+) // objects
+} // scene

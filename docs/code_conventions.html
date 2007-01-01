@@ -1,0 +1,1698 @@
+﻿<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="code_conventions_files/filelist.xml">
+<title>Steel Engine: design document</title>
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>110</w:Zoom>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;
+	mso-font-charset:0;
+	mso-generic-font-family:modern;
+	mso-font-format:other;
+	mso-font-pitch:fixed;
+	mso-font-signature:3 0 0 0 1 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;
+	mso-font-alt:"ＭＳ 明朝";
+	mso-font-charset:128;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:fixed;
+	mso-font-signature:1 134676480 16 0 131072 0;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:204;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:1627421319 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Lucida Sans Unicode";
+	panose-1:2 11 6 2 3 5 4 2 2 4;
+	mso-font-charset:204;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-2147476737 14699 0 0 63 0;}
+@font-face
+	{font-family:"\@MS Mincho";
+	mso-font-charset:128;
+	mso-generic-font-family:modern;
+	mso-font-pitch:fixed;
+	mso-font-signature:-1610612033 1757936891 16 0 131231 0;}
+@font-face
+	{font-family:"Lucida Console";
+	panose-1:2 11 6 9 4 5 4 2 2 4;
+	mso-font-charset:204;
+	mso-generic-font-family:modern;
+	mso-font-pitch:fixed;
+	mso-font-signature:-2147482993 6144 0 0 31 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	margin-bottom:5.95pt;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	font-weight:bold;}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	margin-bottom:5.95pt;
+	margin-left:2.85pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	font-family:Arial;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	font-weight:bold;
+	font-style:italic;}
+h3
+	{margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:5.65pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	font-weight:bold;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:1.0cm;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	text-transform:uppercase;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	font-weight:bold;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:40.25pt;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	tab-stops:right dotted 467.25pt;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-variant:small-caps;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:52.45pt;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	tab-stops:right dotted 467.25pt;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	font-style:italic;}
+p.MsoToc4, li.MsoToc4, div.MsoToc4
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+p.MsoToc5, li.MsoToc5, div.MsoToc5
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:48.0pt;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+p.MsoToc6, li.MsoToc6, div.MsoToc6
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:60.0pt;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+p.MsoToc7, li.MsoToc7, div.MsoToc7
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:72.0pt;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+p.MsoToc8, li.MsoToc8, div.MsoToc8
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:84.0pt;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+p.MsoToc9, li.MsoToc9, div.MsoToc9
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:96.0pt;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	tab-stops:center 242.2pt right 484.45pt;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-pagination:none;
+	mso-hyphenate:none;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Lucida Sans Unicode";
+	mso-bidi-font-family:Tahoma;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:AR-SA;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-style-link:"Normal \(Web\) Char";
+	margin-top:3.0pt;
+	margin-right:14.2pt;
+	margin-bottom:3.0pt;
+	margin-left:1.0cm;
+	text-indent:1.0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+span.NormalWebChar
+	{mso-style-name:"Normal \(Web\) Char";
+	mso-style-locked:yes;
+	mso-style-link:"Normal \(Web\)";
+	mso-ansi-font-size:12.0pt;
+	mso-bidi-font-size:12.0pt;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;}
+span.codeChar
+	{mso-style-name:"code Char";
+	mso-style-locked:yes;
+	mso-style-parent:"Normal \(Web\) Char";
+	mso-style-link:code;
+	mso-ansi-font-size:12.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;
+	mso-no-proof:yes;}
+p.code, li.code, div.code
+	{mso-style-name:code;
+	mso-style-parent:"Normal \(Web\)";
+	mso-style-link:"code Char";
+	margin-top:3.0pt;
+	margin-right:14.2pt;
+	margin-bottom:3.0pt;
+	margin-left:1.0cm;
+	text-indent:1.0cm;
+	mso-pagination:widow-orphan;
+	tab-stops:1.0cm;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-no-proof:yes;}
+p.code053cm, li.code053cm, div.code053cm
+	{mso-style-name:"code\:  053 cm";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:15.15pt;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Courier;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;}
+span.bodyChar
+	{mso-style-name:"body Char";
+	mso-style-locked:yes;
+	mso-style-parent:"code Char";
+	mso-style-link:body;
+	mso-ansi-font-size:12.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Lucida Console";
+	mso-ascii-font-family:"Lucida Console";
+	mso-hansi-font-family:"Lucida Console";
+	mso-bidi-font-family:"Courier New";
+	mso-ansi-language:RU;
+	mso-fareast-language:RU;
+	mso-bidi-language:AR-SA;
+	mso-no-proof:yes;}
+p.body, li.body, div.body
+	{mso-style-name:body;
+	mso-style-parent:code;
+	mso-style-link:"body Char";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:18.0pt;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Lucida Console";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:RU;
+	mso-fareast-language:RU;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-title-page:yes;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:1;
+	mso-list-type:simple;
+	mso-list-template-ids:1;
+	mso-list-name:WW8Num2;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:·;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ascii-font-family:Symbol;
+	mso-hansi-font-family:Symbol;}
+@list l1
+	{mso-list-id:2;
+	mso-list-template-ids:2;
+	mso-list-name:WW8Num3;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:·;
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ascii-font-family:Symbol;
+	mso-hansi-font-family:Symbol;}
+@list l1:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";}
+@list l1:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:§;
+	mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ascii-font-family:Wingdings;
+	mso-hansi-font-family:Wingdings;}
+@list l1:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:·;
+	mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ascii-font-family:Symbol;
+	mso-hansi-font-family:Symbol;}
+@list l1:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";}
+@list l1:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:§;
+	mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ascii-font-family:Wingdings;
+	mso-hansi-font-family:Wingdings;}
+@list l1:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:·;
+	mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ascii-font-family:Symbol;
+	mso-hansi-font-family:Symbol;}
+@list l1:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";}
+@list l1:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:§;
+	mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;
+	mso-ascii-font-family:Wingdings;
+	mso-hansi-font-family:Wingdings;}
+@list l2
+	{mso-list-id:291833212;
+	mso-list-type:hybrid;
+	mso-list-template-ids:948889350 68747279 68747289 68747291 68747279 68747289 68747291 68747279 68747289 68747291;}
+@list l2:level1
+	{mso-level-tab-stop:92.7pt;
+	mso-level-number-position:left;
+	margin-left:92.7pt;
+	text-indent:-18.0pt;}
+@list l2:level2
+	{mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level3
+	{mso-level-tab-stop:108.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level4
+	{mso-level-tab-stop:144.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level5
+	{mso-level-tab-stop:180.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level6
+	{mso-level-tab-stop:216.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level7
+	{mso-level-tab-stop:252.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level8
+	{mso-level-tab-stop:288.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+@list l2:level9
+	{mso-level-tab-stop:324.0pt;
+	mso-level-number-position:left;
+	text-indent:-18.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.MsoTableGrid
+	{mso-style-name:"Table Grid";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	border:solid windowtext 1.0pt;
+	mso-border-alt:solid windowtext .5pt;
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-border-insideh:.5pt solid windowtext;
+	mso-border-insidev:.5pt solid windowtext;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+<meta name=CREATED content="20060330;17111829">
+<meta name=CHANGED content="20060330;18132082">
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="22530"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=RU link=blue vlink=purple style='tab-interval:35.4pt'>
+
+<div class=Section1>
+
+<h1><span style='mso-ansi-language:RU'>Соглашения о программном коде<o:p></o:p></span></h1>
+
+<p><span style='mso-font-kerning:1.0pt;mso-ansi-language:RU'>Документ описывает
+</span><span style='mso-ansi-language:RU'>соглашения<span style='mso-font-kerning:
+1.0pt'> о программном коде, </span></span><span style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'>принятые командой разработчиков </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Testing</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Suite</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> и
+предназначен для программистов и проектировщиков системы, занятых над этим
+проектом. Данных соглашений следует придерживаться при составлении документов,
+написании кода и обмена информацией.<o:p></o:p></span></p>
+
+<h2><span style='mso-ansi-language:RU'>Соглашения о документах<o:p></o:p></span></h2>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>В
+данном разделе мы опишем основные правила составления документов. Этот раздел
+будет полезен прежде всего составителям спецификации и документа, описывающего
+проектирование системы и алгоритмы использующиеся в ней. Так как эти документы
+составляются несколькими людьми, необходимо стандартизовать названия файлов,
+ввести правила написания заголовков, обозначения истории изменения и номеров
+версий.<o:p></o:p></span></p>
+
+<h3><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Форматы
+документов<o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Стандартным
+форматом документов является формат </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>HTML</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>. Этот формат наиболее распространен в мире.
+Редактирование такого документа дело не простое, но зато текстовый формат
+хранения намного лучше бинарного (</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>Word</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>, </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>OpenOffice</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>) так как позволяет отслеживать изменения версий с
+помощью </span><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Subversion</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>. Для
+редактирования можно использовать как </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>Microsoft</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'> </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>Word</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>, так и любой другой текстовый редактор. В качестве
+шаблона может служить этот документ.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Следует
+также учесть, что весь текст пишется в кодировке </span><span lang=EN-US
+style='mso-fareast-font-family:"MS Mincho"'>UTF</span><span style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'>-8.<o:p></o:p></span></p>
+
+<h3><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Версии
+документов<o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Версия
+документа в имени файла не указывается. Документы хранятся в репозитории, что
+позволяет легко отслеживать изменения и иметь доступ к последней версии
+документа.<o:p></o:p></span></p>
+
+<h1><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Соглашения
+о программном коде<o:p></o:p></span></h1>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>В
+этом разделе говорится о соглашениях, принятых командой разработчиков </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Steel</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Engine</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>.<o:p></o:p></span></p>
+
+<h2><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Кодировка<o:p></o:p></span></h2>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Исходный
+код пишется в кодировке </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>UTF</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>-8. В начале файла не должны присутствовать символы </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>c</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> кодами 239,
+187, 191. Символы<span style='mso-spacerun:yes'>  </span>кодом больше, чем 127
+могут присутствовать только в комментариях.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";background:yellow;
+mso-highlight:yellow;mso-ansi-language:RU'>переводы строк</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>В
+конце последней строки должен быть символ перевода строки.<o:p></o:p></span></p>
+
+<h2><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Названия
+файлов<o:p></o:p></span></h2>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Все
+файлы и директории должны состоять только из маленьких английских букв и цифр.
+Если в названии несколько слов, то следует отделять их знаком подчёркивания
+(_). Например, </span><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>steel</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>_</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>engine</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>.</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>h</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>В
+ссылках на модуль указывается относительный путь к файлам без расширения. К
+модулю относятся все файлы с таким именем. Например, к модулю </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>graph</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> относятся
+файлы </span><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>graph</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>.</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>h</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> и </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>graph</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>.</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>cpp</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>. Это
+позволяет изменять внутренний формат хранения файлов (в основном за формат
+хранения отвечает расширение файла) без изменения ссылок на этот модуль (файл).<o:p></o:p></span></p>
+
+<h2><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Заголовки
+файлов<o:p></o:p></span></h2>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>В
+каждом модуле хранится заголовок с номером версии модуля и информацией об
+авторах (и, возможно, лицензионном соглашении). Заголовок должен находиться в
+самом начале файла, описывающего интерфейс модуля, иметь вид комментария, и
+следующий формат:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><o:p>&nbsp;</o:p></span></p>
+
+<p class=code053cm><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>/*</span><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>id</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>*********************************************************<o:p></o:p></span></p>
+
+<p class=code053cm><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>    </span></span><span lang=EN-US
+style='mso-fareast-font-family:"MS Mincho"'>File</span><span style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'>: &lt;</span><span style='font-family:"Times New Roman";
+mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>путь к файлу
+относительно корня исходников</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>&gt;<o:p></o:p></span></p>
+
+<p class=code053cm><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>    </span></span><span lang=EN-US
+style='mso-fareast-font-family:"MS Mincho"'>Unit</span><span style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'>: &lt;название модуля&gt;<o:p></o:p></span></p>
+
+<p class=code053cm><span style='mso-ansi-language:RU'><span
+style='mso-spacerun:yes'>    </span></span><span lang=EN-US>Part</span><span
+lang=EN-US style='mso-ansi-language:RU'> </span><span lang=EN-US>of</span><span
+style='mso-ansi-language:RU'>: &lt;название проекта&gt;<o:p></o:p></span></p>
+
+<p class=code053cm><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-tab-count:1'>   </span></span><span lang=EN-US
+style='mso-fareast-font-family:"MS Mincho"'>(C) DiVision, &lt;years&gt;<o:p></o:p></span></p>
+
+<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>   
+</span>Authors:</span></p>
+
+<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>       
+</span>* &lt;</span><span style='mso-ansi-language:RU'>автор</span><span
+lang=EN-US>1&gt;: </span><span lang=EN-US style='font-family:"Times New Roman"'>&lt;</span><span
+style='font-family:"Times New Roman";mso-ansi-language:RU'>его</span><span
+style='font-family:"Times New Roman"'> </span><span style='font-family:"Times New Roman";
+mso-ansi-language:RU'>заслуга</span><span lang=EN-US style='font-family:"Times New Roman"'>&gt;<o:p></o:p></span></p>
+
+<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>       
+</span>...</span></p>
+
+<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>       
+</span>* &lt;</span><span style='mso-ansi-language:RU'>автор</span><span
+lang=EN-US>N&gt;: </span><span lang=EN-US style='font-family:"Times New Roman"'>&lt;</span><span
+style='font-family:"Times New Roman";mso-ansi-language:RU'>его</span><span
+style='font-family:"Times New Roman"'> </span><span style='font-family:"Times New Roman";
+mso-ansi-language:RU'>заслуга</span><span lang=EN-US style='font-family:"Times New Roman"'>&gt;<o:p></o:p></span></p>
+
+<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>   
+</span>License:</span></p>
+
+<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>       
+</span>Steel Engine License</span><span lang=EN-US style='font-family:"Times New Roman"'><o:p></o:p></span></p>
+
+<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>   
+</span>Description</span><span style='mso-ansi-language:RU'>:<o:p></o:p></span></p>
+
+<p class=code053cm><span style='mso-ansi-language:RU'><span
+style='mso-spacerun:yes'>        </span>&lt;Непосредственно описание модуля&gt;<o:p></o:p></span></p>
+
+<p class=code053cm><span style='mso-ansi-language:RU'><span
+style='mso-spacerun:yes'>    </span>[</span><span lang=EN-US>TODO</span><span
+style='mso-ansi-language:RU'>]<o:p></o:p></span></p>
+
+<p class=code053cm><span style='mso-ansi-language:RU'><span
+style='mso-spacerun:yes'>        </span></span><span lang=EN-US>...</span></p>
+
+<p class=code053cm><span lang=EN-US><span style='mso-spacerun:yes'>    </span><span
+style='background:yellow;mso-highlight:yellow'>[Parts:]<o:p></o:p></span></span></p>
+
+<p class=code053cm><span lang=EN-US style='background:yellow;mso-highlight:
+yellow'><span style='mso-spacerun:yes'>        </span>&lt;</span><span
+style='font-family:"Times New Roman";background:yellow;mso-highlight:yellow;
+mso-ansi-language:RU'>Список</span><span style='font-family:"Times New Roman";
+background:yellow;mso-highlight:yellow'> </span><span style='font-family:"Times New Roman";
+background:yellow;mso-highlight:yellow;mso-ansi-language:RU'>подмодулей</span><span
+lang=EN-US style='background:yellow;mso-highlight:yellow'>&gt;</span></p>
+
+<p class=code053cm><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>************************************************************/<o:p></o:p></span></p>
+
+<p class=code053cm><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><o:p>&nbsp;</o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Где</span><span
+style='mso-fareast-font-family:"MS Mincho"'> </span><span lang=EN-US>&lt;</span><span
+style='mso-ansi-language:RU'>автор</span><span lang=EN-US>1&gt; - &lt;nick&gt;
+[Full Name, email, homepage]</span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>&lt;</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>years</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>&gt; - время
+разработки именно этого файла.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>&lt;название
+проекта&gt; = Steel engine<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>&lt;название
+модуля&gt; пишется маленькими буквами. Если модуль является подмодулем, то
+названия модулей разделяются / (по аналогии с директориями).<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Не
+обязательной является секция </span><span lang=EN-US style='mso-bidi-font-size:
+10.0pt;font-family:"Courier New"'>Part</span><span lang=EN-US style='mso-bidi-font-size:
+10.0pt;font-family:"Courier New";mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-bidi-font-size:10.0pt;font-family:"Courier New"'>of</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>, если модуль
+не является непосредственно частью проекта и может быть использован в других
+целях.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Также
+не обязательной является секция </span><span lang=EN-US style='mso-bidi-font-size:
+10.0pt;font-family:"Courier New"'>TODO</span><span style='mso-bidi-font-size:
+10.0pt;font-family:"Courier New";mso-ansi-language:RU'>.<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Changelog</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> не нужно
+указывать в файле, так как все изменения хранятся в репозитории.</span><span
+style='mso-bidi-font-size:10.0pt;font-family:"Courier New";mso-ansi-language:
+RU'><o:p></o:p></span></p>
+
+<h2><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Требования
+к программному коду (</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>C</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>++)<o:p></o:p></span></h2>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>В
+этом подразделе перечислены требования к коду для программ на C++, PHP и JAVA,
+а также их стилевое оформление. Мы рассмотрели несколько стилей, существующих в
+мире сообщества C++ и JAVA и создали свой стилевой стандарт. Это позволит
+читать исходные тексты других членов команды не отвлекаясь на разбор стиля и
+отделение блоков. Некоторые вещи позаимствованы из стиля ANSI C, некоторые — из
+стиля Kernighan &amp; Ritchie и JAVA, что-то — из примеров книги Brain W.
+Kernighan и Rob Pike.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>При
+написании кода следует учитывать, что читабельность важнее эффективности. Не
+следует употреблять сомнительные и неопределенные стандартами конструкций
+языка. Следует заботиться также о переносимости программы на другие платформы.
+Наша цель — получить код, который можно перенести на другую платформу практически
+без изменений.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Если
+же эффективность в данном месте важнее читаемости, то следует в комментариях
+оставить читаемую версию кода.<o:p></o:p></span></p>
+
+<h3><span style='mso-ansi-language:RU'>Отступы и разделители</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Отступы
+используются для сдвига содержимого блоков кода. Они</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'> </span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>делаются
+символом табуляции, причем он не</span><span style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:LV'> </span><span style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'>должен в последствии заменяться пробелами.
+Это позволяет</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:LV'> </span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>настроить размер такого отступа и отображать код</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'> </span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>в соответствии
+с индивидуальными предпочтениями каждого программиста в команде. Визуально по
+умолчанию один символ табуляции равняется 4ём пробелам.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Основные
+части программы (например, реализации двух функций или методов класса) следует</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'> </span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>отделять друг
+от друга пустыми строками. Пустой строкой можно отделять различные по смыслу
+блоки (наборы функций в дефиниции класса, большие циклы внутри процедуры).<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Параметры
+функций отделяются друг от друга запятыми, сразу после которых ставится один
+пробел. После открывающей скобки и перед закрывающей пробелы не ставятся.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Слева
+и справа от оператора присваивания следует ставить пробелы.<span
+style='mso-spacerun:yes'>  </span>Можно также отделять пробелами и другие
+операции, но это следует делать так, чтобы программист мог легко распознать
+формулу и порядок действий. <o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>В
+некоторых случаях может потребоваться написать очень большую формулу или длинное
+условие, которое не помещается на одну строку. Тогда мы можем разбить большое
+выражение на строки.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-font-kerning:1.0pt;
+mso-ansi-language:RU'>Например<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>(((</span><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>c</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>1)&amp;&amp;((</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>c</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>2)||(</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>c</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>3))&amp;&amp;(!((</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>c</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>4)&amp;&amp;((</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>c</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>5)||(</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>c</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>6)))))<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-font-kerning:1.0pt;
+mso-ansi-language:RU'>превращается в<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>(<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>  </span>(</span><span lang=EN-US
+style='mso-fareast-font-family:"MS Mincho"'>cccccccccccccc</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>) &amp;&amp;
+((</span><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>cccccccccc</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>)|(</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>cccccccccccccc</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>))<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>  </span>&amp;&amp;<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>    </span>!(<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>      </span>(</span><span lang=EN-US
+style='mso-fareast-font-family:"MS Mincho"'>ccccccccccccccccccccc</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>)<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>      </span>&amp;&amp;<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>      </span>(<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-tab-count:2'>       </span>(</span><span lang=EN-US
+style='mso-fareast-font-family:"MS Mincho"'>cccccccccccccccccccccccccccccccccccccccc</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>)<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-tab-count:2'>       </span>||<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-tab-count:2'>       </span>(</span><span lang=EN-US
+style='mso-fareast-font-family:"MS Mincho"'>cccccccccccccccccccccccccccccccccccccccc</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>)<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>      </span>)<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>    </span>)<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>)<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Обычно
+длина строки не должна превышать 80 символов.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Неполнота
+разделенных строк должна быть очевидной.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>totalSum
+= a + b + c +<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><span
+style='mso-spacerun:yes'>           </span>d + e;<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Желательно
+экранировать символ перевода строки, для того, чтобы одним однострочным
+комментарием можно было закомментировать весь оператор.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US>function (param1, param2,</span><span
+lang=EN-US style='mso-ansi-language:RU'> </span><span lang=EN-US>\</span></p>
+
+<p class=code><span lang=EN-US><span style='mso-spacerun:yes'>         
+</span>param3);</span></p>
+
+<h3><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Includes</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p></o:p></span></h3>
+
+<p><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>I</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>nclude-выражения
+должны быть отсортированы и сгруппированы. Сортировка происходит по их
+иерархическому положению в системе, при этом низкоуровневые файлы прикрепляются
+первыми.<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'><o:p>&nbsp;</o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>#include
+&lt;fstream&gt;<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>#include
+&lt;iomanip&gt;<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>#include
+&lt;qt/qbutton.h&gt;<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>#include
+&lt;qt/qtextfield.h&gt;<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>#include
+&quot;com/company/ui/PropertiesDialog.h&quot;<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>#include
+&quot;com/company/ui/MainWindow.h&quot;<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><o:p>&nbsp;</o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Include-выражения
+должны находиться только вначале файла.<o:p></o:p></span></p>
+
+<h3><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Блоки</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Знаки
+обозначающие начало и конец блока (обычно, это </span><span lang=LV
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'>—</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> фигурные
+скобки)</span><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+LV'> </span><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>могут располагаться</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:LV'> </span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>двумя способами:<o:p></o:p></span></p>
+
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l2 level1 lfo2;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='mso-ansi-language:
+RU'><span style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>на отдельных строках (стандарт ANSI);<o:p></o:p></span></p>
+
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l2 level1 lfo2;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='mso-ansi-language:
+RU'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>открывающий знак пишется на строке, где начинается
+инструкция,</span><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+LV'> </span><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>содержащая данный блок; закрывающий знак - на отдельной строке</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'> </span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>(стиль </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Kernighan</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> &amp;</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Ritchie</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>).<o:p></o:p></span></p>
+
+<p style='margin-left:92.7pt;text-indent:-18.0pt;mso-list:l2 level1 lfo2;
+tab-stops:list 92.7pt'><![if !supportLists]><span style='mso-ansi-language:
+RU'><span style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>весь блок пишется после конструкции (</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>inline</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>).<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Рекомендуется
+использовать первый способ.</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:LV'> </span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>Весь код блока пишется с отступом.<o:p></o:p></span></p>
+
+<h3><span style='mso-ansi-language:RU'>Комментарии<o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Комментарии
+в программе пишутся на русском или английском.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Короткие
+комментарии (обычно размером не более 3-х строк) пишутся с использованием</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'> </span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>знака (</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>token</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>),
+обозначающего комментарий, продолжающийся до конца строки (обычно это 2 слэша).</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'> </span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Такие
+комментарии описывают небольшой объект, и отделяется от текста<span
+style='mso-spacerun:yes'>  </span>программы пробелом или символом табуляции.
+Сразу после знака комментария ставится <span style='mso-bidi-font-style:italic'>один</span>
+пробел, за</span><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+LV'> </span><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>которым следует текст комментария. Если комментарий продолжается</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:LV'> </span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>на следующей
+строке, то новый знак комментария ставится под предыдущим (на следующей
+строке), после</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:LV'> </span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>чего ставится пробел, за которым комментарий можно
+продолжить.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU;
+mso-bidi-font-style:italic'>Пример</span><span lang=LV style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:LV;mso-bidi-font-style:italic'>:</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-bidi-font-style:italic'><o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>printf(&quot;Hello,
+world!&quot;); // this is the comment for<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><span
+style='mso-spacerun:yes'> </span><span
+style='mso-spacerun:yes'>                        </span></span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>// </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>function</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>printf</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>()<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Длинные
+комментарии (обычно размером от 3-х строк) пишутся с использованием знаков,
+открывающих и закрывающих комментарий, которые пишутся на новой строке с тем же
+отступом, что и последующая инструкция. Между знаками с таким же отступом
+пишется текст комментария. Такой комментарий обычно используется для описания
+функций.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Пример</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>:<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>/*<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><span
+style='mso-spacerun:yes'>    </span>This is a very very very very very very
+very very<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><span
+style='mso-spacerun:yes'>    </span>very very very very very very very very
+very<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><span
+style='mso-spacerun:yes'>    </span>very very very very very very very very
+very<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><span
+style='mso-spacerun:yes'>    </span>very long comment for the function
+printf().<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>*/<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>printf</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>(&quot;</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Hello</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>, </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>world</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>!&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:Courier;mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Следует
+заметить, что короткие комментарии пишутся перед или после элемента кода,
+который они поясняют, а длинные – перед поясняемым кодом.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Если следует
+закомментировать большой участок кода для того, чтобы он не компилировался,
+лучше воспользоваться директивой #</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>if</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'> 0, чтобы не получилось конфликта вложенных комментариев.<o:p></o:p></span></p>
+
+<h3><span style='mso-ansi-language:RU'>Идентификаторы</span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Названия
+переменных, функций и типов пишутся на английском языке. По возможности,
+следует также использовать традиционные обозначения, например, переменную </span><span
+style='font-family:Courier;mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>i</span><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'> в цикле </span><span style='font-family:Courier;mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'>for</span><span style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'>. Желательно не использовать сокращения в
+идентификаторах (кроме общепринятых, вроде </span><span class=codeChar><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>init</span></span><span
+class=codeChar><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>, </span></span><span class=codeChar><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>mem</span></span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>).<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>computeAverage();<span
+style='mso-spacerun:yes'>   </span>// NOT: compAvg();<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US>HTML // NOT: HypertextMarkupLanguage</span></p>
+
+<p class=code><span style='font-family:"Times New Roman";mso-bidi-font-family:
+"Courier New";mso-ansi-language:RU'>Избегайте отрицательных логических
+выражений. Положительная логика лучше отрицательной.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US>bool isError; // NOT: isNoError, </span><span
+style='mso-ansi-language:RU'>а</span> <span style='mso-ansi-language:RU'>еще</span>
+<span style='mso-ansi-language:RU'>лучше</span><span lang=EN-US> isAllOk</span></p>
+
+<p class=code><span lang=EN-US>bool</span><span lang=EN-US style='mso-ansi-language:
+RU'> </span><span lang=EN-US>isFound</span><span style='mso-ansi-language:RU'>;
+// </span><span lang=EN-US>NOT</span><span style='mso-ansi-language:RU'>: </span><span
+lang=EN-US>isNotFound</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Глобальный
+идентификатор не должен совпадать с каким-либо идентификатором из используемых
+библиотек или других модулей. При необходимости, перед идентификатором
+добавляется имя модуля для уникальности идентификатора.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Если
+в начале идентификатора должно стоять число, то в начало добавляется
+подчёркивание.<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>All names
+should be written in English.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>filename</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><span
+style='mso-tab-count:1'>   </span>// </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>NOT</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>: </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>imjaFaila</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Иногда
+можно отступать от стандарта, если отступление повысит читаемость кода или
+решение по стандарту неэффективно. Цель стандарта – повысить читаемость кода.<o:p></o:p></span></p>
+
+<h3><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Константы<o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Названия
+констант и переменных, которым присваивается значение только 1 раз и они
+действуют на всю программу, пишутся большими буквами. Слова разделяются знаком
+подчёркивания.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>const</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>int</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>MAX</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>_</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>N</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> = 5;<o:p></o:p></span></p>
+
+<p class=code><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:
+RU'>#</span><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>define</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>MAX</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>_</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>N</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> 5<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Сюда
+относятся и значения перечисляемых типов. В начале каждой константы должен быть
+[сокращённый] идентификатор типа, которому он принадлежит. У всех констант
+одного типа этот префикс должен совпадать.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-language:RU'>typedef</span><span
+lang=EN-US style='mso-ansi-language:RU;mso-fareast-language:RU'> </span><span
+lang=EN-US style='mso-fareast-language:RU'>enum</span><span style='mso-ansi-language:
+RU;mso-fareast-language:RU'><o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-language:RU'>{<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-language:RU'><span
+style='mso-tab-count:1'>  </span>POSITION_NONE,<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-language:RU'><span
+style='mso-tab-count:1'>  </span>POSITION_LOCAL,<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-language:RU'><span
+style='mso-tab-count:1'>  </span>POSITION_GLOBAL<o:p></o:p></span></p>
+
+<p class=code><span style='mso-ansi-language:RU;mso-fareast-language:RU'>}
+PositionKind;</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<h3><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Переменные<o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Переменные
+должны начинаться с маленькой буквы. Первая буква каждого внутреннего слова
+должна быть большой. Допускается написание переменных со всеми маленькими
+буквами. В этом случае слова отделяются подчёркиванием.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US>line, myAccount, centerOfGravity, theRectangle</span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>point_count<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Если
+переменная является массивом (или содержит множество других объектов, вроде </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>set</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> или </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>map</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>), то имя
+пишется во множественном числе.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>int
+lines[10];<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>vector&lt;int&gt;
+vertexes;<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Имена
+переменных должны быть короткие и наглядные (имеющие ясную цель). Однобуквенные
+переменные не должны использоваться. В виде исключения – временные переменные.
+Общепринятые имена временных переменных являются:<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='font-family:"Times New Roman";mso-fareast-font-family:
+"MS Mincho"'>i</span><span style='font-family:"Times New Roman";mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'>, </span><span lang=EN-US style='font-family:
+"Times New Roman";mso-fareast-font-family:"MS Mincho"'>j</span><span
+style='font-family:"Times New Roman";mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>, </span><span lang=EN-US style='font-family:"Times New Roman";
+mso-fareast-font-family:"MS Mincho"'>k</span><span style='font-family:"Times New Roman";
+mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>, </span><span
+lang=EN-US style='font-family:"Times New Roman";mso-fareast-font-family:"MS Mincho"'>m</span><span
+style='font-family:"Times New Roman";mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>, </span><span lang=EN-US style='font-family:"Times New Roman";
+mso-fareast-font-family:"MS Mincho"'>n</span><span style='font-family:"Times New Roman";
+mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> – для целых значений<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='font-family:"Times New Roman";mso-fareast-font-family:
+"MS Mincho"'>c</span><span style='font-family:"Times New Roman";mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'>, </span><span lang=EN-US style='font-family:
+"Times New Roman";mso-fareast-font-family:"MS Mincho"'>d</span><span
+style='font-family:"Times New Roman";mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>, </span><span lang=EN-US style='font-family:"Times New Roman";
+mso-fareast-font-family:"MS Mincho"'>e</span><span style='font-family:"Times New Roman";
+mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> – для символов</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<h3><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Типы
+данных<o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Простые
+(баовые) типы данных и состоят из одного слова и пишутся маленькими буквами<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>int,
+vector, aabb, line<o:p></o:p></span></p>
+
+<h3><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Классы</span><span
+style='font-family:"Times New Roman";mso-fareast-font-family:"MS Mincho";
+mso-bidi-font-family:Arial;mso-ansi-language:RU'><o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Названия
+классов пишутся с большой буквы. В многословных идентификаторах каждое слово
+пишется с большой буквы, остальные буквы - маленькие. Если одно из слов
+является аббревиатурой, то слово пишется так же как и в оригинальном варианте,
+и следующее слово отделяется от этого при помощи знака подчёркивания. <o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>class
+MyBestClass<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>class
+SuperDVD_Writer<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>class
+_3D_Engine<o:p></o:p></span></p>
+
+<h3><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Функции<o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Первое
+слово в имени функции (или метода) начинается с большой буквы и является
+глаголом (</span><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Generate</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>, </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Is</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>, </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Get</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>, </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Set</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>, </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Calculate</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>). Каждое
+следующее слово пишется с большой буквы. Слова пишутся слитно.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";background:yellow;
+mso-highlight:yellow;mso-ansi-language:RU'>Допускается написание первого слова
+с маленькой буквы, если первое слово маленькой длины (до трёх букв, например </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";background:yellow;
+mso-highlight:yellow'>set</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho";background:yellow;mso-highlight:yellow;mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";background:yellow;
+mso-highlight:yellow'>get</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho";background:yellow;mso-highlight:yellow;mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";background:yellow;
+mso-highlight:yellow'>is</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho";background:yellow;mso-highlight:yellow;mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";background:yellow;
+mso-highlight:yellow'>was</span><span style='mso-fareast-font-family:"MS Mincho";
+background:yellow;mso-highlight:yellow;mso-ansi-language:RU'>)</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Параметры
+функций отделяются запятой, после которой желательно ставить пробел.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU;
+mso-bidi-font-style:italic'>Пример</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho";mso-bidi-font-style:italic'>:<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>void
+myBestFunction(int param1, float param2);<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>void</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>GenerateText</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>();<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>definition</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> и </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>declaration</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> функции
+должны совпадать до символа (учитывая описательный комментарий).<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Имена
+объектов являются неявными и не должны использоваться в именах методов.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>line.getLength();<span
+style='mso-spacerun:yes'>   </span>// NOT: line.getLineLength();<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Если
+функция не принимает никаких параметров, то не надо указывать (</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>void</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>).<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>bool</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'> </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>CheckError</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>();</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Перед
+входными параметрами надо писать </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>IN</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>, перед выходными </span><span lang=EN-US
+style='mso-fareast-font-family:"MS Mincho"'>OUT</span><span style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'> (эти пустые макросы определены в </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>steel</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>.</span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>h</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>). Перед
+входными и выходными надо писать </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>IN</span><span lang=EN-US style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'> </span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho"'>OUT</span><span style='mso-fareast-font-family:"MS Mincho";
+mso-ansi-language:RU'>.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Амперсант
+и звёздочка пишется сразу после типа. Не забывайте писать </span><span
+lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>const </span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>перед
+параметрами.<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>void make(IN
+const std::string&amp; a, OUT std::string&amp; b)<o:p></o:p></span></p>
+
+<h3><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>Namespace</span><span
+style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'><o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Имена,
+соответствующие названиям именованной области видимости (namespace), пишутся
+маленькими буквами.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>model::analyzer,
+io::iomanager, common::math::geometry<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><o:p>&nbsp;</o:p></span></p>
+
+<h3><span style='mso-ansi-language:RU'>Объявление и использование указателей<o:p></o:p></span></h3>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU'>Символ
+указателя ставится перед названием переменной. Название типа отделяется от
+названия переменной<span style='mso-spacerun:yes'>  </span>одним пробелом.<o:p></o:p></span></p>
+
+<p><span style='mso-fareast-font-family:"MS Mincho";mso-ansi-language:RU;
+mso-bidi-font-style:italic'>Пример</span><span lang=EN-US style='mso-fareast-font-family:
+"MS Mincho";mso-bidi-font-style:italic'>:<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>int
+*a, *b;<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'>int
+func(char* c);<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=code><span lang=EN-US style='mso-fareast-font-family:"MS Mincho";
+background:yellow;mso-highlight:yellow'>const</span><span style='mso-fareast-font-family:
+"MS Mincho";mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<h2><span style='mso-ansi-language:RU'>Соглашения о выражениях<o:p></o:p></span></h2>
+
+<h3><span style='mso-ansi-language:RU'>Типы<o:p></o:p></span></h3>
+
+<p><span style='mso-ansi-language:RU'><span style='mso-tab-count:1'>     </span>Части
+класса должны быть отсортированы в следующем порядке: </span><span lang=EN-US>public</span><span
+style='mso-ansi-language:RU'>, </span><span lang=EN-US>protected</span><span
+style='mso-ansi-language:RU'> и </span><span lang=EN-US>private</span><span
+style='mso-ansi-language:RU'>. В каждом блоке вначале должны идти поля, потом
+методы.<o:p></o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'>Преобразования типов должно
+осуществляться явно.<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US>floatValue = static_cast&lt;float&gt;(intValue);
+</span></p>
+
+<p class=code><span style='mso-ansi-language:RU'>// </span><span lang=EN-US>NOT</span><span
+style='mso-ansi-language:RU'>: </span><span lang=EN-US>floatValue</span><span
+style='mso-ansi-language:RU'> = </span><span lang=EN-US>intValue</span><span
+style='mso-ansi-language:RU'>;<o:p></o:p></span></p>
+
+<h3><span style='mso-ansi-language:RU'>Переменные<o:p></o:p></span></h3>
+
+<p><span style='mso-ansi-language:RU'>Переменные должны быть
+проинициализированы там, где они объявляются.<o:p></o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'>Использование глобальных переменных
+должно быть минимизировано.<o:p></o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'>Переменные в классе никогда не должны
+декларироваться как </span><span lang=EN-US>public</span><span
+style='mso-ansi-language:RU'>.<o:p></o:p></span></p>
+
+<p><span style='background:yellow;mso-highlight:yellow;mso-ansi-language:RU'>Ссылки
+и указатели должны иметь свой ссылочный знак рядом с идентификатором.<o:p></o:p></span></p>
+
+<p><span style='background:yellow;mso-highlight:yellow;mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:yellow;mso-highlight:yellow'>float
+*x; // NOT: float* x; <o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:yellow;mso-highlight:yellow'>int
+&amp;y = …;<span style='mso-spacerun:yes'>   </span>// NOT: int&amp; y = …;</span></p>
+
+<p><span style='mso-ansi-language:RU'>Неявный тест на 0 не должен нигде
+использоваться кроме как в логических выражениях. “0” не должен использоваться
+вместо “</span><span lang=EN-US>NULL</span><span style='mso-ansi-language:RU'>”,
+‘\0’ или 0.0<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US>if</span><span style='mso-ansi-language:RU'> (</span><span
+lang=EN-US>nLines</span><span style='mso-ansi-language:RU'> != 0)<span
+style='mso-spacerun:yes'>  </span>// </span><span lang=EN-US>NOT</span><span
+style='mso-ansi-language:RU'>: </span><span lang=EN-US>if</span><span
+style='mso-ansi-language:RU'> (</span><span lang=EN-US>nLines</span><span
+style='mso-ansi-language:RU'>)<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US>if (value != 0.0) // NOT: if (value)</span></p>
+
+<h3><span style='mso-ansi-language:RU'>Циклы<o:p></o:p></span></h3>
+
+<p><span style='mso-ansi-language:RU'>Переменные должны быть инициализированы непосредственно
+перед циклом.<o:p></o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:yellow;mso-highlight:yellow'>isDone
+= false;<span style='mso-spacerun:yes'>       </span>// NOT: bool isDone =
+false;<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:yellow;mso-highlight:yellow'>while(!isDone)<span
+style='mso-spacerun:yes'>       </span>//<span style='mso-spacerun:yes'>     
+</span></span><span style='background:yellow;mso-highlight:yellow;mso-ansi-language:
+RU'>…<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:yellow;mso-highlight:yellow'>{<o:p></o:p></span></p>
+
+<p class=code><span lang=EN-US style='background:yellow;mso-highlight:yellow'><span
+style='mso-spacerun:yes'>  </span></span><span style='background:yellow;
+mso-highlight:yellow;mso-ansi-language:RU'>…<span
+style='mso-spacerun:yes'>                   </span>//<span
+style='mso-spacerun:yes'>      </span></span><span lang=EN-US style='background:
+yellow;mso-highlight:yellow'>while</span><span style='background:yellow;
+mso-highlight:yellow;mso-ansi-language:RU'>(!</span><span lang=EN-US
+style='background:yellow;mso-highlight:yellow'>isDone</span><span
+style='background:yellow;mso-highlight:yellow;mso-ansi-language:RU'>)<o:p></o:p></span></p>
+
+<p class=code><span style='background:yellow;mso-highlight:yellow;mso-ansi-language:
+RU'>}<span style='mso-tab-count:6'>                        </span><span
+style='mso-spacerun:yes'>   </span>{<o:p></o:p></span></p>
+
+<p class=code><span style='background:yellow;mso-highlight:yellow;mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>                      </span>//<span
+style='mso-spacerun:yes'>        </span>…<o:p></o:p></span></p>
+
+<p class=code><span style='background:yellow;mso-highlight:yellow;mso-ansi-language:
+RU'><span style='mso-spacerun:yes'>                      </span>//<span
+style='mso-spacerun:yes'>      </span>}</span><span style='mso-ansi-language:
+RU'><o:p></o:p></span></p>
+
+<h3><span style='mso-ansi-language:RU'>Разное<o:p></o:p></span></h3>
+
+<p><span style='mso-ansi-language:RU'>Константы с плавающей точкой должны
+всегда писаться с точкой и по крайней мере одним знаком после нее.<o:p></o:p></span></p>
+
+<p class=code><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<p class=code><span lang=EN-US>double total = 0.0;<span
+style='mso-spacerun:yes'>    </span>// NOT:<span style='mso-spacerun:yes'> 
+</span>double total = 0;</span></p>
+
+<p class=code><span lang=EN-US>double speed = 3.0e8;<span
+style='mso-spacerun:yes'>  </span>// NOT:<span style='mso-spacerun:yes'> 
+</span>double speed = 3e8;</span></p>
+
+<p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<p class=code><span lang=EN-US>double sum;</span></p>
+
+<p class=code><span lang=EN-US>:</span></p>
+
+<p class=code><span lang=EN-US>sum = (a + b) * 10.0;</span></p>
+
+<p><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+
+<h3><span style='mso-ansi-language:RU'>Метки<o:p></o:p></span></h3>
+
+<p><span lang=EN-US>TODO</span><span style='mso-ansi-language:RU'>: описание<o:p></o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'>Ставится в комментариях рядом с
+недоделанным участком кода.<o:p></o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<p><span lang=EN-US>DEBUG</span><span style='mso-ansi-language:RU'>: <o:p></o:p></span></p>
+
+<p><span lang=EN-US>TEMP</span><span style='mso-ansi-language:RU'>: <o:p></o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'>Ставится рядом с временно написанным
+кодом для тестирования. Не должно попадать в </span><span lang=EN-US>trunk</span><span
+style='mso-ansi-language:RU'>.<o:p></o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<p><span style='background:yellow;mso-highlight:yellow;mso-ansi-language:RU'>Проверка
+переданных пареметров</span><span style='mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<p><span style='background:yellow;mso-highlight:yellow;mso-ansi-language:RU'>Порядок
+слов в идентификаторах<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='background:yellow;mso-highlight:yellow'>try catch<o:p></o:p></span></p>
+
+<p><span style='background:yellow;mso-highlight:yellow;mso-ansi-language:RU'>ошибки</span><span
+style='mso-ansi-language:RU'><o:p></o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+<p><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+>>>>>>>>>>>>>>>>
+Started Logging
+00:00.187 Renderer: GeForce 6600 GT/PCI/SSE2/3DNOW!		[ graph opengl opengl_info ]
+00:00.187 Version: 2.0.1					[ graph opengl opengl_info ]
+00:00.187 Vendor: NVIDIA Corporation				[ graph opengl opengl_info ]
+00:00.187 Detected OpenGL version code: 20			[ graph opengl opengl_info ]
+00:00.187 Supported WGL extensions: 
+		0: WGL_ARB_buffer_region
+		1: WGL_ARB_extensions_string
+		2: WGL_ARB_make_current_read
+		3: WGL_ARB_multisample
+		4: WGL_ARB_pbuffer
+		5: WGL_ARB_pixel_format
+		6: WGL_ARB_render_texture
+		7: WGL_ATI_pixel_format_float
+		8: WGL_EXT_extensions_string
+		9: WGL_EXT_swap_control
+		10: WGL_NV_float_buffer
+		11: WGL_NV_render_depth_texture
+		12: WGL_NV_render_texture_rectangle	[ graph opengl opengl_info ]
+00:00.187 WGL_ARB_pbuffer supported				[ graph opengl opengl_info ]
+00:00.187 WGL_ARB_pixel_format supported			[ graph opengl opengl_info ]
+00:00.187 WGL_ARB_render_texture supported			[ graph opengl opengl_info ]
+00:00.187 WGL_ARB_render_texture supported			[ graph opengl opengl_info ]
+00:00.187 ARB_multitexture supported. Max texture units 4	[ opengl_info ]
+00:00.187 NV_register_combiners supported. Max general combiners 8	[ opengl_info ]
+00:00.187 VBO supported						[ opengl_info ]
+00:00.187 NV_occlusion_query extension supported.		[ opengl_info ]
+00:00.187 GL_SGIS_generate_mipmap extension supported.		[ opengl_info ]
+00:00.187 GL_ARB_vertex_program extension supported.		[ opengl_info ]
+00:00.187 Supported GL extensions: 
+		0: GL_ARB_color_buffer_float
+		1: GL_ARB_depth_texture
+		2: GL_ARB_draw_buffers
+		3: GL_ARB_fragment_program
+		4: GL_ARB_fragment_program_shadow
+		5: GL_ARB_fragment_shader
+		6: GL_ARB_half_float_pixel
+		7: GL_ARB_imaging
+		8: GL_ARB_multisample
+		9: GL_ARB_multitexture
+		10: GL_ARB_occlusion_query
+		11: GL_ARB_pixel_buffer_object
+		12: GL_ARB_point_parameters
+		13: GL_ARB_point_sprite
+		14: GL_ARB_shadow
+		15: GL_ARB_shader_objects
+		16: GL_ARB_shading_language_100
+		17: GL_ARB_texture_border_clamp
+		18: GL_ARB_texture_compression
+		19: GL_ARB_texture_cube_map
+		20: GL_ARB_texture_env_add
+		21: GL_ARB_texture_env_combine
+		22: GL_ARB_texture_env_dot3
+		23: GL_ARB_texture_float
+		24: GL_ARB_texture_mirrored_repeat
+		25: GL_ARB_texture_non_power_of_two
+		26: GL_ARB_texture_rectangle
+		27: GL_ARB_transpose_matrix
+		28: GL_ARB_vertex_buffer_object
+		29: GL_ARB_vertex_program
+		30: GL_ARB_vertex_shader
+		31: GL_ARB_window_pos
+		32: GL_ATI_draw_buffers
+		33: GL_ATI_texture_float
+		34: GL_ATI_texture_mirror_once
+		35: GL_S3_s3tc
+		36: GL_EXT_texture_env_add
+		37: GL_EXT_abgr
+		38: GL_EXT_bgra
+		39: GL_EXT_blend_color
+		40: GL_EXT_blend_equation_separate
+		41: GL_EXT_blend_func_separate
+		42: GL_EXT_blend_minmax
+		43: GL_EXT_blend_subtract
+		44: GL_EXT_compiled_vertex_array
+		45: GL_EXT_Cg_shader
+		46: GL_EXT_depth_bounds_test
+		47: GL_EXT_draw_range_elements
+		48: GL_EXT_fog_coord
+		49: GL_EXT_framebuffer_object
+		50: GL_EXT_multi_draw_arrays
+		51: GL_EXT_packed_depth_stencil
+		52: GL_EXT_packed_pixels
+		53: GL_EXT_pixel_buffer_object
+		54: GL_EXT_point_parameters
+		55: GL_EXT_rescale_normal
+		56: GL_EXT_secondary_color
+		57: GL_EXT_separate_specular_color
+		58: GL_EXT_shadow_funcs
+		59: GL_EXT_stencil_two_side
+		60: GL_EXT_stencil_wrap
+		61: GL_EXT_texture3D
+		62: GL_EXT_texture_compression_s3tc
+		63: GL_EXT_texture_cube_map
+		64: GL_EXT_texture_edge_clamp
+		65: GL_EXT_texture_env_combine
+		66: GL_EXT_texture_env_dot3
+		67: GL_EXT_texture_filter_anisotropic
+		68: GL_EXT_texture_lod
+		69: GL_EXT_texture_lod_bias
+		70: GL_EXT_texture_mirror_clamp
+		71: GL_EXT_texture_object
+		72: GL_EXT_texture_sRGB
+		73: GL_EXT_timer_query
+		74: GL_EXT_vertex_array
+		75: GL_HP_occlusion_test
+		76: GL_IBM_rasterpos_clip
+		77: GL_IBM_texture_mirrored_repeat
+		78: GL_KTX_buffer_region
+		79: GL_NV_blend_square
+		80: GL_NV_copy_depth_to_color
+		81: GL_NV_depth_clamp
+		82: GL_NV_fence
+		83: GL_NV_float_buffer
+		84: GL_NV_fog_distance
+		85: GL_NV_fragment_program
+		86: GL_NV_fragment_program_option
+		87: GL_NV_fragment_program2
+		88: GL_NV_half_float
+		89: GL_NV_light_max_exponent
+		90: GL_NV_multisample_filter_hint
+		91: GL_NV_occlusion_query
+		92: GL_NV_packed_depth_stencil
+		93: GL_NV_pixel_data_range
+		94: GL_NV_point_sprite
+		95: GL_NV_primitive_restart
+		96: GL_NV_register_combiners
+		97: GL_NV_register_combiners2
+		98: GL_NV_texgen_reflection
+		99: GL_NV_texture_compression_vtc
+		100: GL_NV_texture_env_combine4
+		101: GL_NV_texture_expand_normal
+		102: GL_NV_texture_rectangle
+		103: GL_NV_texture_shader
+		104: GL_NV_texture_shader2
+		105: GL_NV_texture_shader3
+		106: GL_NV_vertex_array_range
+		107: GL_NV_vertex_array_range2
+		108: GL_NV_vertex_program
+		109: GL_NV_vertex_program1_1
+		110: GL_NV_vertex_program2
+		111: GL_NV_vertex_program2_option
+		112: GL_NV_vertex_program3
+		113: GL_NVX_conditional_render
+		114: GL_SGIS_generate_mipmap
+		115: GL_SGIS_texture_lod
+		116: GL_SGIX_depth_texture
+		117: GL_SGIX_shadow
+		118: GL_SUN_slice_accum
+		119: GL_WIN_swap_hint
+		120: WGL_EXT_swap_control	[ graph opengl opengl_info ]
+00:00.187 Using OpenGL renderer version: 1.1			[ graph opengl opengl_info ]

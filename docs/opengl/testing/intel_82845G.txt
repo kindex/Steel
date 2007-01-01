@@ -1,0 +1,55 @@
+>>>>>>>>>>>>>>>>
+Started Logging
+00:00.125 Renderer: Intel Brookdale-G				[ graph opengl opengl_info ]
+00:00.125 Version: 1.3.0 - Build 4.13.10.3510			[ graph opengl opengl_info ]
+00:00.125 Vendor: Intel						[ graph opengl opengl_info ]
+00:00.125 Detected OpenGL version code: 13			[ graph opengl opengl_info ]
+00:00.140 Supported WGL extensions: 
+		0: WGL_ARB_extensions_string
+		1: WGL_ARB_pixel_format
+		2: WGL_ARB_pbuffer
+		3: WGL_ARB_make_current_read
+		4: WGL_EXT_swap_control
+		5: WGL_ARB_buffer_region	[ graph opengl opengl_info ]
+00:00.140 WGL_ARB_pbuffer supported				[ graph opengl opengl_info ]
+00:00.140 WGL_ARB_pixel_format supported			[ graph opengl opengl_info ]
+00:00.140 WGL_ARB_render_texture not supported			[ error graph opengl opengl_info ]
+00:00.140 WGL_ARB_render_texture supported			[ graph opengl opengl_info ]
+00:00.140 ARB_multitexture supported. Max texture units 4	[ opengl_info ]
+00:00.140 No NV_register_combiners				[ opengl_info ]
+00:00.140 No VBO						[ opengl_info ]
+00:00.140 Supported GL extensions: 
+		0: GL_ARB_multitexture
+		1: GL_ARB_texture_border_clamp
+		2: GL_ARB_texture_compression
+		3: GL_ARB_texture_cube_map
+		4: GL_ARB_texture_env_add
+		5: GL_ARB_texture_env_combine
+		6: GL_ARB_texture_env_dot3
+		7: GL_ARB_texture_env_crossbar
+		8: GL_ARB_transpose_matrix
+		9: GL_EXT_abgr
+		10: GL_EXT_bgra
+		11: GL_EXT_blend_color
+		12: GL_EXT_blend_func_separate
+		13: GL_EXT_blend_minmax
+		14: GL_EXT_blend_subtract
+		15: GL_EXT_clip_volume_hint
+		16: GL_EXT_compiled_vertex_array
+		17: GL_EXT_cull_vertex
+		18: GL_EXT_fog_coord
+		19: GL_EXT_packed_pixels
+		20: GL_EXT_packed_pixels_12
+		21: GL_EXT_rescale_normal
+		22: GL_EXT_secondary_color
+		23: GL_EXT_separate_specular_color
+		24: GL_EXT_stencil_wrap
+		25: GL_EXT_texture_compression_s3tc
+		26: GL_EXT_texture_env_add
+		27: GL_EXT_texture_env_combine
+		28: GL_EXT_texture_filter_anisotropic
+		29: GL_3DFX_texture_compression_FXT1
+		30: GL_IBM_texture_mirrored_repeat
+		31: GL_NV_texgen_reflection
+		32: GL_WIN_swap_hint	[ graph opengl opengl_info ]
+00:00.155 Using OpenGL renderer version: 13			[ graph opengl opengl_info ]
