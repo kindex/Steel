@@ -240,10 +240,15 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 { // TODO: mem cleanup
 	int id = vertex->getId();
 	
-	if(!vertex->wasChanged() && id>0 && tangentSpaceCache.find(id) != tangentSpaceCache.end())
+	assert(id > 0, "vertex.id > 0");
+
+	bool was = tangentSpaceCache.find(id) != tangentSpaceCache.end();
+
+	*sTangent = &tangentSpaceCache[id].t;
+	*tTangent = &tangentSpaceCache[id].b;
+
+	if (!vertex->wasChanged() && was)
 	{
-		*sTangent = &tangentSpaceCache[id].t;
-		*tTangent = &tangentSpaceCache[id].b;
 		return;
 	}
 
@@ -318,16 +323,17 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 		tangentSpaceCache[id].t = T;
 	}
 */
-	v3 *tan1 = new v3[size * 2];
-    v3 *tan2 = tan1 + size;
+	svector<v3> &S = (*sTangent)->data;
+	svector<v3> &T = (*tTangent)->data;
+	S.resize(size);
+	T.resize(size);
 
-	memset(tan1, 0, size * sizeof(v3) * 2);
+	memset(&S[0], 0, size * sizeof(v3));
     
 	for(FaceMaterials::const_iterator it = faceMaterials->begin(); it != faceMaterials->end(); it++)
 	{
 		Triangles *triangle = it->triangles;
 		
-
 		for (unsigned int a=0; a < triangle->data.size(); a++)
 		{
 			long i1 = triangle->data[a].a[0];
@@ -357,30 +363,18 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 			float r = 1.0F / (s1 * t2 - s2 * t1);
 			v3 sdir((t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r,
 					(t2 * z1 - t1 * z2) * r);
-			v3 tdir((s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r,
-					(s1 * z2 - s2 * z1) * r);
         
-        tan1[i1] += sdir;
-        tan1[i2] += sdir;
-        tan1[i3] += sdir;
-        
-        tan2[i1] += tdir;
-        tan2[i2] += tdir;
-        tan2[i3] += tdir;
-
-    }
+			S[i1] += sdir;
+			S[i2] += sdir;
+	        S[i3] += sdir;
+	    }
 	}
-
-	svector<v3> &S = tangentSpaceCache[id].t.data;
-	svector<v3> &T = tangentSpaceCache[id].b.data;
-	S.resize(size);
-	T.resize(size);
 
 
 	for (long a = 0; a < (int)vertex->data.size(); a++)
     {
 		const v3& n = normal->data[a];
-        v3 t = tan1[a];
+        v3 t = S[a];
         
         // Gram-Schmidt orthogonalize
 		t = (t - n * (n.dotProduct(t))).getNormalized();
@@ -392,11 +386,6 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
         // Calculate handedness
 //        tangent[a].w = (Dot(Cross(n, t), tan2[a]) < 0.0F) ? -1.0F : 1.0F;
     }
-
-    delete[] tan1;
-
-	*sTangent = &tangentSpaceCache[id].t;
-	*tTangent = &tangentSpaceCache[id].b;
 };
 
 void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	svector<v3> &tangentSpaceLight)

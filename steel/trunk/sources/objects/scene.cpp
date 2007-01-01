@@ -101,5 +101,7 @@ void Scene::bindEngine(InterfaceId id, Engine* egnine)
 void Scene::process(ProcessInfo &info)
 {
 	for EACH(svector<GameObject*>, objects, it)
-			(*it)->process(info);
+	{
+		(*it)->process(info);
+	}
 }

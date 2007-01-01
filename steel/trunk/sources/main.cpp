@@ -186,7 +186,10 @@ int main(int argc, char *argv[])
 		{
 			steel::time time = timer.total() - lastFrameTime;
 			if(time>0)
+			{
 				game.process(timer.total(), time);
+			}
+
 			lastFrameTime = timer.total();
 		}
 

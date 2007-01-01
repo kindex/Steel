@@ -112,24 +112,24 @@ void OpenGL_Engine::process(GraphShadow *e, steel::time globalTime, steel::time 
 	m[12] = e->position.data.vector.x;				m[13] = e->position.data.vector.y;				m[14] = e->position.data.vector.z;				m[15] = 1;
 	glLoadMatrixf(m);
 
-	if(conf->geti("drawFace") && e->faceMaterials != NULL)
+	if(conf->getb("drawFace") && e->faceMaterials != NULL)
 		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
 			DrawFill_Material(*e, e->faceMaterials->at(i).triangles, e->faceMaterials->at(i).material, total);
 
-	if(conf->geti("drawWire") && e->faceMaterials != NULL && DrawWire != NULL)
+	if(conf->getb("drawWire") && e->faceMaterials != NULL && DrawWire != NULL)
 		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
 			(this->*DrawWire)(*e, e->faceMaterials->at(i).triangles, total);
 
-	if(conf->geti("drawLines") && DrawLines)
+	if(conf->getb("drawLines") && DrawLines)
 		(this->*DrawLines)(*e, total);
 
-	if(conf->geti("drawNormals") && DrawNormals)
+	if(conf->getb("drawNormals") && DrawNormals)
 		(this->*DrawNormals)(*e, total);
 
-	if(conf->geti("drawVertexes") && DrawVertexes)
+	if(conf->getb("drawVertexes") && DrawVertexes)
 		(this->*DrawVertexes)(*e, total);
 
-	if(conf->geti("drawAABB") && DrawAABB)
+	if(conf->getb("drawAABB") && DrawAABB)
 		(this->*DrawAABB)(*e, total);
 
 	glPopMatrix();
