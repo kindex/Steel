@@ -360,7 +360,7 @@ const std::string Config::DumpPrefix(int level) const
 	if(!templates.empty())
 	{
 		string res("[");
-		for(svector<ConfigTemplate>::const_iterator it = templates.begin(); it != templates.end(); it++)
+		for (svector<ConfigTemplate>::const_iterator it = templates.begin(); it != templates.end(); it++)
 		{
 			if(it != templates.begin())
 				res += ", ";

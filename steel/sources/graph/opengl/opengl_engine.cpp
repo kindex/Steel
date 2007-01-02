@@ -182,7 +182,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 		jt->second->position = jt->second->shadow->position * jt->second->light->position;
 	}
 
-	for(svector<Shadow*>::iterator it = shadows.begin(); it != shadows.end(); it++)
+	for EACH(ShadowPVector,  shadows, it)
 	{
 		GraphShadow &shadow = *GS(*it);
 		shadow.lights.clear();
@@ -205,7 +205,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 //	steel::vector<int> elementAlpha;
 
 // В начале выводим только непрозрачные объекты
-	for(svector<Shadow*>::iterator it = shadows.begin(); it != shadows.end(); it++)
+	for EACH(ShadowPVector, shadows, it)
 //		if(!it->blend)
 	{
 			GraphShadow *shadow = GS(*it);

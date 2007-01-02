@@ -124,7 +124,7 @@ protected:
 	typedef T*(funcCreateResClass)(const std::string filename, const std::string baseName); 
 
 // Массивы классов для рагрузки ресурсов каждого типа
-	svector<funcCreateResClass*> classes;
+	pvector<funcCreateResClass*> classes;
 
 	// *********** Functions ***************
 	bool removeRaw(int index); // удаляет ссылку на ресурс. Если количество ссылок = 0, то ресурс удалается физически из коллекции

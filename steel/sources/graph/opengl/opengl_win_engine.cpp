@@ -26,7 +26,7 @@
 
 extern HINSTANCE hInstance;
 
-static svector<OpenGL_Engine*> engines;
+static pvector<OpenGL_Engine*> engines;
 
 struct WindowInformationWinAPI: public OpenGL_Engine::WindowInformation
 {
@@ -73,7 +73,7 @@ void RedrawWindow(HWND hWnd)
 LRESULT CALLBACK WinProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     LONG    lRet = 0;
-	for(svector<OpenGL_Engine*>::iterator it = engines.begin(); it != engines.end(); it++)
+	for EACH(pvector<OpenGL_Engine*>, engines, it)
 	{
 		WindowInformationWinAPI &win = *((WindowInformationWinAPI*)(*it)->windowInformation);
 	    if(hWnd == win.handle)

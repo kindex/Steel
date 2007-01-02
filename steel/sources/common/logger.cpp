@@ -151,7 +151,7 @@ void _log_msg(string keywords, string message)
 {
 	svector<string> keys;
 	explode(' ', keywords, keys);
-	for(svector<string>::iterator it = keys.begin(); it != keys.end(); it++)
+	for EACH(svector<string>, keys, it)
 	{
 		string key = *it;
 		if(loggers.find(key) == loggers.end())
@@ -170,7 +170,7 @@ void LogFilter::set(std::string filter)
 {
 	svector<string> keys;
 	explode(' ', filter, keys);
-	for(svector<string>::iterator it = keys.begin(); it!= keys.end(); it++)
+	for EACH(svector<string>, keys, it)
 	{
 		filterItem item;
 
@@ -195,10 +195,10 @@ bool LogFilter::check(std::string keywords)
 	svector<string> keys;
 	explode(' ', keywords, keys);
 
-	for(svector<filterItem>::iterator it = filters.begin(); it!= filters.end(); it++)
+	for EACH(svector<filterItem>, filters, it)
 	{
-		for(svector<string>::iterator jt = keys.begin(); jt!= keys.end(); jt++)
-			if(it->keyword == *jt)
+		for EACH(svector<string>, keys, jt)
+			if (it->keyword == *jt)
 			{
 				return it->action;
 			}

@@ -177,7 +177,7 @@ void Model::updateAABB()
 float Model::calculateVolume() // вычислить объём
 {
 	float volume = 0;
-	for(svector<Triangle>::iterator it = triangleAll.data.begin(); it != triangleAll.data.end(); it++)
+	for EACH(TriangleVector, triangleAll.data, it)
 	{
 		v3 a(vertexes.data[it->a[0]]);
 		v3 b(vertexes.data[it->a[1]]);

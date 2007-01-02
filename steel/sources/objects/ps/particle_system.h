@@ -34,7 +34,7 @@ struct ParticleSet
 {
 	float countScale;
 
-	steel::svector<Particle*> particles;
+	pvector<Particle*> particles;
 };
 
 class ParticleSystem;

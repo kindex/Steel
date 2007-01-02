@@ -215,10 +215,12 @@ public:
 	void setFilePath(const std::string &_file);
 
 // iterators
-	typedef svector<Config*>::iterator iterator;
-	typedef svector<Config*>::const_iterator const_iterator;
+	typedef pvector<Config*>::iterator iterator;
+	typedef pvector<Config*>::const_iterator const_iterator;
 	pvector<Config*>::const_iterator begin() const { return set.begin(); }
 	pvector<Config*>::const_iterator end() const { return set.end(); }
+	pvector<Config*>::iterator begin() { return set.begin(); }
+	pvector<Config*>::iterator end() { return set.end(); }
 protected:
 
 	pvector<Config*> set;

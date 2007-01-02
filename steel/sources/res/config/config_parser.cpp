@@ -50,7 +50,7 @@ Config*	ConfigParser::Parse(Text *_file)
 		if(c != '\0') 
 			LOG_PARSE_ERROR(string("Unxpected symbol '") + c + "'. Expecting EOF");
 	}
-	for(svector<ParseError>::iterator it = errors.begin(); it != errors.end(); it++)
+	for (svector<ParseError>::iterator it = errors.begin(); it != errors.end(); it++)
 	{
 		log_msg("error parser", it->message + 
 			" (" +  IntToStr(it->line) + ":" + IntToStr(it->charNumber) + ") [" +

@@ -70,7 +70,7 @@ string IntToStr(int a)
 }
 
 // split string into array of strings with delimiter
-void explode(char delimiter, const std::string s, svector<string> &res)
+void explode(IN const char delimiter, IN const std::string& s, OUT svector<std::string>& res)
 {
 	string::size_type last, start = 0, len = s.length();
 	while(start <= len)

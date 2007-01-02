@@ -144,7 +144,7 @@ bool GraphObjectBox::InitFromConfig(Config *conf)
 		faces->at(0).triangles->data[i].set(i*3, i*3+1, i*3+2);
 
 	normals->data.resize(vertexes->data.size());
-	for EACH(svector<Triangle>, faces->at(0).triangles->data, it)
+	for EACH(TriangleVector, faces->at(0).triangles->data, it)
 	{
 		v3 a = vertexes->data[it->a[1]] - vertexes->data[it->a[0]];
 		v3 b = vertexes->data[it->a[2]] - vertexes->data[it->a[0]];

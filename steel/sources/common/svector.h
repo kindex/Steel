@@ -17,8 +17,11 @@
 {
 };*/
 
-#include <stdlib.h>
-#include <vector>
+#if STEEL_VECTOR == 1
+	#include <stdlib.h>
+#else
+	#include <vector>
+#endif
 
 #include "../steel.h"
 

@@ -72,7 +72,7 @@ struct Light
 class TexCoords: public BufferedElement
 {
 public:
-	svector<v2>	data;
+	v2Vector data;
 
 	TexCoords(): BufferedElement(), data(0) {}
 };
@@ -93,8 +93,8 @@ public:
 
 struct GLines
 {
-	svector<GLine> index;
-	svector<color4f> color; // line color
+	pvector<GLine> index;
+	pvector<color4f> color; // line color
 };
 
 typedef Vertexes	Normals;

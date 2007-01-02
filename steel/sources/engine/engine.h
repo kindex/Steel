@@ -74,8 +74,9 @@ protected:
 		virtual ~Shadow() {}
 		virtual void setParent(GameObject *aparent) {parent = aparent; }
 	};
+	typedef pvector<Shadow*> ShadowPVector;
 	// кеш объектов
-	pvector<Shadow*> shadows;
+	ShadowPVector shadows;
 	typedef std::map <uid, int> ShadowHash;
 	typedef int sid; // Shadow vector index
 	// отображение идентификаторов объекта на положение в массиве shadow

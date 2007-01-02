@@ -49,9 +49,6 @@ private:
 
 class AudioEngine : public Engine, public AudioInterface
 {
-protected:
-//	svector<AudioObject*> objects;
-
 public:
 	AudioEngine() :  masterVolume(1.0f) {}
 

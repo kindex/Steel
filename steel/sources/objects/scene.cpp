@@ -82,7 +82,7 @@ bool Scene::InitFromConfig(Config *conf)
 
 bool Scene::isSuportingInterface(InterfaceId id)
 {
-	for EACH(svector<GameObject*>, objects, it)
+	for EACH(pvector<GameObject*>, objects, it)
 		if((*it)->isSuportingInterface(id)) return true;
 
 	return false;
@@ -93,7 +93,7 @@ void Scene::bindEngine(InterfaceId id, Engine* egnine)
 	dynamic_cast<ChildrenInterface*>(egnine)->clearChildren();
 
 	ChildrenInterface &gEngine = *dynamic_cast<ChildrenInterface*>(egnine);
-	for EACH(svector<GameObject*>, objects, it)
+	for EACH(pvector<GameObject*>, objects, it)
 	{
 		if ((*it)->isSuportingInterface(id)) 
 		{
@@ -104,7 +104,7 @@ void Scene::bindEngine(InterfaceId id, Engine* egnine)
 
 void Scene::process(ProcessInfo &info)
 {
-	for EACH(svector<GameObject*>, objects, it)
+	for EACH(pvector<GameObject*>, objects, it)
 	{
 		(*it)->process(info);
 	}

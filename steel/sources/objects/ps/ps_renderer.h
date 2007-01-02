@@ -52,7 +52,7 @@ public:
 class ObjectPSRenderer: public ParticleRenderer
 {
 protected:
-	svector<GameObject*> children;
+	pvector<GameObject*> children;
 
 public:
 	bool initParticles();

@@ -107,7 +107,7 @@ int loadpercentage(ifstream &f, float &p)
 }
 
 // ************************ SCENE
-int parsechain(Model_3DS &m, rstream &f, svector<chainProcessor> tags, int size = 0)
+int parsechain(Model_3DS &m, rstream &f, pvector<chainProcessor> tags, int size = 0)
 {
     unsigned short subChainId;
     int subChainSize, reads = 0;
@@ -119,7 +119,7 @@ int parsechain(Model_3DS &m, rstream &f, svector<chainProcessor> tags, int size 
 		int creads = 0;
 		creads += 6;
 
-		for(svector<chainProcessor>::iterator it = tags.begin(); it != tags.end(); it++)
+		for EACH(pvector<chainProcessor>, tags, it)
 			if(it->tag == subChainId)
 			{
 				creads += it->f(m, f, subChainSize-6);
@@ -193,7 +193,7 @@ int chain_triangles(Model_3DS &m, rstream &f, int size)
 		r += 8;
 	}
 
-	svector<chainProcessor> t;
+	pvector<chainProcessor> t;
 	t.push_back(chainProcessor(0x4130, chain_model_material)); // TRI_MATERIAL
 
 	return r + parsechain(m, f, t, size-r);
@@ -232,7 +232,7 @@ int chain_map_coords(Model_3DS &m, rstream &f, int size)
 
 int chain_mesh(Model_3DS &m, rstream &f, int size)
 {
-	svector<chainProcessor> t;
+	pvector<chainProcessor> t;
 	t.push_back(chainProcessor(0x4110, chain_vertexes)); // coordinates
 	t.push_back(chainProcessor(0x4120, chain_triangles)); // indexes
 
@@ -246,7 +246,7 @@ int chain_4000(Model_3DS &m, rstream &f, int size)
 	string name;
 	int namesize = readstring(f, name);
 	
-	svector<chainProcessor> t;
+	pvector<chainProcessor> t;
 	t.push_back(chainProcessor(0x4100, chain_mesh));
 	return parsechain(m, f, t, size - namesize) + namesize;
 }
@@ -254,7 +254,7 @@ int chain_4000(Model_3DS &m, rstream &f, int size)
 
 int chain_3d3d(Model_3DS &m, rstream &f, int size)
 {
-	svector<chainProcessor> t;
+	pvector<chainProcessor> t;
 	t.push_back(chainProcessor(0x4000, chain_4000));
 
 	return parsechain(m, f, t, size);
@@ -264,7 +264,7 @@ int chain_3d3d(Model_3DS &m, rstream &f, int size)
 
 int chain_4d4d(Model_3DS &m, rstream &f, int size)
 {
-	svector<chainProcessor> t;
+	pvector<chainProcessor> t;
 	t.push_back(chainProcessor(0x3D3D, chain_3d3d));
 	return parsechain(m, f, t, size);
 }
@@ -278,7 +278,7 @@ bool Model_3DS::init(const std::string name, const std::string dir)
 		return false;
 	}
 
-	svector<chainProcessor> t;
+	pvector<chainProcessor> t;
 	t.push_back(chainProcessor(0x4D4D, chain_4d4d));
 
 	parsechain(*this, f, t);
@@ -293,8 +293,7 @@ bool Model_3DS::init(const std::string name, const std::string dir)
 	triangleAll.setId(objectIdGenerator.genUid());
 	texCoords.setId(objectIdGenerator.genUid());
 
-	for(svector<FaceMaterial>::iterator it = faceMaterials.begin();
-				it != faceMaterials.end(); it++)
+	for EACH(svector<FaceMaterial>, faceMaterials, it)
 	{
 		it->triangles->setId(objectIdGenerator.genUid());
 

@@ -14,8 +14,11 @@
 #ifndef __COMMON__PVECTOR_H__
 #define __COMMON__PVECTOR_H__
 
-#include <stdlib.h>
-#include <vector>
+#if STEEL_VECTOR == 1
+	#include <stdlib.h>
+#else
+	#include <vector>
+#endif
 
 #include "../steel.h"
 

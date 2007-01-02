@@ -85,6 +85,7 @@ protected:
 #define GS(shadow) (static_cast<GraphShadow*>(shadow))
 
 	struct LightShadow;
+	typedef pvector<LightShadow*> LightShadowPVector;
 	struct GraphShadow: public Shadow // множество треугольников одного материала
 	{
 		ObjectPosition	position; // global or screen
@@ -95,7 +96,7 @@ protected:
 		const Vertexes		*vertexes;
 		const Normals		*normals;
 		unsigned int		 textureCount;
-		svector<const TexCoords*> texCoords;
+		pvector<const TexCoords*> texCoords;
 
 		const GLines		*lines;
 
@@ -105,7 +106,8 @@ protected:
 		bool		visible;
 		float		distance; // расстояние до камеры
 
-		svector<LightShadow*> lights; // lights to this onject
+		LightShadowPVector lights; // lights to this onject
+		
 
 		GraphShadow(Engine *engine);
 		void calculateAABB();

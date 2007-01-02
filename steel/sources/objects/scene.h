@@ -27,7 +27,7 @@ public:
 	void process(ProcessInfo &);
 
 protected:
-	svector<GameObject*> objects;
+	pvector<GameObject*> objects;
 };
 
 #endif

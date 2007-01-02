@@ -51,7 +51,7 @@ public:
 	bool clear();
 
 protected:
-	svector<GameObject*> objects;
+	pvector<GameObject*> objects;
 
 	GraphEngineInfo info;
 };

@@ -29,7 +29,7 @@ void ConfigParserTest::TestParser(void)
 	TEST_CODE(file->Setup(config_text); config = parser.Parse(file));		\
 	if(!parser.errors.empty())												\
 	{	\
-		for(svector<ConfigParser::ParseError>::iterator it = parser.errors.begin(); it != parser.errors.end(); it++)	\
+		for (svector<ConfigParser::ParseError>::iterator it = parser.errors.begin(); it != parser.errors.end(); it++)	\
 			TEST_ERROR(string("Parse '") + file->getText() + "': " + it->getMessage());									\
 	}\
 	else	\

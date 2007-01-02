@@ -33,7 +33,7 @@ std::string FloatToStr(double a);
 std::string IntToStr(int a);
 
 // split string into array of strings with delimiter
-void explode(char delimiter, const std::string s, svector<std::string>& result);
+void explode(IN const char delimiter, IN const std::string& s, OUT svector<std::string>& res);
 // concat array of string into one string
 std::string implode(const char delimiter, const svector<std::string>& elements);
 

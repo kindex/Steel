@@ -16,7 +16,6 @@
 
 #include "../steel.h"
 #include "pvector.h"
-#include "../math/vector3d.h"
 
 /*
 	Целочисленные типы данных
@@ -56,7 +55,6 @@ typedef float time; // time interval
 
 typedef steel::pvector<int> IntVector;
 typedef steel::pvector<float> FloatVector;
-typedef steel::pvector<v3> v3Vector;
 
 // find in vector, svector, pvector
 template<typename C>

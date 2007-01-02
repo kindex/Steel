@@ -33,6 +33,7 @@ struct Triangle // anti-clockwise direction (one side Triangle)
 		a[2] = _2;
 	}
 };
+typedef pvector<Triangle> TriangleVector;
 
 // ћассив значений, который может быть кеширован в графическом ускорителе
 class BufferedElement
@@ -61,7 +62,7 @@ struct Vertexes: public BufferedElement
 // массив треугольников многогранника
 struct Triangles: public BufferedElement
 {
-	svector<Triangle> data;
+	TriangleVector data;
 
 	Triangles(): BufferedElement(), data(0) {}
 };

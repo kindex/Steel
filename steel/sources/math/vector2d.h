@@ -15,6 +15,7 @@
 
 #include "maths.h"
 #include "../common/types.h"
+#include "../common/pvector.h"
 
 class v2
 {
@@ -105,5 +106,8 @@ public:
 	//member variables
 	float x, y;
 };
+
+typedef steel::pvector<v2> v2Vector;
+
 
 #endif	//v2_H
