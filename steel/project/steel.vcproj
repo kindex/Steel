@@ -665,7 +665,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\sources\common\steel_vector.h"
+					RelativePath="..\sources\common\svector.h"
 					>
 				</File>
 				<File

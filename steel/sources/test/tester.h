@@ -18,7 +18,7 @@
 
 #include "../steel.h"
 
-#include "../common/steel_vector.h"
+#include "../common/svector.h"
 #include "../common/logger.h"
 #include <string>
 #include <iostream>

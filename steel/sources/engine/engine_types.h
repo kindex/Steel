@@ -17,7 +17,7 @@
 #include "../steel.h"
 
 #include "../math/vector3d.h"
-#include "../common/steel_vector.h"
+#include "../common/svector.h"
 #include "id_generator.h"
 
 

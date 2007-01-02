@@ -20,7 +20,7 @@
 
 #include "../steel.h"
 #include "timer.h"
-#include "steel_vector.h"
+#include "svector.h"
 
 struct GlobalErrors
 {

@@ -15,7 +15,7 @@
 
 #include "../../steel.h"
 #include "../../test/tester.h"
-#include "../steel_vector.h"
+#include "../svector.h"
 
 class svectorTest: public Tester
 {

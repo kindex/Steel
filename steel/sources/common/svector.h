@@ -1,5 +1,5 @@
 /*id**********************************************************
-	File: common/steel_vector.h
+	File: common/svector.h
 	Unit: vector
 	Part of: Steel engine
 	(C) DiVision, 2006

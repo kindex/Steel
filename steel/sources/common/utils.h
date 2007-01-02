@@ -19,7 +19,7 @@
 #include "../steel.h"
 #include "../math/vector3d.h"
 #include <string>
-#include "steel_vector.h"
+#include "svector.h"
 
 // random float number in interval [0..1)
 float frand();

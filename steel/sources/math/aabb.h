@@ -17,7 +17,7 @@
 #include "vector3d.h"
 #include "matrix34.h"
 
-#include "../common/steel_vector.h"
+#include "../common/svector.h"
 #undef min
 #undef max
 
