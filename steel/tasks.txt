@@ -31,6 +31,7 @@
 364. Quake MAP. Quake MAP (scene) loader. / *. KindeX. [3]. (3d).
 344. JPEG. JPEG file loader same as BMP loader. / KindeX. [3]. (3d). 20061231 (steel 1.1)
 405. ASE. ASE scene file loader. / KindeX. [3]. (3d).
+448. OpenGL: autoresize images that image size is power of 2. / KindeX. [3]. (1d).
 401. OpenGL: shadows. / KindeX. KindeX. [4]. (3d).
 402. OpenGL: blending. Glass, sprites (with correct lighting). Sort blending polygons. / KindeX. KindeX. [4]. (3d).
 348. Config bug. Error in finding value by templates through parent config. / KindeX. KindeX. [5]. (1d). 20061201
