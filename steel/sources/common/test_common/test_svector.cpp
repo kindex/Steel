@@ -20,5 +20,5 @@ void svectorTest::Test(void)
 
 void svectorTest::TestMemory(void)
 {
-	svector<int> a(10000000);
+	IntVector a(10000000);
 }

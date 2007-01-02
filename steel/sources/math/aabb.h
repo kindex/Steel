@@ -17,7 +17,7 @@
 #include "vector3d.h"
 #include "matrix34.h"
 
-#include "../common/svector.h"
+#include "../common/types.h"
 #undef min
 #undef max
 
@@ -33,7 +33,7 @@ struct AABB3 // AABB 3D
 	AABB3(const v3 point): min(point), max(point) {}
 	bool empty() const { return min.x>max.x + EPSILON || min.y>max.y + EPSILON || min.z>max.z + EPSILON;  }
 	void clear();
-	void getVertexes(steel::svector<v3> &dest) const;
+	void getVertexes(v3Vector &dest) const;
 
     void merge(const v3 point);
     void merge(const AABB3 &second);

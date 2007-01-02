@@ -80,7 +80,7 @@ public:
 class TexCoords3f: public BufferedElement
 {
 public:
-	svector<v3> data;
+	v3Vector data;
 };
 
 

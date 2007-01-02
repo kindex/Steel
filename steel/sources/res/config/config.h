@@ -217,11 +217,11 @@ public:
 // iterators
 	typedef svector<Config*>::iterator iterator;
 	typedef svector<Config*>::const_iterator const_iterator;
-	iterator begin() const { return set.begin(); }
-	iterator end() const { return set.end(); }
+	pvector<Config*>::const_iterator begin() const { return set.begin(); }
+	pvector<Config*>::const_iterator end() const { return set.end(); }
 protected:
 
-	svector<Config*> set;
+	pvector<Config*> set;
 };
 
 

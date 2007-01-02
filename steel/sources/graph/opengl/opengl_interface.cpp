@@ -84,7 +84,7 @@ void OpenGL_Engine::addChild(GraphShadow &shadow, GameObject *child)
 {
 	uid childUid = child->getId();
 	
-	svector<uid>::iterator it = shadow.children.find(childUid);
+	uidVector::const_iterator it = find(shadow.children, childUid);
 
 	if(it != currentShadow->children.end()) return ; // child have been added before
 

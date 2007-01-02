@@ -14,7 +14,10 @@
 #ifndef ENGINE__ID_GENERATOR_H
 #define ENGINE__ID_GENERATOR_H
 
+#include "../common/pvector.h"
+
 typedef unsigned int uid;
+typedef pvector<uid> uidVector;
 
 class IdGenerator
 {

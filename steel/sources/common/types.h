@@ -15,6 +15,8 @@
 #define __COMMON_TYPES_H__
 
 #include "../steel.h"
+#include "pvector.h"
+#include "../math/vector3d.h"
 
 /*
 	Целочисленные типы данных
@@ -52,24 +54,22 @@ namespace steel
 typedef float time; // time interval
 }
 
-typedef float steelLength_t;
+typedef steel::pvector<int> IntVector;
+typedef steel::pvector<float> FloatVector;
+typedef steel::pvector<v3> v3Vector;
 
-
-/*
-	Коды ошибок
-*/
-typedef
-enum
+// find in vector, svector, pvector
+template<typename C>
+typename C::const_iterator find(const C& container, typename const C::value_type& value)
 {
-	SE_NONE,		//	нет ошибки
-	SE_NOMEM,		//	ошибка памяти
-	SE_LOADED,		//	объект уже загружен
-	SE_NOT_LOADED,	//	объект ещё не загружен
-	SE_INV_FMT,		//	неверный формат
-	SE_SDL_VQUERY,	//	неудачный запрос к SDL
-	SE_SDL_VIDEO,	//	не удалось создать видео режим
-	SE_SDL_INIT,	//	ошибка инициализации библиотеки SDL
-	SE_OGL_INIT		//	ошибка инициализации OpenGL
-}	SteelError;
+	for EACH_CONST(C, container, it)
+	{
+		if (*it == value)
+		{
+			return it;
+		}
+	}
+	return container.end();
+}
 
 #endif

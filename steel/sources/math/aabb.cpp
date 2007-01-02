@@ -52,7 +52,7 @@ bool AABB3::intersect(AABB3 const &second)
 
 void AABB3::mul(const matrix34 &matrix)
 {
-	steel::svector<v3> v;
+	v3Vector v;
 	getVertexes(v);
 	
 	clear();
@@ -83,7 +83,7 @@ void AABB3::merge(AABB const &second)
 	if (max.z < second.max.z) max.z = second.max.z;
  }
 
-void AABB3::getVertexes(steel::svector<v3> &dest) const
+void AABB3::getVertexes(v3Vector &dest) const
 {
 	dest.resize(8);
 	const v3 &a = min; 

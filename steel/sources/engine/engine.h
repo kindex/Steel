@@ -64,7 +64,7 @@ protected:
 		// время последнего изменения объекта. Если отлично от того, что возвращает Object::getModificationTime(), то надо обновить кеш.
 //		ModificationTime modificationTime, childrenModificationTime;
 		// список детей объекта (uid)
-		svector<uid> children;
+		pvector<uid> children;
 
 		Shadow(Engine *aEngine): object(NULL), parent(NULL), engine(aEngine) {}
 		virtual void fill(GameObject *object);
@@ -75,7 +75,7 @@ protected:
 		virtual void setParent(GameObject *aparent) {parent = aparent; }
 	};
 	// кеш объектов
-	svector<Shadow*> shadows;
+	pvector<Shadow*> shadows;
 	typedef std::map <uid, int> ShadowHash;
 	typedef int sid; // Shadow vector index
 	// отображение идентификаторов объекта на положение в массиве shadow

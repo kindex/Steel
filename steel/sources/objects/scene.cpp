@@ -68,7 +68,7 @@ bool Scene::InitFromConfig(Config *conf)
 		return false;
 	
 	const ConfigArray &objectsArray =  *static_cast<ConfigArray*>(objectsConfig);
-	for EACH(ConfigArray, objectsArray, it)
+	for EACH_CONST(ConfigArray, objectsArray, it)
 	{
 		GameObject *newObject = createGameObject(*it);
 		if (newObject != NULL)

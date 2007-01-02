@@ -495,14 +495,18 @@ const std::string ConfigArray::DumpThis(int level) const
 	level += 2;
 	string res("(\n");
 	
-	for(svector<Config*>::iterator it = set.begin(); it != set.end(); it++)
+	for EACH_CONST(pvector<Config*>, set, it)
 	{
 		res += getIndent(level);
 
-		if(it != NULL)
+		if(*it != NULL)
+		{
 			res += (*it)->Dump(level) + "\n";
+		}
 		else
+		{
 			res += "null\n";
+		}
 	}
 
 	level -= 2;
@@ -586,8 +590,10 @@ const v3 ConfigArray::returnv3(const v3 _default) const
 void ConfigArray::setFilePath(const std::string &_file)
 {
 	file = _file;
-	for(iterator it = begin(); it != end(); it++)
+	for EACH(pvector<Config*>, set, it)
+	{
 		(*it)->setFilePath(_file);
+	}
 }
 
 void ConfigStruct::setFilePath(const std::string &_file)

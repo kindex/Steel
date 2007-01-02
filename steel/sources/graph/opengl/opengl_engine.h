@@ -182,7 +182,7 @@ protected:
 
 	void drawBump(GraphShadow &e, const TexCoords *coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image *img);
 	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent);
-	void genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light, svector<v3> &tangentSpaceLight);
+	void genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light, v3Vector &tangentSpaceLight);
 
 	typedef TexCoords3f tangentSpaceLightBufferedArray;
 

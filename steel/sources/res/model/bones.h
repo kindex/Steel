@@ -79,7 +79,7 @@ struct boneNode
 	//	угол поворота кости вокруг своей оси (правая ориентация)
 	steelAngle_t rotation;
 	//	длина кости
-	steelLength_t len;
+//	steelLength_t len;
 };
 
 /*

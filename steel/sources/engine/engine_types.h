@@ -53,7 +53,7 @@ public:
 // массив вершин многогранника
 struct Vertexes: public BufferedElement
 {
-	svector<v3> data;
+	v3Vector data;
 
 	Vertexes(): BufferedElement(), data(0) {}
 };

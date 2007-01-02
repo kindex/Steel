@@ -370,7 +370,7 @@ void OpenALEngine::addChild(AudioShadow &shadow, GameObject *child)
 {
 	uid childUid = child->getId();
 	
-	svector<uid>::iterator it = shadow.children.find(childUid);
+	pvector<uid>::const_iterator it = find(shadow.children, childUid);
 
 	if(it != currentShadow->children.end()) return ; // child have been added before
 

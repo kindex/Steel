@@ -75,7 +75,7 @@ void Model::generateNormals()
 */
 
 
-	svector<v3> facenormal;
+	v3Vector facenormal;
     facenormal.resize(triangleAll.data.size());
 
     normals.data.resize(vertexes.data.size());
@@ -169,7 +169,7 @@ void Model::generateNormals()
 void Model::updateAABB()
 {
 	frame.clear();
-	for(svector<v3>::iterator it = vertexes.data.begin(); it != vertexes.data.end(); it++)
+	for(v3Vector::iterator it = vertexes.data.begin(); it != vertexes.data.end(); it++)
 		frame.merge(*it);
 }
 

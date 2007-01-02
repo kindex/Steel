@@ -18,8 +18,6 @@
 #ifndef __STEEL_H__
 #define __STEEL_H__
 
-#include "common/types.h"
-
 //	Компиляторы (STEEL_COMPILER)
 #define COMPILER_GCC 2
 #define COMPILER_VS8 1
@@ -44,7 +42,7 @@
 	steel::vector (common/steel_vector.h),
 	иначе использует std::vector
 */
-#define STEEL_VECTOR
+#define STEEL_VECTOR 1
 
 
 /*

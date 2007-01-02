@@ -31,7 +31,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
-		svector<uid> buffersToDelete;
+		pvector<uid> buffersToDelete;
 
 		bool bump_map = material->normal_map.image != NULL && conf->geti("drawBump") && !e.lights.empty() && e.normals != NULL && GL_EXTENSION_DOT3 && GL_EXTENSION_TEXTURE_CUBE_MAP;
 		bool diffuse_map = material->diffuse_map.image != NULL && conf->geti("drawTexture");
@@ -112,7 +112,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 
 		if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
 
-		for(svector<uid>::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
+		for(uidVector::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
 		{
 			cleanBuffer(*it);
 		}
@@ -323,8 +323,8 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 		tangentSpaceCache[id].t = T;
 	}
 */
-	svector<v3> &S = (*sTangent)->data;
-	svector<v3> &T = (*tTangent)->data;
+	v3Vector &S = (*sTangent)->data;
+	v3Vector &T = (*tTangent)->data;
 	S.resize(size);
 	T.resize(size);
 
@@ -388,14 +388,14 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
     }
 };
 
-void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	svector<v3> &tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3Vector &tangentSpaceLight)
 {
 	matrix34 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
 
 	v3 objectLightPosition = inverseModelMatrix*light;
 
-	svector<v3> &tl = tangentSpaceLight;
+	v3Vector &tl = tangentSpaceLight;
 
     // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
     for (unsigned int i=0; i<vertex.data.size(); i++)

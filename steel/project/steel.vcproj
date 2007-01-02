@@ -274,7 +274,7 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath=".\steel.h"
+				RelativePath="..\sources\steel.h"
 				>
 			</File>
 			<Filter
@@ -662,6 +662,10 @@
 				</File>
 				<File
 					RelativePath="..\sources\common\logger.h"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\common\pvector.h"
 					>
 				</File>
 				<File

@@ -1,5 +1,5 @@
 /*id**********************************************************
-	File: common/svector.h
+	File: common/pvector.h
 	Unit: vector
 	Part of: Steel engine
 	(C) DiVision, 2006
@@ -8,14 +8,11 @@
 	License:
 		Steel Engine License
 	Description:
-		Аналог std::vector
+		plain vector: Аналог std::vector для простых типов (int, pointer,
+		структуры без конструктора). Нет дефолтовой инициализации.
  ************************************************************/
-#ifndef __COMMON__SVECTOR_H__
-#define __COMMON__SVECTOR_H__
-
-/*public ref class DebuggerVisualizerAttribute sealed : public Attribute
-{
-};*/
+#ifndef __COMMON__PVECTOR_H__
+#define __COMMON__PVECTOR_H__
 
 #include <stdlib.h>
 #include <vector>
@@ -25,8 +22,6 @@
 namespace steel
 {
 
-	// rename std::vector to steel::vector
-	
 /*	template <typename T>
 	class vector: public std::vector<T>
 	{
@@ -40,11 +35,11 @@ namespace steel
 #if STEEL_VECTOR != 1
 
 	template <typename T>
-	class svector: public std::vector<T>
+	class pvector: public std::vector<T>
 	{
 	public:
-		svector(size_t size): std::vector<T>::vector(size) {}
-		svector(): std::vector<T>::vector() {}
+		pvector(size_t size): std::vector<T>::vector(size) {}
+		pvector(): std::vector<T>::vector() {}
 	};
 
 #else
@@ -52,7 +47,7 @@ namespace steel
 // define new steel::vector with std::vector interface and fast realization for simple classes (without constructors)
 
 template <typename T>
-class svector
+class pvector
 {
 	size_t _count;// Количество используемых эелементов
 	T *data;  // динамический массив для хранения данных
@@ -63,50 +58,37 @@ public:
 	typedef iterator const_iterator;
 	typedef T value_type;
 
-	svector() 
+	pvector() 
 	{ 
 		_size = _count = 0; 
 		data = NULL; 
 	}
 
-	svector(const svector &original)
+	pvector(const pvector &original)
 	{ 
 		_size = original._size;
 		_count = original._count;
 		data = (T*)malloc(_size * sizeof(T));
-//		memcpy(data, original.data, _count* sizeof(T));
-		for (size_t i = 0; i < _count; i++)
-		{
-			new (&data[i]) T(original.data[i]);
-		}
+		memcpy(data, original.data, _count* sizeof(T));
 	}
 
-	svector& operator=(const svector& original)
+	pvector& operator=(const pvector& original)
 	{ 
 		_size = original._size;
 		_count = original._count;
 		data = (T*)malloc(_size * sizeof(T));
-//		memcpy(data, original.data, _count* sizeof(T));
-		for (size_t i = 0; i < _count; i++)
-		{
-			new (&data[i]) T(original.data[i]);
-		}
+		memcpy(data, original.data, _count* sizeof(T));
 		return *this;
 	}
 
-	svector(size_t initSize) 
+	pvector(size_t initSize) 
 	{ 
 		_size = _count = initSize; 
 		data = (T*)malloc(_size*sizeof(T)); 
 	}
 
-	~svector() 
+	~pvector() 
 	{
-		while (_count > 0)
-		{
-			_count--;
-			data[_count].~T();
-		}
 		free(data);
 	}
 
@@ -127,24 +109,9 @@ public:
 			data = (T*)realloc(data, _size*sizeof(T));
 		}
 
-		if(oldCount < _count)
+		if(oldCount*2 > _count)
 		{
-//			memset((char*)data + oldCount*sizeof(T), 0, (_count - oldCount)*sizeof(T));
-			for(size_t i = oldCount; i < _count; i++)
-			{
-				new (&data[i]) T;
-			}
-		}
-		if(oldCount > _count)
-		{
-			for(size_t i = _count; i < oldCount; i++)
-			{
-				data[i].~T();
-			}
-			if (oldCount*2 > _count)
-			{
-				pack();
-			}
+			pack();
 		}
 
 	}
@@ -155,39 +122,28 @@ public:
 		pack();
 	}
 
-	size_t size() const 
-	{ 
-		return _count; 
-	}
-	
-	size_t capacity() const 
-	{ 
-		return _size; 
-	}
+	size_t size() const { return _count; }
+	size_t capacity() const { return _size; }
+	bool empty() const { return _count==0; }
 
-	bool empty() const 
-	{ 
-		return _count==0; 
-	}
-
-	T&operator[](size_t i)
+	T&operator[](size_t i)	
 	{		
 		return data[i];	
 	}
 	
-	const T&operator[](size_t i) const
-	{		
-		return data[i];	
-	}
-	
-	T& at(size_t i)
+	const T&operator[](size_t i) const	
 	{		
 		return data[i];	
 	}
 
-	const T& at(size_t i) const
+	T& at(size_t i) 
 	{		
-		return data[i];
+		return data[i];	
+	}
+
+	const T& at(size_t i) const	
+	{		
+		return data[i];	
 	}
 
 	void pack()
@@ -228,20 +184,20 @@ public:
 
 	T &back()
 	{		
-		return data[_count-1];	
-	}
-
-	T &front()
-	{		
-		return data[0];
+		return data[_count-1];
 	}
 	
-	const T &back()	const 
-	{
-		return data[_count-1];	
+	T &front()
+	{		
+		return data[0];	
 	}
 
-	const T &front() const 
+	const T &back()	const 
+	{		
+		return data[_count-1];	
+	}
+	
+	const T &front()	const 
 	{		
 		return data[0];	
 	}
@@ -258,7 +214,10 @@ public:
 
 };
 #endif // STEEL_VECTOR
-}
-using steel::svector;
 
-#endif // __COMMON__SVECTOR_H__
+}
+
+using steel::pvector;
+
+#endif // __COMMON__PVECTOR_H__
+

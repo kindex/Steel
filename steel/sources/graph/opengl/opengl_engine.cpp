@@ -476,7 +476,7 @@ void OpenGL_Engine::prepare(GraphShadow *shadow, steel::time globalTime, steel::
 	shadow->setParent(parent);
 	shadow->cache();
 
-	for EACH(svector<uid>, shadow->children, it)
+	for EACH(uidVector, shadow->children, it)
 		prepare( getShadow(*it), globalTime, time, 
 		matrix,  // TODO
 		shadow->object);
@@ -577,7 +577,7 @@ void OpenGL_Engine::GraphShadow::calculateAABB()
 
 	if (vertexes != NULL)
 	{
-		for EACH_CONST(svector<v3>, vertexes->data, i)
+		for EACH_CONST(v3Vector, vertexes->data, i)
 		{
 			aabb.merge(*i);
 		}
