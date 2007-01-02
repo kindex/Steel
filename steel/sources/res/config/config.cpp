@@ -404,7 +404,9 @@ const string ConfigStruct::DumpThis(int level) const
 const std::string ConfigNumber::finds(const std::string &path, const std::string &_default) const
 {
 	if(!path.empty())
+	{
 		error("res config", "Cannot find variable '" + path + "' in number");
+	}
 	return gets(_default);
 }
 

@@ -11,12 +11,11 @@ uniform struct
 
 uniform int lightCount;
 
-varying vec3 lightDir[5];// TBN space
+varying vec3 lightDir[4];// TBN space
 
 varying vec3 viewDir;     // tbn
 
 varying	vec3 pixel_position; // global
-varying	vec3 pixel_normal; // global
 
 varying vec3 viewDirGlobal;     // global
 
@@ -24,6 +23,7 @@ varying vec2 texCoord0;
 varying vec2 texCoord1;
 
 vec3 t,b,n;
+vec3 pixel_normal; // global
 
 void calcLightDir(in int i)
 {
@@ -65,9 +65,6 @@ void main(void)
 				calcLightDir(2);
 				if (lightCount > 3)	{
 					calcLightDir(3);
-					if (lightCount > 4)	{
-						calcLightDir(4);
-					}
 				}
 			}
 		}

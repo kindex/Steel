@@ -270,6 +270,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="material"
+				>
+				<File
+					RelativePath="..\data\material\std.frag"
+					>
+				</File>
+				<File
+					RelativePath="..\data\material\std.vert"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="18_weapon"

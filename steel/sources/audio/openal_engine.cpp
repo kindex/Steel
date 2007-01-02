@@ -274,6 +274,10 @@ bool OpenALEngine::process()
 
 bool OpenALEngine::soundPlay(Sound* sound)
 {
+	if (sound == NULL || sound->sound == NULL)
+	{
+		return false;
+	}
 	/*
 	if (!shadows.empty())
 	{

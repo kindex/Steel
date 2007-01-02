@@ -327,7 +327,7 @@ bool	initWin32Extensions()
 		return false;
 
 	const char * exts = wglGetExtensionsStringARB(wglGetCurrentDC());
-	log_msg("graph opengl opengl_info", std::string("Supported WGL extensions: ") + strtr(exts, ' ', '\n' ));
+	log_msg("graph opengl opengl_info", std::string("Supported WGL extensions: ") + strLineEnum(exts, ' ', '\n' ));
 
 	if ( exts == NULL )
 		return false;
@@ -390,7 +390,7 @@ void	initLinuxExtensions ()
 	Display * display = glXGetCurrentDisplay ();
 	int		screen	= DefaultScreen		( display );
 	const char * exts = glXQueryExtensionsString(display, screen);
-	log_msg("graph opengl opengl_info", std::string("Supported glX extensions: ") + strtr(exts, ' ', '\n' ));
+	log_msg("graph opengl opengl_info", std::string("Supported glX extensions: ") + strLineEnum(exts, ' ', '\n' ));
 }
 #endif
 
@@ -646,5 +646,5 @@ void OpenGL_ExtensionsPrintfInfo()				// print info about card, driver, version 
 
 
 	const char *exts = (char*)glGetString(GL_EXTENSIONS);
-	log_msg("graph opengl opengl_info", std::string("Supported GL extensions: ") + strtr(exts, ' ', '\n' ));
+	log_msg("graph opengl opengl_info", std::string("Supported GL extensions: ") + strLineEnum(exts, ' ', '\n' ));
 }

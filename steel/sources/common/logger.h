@@ -21,6 +21,7 @@
 #include "../steel.h"
 #include "timer.h"
 #include "svector.h"
+#include "utils.h"
 
 struct GlobalErrors
 {
@@ -74,14 +75,12 @@ void _log_msg(std::string keywords, std::string message);
 #define error(keywords, message) \
 	globalErrors.errorCount++, \
 	log_msg(std::string("error ") + \
-		keywords, std::string(__FILE__) + "@" + \
-		__FUNCTION__ + ":" + IntToStr(__LINE__) + " " + message) 
+	keywords, std::string(message) + " (" + getFileName(__FILE__) + ":" + IntToStr(__LINE__) + "(" + __FUNCTION__ + "))")
 
 #define warn(keywords, message) \
 	globalErrors.warningCount++, \
 	log_msg(std::string("warning ") + \
-		keywords, std::string(__FILE__) + "@" + \
-		__FUNCTION__ + ":" + IntToStr(__LINE__) + " " + message)
+		keywords, std::string(message) + " (" + getFileName(__FILE__) + ":" + IntToStr(__LINE__) + "(" + __FUNCTION__ + "))")
 
 
 // неудачный выход из процедуры с сообщением в лог

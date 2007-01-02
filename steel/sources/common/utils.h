@@ -41,6 +41,7 @@ std::string implode(const char delimiter, const svector<std::string>& elements);
 std::string getPath(std::string fullpath);
 // split full path to path + filename
 void splitPath(std::string fullpath, std::string &path, std::string &filename);
+std::string getFileName(std::string fullpath);
 std::string createPath(const std::string& dir, const std::string& filename);
 
 // delete file in directory
@@ -48,7 +49,10 @@ void deleteFiles(std::string dir, std::string mask);
 // delete all files in directory with mask
 void deleteFile(std::string dir, std::string file);
 // translate all chars a to b into string s
-std::string strtr(const char *s, char a, char b);
+std::string strtr(IN const std::string& s, IN const char a, IN const char b);
+
+std::string strLineEnum(const char *s, char a, char b);
+
 // escape escapedChar and \ in base string. (Ex: escape(a'b\c, ') => a\'b\\c)
 std::string escape(std::string base, char escapedChar);
 

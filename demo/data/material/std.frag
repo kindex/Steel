@@ -21,14 +21,14 @@ uniform struct
 
 uniform struct
 {
-	int type;
+//	int type;
 	float sqrtAttenuation;
 	float minDistance;
 	float maxDistance;
-	sampler2D map;
-	sampler3D cube_map;
+//	sampler2D map;
+//	sampler3D cube_map;
 	float k;
-} lights[5];
+} lights[4];
 
 uniform sampler2D diffuse_map;
 uniform sampler2D diffuse2_map;
@@ -36,17 +36,15 @@ uniform sampler2D normal_map;
 uniform sampler2D emission_map;
 uniform sampler2D specular_map;
 
-
 varying vec3 viewDir;     // tbn
 
 varying	vec3 pixel_position;// global
-varying	vec3 pixel_normal; // global
 
 varying vec3 lightDirGlobal;  // global
 
 varying vec2 texCoord0;
 varying vec2 texCoord1;
-varying vec3 lightDir[5];// TBN space
+varying vec3 lightDir[4];// TBN space
 
     vec3 norm;
     vec3 r;
@@ -119,9 +117,6 @@ void main (void)
 				color += calcLighting(2);
 				if (lightCount > 3)	{
 					color += calcLighting(3);
-					if (lightCount > 4)	{
-						color += calcLighting(4);
-					}
 				}
 			}
 		}

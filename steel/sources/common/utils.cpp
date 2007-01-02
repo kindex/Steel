@@ -124,6 +124,14 @@ void splitPath(std::string fullpath, std::string& path, std::string& filename)
 	path = implode('/', apath);
 }
 
+std::string getFileName(std::string fullpath)
+{
+	std::string path;
+	std::string filename;
+	splitPath(strtr(fullpath, '\\', '/'), path, filename);
+	return filename;
+}
+
 std::string createPath(const std::string& dir, const std::string& filename)
 {
 	if(!filename.empty() && filename[0] == '/')
@@ -170,7 +178,22 @@ void deleteFiles(string dir, string mask)
 }
 
 // translate all chars a to b into string s
-std::string strtr(const char *s, char a, char b)
+std::string strtr(IN const std::string& s, IN const char a, IN const char b)
+{
+	std::string res = s;
+	size_t size = res.size();
+
+	for (unsigned int i = 0; i < size; i++)
+	{
+		if(res[i] == a)
+		{
+			res[i] = b;
+		}
+	}
+	return res;
+}
+
+std::string strLineEnum(const char *s, char a, char b)
 {
 	std::string res;
 	svector<std::string> r;
@@ -182,6 +205,7 @@ std::string strtr(const char *s, char a, char b)
 	}
 	return res;
 }
+
 
 string escape(string base, char escapedChar)
 {

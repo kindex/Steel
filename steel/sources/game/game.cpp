@@ -283,7 +283,9 @@ void Steel::bind(AudioEngine *engine)
     EAX_ENVIRONMENT_PSYCHOTIC
 	*/
 	if(world != NULL)
+	{
 		engine->inject(world);
+	}
 }
 
 

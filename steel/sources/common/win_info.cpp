@@ -183,19 +183,14 @@ void DetectWindowsVersion()
 	if (VerInfo.wProductType == VER_NT_WORKSTATION) 
 	{
 		log_msg("windows_info",  "  VER_NT_WORKSTATION");
-		log_msg("windows_info",  "    Comment: The operating system is Windows Vista, Windows XP Professional,");
-		log_msg("windows_info",  "             Windows XP Home Edition, Windows 2000 Professional,");
-		log_msg("windows_info",  "             or Windows NT Workstation 4.0.");
 	}
 	if (VerInfo.wProductType == VER_NT_DOMAIN_CONTROLLER) 
 	{
 		log_msg("windows_info",  "  VER_NT_DOMAIN_CONTROLLER");
-		log_msg("windows_info",  "    Comment: The system is a domain controller.");
 	}
 	if (VerInfo.wProductType == VER_NT_SERVER) 
 	{
 		log_msg("windows_info",  "  VER_NT_SERVER");
-		log_msg("windows_info",  "    Comment: The system is a server.");
 	}
 
 	//#define VER_NT_WORKSTATION              0x0000001
@@ -216,8 +211,6 @@ void DetectWindowsVersion()
 	// but may have been upgraded to another version of Windows. 
 
 		log_msg("windows_info",  "  VER_SUITE_SMALLBUSINESS");
-		log_msg("windows_info",  "    Comment: Microsoft Small Business Server was once installed on the system,");
-		log_msg("windows_info",  "             but may have been upgraded to another version of Windows.");
 
 	};
 	//#define VER_SUITE_SMALLBUSINESS             0x00000001
@@ -230,9 +223,6 @@ void DetectWindowsVersion()
 		//Server 4.0 Enterprise Edition is installed.
 
 		log_msg("windows_info",  "  VER_SUITE_ENTERPRISE");
-		log_msg("windows_info",  "    Comment: Windows Server Longhorn, Enterprise Edition, Windows Server 2003,");
-		log_msg("windows_info",  "             Enterprise Edition, Windows 2000 Advanced Server, or Windows NT");
-		log_msg("windows_info",  "             Server 4.0 Enterprise Edition is installed.");
 	};
 	//#define VER_SUITE_ENTERPRISE                0x00000002
 
@@ -241,7 +231,6 @@ void DetectWindowsVersion()
 	//VER_SUITE_BACKOFFICE = $00000004; //
 		//Microsoft BackOffice components are installed.
 		log_msg("windows_info",  "  VER_SUITE_BACKOFFICE");
-		log_msg("windows_info",  "    Comment: Microsoft BackOffice components are installed.");
 	};
 	//#define VER_SUITE_BACKOFFICE                0x00000004
 
@@ -258,7 +247,6 @@ void DetectWindowsVersion()
 	//If VER_SUITE_TERMINAL is set but VER_SUITE_SINGLEUSERTS 
 	//is not set, the system is running in application server mode.
 		log_msg("windows_info",  "  VER_SUITE_TERMINAL");
-		log_msg("windows_info",  "    Comment: Terminal Services is installed. This value is always set.");
 	};
 	//#define VER_SUITE_TERMINAL                  0x00000010
 
@@ -268,8 +256,6 @@ void DetectWindowsVersion()
 	//Microsoft Small Business Server is installed with the restrictive 
 	//client license in force. 
 		log_msg("windows_info",  "  VER_SUITE_SMALLBUSINESS_RESTRICTED");
-		log_msg("windows_info",  "    Comment: Microsoft Small Business Server is installed with the restrictive");
-		log_msg("windows_info",  "             client license in force.");
 	};
 	//#define VER_SUITE_SMALLBUSINESS_RESTRICTED  0x00000020
 
@@ -278,7 +264,6 @@ void DetectWindowsVersion()
 	//VER_SUITE_EMBEDDEDNT = $00000040; //
 	//Windows XP Embedded is installed.
 		log_msg("windows_info",  "  VER_SUITE_EMBEDDEDNT");
-		log_msg("windows_info",  "    Comment: Windows XP Embedded is installed.");
 	};
 	//#define VER_SUITE_EMBEDDEDNT                0x00000040
 
@@ -288,8 +273,6 @@ void DetectWindowsVersion()
 	//Windows Server "Longhorn", Datacenter Edition, Windows Server 2003, 
 	//Datacenter Edition or Windows 2000 Datacenter Server is installed.
 		log_msg("windows_info",  "  VER_SUITE_DATACENTER");
-		log_msg("windows_info",  "    Comment: Windows Server Longhorn, Datacenter Edition, Windows Server 2003,");
-		log_msg("windows_info",  "             Datacenter Edition or Windows 2000 Datacenter Server is installed.");
 	};
 	//#define VER_SUITE_DATACENTER                0x00000080
 
@@ -300,9 +283,6 @@ void DetectWindowsVersion()
 	//supported. This value is set unless the system is running in 
 	//application server mode.
 		log_msg("windows_info",  "  VER_SUITE_SINGLEUSERTS");
-		log_msg("windows_info",  "    Comment: Remote Desktop is supported, but only one interactive session is");
-		log_msg("windows_info",  "             supported. This value is set unless the system is running in ");
-		log_msg("windows_info",  "             application server mode.");
 	};
 	//#define VER_SUITE_SINGLEUSERTS              0x00000100
 
@@ -312,8 +292,6 @@ void DetectWindowsVersion()
 	//Windows Vista Home Premium, Windows Vista Home Basic, 
 	//or Windows XP Home Edition is installed.
 		log_msg("windows_info",  "  VER_SUITE_PERSONAL");
-		log_msg("windows_info",  "    Comment: Windows Vista Home Premium, Windows Vista Home Basic,");
-		log_msg("windows_info",  "             or Windows XP Home Edition is installed.");
 
 	};
 	//#define VER_SUITE_PERSONAL                  0x00000200
@@ -323,7 +301,6 @@ void DetectWindowsVersion()
 	//VER_SUITE_BLADE      = $00000400; //
 	//Windows Server 2003, Web Edition is installed.
 		log_msg("windows_info",  "  VER_SUITE_BLADE");
-		log_msg("windows_info",  "    Comment: Windows Server 2003, Web Edition is installed.");
 	};
 	//#define VER_SUITE_BLADE                     0x00000400
 
@@ -346,7 +323,6 @@ void DetectWindowsVersion()
 	//VER_SUITE_STORAGE_SERVER = $00002000; //
 	//Windows Shadow Server 2003 R2 or Windows Shadow Server 2003 is installed.
 		log_msg("windows_info",  "  VER_SUITE_STORAGE_SERVER");
-		log_msg("windows_info",  "    Comment: Windows Shadow Server 2003 R2 or Windows Shadow Server 2003 is installed.");
 	};
 	//#define VER_SUITE_STORAGE_SERVER            0x00002000
 
@@ -355,7 +331,6 @@ void DetectWindowsVersion()
 	//VER_SUITE_COMPUTE_SERVER = $00004000; //
 	//Windows Server 2003, Compute Cluster Edition is installed.
 		log_msg("windows_info",  "  VER_SUITE_COMPUTE_SERVER");
-		log_msg("windows_info",  "    Comment: Windows Server 2003, Compute Cluster Edition is installed.");
 	};
 	//#define VER_SUITE_COMPUTE_SERVER            0x00004000
 

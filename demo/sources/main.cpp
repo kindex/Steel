@@ -11,6 +11,7 @@
 		main() создайт игровые классы, коллеццию ресурсов, загружет 
 		плагины, содержит главный цикл игры.
  ************************************************************/
+#include <direct.h>
 
 #include <steel.h>
 #include <input/input.h>
@@ -38,10 +39,12 @@ int main(int argc, char *argv[])
 #endif
 {
 // *********************** LOG *********************
-	globalTimer.start(); //globalFrameNumber = 1;
+	globalTimer.start();
 
 	deleteFiles("..\\log", "*.log");
-	logFilter.set("-opengl_info -system_info -windows_info");
+	_mkdir("..\\log");
+
+	logFilter.set("+opengl_info +system_info +windows_info");
 
 	steel::log.open("../steel.log");
 
@@ -68,7 +71,6 @@ int main(int argc, char *argv[])
 	float speed = 0.01f; // 100 FPS
 
 	Config* steelConfig = resConfig.add("../conf/demo.conf");
-	debug(steelConfig->Dump());
 	if (steelConfig == NULL)
 	{
 		error("demo.conf", "Fatal error: conf/steel.conf was not found");
@@ -106,6 +108,7 @@ int main(int argc, char *argv[])
 	Demo game;
 
 	if(!game.init(steelConfig, input)) return 5;
+
 
 	game.bind(graph);
 	if(audio)
