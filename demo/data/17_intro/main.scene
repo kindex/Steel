@@ -3,31 +3,41 @@
 class = 'scene'
 objects = 
 (
+
 {
-class = 'combiner'
+class = 'movator'
+subclass = 'rotation'
 origin = (20 0 0)
-graph = {
-	class = 'model'
-	file = 'steel'
+rotationAxis = (0 0 1)
+speed = 1
+object = 
+	{
+	class = 'combiner'
+	position_kind = 'local'
+	graph = {
+		class = 'model'
+		file = 'steel'
+	}
 }
 
 }
 
 {
 class = 'light'
-origin = (15 7 3)
+origin = (10 7 3)
 k = 10
 sqrtAttenuation = 0.1
-maxDitance = 20
+maxDistance = 100
 }
 
 [#objects[1]]{
-origin = (15 -7 3)
+origin = (10 -7 3)
 }
 
 [#objects[2]]{
-origin = (15 0 5)
+origin = (10 0 5)
 }
+
 
 {
 class = 'combiner'

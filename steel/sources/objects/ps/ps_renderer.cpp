@@ -14,7 +14,7 @@
 #include "ps_renderer.h"
 #include "../../res/res_main.h"
 
-void SpriteRenderer::process(ProcessInfo &info)
+void SpriteRenderer::process(IN const ProcessInfo& info)
 {
 	initSprites(vertexes.data.size()/4, set->particles.size());
 

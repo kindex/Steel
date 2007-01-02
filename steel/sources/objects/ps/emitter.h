@@ -20,7 +20,7 @@ class SimpleEmitter: public ParticleEmitter
 {
 public:
 	void born(Particle &particle); // создать частицу
-	void process(ProcessInfo &);
+	void process(IN const ProcessInfo& info);
 	bool InitFromConfig(Config *_conf);
 };
 

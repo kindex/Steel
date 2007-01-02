@@ -24,7 +24,7 @@ bool Combiner::InitFromConfig(Config *conf)
 
 	position.loadIdentity();
 	position.setTranslation(conf->getv3("origin"));
-	positionKind = conf->gets("position_kind", "global") == "local"?POSITION_LOCAL:POSITION_GLOBAL;
+	positionKind = conf->gets("position_kind", "global") == "local" ? POSITION_LOCAL : POSITION_GLOBAL;
 
 	Config *graphConf = conf->find("graph");
 	if(graphConf != NULL)
@@ -100,7 +100,7 @@ bool Combiner::updateInformation(InterfaceId id, Engine* engine)
 	return false;
 }
 
-void Combiner::process(ProcessInfo &info)
+void Combiner::process(IN const ProcessInfo& info)
 {
 	if (graph != NULL)
 	{

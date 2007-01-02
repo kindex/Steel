@@ -98,7 +98,7 @@ public:
 	bool updateInformation(InterfaceId, Engine*);
 	bool beforeInject(InterfaceId);
 	void afterRemove(InterfaceId, Engine*);
-	void process(ProcessInfo &);
+	void process(IN const ProcessInfo& info);
 	void bindEngine(InterfaceId, Engine*);
 };
 

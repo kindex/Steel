@@ -54,6 +54,9 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			if (lightCount > 4) lightCount = 4;
 
 			program->setUniformInt("lightCount", lightCount);
+			glMatrixMode(GL_MODELVIEW);
+			glPushMatrix();
+			glLoadIdentity();
 			for(int i = 0; i < lightCount; i++)
 			{
 				float pos[4];
@@ -76,7 +79,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 				program->setUniformFloat(lighti + ".maxDistance", e.lights[i]->light->maxDistance);
 				program->setUniformFloat(lighti + ".sqrtAttenuation", e.lights[i]->light->sqrtAttenuation);
 			}
-
+			glPopMatrix();
 
 			TexCoords3f *sTangent = NULL;
 			TexCoords3f *tTangent = NULL;

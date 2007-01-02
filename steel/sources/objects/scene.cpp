@@ -20,6 +20,7 @@
 #include "scene.h"
 #include "sphere.h"
 #include "light.h"
+#include "simple_physic.h"
 #include "combiner/combiner.h"
 #include "ps/particle_system.h"
 
@@ -32,6 +33,7 @@ GameObject* findGameObject(const string &_class)
 	if(_class == "combiner") return new Combiner;
 	if(_class == "ps") return new ParticleSystem;
 	if(_class == "light") return new GameLight;
+	if(_class == "movator") return new SimplePhysic;
 
 	error("objects", string("GameObject class '") + _class + "' not found");
 	return NULL;
@@ -102,7 +104,7 @@ void Scene::bindEngine(InterfaceId id, Engine* egnine)
 	}
 }
 
-void Scene::process(ProcessInfo &info)
+void Scene::process(IN const ProcessInfo& info)
 {
 	for EACH(pvector<GameObject*>, objects, it)
 	{

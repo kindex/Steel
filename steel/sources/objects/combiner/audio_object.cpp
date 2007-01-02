@@ -13,7 +13,7 @@
 
 
 #include "audio_object.h"
-#include "simple_sound.h"
+#include "audio/simple_sound.h"
 
 AudioObject* findAudioObject(const string &_class)
 {

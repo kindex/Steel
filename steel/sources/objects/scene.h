@@ -21,10 +21,10 @@ GameObject *createGameObject(Config *conf);
 class Scene: public GameObject
 {
 public:
-	bool InitFromConfig(Config *conf);
+	bool InitFromConfig(Config* conf);
 	bool isSuportingInterface(InterfaceId);
 	void bindEngine(InterfaceId, Engine*);
-	void process(ProcessInfo &);
+	void process(IN const ProcessInfo& info);
 
 protected:
 	pvector<GameObject*> objects;

@@ -37,7 +37,7 @@ public:
 	bool updateInformation(InterfaceId id, Engine* engine);
 	bool InitFromConfig(Config *conf);
 
-	void process(ProcessInfo &);
+	void process(IN const ProcessInfo& info);
 };
 
 #endif

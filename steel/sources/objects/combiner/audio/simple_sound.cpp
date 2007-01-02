@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: objects/combiner/audio_object.h
+	File: objects/combiner/audio/simple_sound.cpp
 	Unit: objects
 	Part of: Steel Engine
 	(C) DiVision, 2006
@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Ôèçè÷åñêèé àóäèî-îáúåêò.
+		Ð¤Ð¸Ð·Ð¸Ñ‡ÐµÑÐºÐ¸Ð¹ Ð°ÑƒÐ´Ð¸Ð¾-Ð¾Ð±ÑŠÐµÐºÑ‚.
  ************************************************************/
 
 #include "simple_sound.h"
@@ -48,7 +48,7 @@ void SimpleSound::bindEngine(InterfaceId id, Engine* aEngine)
 	}
 }
 
-void SimpleSound::process(ProcessInfo& info)
+void SimpleSound::process(IN const ProcessInfo& info)
 {
 	if (!started && info.curTime > delay)
 	{

@@ -1,3 +1,16 @@
+/*id*********************************************************
+	File: objects/light.cpp
+	Unit: objects
+	Part of: Steel Engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Источник освещения.
+ ************************************************************/
+#include "../steel.h"
 #include "light.h"
 
 bool GameLight::InitFromConfig(Config *conf)

@@ -28,9 +28,7 @@ struct matrix34
 	//member variables
 	struct
 	{
-//		float a[12]; // 1D array
-//		float m[4][3]; // 2D array - matrix 4 rows x 3 cols
-		matrix33 matrix;
+		matrix33 matrix; // first index - row number, second - column number
 		v3simple vector;
 	} data;
 
@@ -135,9 +133,9 @@ struct matrix34
 		getInverse(temp);
 		return temp;
 	}
-
-
 };
 
+v3 operator*(IN const v3& operand1, IN const matrix34& operand2);
+void operator*=(IN OUT v3& operand1, IN const matrix34& operand2);
 
 #endif

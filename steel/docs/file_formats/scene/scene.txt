@@ -1,0 +1,8 @@
+﻿steel::Scene
+
+ Сцена содержит 1 игровой объект, каждый из
+которых может сожержать подобъекты.
+
+class = 'scene'
+origin		v3
+objects		GameObject[]

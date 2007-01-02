@@ -1,14 +1,21 @@
+/*id*********************************************************
+	File: objects/light.h
+	Unit: objects
+	Part of: Steel Engine
+	(C) DiVision, 2006
+	Authors:
+		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+	License:
+		Steel Engine License
+	Description:
+		Источник освещения.
+ ************************************************************/
 #ifndef OBJECTS__LIGHT_H
 #define OBJECTS__LIGHT_H
 
 #include "../steel.h"
-
 #include "../graph/graph_interface.h"
 #include "../engine/game_object.h"
-
-/*
-Источник освещения.
-*/
 
 class GameLight: public GameObject
 {

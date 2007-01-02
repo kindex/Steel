@@ -88,8 +88,10 @@ protected:
 	typedef pvector<LightShadow*> LightShadowPVector;
 	struct GraphShadow: public Shadow // множество треугольников одного материала
 	{
-		ObjectPosition	position; // global or screen
 		PositionKind	positionKind;
+		ObjectPosition	position; // global or screen
+		ObjectPosition	realPosition; // global, calculated from position anbd parent
+		bool 			realPositionCalculated;
 
 		// *** Polyhedra ****
 		const FaceMaterials *faceMaterials;
@@ -229,6 +231,7 @@ public:
 	bool init(Config* _conf, Input *input);
 	bool process(steel::time globalTime, steel::time time);
 	bool deinit();
+	void updateRealPosition(IN OUT GraphShadow* object);
 
 	void prepare(GraphShadow *shadow, steel::time globalTime, steel::time time, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
 	void process(GraphShadow *e, steel::time globalTime, steel::time time);

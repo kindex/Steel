@@ -37,9 +37,9 @@ public:
 	
 	virtual bool updateInformation(InterfaceId, Engine*) { return false; }
 	virtual void bindEngine(InterfaceId, Engine*) { }
-	virtual void process(ProcessInfo &) {}
+	virtual void process(IN const ProcessInfo&) {}
 
-	virtual bool InitFromConfig(Config *conf) {return true;}
+	virtual bool InitFromConfig(Config* conf) {return true;}
 };
 
 #endif

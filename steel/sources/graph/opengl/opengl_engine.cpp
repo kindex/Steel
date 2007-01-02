@@ -106,10 +106,10 @@ void OpenGL_Engine::process(GraphShadow *e, steel::time globalTime, steel::time 
 	glPushMatrix();
 
 	float m[16]; // TODO
-	m[0] = e->position.data.matrix.data.m[0][0];	m[1] = e->position.data.matrix.data.m[1][0];	m[2] = e->position.data.matrix.data.m[2][0];	m[3]  = 0;
-	m[4] = e->position.data.matrix.data.m[0][1];	m[5] = e->position.data.matrix.data.m[1][1];	m[6] = e->position.data.matrix.data.m[2][1];	m[7]  = 0;
-	m[8] = e->position.data.matrix.data.m[0][2];	m[9] = e->position.data.matrix.data.m[1][2];	m[10] = e->position.data.matrix.data.m[2][2];	m[11] = 0;
-	m[12] = e->position.data.vector.x;				m[13] = e->position.data.vector.y;				m[14] = e->position.data.vector.z;				m[15] = 1;
+	m[0] = e->realPosition.data.matrix.data.m[0][0];	m[1] = e->realPosition.data.matrix.data.m[1][0];	m[2] = e->realPosition.data.matrix.data.m[2][0];	m[3]  = 0;
+	m[4] = e->realPosition.data.matrix.data.m[0][1];	m[5] = e->realPosition.data.matrix.data.m[1][1];	m[6] = e->realPosition.data.matrix.data.m[2][1];	m[7]  = 0;
+	m[8] = e->realPosition.data.matrix.data.m[0][2];	m[9] = e->realPosition.data.matrix.data.m[1][2];	m[10] = e->realPosition.data.matrix.data.m[2][2];	m[11] = 0;
+	m[12] = e->realPosition.data.vector.x;				m[13] = e->realPosition.data.vector.y;				m[14] = e->realPosition.data.vector.z;				m[15] = 1;
 	glLoadMatrixf(m);
 
 	if(conf->getb("drawFace") && e->faceMaterials != NULL)
@@ -162,6 +162,24 @@ bool OpenGL_Engine::isVisible(AABB aabb)
 	}
 }*/
 
+void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
+{
+	if (object->realPositionCalculated) return;
+
+	if (object->positionKind == POSITION_GLOBAL || object->positionKind == POSITION_SCREEN || object->parent == NULL)
+	{
+		object->realPosition = object->position;
+		object->realPositionCalculated = true;
+	}
+	else
+	{
+		GraphShadow* parent = getShadow(object->parent);
+		updateRealPosition(parent);
+		object->realPosition = object->position * parent->realPosition;
+		object->realPositionCalculated = true;
+	}
+}
+
 bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 {
 	// TODO repair DC 
@@ -176,10 +194,23 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 	{
 		prepare(getShadow(objects[i]), globalTime, time); /* Update vertexes, faces, ights */
 	}
+	// update position
+	
+	for EACH(ShadowPVector, shadows, it)
+	{
+		GraphShadow* s = GS(*it);
+		s->realPositionCalculated = false;
+	}
+
+	for EACH(ShadowPVector, shadows, it)
+	{
+		GraphShadow* s = GS(*it);
+		updateRealPosition(s);
+	}
 
 	for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
 	{
-		jt->second->position = jt->second->shadow->position * jt->second->light->position;
+		jt->second->position = jt->second->light->position * jt->second->shadow->realPosition;
 	}
 
 	for EACH(ShadowPVector,  shadows, it)
@@ -588,7 +619,7 @@ void OpenGL_Engine::GraphShadow::calculateAABB()
 bool OpenGL_Engine::GraphShadow::isCrossingLight(const LightShadow* light)
 {
 	AABB realaabb = aabb;
-	realaabb.mul(position);
+	realaabb.mul(realPosition);
 	return realaabb.isCrossingSphere(light->position, light->light->maxDistance);
 }
 

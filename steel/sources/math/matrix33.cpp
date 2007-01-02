@@ -14,35 +14,6 @@
 #include "matrix33.h"
 #include <memory.h>
 
-/*matrix33::matrix33(const float _00,	const float _01,	const float _02,	const float _10,	const float _11,	const float _12,	const float _20,	const float _21,	const float _22)
-{
-	data.m[0][0] = _00;
-	data.m[0][1] = _01;
-	data.m[0][2] = _02;
-	data.m[1][0] = _10;
-	data.m[1][1] = _11;
-	data.m[1][2] = _12;
-	data.m[2][0] = _20;
-	data.m[2][1] = _21;
-	data.m[2][2] = _22;
-}*/
-
-/*
-template<typename T>void matrix33<T>::operator+=(const matrix33 operand)
-{
-	data.a[0] += operand.data.a[0];
-	data.a[1] += operand.data.a[1];
-	data.a[2] += operand.data.a[2];
-	data.a[3] += operand.data.a[3];
-	data.a[4] += operand.data.a[4];
-	data.a[5] += operand.data.a[5];
-	data.a[6] += operand.data.a[6];
-	data.a[7] += operand.data.a[7];
-	data.a[8] += operand.data.a[8];
-}*/
-
-
-
 void matrix33::operator+=(const matrix33 operand)
 {
 	data.a[0] += operand.data.a[0];
@@ -112,8 +83,8 @@ void matrix33::loadZero()
 void matrix33::operator*=(const matrix33 o)
 {
 	matrix33 copy = *this; // copy
-	const m33 &a = copy.data.m;
-	const m33 &b = o.data.m;
+	const m33 &b = copy.data.m;
+	const m33 &a = o.data.m;
 
 	data.m[0][0] = a[0][0]*b[0][0] + a[0][1]*b[1][0] + a[0][2]*b[2][0];
 	data.m[0][1] = a[0][0]*b[0][1] + a[0][1]*b[1][1] + a[0][2]*b[2][1];
@@ -156,21 +127,20 @@ void matrix33::setScale(const v3 scale)
 	data.m[2][0] = 0;		data.m[2][1] = 0;		data.m[2][2] = scale.z;
 }
 
-
 void operator*=(v3 &operand1, const matrix33 operand2)
 {
 	v3 copy = operand1;
-	operand1.x = copy.x*operand2.data.m[0][0] + copy.y*operand2.data.m[1][0] + copy.z*operand2.data.m[2][0];
-	operand1.y = copy.x*operand2.data.m[0][1] + copy.y*operand2.data.m[1][1] + copy.z*operand2.data.m[2][1];
-	operand1.z = copy.x*operand2.data.m[0][2] + copy.y*operand2.data.m[1][2] + copy.z*operand2.data.m[2][2];
+	operand1.x = copy.x*operand2.data.m[0][0] + copy.y*operand2.data.m[0][1] + copy.z*operand2.data.m[0][2];
+	operand1.y = copy.x*operand2.data.m[1][0] + copy.y*operand2.data.m[1][1] + copy.z*operand2.data.m[1][2];
+	operand1.z = copy.x*operand2.data.m[2][0] + copy.y*operand2.data.m[2][1] + copy.z*operand2.data.m[2][2];
 }
 
 v3 matrix33::operator*(const v3 operand) const
 {
 	v3 result;
-	result.x = operand.x*data.m[0][0] + operand.y*data.m[0][1] + operand.z*data.m[0][2];
-	result.y = operand.x*data.m[1][0] + operand.y*data.m[1][1] + operand.z*data.m[1][2];
-	result.z = operand.x*data.m[2][0] + operand.y*data.m[2][1] + operand.z*data.m[2][2];
+	result.x = operand.x*data.m[0][0] + operand.y*data.m[1][0] + operand.z*data.m[2][0];
+	result.y = operand.x*data.m[0][1] + operand.y*data.m[1][1] + operand.z*data.m[2][1];
+	result.z = operand.x*data.m[0][2] + operand.y*data.m[1][2] + operand.z*data.m[2][2];
 	return result;
 }
 
@@ -230,4 +200,11 @@ void matrix33::getInverse(matrix33 &res) const
 	else
 		res.loadZero();
 
+}
+
+v3 operator*(IN const v3& operand1, IN const matrix33& operand2)
+{
+	v3 copy = operand1;
+	copy *= operand2;
+	return copy;
 }

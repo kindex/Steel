@@ -24,7 +24,7 @@ void SimpleEmitter::born(Particle &particle)
 }
 
 
-void SimpleEmitter::process(ProcessInfo &info)
+void SimpleEmitter::process(IN const ProcessInfo& info)
 {
 	if(frand() < 0.5 && set->particles.size() > 1) // delete particle
 	{

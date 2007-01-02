@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: objects/combiner/audio_object.h
+	File: objects/combiner/audio/simple_sound.h
 	Unit: objects
 	Part of: Steel Engine
 	(C) DiVision, 2006
@@ -8,20 +8,20 @@
 	License:
 		Steel Engine License
 	Description:
-		Физический аудио-объект.
+		Р¤РёР·РёС‡РµСЃРєРёР№ Р°СѓРґРёРѕ-РѕР±СЉРµРєС‚.
  ************************************************************/
 
 #ifndef __SIMPLE_SOUND_H
 #define __SIMPLE_SOUND_H
 
-#include "audio_object.h"
+#include "../audio_object.h"
 
 class SimpleSound: public AudioObject
 {
 public:
 	bool InitFromConfig(Config *);
 	void bindEngine(InterfaceId, Engine*);
-	void process(ProcessInfo&);
+	void process(IN const ProcessInfo& info);
 
 
 protected:

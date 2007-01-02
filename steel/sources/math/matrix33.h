@@ -27,7 +27,7 @@ struct matrix33
 	union
 	{
 		float a[9]; // 1D array
-		m33 m; // 2D array - matrix 4 rows x 3 cols
+		m33 m; // 2D array - matrix 3 rows x 3 cols, first index - row number, second - column number
 //		v3simple v[3];
 	} data;
 
@@ -82,5 +82,8 @@ struct matrix33
 	}
 	void getInverse(matrix33 &operand) const;
 };
+
+v3 operator*(IN const v3& operand1, IN const matrix33& operand2);
+
 
 #endif

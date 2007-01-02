@@ -878,6 +878,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\sources\objects\simple_physic.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\objects\simple_physic.h"
+					>
+				</File>
+				<File
 					RelativePath="..\sources\objects\sphere.cpp"
 					>
 				</File>
@@ -957,14 +965,18 @@
 						RelativePath="..\sources\objects\combiner\graph_object.h"
 						>
 					</File>
-					<File
-						RelativePath="..\sources\objects\combiner\simple_sound.cpp"
+					<Filter
+						Name="audio"
 						>
-					</File>
-					<File
-						RelativePath="..\sources\objects\combiner\simple_sound.h"
-						>
-					</File>
+						<File
+							RelativePath="..\sources\objects\combiner\audio\simple_sound.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\sources\objects\combiner\audio\simple_sound.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 			<Filter

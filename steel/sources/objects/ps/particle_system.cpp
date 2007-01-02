@@ -157,7 +157,7 @@ void ParticleSystem::afterRemove(InterfaceId, Engine* engine)
 	if (id == GraphInterface::interfaceId) renderer->afterRemove(id, engine);
 }
 
-void ParticleSystem::process(ProcessInfo &info)
+void ParticleSystem::process(IN const ProcessInfo& info)
 {
 	emitter->process(info);
 	animator->process(info);

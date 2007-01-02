@@ -43,7 +43,7 @@ public:
 	void initSprites(int begin, int end);
 	bool initParticles();
 
-	void process(ProcessInfo &);
+	void process(IN const ProcessInfo& info);
 	bool updateInformation(InterfaceId, Engine*);
 	AABB getFrame();
 };
