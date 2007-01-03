@@ -2,7 +2,7 @@
 
 1 источник освещения
 
-class			string	'light'
+class = 'light'
 origin			v3
 
 constantAttenuation	float

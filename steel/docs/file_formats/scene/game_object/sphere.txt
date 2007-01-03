@@ -2,7 +2,7 @@
 
 Сфера, разрущающаяся со временем (нужня для тестов)
 
-class	string	'sphere'
+class = 'sphere'
 origin	v3
 
 size	float	size of sphere	[1.0]
