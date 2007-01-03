@@ -1,0 +1,8 @@
+steel::SimplePhysicList
+
+
+class = 'movator_list'
+
+physic		movator[]
+object		GameObject
+

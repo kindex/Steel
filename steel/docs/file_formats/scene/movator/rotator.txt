@@ -1,0 +1,9 @@
+steel::PhysicRotator
+
+class = 'rotator'
+
+delay		float	0
+bias		float	0
+speed		float	[1.0]
+rotationAxis 	v3	[0 0 1]
+

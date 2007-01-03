@@ -1,0 +1,7 @@
+#
+{
+class = 'light'
+k = 10
+sqrtAttenuation = 0.1
+maxDistance = 100
+}

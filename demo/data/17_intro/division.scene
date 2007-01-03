@@ -1,0 +1,22 @@
+#
+{
+class = 'movator'
+subclass = 'rotation'
+origin = (-1 8 6)
+speed = 1
+rotationAxis = (0 0 -1)
+object=
+{
+	class = 'combiner'
+	origin = (0 0 0)
+
+	position_kind = 'local'
+	graph = 
+	{
+		class = 'model'
+		file = 'division'
+	}
+}
+}
+
+

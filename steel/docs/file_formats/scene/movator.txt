@@ -3,8 +3,6 @@ steel::SimplePhysic
 
 class = 'movator'
 
-subclass 	{'none', 'rotation', 'translation', 'scale', 'path'}
+physic		movator
 object		GameObject
-speed		float	[1.0]
-rotationAxis 	v3	[0 0 1]
 

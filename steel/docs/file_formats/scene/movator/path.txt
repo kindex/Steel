@@ -1,0 +1,9 @@
+steel::PhysicPath
+
+class = 'path'
+
+delay		float	[0]
+speed		float	[1.0]
+?bias		float	[0]
+
+?path		v3[]+speed

@@ -1,0 +1,9 @@
+steel::PhysicScaler
+
+class = 'scaler'
+
+delay		float	[0]
+bias		float	[1]
+speed		float	[1.0]
+scaler		float	[2]
+kind		{'forward', 'sin', 'shuttle'} 	['forward']
