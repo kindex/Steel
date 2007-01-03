@@ -78,6 +78,11 @@ void SimplePhysic::process(IN const ProcessInfo& info)
 		break;
 	}
 	currentPosition = transformation * startPosition;
+
+	if (object != NULL)
+	{
+		object->process(info);
+	}
 }
 
 

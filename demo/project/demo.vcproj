@@ -266,7 +266,19 @@
 				Name="17_intro"
 				>
 				<File
+					RelativePath="..\data\17_intro\division.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\17_intro\light.scene"
+					>
+				</File>
+				<File
 					RelativePath="..\data\17_intro\main.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\17_intro\steel.scene"
 					>
 				</File>
 			</Filter>

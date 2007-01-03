@@ -1,0 +1,25 @@
+#
+{
+class = 'std'
+blend = 0
+diffuse_map =
+{ 
+	image = 'GALVPLAT'
+	texCoordsRotation = 0.0
+	texCoordsScale = (1 1 1)
+	texCoordsTranslation = (0 0 0)
+	k = 0.4
+}
+
+specular_map = 
+{
+	image = 'GALVPLAT'
+	power = 80
+	k = 3
+}
+emission_map = 
+{
+//	image = '/none'
+	k = 1
+}
+}
