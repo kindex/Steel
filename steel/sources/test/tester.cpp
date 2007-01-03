@@ -11,6 +11,8 @@
 		Основные макросы и процедуры для самотестирования кода.
  ************************************************************/
 #include "../steel.h"
+#if TESTING == 1
+
 #include "tester.h"
 #include "../common/utils.h"
 #include "../common/logger.h"
@@ -51,3 +53,5 @@ void Tester::Error(std::string message)
 	testInfo.push(message);
 	std::cout << std::string(testInfo.level, '\t') << "Error: " << message << std::endl;
 }
+
+#endif

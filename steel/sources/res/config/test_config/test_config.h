@@ -15,6 +15,9 @@
 #define __RES__CONFIG_TEST_H
 
 #include "../../../steel.h"
+
+#if TESTING == 1
+
 #include "../../../test/tester.h"
 #include "../config.h"
 #include "../config_parser.h"
@@ -46,5 +49,6 @@ public:
 
 };
 
+#endif
 #endif
 

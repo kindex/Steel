@@ -11,6 +11,10 @@
 		Config Selftest
  ************************************************************/
 
+#include "../../../steel.h"
+
+#if TESTING == 1
+
 #include "test_config.h"
 #include "../../text/text_string.h"
 
@@ -210,3 +214,4 @@ void ConfigTest::TestFind(void)
 
 	CHECK_TRUE(_struct->getd("arr[2]", -1.0) == 3.0, "Find: struct->array->number");
 }
+#endif

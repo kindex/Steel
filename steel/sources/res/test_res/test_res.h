@@ -14,6 +14,9 @@
 #define __RES_TEST_H
 
 #include "../../steel.h"
+
+#if TESTING == 1
+
 #include "../../test/tester.h"
 #include "../res.h"
 #include "../config/test_config/test_config.h"
@@ -31,4 +34,5 @@ public:
 };
 
 
+#endif
 #endif

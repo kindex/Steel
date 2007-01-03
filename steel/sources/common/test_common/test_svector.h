@@ -14,6 +14,9 @@
 #define __COMMOON__STEEL_VECTOR_TEST_H
 
 #include "../../steel.h"
+
+#if TESTING == 1
+
 #include "../../test/tester.h"
 #include "../svector.h"
 
@@ -26,5 +29,5 @@ private:
 	void TestMemory(void);
 };
 
-
+#endif
 #endif

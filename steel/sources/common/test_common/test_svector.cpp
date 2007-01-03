@@ -11,6 +11,9 @@
 		Steel Vector Selftest
  ************************************************************/
 
+#include "../../steel.h"
+#if TESTING == 1
+
 #include "test_svector.h"
 
 void svectorTest::Test(void)
@@ -22,3 +25,5 @@ void svectorTest::TestMemory(void)
 {
 	IntVector a(10000000);
 }
+
+#endif

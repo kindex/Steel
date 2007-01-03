@@ -15,6 +15,7 @@
  ************************************************************/
 
 #include "../steel.h"
+#if TESTING == 1
 
 #include <string>
 #include "../common/timer.h"
@@ -99,3 +100,4 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 #endif	// STEEL_OS
 
+#endif	// TESTING
