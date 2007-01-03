@@ -30,7 +30,7 @@ typedef	enum
 class SpriteRenderer: public ParticleRenderer
 {
 protected:
-	Material	*material;
+	Material*	material;
 	Vertexes	vertexes;
 	FaceMaterials	face;
 	TexCoords	texCoords;
@@ -56,7 +56,6 @@ protected:
 
 public:
 	bool initParticles();
-	
 };
 
 // ничего не рисует

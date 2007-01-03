@@ -5,7 +5,7 @@
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 		* Kane [J. Anton, kane@mail.berlios.de]
-    License:
+	License:
 		Steel Engine License
 	Description:
 		main() создайт игровые классы, коллеццию ресурсов, загружет 

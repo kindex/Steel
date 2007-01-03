@@ -4,7 +4,7 @@
 	(C) DiVision, 2004-2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
+	License:
 		Steel Engine License
 	Description:
 		Этот юнит является дополнением к steel engine и служит
@@ -30,6 +30,7 @@ class Demo: public Steel
 {
 public:
 	bool init(Config *_conf, Input *_input);
+	virtual GameObjectFactory* createGameObjectFactory() const;
 };
 
 #endif

@@ -11,9 +11,9 @@
 		Многогранник с изменяемой формой и количеством полигонов
  ************************************************************/
 
-#include "../steel.h"
+#include <steel.h>
 #include "sphere.h"
-#include "../res/res_main.h"
+#include <res/res_main.h>
 
 Sphere::Sphere():
 	vertexes(NULL),

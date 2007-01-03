@@ -227,6 +227,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\sources\demo_game_object_factory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sources\demo_game_object_factory.h"
+				>
+			</File>
+			<File
 				RelativePath="..\sources\main.cpp"
 				>
 			</File>
@@ -238,6 +246,18 @@
 				RelativePath="..\sources\test.cpp"
 				>
 			</File>
+			<Filter
+				Name="objects"
+				>
+				<File
+					RelativePath="..\sources\objects\sphere.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\objects\sphere.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="conf"

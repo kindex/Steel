@@ -4,7 +4,7 @@
 	(C) DiVision, 2004-2006
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-    License:
+	License:
 		Steel Engine License
 	Description:
 		Этот юнит является дополнением к steel engine и служит
@@ -21,20 +21,17 @@
 #include <objects/scene.h>
 #include <audio/openal_engine.h>
 
+#include "demo_game_object_factory.h"
+
 using namespace std;
 
 
 bool Demo::init(Config *_conf, Input *_input)
 {
-	conf = _conf;
-	if(!conf)
+	if (!Steel::init(_conf, _input))
 	{
-		log_msg("error game res", "Cannot load game config");
 		return false;
 	}
-
-	input = _input; 
-	input->setGame(this);
 
 	// Init world
 	eye = conf->getv3("camera.eye", v3(1.0f, 1.0f, 1.0f));
@@ -80,4 +77,9 @@ bool Demo::init(Config *_conf, Input *_input)
 	speedup = 1;
 
 	return true;
+}
+
+GameObjectFactory* Demo::createGameObjectFactory() const
+{
+	return new DemoGameObjectFactory;
 }

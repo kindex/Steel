@@ -12,7 +12,7 @@
  ************************************************************/
 
 #include "simple_physic.h"
-#include "scene.h"
+#include "game_object_factory.h"
 #include "../graph/graph_interface.h"
 #include "../audio/audio_interface.h"
 

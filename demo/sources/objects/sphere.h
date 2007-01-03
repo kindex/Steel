@@ -14,9 +14,9 @@
 #ifndef __OBJECTS_SPHERE_H
 #define __OBJECTS_SPHERE_H
 
-#include "../steel.h"
-#include "../graph/graph_interface.h"
-#include "../graph/graph_engine.h"
+#include <steel.h>
+#include <graph/graph_interface.h>
+#include <graph/graph_engine.h>
 
 class Sphere: public GameObject
 {

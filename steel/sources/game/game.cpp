@@ -37,50 +37,10 @@ bool Steel::init(Config *_conf, Input *_input)
 		return false;
 	}
 
+	gameObjectFactory = createGameObjectFactory();
+
 	input = _input; 
 	input->setGame(this);
-
-	// Init world
-	eye = conf->getv3("camera.eye", v3(1.0f, 1.0f, 1.0f));
-
-	v3 target = conf->getv3("camera.target", v3(0.0f,0.0f,0.0f));
-
-	direction = target-eye;
-	direction.normalize();
-
-	accSpeed = conf->getf("camera.acc", 50);
-	brakeSpeed = conf->getf("camera.brakes", 200);
-
-	moveSpeed.loadZero();
-
-	Config *scene = conf->find("scene");
-	if(scene == NULL)
-	{
-		error("game res", "Cannot find scene config");
-		return false;
-	}
-
-	world = createGameObject(scene);
-	if(world == NULL)
-	{
-		error("game", "Cannot init scene");
-		return false;
-	}
-	
-	light = new GameLight();
-	light->InitFromConfig(resConfig.add("flashlight.conf"));
-	light->enable();
-	if(light != NULL)
-	{
-		light->setPosition(eye);
-	}
-
-// ******************* PHYSIC **************************
-
-	_alive = true;
-	paused = conf->geti("paused", 0) == 1;
-	framesToPass = 0;
-	speedup = 1;
 
 	return true;
 }
@@ -315,4 +275,9 @@ void Steel::deinit()
 
 void Steel::handleEventKeyUp(std::string key)
 {
+}
+
+GameObjectFactory* Steel::createGameObjectFactory() const
+{
+	return new GameObjectFactory;
 }

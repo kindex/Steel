@@ -21,8 +21,8 @@
 
 #include "../graph/graph_engine.h"
 #include "../audio/audio_engine.h"
-
 #include "../objects/light.h"
+#include "../objects/game_object_factory.h"
 
 
 class Game; // forward declaration, cross-use
@@ -77,6 +77,7 @@ public:
 
 	virtual bool init(Config *_conf, Input *_input);
 	virtual void deinit();
+	virtual GameObjectFactory* createGameObjectFactory() const;
 
 	void processKeyboard();
 

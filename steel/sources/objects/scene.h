@@ -11,12 +11,13 @@
 		Загрузка уровня из *.scene файла.
  ************************************************************/
 
-#include "../steel.h"
 #ifndef __OBJECTS__SCENE_H
 #define __OBJECTS__SCENE_H
-#include "../engine/game_object.h"
 
-GameObject *createGameObject(Config *conf);
+#include "../steel.h"
+#include "../engine/game_object.h"
+#include <string>
+
 
 class Scene: public GameObject
 {

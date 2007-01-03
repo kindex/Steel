@@ -37,7 +37,7 @@ void SimpleEmitter::process(IN const ProcessInfo& info)
 		set->particles.pop_back();
 	}
 
-	if(frand() < 0.6)  // born particle
+	if(frand() < 0.6f)  // born particle
 	{
 		int bornId = set->particles.size();
 		set->particles.resize(bornId + 1);
