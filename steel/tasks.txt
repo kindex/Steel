@@ -44,10 +44,13 @@
 413. OpenGL: implement texture units choosing in material config. / *. KindeX. [9]. (2d).
 446. Logger: put in log revision number, compilation date and compilation computer namet. / *. KindeX. [10]. (1d).
 
+** Freezed Construction ****************************************************************************
+345. PNG. PNG file loader same as BMP loader. / Kane. KindeX. [4.]
+367. OpenGL 2.0. Shaders, dynamic lighting (many lights). / KindeX. [1]
+462. Tests: implement selftests for configs. / *. KindeX. [5].
+
 ** Construction ************************************************************************************
 406. Kinematics: add simple rotation and path movement to objects (combiner). Local coordinate system. / KindeX. KindeX. [1]. (1d).
-345. PNG. PNG file loader same as BMP loader. / Kane. KindeX. 4. 3d. 20061231 (steel 1.1)
-367. OpenGL 2.0. Shaders, dynamic lighting (many lights). / KindeX.
 
 
 ** Done Construction *******************************************************************************
