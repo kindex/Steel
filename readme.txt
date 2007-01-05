@@ -1,21 +1,40 @@
-/*id*********************************************************
-	(C) DiVision, 2004-2006
-	Parts of: 
-		Steel Engine
-	License: 
-		Steel Engine License
-	Authors:
-		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
-		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
-		* Kane [J. Anton, kane@mail.berlios.de]
-		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
-	Description:
-		Steel engine based projects
+(C) DiVision, 2004-2007
+Steel Engine and based projects
 
-		Directories:
-		steel - Steel Engine sources
-		Intro - Steel Engine demo, DiVision intro projects and scene files
-		docs  - base documentation (code_conventions, work_rules)
+License: Steel Engine License
 
- ************************************************************/
 
+Directories:
+steel	Steel Engine sources (leader KindeX)
+docs	base documentation (code_conventions, work_rules)
+demo	Steel Engine demo, DiVision intro projects and scene files (leader Def)
+wurps	W.U.R.P.S project (leader Wormboy)
+pool	Noncence pool (leader FDF)
+
+
+Team:
+
+* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+Lead programmer, architect
+
+* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
+Tester
+
+* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
+Sound programmer
+
+* Kane [J. Anton, kane@mail.berlios.de]
+Programmer
+
+* FDF
+Gamedesigner
+
+* Wormboy
+Gamedesigner
+
+Special thanks to:
+* Bond
+architect
+
+* Dark Sirius
+Tester
