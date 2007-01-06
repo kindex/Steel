@@ -51,7 +51,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			program->setUniformVector("camera.upVector", camera.getUpVector());
 
 			int lightCount = (int)e.lights.size();
-			if (lightCount > 4) lightCount = 4;
+			if (lightCount > maxLightsInShader) lightCount = maxLightsInShader;
 
 			program->setUniformInt("lightCount", lightCount);
 			glMatrixMode(GL_MODELVIEW);

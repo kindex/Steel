@@ -141,6 +141,7 @@ protected:
 	Image *white;
 	Image *none;
 	Shader shaderStd;
+	int maxLightsInShader;
 
 private:
 	GraphShadow *currentShadow;

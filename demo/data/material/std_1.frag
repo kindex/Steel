@@ -28,7 +28,7 @@ uniform struct
 //	sampler2D map;
 //	sampler3D cube_map;
 	float k;
-} lights[4];
+} lights[1];
 
 uniform sampler2D diffuse_map;
 uniform sampler2D diffuse2_map;
@@ -44,15 +44,15 @@ varying vec3 lightDirGlobal;  // global
 
 varying vec2 texCoord0;
 varying vec2 texCoord1;
-varying vec3 lightDir[4];// TBN space
+varying vec3 lightDir[1];// TBN space
 
-    vec3 norm;
-    vec3 r;
-    vec3 color;
-    float intensity;
-    float spec;
-    float d;
-	vec3 viewDirN;
+vec3 norm;
+vec3 r;
+vec3 color;
+float intensity;
+float spec;
+float d;
+vec3 viewDirN;
 
 vec3 calcLighting(in int i)
 {
@@ -103,26 +103,13 @@ void main (void)
 	
 	color = vec3(texture2D(emission_map, texCoord0))*material.emissionk; // emission
 	
-    norm = vec3(texture2D(normal_map, texCoord0));
-    norm = (norm - 0.5) * 2.0;
-    norm.y = -norm.y;
-    norm = normalize(norm); // TBN
-    r = reflect(viewDirN, norm);
+	norm = vec3(texture2D(normal_map, texCoord0));
+	norm = (norm - 0.5) * 2.0;
+	norm.y = -norm.y;
+	norm = normalize(norm); // TBN
+	r = reflect(viewDirN, norm);
 
-	if (lightCount > 0)	{
-		color += calcLighting(0);
-		if (lightCount > 1)	{
-			color += calcLighting(1);
-			if (lightCount > 2)	{
-				color += calcLighting(2);
-				if (lightCount > 3)	{
-					color += calcLighting(3);
-				}
-			}
-		}
-	}
+	color += calcLighting(0);
 	
-	
-    // Write out final fragment color
-    gl_FragColor = vec4(color, 1.0);
+	gl_FragColor = vec4(color, 1.0);
 }

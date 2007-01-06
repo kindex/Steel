@@ -307,21 +307,21 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		return false;
 	}
 
-		string VideoAPI = conf->gets("VideoAPI");
+	string VideoAPI = conf->gets("VideoAPI");
 
-		if(VideoAPI == "WinAPI")
-		#if STEEL_OS == OS_WIN32
-			UseWinAPI();
-		#else
-			error("graph opengl sdl opengl_info", "Cannot find VideoAPI::WinAPI");
-		#endif
+	if(VideoAPI == "WinAPI")
+	#if STEEL_OS == OS_WIN32
+		UseWinAPI();
+	#else
+		error("graph opengl sdl opengl_info", "Cannot find VideoAPI::WinAPI");
+	#endif
 
-		if(VideoAPI == "SDL")
-		#ifdef LIB_SDL
-			UseSDL();
-		#else
-			error("graph opengl sdl opengl_info", "Cannot find VideoAPI::SDL");
-		#endif
+	if(VideoAPI == "SDL")
+	#ifdef LIB_SDL
+		UseSDL();
+	#else
+		error("graph opengl sdl opengl_info", "Cannot find VideoAPI::SDL");
+	#endif
 
 	#if STEEL_OS == OS_WIN32
 		if(CreateOpenGL_Window == NULL)	UseWinAPI();
@@ -331,11 +331,11 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		if(CreateOpenGL_Window == NULL)	UseSDL();
 	#endif
 
-		if(CreateOpenGL_Window == NULL)
-		{
-			error("graph opengl sdl opengl_info", "Cannot find VideoAPI");
-			return false;
-		}
+	if(CreateOpenGL_Window == NULL)
+	{
+		error("graph opengl sdl opengl_info", "Cannot find VideoAPI");
+		return false;
+	}
 
 /*	conf->setDefault("window.left", "10");
 	conf->setDefault("window.top", "10");
@@ -433,14 +433,12 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		}
 	}
 
-	if(version >= 20)
+	if(GL_EXTENSION_GLSL && conf->getb("use_glsl", true))
 	{
-		if(GL_EXTENSION_GLSL)
-		{
-			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
-			shaderStd.vertexShader = resText.add("material/std.vert");
-			shaderStd.fragmentShader = resText.add("material/std.frag");
-		}
+		DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
+		shaderStd.vertexShader = resText.add("material/" + conf->gets("std_shader", "std") + ".vert");
+		shaderStd.fragmentShader = resText.add("material/" + conf->gets("std_shader", "std") + ".frag");
+		maxLightsInShader = conf->geti("max_lights", 1);
 	}
 	textureMatrixLevel = 0;
 
