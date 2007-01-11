@@ -1,61 +1,31 @@
-﻿<html xmlns:v="urn:schemas-microsoft-com:vml"
-xmlns:o="urn:schemas-microsoft-com:office:office"
-xmlns:w="urn:schemas-microsoft-com:office:word"
-xmlns="http://www.w3.org/TR/REC-html40">
+﻿<html>
 
 <head>
 <meta http-equiv=Content-Type content="text/html; charset=utf-8">
-<meta name=ProgId content=Word.Document>
-<meta name=Generator content="Microsoft Word 11">
-<meta name=Originator content="Microsoft Word 11">
-<link rel=File-List href="config_files/filelist.xml">
+<meta name=Generator content="Microsoft Word 11 (filtered)">
 <title>Steel Engine: Спецификация движка</title>
-<!--[if gte mso 9]><xml>
- <w:WordDocument>
-  <w:Zoom>110</w:Zoom>
-  <w:SpellingState>Clean</w:SpellingState>
-  <w:GrammarState>Clean</w:GrammarState>
-  <w:ValidateAgainstSchemas/>
-  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
-  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
-  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
-  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
- </w:WordDocument>
-</xml><![endif]--><!--[if gte mso 9]><xml>
- <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
- </w:LatentStyles>
-</xml><![endif]-->
 <style>
 <!--
  /* Style Definitions */
  p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{mso-style-parent:"";
-	margin:0cm;
+	{margin:0cm;
 	margin-bottom:.0001pt;
 	text-indent:0cm;
-	mso-pagination:widow-orphan;
 	font-size:12.0pt;
-	font-family:"Times New Roman";
-	mso-fareast-font-family:"Times New Roman";}
+	font-family:"Times New Roman";}
 h1
-	{mso-margin-top-alt:auto;
-	margin-right:0cm;
+	{margin-right:0cm;
 	margin-bottom:5.95pt;
 	margin-left:0cm;
 	text-indent:0cm;
-	mso-pagination:widow-orphan;
-	mso-outline-level:1;
 	font-size:16.0pt;
 	font-family:Arial;
 	font-weight:bold;}
 h2
-	{mso-margin-top-alt:auto;
-	margin-right:0cm;
+	{margin-right:0cm;
 	margin-bottom:5.95pt;
 	margin-left:2.85pt;
 	text-indent:0cm;
-	mso-pagination:widow-orphan;
-	mso-outline-level:2;
 	font-size:14.0pt;
 	font-family:Arial;
 	font-weight:bold;
@@ -66,140 +36,51 @@ h3
 	margin-bottom:3.0pt;
 	margin-left:5.65pt;
 	text-indent:0cm;
-	mso-pagination:widow-orphan;
 	page-break-after:avoid;
-	mso-outline-level:3;
 	font-size:13.0pt;
 	font-family:Arial;
 	font-weight:bold;}
 p
-	{mso-style-link:"Normal \(Web\) Char";
-	margin-top:3.0pt;
+	{margin-top:3.0pt;
 	margin-right:14.2pt;
 	margin-bottom:3.0pt;
 	margin-left:1.0cm;
 	text-indent:1.0cm;
-	mso-pagination:widow-orphan;
 	font-size:12.0pt;
-	font-family:"Times New Roman";
-	mso-fareast-font-family:"Times New Roman";}
-span.NormalWebChar
-	{mso-style-name:"Normal \(Web\) Char";
-	mso-style-locked:yes;
-	mso-style-link:"Normal \(Web\)";
-	mso-ansi-font-size:12.0pt;
-	mso-bidi-font-size:12.0pt;
-	mso-ansi-language:RU;
-	mso-fareast-language:RU;
-	mso-bidi-language:AR-SA;}
+	font-family:"Times New Roman";}
 span.codeChar
-	{mso-style-name:"code Char";
-	mso-style-locked:yes;
-	mso-style-parent:"Normal \(Web\) Char";
-	mso-style-link:code;
-	mso-ansi-font-size:12.0pt;
-	mso-bidi-font-size:12.0pt;
-	font-family:"Courier New";
-	mso-ascii-font-family:"Courier New";
-	mso-hansi-font-family:"Courier New";
-	mso-bidi-font-family:"Courier New";
-	mso-ansi-language:EN-US;
-	mso-fareast-language:RU;
-	mso-bidi-language:AR-SA;
-	mso-no-proof:yes;}
+	{font-family:"Courier New";}
 p.code, li.code, div.code
-	{mso-style-name:code;
-	mso-style-parent:"Normal \(Web\)";
-	mso-style-link:"code Char";
-	margin-top:3.0pt;
+	{margin-top:3.0pt;
 	margin-right:14.2pt;
 	margin-bottom:3.0pt;
 	margin-left:1.0cm;
 	text-indent:1.0cm;
-	mso-pagination:widow-orphan;
-	tab-stops:1.0cm;
-	mso-layout-grid-align:none;
 	text-autospace:none;
 	font-size:10.0pt;
-	font-family:"Courier New";
-	mso-fareast-font-family:"Times New Roman";
-	mso-ansi-language:EN-US;
-	mso-no-proof:yes;}
-span.SpellE
-	{mso-style-name:"";
-	mso-spl-e:yes;}
-span.GramE
-	{mso-style-name:"";
-	mso-gram-e:yes;}
+	font-family:"Courier New";}
 @page Section1
 	{size:595.3pt 841.9pt;
-	margin:2.0cm 42.5pt 2.0cm 3.0cm;
-	mso-header-margin:35.4pt;
-	mso-footer-margin:35.4pt;
-	mso-paper-source:0;}
+	margin:2.0cm 42.5pt 2.0cm 3.0cm;}
 div.Section1
 	{page:Section1;}
 -->
 </style>
-<!--[if gte mso 10]>
-<style>
- /* Style Definitions */
- table.MsoNormalTable
-	{mso-style-name:"Table Normal";
-	mso-tstyle-rowband-size:0;
-	mso-tstyle-colband-size:0;
-	mso-style-noshow:yes;
-	mso-style-parent:"";
-	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
-	mso-para-margin:0cm;
-	mso-para-margin-bottom:.0001pt;
-	mso-pagination:widow-orphan;
-	font-size:10.0pt;
-	font-family:"Times New Roman";
-	mso-ansi-language:#0400;
-	mso-fareast-language:#0400;
-	mso-bidi-language:#0400;}
-table.MsoTableGrid
-	{mso-style-name:"Table Grid";
-	mso-tstyle-rowband-size:0;
-	mso-tstyle-colband-size:0;
-	border:solid windowtext 1.0pt;
-	mso-border-alt:solid windowtext .5pt;
-	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
-	mso-border-insideh:.5pt solid windowtext;
-	mso-border-insidev:.5pt solid windowtext;
-	mso-para-margin:0cm;
-	mso-para-margin-bottom:.0001pt;
-	mso-pagination:widow-orphan;
-	font-size:10.0pt;
-	font-family:"Times New Roman";
-	mso-ansi-language:#0400;
-	mso-fareast-language:#0400;
-	mso-bidi-language:#0400;}
-</style>
-<![endif]-->
+
 <meta name=CREATED content="20060330;17111829">
 <meta name=CHANGED content="20060330;18132082">
-<!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="20482"/>
-</xml><![endif]--><!--[if gte mso 9]><xml>
- <o:shapelayout v:ext="edit">
-  <o:idmap v:ext="edit" data="1"/>
- </o:shapelayout></xml><![endif]-->
 </head>
 
-<body lang=RU style='tab-interval:35.4pt'>
+<body lang=RU>
 
 <div class=Section1>
 
-<h1><span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>Config</span></span>
-(Конфиги)</h1>
+<h1><span lang=EN-US>Config</span> (Конфиги)</h1>
 
 <p>Этот формат файла подходит как для описания сцены, так и для любых конфигов,
 материалов, анимации, моделей и т.д.</p>
 
-<p>Стандартное расширение файла: *.<span lang=EN-US style='mso-ansi-language:
-EN-US'>conf</span></p>
+<p>Стандартное расширение файла: *.<span lang=EN-US>conf</span></p>
 
 <h3>Требования</h3>
 
@@ -213,7 +94,7 @@ EN-US'>conf</span></p>
 
 <p>Без типизации. Объект сам может распознать нужные настройки из строки.</p>
 
-<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>Includes</span>.</span></p>
+<p><span lang=EN-US>Includes</span>.</p>
 
 <p>Однозначность.</p>
 
@@ -221,9 +102,8 @@ EN-US'>conf</span></p>
 
 <h3>Синтаксис</h3>
 
-<p>В основе конфига лежит понятие <span class=SpellE><span lang=EN-US
-style='mso-ansi-language:EN-US'>config</span></span> (значение переменной). Всё
-содержимое файла является <span lang=EN-US style='mso-ansi-language:EN-US'>value</span>
+<p>В основе конфига лежит понятие <span lang=EN-US>config</span> (значение
+переменной). Всё содержимое файла является <span lang=EN-US>value</span>
 (исключая комментарии).</p>
 
 <p class=code><span lang=EN-US>&lt;config&gt; ::= [&lt;tag&gt;] &lt;value&gt; |
@@ -242,62 +122,55 @@ style='mso-ansi-language:EN-US'>config</span></span> (значение пере�
 (&lt;array&gt;)</span></p>
 
 <p class=code><span lang=EN-US>&lt;array&gt; ::= &lt;config&gt; &lt;array&gt; |
-&lt;config&gt;,&lt;array&gt; |<i style='mso-bidi-font-style:normal'>&lt;empty&gt;<o:p></o:p></i></span></p>
+&lt;config&gt;,&lt;array&gt; |<i>&lt;empty&gt;</i></span></p>
 
 <p class=code><span lang=EN-US>&lt;struct&gt; ::= &lt;struct_element&gt;
-&lt;struct &gt; | &lt;struct_element&gt;;&lt;struct&gt; | <i style='mso-bidi-font-style:
-normal'>&lt;empty&gt;<o:p></o:p></i></span></p>
+&lt;struct &gt; | &lt;struct_element&gt;;&lt;struct&gt; | <i>&lt;empty&gt;</i></span></p>
 
 <p class=code><span lang=EN-US>&lt;struct_element&gt; ::= &lt;alpha&gt; =
 &lt;config&gt;</span></p>
 
-<p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+<p class=code><span lang=EN-US>&nbsp;</span></p>
 
 <p class=code><span lang=EN-US>&lt;tag&gt; ::= &lt;templates&gt;</span></p>
 
-<p class=code><span lang=EN-US>&lt;templates&gt; ::= <i style='mso-bidi-font-style:
-normal'>&lt;empty</i>&gt; | &lt;external_id&gt;,&lt;inherits&gt;</span></p>
+<p class=code><span lang=EN-US>&lt;templates&gt; ::= <i>&lt;empty</i>&gt; |
+&lt;external_id&gt;,&lt;inherits&gt;</span></p>
 
 <p class=code><span lang=EN-US>&lt;external_id&gt; ::= &lt;alpha&gt; | &lt;path
 to config&gt;#&lt;alpha&gt; | &lt;path to config&gt;#</span></p>
 
-<p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+<p class=code><span lang=EN-US>&nbsp;</span></p>
 
 <p>Комментарии в стиле //, /* и #</p>
 
-<p><span lang=EN-US style='mso-ansi-language:EN-US'>String</span><span
-lang=EN-US> </span>– строка, стоящая из любых символов. Символы начала строки ‘
-и “ и сам экран \ экранируются при помощи \.</p>
+<p><span lang=EN-US>String </span>– строка, стоящая из любых символов. Символы
+начала строки ‘ и “ и сам экран \ экранируются при помощи \.</p>
 
-<p><span lang=EN-US style='mso-ansi-language:EN-US'>Number</span><span
-lang=EN-US> </span>– целое или дробное число в стандартной форме или <span
-class=SpellE><span style='background:lime;mso-highlight:lime'>експоненциональной</span></span>.</p>
+<p><span lang=EN-US>Number </span>– целое или дробное число в стандартной форме
+или <span style='background:lime'>експоненциональной</span>.</p>
 
-<p><span class=SpellE>alpha</span> - английские буквы и символ подчёркивания,
-или цифры, начиная со второго символа. <span class=GramE><span lang=EN-US
-style='background:yellow;mso-highlight:yellow;mso-ansi-language:EN-US'>Case
-sensitive</span><span lang=EN-US style='mso-ansi-language:EN-US'>.</span></span><span
-lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+<p>alpha - английские буквы и символ подчёркивания, или цифры, начиная со
+второго символа. <span lang=EN-US style='background:yellow'>Case sensitive</span><span
+lang=EN-US>.</span></p>
 
-<p class=code><span lang=EN-US><o:p>&nbsp;</o:p></span></p>
+<p class=code><span lang=EN-US>&nbsp;</span></p>
 
-<h3><span style='background:silver;mso-highlight:silver'>Семантика</span><span
-lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h3>
+<h3><span style='background:silver'>Семантика</span></h3>
 
-<p><span lang=EN-US style='mso-ansi-language:EN-US'><o:p>&nbsp;</o:p></span></p>
+<p><span lang=EN-US>&nbsp;</span></p>
 
-<h1>Составители<span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h1>
+<h1>Составители</h1>
 
-<p style='margin-bottom:0cm;margin-bottom:.0001pt'><span lang=EN-US
-style='mso-ansi-language:EN-US'>KindeX</span></p>
+<p style='margin-bottom:0cm;margin-bottom:.0001pt'><span lang=EN-US>KindeX</span></p>
 
-<p style='margin-bottom:0cm;margin-bottom:.0001pt'><o:p>&nbsp;</o:p></p>
+<p style='margin-bottom:0cm;margin-bottom:.0001pt'>&nbsp;</p>
 
-<p style='margin-bottom:0cm;margin-bottom:.0001pt'><o:p>&nbsp;</o:p></p>
+<p style='margin-bottom:0cm;margin-bottom:.0001pt'>&nbsp;</p>
 
-<p style='margin-bottom:0cm;margin-bottom:.0001pt'><o:p>&nbsp;</o:p></p>
+<p style='margin-bottom:0cm;margin-bottom:.0001pt'>&nbsp;</p>
 
-<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+<p class=MsoNormal>&nbsp;</p>
 
 </div>
 
