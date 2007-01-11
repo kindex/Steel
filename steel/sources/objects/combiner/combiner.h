@@ -21,23 +21,27 @@
 #include "../../graph/graph_interface.h"
 #include "graph_object.h"
 #include "audio_object.h"
+#include "../transformation/transformation.h"
 
 class Combiner: public GameObject
 {
-protected:
-	GraphObject *graph;
-	AudioObject *audio;
-	ObjectPosition position;
-	PositionKind positionKind;
 public:
-	Combiner(): graph(NULL), audio(NULL) {}
-
+	Combiner();
 	bool isSuportingInterface(InterfaceId id);
 	void bindEngine(InterfaceId id, Engine* engine);
 	bool updateInformation(InterfaceId id, Engine* engine);
 	bool InitFromConfig(Config *conf);
-
 	void process(IN const ProcessInfo& info);
+
+protected:
+	GraphObject*    graph;
+	AudioObject*    audio;
+	Transformation* transformation;
+	ObjectPosition  origin;
+	ObjectPosition  position;
+	PositionKind    positionKind;
+
+	pvector<GameObject*> objects;
 };
 
 #endif

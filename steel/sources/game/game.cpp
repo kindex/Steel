@@ -20,7 +20,6 @@
 #include "../common/utils.h"
 
 #include "../res/res_main.h"
-#include "../objects/scene.h"
 #include "../audio/openal_engine.h"
 #include "../res/config/config_parser.h"
 

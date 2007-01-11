@@ -6,8 +6,9 @@
 class = 'combiner'
 origin	v3
 
-position_kind {'global', 'local'}	['global']
+position_kind {'global', 'local'}	['local']
 
 graph	graph_object
 audio	audio_object
-
+transformation transformation
+objects	game_object[]

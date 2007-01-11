@@ -585,6 +585,29 @@
 						<File
 							RelativePath="..\sources\res\config\test_config\test_config.cpp"
 							>
+							<FileConfiguration
+								Name="lib_debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="lib_release|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="test_debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath="..\sources\res\config\test_config\test_config.h"
@@ -598,6 +621,29 @@
 					<File
 						RelativePath="..\sources\res\test_res\test_res.cpp"
 						>
+						<FileConfiguration
+							Name="lib_debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="lib_release|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="test_debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\sources\res\test_res\test_res.h"
@@ -714,6 +760,29 @@
 					<File
 						RelativePath="..\sources\common\test_common\test_svector.cpp"
 						>
+						<FileConfiguration
+							Name="lib_debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="lib_release|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="test_debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\sources\common\test_common\test_svector.h"
@@ -877,22 +946,6 @@
 					RelativePath="..\sources\objects\light.h"
 					>
 				</File>
-				<File
-					RelativePath="..\sources\objects\scene.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\sources\objects\scene.h"
-					>
-				</File>
-				<File
-					RelativePath="..\sources\objects\simple_physic.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\sources\objects\simple_physic.h"
-					>
-				</File>
 				<Filter
 					Name="ps"
 					>
@@ -978,6 +1031,26 @@
 						</File>
 					</Filter>
 				</Filter>
+				<Filter
+					Name="transformation"
+					>
+					<File
+						RelativePath="..\sources\objects\transformation\rotation.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\objects\transformation\rotation.h"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\objects\transformation\transformation.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\objects\transformation\transformation.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="engine"
@@ -1049,10 +1122,56 @@
 				<File
 					RelativePath="..\sources\test\test_main.cpp"
 					>
+					<FileConfiguration
+						Name="lib_debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="lib_release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="test_debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\sources\test\tester.cpp"
 					>
+					<FileConfiguration
+						Name="lib_debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="lib_release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="test_debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\sources\test\tester.h"

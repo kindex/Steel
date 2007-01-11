@@ -1,9 +1,0 @@
-﻿steel::Scene
-
-Коллекция игровых объектов
-
-class = 'scene'
-origin	v3
-
-objects	game_object[]	list of subobjects
-

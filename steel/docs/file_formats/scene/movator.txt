@@ -1,8 +1,0 @@
-steel::SimplePhysic
-
-
-class = 'movator'
-
-physic		movator
-object		GameObject
-

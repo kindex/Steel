@@ -35,7 +35,6 @@ bool SimplePhysic::InitFromConfig(Config* conf)
 	if (subclass == "rotation")
 	{
 		type = SIMPLE_PHYSIC_ROTATION;
-		rotationAxis = conf->getv3("rotationAxis", v3(0.0f, 0.0f, 1.0f));
 	} else
 	if (subclass == "translation")
 	{
@@ -57,27 +56,20 @@ bool SimplePhysic::InitFromConfig(Config* conf)
 		error("movator", "undefined subclass " + subclass);
 
 	object = createGameObject(conf->find("object"));
-	speed = conf->getf("speed", 1.0f);
-
-	startPosition.loadIdentity();
-	startPosition.setTranslation(conf->getv3("origin"));
 
 	return true;
 }
 
 void SimplePhysic::process(IN const ProcessInfo& info)
 {
-	ObjectPosition transformation;
 	switch (type)
 	{
 	case SIMPLE_PHYSIC_ROTATION:
-		transformation.setRotationAxis(info.curTime*speed, rotationAxis);
 		break;
 	default:
 		transformation.loadIdentity();
 		break;
 	}
-	currentPosition = transformation * startPosition;
 
 	if (object != NULL)
 	{

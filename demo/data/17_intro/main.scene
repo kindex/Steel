@@ -1,10 +1,10 @@
 # Main scene 
 {
-class = 'scene'
+class = 'combiner'
 objects = 
 (
 
-[steel.scene#] {origin = (20 0 0)}
+[steel.scene#]{origin = (20 0 0)}
 
 [light.scene#]{origin = (10 7 3)}
 [light.scene#]{origin = (10 -7 3)}

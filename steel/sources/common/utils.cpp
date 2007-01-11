@@ -167,8 +167,10 @@ void deleteFiles(string dir, string mask)
 		return;
 
 	deleteFile(dir, FindFileData.cFileName);
-    while (FindNextFile(hFind, &FindFileData) != 0) 
+    while (FindNextFile(hFind, &FindFileData) != 0)
+	{
 		deleteFile(dir, FindFileData.cFileName);
+	}
 	
 	FindClose(hFind);
 	
@@ -201,7 +203,9 @@ std::string strLineEnum(const char *s, char a, char b)
 	for(unsigned int i = 0; i < r.size(); i++)
 	{
 		if(!r[i].empty())
+		{
 			res += "\n\t\t" + IntToStr(i) + ": " + r[i];
+		}
 	}
 	return res;
 }

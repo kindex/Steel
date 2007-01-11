@@ -257,6 +257,18 @@
 					RelativePath="..\sources\objects\sphere.h"
 					>
 				</File>
+				<Filter
+					Name="18_weapon"
+					>
+					<File
+						RelativePath="..\sources\18_weapon\kar98k.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\18_weapon\kar98k.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -314,18 +326,6 @@
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="18_weapon"
-			>
-			<File
-				RelativePath="..\sources\18_weapon\kar98k.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\18_weapon\kar98k.h"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

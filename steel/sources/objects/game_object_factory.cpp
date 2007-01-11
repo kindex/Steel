@@ -16,9 +16,7 @@
 #include "../engine/game_object.h"
 #include "../res/config/config.h"
 
-#include "scene.h"
 #include "light.h"
-#include "simple_physic.h"
 #include "combiner/combiner.h"
 #include "ps/particle_system.h"
 
@@ -27,11 +25,9 @@ GameObjectFactory* gameObjectFactory = NULL;
 
 GameObject* GameObjectFactory::createGameObject(IN const std::string& className) const
 {
-	if(className == "scene")	return new Scene;
 	if(className == "combiner")	return new Combiner;
 	if(className == "ps")		return new ParticleSystem;
 	if(className == "light")	return new GameLight;
-	if(className == "movator")	return new SimplePhysic;
 
 	return NULL;
 }

@@ -1,27 +1,24 @@
 #
 {
-class = 'movator'
-subclass = 'rotation'
-rotationAxis = (0 0 1)
-speed = 1
-object = 
-{
-	class = 'scene'
-	objects = 
-	(
+	class = 'combiner'
+	position_kind = 'local'
+	transformation = 
 		{
-		class = 'combiner'
-		position_kind = 'local'
-		graph = 
-			{
-				class = 'model'
-				file = 'steel'
-			}
+			class = 'rotation'
+			rotationAxis = (0 0 1)
+			speed = 1
+		}
+	graph = 
+		{
+			class = 'model'
+			file = 'steel'
 		}
 
-		[division.scene#] {}
+	objects = 
+	(
+		[division.scene#] {origin = (-1 8 6)}
 	)
 }
-}
+
 
 

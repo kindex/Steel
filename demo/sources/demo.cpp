@@ -18,7 +18,6 @@
 #include <common/logger.h>
 #include <common/utils.h>
 #include <res/res_main.h>
-#include <objects/scene.h>
 #include <audio/openal_engine.h>
 
 #include "demo_game_object_factory.h"
