@@ -10,7 +10,7 @@
 			{
 				class = 'movement'
 				direction = (1 0 0)
-				speed = 10
+				speed = 0.1
 				type = 'sin'
 			}
 			{

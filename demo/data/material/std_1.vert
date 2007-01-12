@@ -20,7 +20,6 @@ varying	vec3 pixel_position; // global
 varying vec3 viewDirGlobal;     // global
 
 varying vec2 texCoord0;
-varying vec2 texCoord1;
 
 vec3 t,b,n;
 vec3 pixel_normal; // global
@@ -46,7 +45,6 @@ void main(void)
 	
 	gl_Position = ftransform();
 	texCoord0 = (gl_TextureMatrix[0] * vec4(gl_MultiTexCoord0.xy, 0.0, 1.0)).xy;
-	texCoord1 = gl_MultiTexCoord1.xy;
 	
 	t = gl_NormalMatrix * gl_MultiTexCoord7.xyz;
 	n = gl_NormalMatrix * gl_Normal.xyz;

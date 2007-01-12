@@ -43,7 +43,6 @@ varying	vec3 pixel_position;// global
 varying vec3 lightDirGlobal;  // global
 
 varying vec2 texCoord0;
-varying vec2 texCoord1;
 varying vec3 lightDir[1];// TBN space
 
 vec3 norm;
