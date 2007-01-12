@@ -14,6 +14,8 @@
 #include "../../steel.h"
 #include "audio.h"
 
+int dummy; // TODO: remove
+
 //TBuf buffers;
 //ALCdevice *pDevice;
 //ALCcontext *pContext;

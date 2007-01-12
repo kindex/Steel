@@ -6,7 +6,6 @@
 	transformation = 
 	{
 		class = 'rotation'
-		origin = (-1 8 6)
 		speed = -1
 		rotationAxis = (0 0 1)
 	}

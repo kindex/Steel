@@ -4,7 +4,7 @@
 	Part of: Steel Engine
 	(C) DiVision, 2007
 	Authors:
-		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindexz at gmail]
 	License:
 		Steel Engine License
 	Description:
@@ -20,9 +20,19 @@
 class Transformation
 {
 public:
-	virtual bool InitFromConfig(Config*) = 0;
-	virtual void process(IN const ProcessInfo& info) = 0;
-	virtual ObjectPosition getPosition() = 0;
+	Transformation();
+	virtual ~Transformation() {}
+	virtual bool InitFromConfig(IN Config&);
+	virtual void process(IN const ProcessInfo&) = 0;
+	virtual ObjectPosition getPosition();
+
+protected:
+	float getT(IN const float time);
+
+	ObjectPosition currentPosition;
+	ObjectPosition origin;
+	float speed;
+	float bias;
 };
 
 Transformation* transformationFactory(const std::string& className);

@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: objects/transformator/rotation.h
+	File: objects/transformator/movement.h
 	Unit: objects
 	Part of: Steel Engine
 	(C) DiVision, 2007
@@ -8,23 +8,24 @@
 	License:
 		Steel Engine License
 	Description:
-		3D object rotation
+		3D object movement
  ************************************************************/
 
-#ifndef __OBJECTS__ROTATION_H__
-#define __OBJECTS__ROTATION_H__
+#ifndef __OBJECTS__TRANSFORMATION_LIST_H__
+#define __OBJECTS__TRANSFORMATION_LIST_H__
 
 #include "../../steel.h"
 #include "transformation.h"
 
-class Rotation : public Transformation
+class TransformationList : public Transformation
 {
 public:
+	~TransformationList();
 	bool InitFromConfig(IN Config&);
 	void process(IN const ProcessInfo& info);
 
 private:
-	v3 rotationAxis;
+	pvector<Transformation*> transformations;
 };
 
 

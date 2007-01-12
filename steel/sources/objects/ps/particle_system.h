@@ -4,7 +4,7 @@
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
-		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindexz at gmail]
 		* Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]
 	Description:
 		Основа систем частиц. Базовый класс, которые компонует

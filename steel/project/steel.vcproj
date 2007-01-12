@@ -601,13 +601,6 @@
 									Name="VCCLCompilerTool"
 								/>
 							</FileConfiguration>
-							<FileConfiguration
-								Name="test_debug|Win32"
-								>
-								<Tool
-									Name="VCCLCompilerTool"
-								/>
-							</FileConfiguration>
 						</File>
 						<File
 							RelativePath="..\sources\res\config\test_config\test_config.h"
@@ -632,13 +625,6 @@
 						<FileConfiguration
 							Name="lib_release|Win32"
 							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="test_debug|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -771,13 +757,6 @@
 						<FileConfiguration
 							Name="lib_release|Win32"
 							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="test_debug|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -1035,6 +1014,14 @@
 					Name="transformation"
 					>
 					<File
+						RelativePath="..\sources\objects\transformation\movement.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\objects\transformation\movement.h"
+						>
+					</File>
+					<File
 						RelativePath="..\sources\objects\transformation\rotation.cpp"
 						>
 					</File>
@@ -1048,6 +1035,14 @@
 					</File>
 					<File
 						RelativePath="..\sources\objects\transformation\transformation.h"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\objects\transformation\transformation_list.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\objects\transformation\transformation_list.h"
 						>
 					</File>
 				</Filter>
@@ -1138,13 +1133,6 @@
 							Name="VCCLCompilerTool"
 						/>
 					</FileConfiguration>
-					<FileConfiguration
-						Name="test_debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\sources\test\tester.cpp"
@@ -1165,71 +1153,12 @@
 							Name="VCCLCompilerTool"
 						/>
 					</FileConfiguration>
-					<FileConfiguration
-						Name="test_debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\sources\test\tester.h"
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="data"
-			>
-			<File
-				RelativePath="..\data\1.scene"
-				>
-			</File>
-			<File
-				RelativePath="..\data\flashlight.conf"
-				>
-			</File>
-			<Filter
-				Name="sphere"
-				>
-				<File
-					RelativePath="..\data\sphere\sphere.mat"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="material"
-				>
-				<File
-					RelativePath="..\data\material\std.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\data\material\std.vert"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="conf"
-			>
-			<File
-				RelativePath="..\conf\game.conf"
-				>
-			</File>
-			<File
-				RelativePath="..\conf\input.conf"
-				>
-			</File>
-			<File
-				RelativePath="..\conf\opengl.conf"
-				>
-			</File>
-			<File
-				RelativePath="..\conf\physic.conf"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

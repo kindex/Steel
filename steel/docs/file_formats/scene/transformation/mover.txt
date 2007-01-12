@@ -1,9 +1,0 @@
-?steel::PhysicMover
-
-class = 'mover'
-
-delay		float	[0]
-bias		float	[0]
-speed		float	[1.0]
-direction 	v3	[0 0 1]
-kind		{'forward', 'sin', 'shuttle'} 	['forward']

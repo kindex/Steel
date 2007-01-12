@@ -5,7 +5,7 @@
 	(C) DiVision, 2004-2006
 	Authors:
 		* Alex V. Boreskoff <alexboreskoff@mtu-net.ru>, <steps3d@narod.ru>
-		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindexz at gmail]
 	License:
 		??
 	Description:

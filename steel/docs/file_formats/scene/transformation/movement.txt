@@ -1,0 +1,6 @@
+steel::Movement
+
+class = 'movement'
+
+direction 	v3	[1 0 0]
+type		{'forward', 'sin', 'shuttle', 'frac'} 	['forward']

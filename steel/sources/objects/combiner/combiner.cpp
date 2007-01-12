@@ -4,7 +4,7 @@
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
-		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindexz at gmail]
 	License:
 		Steel Engine License
 	Description:
@@ -74,7 +74,7 @@ bool Combiner::InitFromConfig(Config *conf)
 		transformation = transformationFactory(transformationClass);
 		if (transformation != NULL)
 		{
-			bool ok = transformation->InitFromConfig(transformationConf);
+			bool ok = transformation->InitFromConfig(*transformationConf);
 			if (!ok)
 			{
 				delete transformation;
