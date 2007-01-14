@@ -10,19 +10,16 @@
 	Description:
 		Позволяет движку использовать классы, объявленные в Demo проекте.
  ************************************************************/
-
-#ifndef __GAME_OBJECT_FACTORY_H__
-#define __GAME_OBJECT_FACTORY_H__
-
 #include <steel.h>
-#include <engine/game_object.h>
-#include <objects/game_object_factory.h>
+#include "game_factory.h"
+#include "game_free_scene.h"
+#include "19_ps/19_game.h"
 
-class DemoGameObjectFactory : public GameObjectFactory
+Game* GameFactory::createGame(IN const std::string& className) const
 {
-public:
-	GameObject* createGameObject(IN const std::string& className) const;
-};
+	if(className == "free_scene")	return new GameFreeScene;
+	if(className == "19_ps")	return new Game19;
 
+	return NULL;
+}
 
-#endif

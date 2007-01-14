@@ -8,8 +8,8 @@
 	License:
 		Steel Engine License
 	Description:
-		main() создайт игровые классы, коллеццию ресурсов, загружет 
-		плагины, содержит главный цикл игры.
+		main() СЃРѕР·РґР°Р№С‚ РёРіСЂРѕРІС‹Рµ РєР»Р°СЃСЃС‹, РєРѕР»Р»РµС†С†РёСЋ СЂРµСЃСѓСЂСЃРѕРІ, Р·Р°РіСЂСѓР¶РµС‚ 
+		РїР»Р°РіРёРЅС‹, СЃРѕРґРµСЂР¶РёС‚ РіР»Р°РІРЅС‹Р№ С†РёРєР» РёРіСЂС‹.
  ************************************************************/
 #include <direct.h>
 
@@ -26,7 +26,7 @@
 #include <res/config/config_setup.h>
 
 #include "main.h"
-#include "demo.h"
+#include "game_factory.h"
 
 using namespace std;
 
@@ -105,16 +105,24 @@ int main(int argc, char *argv[])
 	}
 
 // ******************* GAME *************************
-	Demo game;
-
-	if(!game.init(steelConfig, input)) return 5;
-
-
-	game.bind(graph);
-	if(audio)
+	GameFactory gameFactory;
+	Game* game = gameFactory.createGame(steelConfig->gets("game_class"));
+	if (game == NULL)
 	{
-		game.bind(audio);
-		game.insonify(audio);
+		error("demo.conf", "Fatal error: unknown game class '" + steelConfig->gets("game_class") + "'");
+		return 5;
+	}
+
+	if(!game->init(steelConfig, input))
+	{
+		return 6;
+	}
+
+	game->bind(graph);
+	if (audio != NULL)
+	{
+		game->bind(audio);
+		game->insonify(audio);
 	}
 		
 
@@ -125,33 +133,39 @@ int main(int argc, char *argv[])
 	bool first = true;
 	steel::time	lastFrameTime = timer.total();
 
-	while(input->isAlive() && game.isAlive())
+	while(input->isAlive() && game->isAlive())
 	{
 		(input->*(input->Process))();
 		double dx = 0, dy = 0;
 		input->getMouseDelta(dx, dy);
 		
-		game.handleMouse(dx, -dy);
+		game->handleMouse(dx, -dy);
 
 		if(speed < 0.0 || speed>0.01 && timer.total()<2)
 		{
 			speed = 0.01f;
 		}
 	
-		game.setspeed(speed, timer.total());
+//		game->setspeed(speed, timer.total());
 	
 		if(!first)
 		{
 			steel::time time = timer.total() - lastFrameTime;
 			if(time>0)
 			{
-				game.process(timer.total(), time);
+				TimeInfo info;
+				info.currentTime = timer.total();
+				info.frameLength = time;
+				game->process(info);
 			}
 			lastFrameTime = timer.total();
 		}
 
-		game.draw(graph);
-		if(audio) game.insonify(audio);
+		game->draw(graph);
+		if(audio != NULL)
+		{
+			game->insonify(audio);
+		}
 
 		timer.incframe();
 

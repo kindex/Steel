@@ -22,8 +22,8 @@ bool Rotation::InitFromConfig(IN Config& conf)
 	return true;
 }
 
-void Rotation::process(IN const ProcessInfo& info)
+void Rotation::process(IN const TimeInfo& info)
 {
-	currentPosition.setRotationAxis(getT(info.curTime), rotationAxis);
+	currentPosition.setRotationAxis(getT(info.currentTime), rotationAxis);
 }
 

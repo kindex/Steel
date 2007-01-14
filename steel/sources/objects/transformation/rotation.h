@@ -21,7 +21,7 @@ class Rotation : public Transformation
 {
 public:
 	bool InitFromConfig(IN Config&);
-	void process(IN const ProcessInfo& info);
+	void process(IN const TimeInfo&);
 
 private:
 	v3 rotationAxis;

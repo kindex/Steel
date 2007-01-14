@@ -219,19 +219,31 @@
 			Name="sources"
 			>
 			<File
-				RelativePath="..\sources\demo.cpp"
+				RelativePath="..\sources\game.h"
 				>
 			</File>
 			<File
-				RelativePath="..\sources\demo.h"
+				RelativePath="..\sources\game_factory.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\sources\demo_game_object_factory.cpp"
+				RelativePath="..\sources\game_factory.h"
 				>
 			</File>
 			<File
-				RelativePath="..\sources\demo_game_object_factory.h"
+				RelativePath="..\sources\game_free_scene.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sources\game_free_scene.h"
+				>
+			</File>
+			<File
+				RelativePath="..\sources\game_object_factory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sources\game_object_factory.h"
 				>
 			</File>
 			<File
@@ -247,28 +259,28 @@
 				>
 			</File>
 			<Filter
-				Name="objects"
+				Name="18_weapon"
 				>
 				<File
-					RelativePath="..\sources\objects\sphere.cpp"
+					RelativePath="..\sources\18_weapon\kar98k.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\sources\objects\sphere.h"
+					RelativePath="..\sources\18_weapon\kar98k.h"
 					>
 				</File>
-				<Filter
-					Name="18_weapon"
+			</Filter>
+			<Filter
+				Name="19_ps"
+				>
+				<File
+					RelativePath="..\sources\19_ps\19_game.cpp"
 					>
-					<File
-						RelativePath="..\sources\18_weapon\kar98k.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\sources\18_weapon\kar98k.h"
-						>
-					</File>
-				</Filter>
+				</File>
+				<File
+					RelativePath="..\sources\19_ps\19_game.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -326,6 +338,18 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="objects"
+			>
+			<File
+				RelativePath="..\sources\objects\sphere.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\sources\objects\sphere.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

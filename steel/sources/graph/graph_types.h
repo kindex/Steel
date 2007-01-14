@@ -99,14 +99,4 @@ struct GLines
 
 typedef Vertexes	Normals;
 
-struct GraphEngineInfo
-{
-	steel::time curTime;
-	steel::time frameLength;
-//	ModificationTime modificationTime;
-	Camera* camera;
-};
-
-
-
 #endif

@@ -50,7 +50,7 @@ void SimpleSound::bindEngine(InterfaceId id, Engine* aEngine)
 
 void SimpleSound::process(IN const ProcessInfo& info)
 {
-	if (!started && info.curTime > delay)
+	if (!started && info.timeInfo.currentTime > delay)
 	{
 		soundPlay(originalSound);
 		started = true;

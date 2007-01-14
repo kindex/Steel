@@ -22,7 +22,7 @@ class TransformationList : public Transformation
 public:
 	~TransformationList();
 	bool InitFromConfig(IN Config&);
-	void process(IN const ProcessInfo& info);
+	void process(IN const TimeInfo&);
 
 private:
 	pvector<Transformation*> transformations;

@@ -22,7 +22,7 @@
 
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material)
 {
 	if(material != NULL && GL_EXTENSION_MULTITEXTURE)
 	{
@@ -108,7 +108,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 		if(!diffuse_map)
 			glColor4fv(material->color.getfv());
 
-		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
+		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL);
 
 		if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
 

@@ -10,16 +10,19 @@
 	Description:
 		Позволяет движку использовать классы, объявленные в Demo проекте.
  ************************************************************/
+
+#ifndef DEMO__GAME_OBJECT_FACTORY_H__
+#define DEMO__GAME_OBJECT_FACTORY_H__
+
 #include <steel.h>
-#include "demo_game_object_factory.h"
-#include "objects/sphere.h"
-#include "18_weapon/kar98k.h"
+#include <engine/game_object.h>
+#include <objects/game_object_factory.h>
 
-GameObject* DemoGameObjectFactory::createGameObject(IN const std::string& className) const
+class DemoGameObjectFactory : public GameObjectFactory
 {
-	if(className == "sphere")	return new Sphere;
-	if(className == "kar98k")	return new Kar98k;
+public:
+	GameObject* createGameObject(IN const std::string& className) const;
+};
 
-	return GameObjectFactory::createGameObject(className);
-}
 
+#endif

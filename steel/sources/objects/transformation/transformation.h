@@ -23,7 +23,7 @@ public:
 	Transformation();
 	virtual ~Transformation() {}
 	virtual bool InitFromConfig(IN Config&);
-	virtual void process(IN const ProcessInfo&) = 0;
+	virtual void process(IN const TimeInfo&) = 0;
 	virtual ObjectPosition getPosition();
 
 protected:

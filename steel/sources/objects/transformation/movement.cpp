@@ -46,9 +46,9 @@ bool Movement::InitFromConfig(IN Config& conf)
 	return true;
 }
 
-void Movement::process(IN const ProcessInfo& info)
+void Movement::process(IN const TimeInfo& info)
 {
-	float k = getT(info.curTime);
+	float k = getT(info.currentTime);
 	switch (type)
 	{
 	case MOVEMENT_SIN: k = sin(k); break;

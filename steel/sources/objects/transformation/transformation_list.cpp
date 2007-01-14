@@ -40,10 +40,10 @@ bool TransformationList::InitFromConfig(IN Config& conf)
 	return true;
 }
 
-void TransformationList::process(IN const ProcessInfo& info)
+void TransformationList::process(IN const TimeInfo& info)
 {
-	ProcessInfo newInfo = info;
-	newInfo.curTime = getT(info.curTime);
+	TimeInfo newInfo = info;
+	newInfo.currentTime = getT(info.currentTime);
 
 	currentPosition.loadIdentity();
 	for EACH(pvector<Transformation*>, transformations, it)

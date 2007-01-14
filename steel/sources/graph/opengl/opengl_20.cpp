@@ -20,7 +20,7 @@
 #include <string>
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material)
 {
 	if(material != NULL && GL_EXTENSION_GLSL)
 	{
@@ -93,7 +93,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 				(this->*BindTexCoords3f)(sTangent);
 			}
 
-			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
+			if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL);
 
 			program->unbind();
 		}

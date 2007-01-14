@@ -37,13 +37,11 @@ public:
 		int globalObjectCount;
 	} total;
 
-	Camera camera;
-	virtual void processCamera() = 0;
 	// Collect information about object: how to render it
 	virtual bool inject(GameObject *object);
 	virtual bool remove(GameObject *object);
 	
-	virtual bool process(steel::time globalTime, steel::time time) = 0;
+	virtual bool process(IN const ProcessInfo&) = 0;
 
 	// Draw colelcted information. May be called few times without recollection information
 	virtual bool isVisible(AABB box) = 0;
@@ -51,9 +49,9 @@ public:
 	bool clear();
 
 protected:
-	pvector<GameObject*> objects;
-
-	GraphEngineInfo info;
+	pvector<GameObject*>	objects;
+	Camera					camera;
+	TimeInfo				timeInfo;
 };
 
 #endif

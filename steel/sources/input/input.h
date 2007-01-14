@@ -24,8 +24,7 @@
 	#include <windows.h>
 #endif
 
-class Input;  // forward declaration, cross-use
-#include "../game/game.h"
+#include "game_input.h"
 #include "../res/res_main.h"
 
 #include <string>
@@ -54,7 +53,7 @@ public:
 
 	virtual ~Input() {}
 	virtual bool init(Config* _conf);
-	virtual void setGame(GameInput* game) { game = game; }
+	virtual void setGame(GameInput* _game) { game = _game; }
 
 	virtual bool isPressed(std::string key);
 	virtual bool isAlive() { return alive; }

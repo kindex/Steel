@@ -16,7 +16,7 @@
 #include "opengl_engine.h"
 #include "../../libs/opengl/libext.h"
 
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material, GraphEngine::GraphTotalInfo &total)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material)
 {
 	if(material != NULL)
 	{
@@ -36,7 +36,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 			texCoords = e.getTexCoords(material->diffuse_map);
 		}
 
-		if(DrawTriangles != NULL) (this->*DrawTriangles)(e, triangles, texCoords,  total);
+		if(DrawTriangles != NULL) (this->*DrawTriangles)(e, triangles, texCoords);
 		if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
 
 		unbindTexCoords();
@@ -50,7 +50,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 
 
 // нарисовать множество полигонов с указанным материалом / Blend
-/*void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+/*void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material)
 {
 	if(material != NULL)
 	{
@@ -142,7 +142,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 }
 */
 // нарисовать множество полигонов с указанным материалом
-void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords)
 {
 	if(triangles && e.vertexes && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
@@ -200,7 +200,7 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image *image, bool enable)
 }
 
 // нарисовать множество полигонов как сетку (только рёбра)
-void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles)
 {
 	if(triangles != NULL && e.vertexes != NULL && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
@@ -220,7 +220,7 @@ void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow &e, const Trian
 }
 
 // нарисовать множество линий
-void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e)
 {
 	if(e.vertexes && e.lines && !e.lines->index.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
@@ -240,7 +240,7 @@ void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngin
 }
 
 // нарисовать нормали к вершинам
-void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e)
 {
 	if(e.normals != NULL && e.vertexes != NULL && e.vertexes->data.size() == e.normals->data.size())
 	{
@@ -265,7 +265,7 @@ void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEng
 }
 
 // нарисовать вершины
-void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e)
 {
 	if(e.vertexes && !e.vertexes->data.empty())
 	{
@@ -285,7 +285,7 @@ void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEn
 }
 
 // нарисовать AABB
-void OpenGL_Engine::DrawAABB_OpenGL10(OpenGL_Engine::GraphShadow &e, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawAABB_OpenGL10(OpenGL_Engine::GraphShadow &e)
 {
 	AABB &c = e.aabb;
 	if(c.empty()) return;

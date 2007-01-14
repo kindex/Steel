@@ -770,24 +770,24 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="game"
-				>
-				<File
-					RelativePath="..\sources\game\game.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\sources\game\game.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="physic"
 				>
+				<File
+					RelativePath="..\sources\physic\physic_engine.h"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\physic\physic_interface.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="input"
 				>
+				<File
+					RelativePath="..\sources\input\game_input.h"
+					>
+				</File>
 				<File
 					RelativePath="..\sources\input\input.cpp"
 					>

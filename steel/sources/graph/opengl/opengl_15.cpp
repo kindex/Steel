@@ -24,7 +24,7 @@ void OpenGL_Engine::CleanupDrawTriangles_OpenGL15()
 }
 
 // нарисовать множество полигонов с указанным материалом / VBO
-void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, const Triangles *triangles, const TexCoords *coords, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, const Triangles *triangles, const TexCoords *coords)
 {
 	if(triangles && e.vertexes && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
@@ -342,7 +342,7 @@ template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2,
 
 			if(mode)glEnableClientState(mode);
 
-			buf.lastUsedTime = time;
+			buf.lastUsedTime = info.timeInfo.currentTime;
 			buf.usedCnt++;
 //			buf.temp = false;
 		}
@@ -368,7 +368,7 @@ template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2,
 				buf.kind = OpenGL_Buffer::index;
 
 //			buf.temp = false;
-			buf.lastUsedTime = time;
+			buf.lastUsedTime = info.timeInfo.currentTime;
 			buf.usedCnt++;
 		}
 		return true;

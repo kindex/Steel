@@ -43,7 +43,7 @@ const TexCoords* OpenGL_Engine::GraphShadow::getTexCoords(const MaterialStd::Tex
 }
 
 
-void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material, GraphEngine::GraphTotalInfo &total)
+void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material)
 {
 	if(material != NULL)
 	{
@@ -52,13 +52,15 @@ void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Trian
 		case MATERIAL_STD:	
 			if(DrawFill_MaterialStd != NULL)
 			{
-				if((this->*DrawFill_MaterialStd)(e, triangles, static_cast<MaterialStd*>(material), total))
+				if((this->*DrawFill_MaterialStd)(e, triangles, static_cast<MaterialStd*>(material)))
+				{
 					return;
+				}
 			}
 			break;
 		}
 
-		DrawFill_Material(e, triangles, material->backup, total);
+		DrawFill_Material(e, triangles, material->backup);
 	}
 }
 
@@ -93,7 +95,7 @@ OpenGL_Engine::OpenGL_Engine():
 Отвечает за вывод графичесткого элемента.
 */
 
-void OpenGL_Engine::process(GraphShadow *e, steel::time globalTime, steel::time time)
+void OpenGL_Engine::process(GraphShadow *e)
 {
 	if(e->positionKind == POSITION_SCREEN)
 	{
@@ -113,28 +115,46 @@ void OpenGL_Engine::process(GraphShadow *e, steel::time globalTime, steel::time 
 	glLoadMatrixf(m);
 
 	if(conf->getb("drawFace") && e->faceMaterials != NULL)
+	{
 		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
-			DrawFill_Material(*e, e->faceMaterials->at(i).triangles, e->faceMaterials->at(i).material, total);
+		{
+			DrawFill_Material(*e, e->faceMaterials->at(i).triangles, e->faceMaterials->at(i).material);
+		}
+	}
 
 	if(conf->getb("drawWire") && e->faceMaterials != NULL && DrawWire != NULL)
+	{
 		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
-			(this->*DrawWire)(*e, e->faceMaterials->at(i).triangles, total);
+		{
+			(this->*DrawWire)(*e, e->faceMaterials->at(i).triangles);
+		}
+	}
 
 	if(conf->getb("drawLines") && DrawLines)
-		(this->*DrawLines)(*e, total);
+	{
+		(this->*DrawLines)(*e);
+	}
 
 	if(conf->getb("drawNormals") && DrawNormals)
-		(this->*DrawNormals)(*e, total);
+	{
+		(this->*DrawNormals)(*e);
+	}
 
 	if(conf->getb("drawVertexes") && DrawVertexes)
-		(this->*DrawVertexes)(*e, total);
+	{
+		(this->*DrawVertexes)(*e);
+	}
 
 	if(conf->getb("drawAABB") && DrawAABB)
-		(this->*DrawAABB)(*e, total);
+	{
+		(this->*DrawAABB)(*e);
+	}
 
 	glPopMatrix();
 	if(e->positionKind == POSITION_SCREEN)
+	{
 		glPopMatrix();
+	}
 }
 
 
@@ -180,9 +200,13 @@ void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
 	}
 }
 
-bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
+bool OpenGL_Engine::process(IN const ProcessInfo& info)
 {
 	// TODO repair DC 
+
+	timeInfo = info.timeInfo;
+	camera = info.camera;
+	processCamera();
 
 	total.vertexCount = 0;
 	total.triangleCount = 0;
@@ -192,7 +216,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 
 	for(int i=0; i < size; i++)
 	{
-		prepare(getShadow(objects[i]), globalTime, time); /* Update vertexes, faces, ights */
+		prepare(getShadow(objects[i])); /* Update vertexes, faces, ights */
 	}
 	// update position
 	
@@ -240,7 +264,7 @@ bool OpenGL_Engine::process(steel::time globalTime, steel::time time)
 //		if(!it->blend)
 	{
 			GraphShadow *shadow = GS(*it);
-			process(shadow, globalTime, time);
+			process(shadow);
 	}
 	/*		else
 		{
@@ -492,13 +516,8 @@ void OpenGL_Engine::processCamera()
     glLoadIdentity();
 }
 
-void OpenGL_Engine::prepare(GraphShadow *shadow, steel::time globalTime, steel::time time, matrix34 matrix, GameObject *parent)
+void OpenGL_Engine::prepare(GraphShadow *shadow, matrix34 matrix, GameObject *parent)
 {
-	info.curTime = globalTime;
-	info.frameLength = time;
-//	info.modificationTime = globalFrameNumber;
-	info.camera = &camera;
-
 	currentShadow = shadow;
 	shadow->object->updateInformation(this->interfaceId, this);
 
@@ -506,9 +525,10 @@ void OpenGL_Engine::prepare(GraphShadow *shadow, steel::time globalTime, steel::
 	shadow->cache();
 
 	for EACH(uidVector, shadow->children, it)
-		prepare( getShadow(*it), globalTime, time, 
-		matrix,  // TODO
-		shadow->object);
+	{
+		prepare(getShadow(*it),matrix,  // TODO
+					shadow->object);
+	}
 
 	if (!shadow->aabbCalculated)
 	{

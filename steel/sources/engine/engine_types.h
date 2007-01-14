@@ -71,12 +71,12 @@ class Camera
 public:
 	Camera();
 
-    void setPosition(const v3 &_position) { position = _position; }
-	void setDirection(const v3& _direction) { direction = _direction.getNormalized(); }
-    void setUpVector(const v3& _upVector) { upVector = _upVector.getNormalized(); }
-	v3	getDirection() { return direction; }
-	v3  getPosition() { return position; }
-	v3  getUpVector() { return upVector; }
+    void setPosition (const v3 &_position)	{ position	= _position; }
+	void setDirection(const v3& _direction)	{ direction	= _direction.getNormalized(); }
+    void setUpVector (const v3& _upVector)	{ upVector	= _upVector.getNormalized(); }
+	v3	getDirection()	const { return direction; }
+	v3  getPosition()	const { return position; }
+	v3  getUpVector()	const { return upVector; }
 
 private:
     v3 position; // camera eye
@@ -84,11 +84,16 @@ private:
 	v3 upVector;
 };
 
+struct TimeInfo
+{
+	steel::time currentTime;
+	steel::time frameLength;
+};
+
 struct ProcessInfo
 {
-	steel::time curTime;
-	steel::time frameLength;
-	Camera*		camera;
+	TimeInfo	timeInfo;
+	Camera		camera;
 };
 
 

@@ -167,7 +167,7 @@ void Combiner::process(IN const ProcessInfo& info)
 {
 	if (transformation != NULL)
 	{
-		transformation->process(info);
+		transformation->process(info.timeInfo);
 		position = transformation->getPosition();
 	}
 	if (graph != NULL)
