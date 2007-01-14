@@ -1,0 +1,6 @@
+steel::Transformation
+
+
+origin	v3	[0 0 0]
+bias	float	[0.0]
+speed	float 	[1.0]
