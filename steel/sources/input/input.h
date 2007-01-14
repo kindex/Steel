@@ -38,8 +38,8 @@ protected:
 	std::map<std::string, bool> keyPressed;
 	double sensetivity;
 	bool alive, mouseCaptured, focused;
-	Game	*game;
-	Config	*conf;
+	GameInput*	game;
+	Config*		conf;
 
 	int cx, cy, lastdx, lastdy;
 
@@ -54,7 +54,7 @@ public:
 
 	virtual ~Input() {}
 	virtual bool init(Config* _conf);
-	virtual void setGame(Game *_game) { game = _game; }
+	virtual void setGame(GameInput* game) { game = game; }
 
 	virtual bool isPressed(std::string key);
 	virtual bool isAlive() { return alive; }

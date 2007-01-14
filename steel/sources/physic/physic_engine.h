@@ -2,9 +2,9 @@
 	File: physic/physic_engine.h
 	Unit: physic engine
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2004-2007
 	Authors:
-		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindexz at gmail]
 	License:
 		Steel Engine License
 	Description:
@@ -21,39 +21,19 @@
 #include "../res/conf/conf.h"
 #include "physic_interface.h"
 
-class PhysicEngine: public Engine
+class PhysicEngine: public Engine, public PhysicInterface
 {
-protected:
-	// спиок [глобальных] объектов, котоыре были лобавлены в движок для обработки с помощью процедуры inject()
-	steel::vector<PhysicObject*> objects;
-	// действующая гратация на все обхекты
-	v3 g;
-
-public:
-	struct TotalInfo
-	{
-		int collisionCount;
-	} total;
-
 public:
 	virtual bool init(Config* _conf);
-	virtual void deinit(void) { clear();}
-
-	// удаляет все объекты из движка (foreach remove)
-	virtual bool clear(void);
 
 	// обрабатывает движение всех объектов
-	virtual bool process(steel::time globalTime, steel::time time) = 0; 
+	virtual void process(IN const ProcessInfo&);
+	virtual bool clear(); 
 
-	// Inject добавляет объект для обработки
-	// Типы движений объектов: uni, custom, none
-	// У uni не может быть детей
-	// У custom и none не может быть детей с типом uni
-	// добавляет объект и его детей в движок для обработки
 	virtual bool inject(PhysicObject *object);
 	virtual bool remove(PhysicObject *object);
 
-	virtual void setGravitation(const v3 force) { g = force; }
+	virtual Shadow* getShadowClass(GameObject *object) = 0;
 };
 
 #endif

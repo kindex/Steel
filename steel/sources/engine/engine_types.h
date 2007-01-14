@@ -88,7 +88,7 @@ struct ProcessInfo
 {
 	steel::time curTime;
 	steel::time frameLength;
-	Camera *camera;
+	Camera*		camera;
 };
 
 

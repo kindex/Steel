@@ -97,7 +97,7 @@ public:
 protected:
 	// создаёт место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
 	virtual bool makeShadowForObject(GameObject *object);
-	virtual Shadow* getShadowClass(GameObject *object) = 0 ;
+	virtual Shadow* getShadowClass(GameObject *object) = 0;
 	virtual void makeShadowForObjectPost(GameObject *object, Shadow *shadow) {}
 
 	virtual void deleteShadowForObject(int sid);

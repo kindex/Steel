@@ -53,7 +53,7 @@ public:
 	virtual void updateLight(uid, Light*) = 0;
 };
 
-class GraphInterface: public BaseInterface, public ChildrenInterface, public Interface3D, public GraphLightInterface
+class GraphInterface : public BaseInterface, public ChildrenInterface, public Interface3D, public GraphLightInterface
 {
 public:
 	static const InterfaceId interfaceId = 0x100;

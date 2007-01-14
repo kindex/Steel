@@ -2,9 +2,9 @@
 	File: physic/physic_interface.h
 	Unit: physic engine
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2004-2007
 	Authors:
-		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindexz at gmail]
 	License:
 		Steel Engine License
 	Description:
@@ -51,45 +51,16 @@ struct velocity
 	}
 };
 
-class PhysicInterface
+class PhysicInterface : public BaseInterface, public ChildrenInterface, public Interface3D
 {
 public:
+	static const InterfaceId interfaceId = 0x400;
 
-// *** Common ***
+	virtual	void			setPosition(IN const ObjectPosition&) = 0;
+	virtual	ObjectPosition	getPosition() = 0;
 
-	// список детей
-	/*	список составных частей объекта (потомков). Например, для мира - это стены и монстры, а для монстра это может быть частами тела.*/
-	// возвращает количество детей
-	virtual void setPhysicChildrenCount(int) = 0; 
-	// ребёнок с указанным номером
-	virtual void setPhysicChildren(int number, PhysicObject*) = 0;
-
-// *** Configuration ***
-
-	// Форма объекта и способ проверки и обработки коллизий
-	virtual CollisionType getCollisionType(void) { return COLLISION_NONE; }
-
-	// Положение и поворот произвольной точки объекта в локальный координатах (точка отсчёта объекта). Именно за изменения этого параметра и отвечает физический движок.
-	virtual	void setPosition(ObjectPosition const &newPosition) = 0;
-
-	// скорость
-	virtual velocity	getVelocity(void) = 0;
-	virtual void		setVelocity(const velocity &v) = 0;
-	// масса
-	virtual	float	getMass(void) = 0;
-
-
-/*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
-//	virtual aabb getPFrame() = 0; // AABB of object
-
-	// *** Polyhedra ***
-	virtual Vertexes*	getPVertexes(void) { return NULL; } // список вершин (координаты относительно getPosition() и всех матриц предков)
-	// массив индексов вершин, которые образуют треугольники (грани)
-	virtual Triangles*	getTriangles(void) { return NULL; }
-
-	virtual OldConfig* getPMaterial(void) { return NULL; }
-	// эта функция вызывается, если другой объект трогает этот
-	virtual void	trigger(PhysicObject *object) {}
+	virtual void			setVelocity(const velocity &v) = 0;
+	virtual velocity		getVelocity() = 0;
 };
 
 #endif
