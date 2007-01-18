@@ -129,7 +129,7 @@ void Combiner::bindEngine(Engine& engine)
 		dynamic_cast<GraphInterface*>(&engine)->setPosition(position*origin);
 		graph->bindEngine(engine);
 	}
-	if (engine.isSupportingInterface(INTERFACE_GRAPH) && audio != NULL)
+	if (engine.isSupportingInterface(INTERFACE_AUDIO) && audio != NULL)
 	{
 //		dynamic_cast<AudioInterface*>(engine)->setPositionKind(positionKind);
 //		dynamic_cast<AudioInterface*>(engine)->setPosition(position);

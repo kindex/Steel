@@ -202,11 +202,11 @@ void GameFreeScene::process(IN const TimeInfo& timeInfo)
 void GameFreeScene::bind(GraphEngine& engine)
 {
 	graphEngine = &engine;
-	if(world != NULL)
+	if (world != NULL)
 	{
 		engine.inject(world);
 	}
-	if(light != NULL)
+	if (light != NULL)
 	{
 		engine.inject(light);
 	}
