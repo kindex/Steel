@@ -29,7 +29,20 @@ typedef	enum
 // система - модель из множества полигонов - спрайтов
 class SpriteRenderer: public ParticleRenderer
 {
-protected:
+public:
+	bool beforeInject(IN OUT Engine&) { return true; }
+	void afterRemove(IN OUT Engine&) {}
+	bool updateInformation(IN OUT Engine&);
+	void bindEngine(IN OUT Engine&);
+	void process(IN const ProcessInfo&);
+	bool InitFromConfig(IN Config&){ return true; }
+
+	void initSprites();
+	void initSprites(int begin, int end);
+	bool initParticles();
+	AABB getFrame();
+
+private:
 	Material*	material;
 	Vertexes	vertexes;
 	FaceMaterials	face;
@@ -38,33 +51,33 @@ protected:
 	v3			cameraPosition;
 	SpriteAlign	align;
 	v3			customAlign;
-public:
-	void initSprites();
-	void initSprites(int begin, int end);
-	bool initParticles();
-
-	void process(IN const ProcessInfo& info);
-	bool updateInformation(InterfaceId, Engine*);
-	AABB getFrame();
 };
 
 // каждая частица - отдельная модель (объект)
 class ObjectPSRenderer: public ParticleRenderer
 {
-protected:
-	pvector<GameObject*> children;
-
 public:
 	bool initParticles();
+	bool InitFromConfig(Config&) { return true;}
+	bool updateInformation(IN OUT Engine&) { return false; }
+	void process(IN const ProcessInfo& info){}
+	bool beforeInject(IN OUT Engine&) { return true; }
+	void afterRemove(IN OUT Engine&) {}
+
+protected:
+	pvector<GameObject*> children;
 };
 
 // ничего не рисует
 class DummyPSRenderer: public ParticleRenderer
 {
-protected:
 public:
 	bool initParticles() { return true; }
-
+	bool InitFromConfig(Config&) { return true;}
+	bool updateInformation(IN OUT Engine&) { return false; }
+	void process(IN const ProcessInfo& info){}
+	bool beforeInject(IN OUT Engine&) { return true; }
+	void afterRemove(IN OUT Engine&) {}
 };
 
 #endif

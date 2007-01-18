@@ -89,6 +89,9 @@ class SimpleAnimator: public ParticleAnimator
 {
 public:
 	bool initParticles();
+	bool InitFromConfig(Config&) {return true;}
+	bool updateInformation(IN OUT Engine&) {return false;}
+	void process(IN const ProcessInfo& info) {return;}
 };
 
 

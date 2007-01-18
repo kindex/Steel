@@ -89,8 +89,8 @@ public:
 	friend class ConfigParser;
 
 protected:
-	virtual const Config* findInThis(const std::string &path)  const = 0;
-	virtual Config* findInThis(const std::string &path) = 0;
+	virtual const Config* findInThis(const std::string &path) const abstract;
+	virtual Config* findInThis(const std::string &path) abstract;
 	virtual const Config* findInTemplate(const std::string &path) const;
 	virtual Config* findInTemplate(const std::string &path);
 
@@ -101,7 +101,7 @@ protected:
 
 	const std::string getIndent(int level) const;
 	virtual const std::string DumpPrefix(int level = 0) const;
-	virtual const std::string DumpThis(int level = 0) const = 0;
+	virtual const std::string DumpThis(int level = 0) const abstract;
 	void setFile(std::string _file) { file = _file; }
 	const Config *getRoot() const;
 	Config *getRoot();

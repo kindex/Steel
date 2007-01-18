@@ -27,11 +27,13 @@ class Combiner: public GameObject
 {
 public:
 	Combiner();
-	bool isSuportingInterface(InterfaceId id);
-	void bindEngine(InterfaceId id, Engine* engine);
-	bool updateInformation(InterfaceId id, Engine* engine);
-	bool InitFromConfig(Config *conf);
-	void process(IN const ProcessInfo& info);
+	bool isSuportingInterface(IN OUT Engine&);
+	bool beforeInject(IN OUT Engine&){ return true; }
+	void afterRemove(IN OUT Engine&){}
+	bool updateInformation(IN OUT Engine&);
+	void bindEngine(IN OUT Engine&);
+	void process(IN const ProcessInfo&);
+	bool InitFromConfig(IN Config&);
 
 protected:
 	GraphObject*    graph;

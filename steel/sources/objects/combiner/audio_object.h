@@ -22,23 +22,25 @@
 
 class AudioObject;
 
-AudioObject* findAudioObject(const string &_class);
+AudioObject* audioObjectFactory(const string &_class);
 
 class AudioObject: public GameObject
 {
 public:
 	AudioObject();
-	bool isSuportingInterface(InterfaceId id) { return AudioInterface::interfaceId == id; }
-	void bindEngine(InterfaceId, Engine*);
+	bool isSuportingInterface(Engine& engine)
+	{
+		return engine.isSupportingInterface(INTERFACE_AUDIO);
+	}
+	void bindEngine(Engine&);
 	
 //protected:
-	AudioInterface* engine;
 	bool soundPlay(Sound* sound);
 	bool soundStop(Sound* sound);
 	bool soundPause(Sound* sound);
+	AudioInterface* engine;
 
 private:
-	
 	vector<Sound*> sounds;	// ???						// ???
 };
 

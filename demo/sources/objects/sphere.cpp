@@ -26,34 +26,26 @@ Sphere::Sphere():
 
 
 
-void Sphere::bindEngine(InterfaceId id, Engine* engine)
+void Sphere::bindEngine(Engine& engine)
 {
-	if(id == GraphInterface::interfaceId)
-	{
-		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
+	GraphEngine &gengine = *static_cast<GraphEngine*>(&engine);
 
-		gengine.setPositionKind(POSITION_GLOBAL);
-		gengine.setPosition(ObjectPosition::getIdentity());
-	}
+	gengine.setPositionKind(POSITION_GLOBAL);
+	gengine.setPosition(ObjectPosition::getIdentity());
 }
 
-bool Sphere::updateInformation(InterfaceId id, Engine* engine)
+bool Sphere::updateInformation(Engine& engine)
 {
-	if(id == GraphInterface::interfaceId)
-	{
-		ProcessGraph();
-		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
+	GraphEngine &gengine = *static_cast<GraphEngine*>(&engine);
 
-		gengine.setPosition(position);
-		gengine.setVertexes(vertexes);
-		gengine.setNormals(normals);
-		gengine.setFaceMaterials(faces);
-		gengine.setTexCoordsCount(2);
-		gengine.setTexCoords(0, texCoords0);
-		gengine.setTexCoords(1, texCoords1);
-		return true;
-	}
-	return false;
+	gengine.setPosition(position);
+	gengine.setVertexes(vertexes);
+	gengine.setNormals(normals);
+	gengine.setFaceMaterials(faces);
+	gengine.setTexCoordsCount(2);
+	gengine.setTexCoords(0, texCoords0);
+	gengine.setTexCoords(1, texCoords1);
+	return true;
 }
 
 
@@ -141,7 +133,7 @@ Sphere::~Sphere()
 }
 
 
-void Sphere::ProcessGraph()
+void Sphere::process(IN const ProcessInfo&)
 {
 	for(unsigned int i=0; i < vertexes->data.size(); i++)
 	{
@@ -167,9 +159,9 @@ void Sphere::DeleteTriangle(int n)
 	// TODO delete vertexes
 }
 
-bool Sphere::InitFromConfig(Config *_conf)
+bool Sphere::InitFromConfig(Config& _conf)
 {
-	conf = _conf;
+	conf = &_conf;
 	if (conf == NULL) return false;
 
 	v3 origin =  conf->getv3("origin");

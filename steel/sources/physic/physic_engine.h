@@ -33,7 +33,7 @@ public:
 	virtual bool inject(PhysicObject *object);
 	virtual bool remove(PhysicObject *object);
 
-	virtual Shadow* getShadowClass(GameObject *object) = 0;
+	virtual Shadow* getShadowClass(GameObject& object) abstract;
 };
 
 #endif

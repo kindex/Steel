@@ -32,11 +32,11 @@ class EngineHelper // Abstract Object
 {
 public:
 	virtual ~EngineHelper() {}
-	virtual void clean() = 0;	
-	virtual void setTime(const steel::time _time) = 0;
-	virtual void drawLine(const Line line, const steel::time duration, const steel::time fade, const color4f color) = 0;
-	virtual void drawVector(const Line line, const steel::time duration, const steel::time fade, const color4f color) = 0;
-	virtual void drawBox(const AABB box, const steel::time duration, const steel::time fade, const color4f color) = 0;
+	virtual void clean() abstract;
+	virtual void setTime(const steel::time _time) abstract;
+	virtual void drawLine(const Line line, const steel::time duration, const steel::time fade, const color4f color) abstract;
+	virtual void drawVector(const Line line, const steel::time duration, const steel::time fade, const color4f color) abstract;
+	virtual void drawBox(const AABB box, const steel::time duration, const steel::time fade, const color4f color) abstract;
 };
 
 #endif

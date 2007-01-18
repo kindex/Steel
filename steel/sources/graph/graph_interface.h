@@ -48,15 +48,14 @@ typedef svector<FaceMaterial>	FaceMaterials;
 class GraphLightInterface
 {
 public:
-	virtual void addLight(Light*) = 0;
-	virtual void removeLight(uid) = 0;
-	virtual void updateLight(uid, Light*) = 0;
+	virtual void addLight(Light*) abstract;
+	virtual void removeLight(uid) abstract;
+	virtual void updateLight(uid, Light*) abstract;
 };
 
-class GraphInterface : public BaseInterface, public ChildrenInterface, public Interface3D, public GraphLightInterface
+class GraphInterface : public ChildrenInterface, public Interface3D, public GraphLightInterface
 {
 public:
-	static const InterfaceId interfaceId = 0x100;
 
 // *** Configuration ***
 
@@ -67,16 +66,16 @@ public:
 	// Следующие функции возврящяют ссылки на массивы данных (NULL if none), и должны 
 	// отвечать за хранние этих данных до следующего вызова этой функции
 	// или вызова cleanup
-	virtual void	setVertexes(const Vertexes*) = 0; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
-	virtual void	setNormals(const Normals*) = 0; // список нормалей в вершинам
+	virtual void	setVertexes(const Vertexes*) abstract; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	virtual void	setNormals(const Normals*) abstract; // список нормалей в вершинам
 
-	virtual void	setLines(const GLines*) = 0; // индексы вершин для линий и цвета линий (for debug)
+	virtual void	setLines(const GLines*) abstract; // индексы вершин для линий и цвета линий (for debug)
 
 	// массив индексов вершин, которые образуют треугольники (грани) + материалы
-	virtual void	setFaceMaterials(const FaceMaterials*) = 0;
-	virtual void	setTexCoordsCount(unsigned int) = 0;
-	virtual void	setTexCoords(unsigned int texNumber, const TexCoords*) = 0;
-	virtual void	setAABB(const AABB&) = 0;
+	virtual void	setFaceMaterials(const FaceMaterials*) abstract;
+	virtual void	setTexCoordsCount(unsigned int) abstract;
+	virtual void	setTexCoords(unsigned int texNumber, const TexCoords*) abstract;
+	virtual void	setAABB(const AABB&) abstract;
 };
 
 #endif

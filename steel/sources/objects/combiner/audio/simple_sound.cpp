@@ -13,33 +13,31 @@
 
 #include "simple_sound.h"
 
-bool SimpleSound::InitFromConfig(Config *conf)
+bool SimpleSound::InitFromConfig(Config& conf)
 {
-	if(conf == NULL) return false;
-	
 	originalSound = new Sound();
 
-	originalSound->position = conf->getv3("position");
+	originalSound->position = conf.getv3("position");
 	//float master = engine->getMasterVolume(); 
-	originalSound->gain = conf->getf("gain", 1.0f); //* master;
-	originalSound->pitch = conf->getf("pitch", 1.0f);
-	originalSound->isLoop = conf->geti("isLoop", 0) > 0;
-	originalSound->rolloffFactor = conf->getf("rolloffFactor", 0.0f);
-	originalSound->sourceRelative = conf->geti("sourceRelative", 0);
+	originalSound->gain = conf.getf("gain", 1.0f); //* master;
+	originalSound->pitch = conf.getf("pitch", 1.0f);
+	originalSound->isLoop = conf.geti("isLoop", 0) > 0;
+	originalSound->rolloffFactor = conf.getf("rolloffFactor", 0.0f);
+	originalSound->sourceRelative = conf.geti("sourceRelative", 0);
 
-	originalSound->sound = resAudio.add(conf->getPath("file"));
-	delay = conf->getf("delay", 0.0);
+	originalSound->sound = resAudio.add(conf.getPath("file"));
+	delay = conf.getf("delay", 0.0);
 	started = false;
 	//engine->soundPlay(originalSound);
 
 	return true;
 }
 
-void SimpleSound::bindEngine(InterfaceId id, Engine* aEngine)
+void SimpleSound::bindEngine(Engine& aEngine)
 {
-	if(id == AudioInterface::interfaceId)
+	if (aEngine.isSupportingInterface(INTERFACE_AUDIO))
 	{		
-		AudioObject::bindEngine(id, aEngine);
+		AudioObject::bindEngine(aEngine);
 		if (delay <= 0.0 && !started)
 		{
 			soundPlay(originalSound);

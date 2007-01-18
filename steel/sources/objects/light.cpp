@@ -13,31 +13,29 @@
 #include "../steel.h"
 #include "light.h"
 
-bool GameLight::InitFromConfig(Config *conf)
+bool GameLight::InitFromConfig(Config& conf)
 {
-	if(conf == NULL) return false;
-
-	v3 origin =  conf->getv3("origin");
+	v3 origin =  conf.getv3("origin");
 	position.loadIdentity();
 	position.setTranslation(origin);
 
 	light = new Light;
 	light->position.loadZero();
 
-	light->constantAttenuation = conf->getf("constantAttenuation", 0.0f);
-	light->sqrtAttenuation = conf->getf("sqrtAttenuation", 0.0f);
-	light->linearAttenuation = conf->getf("linearAttenuation", 1.0f);
-	light->quadraticAttenuation = conf->getf("quadraticAttenuation", 0.0f);
+	light->constantAttenuation = conf.getf("constantAttenuation", 0.0f);
+	light->sqrtAttenuation = conf.getf("sqrtAttenuation", 0.0f);
+	light->linearAttenuation = conf.getf("linearAttenuation", 1.0f);
+	light->quadraticAttenuation = conf.getf("quadraticAttenuation", 0.0f);
 
-	light->ambient = conf->getv3("ambient", v3(0.0f, 0.0f, 0.0f));
-	light->diffuse = conf->getv3("diffuse", v3(1.0f, 1.0f, 1.0f));
-	light->specular = conf->getv3("specular", v3(1.0f, 1.0f, 1.0f));
+	light->ambient = conf.getv3("ambient", v3(0.0f, 0.0f, 0.0f));
+	light->diffuse = conf.getv3("diffuse", v3(1.0f, 1.0f, 1.0f));
+	light->specular = conf.getv3("specular", v3(1.0f, 1.0f, 1.0f));
 
-	light->minDistance = conf->getf("minDistance", 1.0f);
-	light->maxDistance = conf->getf("maxDistance", 10.0f);
-	light->k = conf->getf("k", 1.0f);
+	light->minDistance = conf.getf("minDistance", 1.0f);
+	light->maxDistance = conf.getf("maxDistance", 10.0f);
+	light->k = conf.getf("k", 1.0f);
 
-	bool enabled = conf->getb("enabled", true);
+	bool enabled = conf.getb("enabled", true);
 	if (enabled)
 	{
 		enable();
@@ -50,40 +48,25 @@ bool GameLight::InitFromConfig(Config *conf)
 	return true;
 }
 
-bool GameLight::isSuportingInterface(InterfaceId id)
-{
-	return id == GraphInterface::interfaceId;
-}
 
-void GameLight::bindEngine(InterfaceId id, Engine* engine)
+void GameLight::bindEngine(Engine& engine)
 {
-	if(id == GraphInterface::interfaceId)
+	if (engine.isSupportingInterface(INTERFACE_GRAPH))
 	{
-		this->engine = dynamic_cast<GraphInterface*>(engine);
+		this->engine = dynamic_cast<GraphInterface*>(&engine);
 		this->engine->setPosition(position);
 		if (enabled && light != NULL) this->engine->addLight(light);
 	}
 }
 
-void GameLight::afterRemove(InterfaceId, Engine*)
+void GameLight::afterRemove(Engine&)
 {
 	engine = NULL;
 }
 
 
-bool GameLight::updateInformation(InterfaceId id, Engine* engine)
+bool GameLight::updateInformation(Engine&)
 {
-	if(id == GraphInterface::interfaceId)
-	{
-/*		matrix34 rot = matrix34::CreateRotationMatrix(0.001f, v3(0.0f, 0.0f, 1.0f));
-		v3 pos = position.getTranslation();
-		pos = rot * pos;
-		position.setTranslation(pos);*/
-
-		GraphInterface &gengine = *dynamic_cast<GraphInterface*>(engine);
-		gengine.setPosition(position);
-		return true;
-	}
 	return false;
 }
 

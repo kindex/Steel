@@ -20,12 +20,22 @@
 
 typedef int InterfaceId;
 
+const InterfaceId INTERFACE_BASE = 1 << 0;
+const InterfaceId INTERFACE_3D = 1 << 1;
+const InterfaceId INTERFACE_CHILDREN = 1 << 2;
+const InterfaceId INTERFACE_GRAPH_RAW = 1 << 3; // TODO: rename
+const InterfaceId INTERFACE_AUDIO_RAW = 1 << 4; // TODO: rename
+
+const InterfaceId INTERFACE_GRAPH = INTERFACE_BASE + INTERFACE_3D + INTERFACE_CHILDREN + INTERFACE_GRAPH_RAW;
+const InterfaceId INTERFACE_AUDIO = INTERFACE_BASE + INTERFACE_3D + INTERFACE_CHILDREN + INTERFACE_AUDIO_RAW;
+
 class GameObject;
 
 class BaseInterface
 {
 public:
-	virtual bool setCurrentObject(GameObject*) = 0;
+	virtual bool setCurrentObject(GameObject*) abstract;
+	virtual bool isSupportingInterface(IN const InterfaceId) abstract;
 };
 
 /*
@@ -47,16 +57,16 @@ typedef enum
 class Interface3D
 {
 public:
-	virtual void setPosition(ObjectPosition) = 0;
-	virtual void setPositionKind(PositionKind) = 0;
+	virtual void setPosition(ObjectPosition) abstract;
+	virtual void setPositionKind(PositionKind) abstract;
 };
 
 class ChildrenInterface
 {
 public:
-	virtual void addChild(GameObject* child) = 0;
-	virtual void deleteChild(GameObject* child) = 0;
-	virtual void clearChildren() = 0;
+	virtual void addChild(GameObject* child) abstract;
+	virtual void deleteChild(GameObject* child) abstract;
+	virtual void clearChildren() abstract;
 };
 
 

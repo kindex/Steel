@@ -32,7 +32,7 @@ GameObject* GameObjectFactory::createGameObject(IN const std::string& className)
 	return NULL;
 }
 
-GameObject *createGameObject(Config *conf)
+GameObject *createGameObject(Config* conf)
 {
 	if(conf == NULL) return NULL;
 
@@ -48,7 +48,7 @@ GameObject *createGameObject(Config *conf)
 	pos.loadIdentity();
 	pos.setTranslation(origin);
 
-	bool result = obj->InitFromConfig(conf);
+	bool result = obj->InitFromConfig(*conf);
 	if(!result)
 	{
 		delete obj; obj = NULL;

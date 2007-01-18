@@ -32,18 +32,18 @@ struct Spectator
 class Game : public GameInput
 {
 public:
-	virtual bool init(Config *_conf, Input *_input) = 0;
-	virtual void deinit() = 0;
-	virtual void process(IN const TimeInfo&) = 0;
-	virtual bool isAlive() = 0;
+	virtual bool init(Config &_conf, Input &_input) abstract;
+	virtual void deinit() abstract;
+	virtual void process(IN const TimeInfo&) abstract;
+	virtual bool isAlive() abstract;
 
-	virtual GameObjectFactory* createGameObjectFactory() const = 0;
+	virtual GameObjectFactory* createGameObjectFactory() const abstract;
 
-	virtual void bind(GraphEngine*) = 0;
-	virtual void draw(GraphEngine*) = 0;
+	virtual void bind(GraphEngine&) abstract;
+	virtual void draw(GraphEngine&) abstract;
 
-	virtual void bind(AudioEngine*) = 0;
-	virtual void insonify(AudioEngine*) = 0;
+	virtual void bind(AudioEngine&) abstract;
+	virtual void insonify(AudioEngine&) abstract;
 };
 
 #endif

@@ -54,9 +54,9 @@ ALboolean OpenALEngine::CheckALError()
 }
 
 
-bool OpenALEngine::init(Config* _conf)
+bool OpenALEngine::init(Config& _conf)
 {
-	conf = _conf;
+	conf = &_conf;
 	if(conf == NULL)
 	{
 		log_msg("openal init error", "config not found");
@@ -244,19 +244,19 @@ void OpenALEngine::setListener(const Listener &aListener)
 }
 
 
-bool OpenALEngine::inject(GameObject *object)
+bool OpenALEngine::inject(GameObject& object)
 {
-	if(!object->isSuportingInterface(interfaceId)) return false;
+	if(!object.isSuportingInterface(*this)) return false;
 
 	// если объект не хочет добавляться
-	if(!object->beforeInject(interfaceId)) return false;
+	if(!object.beforeInject(*this)) return false;
 
 	// кешируем объект
-	if(!makeShadowForObject(object)) return false;
+	if(!makeShadowForObject(&object)) return false;
 	// список глобальных объектов
 
-	setCurrentObject(object);
-	object->bindEngine(interfaceId, this);
+	setCurrentObject(&object);
+	object.bindEngine(*this);
 
 	return true;
 }
@@ -373,21 +373,13 @@ void OpenALEngine::addChild(GameObject* child)
 void OpenALEngine::addChild(AudioShadow &shadow, GameObject *child)
 {
 	uid childUid = child->getId();
-	
 	pvector<uid>::const_iterator it = find(shadow.children, childUid);
-
 	if(it != currentShadow->children.end()) return ; // child have been added before
-
-	if(!child->beforeInject(this->interfaceId)) return; // shild don't want to be added
-
+	if(!child->beforeInject(*this)) return; // shild don't want to be added
 	if(!makeShadowForObject(child)) return;
-
 	shadow.children.push_back(childUid);
-
 	setCurrentObject(child);
-
-	child->bindEngine(this->interfaceId, this);
-
+	child->bindEngine(*this);
 	currentShadow = &shadow;
 }
 

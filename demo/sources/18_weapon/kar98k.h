@@ -25,7 +25,7 @@ public:
 	void reload();
 	void rechamber();
 	void fire();
-		AudioObject* kar98k;
+	AudioObject* kar98k;
 
 private:
 	float caliber;		// = 7.92 mm;

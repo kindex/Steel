@@ -19,12 +19,18 @@
 class SimpleSound: public AudioObject
 {
 public:
-	bool InitFromConfig(Config *);
-	void bindEngine(InterfaceId, Engine*);
-	void process(IN const ProcessInfo& info);
+	bool isSuportingInterface(IN OUT Engine& engine)
+	{
+		return engine.isSupportingInterface(INTERFACE_AUDIO);
+	}
+	bool beforeInject(IN OUT Engine&){ return true; }
+	void afterRemove(IN OUT Engine&){}
+	bool updateInformation(IN OUT Engine&){return false;}
+	void bindEngine(IN OUT Engine&);
+	void process(IN const ProcessInfo&);
+	bool InitFromConfig(IN Config&);
 
-
-protected:
+private:
 	Sound*	originalSound;		// must be vector		// ???
 	float	delay;
 	bool	started;

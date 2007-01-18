@@ -24,15 +24,20 @@ public:
 	Sphere();
 	virtual ~Sphere();
 
-	bool isSuportingInterface(InterfaceId id) { return id == GraphEngine::interfaceId; }
-	bool updateInformation(InterfaceId id, Engine* engine);
-	void bindEngine(InterfaceId, Engine*);
+	bool beforeInject(IN OUT Engine&){return true;}
+	void afterRemove(IN OUT Engine&){}
+	bool updateInformation(IN OUT Engine&);
+	void bindEngine(IN OUT Engine&);
+	void process(IN const ProcessInfo&);
+	bool InitFromConfig(IN Config&);
+	bool isSuportingInterface(Engine& engine)
+	{
+		return engine.isSupportingInterface(INTERFACE_GRAPH);
+	}
 
-	void ProcessGraph();
-	void DeleteTriangle(int n);
-	bool InitFromConfig(Config*);
 
 private:
+	void DeleteTriangle(int n);
 	void createSphere();
 
 	float size;

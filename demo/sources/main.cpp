@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 	// ******************** RES ************************
 	registerResources();
 
-	if(!test())
+	if (!test())
 	{
 		steel::log.close();
 		return 99;
@@ -80,14 +80,14 @@ int main(int argc, char *argv[])
 
 // ******************* INPUT ************************
 	Input* input = new Input;
-	if(!input->init(steelConfig->find("input")))
+	if (!input->init(steelConfig->find("input")))
 	{
 		error("demo.conf", "Fatal error: cannot find input config");
 		return 2;
 	}
 // ******************* GRAPH ************************
 	OpenGL_Engine* graph = new OpenGL_Engine();
-	if(!graph->init(steelConfig->find("graph"), input))
+	if (!graph->init(steelConfig->find("graph"), input))
 	{
 		error("demo.conf", "Fatal error: cannot find graph config");
 		return 3;
@@ -97,7 +97,8 @@ int main(int argc, char *argv[])
 #ifdef LIB_OPENAL
 	audio = new OpenALEngine();
 #endif
-	if(audio != NULL && !audio->init(steelConfig->find("audio")))
+	Config* audioConfig = steelConfig->find("audio");
+	if (audio != NULL && audioConfig != NULL && !audio->init(*audioConfig))
 	{
 		error("demo.conf", "Warning: cannot find audio config");
 		delete audio;
@@ -113,16 +114,16 @@ int main(int argc, char *argv[])
 		return 5;
 	}
 
-	if(!game->init(steelConfig, input))
+	if (!game->init(*steelConfig, *input))
 	{
 		return 6;
 	}
 
-	game->bind(graph);
+	game->bind(*graph);
 	if (audio != NULL)
 	{
-		game->bind(audio);
-		game->insonify(audio);
+		game->bind(*audio);
+		game->insonify(*audio);
 	}
 		
 
@@ -161,10 +162,10 @@ int main(int argc, char *argv[])
 			lastFrameTime = timer.total();
 		}
 
-		game->draw(graph);
+		game->draw(*graph);
 		if(audio != NULL)
 		{
-			game->insonify(audio);
+			game->insonify(*audio);
 		}
 
 		timer.incframe();

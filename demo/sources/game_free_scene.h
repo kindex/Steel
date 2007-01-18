@@ -21,17 +21,17 @@ class GameFreeScene : public Game
 {
 public:
 	GameFreeScene();
-	bool init(Config *_conf, Input *_input);
+	bool init(Config& _conf, Input& _input);
 	void deinit();
 	void process(IN const TimeInfo&);
 
 	GameObjectFactory* createGameObjectFactory() const;
 
-	void bind(GraphEngine*);
-	void draw(GraphEngine*);
+	void bind(GraphEngine&);
+	void draw(GraphEngine&);
 
-	void bind(AudioEngine*);
-	void insonify(AudioEngine*);
+	void bind(AudioEngine&);
+	void insonify(AudioEngine&);
 	bool isAlive() {return _alive;} 
 
 	void handleEventKeyDown(std::string key);

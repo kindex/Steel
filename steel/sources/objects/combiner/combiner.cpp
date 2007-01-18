@@ -26,23 +26,21 @@ Combiner::Combiner():
 {}
 
 
-bool Combiner::InitFromConfig(Config *conf)
+bool Combiner::InitFromConfig(Config& conf)
 {
-	if(conf == NULL) return false;
-
 	origin.loadIdentity();
-	origin.setTranslation(conf->getv3("origin"));
+	origin.setTranslation(conf.getv3("origin"));
 	position.loadIdentity();
-	positionKind = conf->gets("position_kind", "local") == "local" ? POSITION_LOCAL : POSITION_GLOBAL;
+	positionKind = conf.gets("position_kind", "local") == "local" ? POSITION_LOCAL : POSITION_GLOBAL;
 
-	Config *graphConf = conf->find("graph");
+	Config *graphConf = conf.find("graph");
 	if(graphConf != NULL)
 	{
 		string graphClass = graphConf->gets("class");
-		graph = findGraphObject(graphClass);
+		graph = graphObjectFactory(graphClass);
 		if(graph != NULL)
 		{
-			bool ok =  graph->InitFromConfig(graphConf);
+			bool ok = graph->InitFromConfig(*graphConf);
 			if(!ok)
 			{
 				delete graph; 
@@ -51,14 +49,14 @@ bool Combiner::InitFromConfig(Config *conf)
 		}
 	}
 
-	Config *audioConf = conf->find("audio");
+	Config *audioConf = conf.find("audio");
 	if(audioConf != NULL)
 	{
 		string audioClass = audioConf->gets("class");
-		audio = findAudioObject(audioClass);
+		audio = audioObjectFactory(audioClass);
 		if(audio != NULL)
 		{
-			bool ok =  audio->InitFromConfig(audioConf);
+			bool ok =  audio->InitFromConfig(*audioConf);
 			if(!ok)
 			{
 				delete audio; 
@@ -67,7 +65,7 @@ bool Combiner::InitFromConfig(Config *conf)
 		}
 	}
 
-	Config* transformationConf = conf->find("transformation");
+	Config* transformationConf = conf.find("transformation");
 	if (transformationConf != NULL)
 	{
 		string transformationClass = transformationConf->gets("class");
@@ -87,7 +85,7 @@ bool Combiner::InitFromConfig(Config *conf)
 		}
 	}
 
-	ConfigArray* objectsConfig = conf->getArray("objects");
+	ConfigArray* objectsConfig = conf.getArray("objects");
 	if(objectsConfig != NULL)
 	{
 		const ConfigArray &objectsArray =  *static_cast<ConfigArray*>(objectsConfig);
@@ -104,61 +102,64 @@ bool Combiner::InitFromConfig(Config *conf)
 	return true;
 }
 
-bool Combiner::isSuportingInterface(InterfaceId id) 
+bool Combiner::isSuportingInterface(Engine& engine) 
 { 
-	if (id == GraphInterface::interfaceId ||
-		id == AudioInterface::interfaceId)
+	if (engine.isSupportingInterface(INTERFACE_GRAPH) ||
+		engine.isSupportingInterface(INTERFACE_AUDIO))
 	{
 		return true;
 	}
 	for EACH(pvector<GameObject*>, objects, it)
 	{
-		if((*it)->isSuportingInterface(id)) return true;
+		if ((*it)->isSuportingInterface(engine))
+		{
+			return true;
+		}
 	}
 	return false;
 }
 
-void Combiner::bindEngine(InterfaceId id, Engine* engine)
+void Combiner::bindEngine(Engine& engine)
 {
-	dynamic_cast<BaseInterface*>(engine)->setCurrentObject(this);
-
-	if(id == GraphInterface::interfaceId && graph != NULL)
+	engine.setCurrentObject(this);
+// TODO:
+	if (engine.isSupportingInterface(INTERFACE_GRAPH) && graph != NULL)
 	{
-		dynamic_cast<GraphInterface*>(engine)->setPositionKind(positionKind);
-		dynamic_cast<GraphInterface*>(engine)->setPosition(position*origin);
-		graph->bindEngine(id, engine);
+		dynamic_cast<GraphInterface*>(&engine)->setPositionKind(positionKind);
+		dynamic_cast<GraphInterface*>(&engine)->setPosition(position*origin);
+		graph->bindEngine(engine);
 	}
-	if(id == AudioInterface::interfaceId && audio != NULL)
+	if (engine.isSupportingInterface(INTERFACE_GRAPH) && audio != NULL)
 	{
 //		dynamic_cast<AudioInterface*>(engine)->setPositionKind(positionKind);
 //		dynamic_cast<AudioInterface*>(engine)->setPosition(position);
-		audio->bindEngine(id, engine);
+		audio->bindEngine(engine);
 	}
 
-	ChildrenInterface &cEngine = *dynamic_cast<ChildrenInterface*>(engine);
+	ChildrenInterface &cEngine = *dynamic_cast<ChildrenInterface*>(&engine);
 	cEngine.clearChildren();
 
 	for EACH(pvector<GameObject*>, objects, it)
 	{
-		if ((*it)->isSuportingInterface(id)) 
+		if ((*it)->isSuportingInterface(engine)) 
 		{
 			cEngine.addChild(*it);
 		}
 	}
 }
 
-bool Combiner::updateInformation(InterfaceId id, Engine* engine)
+bool Combiner::updateInformation(Engine& engine)
 {
-	if(id == GraphInterface::interfaceId && graph != NULL)
+	if (engine.isSupportingInterface(INTERFACE_GRAPH) && graph != NULL)
 	{
-		dynamic_cast<GraphInterface*>(engine)->setPosition(position*origin);
-		return graph->updateInformation(id, engine);
+		dynamic_cast<GraphInterface*>(&engine)->setPosition(position*origin);
+		return graph->updateInformation(engine);
 	}
 	// test audio update
-	if (id == AudioInterface::interfaceId && audio != NULL)
+	if (engine.isSupportingInterface(INTERFACE_AUDIO) && audio != NULL)
 	{
-		dynamic_cast<AudioInterface*>(engine)->setPosition(position*origin);
-		return audio->updateInformation(id, engine);
+		dynamic_cast<AudioInterface*>(&engine)->setPosition(position*origin);
+		return audio->updateInformation(engine);
 	}
 	return false;
 }

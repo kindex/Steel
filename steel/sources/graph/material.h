@@ -47,7 +47,7 @@ public:
 
 	virtual uid	 getId()				{ return id; }
 	// загружает материал из конфига
-	virtual bool InitFromConfig(Config *config) = 0;
+	virtual bool InitFromConfig(Config *config) abstract;
 	// получить текстуру с номером number
 	bool isBlending() const { return blend; }
 	MaterialType getMaterialType() const { return type; }

@@ -38,6 +38,8 @@ class OpenGL_Engine: public GraphEngine
 {
 // ******************* GRAPH INTERFACE *************************
 public:
+	bool isSupportingInterface(IN const InterfaceId);
+	
 	bool setCurrentObject(GameObject*);
 	void setPosition(ObjectPosition);
 	void setPositionKind(PositionKind);

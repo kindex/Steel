@@ -41,10 +41,10 @@ public:
 	virtual bool inject(GameObject *object);
 	virtual bool remove(GameObject *object);
 	
-	virtual bool process(IN const ProcessInfo&) = 0;
+	virtual bool process(IN const ProcessInfo&) abstract;
 
 	// Draw colelcted information. May be called few times without recollection information
-	virtual bool isVisible(AABB box) = 0;
+	virtual bool isVisible(AABB box) abstract;
 	// Clear collected information
 	bool clear();
 

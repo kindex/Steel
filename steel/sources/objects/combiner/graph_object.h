@@ -21,20 +21,24 @@
 
 class GraphObject;
 
-GraphObject* findGraphObject(const std::string &_class);
+GraphObject* graphObjectFactory(const std::string &_class);
 
 class GraphObject: public GameObject
 {
 public:
-	bool isSuportingInterface(InterfaceId id) { return id == GraphInterface::interfaceId; }
+	bool isSuportingInterface(IN OUT Engine&);
 };
 
 class GraphObjectModel: public GraphObject
 {
 public:
 	GraphObjectModel();
-	bool InitFromConfig(Config *conf);
-	void bindEngine(InterfaceId, Engine*);
+	bool InitFromConfig(Config& conf);
+	void bindEngine(Engine&);
+	bool beforeInject(IN OUT Engine&){return true;}
+	void afterRemove(IN OUT Engine&){}
+	bool updateInformation(IN OUT Engine&){return false;}
+	void process(IN const ProcessInfo&) {}
 
 protected:
 	Model *model;
@@ -44,8 +48,12 @@ class GraphObjectCustom: public GraphObject
 {
 public:
 	GraphObjectCustom();
+	void bindEngine(Engine&);
+	bool beforeInject(IN OUT Engine&){return true;}
+	void afterRemove(IN OUT Engine&){}
+	bool updateInformation(IN OUT Engine&){return false;}
+	void process(IN const ProcessInfo&) {}
 
-	void bindEngine(InterfaceId, Engine*);
 protected:
 	Vertexes *vertexes;
 	Normals  *normals;
@@ -56,13 +64,13 @@ protected:
 class GraphObjectMesh: public GraphObjectCustom
 {
 public:
-	bool InitFromConfig(Config *conf);
+	bool InitFromConfig(Config& conf);
 };
 
 class GraphObjectBox: public GraphObjectCustom
 {
 public:
-	bool InitFromConfig(Config *conf);
+	bool InitFromConfig(Config& conf);
 };
 
 

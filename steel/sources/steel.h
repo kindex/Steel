@@ -85,4 +85,6 @@ private:
 #define IN
 #define OUT
 
+#define abstract =0
+
 #endif

@@ -20,10 +20,10 @@
 
 bool GraphEngine::inject(GameObject *object)
 {
-	if(!object->isSuportingInterface(interfaceId)) return false;
+	if(!object->isSuportingInterface(*this)) return false;
 
 	// если объект не хочет добавляться
-	if(!object->beforeInject(interfaceId)) return false;
+	if(!object->beforeInject(*this)) return false;
 
 	// кешируем объект
 	if(!makeShadowForObject(object)) return false;
@@ -31,7 +31,7 @@ bool GraphEngine::inject(GameObject *object)
 	objects.push_back(object);
 
 	setCurrentObject(object);
-	object->bindEngine(interfaceId, this);
+	object->bindEngine(*this);
 
 	return true;
 }
@@ -58,7 +58,7 @@ bool GraphEngine::remove(GameObject *object)
 			objects.erase(it);
 			break;
 		}
-	object->afterRemove(interfaceId, this);
+	object->afterRemove(*this);
 
 	return true;
 }

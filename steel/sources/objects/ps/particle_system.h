@@ -39,14 +39,15 @@ struct ParticleSet
 
 class ParticleSystem;
 
-class ParticleProcessor: public GameObject
+class ParticleProcessor
 {
 public:
 	ParticleProcessor();
 	virtual ~ParticleProcessor() {}
 	virtual void bindParticleSystem(ParticleSystem *a);
-	virtual bool initParticles() = 0;
-	bool InitFromConfig(Config *_conf);
+	virtual bool InitFromConfig(Config&) abstract;
+	virtual bool initParticles() abstract;
+	virtual void process(IN const ProcessInfo& info) abstract;
 
 protected:
 	Config *conf;
@@ -59,7 +60,7 @@ class ParticleEmitter: public ParticleProcessor
 {
 public:
 	bool initParticles();
-	virtual void born(Particle &particle) = 0; // создать частицу
+	virtual void born(Particle &particle) abstract; // создать частицу
 	virtual void kill(int i); // убить частицу с номером i
 
 protected:
@@ -69,16 +70,36 @@ protected:
 // класс для рисования: множество спрайтов, набор объектов, меташарики
 class ParticleRenderer: public ParticleProcessor
 {
+public:
+	virtual bool updateInformation(IN OUT Engine&) abstract;
+	virtual bool beforeInject(IN OUT Engine&) abstract;
+	virtual void afterRemove(IN OUT Engine&) abstract;
 };
 
 // класс, который анимирует частицы (физика частиц)
 class ParticleAnimator: public ParticleProcessor
 {
+public:
+	virtual bool updateInformation(IN OUT Engine&) abstract;
 };
 
 // система чатиц
 class ParticleSystem: public GameObject
 {
+	friend class ParticleProcessor;
+
+public:
+	ParticleSystem();
+
+	bool isSuportingInterface(IN OUT Engine&);
+	bool beforeInject(IN OUT Engine&);
+	void afterRemove(IN OUT Engine&);
+	bool updateInformation(IN OUT Engine&);
+	void bindEngine(IN OUT Engine&);
+	void process(IN const ProcessInfo&);
+	bool InitFromConfig(IN Config&);
+
+private:
 	Config				*conf;
 	Config				*emitterConf;
 	Config				*rendererConf;
@@ -87,19 +108,6 @@ class ParticleSystem: public GameObject
 	ParticleRenderer	*renderer;
 	ParticleAnimator	*animator;
 	ParticleSet			 particleSet;
-
-friend class ParticleProcessor;
-
-public:
-	ParticleSystem();
-
-	bool InitFromConfig(Config *conf);
-	bool isSuportingInterface(InterfaceId);
-	bool updateInformation(InterfaceId, Engine*);
-	bool beforeInject(InterfaceId);
-	void afterRemove(InterfaceId, Engine*);
-	void process(IN const ProcessInfo& info);
-	void bindEngine(InterfaceId, Engine*);
 };
 
 #endif

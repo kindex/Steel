@@ -15,6 +15,11 @@
 #include "../../steel.h"
 #include "opengl_engine.h"
 
+bool OpenGL_Engine::isSupportingInterface(IN const InterfaceId id)
+{
+	return (id & (INTERFACE_GRAPH)) == id;
+}
+
 void OpenGL_Engine::addLight(Light* light)
 {
 	if(currentShadow != NULL)
@@ -83,21 +88,13 @@ void OpenGL_Engine::addChild(GameObject* child)
 void OpenGL_Engine::addChild(GraphShadow &shadow, GameObject *child)
 {
 	uid childUid = child->getId();
-	
 	uidVector::const_iterator it = find(shadow.children, childUid);
-
 	if(it != currentShadow->children.end()) return ; // child have been added before
-
-	if(!child->beforeInject(this->interfaceId)) return; // shild don't want to be added
-
+	if(!child->beforeInject(*this)) return; // shild don't want to be added
 	if(!makeShadowForObject(child)) return;
-
 	shadow.children.push_back(childUid);
-
 	setCurrentObject(child);
-
-	child->bindEngine(this->interfaceId, this);
-
+	child->bindEngine(*this);
 	currentShadow = &shadow;
 }
 

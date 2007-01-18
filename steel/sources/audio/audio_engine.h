@@ -52,14 +52,14 @@ class AudioEngine : public Engine, public AudioInterface
 public:
 	AudioEngine() :  masterVolume(1.0f) {}
 
-	virtual bool init(Config *_conf) = 0;
+	virtual bool init(Config& _conf) abstract;
 	virtual bool clear() { return true; } 
-	virtual bool deinit() = 0;
+	virtual bool deinit() abstract;
 	virtual void setListener(const Listener &aListener) { listener = aListener; }
-	virtual void setListenerEnvironment(unsigned long environment) = 0;
+	virtual void setListenerEnvironment(unsigned long environment) abstract;
 
-	virtual bool process() = 0;
-	virtual bool inject(GameObject *object) = 0;
+	virtual bool process() abstract;
+	virtual bool inject(GameObject& object) abstract;
 
 	float getMasterVolume() { return masterVolume; }
 

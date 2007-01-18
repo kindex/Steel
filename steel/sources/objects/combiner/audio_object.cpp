@@ -15,7 +15,7 @@
 #include "audio_object.h"
 #include "audio/simple_sound.h"
 
-AudioObject* findAudioObject(const string &_class)
+AudioObject* audioObjectFactory(const string &_class)
 {
 	if(_class == "simple") return new SimpleSound;
 
@@ -58,13 +58,10 @@ bool AudioObject::soundPause(Sound* sound)
 	return true;
 }
 
-void AudioObject::bindEngine(InterfaceId id, Engine* aEngine)
+void AudioObject::bindEngine(Engine& _engine)
 {
-	if(id == AudioInterface::interfaceId)
-	{
-		engine = dynamic_cast<AudioInterface*>(aEngine);
-		// TODO: start playing all scheduled sounds in sounds array
-	}
+	engine = dynamic_cast<AudioInterface*>(&_engine);
+	// TODO: start playing all scheduled sounds in sounds array
 }
 
 

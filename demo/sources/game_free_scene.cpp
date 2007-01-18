@@ -14,9 +14,9 @@
 #include "game_free_scene.h"
 #include <audio/openal_engine.h>
 
-bool GameFreeScene::init(Config *_conf, Input *_input)
+bool GameFreeScene::init(Config& _conf, Input& _input)
 {
-	conf = _conf;
+	conf = &_conf;
 	if(!conf)
 	{
 		log_msg("error game res", "Cannot load game config");
@@ -25,7 +25,7 @@ bool GameFreeScene::init(Config *_conf, Input *_input)
 
 	gameObjectFactory = createGameObjectFactory();
 
-	input = _input; 
+	input = &_input; 
 	input->setGame(this);
 
 	// Init world
@@ -51,9 +51,13 @@ bool GameFreeScene::init(Config *_conf, Input *_input)
 		return false;
 	}
 	
-	light = new GameLight();
-	light->InitFromConfig(resConfig.add("flashlight.conf"));
-	light->enable();
+	Config* flashlightConf = resConfig.add("flashlight.conf");
+	if (flashlightConf != NULL)
+	{
+		light = new GameLight();
+		light->InitFromConfig(*flashlightConf);
+		light->enable();
+	}
 	if(light != NULL)
 	{
 		light->setPosition(spectator.camera.getPosition());
@@ -195,22 +199,22 @@ void GameFreeScene::process(IN const TimeInfo& timeInfo)
 	}
 }
 
-void GameFreeScene::bind(GraphEngine *engine)
+void GameFreeScene::bind(GraphEngine& engine)
 {
-	graphEngine = engine;
+	graphEngine = &engine;
 	if(world != NULL)
 	{
-		engine->inject(world);
+		engine.inject(world);
 	}
 	if(light != NULL)
 	{
-		engine->inject(light);
+		engine.inject(light);
 	}
 }
 
-void GameFreeScene::bind(AudioEngine *engine)
+void GameFreeScene::bind(AudioEngine& engine)
 {
-	audioEngine = engine;
+	audioEngine = &engine;
 #ifdef LIB_OPENAL
 	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_GENERIC);
 #endif
@@ -244,24 +248,24 @@ void GameFreeScene::bind(AudioEngine *engine)
 	*/
 	if(world != NULL)
 	{
-		engine->inject(world);
+		engine.inject(*world);
 	}
 }
 
 
-void GameFreeScene::draw(GraphEngine *graph)
+void GameFreeScene::draw(GraphEngine& graph)
 {
-	graph->process(info);
+	graph.process(info);
 }
 
-void GameFreeScene::insonify(AudioEngine *_audioEngine)
+void GameFreeScene::insonify(AudioEngine& _audioEngine)
 {
 	Listener listener;
 	v3 eye = spectator.camera.getPosition();
 	v3 direction = spectator.camera.getDirection();
 	listener.setPosition(eye.x, eye.y, eye.z);
 	listener.setOrientation(v3(direction.x, direction.y, direction.z), v3(0,0,1));
-	_audioEngine->setListener(listener);
+	_audioEngine.setListener(listener);
 }
 
 

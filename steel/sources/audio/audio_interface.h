@@ -21,14 +21,12 @@
 class AudioInterface: public BaseInterface, public ChildrenInterface, public Interface3D
 {
 public:
-	static const InterfaceId interfaceId = 0x200;
+	virtual bool soundPlay(Sound* sound) abstract;
+	virtual bool soundStop(Sound* sound) abstract;
+	virtual bool soundPause(Sound* sound) abstract;
+	virtual bool soundUpdate(Sound* sound) abstract;
 
-	virtual bool soundPlay(Sound* sound) = 0;
-	virtual bool soundStop(Sound* sound) = 0;
-	virtual bool soundPause(Sound* sound) = 0;
-	virtual bool soundUpdate(Sound* sound) = 0;
-
-	virtual float getMasterVolume() = 0;
+	virtual float getMasterVolume() abstract;
 };
 
 

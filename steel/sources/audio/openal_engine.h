@@ -57,7 +57,7 @@ protected:
 	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???
 	ALboolean CheckALCError();
 	ALboolean CheckALError();
-	void updateListener(Listener &listener);
+	void updateListener(Listener& listener);
 
 // AUDIO SHADOW ==============================
 	struct AudioShadow: public Shadow
@@ -80,9 +80,9 @@ public:
 	
 
 	void setListener(const Listener &aListener);
-	bool init(Config* _conf);
+	bool init(Config& _conf);
 	bool deinit();
-	bool inject(GameObject *object);
+	bool inject(GameObject& object);
 	bool process();
 
 
@@ -96,6 +96,10 @@ public:
 	void setPosition(ObjectPosition) {}
 	void setPositionKind(PositionKind) {}
 	bool setCurrentObject(GameObject* object);
+	bool isSupportingInterface(IN const InterfaceId id)
+	{
+		return (id & INTERFACE_AUDIO) == id;
+	}
 
 	
 

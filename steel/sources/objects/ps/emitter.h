@@ -19,9 +19,11 @@
 class SimpleEmitter: public ParticleEmitter
 {
 public:
-	void born(Particle &particle); // создать частицу
 	void process(IN const ProcessInfo& info);
-	bool InitFromConfig(Config *_conf);
+	bool updateInformation(IN OUT Engine&) {return false; }
+	bool InitFromConfig(IN Config&);
+
+	void born(Particle &particle); // создать частицу
 };
 
 #endif

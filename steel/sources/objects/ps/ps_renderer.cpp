@@ -65,7 +65,9 @@ AABB SpriteRenderer::getFrame()
 {
 	AABB frame;
 	for EACH(v3Vector, vertexes.data, it)
+	{
 		frame.merge(*it);
+	}
 
 	return frame;
 }
@@ -136,11 +138,11 @@ bool SpriteRenderer::initParticles()
 	return true;
 }
 
-bool SpriteRenderer::updateInformation(InterfaceId id, Engine* engine)
+bool SpriteRenderer::updateInformation(Engine& engine)
 {
-	if(id == GraphInterface::interfaceId)
+	if (engine.isSupportingInterface(INTERFACE_GRAPH))
 	{
-		GraphInterface &gengine = *dynamic_cast<GraphInterface*>(engine);
+		GraphInterface &gengine = *dynamic_cast<GraphInterface*>(&engine);
 
 		gengine.setVertexes(&vertexes);
 		gengine.setNormals(&normals);

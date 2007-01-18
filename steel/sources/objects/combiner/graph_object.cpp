@@ -17,15 +17,21 @@
 
 using namespace std;
 
-GraphObject* findGraphObject(const string &_class)
+GraphObject* graphObjectFactory(const string &_class)
 {
-	if(_class == "mesh") return new GraphObjectMesh;
-	if(_class == "box") return new GraphObjectBox;
-	if(_class == "model") return new GraphObjectModel;
+	if(_class == "mesh")	return new GraphObjectMesh;
+	if(_class == "box")		return new GraphObjectBox;
+	if(_class == "model")	return new GraphObjectModel;
 
 	error("objects", string("GraphObject class '") + _class + "' not found");
 	return NULL;
 }
+
+bool GraphObject::isSuportingInterface(Engine& engine)
+{ 
+	return engine.isSupportingInterface(INTERFACE_GRAPH);
+}
+
 
 // ***************** Custom *****************
 
@@ -37,32 +43,29 @@ GraphObjectCustom::GraphObjectCustom():
 {}
 
 
-void GraphObjectCustom::bindEngine(InterfaceId id, Engine* engine)
+void GraphObjectCustom::bindEngine(Engine& engine)
 {
-	if(id == GraphInterface::interfaceId)
-	{
-		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
-		gengine.setVertexes(vertexes);
-		gengine.setNormals(normals);
-		gengine.setFaceMaterials(faces);
-		gengine.setTexCoordsCount(1);
-		gengine.setTexCoords(0, texCoords);
-	}
+	GraphEngine &gengine = *static_cast<GraphEngine*>(&engine);
+	gengine.setVertexes(vertexes);
+	gengine.setNormals(normals);
+	gengine.setFaceMaterials(faces);
+	gengine.setTexCoordsCount(1);
+	gengine.setTexCoords(0, texCoords);
 }
 
 // ***************** Mesh *****************
-bool GraphObjectMesh::InitFromConfig(Config *conf)
+bool GraphObjectMesh::InitFromConfig(Config& conf)
 {
-	if(conf == NULL) return false;
-	
-	ConfigArray *vertexesConfig = conf->getArray("vertexes");  if(vertexesConfig == NULL) return false;
-	ConfigArray *trianglesConfig = conf->getArray("triangles");if(trianglesConfig == NULL) return false;
-	ConfigArray *texCoordsConfig = conf->getArray("texCoords");if(texCoordsConfig == NULL || texCoordsConfig->size() != vertexesConfig->size()) return false;
-	Config *materialConfig = conf->find("material");
+	ConfigArray *vertexesConfig = conf.getArray("vertexes");  if(vertexesConfig == NULL) return false;
+	ConfigArray *trianglesConfig = conf.getArray("triangles");if(trianglesConfig == NULL) return false;
+	ConfigArray *texCoordsConfig = conf.getArray("texCoords");if(texCoordsConfig == NULL || texCoordsConfig->size() != vertexesConfig->size()) return false;
+	Config *materialConfig = conf.find("material");
 
 	Material *m = NULL;
 	if(materialConfig != NULL)
+	{
 		m = createMaterial(materialConfig);
+	}
 
 	int vert = vertexesConfig->size();
 	int trg  = trianglesConfig->size();
@@ -95,16 +98,16 @@ bool GraphObjectMesh::InitFromConfig(Config *conf)
 }
 
 // ***************** Box *****************
-bool GraphObjectBox::InitFromConfig(Config *conf)
+bool GraphObjectBox::InitFromConfig(Config& conf)
 {
-	if(conf == NULL) return false;
-	
-	Config *materialConfig = conf->find("material");
-	v3 size = conf->getv3("size", v3(1.0f, 1.0f, 1.0f));
+	Config *materialConfig = conf.find("material");
+	v3 size = conf.getv3("size", v3(1.0f, 1.0f, 1.0f));
 
 	Material *m = NULL;
 	if(materialConfig != NULL)
+	{
 		m = createMaterial(materialConfig);
+	}
 
 	int vert = 6*4;
 	int trg  = 12;
@@ -161,13 +164,11 @@ GraphObjectModel::GraphObjectModel():
 	model(NULL) 
 {}
 
-bool GraphObjectModel::InitFromConfig(Config *conf)
+bool GraphObjectModel::InitFromConfig(Config& conf)
 {
-	if(conf == NULL) return false;
-	
-	model = resModel.add(conf->getPath("file"));
+	model = resModel.add(conf.getPath("file"));
 
-	Config *material = conf->find("material");
+	Config *material = conf.find("material");
 	if(material != NULL)
 	{
 		model->faceMaterials[0].material = createMaterial(material);
@@ -176,11 +177,11 @@ bool GraphObjectModel::InitFromConfig(Config *conf)
 	return model != NULL;
 }
 
-void GraphObjectModel::bindEngine(InterfaceId id, Engine* engine)
+void GraphObjectModel::bindEngine(Engine& engine)
 {
-	if(id == GraphInterface::interfaceId)
+	if (engine.isSupportingInterface(INTERFACE_GRAPH))
 	{
-		GraphEngine &gengine = *static_cast<GraphEngine*>(engine);
+		GraphEngine &gengine = *static_cast<GraphEngine*>(&engine);
 		gengine.setVertexes(model->getVertexes());
 		gengine.setNormals(model->getNormals());
 		gengine.setFaceMaterials(model->getFaceMaterials());

@@ -29,7 +29,7 @@
 #include <string>
 class GameObject;
 
-class Engine
+class Engine : public BaseInterface
 {
 public:
 	Config *conf;
@@ -37,7 +37,7 @@ public:
 	virtual ~Engine() {}
 //	virtual bool init(std::string _conf) = 0; // initialization
 
-	virtual bool clear() = 0; 
+	virtual bool clear() abstract; 
 //	protottype: virtual bool inject(Object *object) { return false; }; // add object to process by engine
 //	virtual	bool remove(Object *object);
 //	virtual bool process() = 0; // add object to process by engine
@@ -97,7 +97,7 @@ public:
 protected:
 	// создаёт место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
 	virtual bool makeShadowForObject(GameObject *object);
-	virtual Shadow* getShadowClass(GameObject *object) = 0;
+	virtual Shadow* getShadowClass(GameObject *object) abstract;
 	virtual void makeShadowForObjectPost(GameObject *object, Shadow *shadow) {}
 
 	virtual void deleteShadowForObject(int sid);

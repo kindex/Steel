@@ -56,11 +56,11 @@ class PhysicInterface : public BaseInterface, public ChildrenInterface, public I
 public:
 	static const InterfaceId interfaceId = 0x400;
 
-	virtual	void			setPosition(IN const ObjectPosition&) = 0;
-	virtual	ObjectPosition	getPosition() = 0;
+	virtual	void			setPosition(IN const ObjectPosition&) abstract;
+	virtual	ObjectPosition	getPosition() abstract;
 
-	virtual void			setVelocity(const velocity &v) = 0;
-	virtual velocity		getVelocity() = 0;
+	virtual void			setVelocity(const velocity &v) abstract;
+	virtual velocity		getVelocity() abstract;
 };
 
 #endif

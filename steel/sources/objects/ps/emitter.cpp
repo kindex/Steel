@@ -48,9 +48,9 @@ void SimpleEmitter::process(IN const ProcessInfo& info)
 	}
 }
 
-bool SimpleEmitter::InitFromConfig(Config *_conf)
+bool SimpleEmitter::InitFromConfig(Config& _conf)
 {
-	conf = _conf;
+	conf = &_conf;
 	position = conf->getv3("origin");
 
 	return true;

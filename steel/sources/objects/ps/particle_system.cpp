@@ -44,7 +44,7 @@ ParticleRenderer* findParticleRenderer(const string &_class)
 {
 	if(_class == "sprite") return new SpriteRenderer;
 	if(_class == "object") return new ObjectPSRenderer;
-	if(_class == "dummy") return new DummyPSRenderer;
+	if(_class == "dummy")  return new DummyPSRenderer;
 
 	error("ps", string("ParticleRenderer class '") + _class + "' not found");
 	return NULL;
@@ -63,10 +63,10 @@ void ParticleProcessor::bindParticleSystem(ParticleSystem *a)
 	set = &particleSystem->particleSet;
 }
 
-bool ParticleProcessor::InitFromConfig(Config *_conf) 
+bool ParticleProcessor::InitFromConfig(Config& _conf) 
 {
-	conf = _conf;
-	return conf != NULL; 
+	conf = &_conf;
+	return true; 
 }
 
 
@@ -80,10 +80,9 @@ ParticleSystem::ParticleSystem():
 	animator(NULL)
 {}
 
-bool ParticleSystem::InitFromConfig(Config *_conf)
+bool ParticleSystem::InitFromConfig(Config& _conf)
 {
-	if(_conf == NULL) return false;
-	conf = _conf;
+	conf = &_conf;
 
 	if( (emitterConf = conf->find("emitter")) == NULL)
 		abort_init("error res ps", "Cannot find emitter config");
@@ -98,7 +97,7 @@ bool ParticleSystem::InitFromConfig(Config *_conf)
 	processor = find##CLASS(processor##Conf->gets("class"));\
 	if(processor == NULL) return false;\
 	processor->bindParticleSystem(this);\
-	if(!processor->InitFromConfig(processor##Conf)) \
+	if(!processor->InitFromConfig(*processor##Conf)) \
 	{ \
 		abort_init("error res ps emitter", "emitter class cannot initialize"); \
 	}\
@@ -128,33 +127,46 @@ bool ParticleEmitter::initParticles()
 	return true;
 }
 
-bool ParticleSystem::isSuportingInterface(InterfaceId id)
+bool ParticleSystem::isSuportingInterface(Engine& engine)
 {
-	return id == GraphInterface::interfaceId;
+	return engine.isSupportingInterface(INTERFACE_GRAPH);
 }
 
-bool ParticleSystem::updateInformation(InterfaceId id, Engine* engine)
+bool ParticleSystem::updateInformation(Engine& engine)
 {
-	if(id == GraphInterface::interfaceId)
+	if (engine.isSupportingInterface(INTERFACE_GRAPH))
 	{
-		emitter->updateInformation(id, engine);
-		animator->updateInformation(id, engine);
-		renderer->updateInformation(id, engine);
+//		emitter->updateInformation(engine);
+		animator->updateInformation(engine);
+		renderer->updateInformation(engine);
 		return true;
 	}
-//	if(id == PhysicInterface::interfaceId) result ||= animator->updateInformation();
 	return false;
 }
 
-bool ParticleSystem::beforeInject(InterfaceId id)
+bool ParticleSystem::beforeInject(Engine& engine)
 {
-	if(id == GraphInterface::interfaceId) return renderer->beforeInject(id);
+	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	{
+		return renderer->beforeInject(engine);
+	}
 	return false;
 }
 
-void ParticleSystem::afterRemove(InterfaceId, Engine* engine)
+void ParticleSystem::afterRemove(Engine& engine)
 {
-	if (id == GraphInterface::interfaceId) renderer->afterRemove(id, engine);
+	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	{
+		return renderer->afterRemove(engine);
+	}
+}
+
+void ParticleSystem::bindEngine(Engine& engine)
+{
+	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	{
+		return renderer->afterRemove(engine);
+	}
 }
 
 void ParticleSystem::process(IN const ProcessInfo& info)
@@ -162,9 +174,4 @@ void ParticleSystem::process(IN const ProcessInfo& info)
 	emitter->process(info);
 	animator->process(info);
 	renderer->process(info);
-}
-
-void ParticleSystem::bindEngine(InterfaceId id, Engine* engine)
-{
-	if(id == GraphInterface::interfaceId) renderer->bindEngine(id, engine);
 }
