@@ -338,6 +338,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="19_ps"
+				>
+				<File
+					RelativePath="..\data\19_ps\main.scene"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="objects"

@@ -44,6 +44,8 @@ struct ConfigTemplate
 };
 class ConfigArray;
 
+class Config;
+typedef Config* PConfig;
 class Config: public Res
 {
 public:
@@ -61,18 +63,18 @@ public:
 	virtual const std::string returns(const std::string& _default = std::string()) const { return _default; }
 
 	// search for config subelement (struct, array)
-	virtual const Config *find(const std::string& path) const;
-	virtual Config *find(const std::string& path);
+	virtual const Config* find(const std::string& path) const;
+	virtual Config* find(const std::string& path);
 	virtual void toggle(const std::string& path);
 	virtual void setValued(const std::string& path, double value);
 	virtual void setValues(const std::string& path, const std::string& value);
 
 	// Steel types
-			double		getd (const std::string& path, const double _default = 0.0f) const;
-			float		getf (const std::string& path, const float  _default = 0.0f) const { return (float)getd(path, (double)_default); } 
-			int			geti (const std::string& path, const int	 _default = 0) const { return (int)getd(path, (double)_default); } 
-			bool		getb (const std::string& path, const bool	 _default = false) const { return geti(path, _default?1:0) > 0; } 
-			v3			getv3(const std::string& path, const v3	 _default = v3(0.0f, 0.0f, 0.0f)) const;
+			double		getd (const std::string& path, const double _default = 0.0)		const;
+			float		getf (const std::string& path, const float	_default = 0.0f)	const { return (float)getd(path, (double)_default); } 
+			int			geti (const std::string& path, const int	_default = 0)		const { return   (int)getd(path, (double)_default); } 
+			bool		getb (const std::string& path, const bool	_default = false)	const { return        geti(path, _default?1:0) > 0; } 
+			v3			getv3(const std::string& path, const v3		_default = v3(0.0f, 0.0f, 0.0f)) const;
 	const	std::string	gets(const std::string& path, const std::string &_default = std::string()) const;
 	const	ConfigArray*getArray(const std::string& path) const;
 			ConfigArray*getArray(const std::string &path);
@@ -119,8 +121,9 @@ class ConfigNull: public Config
 public:
 	ConfigNull(): Config(CONFIG_VALUE_NULL, false) {}
 
-	const Config	*findInThis(const std::string &path) const { return NULL; }
-	Config			*findInThis(const std::string &path) { return NULL; }
+	const	Config* findInThis(const std::string &path) const { return NULL; }
+	Config* findInThisForce(const std::string &path);
+	Config* findInThis(const std::string &path) { return NULL; }
 	const std::string  DumpThis(int level = 0)  const { return "null"; }
 };
 
@@ -129,7 +132,8 @@ class ConfigSimple: public Config
 public:
 	ConfigSimple(ConfigValueType _type, bool _valueIsSet): Config(_type, _valueIsSet) {}
 
-	const Config *findInThis(const std::string &path) const;
+	const Config* findInThis(const std::string &path) const;
+	const Config* findInThisForce(const std::string &path) const;
 	Config *findInThis(const std::string &path);
 };
 

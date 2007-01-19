@@ -35,7 +35,7 @@ public:
 	bool updateInformation(IN OUT Engine&);
 	void bindEngine(IN OUT Engine&);
 	void process(IN const ProcessInfo&);
-	bool InitFromConfig(IN Config&){ return true; }
+	bool InitFromConfig(IN Config&);
 
 	void initSprites();
 	void initSprites(int begin, int end);

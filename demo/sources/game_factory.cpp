@@ -18,7 +18,7 @@
 Game* GameFactory::createGame(IN const std::string& className) const
 {
 	if(className == "free_scene")	return new GameFreeScene;
-	if(className == "19_ps")		return new Game19;
+	if(className == "ps")			return new GamePS;
 
 	return NULL;
 }

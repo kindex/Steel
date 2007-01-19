@@ -1,0 +1,45 @@
+# Main scene 
+{
+class = 'combiner'
+objects = 
+(
+
+[steel.scene#]{origin = (20 0 0)}
+
+[light.scene#]{origin = (10 7 3)}
+[light.scene#]{origin = (10 -7 3)}
+[light.scene#]{origin = (10 0 5)}
+
+{
+class = 'ps'
+emitter = 
+	{
+	class = 'simple'
+	particle_size = 0.1
+	} 
+renderer = 
+	{
+	class = 'sprite'
+	material = 
+		{
+			class = 'std'
+			blend = 0
+			diffuse_map =
+			{ 
+				image = '../17_intro/GALVPLAT'
+				texCoordsRotation = 0.0
+				texCoordsScale = (1 1 1)
+				texCoordsTranslation = (0 0 0)
+				k = 0.4
+			}
+		}
+	} 
+animator = 
+	{
+	class = 'simple'
+	} 
+}
+
+
+) // objects
+} // scene

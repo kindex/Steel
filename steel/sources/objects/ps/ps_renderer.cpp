@@ -117,9 +117,15 @@ void SpriteRenderer::initSprites(int begin, int end)
 	}
 }
 
-bool SpriteRenderer::initParticles()
+bool SpriteRenderer::InitFromConfig(IN Config& _conf)
 {
-	material = createMaterial(conf->find("material"));
+	conf = &_conf;
+	Config* materailConfig = conf->find("material");
+	if (materailConfig == NULL)
+	{
+		return false;
+	}
+	material = createMaterial(materailConfig);
 
 	std::string salign = conf->gets("align", "screen"); // align;
 	if(salign == "screen")	align = SPRITE_ALIGN_SCREEN; else
@@ -132,11 +138,17 @@ bool SpriteRenderer::initParticles()
 		align = SPRITE_ALIGN_CUSTOM;
 	}
 
-	initSprites();
-	initSprites(0, set->particles.size());
-
 	return true;
 }
+
+bool SpriteRenderer::initParticles()
+{
+	initSprites();
+	initSprites(0, set->particles.size());
+	return true;
+}
+
+
 
 bool SpriteRenderer::updateInformation(Engine& engine)
 {

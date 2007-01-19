@@ -45,13 +45,14 @@ const Config* Config::find(const std::string &path) const
 	return result;
 }
 
+
+
 Config* Config::find(const std::string &path)
 {
 	Config *result = findInThis(path);
 	if(result == NULL) result = findInTemplate(path);
 	return result;
 }
-
 
 void Config::toggle(const std::string &path)
 {
@@ -84,6 +85,7 @@ void Config::setValued(const std::string& path, double value)
 		}
 	}
 }
+
 void Config::setValues(const std::string& path, const std::string& value)
 {
 	Config *c = find(path);

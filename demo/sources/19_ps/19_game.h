@@ -15,7 +15,7 @@
 
 #include "../game_free_scene.h"
 
-class Game19: public GameFreeScene
+class GamePS: public GameFreeScene
 {
 
 };

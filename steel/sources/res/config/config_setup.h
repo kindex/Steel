@@ -14,10 +14,9 @@
 #define __RES__CONFIF_SETUP_H__
 
 #include "../../steel.h"
-
-
 #include "config.h"
 
+void setup(PConfig& conf, const std::string& path, Config* newValue);
 bool executeScript(Config* conf, std::string script);
 
 #endif
