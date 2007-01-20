@@ -59,7 +59,9 @@ bool UniPSanimator::InitFromConfig(Config& _conf)
 {
 	conf = &_conf;
 
-	return true;
+	particleConf = conf->find("particle");
+
+	return particleConf != NULL;
 }
 
 bool UniPSanimator::updateInformation(IN OUT Engine& engine)
@@ -94,7 +96,7 @@ void UniPSanimator::afterRemove(IN OUT Engine&)
 
 void UniPSanimator::onParticleBorn(int index)
 {
-	UniParticle* newParticle = new UniParticle(set->particles[index], conf);
+	UniParticle* newParticle = new UniParticle(set->particles[index], particleConf);
 	children.push_back(newParticle);
 
 	if (engine != NULL)
@@ -142,10 +144,12 @@ void UniParticle::bindEngine(IN OUT Engine& _engine)
 	engine = static_cast<PhysicEngine*>(&_engine);
 	engine->setPosition(particle->position);
 	engine->setVelocity(particle->velocity);
+	engine->setConfig(*conf);
 }
 
 UniPSanimator::UniPSanimator():
-	engine(NULL)
+	engine(NULL),
+	particleConf(NULL)
 {}
 
 UniParticle::UniParticle(Particle *_particle, Config *_conf):

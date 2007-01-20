@@ -310,6 +310,10 @@
 				Name="17_intro"
 				>
 				<File
+					RelativePath="..\data\17_intro\1.mat"
+					>
+				</File>
+				<File
 					RelativePath="..\data\17_intro\division.scene"
 					>
 				</File>

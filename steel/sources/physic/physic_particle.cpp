@@ -78,9 +78,18 @@ v3 PhysicEngine::getVelocity()
 	return currentShadow->velocity;
 }
 
-void PhysicEngine::setConfig(Config&)
+void PhysicEngine::setConfig(Config& _config)
 {
-
+	currentShadow->config			= &_config;
+	currentShadow->mass				= currentShadow->config->getf("mass", 1.0f);
+	currentShadow->spring_r0		= currentShadow->config->getf("spring_r0");
+	currentShadow->spring_k			= currentShadow->config->getf("spring_k");
+	currentShadow->gravity_k		= currentShadow->config->getf("gravity_k");
+	currentShadow->gravity_power	= currentShadow->config->getf("gravity_power");
+	currentShadow->gravity_min_dist	= currentShadow->config->getf("gravity_min_dist");
+	currentShadow->friction_k		= currentShadow->config->getf("friction_k");
+	currentShadow->friction_power	= currentShadow->config->getf("friction_power");
+	currentShadow->enabled			= true;
 }
 
 
@@ -150,41 +159,39 @@ bool PhysicEngine::process(IN const TimeInfo& info)
 	
 	for EACH(ShadowPVector,  shadows, it)
 	{
-//		processParticle(storages[*it]);
-		static_cast<ParticleShadow*>(*it)->position += v3(0,0,1)*timeInfo.frameLength;
+		if (static_cast<ParticleShadow*>(*it)->enabled)
+		{
+			processParticle(static_cast<ParticleShadow*>(*it));
+	//		->position += v3(0,0,1)*timeInfo.frameLength;
+		}
 	}
-	
 
-/*	for(svector<int>::iterator it = particleSet.begin(); it != particleSet.end(); it++)
+	for EACH(ShadowPVector,  shadows, it)
 	{
-		PhysicStorageParticle *objectStorage = (PhysicStorageParticle*)storages[*it];
+	if (static_cast<ParticleShadow*>(*it)->enabled)
+	{
+		ParticleShadow* shadow = static_cast<ParticleShadow*>(*it);
 
-		objectStorage->velocity += time*objectStorage->force/objectStorage->mass;
-		objectStorage->force += objectStorage->velocity.getNormalized() * objectStorage->velocity.getNormalized();
+		shadow->velocity += info.frameLength*shadow->force/shadow->mass;
+		shadow->force += shadow->velocity.getNormalized() * shadow->velocity.getNormalized();
+
 		v3 frictionForce  = 
-			-objectStorage->velocity.getNormalized() * pow(objectStorage->velocity.getLength(), objectStorage->friction_power)*objectStorage->friction_k;
+			-shadow->velocity.getNormalized() * pow(shadow->velocity.getLength(), shadow->friction_power)*shadow->friction_k;
 
-		v3 newVelocity = objectStorage->velocity + time*frictionForce/objectStorage->mass;
+		v3 newVelocity = shadow->velocity + info.frameLength*frictionForce/shadow->mass;
 
-		if((newVelocity & objectStorage->velocity) >0) // Ñ_Ð¸Ð>Ð° Ñ'Ñ_Ð÷Ð_Ð¸Ñ_ Ð_Ð÷ Ð_Ð_ÐÐ÷Ñ' Ñ_Ð°Ð·Ð_Ð÷Ñ_Ð_Ñ_Ñ'Ñ_ Ñ'Ð÷Ð>Ð_
-				objectStorage->velocity = newVelocity;
+		if((newVelocity & shadow->velocity) >0) // Ñ_Ð¸Ð>Ð° Ñ'Ñ_Ð÷Ð_Ð¸Ñ_ Ð_Ð÷ Ð_Ð_ÐÐ÷Ñ' Ñ_Ð°Ð·Ð_Ð÷Ñ_Ð_Ñ_Ñ'Ñ_ Ñ'Ð÷Ð>Ð_
+		{
+			shadow->velocity = newVelocity;
+		}
 		else
-			objectStorage->velocity.loadZero();
+		{
+			shadow->velocity.loadZero();
+		}
 
-
-		objectStorage->position += objectStorage->velocity*time;
-
-		PhysicObject &object = *(PhysicObject*)objectStorage->object;
-
-		ObjectPosition objectPosition = object.getPosition();
-		objectPosition.setTranslation(objectStorage->position);
-		object.setPosition(objectPosition);
-
-		velocity vel;
-		vel.translation = objectStorage->velocity;
-		object.setVelocity(vel);
+		shadow->position += shadow->velocity*info.frameLength;
 	}
-*/
+	}
 
 	return true;
 }

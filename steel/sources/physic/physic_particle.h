@@ -25,8 +25,12 @@ class PhysicEngine: public Engine, public PhysicParticleInterface
 		v3		velocity;
 		v3		force;
 		Config*	config;
+		bool	enabled;
 
-		ParticleShadow(Engine* aEngine): Shadow(aEngine) {}
+		float mass;
+		float spring_r0, spring_k, gravity_k, gravity_min_dist, gravity_power, friction_k, friction_power;
+
+		ParticleShadow(Engine* aEngine): Shadow(aEngine), enabled(false) {}
 	};
 
 public:
@@ -54,6 +58,12 @@ public:
 	ParticleShadow* currentShadow;
 
 	PhysicEngine();
+
+// ***************************** PARTICLE *************************
+	v3 calculateForceForParticle(ParticleShadow* shadow1, ParticleShadow* shadow2);
+	v3 PhysicEngine::calculateForceForParticle(ParticleShadow* shadow);
+	bool PhysicEngine::processParticle(ParticleShadow* shadow);
+
 
 protected:
 	pvector<GameObject*>	objects;

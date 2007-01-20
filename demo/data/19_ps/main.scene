@@ -3,20 +3,14 @@
 class = 'combiner'
 objects = 
 (
-
-[steel.scene#]{origin = (20 0 0)}
-
-[light.scene#]{origin = (10 7 3)}
-[light.scene#]{origin = (10 -7 3)}
-[light.scene#]{origin = (10 0 5)}
-
 {
 class = 'ps'
 emitter = 
 	{
 	class = 'simple'
 	particle_size = 0.1
-	init_size = 10
+	init_size = 100
+	position_dispersion = 10
 	} 
 renderer = 
 	{
@@ -25,19 +19,30 @@ renderer =
 		{
 			class = 'std'
 			blend = 0
-			diffuse_map =
+			emission_map =
 			{ 
 				image = '../17_intro/GALVPLAT'
-				texCoordsRotation = 0.0
-				texCoordsScale = (1 1 1)
-				texCoordsTranslation = (0 0 0)
-				k = 0.4
+				k = 10
 			}
 		}
 	} 
 animator = 
 	{
 	class = 'UniPSanimator'
+	particle = 
+	{
+		mass=1
+
+		spring_k=1
+		spring_r0=10
+
+		gravity_k=0
+		gravity_power=1
+		gravity_min_dist=0.1
+
+		friction_k=0.1
+		friction_power=1
+	}
 	} 
 }
 

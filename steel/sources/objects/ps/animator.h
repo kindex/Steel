@@ -52,8 +52,9 @@ public:
 	void onParticleDie(int index) {}
 
 private:
-	pvector<UniParticle*> children;
-	PhysicEngine* engine;
+	pvector<UniParticle*>	children;
+	PhysicEngine*			engine;
+	Config*					particleConf;
 };
 
 
