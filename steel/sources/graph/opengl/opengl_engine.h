@@ -138,10 +138,10 @@ protected:
 	std::map<uid, OpenGL_Buffer> buffer;
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
-	Image *zeroNormal;
-	Image *black;
-	Image *white;
-	Image *none;
+	Image* zeroNormal;
+	Image* black;
+	Image* white;
+	Image* none;
 	Shader shaderStd;
 	int maxLightsInShader;
 
@@ -239,7 +239,7 @@ public:
 	void process(GraphShadow *e);
 	bool isVisible(AABB box);
 	
-	GraphShadow* getShadow(GameObject *object) { return (GraphShadow*)Engine::getShadow(object); }
+	GraphShadow* getShadow(GameObject* object) { return (GraphShadow*)Engine::getShadow(object); }
 	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id); }
 	 
 	Shadow* getShadowClass(GameObject *object) { return new GraphShadow(this); }

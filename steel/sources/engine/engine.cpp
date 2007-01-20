@@ -19,7 +19,7 @@
 #include "engine.h"
 #include "game_object.h"
 
-void Engine::Shadow::fill(GameObject *object)
+void Engine::Shadow::fill(GameObject* object)
 {
 	this->object = object;
 	objectId = object->getId();
@@ -39,7 +39,7 @@ bool Engine::Shadow::cache()
 }
 
 
-bool Engine::makeShadowForObject(GameObject *object)
+bool Engine::makeShadowForObject(GameObject* object)
 {
 	uid objectId = object->getId();
 	if(idHash.find(objectId) != idHash.end())
@@ -93,7 +93,7 @@ void Engine::deleteShadowForChildren(int sid)
 	}
 }
 
-Engine::Shadow* Engine::getShadow(GameObject *object)
+Engine::Shadow* Engine::getShadow(GameObject* object)
 {
 	uid id = object->getId();
 //	assert(idHash.find(id) != idHash.end(), "Object not found in physic shadow");

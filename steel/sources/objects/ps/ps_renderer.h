@@ -36,6 +36,8 @@ public:
 	void bindEngine(IN OUT Engine&);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+	void onParticleBorn(int index) {}
+	void onParticleDie(int index) {}
 
 	void initSprites();
 	void initSprites(int begin, int end);
@@ -63,6 +65,8 @@ public:
 	void process(IN const ProcessInfo& info){}
 	bool beforeInject(IN OUT Engine&) { return true; }
 	void afterRemove(IN OUT Engine&) {}
+	void onParticleBorn(int index) {}
+	void onParticleDie(int index) {}
 
 protected:
 	pvector<GameObject*> children;
@@ -78,6 +82,8 @@ public:
 	void process(IN const ProcessInfo& info){}
 	bool beforeInject(IN OUT Engine&) { return true; }
 	void afterRemove(IN OUT Engine&) {}
+	void onParticleBorn(int index) {}
+	void onParticleDie(int index) {}
 };
 
 #endif

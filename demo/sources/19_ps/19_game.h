@@ -15,9 +15,17 @@
 
 #include "../game_free_scene.h"
 
+#include <physic/physic_particle.h>
+
 class GamePS: public GameFreeScene
 {
+public:
+	GamePS();
+	bool init(Config& _conf, Input& _input);
+	void process(IN const TimeInfo&);
 
+private:
+	PhysicEngine* physicEngine;
 };
 
 #endif

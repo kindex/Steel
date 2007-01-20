@@ -33,7 +33,7 @@ ParticleEmitter* findParticleEmitter(const string &_class)
 
 ParticleAnimator* findParticleAnimator(const string &_class)
 {
-//	if(_class == "UniPSanimator") return new UniPSanimator;
+	if(_class == "UniPSanimator") return new UniPSanimator;
 	if(_class == "simple") return new SimpleAnimator;
 
 	error("ps", string("ParticleAnimator class '") + _class + "' not found");
@@ -100,12 +100,15 @@ bool ParticleSystem::InitFromConfig(Config& _conf)
 	if(!processor->InitFromConfig(*processor##Conf)) \
 	{ \
 		abort_init("error res ps emitter", "emitter class cannot initialize"); \
-	}\
-	processor->initParticles();
+	}
 	
 	INIT_PARTICLE_PROCESSOR(emitter, ParticleEmitter);
 	INIT_PARTICLE_PROCESSOR(animator, ParticleAnimator);
 	INIT_PARTICLE_PROCESSOR(renderer, ParticleRenderer);
+
+	emitter->initParticles();
+	animator->initParticles();
+	renderer->initParticles();
 
 	return true;
 }
@@ -122,14 +125,15 @@ bool ParticleEmitter::initParticles()
 	for(int i=0; i<initSize; i++)
 	{
 		set->particles[i] = new Particle;
-		born(*set->particles[i]);
+		born(*set->particles[i], i);
 	}
 	return true;
 }
 
 bool ParticleSystem::isSuportingInterface(Engine& engine)
 {
-	return engine.isSupportingInterface(INTERFACE_GRAPH);
+	return engine.isSupportingInterface(INTERFACE_GRAPH) ||
+			engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC);
 }
 
 bool ParticleSystem::updateInformation(Engine& engine)
@@ -137,10 +141,14 @@ bool ParticleSystem::updateInformation(Engine& engine)
 	if (engine.isSupportingInterface(INTERFACE_GRAPH))
 	{
 //		emitter->updateInformation(engine);
-		animator->updateInformation(engine);
 		renderer->updateInformation(engine);
 		return true;
 	}
+	if (engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC))
+	{
+		animator->updateInformation(engine);
+	}
+
 	return false;
 }
 
@@ -149,6 +157,10 @@ bool ParticleSystem::beforeInject(Engine& engine)
 	if (engine.isSupportingInterface(INTERFACE_GRAPH))
 	{
 		return renderer->beforeInject(engine);
+	}
+	if (engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC))
+	{
+		return animator->beforeInject(engine);
 	}
 	return false;
 }
@@ -159,6 +171,10 @@ void ParticleSystem::afterRemove(Engine& engine)
 	{
 		return renderer->afterRemove(engine);
 	}
+	if (engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC))
+	{
+		return animator->afterRemove(engine);
+	}
 }
 
 void ParticleSystem::bindEngine(Engine& engine)
@@ -167,6 +183,10 @@ void ParticleSystem::bindEngine(Engine& engine)
 	{
 		return renderer->afterRemove(engine);
 	}
+	if (engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC))
+	{
+		return animator->afterRemove(engine);
+	}
 }
 
 void ParticleSystem::process(IN const ProcessInfo& info)
@@ -174,4 +194,18 @@ void ParticleSystem::process(IN const ProcessInfo& info)
 	emitter->process(info);
 	animator->process(info);
 	renderer->process(info);
+}
+
+void ParticleSystem::particleBorn(int index)
+{
+	emitter->onParticleBorn(index);
+	animator->onParticleBorn(index);
+	renderer->onParticleBorn(index);
+}
+
+void ParticleSystem::particleDie(int index)
+{
+	emitter->onParticleDie(index);
+	animator->onParticleDie(index);
+	renderer->onParticleDie(index);
 }

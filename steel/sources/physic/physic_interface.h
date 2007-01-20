@@ -16,10 +16,10 @@
 
 #include "../steel.h"
 #include "../engine/engine.h"
+#include "../engine/game_object.h"
 #include "../math/aabb.h"
 #include "../math/matrix34.h"
 #include "../math/vector3d.h"
-#include "../res/conf/conf.h"
 
 typedef enum
 {
@@ -28,39 +28,29 @@ typedef enum
 	PROCESS_UNI // движется по универсальным законам
 } ProcessKind;
 
-typedef enum
-{
-	COLLISION_NONE,
-	COLLISION_POLYHEDRA,
-	COLLISION_TRIGGER,
-	COLLISION_PARTICLE, // sphere, collide with polyhedra
-	COLLISION_SPHERE
-} CollisionType;
-
-
-struct velocity
+struct Velocity
 {
 	v3 translation; // скорость поступательного движения
 	v3 rotationAxis;  // ось вращения*скорость вращения(радиан/сек)
 
-	inline velocity(void) {}
-	inline velocity(const v3 _translation, const v3 _axis) 
+	inline Velocity(void) {}
+	inline Velocity(const v3 _translation, const v3 _axis) 
 	{
 		translation = _translation;
 		rotationAxis = _axis;
 	}
 };
 
-class PhysicInterface : public BaseInterface, public ChildrenInterface, public Interface3D
+class PhysicParticleInterface : public ChildrenInterface
 {
 public:
-	static const InterfaceId interfaceId = 0x400;
+	virtual	void		setPosition(IN const v3) abstract;
+	virtual	v3			getPosition() abstract;
 
-	virtual	void			setPosition(IN const ObjectPosition&) abstract;
-	virtual	ObjectPosition	getPosition() abstract;
+	virtual void		setVelocity(IN const v3) abstract;
+	virtual v3			getVelocity() abstract;
 
-	virtual void			setVelocity(const velocity &v) abstract;
-	virtual velocity		getVelocity() abstract;
+	virtual	void		setConfig(Config&) abstract;
 };
 
 #endif

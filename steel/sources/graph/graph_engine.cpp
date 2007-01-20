@@ -18,7 +18,7 @@
 #include "../steel.h"
 #include "graph_engine.h"
 
-bool GraphEngine::inject(GameObject *object)
+bool GraphEngine::inject(GameObject* object)
 {
 	if(!object->isSuportingInterface(*this)) return false;
 

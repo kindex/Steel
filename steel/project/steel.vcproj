@@ -777,7 +777,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\sources\physic\physic_engine_particle.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\sources\physic\physic_interface.h"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\physic\physic_particle.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\physic\physic_particle.h"
 					>
 				</File>
 			</Filter>

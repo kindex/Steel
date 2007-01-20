@@ -48,11 +48,13 @@ public:
 	virtual bool InitFromConfig(Config&) abstract;
 	virtual bool initParticles() abstract;
 	virtual void process(IN const ProcessInfo& info) abstract;
+	virtual void onParticleBorn(int index) abstract;
+	virtual void onParticleDie(int index) abstract;
 
 protected:
-	Config *conf;
-	ParticleSet *set;
-	ParticleSystem *particleSystem;
+	Config*			conf;
+	ParticleSet*	set;
+	ParticleSystem*	particleSystem;
 };
 
 // класс для создания новых частиц
@@ -60,7 +62,7 @@ class ParticleEmitter: public ParticleProcessor
 {
 public:
 	bool initParticles();
-	virtual void born(Particle &particle) abstract; // создать частицу
+	virtual void born(Particle &particle, int index) abstract; // создать частицу
 	virtual void kill(int i); // убить частицу с номером i
 
 protected:
@@ -81,6 +83,8 @@ class ParticleAnimator: public ParticleProcessor
 {
 public:
 	virtual bool updateInformation(IN OUT Engine&) abstract;
+	virtual bool beforeInject(IN OUT Engine&) abstract;
+	virtual void afterRemove(IN OUT Engine&) abstract;
 };
 
 // система чатиц
@@ -98,6 +102,8 @@ public:
 	void bindEngine(IN OUT Engine&);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+	void particleBorn(int index);
+	void particleDie(int index);
 
 private:
 	Config				*conf;

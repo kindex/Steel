@@ -16,6 +16,7 @@ emitter =
 	{
 	class = 'simple'
 	particle_size = 0.1
+	init_size = 10
 	} 
 renderer = 
 	{
@@ -36,7 +37,7 @@ renderer =
 	} 
 animator = 
 	{
-	class = 'simple'
+	class = 'UniPSanimator'
 	} 
 }
 

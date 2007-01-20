@@ -15,18 +15,20 @@
 #include "../../common/utils.h"
 
 
-void SimpleEmitter::born(Particle &particle)
+void SimpleEmitter::born(Particle &particle, int index)
 {
 	particle.position = this->position + v3(frand(), frand(), frand())*conf->getf("position_dispersion", 1.0f);
 	
 	particle.velocity.loadZero();
 	particle.size = conf->getf("particle_size", 1.0f);
+
+	particleSystem->particleBorn(index);
 }
 
 
 void SimpleEmitter::process(IN const ProcessInfo& info)
 {
-	if(frand() < 0.5 && set->particles.size() > 1) // delete particle
+	if(frand() < 0.0f && set->particles.size() > 1) // delete particle
 	{
 		int dieId = rand()%set->particles.size(); // particle number
 
@@ -37,14 +39,14 @@ void SimpleEmitter::process(IN const ProcessInfo& info)
 		set->particles.pop_back();
 	}
 
-	if(frand() < 0.6f)  // born particle
+	if(frand() < 0.0f)  // born particle
 	{
 		int bornId = set->particles.size();
 		set->particles.resize(bornId + 1);
 
 		set->particles[bornId] = new Particle;
 
-		born(*set->particles[bornId]);
+		born(*set->particles[bornId], bornId);
 	}
 }
 

@@ -13,11 +13,7 @@
 ************************************************************/
 #include "animator.h"
 
-/*bool UniPSanimator::initParticles()
-{
-	return true;
-}
-
+/*
 void UniPSanimator::ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime _modificationTime)
 {
 	int size = set->particles.size();
@@ -53,3 +49,107 @@ bool SimpleAnimator::initParticles()
 {
 	return true;
 }
+
+bool UniPSanimator::initParticles()
+{ 
+	return true;
+}
+
+bool UniPSanimator::InitFromConfig(Config& _conf)
+{
+	conf = &_conf;
+
+	return true;
+}
+
+bool UniPSanimator::updateInformation(IN OUT Engine& engine)
+{
+
+	return false;
+}
+
+void UniPSanimator::process(IN const ProcessInfo& info)
+{
+	for EACH(pvector<UniParticle*>, children, it)
+	{
+		(*it)->process(info);
+	}
+}
+
+bool UniPSanimator::beforeInject(IN OUT Engine& _engine)
+{
+	engine = static_cast<PhysicEngine*>(&_engine);
+
+	for EACH(pvector<UniParticle*>, children, it)
+	{
+		engine->addChild(*it);
+	}
+
+	return true;
+}
+
+void UniPSanimator::afterRemove(IN OUT Engine&) 
+{
+}
+
+void UniPSanimator::onParticleBorn(int index)
+{
+	UniParticle* newParticle = new UniParticle(set->particles[index], conf);
+	children.push_back(newParticle);
+
+	if (engine != NULL)
+	{
+		engine->addChild(newParticle);
+	}
+}
+
+bool UniParticle::InitFromConfig(Config&)
+{
+	return true;
+}
+
+bool UniParticle::updateInformation(IN OUT Engine&)
+{
+	return false;
+}
+
+void UniParticle::process(IN const ProcessInfo& info)
+{
+	if (engine != NULL)
+	{
+		engine->setCurrentObject(this);
+		particle->position = engine->getPosition();
+		particle->velocity = engine->getVelocity();
+	}
+}
+
+bool UniParticle::beforeInject(IN OUT Engine& engine)
+{
+	return true;
+}
+
+void UniParticle::afterRemove(IN OUT Engine&)
+{
+}
+
+bool UniParticle::isSuportingInterface(IN OUT Engine& engine)
+{
+	return engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC);
+}
+
+void UniParticle::bindEngine(IN OUT Engine& _engine)
+{
+	engine = static_cast<PhysicEngine*>(&_engine);
+	engine->setPosition(particle->position);
+	engine->setVelocity(particle->velocity);
+}
+
+UniPSanimator::UniPSanimator():
+	engine(NULL)
+{}
+
+UniParticle::UniParticle(Particle *_particle, Config *_conf):
+	particle(_particle),
+	conf(_conf),
+	engine(NULL)
+{}

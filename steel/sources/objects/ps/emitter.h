@@ -22,8 +22,9 @@ public:
 	void process(IN const ProcessInfo& info);
 	bool updateInformation(IN OUT Engine&) {return false; }
 	bool InitFromConfig(IN Config&);
-
-	void born(Particle &particle); // создать частицу
+	void born(Particle &particle, int index); // создать частицу
+	void onParticleBorn(int index) {}
+	void onParticleDie(int index) {}
 };
 
 #endif

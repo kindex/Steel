@@ -14,7 +14,9 @@
 ************************************************************/
 
 #include "../steel.h"
-#include "physic_engine_steel.h"
+#include "physic_particle.h"
+
+#if 0
 
 v3 PhysicEngineSteel::calculateForceForParticle(PhysicStorageParticle *storage1, PhysicStorageParticle *storage2)
 {
@@ -99,3 +101,4 @@ bool PhysicEngineSteel::PhysicStorageParticle::cache()
 	else
 		return false;
 }
+#endif

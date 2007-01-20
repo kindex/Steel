@@ -23,8 +23,6 @@
 #include "../engine/interface.h"
 #include "../engine/game_object.h"
 
-class GraphEngine;
-
 class GraphEngine: public Engine, public GraphInterface
 {
 public:
