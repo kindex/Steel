@@ -86,7 +86,6 @@ public:
 	{
 		Image *image;
 		unsigned int texCoordsUnit;
-		TextureMatrix textureMatrix;
 		float k;
 
 		TextureStd(): image(NULL), texCoordsUnit(0), k(0.0) {}
@@ -105,6 +104,7 @@ public:
 //private:
 	float specularPower;
 
+	TextureMatrix textureMatrix;
 
 	TextureStd diffuse_map, diffuse2_map, normal_map, specular_map, emission_map;
 	color4f color;

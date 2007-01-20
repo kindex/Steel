@@ -8,7 +8,7 @@ class = 'ps'
 emitter = 
 	{
 	class = 'simple'
-	particle_size = 0.1
+	particle_size = 0.2
 	init_size = 100
 	position_dispersion = 10
 	} 
@@ -18,11 +18,11 @@ renderer =
 	material = 
 		{
 			class = 'std'
-			blend = 0
+			blend = 1
 			emission_map =
 			{ 
-				image = '../17_intro/GALVPLAT'
-				k = 10
+				image = 'wsmoke'
+				k = 1
 			}
 		}
 	} 

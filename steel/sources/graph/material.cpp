@@ -45,6 +45,10 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 */
 	string name;
 
+	textureMatrix.texCoordsScale		= conf->getv3("texCoordsScale", v3(1.0f, 1.0f, 1.0f));
+	textureMatrix.texCoordsRotation		= conf->getf ("texCoordsRotation", 0.0f);
+	textureMatrix.texCoordsTranslation	= conf->getv3("texCoordsTranslation", v3(0.0f, 0.0f, 0.0f));
+
 	diffuse_map.InitFromConfig(conf->find("diffuse_map"));
 	diffuse2_map.InitFromConfig(conf->find("diffuse2_map"));
 	normal_map.InitFromConfig(conf->find("normal_map"));
@@ -72,9 +76,6 @@ bool MaterialStd::TextureStd::InitFromConfig(Config *config)
 	k					= config->getf ("k", 1.0f);
 
 	texCoordsUnit		= config->geti ("texCoordsUnit", 0);
-	textureMatrix.texCoordsScale		= config->getv3("texCoordsScale", v3(1.0f, 1.0f, 1.0f));
-	textureMatrix.texCoordsRotation	= config->getf ("texCoordsRotation", 0.0f);
-	textureMatrix.texCoordsTranslation= config->getv3("texCoordsTranslation", v3(0.0f, 0.0f, 0.0f));
 
 	return image != NULL;
 }

@@ -74,7 +74,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 					texCoords = e.texCoords[0];
 
 			assert(texCoords->data.size() == e.vertexes->data.size(), "TexCoords.size != Vertex.size");
-			if(BindTexCoords != NULL) (this->*BindTexCoords)(texCoords, &material->diffuse_map.textureMatrix);
+			if(BindTexCoords != NULL) (this->*BindTexCoords)(texCoords, &material->textureMatrix);
 			currentTextureArb++;
 		}
 

@@ -35,10 +35,16 @@ using namespace std;
 const TexCoords* OpenGL_Engine::GraphShadow::getTexCoords(const MaterialStd::TextureStd &texture)
 {
 	if(texture.texCoordsUnit < texCoords.size())
+	{
 		return texCoords[texture.texCoordsUnit];
+	}
 	else
+	{
 		if(!texCoords.empty())
+		{
 			return texCoords[0];
+		}
+	}
 	return NULL;
 }
 
@@ -258,32 +264,40 @@ bool OpenGL_Engine::process(IN const ProcessInfo& info)
 		glClear(clear);
 
 //	steel::vector<int> elementAlpha;
-
+	ShadowPVector elementAlpha;
 // В начале выводим только непрозрачные объекты
 	for EACH(ShadowPVector, shadows, it)
-//		if(!it->blend)
 	{
-			GraphShadow *shadow = GS(*it);
-			process(shadow);
-	}
-	/*		else
+		GraphShadow* shadow = GS(*it);
+		if(!shadow->blend)
 		{
-			it->distance = (camera.eye - it->matrix*v3(0,0,0)).getLength();
-			elementAlpha.push_back(*it);
+			process(shadow);
 		}
-*/
+		else
+		{
+//			it->distance = (camera.eye - it->matrix*v3(0,0,0)).getLength();
+			elementAlpha.push_back(shadow);
+		}
+	}
 
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
 
-/*	if(conf->geti("drawAlpha")>0)
+	if (conf->geti("drawAlpha")>0)
 	{
-		sort(elementAlpha.begin(), elementAlpha.end());
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		
+		glDepthMask(GL_FALSE);
 
-		for(steel::vector<DrawElement>::iterator it = elementAlpha.begin(); it != elementAlpha.end(); it++)
-			drawElement((*it));
+//		sort(elementAlpha.begin(), elementAlpha.end());
+
+		for EACH(ShadowPVector, elementAlpha, it)
+		{
+			process(GS(*it));
+		}
+		glPopAttrib();
 	}
 	elementAlpha.clear();
-*/
+
 	if(conf->geti("swapBuffers", 1))
 	{
 //		glFlush(); // TODO: flush in thread

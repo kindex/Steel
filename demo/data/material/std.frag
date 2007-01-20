@@ -35,6 +35,7 @@ uniform sampler2D diffuse2_map;
 uniform sampler2D normal_map;
 uniform sampler2D emission_map;
 uniform sampler2D specular_map;
+uniform int blending;
 
 varying vec3 viewDir;     // tbn
 
@@ -121,7 +122,12 @@ void main (void)
 		}
 	}
 	
-	
-    // Write out final fragment color
-    gl_FragColor = vec4(color, 1.0);
+	if (blending == 0)
+	{
+	    gl_FragColor = vec4(color, 1.0);
+	}
+	else
+	{
+	    gl_FragColor = gl_FragColor + vec4(color, 1.0);
+	}
 }

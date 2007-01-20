@@ -33,7 +33,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 
 		if(program != NULL)
 		{
-			(this->*BindTexCoords)(e.getTexCoords(material->diffuse_map), &material->diffuse_map.textureMatrix);
+			(this->*BindTexCoords)(e.getTexCoords(material->diffuse_map), &material->textureMatrix);
 
 			bindTextureToShader(program, "diffuse_map", 0, material->diffuse_map.image ? material->diffuse_map.image : none);
 //			bindTextureToShader(program, "diffuse2_map", 1, material->diffuse2_map.image ? material->diffuse2_map.image : black);
@@ -49,6 +49,8 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			program->setUniformVector("camera.position", camera.getPosition());
 			program->setUniformVector("camera.direction", camera.getDirection());
 			program->setUniformVector("camera.upVector", camera.getUpVector());
+
+			program->setUniformInt("blending", e.blend ? 1 : 0);
 
 			int lightCount = (int)e.lights.size();
 			if (lightCount > maxLightsInShader) lightCount = maxLightsInShader;
