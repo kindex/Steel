@@ -31,7 +31,7 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 	if(_conf == NULL) return false;
 	conf = _conf;
 
-	blend = conf->geti("blend") > 0;
+	blend = conf->getb("blend", false);
 
 /*	TextureBlendMode mode;
 	string sMode = conf->gets("mode");
@@ -116,7 +116,7 @@ Material *createMaterial(Config* conf)
 {
 	if(conf == NULL) return NULL;
 
-	Material *material = getMaterialClass(conf->gets("class"));
+	Material* material = getMaterialClass(conf->gets("class"));
 	if(material == NULL) return NULL;
 
 	material->InitFromConfig(conf);

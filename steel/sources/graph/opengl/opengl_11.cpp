@@ -17,15 +17,15 @@
 #include "../../libs/opengl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / glVertexPointer
-void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords)
+void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow& e, const Triangles& triangles, const TexCoords* coords)
 {
-	if(triangles != NULL && e.vertexes != NULL && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes != NULL && !triangles.data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
 		total.vertexCount += e.vertexes->data.size();
-		total.triangleCount += triangles->data.size();
+		total.triangleCount += triangles.data.size();
 			
 		if(coords)	
 		{ 
@@ -44,14 +44,14 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow &e, const 
 		glEnableClientState(GL_VERTEX_ARRAY);
 
 		//Draw All
-		glDrawElements(GL_TRIANGLES, triangles->data.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &triangles->data.front().a[0]);
+		glDrawElements(GL_TRIANGLES, triangles.data.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &triangles.data.front().a[0]);
 
 		glPopClientAttrib();
 		glPopAttrib();
 	}
 }
 
-void OpenGL_Engine::BindTexCoords_OpenGL11(const TexCoords *coords, const TextureMatrix* textureMatrix)
+void OpenGL_Engine::BindTexCoords_OpenGL11(const TexCoords* coords, const TextureMatrix* textureMatrix)
 {
 	if(coords != NULL)
 	{ 
@@ -71,7 +71,7 @@ void OpenGL_Engine::BindTexCoords_OpenGL11(const TexCoords *coords, const Textur
 	}
 }
 
-void OpenGL_Engine::BindTexCoords3f_OpenGL11(const TexCoords3f *coords)
+void OpenGL_Engine::BindTexCoords3f_OpenGL11(const TexCoords3f* coords)
 {
 	if(coords != NULL)
 	{ 
@@ -83,11 +83,9 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL11(const TexCoords3f *coords)
 }
 
 
-bool OpenGL_Engine::BindTexture_OpenGL11(Image *image, bool enable)
+bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enable)
 {
-	if(image == NULL) return false;
-
-	uid	id = image->getId();
+	uid	id = image.getId();
 
 	bool loaded = false;
 	if(buffer.find(id) != buffer.end())
@@ -97,7 +95,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image, bool enable)
 
 	if(loaded)
 	{
-		switch(image->getDimension())
+		switch(image.getDimension())
 		{
 			case IMAGE_2D:
 				if(enable) glEnable(GL_TEXTURE_2D);
@@ -123,16 +121,16 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image, bool enable)
 		glGenTextures(1, &buf.glid);
 
 		int format;
-		if(image->getFormat() == IMAGE_RGB) format = GL_RGB; 
+		if(image.getFormat() == IMAGE_RGB) format = GL_RGB; 
 		else
-		if(image->getFormat() == IMAGE_NORMAL) format = GL_RGB; 
-		else if(image->getFormat() == IMAGE_RGBA) format = GL_RGBA;
+		if(image.getFormat() == IMAGE_NORMAL) format = GL_RGB; 
+		else if(image.getFormat() == IMAGE_RGBA) format = GL_RGBA;
 		else return false;
 
-		int width = image->getWidth();
-		int heigth = image->getHeight();
+		int width = image.getWidth();
+		int heigth = image.getHeight();
 
-		switch(image->getDimension())
+		switch(image.getDimension())
 		{
 			case IMAGE_2D:
 				if(!GL_EXTENSION_TEXTURE_NON2POWER)
@@ -156,8 +154,8 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image, bool enable)
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 
-				glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
-					format,  GL_UNSIGNED_BYTE , image->getBitmap());
+				glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image.getWidth(), image.getHeight(),0,
+					format,  GL_UNSIGNED_BYTE , image.getBitmap());
 				break;
 			case IMAGE_CUBE:
 				if(GL_EXTENSION_TEXTURE_CUBE_MAP)
@@ -165,16 +163,16 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image, bool enable)
 					if(enable) glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 					glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
 
-					int w = image->getWidth();
-					int h = image->getHeight();
-					int bpp = image->getBpp()/8;
+					int w = image.getWidth();
+					int h = image.getHeight();
+					int bpp = image.getBpp()/8;
 
 					if(w*6 != h) return false; // 6 images in one
 
 					for(int i=0; i<6; i++)
 					{
 						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i,	0, 
-							GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image->getBitmap() + w*w*bpp*i);
+							GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image.getBitmap() + w*w*bpp*i);
 					}
 
 					glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -201,13 +199,13 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image *image, bool enable)
 
 
 
-void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow &e, const Triangles *triangles)
+void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow& e, const Triangles& triangles)
 {
-	if(triangles != NULL && e.vertexes != NULL && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes != NULL && !triangles.data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
 		total.objectCount++;
 		total.vertexCount += e.vertexes->data.size();
-		total.triangleCount += triangles->data.size();
+		total.triangleCount += triangles.data.size();
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
@@ -216,7 +214,7 @@ void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow &e, const Trian
 
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
 
-		glDrawElements(GL_TRIANGLES, triangles->data.size()*3/*A,b,c*/, GL_UNSIGNED_INT, &triangles->data.front().a[0]);
+		glDrawElements(GL_TRIANGLES, triangles.data.size()*3/*A,b,c*/, GL_UNSIGNED_INT, &triangles.data.front().a[0]);
 
 		glPopClientAttrib();
 		glPopAttrib();

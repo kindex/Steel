@@ -100,10 +100,10 @@ bool GraphObjectMesh::InitFromConfig(Config& conf)
 // ***************** Box *****************
 bool GraphObjectBox::InitFromConfig(Config& conf)
 {
-	Config *materialConfig = conf.find("material");
+	Config* materialConfig = conf.find("material");
 	v3 size = conf.getv3("size", v3(1.0f, 1.0f, 1.0f));
 
-	Material *m = NULL;
+	Material* m = NULL;
 	if(materialConfig != NULL)
 	{
 		m = createMaterial(materialConfig);

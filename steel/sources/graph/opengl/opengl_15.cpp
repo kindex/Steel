@@ -24,32 +24,32 @@ void OpenGL_Engine::CleanupDrawTriangles_OpenGL15()
 }
 
 // нарисовать множество полигонов с указанным материалом / VBO
-void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, const Triangles *triangles, const TexCoords *coords)
+void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow& e, const Triangles& triangles, const TexCoords* coords)
 {
-	if(triangles && e.vertexes && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes && !triangles.data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
 		total.vertexCount += e.vertexes->data.size();
-		total.triangleCount += triangles->data.size();
+		total.triangleCount += triangles.data.size();
 			
 //		if(coords)	{ glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY); }
 
-		if(BindVBO(e.vertexes, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+		if (BindVBO(e.vertexes, GL_VERTEX_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 		{
 			glVertexPointer(3, GL_FLOAT, 0, 0);
 		}
 
-		if(BindVBO(e.normals, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+		if (BindVBO(e.normals, GL_NORMAL_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
 		{
 			glNormalPointer(GL_FLOAT, 0, 0);
 		}
 
 		//Draw All
-		if(BindVBO(triangles, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
+		if (BindVBO(&triangles, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
 		{
-			glDrawElements(GL_TRIANGLES, triangles->data.size()*3, GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, triangles.data.size()*3, GL_UNSIGNED_INT, 0);
 		}
 
 		glPopClientAttrib();
@@ -57,7 +57,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow &e, const Triangles *tria
 	}
 }
 
-void OpenGL_Engine::BindTexCoords_OpenGL15(const TexCoords *coords, const TextureMatrix* textureMatrix)
+void OpenGL_Engine::BindTexCoords_OpenGL15(const TexCoords* coords, const TextureMatrix* textureMatrix)
 {
 	if(coords != NULL)	
 	{ 
@@ -77,7 +77,7 @@ void OpenGL_Engine::BindTexCoords_OpenGL15(const TexCoords *coords, const Textur
 	}
 }
 
-void OpenGL_Engine::BindTexCoords3f_OpenGL15(const TexCoords3f *coords)
+void OpenGL_Engine::BindTexCoords3f_OpenGL15(const TexCoords3f* coords)
 {
 	if(coords != NULL)
 	{ 

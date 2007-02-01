@@ -38,19 +38,68 @@ ConfigTemplate::ConfigTemplate(const string &FullPath)
 }
 
 
-const Config* Config::find(const std::string &path) const
+const Config* Config::find(const std::string& path) const
 {
 	const Config *result = findInThis(path);
-	if(result == NULL) result = findInTemplate(path);
+	if (result == NULL) result = findInTemplate(path);
+	if (result == NULL) result = findInParent(path);
 	return result;
 }
 
+const Config* Config::findInParent(const std::string& path) const
+{
+	if (parent == NULL) return false;
+
+	if (parent->getType() == CONFIG_VALUE_STRUCT)
+	{
+		std::string newPath = static_cast<ConfigStruct*>(parent)->findKey(this) + "." + path;
+		const Config *result = parent->findInTemplate(newPath);
+		if (result == NULL)
+		{
+			result = parent->findInParent(newPath);
+		}
+		return result;
+	}
+	// TODO: find in array
+	return NULL;
+}
+
+Config* Config::findInParent(const std::string& path)
+{
+	if (parent == NULL) return false;
+
+	if (parent->getType() == CONFIG_VALUE_STRUCT)
+	{
+		std::string newPath = static_cast<ConfigStruct*>(parent)->findKey(this) + "." + path;
+		Config *result = parent->findInTemplate(newPath);
+		if (result == NULL)
+		{
+			result = parent->findInParent(newPath);
+		}
+		return result;
+	}
+	// TODO: find in array
+	return NULL;
+}
+
+std::string ConfigStruct::findKey(const Config* value) const
+{
+	for EACH_CONST(PConfigDict, set, it)
+	{
+		if (it->second == value)
+		{
+			return it->first;
+		}
+	}
+	return "";
+}
 
 
 Config* Config::find(const std::string &path)
 {
-	Config *result = findInThis(path);
-	if(result == NULL) result = findInTemplate(path);
+	Config* result = findInThis(path);
+	if (result == NULL) result = findInTemplate(path);
+	if (result == NULL) result = findInParent(path);
 	return result;
 }
 

@@ -16,36 +16,36 @@
 #include "opengl_engine.h"
 #include "../../libs/opengl/libext.h"
 
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow& e, const Triangles& triangles, MaterialStd& material)
 {
-	if(material != NULL)
+	total.objectCount++;
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
+
+	if(BindTexture != NULL && material.diffuse_map.image != NULL) 
 	{
-		total.objectCount++;
-		glPushAttrib(GL_ALL_ATTRIB_BITS);
-		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
-
-		if(BindTexture != NULL && material->diffuse_map.image != NULL) 
-			(this->*BindTexture)(material->diffuse_map.image, true);
-		else
-			glColor4fv(material->color.getfv());
-
-		const TexCoords *texCoords = NULL;
-
-		if(material->diffuse_map.image != NULL)
-		{
-			texCoords = e.getTexCoords(material->diffuse_map);
-		}
-
-		if(DrawTriangles != NULL) (this->*DrawTriangles)(e, triangles, texCoords);
-		if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
-
-		unbindTexCoords();
-
-		glPopClientAttrib();
-	   	glPopAttrib();
-		return true;
+		(this->*BindTexture)(*material.diffuse_map.image, true);
 	}
-	return false;
+	else
+	{
+		glColor4fv(material.color.getfv());
+	}
+
+	const TexCoords* texCoords = NULL;
+
+	if(material.diffuse_map.image != NULL)
+	{
+		texCoords = e.getTexCoords(material.diffuse_map);
+	}
+
+	if(DrawTriangles != NULL) (this->*DrawTriangles)(e, triangles, texCoords);
+	if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
+
+	unbindTexCoords();
+
+	glPopClientAttrib();
+   	glPopAttrib();
+	return true;
 }
 
 
@@ -59,7 +59,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
-		int texCount = material->getTextureCount();
+		int texCount = material.getTextureCount();
 
 		TextureBlendMode inheritedMode = TEXTURE_BLEND_MODE_NONE, currentMode;
 
@@ -68,7 +68,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 		{
 			glPushAttrib(GL_ALL_ATTRIB_BITS);
 			glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
-			const Texture *texture = material->getTexture(i); // текущая текстура
+			const Texture *texture = material.getTexture(i); // текущая текстура
 
 			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
 				currentMode = texture->mode;
@@ -142,20 +142,20 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow &e,
 }
 */
 // нарисовать множество полигонов с указанным материалом
-void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, const TexCoords *coords)
+void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow& e, const Triangles& triangles, const TexCoords* coords)
 {
-	if(triangles && e.vertexes && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes && !triangles.data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
 		total.vertexCount += e.vertexes->data.size();
-		total.triangleCount += triangles->data.size();
+		total.triangleCount += triangles.data.size();
 
 		glBegin(GL_TRIANGLES);
 		 
-		for(unsigned int i=0; i<triangles->data.size(); i++)
+		for EACH_CONST(TriangleVector, triangles.data, it)
 		{
-			if(coords != NULL) glTexCoord2fv(&coords->data[ triangles->data[i].a[0] ].x);	glVertex3fv(&e.vertexes->data[ triangles->data[i].a[0] ].x);
-			if(coords != NULL) glTexCoord2fv(&coords->data[ triangles->data[i].a[1] ].x);	glVertex3fv(&e.vertexes->data[ triangles->data[i].a[1] ].x);
-			if(coords != NULL) glTexCoord2fv(&coords->data[ triangles->data[i].a[2] ].x);	glVertex3fv(&e.vertexes->data[ triangles->data[i].a[2] ].x);
+			if(coords != NULL) glTexCoord2fv(&coords->data[ it->a[0] ].x);	glVertex3fv(&e.vertexes->data[it->a[0] ].x);
+			if(coords != NULL) glTexCoord2fv(&coords->data[ it->a[1] ].x);	glVertex3fv(&e.vertexes->data[it->a[1] ].x);
+			if(coords != NULL) glTexCoord2fv(&coords->data[ it->a[2] ].x);	glVertex3fv(&e.vertexes->data[it->a[2] ].x);
 		}
 	 
 		glEnd();
@@ -163,7 +163,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow &e, const 
 }
 
 // установить текущуу текстуру
-bool OpenGL_Engine::BindTexture_OpenGL10(Image *image, bool enable)
+bool OpenGL_Engine::BindTexture_OpenGL10(Image& image, bool enable)
 {
 	if(enable) glEnable(GL_TEXTURE_2D);
 
@@ -171,15 +171,15 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image *image, bool enable)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	int format;
-	if(image->getFormat() == IMAGE_RGB) format = GL_RGB; 
+	if(image.getFormat() == IMAGE_RGB) format = GL_RGB; 
 	else
-	if(image->getFormat() == IMAGE_NORMAL) format = GL_RGB; 
-	else if(image->getFormat() == IMAGE_RGBA) format = GL_RGBA;
+	if(image.getFormat() == IMAGE_NORMAL) format = GL_RGB; 
+	else if(image.getFormat() == IMAGE_RGBA) format = GL_RGBA;
 	else
 		assert(false, "Unsupported image format");
 
-	int width = image->getWidth();
-	int heigth = image->getHeight();
+	int width = image.getWidth();
+	int heigth = image.getHeight();
 	if(!GL_EXTENSION_TEXTURE_NON2POWER)
 	{
 		if((width & (width - 1) )!= 0)
@@ -194,26 +194,26 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image *image, bool enable)
 		}
 	}
 
-    glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image->getWidth(), image->getHeight(),0,
-				format,  GL_UNSIGNED_BYTE , image->getBitmap());
+    glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image.getWidth(), image.getHeight(),0,
+				format,  GL_UNSIGNED_BYTE , image.getBitmap());
 	return true;
 }
 
 // нарисовать множество полигонов как сетку (только рёбра)
-void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles)
+void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow& e, const Triangles& triangles)
 {
-	if(triangles != NULL && e.vertexes != NULL && !triangles->data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes != NULL && !triangles.data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
 	{
 		total.objectCount++;
 		total.vertexCount += e.vertexes->data.size();
-		total.triangleCount += triangles->data.size();
+		total.triangleCount += triangles.data.size();
          
-        for(unsigned int i=0; i<triangles->data.size(); i++)
+        for EACH_CONST(TriangleVector, triangles.data, it)
         {
 	        glBegin(GL_LINE_LOOP);
-            glVertex3fv(&e.vertexes->data[ triangles->data[i].a[0] ].x);
-            glVertex3fv(&e.vertexes->data[ triangles->data[i].a[1] ].x);
-            glVertex3fv(&e.vertexes->data[ triangles->data[i].a[2] ].x);
+			glVertex3fv(e.vertexes->data[ it->a[0] ].getfv());
+            glVertex3fv(e.vertexes->data[ it->a[1] ].getfv());
+            glVertex3fv(e.vertexes->data[ it->a[2] ].getfv());
 		    glEnd();
         }
     }

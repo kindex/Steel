@@ -65,8 +65,13 @@ void GameLight::afterRemove(Engine&)
 }
 
 
-bool GameLight::updateInformation(Engine&)
+bool GameLight::updateInformation(Engine& engine)
 {
+	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	{
+		dynamic_cast<GraphInterface*>(&engine)->setPosition(position);
+		return true;
+	}
 	return false;
 }
 

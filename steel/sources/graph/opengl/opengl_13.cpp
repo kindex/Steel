@@ -22,9 +22,9 @@
 
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, MaterialStd *material)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow& e, const Triangles& triangles, MaterialStd& material)
 {
-	if(material != NULL && GL_EXTENSION_MULTITEXTURE)
+	if (GL_EXTENSION_MULTITEXTURE)
 	{
 		total.objectCount++;
 
@@ -33,21 +33,21 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 
 		pvector<uid> buffersToDelete;
 
-		bool bump_map = material->normal_map.image != NULL && conf->geti("drawBump") && !e.lights.empty() && e.normals != NULL && GL_EXTENSION_DOT3 && GL_EXTENSION_TEXTURE_CUBE_MAP;
-		bool diffuse_map = material->diffuse_map.image != NULL && conf->geti("drawTexture");
-		//bool reflect_map = material->reflect_map.image != NULL && conf->geti("drawReflect") && GL_EXTENSION_TEXTURE_CUBE_MAP;
+		bool bump_map = material.normal_map.image != NULL && conf->geti("drawBump") && !e.lights.empty() && e.normals != NULL && GL_EXTENSION_DOT3 && GL_EXTENSION_TEXTURE_CUBE_MAP;
+		bool diffuse_map = material.diffuse_map.image != NULL && conf->geti("drawTexture");
+		//bool reflect_map = material.reflect_map.image != NULL && conf->geti("drawReflect") && GL_EXTENSION_TEXTURE_CUBE_MAP;
 		int currentTextureArb = 0;
 
 		if(bump_map)
 		{
-			const TexCoords *texCoords = e.getTexCoords(material->normal_map);
+			const TexCoords *texCoords = e.getTexCoords(material.normal_map);
 
 			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
 			uid bufId = objectIdGenerator.genUid();
 			buffersToDelete.push_back(bufId);
 
-			drawBump(e, texCoords, e.position, e.lights[0]->position, bufId, currentTextureArb, material->normal_map.image);
+			drawBump(e, texCoords, e.position, e.lights[0]->position, bufId, currentTextureArb, material.normal_map.image);
 			currentTextureArb +=2;
 		}
 
@@ -63,18 +63,18 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 
 			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 
-			(this->*BindTexture)(material->diffuse_map.image, true);
+			(this->*BindTexture)(*material.diffuse_map.image, true);
 
 			const TexCoords *texCoords = NULL;
 
-			if(material->diffuse_map.texCoordsUnit < e.texCoords.size())
-				texCoords = e.texCoords[material->diffuse_map.texCoordsUnit];
+			if(material.diffuse_map.texCoordsUnit < e.texCoords.size())
+				texCoords = e.texCoords[material.diffuse_map.texCoordsUnit];
 			else
 				if(!e.texCoords.empty())
 					texCoords = e.texCoords[0];
 
 			assert(texCoords->data.size() == e.vertexes->data.size(), "TexCoords.size != Vertex.size");
-			if(BindTexCoords != NULL) (this->*BindTexCoords)(texCoords, &material->textureMatrix);
+			if(BindTexCoords != NULL) (this->*BindTexCoords)(texCoords, &material.textureMatrix);
 			currentTextureArb++;
 		}
 
@@ -88,7 +88,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 			glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 
-			(this->*BindTexture)(material->reflect_map.image, true); // Cube texture (auto detect from Image)
+			(this->*BindTexture)(material.reflect_map.image, true); // Cube texture (auto detect from Image)
 
 			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_EXT);
             glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_EXT);
@@ -106,7 +106,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 */
 
 		if(!diffuse_map)
-			glColor4fv(material->color.getfv());
+			glColor4fv(material.color.getfv());
 
 		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL);
 
@@ -134,11 +134,11 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
-		int texCount = material->getTextureCount();
+		int texCount = material.getTextureCount();
 
 		if(texCount>0)
 		{
-			switch(material->getTexture(0)->mode)
+			switch(material.getTexture(0)->mode)
 			{
 				case TEXTURE_BLEND_MODE_MUL:	
 						glEnable(GL_BLEND);
@@ -161,7 +161,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow &e,
 		// TODO check OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS
 		for(int i=0; i<texCount; i++)
 		{
-			const Texture *texture = material->getTexture(i); // текущая текстура
+			const Texture *texture = material.getTexture(i); // текущая текстура
 
 			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
 				currentMode = texture->mode;
@@ -493,7 +493,7 @@ void OpenGL_Engine::drawBump(GraphShadow &e, const TexCoords *coords, matrix34 c
 
 	glActiveTextureARB(GL_TEXTURE0_ARB + curTexArb + 1);
 	glClientActiveTextureARB(GL_TEXTURE0_ARB + curTexArb + 1);
-	(this->*BindTexture)(img, true);
+	(this->*BindTexture)(*img, true);
 
 	if(BindTexCoords) (this->*BindTexCoords)(coords, NULL);
 	

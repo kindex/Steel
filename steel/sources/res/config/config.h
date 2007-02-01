@@ -46,6 +46,7 @@ class ConfigArray;
 
 class Config;
 typedef Config* PConfig;
+typedef std::map<std::string, Config*> PConfigDict;
 class Config: public Res
 {
 public:
@@ -63,8 +64,8 @@ public:
 	virtual const std::string returns(const std::string& _default = std::string()) const { return _default; }
 
 	// search for config subelement (struct, array)
-	virtual const Config* find(const std::string& path) const;
-	virtual Config* find(const std::string& path);
+	virtual const	Config* find(const std::string& path) const;
+	virtual			Config* find(const std::string& path);
 	virtual void toggle(const std::string& path);
 	virtual void setValued(const std::string& path, double value);
 	virtual void setValues(const std::string& path, const std::string& value);
@@ -91,10 +92,12 @@ public:
 	friend class ConfigParser;
 
 protected:
-	virtual const Config* findInThis(const std::string &path) const abstract;
-	virtual Config* findInThis(const std::string &path) abstract;
-	virtual const Config* findInTemplate(const std::string &path) const;
-	virtual Config* findInTemplate(const std::string &path);
+	virtual const	Config* findInThis(const std::string& path) const abstract;
+	virtual			Config* findInThis(const std::string& path) abstract;
+	virtual const	Config* findInTemplate(const std::string& path) const;
+	virtual			Config* findInTemplate(const std::string& path);
+	virtual	const	Config* findInParent(const std::string& path) const;
+	virtual			Config* findInParent(const std::string& path);
 
 	virtual std::string genFullId(std::string someConfigId) const;
 	const Config* getParent() const { return parent; }
@@ -196,9 +199,10 @@ public:
 
 	const std::string DumpThis(int level) const;
 	void setFilePath(const std::string &_file);
+	std::string findKey(const Config* value) const;
 
 protected:
-	std::map<std::string, Config*> set;
+	PConfigDict set;
 };
 
 class ConfigArray: public ConfigCompound

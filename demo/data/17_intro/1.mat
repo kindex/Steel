@@ -8,14 +8,14 @@ diffuse_map =
 	texCoordsRotation = 0.0
 	texCoordsScale = (1 1 1)
 	texCoordsTranslation = (0 0 0)
-	k = 0.4
+	k = 4
 }
 
 specular_map = 
 {
 	image = 'GALVPLAT'
 	power = 80
-	k = 3
+	k = 30
 }
 emission_map = 
 {

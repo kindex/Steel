@@ -3,14 +3,15 @@
 class = 'combiner'
 objects = 
 (
+[/room/room.scene#] {}
 {
 class = 'ps'
 emitter = 
 	{
 	class = 'simple'
-	particle_size = 0.2
-	init_size = 100
-	position_dispersion = 10
+	particle_size = 0.1
+	init_size = 10
+	position_dispersion = 5
 	} 
 renderer = 
 	{

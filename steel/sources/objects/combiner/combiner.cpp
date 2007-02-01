@@ -33,15 +33,15 @@ bool Combiner::InitFromConfig(Config& conf)
 	position.loadIdentity();
 	positionKind = conf.gets("position_kind", "local") == "local" ? POSITION_LOCAL : POSITION_GLOBAL;
 
-	Config *graphConf = conf.find("graph");
-	if(graphConf != NULL)
+	Config* graphConf = conf.find("graph");
+	if (graphConf != NULL)
 	{
 		string graphClass = graphConf->gets("class");
 		graph = graphObjectFactory(graphClass);
-		if(graph != NULL)
+		if (graph != NULL)
 		{
 			bool ok = graph->InitFromConfig(*graphConf);
-			if(!ok)
+			if (!ok)
 			{
 				delete graph; 
 				graph = NULL; 
@@ -49,7 +49,7 @@ bool Combiner::InitFromConfig(Config& conf)
 		}
 	}
 
-	Config *audioConf = conf.find("audio");
+	Config* audioConf = conf.find("audio");
 	if(audioConf != NULL)
 	{
 		string audioClass = audioConf->gets("class");

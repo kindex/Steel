@@ -1,7 +1,7 @@
 #
 {
 class = 'light'
-k = 10
+k = 1
 sqrtAttenuation = 0.1
 maxDistance = 100
 }

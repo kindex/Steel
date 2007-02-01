@@ -282,18 +282,6 @@
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="18_weapon"
-				>
-				<File
-					RelativePath="..\sources\18_weapon\kar98k.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\sources\18_weapon\kar98k.h"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="conf"

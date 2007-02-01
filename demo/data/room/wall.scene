@@ -1,0 +1,10 @@
+#
+{
+class = 'combiner'
+graph={
+class = 'box'
+material = [/material/diffuse.mat#] {
+texCoordsScale = (5 5 0.1)
+}
+}
+}

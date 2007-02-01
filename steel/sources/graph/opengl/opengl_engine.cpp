@@ -32,7 +32,7 @@
 
 using namespace std;
 
-const TexCoords* OpenGL_Engine::GraphShadow::getTexCoords(const MaterialStd::TextureStd &texture)
+const TexCoords* OpenGL_Engine::GraphShadow::getTexCoords(const MaterialStd::TextureStd& texture)
 {
 	if(texture.texCoordsUnit < texCoords.size())
 	{
@@ -58,7 +58,7 @@ void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Trian
 		case MATERIAL_STD:	
 			if(DrawFill_MaterialStd != NULL)
 			{
-				if((this->*DrawFill_MaterialStd)(e, triangles, static_cast<MaterialStd*>(material)))
+				if((this->*DrawFill_MaterialStd)(e, *triangles, *static_cast<MaterialStd*>(material)))
 				{
 					return;
 				}
@@ -101,9 +101,9 @@ OpenGL_Engine::OpenGL_Engine():
 Отвечает за вывод графичесткого элемента.
 */
 
-void OpenGL_Engine::process(GraphShadow *e)
+void OpenGL_Engine::process(GraphShadow& e, bool blend)
 {
-	if(e->positionKind == POSITION_SCREEN)
+	if (e.positionKind == POSITION_SCREEN)
 	{
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -114,50 +114,57 @@ void OpenGL_Engine::process(GraphShadow *e)
 	glPushMatrix();
 
 	float m[16]; // TODO
-	m[0] = e->realPosition.data.matrix.data.m[0][0];	m[1] = e->realPosition.data.matrix.data.m[1][0];	m[2] = e->realPosition.data.matrix.data.m[2][0];	m[3]  = 0;
-	m[4] = e->realPosition.data.matrix.data.m[0][1];	m[5] = e->realPosition.data.matrix.data.m[1][1];	m[6] = e->realPosition.data.matrix.data.m[2][1];	m[7]  = 0;
-	m[8] = e->realPosition.data.matrix.data.m[0][2];	m[9] = e->realPosition.data.matrix.data.m[1][2];	m[10] = e->realPosition.data.matrix.data.m[2][2];	m[11] = 0;
-	m[12] = e->realPosition.data.vector.x;				m[13] = e->realPosition.data.vector.y;				m[14] = e->realPosition.data.vector.z;				m[15] = 1;
+	m[0] = e.realPosition.data.matrix.data.m[0][0];	m[1] = e.realPosition.data.matrix.data.m[1][0];	m[2] = e.realPosition.data.matrix.data.m[2][0];	m[3]  = 0;
+	m[4] = e.realPosition.data.matrix.data.m[0][1];	m[5] = e.realPosition.data.matrix.data.m[1][1];	m[6] = e.realPosition.data.matrix.data.m[2][1];	m[7]  = 0;
+	m[8] = e.realPosition.data.matrix.data.m[0][2];	m[9] = e.realPosition.data.matrix.data.m[1][2];	m[10]= e.realPosition.data.matrix.data.m[2][2];	m[11] = 0;
+	m[12]= e.realPosition.data.vector.x;			m[13]= e.realPosition.data.vector.y;			m[14]= e.realPosition.data.vector.z;			m[15] = 1;
 	glLoadMatrixf(m);
 
-	if(conf->getb("drawFace") && e->faceMaterials != NULL)
+	if (conf->getb("drawFace") && e.faceMaterials != NULL)
 	{
-		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
+		for EACH(FaceMaterials, *e.faceMaterials, it)
 		{
-			DrawFill_Material(*e, e->faceMaterials->at(i).triangles, e->faceMaterials->at(i).material);
+			if (blend == it->material->blend)
+			{
+				DrawFill_Material(e, it->triangles, it->material);
+			}
 		}
 	}
 
-	if(conf->getb("drawWire") && e->faceMaterials != NULL && DrawWire != NULL)
+	if(conf->getb("drawWire") && e.faceMaterials != NULL && DrawWire != NULL)
 	{
-		for(unsigned int i = 0; i < e->faceMaterials->size(); i++)
+		for EACH(FaceMaterials, *e.faceMaterials, it)
 		{
-			(this->*DrawWire)(*e, e->faceMaterials->at(i).triangles);
+			if (blend == it->material->blend)
+			{
+				(this->*DrawWire)(e, *it->triangles);
+			}
 		}
 	}
-
-	if(conf->getb("drawLines") && DrawLines)
+	if (!blend)
 	{
-		(this->*DrawLines)(*e);
-	}
+		if(conf->getb("drawLines") && DrawLines)
+		{
+			(this->*DrawLines)(e);
+		}
 
-	if(conf->getb("drawNormals") && DrawNormals)
-	{
-		(this->*DrawNormals)(*e);
-	}
+		if(conf->getb("drawNormals") && DrawNormals)
+		{
+			(this->*DrawNormals)(e);
+		}
 
-	if(conf->getb("drawVertexes") && DrawVertexes)
-	{
-		(this->*DrawVertexes)(*e);
-	}
+		if(conf->getb("drawVertexes") && DrawVertexes)
+		{
+			(this->*DrawVertexes)(e);
+		}
 
-	if(conf->getb("drawAABB") && DrawAABB)
-	{
-		(this->*DrawAABB)(*e);
+		if(conf->getb("drawAABB") && DrawAABB)
+		{
+			(this->*DrawAABB)(e);
+		}
 	}
-
 	glPopMatrix();
-	if(e->positionKind == POSITION_SCREEN)
+	if (e.positionKind == POSITION_SCREEN)
 	{
 		glPopMatrix();
 	}
@@ -222,7 +229,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& info)
 
 	for(int i=0; i < size; i++)
 	{
-		prepare(getShadow(objects[i])); /* Update vertexes, faces, ights */
+		prepare(*getShadow(objects[i])); /* Update vertexes, faces, ights */
 	}
 	// update position
 	
@@ -261,23 +268,15 @@ bool OpenGL_Engine::process(IN const ProcessInfo& info)
 	if(conf->geti("clearColor", 1))	clear |= GL_COLOR_BUFFER_BIT;
 	if(conf->geti("clearDepth", 1))	clear |= GL_DEPTH_BUFFER_BIT;
 	if(clear)
+	{
 		glClear(clear);
+	}
 
 //	steel::vector<int> elementAlpha;
-	ShadowPVector elementAlpha;
 // В начале выводим только непрозрачные объекты
 	for EACH(ShadowPVector, shadows, it)
 	{
-		GraphShadow* shadow = GS(*it);
-		if(!shadow->blend)
-		{
-			process(shadow);
-		}
-		else
-		{
-//			it->distance = (camera.eye - it->matrix*v3(0,0,0)).getLength();
-			elementAlpha.push_back(shadow);
-		}
+		process(*GS(*it), false);
 	}
 
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
@@ -287,16 +286,16 @@ bool OpenGL_Engine::process(IN const ProcessInfo& info)
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		
 		glDepthMask(GL_FALSE);
+//		glEnable(GL_BLEND);		glBlendFunc(GL_ADD);
 
 //		sort(elementAlpha.begin(), elementAlpha.end());
 
-		for EACH(ShadowPVector, elementAlpha, it)
+		for EACH(ShadowPVector, shadows, it)
 		{
-			process(GS(*it));
+			process(*GS(*it), true);
 		}
 		glPopAttrib();
 	}
-	elementAlpha.clear();
 
 	if(conf->geti("swapBuffers", 1))
 	{
@@ -306,7 +305,9 @@ bool OpenGL_Engine::process(IN const ProcessInfo& info)
 
 	GLenum errorCode = glGetError();
 	if(errorCode != 0)
+	{
 		log_msg("error opengl", string("OpenGL error #") + IntToStr(errorCode));
+	}
 
 	return true;
 }
@@ -530,23 +531,23 @@ void OpenGL_Engine::processCamera()
     glLoadIdentity();
 }
 
-void OpenGL_Engine::prepare(GraphShadow *shadow, matrix34 matrix, GameObject *parent)
+void OpenGL_Engine::prepare(GraphShadow& shadow, matrix34 matrix, GameObject* parent)
 {
-	currentShadow = shadow;
-	shadow->object->updateInformation(*this);
+	currentShadow = &shadow;
+	shadow.object->updateInformation(*this);
 
-	shadow->setParent(parent);
-	shadow->cache();
+	shadow.setParent(parent);
+	shadow.cache();
 
-	for EACH(uidVector, shadow->children, it)
+	for EACH(uidVector, shadow.children, it)
 	{
-		prepare(getShadow(*it),matrix,  // TODO
-					shadow->object);
+		prepare(*getShadow(*it), matrix,  // TODO
+					shadow.object);
 	}
 
-	if (!shadow->aabbCalculated)
+	if (!shadow.aabbCalculated)
 	{
-		shadow->calculateAABB();
+		shadow.calculateAABB();
 	}
 
 /*	if(shadow->childrenModificationTime < shadow->object->getChildrenModificationTime())
