@@ -31,7 +31,14 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 	if(_conf == NULL) return false;
 	conf = _conf;
 
-	blend = conf->getb("blend", false);
+	int blendInt = conf->geti("blend", 0);
+	switch (blendInt)
+	{
+		case 1: blend = BLEND_ADDITIONAL_TEXTURE; break;
+		case 2: blend = BLEND_WHITE; break;
+		case 3: blend = BLEND_BLACK; break;
+		case 0: default: blend = BLEND_NONE; break;
+	}
 
 /*	TextureBlendMode mode;
 	string sMode = conf->gets("mode");

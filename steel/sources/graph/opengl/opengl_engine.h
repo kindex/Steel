@@ -46,10 +46,11 @@ public:
 	void setVertexes(const Vertexes*); // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
 	void setNormals(const Normals*); // список нормалей в вершинам
 	void setLines(const GLines*); // индексы вершин для линий и цвета линий (for debug)
-	void setFaceMaterials(const FaceMaterials*);// массив индексов вершин, которые образуют треугольники (грани) + материалы
+	void setFaceMaterials(const FaceMaterialVector*);// массив индексов вершин, которые образуют треугольники (грани) + материалы
 	void setTexCoordsCount(unsigned int);
 	void setTexCoords(unsigned int texNumber, const TexCoords*);
 	void setAABB(const AABB &box);
+	const ProcessInfo& getProcessInfo();
 
 	void addLight(Light*);
 	void removeLight(uid);
@@ -96,7 +97,7 @@ protected:
 		bool 			realPositionCalculated;
 
 		// *** Polyhedra ****
-		const FaceMaterials *faceMaterials;
+		const FaceMaterialVector *faceMaterials;
 		const Vertexes		*vertexes;
 		const Normals		*normals;
 		unsigned int		 textureCount;
@@ -135,6 +136,31 @@ protected:
 
 	map<uid, LightShadow*> lights;
 	std::map<uid, OpenGL_Buffer> buffer;
+
+	struct BlendingFaces
+	{
+		BlendingFaces() {}
+		BlendingFaces(GraphShadow* shadow, Material* material, Triangles* triangles) :
+			shadow(shadow),
+			material(material),
+			triangles(triangles)
+		{}
+
+		GraphShadow*	shadow;
+		Material*		material;
+		Triangles*		triangles;
+	};
+
+	struct BlendingTriangle
+	{
+		unsigned int	vertex[3];
+		Material*		material;
+		float			distance;
+		GraphShadow*	shadow;
+
+		const bool operator < (const BlendingTriangle& second) {return distance > second.distance; }
+	};
+	typedef pvector<BlendingTriangle> BlendingTriangleVector;
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image* zeroNormal;
@@ -186,7 +212,7 @@ protected:
 	bool DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow&, const Triangles&, MaterialStd&);
 
 	void drawBump(GraphShadow &e, const TexCoords *coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image *img);
-	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterials *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent);
+	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterialVector *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent);
 	void genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light, v3Vector &tangentSpaceLight);
 
 	typedef TexCoords3f tangentSpaceLightBufferedArray;
@@ -210,7 +236,9 @@ protected:
 	int textureMatrixLevel;
 
 
-	template<class Class> bool BindVBO(Class *v, int mode, int mode2, int elCnt);
+	template<class Class> 
+	bool BindVBO(Class *v, int mode, int mode2, int elCnt);
+
 	void cleanBuffer(uid bufId);
 // ******************* OpenGL 2.0 *******************
 	bool DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow&, const Triangles&, MaterialStd&);
@@ -235,8 +263,10 @@ public:
 	void updateRealPosition(IN OUT GraphShadow* object);
 
 	void prepare(GraphShadow&, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
-	void process(GraphShadow&, bool blend);
+	void process(GraphShadow&, OUT FaceMaterialVector& skippedFaces);
 	bool isVisible(AABB box);
+	void pushPosition(GraphShadow&);
+	void popPosition(GraphShadow&);
 	
 	GraphShadow* getShadow(GameObject* object) { return (GraphShadow*)Engine::getShadow(object); }
 	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id); }

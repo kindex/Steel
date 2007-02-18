@@ -19,7 +19,7 @@ renderer =
 	material = 
 		{
 			class = 'std'
-			blend = 1
+			blend = 2
 			emission_map =
 			{ 
 				image = 'wsmoke'

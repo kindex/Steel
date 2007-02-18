@@ -93,7 +93,7 @@ void Sphere::createSphere()
 				(float)j/radius);
 	}
 	
-	faces = new FaceMaterials(1);
+	faces = new FaceMaterialVector(1);
 
 	faces->at(0).material = createMaterial(conf->find("material"));
 	faces->at(0).triangles = new Triangles;
@@ -123,7 +123,7 @@ Sphere::~Sphere()
 	delete normals;
 	delete texCoords0;
 	delete texCoords1;
-	for(FaceMaterials::iterator it = faces->begin(); it != faces->end(); it++)
+	for(FaceMaterialVector::iterator it = faces->begin(); it != faces->end(); it++)
 	{
 		delete it->triangles;
 	}

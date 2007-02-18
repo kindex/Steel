@@ -81,7 +81,7 @@ bool GraphObjectMesh::InitFromConfig(Config& conf)
 		texCoords->data[i].y = texCoordsConfig ->getArrayElement(i)->getf("[1]");
 	}
 
-	faces = new FaceMaterials(1);
+	faces = new FaceMaterialVector(1);
 	faces->at(0).material = m;
 	faces->at(0).triangles = new Triangles;
 	faces->at(0).triangles->changed = false;
@@ -136,7 +136,7 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 	t(+1, -1, -1, 0, 0);	t(-1, -1, -1, 1, 0);	t(-1, +1, -1, 1, 1);
 	t(+1, -1, -1, 0, 0);	t(-1, +1, -1, 1, 1);	t(+1, +1, -1, 0, 1);
 
-	faces = new FaceMaterials(1);
+	faces = new FaceMaterialVector(1);
 	faces->at(0).material = m;
 	faces->at(0).triangles = new Triangles;
 	faces->at(0).triangles->changed = false;

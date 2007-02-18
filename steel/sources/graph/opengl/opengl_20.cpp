@@ -45,11 +45,11 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 			program->setUniformFloat("material.diffusek", material.diffuse_map.k);
 			program->setUniformFloat("material.emissionk", material.emission_map.k);
 
-			program->setUniformVector("camera.position", camera.getPosition());
-			program->setUniformVector("camera.direction", camera.getDirection());
-			program->setUniformVector("camera.upVector", camera.getUpVector());
+			program->setUniformVector("camera.position", info.camera.getPosition());
+			program->setUniformVector("camera.direction", info.camera.getDirection());
+			program->setUniformVector("camera.upVector", info.camera.getUpVector());
 
-			program->setUniformInt("blending", material.blend ? 1 : 0);
+			program->setUniformInt("blending", material.blend);
 
 			int lightCount = (int)e.lights.size();
 			if (lightCount > maxLightsInShader) lightCount = maxLightsInShader;

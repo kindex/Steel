@@ -350,6 +350,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="room"
+				>
+				<File
+					RelativePath="..\data\room\room.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\room\wall.scene"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="objects"

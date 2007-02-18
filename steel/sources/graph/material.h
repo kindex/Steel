@@ -20,37 +20,42 @@
 #include "graph_types.h"
 #include "../res/config/config.h"
 
-typedef enum
+enum MaterialType
 {
 	MATERIAL_NONE,
 	MATERIAL_STD,
 	MATERIAL_SHADER,
-} MaterialType;
+};
 
+enum BlendType
+{
+	BLEND_NONE = 0,
+	BLEND_ADDITIONAL_TEXTURE = 1,
+	BLEND_WHITE = 2,
+	BLEND_BLACK = 3
+};
 
 // материал задаёт множество текстур и типы их наложения
 // или шейдеры для рендеринга моделей
 class Material
 {
 public:
-//protected:
-	uid		id;
-	Config *conf;
-	bool	blend;
-	MaterialType type;
-	Material *backup;
-
-public:
-	Material(): conf(NULL), backup(NULL)  { id = id = objectIdGenerator.genUid(); }
-	Material(MaterialType _type): conf(NULL), backup(NULL), type(_type) {}
+	Material(): conf(NULL), reserve(NULL)  { id = id = objectIdGenerator.genUid(); }
+	Material(MaterialType _type): conf(NULL), reserve(NULL), type(_type) {}
 	virtual ~Material();
 
 	virtual uid	 getId()				{ return id; }
 	// загружает материал из конфига
 	virtual bool InitFromConfig(Config *config) abstract;
 	// получить текстуру с номером number
-	bool isBlending() const { return blend; }
 	MaterialType getMaterialType() const { return type; }
+
+public: //protected:
+	uid				id;
+	Config*			conf;
+	BlendType		blend;
+	MaterialType	type;
+	Material*		reserve;
 };
 
 typedef enum

@@ -21,6 +21,7 @@
 
 #include "../../common/utils.h"
 #include "../../common/logger.h"
+#include "../../common/containers.h"
 
 #include "../../res/image/image.h"
 #include "../../libs/opengl/libext.h"
@@ -34,13 +35,13 @@ using namespace std;
 
 const TexCoords* OpenGL_Engine::GraphShadow::getTexCoords(const MaterialStd::TextureStd& texture)
 {
-	if(texture.texCoordsUnit < texCoords.size())
+	if (texture.texCoordsUnit < texCoords.size())
 	{
 		return texCoords[texture.texCoordsUnit];
 	}
 	else
 	{
-		if(!texCoords.empty())
+		if (!texCoords.empty())
 		{
 			return texCoords[0];
 		}
@@ -51,14 +52,14 @@ const TexCoords* OpenGL_Engine::GraphShadow::getTexCoords(const MaterialStd::Tex
 
 void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material)
 {
-	if(material != NULL)
+	if (material != NULL)
 	{
 		switch(material->getMaterialType())
 		{
 		case MATERIAL_STD:	
-			if(DrawFill_MaterialStd != NULL)
+			if (DrawFill_MaterialStd != NULL)
 			{
-				if((this->*DrawFill_MaterialStd)(e, *triangles, *static_cast<MaterialStd*>(material)))
+				if ((this->*DrawFill_MaterialStd)(e, *triangles, *static_cast<MaterialStd*>(material)))
 				{
 					return;
 				}
@@ -66,7 +67,7 @@ void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Trian
 			break;
 		}
 
-		DrawFill_Material(e, triangles, material->backup);
+		DrawFill_Material(e, triangles, material->reserve);
 	}
 }
 
@@ -94,14 +95,7 @@ OpenGL_Engine::OpenGL_Engine():
 {}
 
 
-
-
-/*
-Сердце Графического движка.
-Отвечает за вывод графичесткого элемента.
-*/
-
-void OpenGL_Engine::process(GraphShadow& e, bool blend)
+void OpenGL_Engine::pushPosition(GraphShadow& e)
 {
 	if (e.positionKind == POSITION_SCREEN)
 	{
@@ -119,56 +113,19 @@ void OpenGL_Engine::process(GraphShadow& e, bool blend)
 	m[8] = e.realPosition.data.matrix.data.m[0][2];	m[9] = e.realPosition.data.matrix.data.m[1][2];	m[10]= e.realPosition.data.matrix.data.m[2][2];	m[11] = 0;
 	m[12]= e.realPosition.data.vector.x;			m[13]= e.realPosition.data.vector.y;			m[14]= e.realPosition.data.vector.z;			m[15] = 1;
 	glLoadMatrixf(m);
+}
 
-	if (conf->getb("drawFace") && e.faceMaterials != NULL)
-	{
-		for EACH(FaceMaterials, *e.faceMaterials, it)
-		{
-			if (blend == it->material->blend)
-			{
-				DrawFill_Material(e, it->triangles, it->material);
-			}
-		}
-	}
-
-	if(conf->getb("drawWire") && e.faceMaterials != NULL && DrawWire != NULL)
-	{
-		for EACH(FaceMaterials, *e.faceMaterials, it)
-		{
-			if (blend == it->material->blend)
-			{
-				(this->*DrawWire)(e, *it->triangles);
-			}
-		}
-	}
-	if (!blend)
-	{
-		if(conf->getb("drawLines") && DrawLines)
-		{
-			(this->*DrawLines)(e);
-		}
-
-		if(conf->getb("drawNormals") && DrawNormals)
-		{
-			(this->*DrawNormals)(e);
-		}
-
-		if(conf->getb("drawVertexes") && DrawVertexes)
-		{
-			(this->*DrawVertexes)(e);
-		}
-
-		if(conf->getb("drawAABB") && DrawAABB)
-		{
-			(this->*DrawAABB)(e);
-		}
-	}
+void OpenGL_Engine::popPosition(GraphShadow& e)
+{
 	glPopMatrix();
 	if (e.positionKind == POSITION_SCREEN)
 	{
 		glPopMatrix();
 	}
 }
+
+
+
 
 
 
@@ -213,12 +170,11 @@ void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
 	}
 }
 
-bool OpenGL_Engine::process(IN const ProcessInfo& info)
+bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 {
 	// TODO repair DC 
 
-	timeInfo = info.timeInfo;
-	camera = info.camera;
+	info = _info;
 	processCamera();
 
 	total.vertexCount = 0;
@@ -256,11 +212,11 @@ bool OpenGL_Engine::process(IN const ProcessInfo& info)
 		shadow.lights.clear();
 		if (!shadow.aabb.empty())
 		{
-		for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
-			if (shadow.isCrossingLight(jt->second))
-			{
-				shadow.lights.push_back(jt->second);
-			}
+			for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
+				if (shadow.isCrossingLight(jt->second))
+				{
+					shadow.lights.push_back(jt->second);
+				}
 		}
 	}
 
@@ -271,29 +227,61 @@ bool OpenGL_Engine::process(IN const ProcessInfo& info)
 	{
 		glClear(clear);
 	}
-
+	pvector<BlendingFaces> blendingFaces;
 //	steel::vector<int> elementAlpha;
 // В начале выводим только непрозрачные объекты
 	for EACH(ShadowPVector, shadows, it)
 	{
-		process(*GS(*it), false);
+		FaceMaterialVector skippedFaces;
+		process(*GS(*it), skippedFaces);
+
+		for EACH(FaceMaterialVector, skippedFaces, jt)
+		{
+			blendingFaces.push_back(BlendingFaces(GS(*it), jt->material, jt->triangles));
+		}
 	}
 
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
 
-	if (conf->geti("drawAlpha")>0)
+	if (conf->geti("drawAlpha")>0 && !blendingFaces.empty())
 	{
+		BlendingTriangleVector blendingTriangles;
+		for EACH(pvector<BlendingFaces>, blendingFaces, it)
+		{
+			if (it->shadow->positionKind != POSITION_SCREEN)
+			{
+				for EACH(TriangleVector, it->triangles->data, jt)
+				{
+					BlendingTriangle newBlendingTriangle;
+					newBlendingTriangle.vertex[0] = jt->a[0];
+					newBlendingTriangle.vertex[1] = jt->a[1];
+					newBlendingTriangle.vertex[2] = jt->a[2];
+					v3 center = (it->shadow->realPosition * it->shadow->vertexes->data[jt->a[0]] + it->shadow->realPosition * it->shadow->vertexes->data[jt->a[1]] + it->shadow->realPosition * it->shadow->vertexes->data[jt->a[2]])/3.0;
+					newBlendingTriangle.distance = (info.camera.getPosition() - center).getLength();
+					newBlendingTriangle.material = it->material;
+					newBlendingTriangle.shadow = it->shadow;
+					blendingTriangles.push_back(newBlendingTriangle);
+				}
+			}
+		}
+
+		sort(blendingTriangles.begin(), blendingTriangles.end());
+
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		
 		glDepthMask(GL_FALSE);
-//		glEnable(GL_BLEND);		glBlendFunc(GL_ADD);
+		glEnable(GL_BLEND);		
+		glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-//		sort(elementAlpha.begin(), elementAlpha.end());
-
-		for EACH(ShadowPVector, shadows, it)
+		for EACH(BlendingTriangleVector, blendingTriangles, it)
 		{
-			process(*GS(*it), true);
+			Triangles triangles;
+			triangles.data.push_back(Triangle(it->vertex[0], it->vertex[1], it->vertex[2]));
+			triangles.changed = true;
+			triangles.setId(0);
+			DrawFill_Material(*it->shadow, &triangles, it->material);
 		}
+
 		glPopAttrib();
 	}
 
@@ -311,6 +299,61 @@ bool OpenGL_Engine::process(IN const ProcessInfo& info)
 
 	return true;
 }
+
+/*
+Сердце Графического движка.
+Отвечает за вывод графичесткого элемента.
+*/
+
+void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces)
+{
+	pushPosition(e);
+
+	if (conf->getb("drawFace") && e.faceMaterials != NULL)
+	{
+		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
+		{
+			if (it->material->blend == TEXTURE_MODE_NONE)
+			{
+				DrawFill_Material(e, it->triangles, it->material);
+			}
+			else
+			{
+				skippedFaces.push_back(FaceMaterial(it->material, it->triangles));
+			}
+		}
+	}
+
+	if(conf->getb("drawWire") && e.faceMaterials != NULL && DrawWire != NULL)
+	{
+		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
+		{
+			(this->*DrawWire)(e, *it->triangles);
+		}
+	}
+
+	if(conf->getb("drawLines") && DrawLines)
+	{
+		(this->*DrawLines)(e);
+	}
+
+	if(conf->getb("drawNormals") && DrawNormals)
+	{
+		(this->*DrawNormals)(e);
+	}
+
+	if(conf->getb("drawVertexes") && DrawVertexes)
+	{
+		(this->*DrawVertexes)(e);
+	}
+
+	if(conf->getb("drawAABB") && DrawAABB)
+	{
+		(this->*DrawAABB)(e);
+	}
+	popPosition(e);
+}
+
 
 #if STEEL_OS == OS_WIN32
 void OpenGL_Engine::UseWinAPI()
@@ -519,9 +562,9 @@ void OpenGL_Engine::processCamera()
 
 	gluPerspective(conf->getd("camera.fov"), cameraAspectRatio, conf->getd("camera.min_dist"), conf->getd("camera.max_dist"));
 
-	v3 cameraPosition = camera.getPosition();
-	v3 cameraCenter = cameraPosition + camera.getDirection();
-	v3 cameraUp = camera.getUpVector();
+	v3 cameraPosition = info.camera.getPosition();
+	v3 cameraCenter = cameraPosition + info.camera.getDirection();
+	v3 cameraUp = info.camera.getUpVector();
 
     gluLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z,
 			cameraCenter.x, cameraCenter.y, cameraCenter.z,

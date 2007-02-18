@@ -48,7 +48,7 @@ private:
 	Config	*conf;
 
 	Vertexes *vertexes, *normals;
-	FaceMaterials *faces;
+	FaceMaterialVector *faces;
 	TexCoords *texCoords0, *texCoords1;
 	GraphEngine *graphEngine;
 

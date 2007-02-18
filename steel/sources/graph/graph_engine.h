@@ -48,8 +48,6 @@ public:
 
 protected:
 	pvector<GameObject*>	objects;
-	Camera					camera;
-	TimeInfo				timeInfo;
 };
 
 #endif

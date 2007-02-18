@@ -23,7 +23,8 @@
 // One triangle, indexes of vertexes
 struct Triangle // anti-clockwise direction (one side Triangle)
 {
-	unsigned int a[3];
+	Triangle(){}
+	Triangle(unsigned int _0, unsigned int _1, unsigned int _2) { set(_0, _1, _2); }
 
 	void set(unsigned int _0, unsigned int _1, unsigned int _2) 
 	{ 
@@ -31,6 +32,10 @@ struct Triangle // anti-clockwise direction (one side Triangle)
 		a[1] = _1;
 		a[2] = _2;
 	}
+
+	unsigned int a[3];
+
+
 };
 typedef pvector<Triangle> TriangleVector;
 

@@ -57,7 +57,7 @@ public:
 protected:
 	Vertexes *vertexes;
 	Normals  *normals;
-	FaceMaterials *faces;
+	FaceMaterialVector *faces;
 	TexCoords *texCoords;
 };
 

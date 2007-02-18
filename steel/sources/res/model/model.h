@@ -28,10 +28,10 @@ public:
 	float calculateVolume(); // вычислить объём
 	float getVolume(); // вычислить объём
 
-	const Vertexes *getVertexes() const { return &vertexes; }
-	const Normals *getNormals() const { return &normals; }
-	const FaceMaterials *getFaceMaterials() const { return &faceMaterials; }
-	const TexCoords	*getTexCoords(int mapNumber) const;
+	const Vertexes* getVertexes() const { return &vertexes; }
+	const Normals* getNormals() const { return &normals; }
+	const FaceMaterialVector* getFaceMaterials() const { return &faceMaterials; }
+	const TexCoords* getTexCoords(int mapNumber) const;
 
 	friend class GraphObjectModel; // TEMP:
 
@@ -43,7 +43,7 @@ protected:
 
     TexCoords			texCoords; // Texture coordinates
     Normals				normals;    // Vertex normals
-	FaceMaterials		faceMaterials;
+	FaceMaterialVector	faceMaterials;
 	
 	std::string			name;
 	float				volume;

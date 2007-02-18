@@ -51,6 +51,10 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow& e, const Triangles& tria
 		{
 			glDrawElements(GL_TRIANGLES, triangles.data.size()*3, GL_UNSIGNED_INT, 0);
 		}
+		else
+		{
+			glDrawElements(GL_TRIANGLES, triangles.data.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &triangles.data.front().a[0]);
+		}
 
 		glPopClientAttrib();
 		glPopAttrib();
@@ -304,43 +308,53 @@ void OpenGL_Engine::cleanBuffer(uid bufId)
 	buffer.erase(bufId);
 }
 
-template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2, int elCnt)
+template<class Class> 
+bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2, int elCnt)
 {
 	if(v == NULL || v->data.empty()) return false;
 
-	if(GL_EXTENSION_VBO) // Vertex Buffer Object supportd
+	if (GL_EXTENSION_VBO) // Vertex Buffer Object supportd
 	{
 		uid	id = v->getId();
-		if(id == 0) 
+		if (id == 0) 
 		{
-			if(mode) glEnableClientState(mode);
+			if (mode != 0) 
+			{
+				glEnableClientState(mode);
+			}
+
 			glBindBufferARB(mode2, 0);
 			return false;
 		}
 
 		bool loaded = false;
 		if(buffer.find(id) != buffer.end())
+		{
 			loaded = buffer[id].loaded;
+		}
 
 		OpenGL_Buffer &buf = buffer[id];
 
-		if(loaded && buf.size != v->data.size())
+		if (loaded && buf.size != v->data.size())
 		{
 			glDeleteBuffersARB(1, &buf.glid);
 			buf.loaded = false;
 			loaded = false;
 		}
 
-		if(loaded)
+		if (loaded)
 		{
 			glBindBufferARB(mode2, buf.glid);
-			if(v->changed)
+			if (v->changed)
 			{
 				glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->data.size(), &v->data.front());
 				buf.loadCnt++;
 			}
 
-			if(mode)glEnableClientState(mode);
+			if (mode)
+			{
+				glEnableClientState(mode);
+			}
 
 			buf.lastUsedTime = info.timeInfo.currentTime;
 			buf.usedCnt++;
@@ -354,18 +368,24 @@ template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2,
 			glBindBufferARB(mode2, buf.glid);
 
 			GLenum usage = GL_STATIC_DRAW;
-			if(v->changed)
+			if (v->changed)
+			{
 				usage = GL_STREAM_DRAW;
+			}
 
 			glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
 			buf.size = v->data.size();
 	
 			buf.loaded = true;
 			buf.loadCnt++;
-			if(mode2 == GL_ARRAY_BUFFER_ARB)
+			if (mode2 == GL_ARRAY_BUFFER_ARB)
+			{
 				buf.kind = OpenGL_Buffer::array;
-			if(mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
+			}
+			if (mode2 == GL_ELEMENT_ARRAY_BUFFER_ARB)
+			{
 				buf.kind = OpenGL_Buffer::index;
+			}
 
 //			buf.temp = false;
 			buf.lastUsedTime = info.timeInfo.currentTime;
@@ -374,5 +394,7 @@ template<class Class> bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2,
 		return true;
 	}  
 	else
+	{
 		return false;
+	}
 }

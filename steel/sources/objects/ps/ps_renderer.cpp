@@ -14,7 +14,7 @@
 #include "ps_renderer.h"
 #include "../../res/res_main.h"
 
-void SpriteRenderer::process(IN const ProcessInfo& info)
+void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 {
 	initSprites(vertexes.data.size()/4, set->particles.size());
 
@@ -74,7 +74,7 @@ AABB SpriteRenderer::getFrame()
 
 void SpriteRenderer::initSprites()
 {
-	face.resize(1);		
+	face.resize(1);
 	face[0].material = material;
 
 	face[0].triangles = new Triangles;
@@ -92,7 +92,7 @@ void SpriteRenderer::initSprites()
 
 void SpriteRenderer::initSprites(int begin, int end)
 {
-	if(begin == end) return ;
+	if (begin == end) return ;
 
 	vertexes.data.resize(end*4);
 	normals.data.resize(end*4);
@@ -155,6 +155,8 @@ bool SpriteRenderer::updateInformation(Engine& engine)
 	if (engine.isSupportingInterface(INTERFACE_GRAPH))
 	{
 		GraphInterface &gengine = *dynamic_cast<GraphInterface*>(&engine);
+
+		updateSpritePositions(gengine.getProcessInfo());
 
 		gengine.setVertexes(&vertexes);
 		gengine.setNormals(&normals);

@@ -124,10 +124,18 @@ void main (void)
 	
 	if (blending == 0)
 	{
-	    gl_FragColor = vec4(color, 1.0);
+	    gl_FragColor = vec4(color, 1.0); // no blending
 	}
-	else
+	else if (blending == 1)
 	{
-	    gl_FragColor = gl_FragColor + vec4(color, 1.0);
+	    gl_FragColor = vec4(color, length(color)); // blend factor from additional texture
+	}
+	else if (blending == 2)
+	{
+	    gl_FragColor = vec4(color, length(color)); // blend factor ~ white
+	}
+	else if (blending == 3)
+	{
+	    gl_FragColor = vec4(color, 1- length(color)); // blend factor ~ black
 	}
 }

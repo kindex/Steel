@@ -42,7 +42,7 @@
 	steel::vector (common/steel_vector.h),
 	иначе использует std::vector
 */
-#define STEEL_VECTOR 1
+#define STEEL_VECTOR 0
 
 
 /*

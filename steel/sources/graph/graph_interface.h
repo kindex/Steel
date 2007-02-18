@@ -27,12 +27,15 @@
 // материал + треугольники, к которым он относится
 struct FaceMaterial
 {
-	Material		*material;
-	Triangles		*triangles;
+	FaceMaterial() {}
+	FaceMaterial(Material* material, Triangles* triangles) : material(material), triangles(triangles) {}
+
+	Material*		material;
+	Triangles*		triangles;
 	std::string		name;
 };
 
-typedef svector<FaceMaterial>	FaceMaterials;
+typedef svector<FaceMaterial>	FaceMaterialVector;
 
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 
@@ -72,10 +75,11 @@ public:
 	virtual void	setLines(const GLines*) abstract; // индексы вершин для линий и цвета линий (for debug)
 
 	// массив индексов вершин, которые образуют треугольники (грани) + материалы
-	virtual void	setFaceMaterials(const FaceMaterials*) abstract;
+	virtual void	setFaceMaterials(const FaceMaterialVector*) abstract;
 	virtual void	setTexCoordsCount(unsigned int) abstract;
 	virtual void	setTexCoords(unsigned int texNumber, const TexCoords*) abstract;
 	virtual void	setAABB(const AABB&) abstract;
+	virtual const ProcessInfo& getProcessInfo() abstract;
 };
 
 #endif

@@ -34,11 +34,12 @@ public:
 	void afterRemove(IN OUT Engine&) {}
 	bool updateInformation(IN OUT Engine&);
 	void bindEngine(IN OUT Engine&);
-	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+	void process(IN const ProcessInfo& info) {}
 	void onParticleBorn(int index) {}
 	void onParticleDie(int index) {}
 
+	void updateSpritePositions(IN const ProcessInfo&);
 	void initSprites();
 	void initSprites(int begin, int end);
 	bool initParticles();
@@ -47,7 +48,7 @@ public:
 private:
 	Material*	material;
 	Vertexes	vertexes;
-	FaceMaterials	face;
+	FaceMaterialVector	face;
 	TexCoords	texCoords;
 	Normals		normals;
 	v3			cameraPosition;
