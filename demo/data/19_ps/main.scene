@@ -4,47 +4,16 @@ class = 'combiner'
 objects = 
 (
 [/room/room.scene#] {}
-{
-class = 'ps'
-emitter = 
-	{
-	class = 'simple'
-	particle_size = 0.1
-	init_size = 10
-	position_dispersion = 5
-	} 
-renderer = 
-	{
-	class = 'sprite'
-	material = 
+
+[ps.scene#] { emitter = {	origin = (1 0 1.8) } }
+[ps.scene#] { 
+	emitter = {	origin = (1 0 0.8) } 
+	renderer = 
 		{
-			class = 'std'
-			blend = 2
-			emission_map =
-			{ 
-				image = 'wsmoke'
-				k = 1
-			}
+		material =  {
+			emission_map = {image = 'bsmoke'}
 		}
-	} 
-animator = 
-	{
-	class = 'UniPSanimator'
-	particle = 
-	{
-		mass=1
-
-		spring_k=1
-		spring_r0=10
-
-		gravity_k=0
-		gravity_power=1
-		gravity_min_dist=0.1
-
-		friction_k=0.1
-		friction_power=1
 	}
-	} 
 }
 
 

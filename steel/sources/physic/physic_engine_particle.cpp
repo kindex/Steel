@@ -38,7 +38,7 @@ v3 PhysicEngine::calculateForceForParticle(ParticleShadow* shadow1, ParticleShad
 	}
 */
 	
-	float dist = (pos2-pos1).getLength();
+	float dist = (pos2-pos1).getLength()/((shadow1->distance_k + shadow2->distance_k)/2);
 	
 	float spring_r0 = shadow1->spring_r0 + shadow2->spring_r0;
 	float spring_k = shadow1->spring_k + shadow2->spring_k;
@@ -48,7 +48,7 @@ v3 PhysicEngine::calculateForceForParticle(ParticleShadow* shadow1, ParticleShad
 	float gravity_min_dist = 0.5f*(shadow1->gravity_min_dist + shadow2->gravity_min_dist);
 
 	//res += (pos2-pos1).getNormalized() * (dist - spring_r0)*spring_k; // пружина
-	res += (pos2-pos1).getNormalized() * (pow((1/dist),2) - pow(1/dist,3)); // lennard-jones
+	res += (pos2-pos1).getNormalized() * (pow(dist, (shadow1->lj_power1 + shadow2->lj_power1)/2) - pow(dist, (shadow1->lj_power2 + shadow2->lj_power2)/2)); // lennard-jones
 
 	if (dist>gravity_min_dist && gravity_k != 0)
 	{

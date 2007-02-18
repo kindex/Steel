@@ -17,47 +17,29 @@
 #include "../../steel.h"
 #include "../res.h"
 
-typedef enum 
+enum ImageDimension
 {
 	IMAGE_DIMENSION_NONE,
 	IMAGE_1D,
 	IMAGE_2D,
 	IMAGE_3D,
 	IMAGE_CUBE // 6 images in one (+X, -X, +Y, -Y, +Z, -Z)
-} ImageDimension;
+};
 
-typedef enum
+enum ImageFormat
 {
 	IMAGE_FORMAT_NONE,
 	IMAGE_RGB,   // 24
-	IMAGE_RGBA,  // 32
-	IMAGE_NORMAL // rgb = xyz
-} ImageFormat;
+	IMAGE_RGBA  // 32
+} ;
 
 class Image: public Res
 {
-protected:
-    unsigned char* bitmap;
-    int width, height, bpp, bitmapSize;
 public:
-
-protected:
-	ImageDimension	dimension;
-	ImageFormat		format;
-public:
-
 	Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; dimension = IMAGE_DIMENSION_NONE; format = IMAGE_FORMAT_NONE; }
     ~Image() { unload(); }
 
-    bool unload()
-	{
-		if (bitmap != NULL)
-			delete bitmap;
-		bitmap = NULL;
-		bpp = 0; width = 0; height = 0; bitmapSize = 0;
-		return true;
-     }
-
+    bool unload();
     bool createImage(int WIDTH, int HEIGHT, int BPP);
 
     void flipV(); // perevernut' Vertikalno |
@@ -79,6 +61,18 @@ public:
 	void setDimension(ImageDimension _dimension) { dimension = _dimension; }
 	ImageFormat	getFormat() { return format; }
 	void setFormat(ImageFormat _format) { format = _format; }
+	void addAlphaChannel(const Image* alpha);
+	bool convertToRGBA();
+
+protected:
+    unsigned char* bitmap;
+    size_t width;
+	size_t height;
+	size_t bpp; // bits per pixel
+	size_t bitmapSize;
+
+	ImageDimension	dimension;
+	ImageFormat		format;
 };
 
 #endif

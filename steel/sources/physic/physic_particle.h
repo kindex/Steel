@@ -28,7 +28,20 @@ class PhysicEngine: public Engine, public PhysicParticleInterface
 		bool	enabled;
 
 		float mass;
-		float spring_r0, spring_k, gravity_k, gravity_min_dist, gravity_power, friction_k, friction_power;
+		float distance_k;
+		
+		float spring_r0;
+		float spring_k;
+
+		float gravity_k;
+		float gravity_min_dist;
+		float gravity_power;
+
+		float friction_k;
+		float friction_power;
+
+		float lj_power1;
+		float lj_power2;
 
 		ParticleShadow(Engine* aEngine): Shadow(aEngine), enabled(false) {}
 	};

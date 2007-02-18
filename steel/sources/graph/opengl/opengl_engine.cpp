@@ -270,8 +270,9 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		
 		glDepthMask(GL_FALSE);
+		glDepthFunc(GL_LESS);
 		glEnable(GL_BLEND);		
-		glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		for EACH(BlendingTriangleVector, blendingTriangles, it)
 		{

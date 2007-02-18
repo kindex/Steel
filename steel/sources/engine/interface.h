@@ -46,13 +46,13 @@ public:
 typedef matrix34 ObjectPosition;
 
 // Тип положения объекта: local – относительно родитиля, global – в глобальной системе координат.
-typedef enum
+enum PositionKind
 {
 	POSITION_NONE,
 	POSITION_LOCAL,
 	POSITION_GLOBAL,
 	POSITION_SCREEN
-} PositionKind;
+};
 
 
 

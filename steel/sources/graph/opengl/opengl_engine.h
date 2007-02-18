@@ -67,14 +67,14 @@ public:
 protected:
 	struct OpenGL_Buffer
 	{
-		typedef enum 
+		enum buffer_kind
 		{
 			none,
 			image,
 			array,
 			index,
 			shader
-		} buffer_kind;
+		};
 
 		int		size;
 		GLuint	glid;

@@ -20,7 +20,7 @@
 #include <string>
 #include <map>
 
-typedef enum
+enum ConfigValueType
 {
 	CONFIG_VALUE_NONE,
 	CONFIG_VALUE_NULL,
@@ -28,7 +28,7 @@ typedef enum
 	CONFIG_VALUE_STRING,
 	CONFIG_VALUE_STRUCT,
 	CONFIG_VALUE_ARRAY
-} ConfigValueType;
+};
 
 struct ConfigTemplate
 {

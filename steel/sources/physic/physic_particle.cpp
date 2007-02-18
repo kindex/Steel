@@ -82,6 +82,7 @@ void PhysicEngine::setConfig(Config& _config)
 {
 	currentShadow->config			= &_config;
 	currentShadow->mass				= currentShadow->config->getf("mass", 1.0f);
+	currentShadow->distance_k		= currentShadow->config->getf("distance_k", 1.0f);
 	currentShadow->spring_r0		= currentShadow->config->getf("spring_r0");
 	currentShadow->spring_k			= currentShadow->config->getf("spring_k");
 	currentShadow->gravity_k		= currentShadow->config->getf("gravity_k");
@@ -89,6 +90,8 @@ void PhysicEngine::setConfig(Config& _config)
 	currentShadow->gravity_min_dist	= currentShadow->config->getf("gravity_min_dist");
 	currentShadow->friction_k		= currentShadow->config->getf("friction_k");
 	currentShadow->friction_power	= currentShadow->config->getf("friction_power");
+	currentShadow->lj_power1		= currentShadow->config->getf("lj_power1", -2);
+	currentShadow->lj_power2		= currentShadow->config->getf("lj_power2", -3);
 	currentShadow->enabled			= true;
 }
 

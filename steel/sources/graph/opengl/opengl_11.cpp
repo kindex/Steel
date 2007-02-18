@@ -122,8 +122,6 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enable)
 
 		int format;
 		if(image.getFormat() == IMAGE_RGB) format = GL_RGB; 
-		else
-		if(image.getFormat() == IMAGE_NORMAL) format = GL_RGB; 
 		else if(image.getFormat() == IMAGE_RGBA) format = GL_RGBA;
 		else return false;
 

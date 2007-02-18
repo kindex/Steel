@@ -21,13 +21,6 @@
 #include "../math/matrix34.h"
 #include "../math/vector3d.h"
 
-typedef enum
-{
-	PROCESS_NONE,
-	PROCESS_CUSTOM, // сам объект определяет своё движение
-	PROCESS_UNI // движется по универсальным законам
-} ProcessKind;
-
 struct Velocity
 {
 	v3 translation; // скорость поступательного движения

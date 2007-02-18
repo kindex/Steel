@@ -58,20 +58,20 @@ public: //protected:
 	Material*		reserve;
 };
 
-typedef enum
+enum TextureMode
 {
 	TEXTURE_MODE_NONE,
 	TEXTURE_MODE_ADD,
 	TEXTURE_MODE_MUL,
 	TEXTURE_MODE_BLEND
-} TextureMode;
+};
 
-typedef enum
+enum TextureReflectType
 {
 	TEXTURE_REFLECT_NONE,
 	TEXTURE_REFLECT_MIRROR,
 	TEXTURE_REFLECT_SKY
-} TextureReflectType;
+};
 
 struct TextureMatrix
 {

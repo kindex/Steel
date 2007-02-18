@@ -173,17 +173,17 @@ void GameFreeScene::process(IN const TimeInfo& timeInfo)
 
 	spectator.camera.setPosition(spectator.camera.getPosition() + cameraSpeed*(float)speed);
 	
-	if(!paused || framesToPass>0)
+	info.timeInfo = timeInfo;
+	info.camera = spectator.camera;
+
+	if (!paused || framesToPass>0)
 	{
 		static steel::time totalPhysicTime = 0;
 		steel::time frame = 0.01f*speedup;
 
-		info.timeInfo = timeInfo;
-		info.camera = spectator.camera;
-
 		world->process(info);
 
-		if(framesToPass>0)
+		if (framesToPass>0)
 		{
 			framesToPass--;
 		}
@@ -192,7 +192,7 @@ void GameFreeScene::process(IN const TimeInfo& timeInfo)
 			framesToPass = 0;
 		}
 
-		if(light != NULL)
+		if (light != NULL)
 		{
 			light->setPosition(spectator.camera.getPosition());
 		}

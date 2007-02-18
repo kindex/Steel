@@ -1,0 +1,47 @@
+//
+{
+class = 'ps'
+emitter = 
+	{
+	class = 'simple'
+	particle_size = 0.2
+	init_size = 20
+	position_dispersion = 1
+	} 
+renderer = 
+	{
+	class = 'sprite'
+	material = 
+		{
+			class = 'std'
+			blend = 1
+			emission_map =
+			{ 
+				image = 'wsmoke'
+				k = 1
+			}
+		}
+	} 
+animator = 
+	{
+	class = 'UniPSanimator'
+	particle = 
+	{
+		mass=1
+		distance_k = 0.1
+
+		spring_k=0.0
+		spring_r0=0.1
+
+		gravity_k=0.0
+		gravity_power=1
+		gravity_min_dist=0.1
+
+		friction_k=0.1
+		friction_power=1
+
+		lj_power1 = -2
+		lj_power2 = -3
+	}
+	} 
+}

@@ -35,12 +35,12 @@ struct color4f
 	const float *getfv() const { return &r; }
 };
 
-typedef enum
+enum LightType
 {
 	LIGHT_NONE,
 	LIGHT_DIFFUSE, // omni?
 	LIGHT_TARGET // spot
-} LightType;
+};
 
 struct Light
 {

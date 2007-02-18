@@ -17,7 +17,7 @@
 
 bool Image::createImage(int WIDTH, int HEIGHT, int BPP)
 {
-	if(BPP != 24 && BPP != 32) return false; // Only RGB or RGBA
+	if (BPP != 24 && BPP != 32) return false; // Only RGB or RGBA
     this->width = WIDTH;
     this->height = HEIGHT;
     this->bpp = BPP;
@@ -51,8 +51,8 @@ void Image::flipH()
   if (bitmap == NULL) return ;
   int bpl = width*3;
 
-  for (int y = 0; y<height; y++)
-    for (int x = 0; x<(width-1)/2; x++)
+  for (size_t y = 0; y<height; y++)
+    for (size_t x = 0; x<(width-1)/2; x++)
     {
         unsigned char a = bitmap[y*bpl + x*3 + 0];
         unsigned char b = bitmap[y*bpl + x*3 + 1];
@@ -71,13 +71,13 @@ void Image::flipH()
 void Image::putpixel(float X, float Y, float r, float g, float b)
 {
     if (bitmap == NULL) return ;
-    int x = (int)(X*width);
+    size_t x = (int)(X*width);
     if (x<0 || x>= width) return;
 
-    int y = (int)(Y*height);
+    size_t y = (int)(Y*height);
     if (y<0 || y>= height) return;
 
-    int bpl = width*3;
+    size_t bpl = width*3;
     bitmap[y*bpl + x*3 + 0] = (int)(r*255);
     bitmap[y*bpl + x*3 + 1] = (int)(g*255);
     bitmap[y*bpl + x*3 + 2] = (int)(b*255);
@@ -86,13 +86,13 @@ void Image::putpixel(float X, float Y, float r, float g, float b)
 void Image::putpixeladd(float X, float Y, float r, float g, float b)
 {
     if (bitmap == NULL) return ;
-    int x = (int)(X*width);
+    size_t x = (int)(X*width);
     if (x<0 || x>= width) return;
 
-    int y = (int)(Y*height);
+    size_t y = (int)(Y*height);
     if (y<0 || y>= height) return;
 
-    int bpl = width*3;
+    size_t bpl = width*3;
     int a;
     a = (int)bitmap[y*bpl + x*3 + 0] + (int)(r*255); if (a<0) a = 0; if (a>255) a = 255; bitmap[y*bpl + x*3 + 0] = a;
     a = (int)bitmap[y*bpl + x*3 + 1] + (int)(g*255); if (a<0) a = 0; if (a>255) a = 255; bitmap[y*bpl + x*3 + 1] = a;
@@ -103,13 +103,13 @@ void Image::putpixeladd(float X, float Y, float r, float g, float b)
 void Image::putpixelalfa(float X, float Y, float r, float g, float b, float alfa)
 {
     if (bitmap == NULL) return ;
-    int x = (int)(X*width);
+    size_t x = (int)(X*width);
     if (x<0 || x>= width) return;
 
-    int y = (int)(Y*height);
+    size_t y = (int)(Y*height);
     if (y<0 || y>= height) return;
 
-    int bpl = width*3;
+    size_t bpl = width*3;
     bitmap[y*bpl + x*3 + 0] = (unsigned char)(bitmap[y*bpl + x*3 + 0]*(1-alfa) + alfa*r*255);
     bitmap[y*bpl + x*3 + 1] = (unsigned char)(bitmap[y*bpl + x*3 + 1]*(1-alfa) + alfa*g*255);
     bitmap[y*bpl + x*3 + 2] = (unsigned char)(bitmap[y*bpl + x*3 + 2]*(1-alfa) + alfa*b*255);
@@ -119,14 +119,16 @@ void Image::putpixelalfa(float X, float Y, float r, float g, float b, float alfa
 void Image::clear(float r, float g, float b)
 {
     if (bitmap == NULL) return;
-    int bpl = width*3;
-    for(int y=0; y<height; y++)
-        for(int x=0; x<width; x++)
+    size_t bpl = width*3;
+    for (size_t y=0; y<height; y++)
+	{
+        for (size_t x=0; x<width; x++)
         {
             bitmap[y*bpl + x*3 + 0] = (int)(r*255);
             bitmap[y*bpl + x*3 + 1] = (int)(g*255);
             bitmap[y*bpl + x*3 + 2] = (int)(b*255);
         }
+	}
 }
 
 void Image::convertFromHeightMapToNormalMap()
@@ -137,12 +139,12 @@ void Image::convertFromHeightMapToNormalMap()
 
     memcpy(b, &bitmap[(height-1)*bpl], bpl);
 
-    for(int y=0; y<height; y++)
+    for (size_t y=0; y<height; y++)
     {
         memcpy(a, b, bpl);
         memcpy(b, &bitmap[y*bpl], bpl);
 
-        for(int x=0; x<width; x++)
+        for (size_t x=0; x<width; x++)
         {
             unsigned char A = a[x*3];
 //            unsigned char B = b[x*3];
@@ -170,5 +172,61 @@ void Image::convertFromHeightMapToNormalMap()
     free(a);
     free(b);
 
-	format = IMAGE_NORMAL;
+	format = IMAGE_RGB;
+}
+
+bool Image::unload()
+{
+	if (bitmap != NULL)
+	{
+		delete[] bitmap;
+	}
+	bitmap = NULL;
+	bpp = 0; width = 0; height = 0; bitmapSize = 0;
+	return true;
+ }
+
+bool Image::convertToRGBA()
+{
+	if (getFormat() == IMAGE_RGB)
+	{
+		format = IMAGE_RGBA;
+		bpp = 32;
+		bitmapSize = width*height*bpp/8;
+
+		unsigned char* newBitmap = new unsigned char[this->bitmapSize];
+
+		for (size_t y = 0; y < height; y++)
+		{
+			for (size_t x = 0; x < width; x++)
+			{
+				newBitmap[(y*width+x)*4 + 0] = bitmap[(y*width+x)*3 + 0];
+				newBitmap[(y*width+x)*4 + 1] = bitmap[(y*width+x)*3 + 1];
+				newBitmap[(y*width+x)*4 + 2] = bitmap[(y*width+x)*3 + 2];
+				newBitmap[(y*width+x)*4 + 3] = 1;
+			}
+		}
+
+		delete[] bitmap;
+		bitmap = newBitmap;
+		return true;
+	}
+	else
+		return false;
+}
+
+
+void Image::addAlphaChannel(const Image* alpha)
+{
+	convertToRGBA();
+	for (size_t y = 0; y < height; y++)
+	{
+		for (size_t x = 0; x < width; x++)
+		{
+			bitmap[(y*width+x)*4 + 3] = 
+				(alpha->bitmap[(y*width+x)*alpha->bpp/8 + 0] +
+				 alpha->bitmap[(y*width+x)*alpha->bpp/8 + 1] +
+				 alpha->bitmap[(y*width+x)*alpha->bpp/8 + 2]) / 3;
+		}
+	}
 }

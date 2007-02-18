@@ -18,11 +18,11 @@
 #include <string>
 
 // формат текста
-typedef enum
+enum TextFormat
 {
 	TEXT_ASCII,
 	TEXT_UTF8
-}TextFormat;
+};
 
 
 class Text: public Res

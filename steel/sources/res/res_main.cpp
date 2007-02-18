@@ -31,9 +31,9 @@ ResCollection<Audio>	resAudio;
 
 
 // Image filename:
-// name[.cube][.normal|.height][.bmp|.tga]
+// name[.cube][.normal|.height|.alpha][.bmp|.tga]
 
-Image *createBitmap(const std::string filename)
+Image* createBitmap(const std::string filename)
 {
 	Image *r;
 	// try to load image2d
@@ -42,20 +42,30 @@ Image *createBitmap(const std::string filename)
 	return NULL;
 }
 
-Image *createImageFormat(const std::string filename)
+Image* createImageFormat(const std::string filename)
 {
-	Image *r;
+	Image* r;
 	// try to load image2d
-	if((r = createBitmap(filename)) != NULL) return r;
+	if ((r = createBitmap(filename)) != NULL)
+	{
+		Image* alpha;
+		if ((alpha = createBitmap(filename + ".alpha")) != NULL)
+		{
+			r->addAlphaChannel(alpha);
+			delete alpha;
+		}
+
+		return r;
+	}
 	if((r = createBitmap(filename + ".normal"))	!= NULL)
 	{
-		((Image*)r)->setFormat(IMAGE_NORMAL);
+		((Image*)r)->setFormat(IMAGE_RGB);
 		return r;
 	}
 	if((r = createBitmap(filename + ".height")) != NULL)
 	{
 		((Image*)r)->convertFromHeightMapToNormalMap();
-		((Image*)r)->setFormat(IMAGE_NORMAL);
+		((Image*)r)->setFormat(IMAGE_RGB);
 		return r;
 	}
 
@@ -63,7 +73,7 @@ Image *createImageFormat(const std::string filename)
 }
 
 
-Image *createImage(const std::string filename, const std::string base)
+Image* createImage(const std::string filename, const std::string base)
 {
 	Image *r;
 	// try to load image2d
