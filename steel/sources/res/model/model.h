@@ -39,7 +39,7 @@ protected:
 	AABB				frame;
     Vertexes			vertexes;    // Vertexes
 
-    Triangles			triangleAll;        // Triangles
+    Faces				triangleAll;        // Faces
 
     TexCoords			texCoords; // Texture coordinates
     Normals				normals;    // Vertex normals

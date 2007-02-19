@@ -17,34 +17,34 @@
 #include "../../libs/opengl/libext.h"
 
 // нарисовать множество полигонов с указанным материалом / glVertexPointer
-void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow& e, const Triangles& triangles, const TexCoords* coords)
+void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow& e, const Faces& faces, const TexCoords* coords)
 {
-	if (e.vertexes != NULL && !triangles.data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes != NULL && !faces.triangles.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
-		total.vertexCount += e.vertexes->data.size();
-		total.triangleCount += triangles.data.size();
+		total.vertexCount += e.vertexes->size();
+		total.triangleCount += faces.triangles.size();
 			
 		if(coords)	
 		{ 
-			glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());
+			glTexCoordPointer(2, GL_FLOAT, 0, &coords->front());
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		}
 
 /*		RUNTIME ERROR: glDrawElements вылезает в плохую область памяти, если передаются нормали
 		if(e.normals) // TODO check array length
 		{
-			glVertexPointer(3, GL_FLOAT, 0, &e.normals->data.front());
+			glVertexPointer(3, GL_FLOAT, 0, &e.normals->front());
 			glEnableClientState(GL_NORMAL_ARRAY);
 		}
 */
-		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->data.front());	
+		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->front());	
 		glEnableClientState(GL_VERTEX_ARRAY);
 
 		//Draw All
-		glDrawElements(GL_TRIANGLES, triangles.data.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &triangles.data.front().a[0]);
+		glDrawElements(GL_TRIANGLES, faces.triangles.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &faces.triangles.front().a[0]);
 
 		glPopClientAttrib();
 		glPopAttrib();
@@ -55,7 +55,7 @@ void OpenGL_Engine::BindTexCoords_OpenGL11(const TexCoords* coords, const Textur
 {
 	if(coords != NULL)
 	{ 
-		glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	
+		glTexCoordPointer(2, GL_FLOAT, 0, &coords->front());	
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
 	}
 	else
@@ -75,11 +75,13 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL11(const TexCoords3f* coords)
 {
 	if(coords != NULL)
 	{ 
-		glTexCoordPointer(3, GL_FLOAT, 0, &coords->data.front());
+		glTexCoordPointer(3, GL_FLOAT, 0, &coords->front());
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
 	else
+	{
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	}
 }
 
 
@@ -197,22 +199,22 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enable)
 
 
 
-void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow& e, const Triangles& triangles)
+void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow& e, const Faces& faces)
 {
-	if (e.vertexes != NULL && !triangles.data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes != NULL && !faces.triangles.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		total.objectCount++;
-		total.vertexCount += e.vertexes->data.size();
-		total.triangleCount += triangles.data.size();
+		total.vertexCount += e.vertexes->size();
+		total.triangleCount += faces.triangles.size();
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
 		glPolygonMode (GL_FRONT, GL_LINE);
 
-		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->front());	glEnableClientState(GL_VERTEX_ARRAY);
 
-		glDrawElements(GL_TRIANGLES, triangles.data.size()*3/*A,b,c*/, GL_UNSIGNED_INT, &triangles.data.front().a[0]);
+		glDrawElements(GL_TRIANGLES, faces.triangles.size()*3/*A,b,c*/, GL_UNSIGNED_INT, &faces.triangles.front().a[0]);
 
 		glPopClientAttrib();
 		glPopAttrib();
@@ -221,17 +223,17 @@ void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow& e, const Trian
 
 void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphShadow &e)
 {
-	if(e.vertexes != NULL && e.lines != NULL && !e.lines->index.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes != NULL && e.lines != NULL && !e.lines->index.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		total.objectCount++;
-		total.vertexCount += e.vertexes->data.size();
+		total.vertexCount += e.vertexes->size();
 		total.triangleCount += e.lines->index.size();
 		
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
 		// TODO color
-		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->data.front());	glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->front());	glEnableClientState(GL_VERTEX_ARRAY);
 
 		glDrawElements(GL_LINES, e.lines->index.size()*2, GL_UNSIGNED_INT, &e.lines->index.front().a[0]);
 

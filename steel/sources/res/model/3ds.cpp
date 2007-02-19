@@ -150,17 +150,17 @@ int chain_model_material(Model_3DS &m, rstream &f, int size) // model material i
 	m.faceMaterials.resize(s+1);
 	m.faceMaterials[s].name = materialName;
 
-	m.faceMaterials[s].triangles = new Triangles;
-	Triangles &a = *m.faceMaterials[s].triangles;
+	m.faceMaterials[s].faces = new Faces;
+	Faces& a = *m.faceMaterials[s].faces;
 
-	a.data.resize(count);
+	a.triangles.resize(count);
 
 	for(int i=0; i<count; i++)
 	{
 		unsigned short tmp;
 		f.read(&tmp, 2);
 
-		a.data[i] = m.triangleAll.data[tmp];
+		a.triangles[i] = m.triangleAll.triangles[tmp];
 
 		r += 2;
 	}
@@ -176,17 +176,17 @@ int chain_triangles(Model_3DS &m, rstream &f, int size)
 
 //	int x = sizeof(m.triangleAll.data[0]);
 
-    m.triangleAll.data.resize(count);
-	for(int i=0; i<count; i++)
+    m.triangleAll.triangles.resize(count);
+	for(size_t i = 0; i < count; i++)
 	{
-		unsigned short a,b,c;
+		unsigned short a, b, c;
 		f.read(&a, 2); // short
 		f.read(&b, 2); // short
 		f.read(&c, 2); // short
 
-		m.triangleAll.data[i].a[0] = a;
-		m.triangleAll.data[i].a[1] = b;
-		m.triangleAll.data[i].a[2] = c;
+		m.triangleAll.triangles[i].a[0] = a;
+		m.triangleAll.triangles[i].a[1] = b;
+		m.triangleAll.triangles[i].a[2] = c;
 
 		short face_flags;
 		f.read(&face_flags, 2);
@@ -210,8 +210,8 @@ int chain_vertexes(Model_3DS &m, rstream &f, int size)
 	f.read(&count, 2);	
 	if(count*12 +2!= size)
 			throw;
-	m.vertexes.data.resize(count);
-	f.read(&m.vertexes.data[0], count*4*3); // count*3*float (x, y, z)
+	m.vertexes.resize(count);
+	f.read(&m.vertexes[0], count*4*3); // count*3*float (x, y, z)
 
 	return 2+count*3*4;
 }
@@ -222,9 +222,9 @@ int chain_map_coords(Model_3DS &m, rstream &f, int size)
 
 	f.read(&count, 2);	
 
-	m.texCoords.data.resize(count);
+	m.texCoords.resize(count);
 
-	f.read(&m.texCoords.data[0], count*4*2); // float+float (u, v)
+	f.read(&m.texCoords[0], count*4*2); // float+float (u, v)
 
 	return 2+count*3*4;
 }
@@ -290,12 +290,12 @@ bool Model_3DS::init(const std::string name, const std::string dir)
 
 	vertexes.setId(objectIdGenerator.genUid());
 	normals.setId(objectIdGenerator.genUid());
-	triangleAll.setId(objectIdGenerator.genUid());
+	triangleAll.triangles.setId(objectIdGenerator.genUid());
 	texCoords.setId(objectIdGenerator.genUid());
 
 	for EACH(svector<FaceMaterial>, faceMaterials, it)
 	{
-		it->triangles->setId(objectIdGenerator.genUid());
+		it->faces->triangles.setId(objectIdGenerator.genUid());
 
 		string mat = it->name;
 		

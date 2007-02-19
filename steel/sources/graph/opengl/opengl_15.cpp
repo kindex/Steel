@@ -24,15 +24,15 @@ void OpenGL_Engine::CleanupDrawTriangles_OpenGL15()
 }
 
 // нарисовать множество полигонов с указанным материалом / VBO
-void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow& e, const Triangles& triangles, const TexCoords* coords)
+void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow& e, const Faces& faces, const TexCoords* coords)
 {
-	if (e.vertexes && !triangles.data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes && !faces.triangles.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
-		total.vertexCount += e.vertexes->data.size();
-		total.triangleCount += triangles.data.size();
+		total.vertexCount += e.vertexes->size();
+		total.triangleCount += faces.triangles.size();
 			
 //		if(coords)	{ glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY); }
 
@@ -47,13 +47,13 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow& e, const Triangles& tria
 		}
 
 		//Draw All
-		if (BindVBO(&triangles, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
+		if (BindVBO(&faces.triangles, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
 		{
-			glDrawElements(GL_TRIANGLES, triangles.data.size()*3, GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, faces.triangles.size()*3, GL_UNSIGNED_INT, 0);
 		}
 		else
 		{
-			glDrawElements(GL_TRIANGLES, triangles.data.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &triangles.data.front().a[0]);
+			glDrawElements(GL_TRIANGLES, faces.triangles.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &faces.triangles.front().a[0]);
 		}
 
 		glPopClientAttrib();
@@ -63,9 +63,9 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow& e, const Triangles& tria
 
 void OpenGL_Engine::BindTexCoords_OpenGL15(const TexCoords* coords, const TextureMatrix* textureMatrix)
 {
-	if(coords != NULL)	
+	if (coords != NULL)	
 	{ 
-		if(BindVBO(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
+		if (BindVBO(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 2))
 		{
 			glTexCoordPointer(2, GL_FLOAT, 0,0);
 
@@ -85,8 +85,10 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(const TexCoords3f* coords)
 {
 	if(coords != NULL)
 	{ 
-		if(BindVBO(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+		if (BindVBO(coords, GL_TEXTURE_COORD_ARRAY, GL_ARRAY_BUFFER_ARB, 3))
+		{
 			glTexCoordPointer(3, GL_FLOAT, 0,0);
+		}
 	}
 }
 
@@ -95,7 +97,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(const TexCoords3f* coords)
 {
 	steel::vector<uid> buffersToDelete;
 
-	if(e.triangle && e.vertexes && !e.vertexes->data.empty() && !e.triangle->data.empty())// если есть полигоны и вершины
+	if(e.triangle && e.vertexes && !e.vertexes->empty() && !e.faces->triangles.empty())// если есть полигоны и вершины
 	{
 		Material *m = e.material; // получаем материал
 		if(m != NULL  && conf->geti("drawFill", 1))
@@ -217,10 +219,10 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(const TexCoords3f* coords)
 			// загружаем и ресуем треугольники
 			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
 			{
-				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+				glDrawElements(GL_TRIANGLES, e.faces->triangles.size()*3, GL_UNSIGNED_INT, 0);
 			}
 			else
-				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data.front());
+				glDrawElements(GL_TRIANGLES, e.faces->triangles.size()*3, GL_UNSIGNED_INT, &e.faces->triangles.front());
 
 // -------------------------------------------------------------------------------
 
@@ -253,7 +255,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(const TexCoords3f* coords)
 			else
 			{
 				glEnable(GL_VERTEX_ARRAY);
-				glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->data[0]);
+				glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->at(0]);
 			}
 			glPolygonMode(GL_FRONT, GL_LINE);  		// Draw Polygons As Wireframes
 			glPolygonMode(GL_BACK, GL_LINE); 
@@ -261,10 +263,10 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(const TexCoords3f* coords)
 
 			if(bind(e.triangle, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
 			{
-				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, 0);
+				glDrawElements(GL_TRIANGLES, e.faces->triangles.size()*3, GL_UNSIGNED_INT, 0);
 			}
 			else
-				glDrawElements(GL_TRIANGLES, e.triangle->data.size()*3, GL_UNSIGNED_INT, &e.triangle->data[0]);
+				glDrawElements(GL_TRIANGLES, e.faces->triangles.size()*3, GL_UNSIGNED_INT, &e.faces->triangles[0]);
 
 			glPolygonMode(GL_FRONT, GL_FILL);  
 
@@ -272,7 +274,7 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(const TexCoords3f* coords)
 		}
 	}
 
-	if(e.lines && e.vertexes && !e.vertexes->data.empty() && !e.lines->empty())
+	if(e.lines && e.vertexes && !e.vertexes->empty() && !e.lines->empty())
 	{
 		glColor4f(1,1,1,1);
 		glBegin(GL_LINES);
@@ -280,8 +282,8 @@ void OpenGL_Engine::BindTexCoords3f_OpenGL15(const TexCoords3f* coords)
 		int i = 0;
 		for(GLines::iterator it = e.lines->begin(); it != e.lines->end(); it++)
 		{
-			glVertex3fv(e.vertexes->data[it->a[0]].get3fv());
-			glVertex3fv(e.vertexes->data[it->a[1]].get3fv());
+			glVertex3fv(e.vertexes->at(it->a[0]].get3fv());
+			glVertex3fv(e.vertexes->at(it->a[1]].get3fv());
 		}
 		glEnd();
 	}
@@ -309,9 +311,9 @@ void OpenGL_Engine::cleanBuffer(uid bufId)
 }
 
 template<class Class> 
-bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2, int elCnt)
+bool OpenGL_Engine::BindVBO(Class* v, int mode, int mode2, int elCnt)
 {
-	if(v == NULL || v->data.empty()) return false;
+	if (v == NULL || v->empty()) return false;
 
 	if (GL_EXTENSION_VBO) // Vertex Buffer Object supportd
 	{
@@ -335,7 +337,7 @@ bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2, int elCnt)
 
 		OpenGL_Buffer &buf = buffer[id];
 
-		if (loaded && buf.size != v->data.size())
+		if (loaded && buf.size != v->size())
 		{
 			glDeleteBuffersARB(1, &buf.glid);
 			buf.loaded = false;
@@ -347,7 +349,7 @@ bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2, int elCnt)
 			glBindBufferARB(mode2, buf.glid);
 			if (v->changed)
 			{
-				glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->data.size(), &v->data.front());
+				glBufferSubDataARB(mode2, 0, elCnt*sizeof(float)*v->size(), &v->front());
 				buf.loadCnt++;
 			}
 
@@ -373,8 +375,8 @@ bool OpenGL_Engine::BindVBO(Class *v, int mode, int mode2, int elCnt)
 				usage = GL_STREAM_DRAW;
 			}
 
-			glBufferDataARB(mode2, elCnt*sizeof(float)*v->data.size(), &v->data.front(), usage);
-			buf.size = v->data.size();
+			glBufferDataARB(mode2, elCnt*sizeof(float)*v->size(), &v->front(), usage);
+			buf.size = v->size();
 	
 			buf.loaded = true;
 			buf.loadCnt++;

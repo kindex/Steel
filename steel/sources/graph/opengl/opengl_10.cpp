@@ -16,7 +16,7 @@
 #include "opengl_engine.h"
 #include "../../libs/opengl/libext.h"
 
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow& e, const Triangles& triangles, MaterialStd& material)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow& e, const Faces& triangles, MaterialStd& material)
 {
 	total.objectCount++;
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -50,7 +50,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow& e,
 
 
 // нарисовать множество полигонов с указанным материалом / Blend
-/*void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material)
+/*void OpenGL_Engine::DrawFill_OpenGL10(OpenGL_Engine::GraphShadow &e, const Faces *triangles, Material *material)
 {
 	if(material != NULL)
 	{
@@ -142,20 +142,20 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow& e,
 }
 */
 // нарисовать множество полигонов с указанным материалом
-void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow& e, const Triangles& triangles, const TexCoords* coords)
+void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow& e, const Faces& faces, const TexCoords* coords)
 {
-	if (e.vertexes && !triangles.data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes && !faces.triangles.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
-		total.vertexCount += e.vertexes->data.size();
-		total.triangleCount += triangles.data.size();
+		total.vertexCount += e.vertexes->size();
+		total.triangleCount += faces.triangles.size();
 
 		glBegin(GL_TRIANGLES);
 		 
-		for EACH_CONST(TriangleVector, triangles.data, it)
+		for EACH_CONST(TriangleVector, faces.triangles, it)
 		{
-			if(coords != NULL) glTexCoord2fv(&coords->data[ it->a[0] ].x);	glVertex3fv(&e.vertexes->data[it->a[0] ].x);
-			if(coords != NULL) glTexCoord2fv(&coords->data[ it->a[1] ].x);	glVertex3fv(&e.vertexes->data[it->a[1] ].x);
-			if(coords != NULL) glTexCoord2fv(&coords->data[ it->a[2] ].x);	glVertex3fv(&e.vertexes->data[it->a[2] ].x);
+			if(coords != NULL) glTexCoord2fv(&coords->at( it->a[0] ).x);	glVertex3fv(&e.vertexes->at(it->a[0] ).x);
+			if(coords != NULL) glTexCoord2fv(&coords->at( it->a[1] ).x);	glVertex3fv(&e.vertexes->at(it->a[1] ).x);
+			if(coords != NULL) glTexCoord2fv(&coords->at( it->a[2] ).x);	glVertex3fv(&e.vertexes->at(it->a[2] ).x);
 		}
 	 
 		glEnd();
@@ -198,20 +198,20 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image& image, bool enable)
 }
 
 // нарисовать множество полигонов как сетку (только рёбра)
-void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow& e, const Triangles& triangles)
+void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow& e, const Faces& faces)
 {
-	if (e.vertexes != NULL && !triangles.data.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if (e.vertexes != NULL && !faces.triangles.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		total.objectCount++;
-		total.vertexCount += e.vertexes->data.size();
-		total.triangleCount += triangles.data.size();
+		total.vertexCount += e.vertexes->size();
+		total.triangleCount += faces.triangles.size();
          
-        for EACH_CONST(TriangleVector, triangles.data, it)
+        for EACH_CONST(TriangleVector, faces.triangles, it)
         {
 	        glBegin(GL_LINE_LOOP);
-			glVertex3fv(e.vertexes->data[ it->a[0] ].getfv());
-            glVertex3fv(e.vertexes->data[ it->a[1] ].getfv());
-            glVertex3fv(e.vertexes->data[ it->a[2] ].getfv());
+			glVertex3fv(e.vertexes->at( it->a[0] ).getfv());
+            glVertex3fv(e.vertexes->at( it->a[1] ).getfv());
+            glVertex3fv(e.vertexes->at( it->a[2] ).getfv());
 		    glEnd();
         }
     }
@@ -220,18 +220,18 @@ void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow& e, const Trian
 // нарисовать множество линий
 void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e)
 {
-	if(e.vertexes && e.lines && !e.lines->index.empty() && !e.vertexes->data.empty())// если есть полигоны и вершины
+	if(e.vertexes && e.lines && !e.lines->index.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		total.objectCount++;
-		total.vertexCount += e.vertexes->data.size();
+		total.vertexCount += e.vertexes->size();
 		total.triangleCount += e.lines->index.size();
 		
 		glBegin(GL_LINES);
         for(unsigned int i=0; i < e.lines->index.size(); i++)
         {
 			// TODO color
-            glVertex3fv(&e.vertexes->data[ e.lines->index[i].a[0] ].x);
-            glVertex3fv(&e.vertexes->data[ e.lines->index[i].a[1] ].x);
+            glVertex3fv(&e.vertexes->at( e.lines->index[i].a[0] ).x);
+            glVertex3fv(&e.vertexes->at( e.lines->index[i].a[1] ).x);
         }
         glEnd();
     }
@@ -240,7 +240,7 @@ void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e)
 // нарисовать нормали к вершинам
 void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e)
 {
-	if(e.normals != NULL && e.vertexes != NULL && e.vertexes->data.size() == e.normals->data.size())
+	if(e.normals != NULL && e.vertexes != NULL && e.vertexes->size() == e.normals->size())
 	{
 		glColor3f(0,0,1);
 		AABB &f = e.aabb;
@@ -249,10 +249,10 @@ void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e)
 		if(diag<EPSILON) diag = 0.01f;
 
 		glBegin(GL_LINES);
-		for(unsigned int i=0; i < e.vertexes->data.size(); i++)
+		for(unsigned int i=0; i < e.vertexes->size(); i++)
 		{
-			v3 s = e.vertexes->data[i];
-			v3 d = e.vertexes->data[i] + e.normals->data[i]*diag;
+			v3 s = e.vertexes->at(i);
+			v3 d = e.vertexes->at(i) + e.normals->at(i)*diag;
 
 			glVertex3f(s.x, s.y, s.z);
 			glVertex3f(d.x, d.y, d.z);
@@ -265,15 +265,15 @@ void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e)
 // нарисовать вершины
 void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e)
 {
-	if(e.vertexes && !e.vertexes->data.empty())
+	if(e.vertexes && !e.vertexes->empty())
 	{
 		glPointSize(5.0f);
 		glColor3f(0.5f, 1.0f, 1.0f);
 
 		glBegin(GL_POINTS);
-		for(unsigned int i=0; i < e.vertexes->data.size(); i++)
+		for(unsigned int i=0; i < e.vertexes->size(); i++)
 		{
-			glVertex3fv(&e.vertexes->data[i].x);
+			glVertex3fv(&e.vertexes->at(i).x);
 		}
 		glEnd();
 

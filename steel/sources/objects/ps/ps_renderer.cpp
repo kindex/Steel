@@ -16,7 +16,7 @@
 
 void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 {
-	initSprites(vertexes.data.size()/4, set->particles.size());
+	initSprites(vertexes.size()/4, set->particles.size());
 
 	cameraPosition = info.camera.getPosition();
 
@@ -48,23 +48,23 @@ void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 		per2 *= set->particles[i]->size;
 
 		// углы спарйта
-		vertexes.data[i4 + 0]  = pos + per1 - per2;
-		vertexes.data[i4 + 1]  = pos + -per1 - per2;
-		vertexes.data[i4 + 2]  = pos + -per1 + per2;
-		vertexes.data[i4 + 3]  = pos + per1 + per2;
+		vertexes[i4 + 0]  = pos + per1 - per2;
+		vertexes[i4 + 1]  = pos + -per1 - per2;
+		vertexes[i4 + 2]  = pos + -per1 + per2;
+		vertexes[i4 + 3]  = pos + per1 + per2;
 
 		// нормали к углам спарйта
-		normals.data[i4 + 0] = dir;
-		normals.data[i4 + 1] = dir;
-		normals.data[i4 + 2] = dir;
-		normals.data[i4 + 3] = dir;
+		normals[i4 + 0] = dir;
+		normals[i4 + 1] = dir;
+		normals[i4 + 2] = dir;
+		normals[i4 + 3] = dir;
 	}
 }
 
 AABB SpriteRenderer::getFrame()
 {
 	AABB frame;
-	for EACH(v3Vector, vertexes.data, it)
+	for EACH(v3Vector, vertexes, it)
 	{
 		frame.merge(*it);
 	}
@@ -77,9 +77,9 @@ void SpriteRenderer::initSprites()
 	face.resize(1);
 	face[0].material = material;
 
-	face[0].triangles = new Triangles;
-	face[0].triangles->id = objectIdGenerator.genUid();
-	face[0].triangles->changed = false;
+	face[0].faces = new Faces;
+	face[0].faces->triangles.id = objectIdGenerator.genUid();
+	face[0].faces->triangles.changed = false;
 
 	normals.id = objectIdGenerator.genUid();
 	vertexes.id = objectIdGenerator.genUid();
@@ -94,26 +94,26 @@ void SpriteRenderer::initSprites(int begin, int end)
 {
 	if (begin == end) return ;
 
-	vertexes.data.resize(end*4);
-	normals.data.resize(end*4);
-	face[0].triangles->data.resize(end*2);
+	vertexes.resize(end*4);
+	normals.resize(end*4);
+	face[0].faces->triangles.resize(end*2);
 
 	for(int j = begin; j<end; j++)
 	{
 		for(int i=0; i<3; i++)
 		{
-			face[0].triangles->data[j*2 + 0].a[i] = j*4 + 3-i;
-			face[0].triangles->data[j*2 + 1].a[i] = j*4 + 3-(i+2)%4;
+			face[0].faces->triangles[j*2 + 0].a[i] = j*4 + 3-i;
+			face[0].faces->triangles[j*2 + 1].a[i] = j*4 + 3-(i+2)%4;
 		}
 	}
 
-	texCoords.data.resize(end*4);
+	texCoords.resize(end*4);
 	for(int i=begin; i<end; i++)
 	{
-		texCoords.data[i*4 + 0] = v2(0, 0);
-		texCoords.data[i*4 + 1] = v2(1, 0);
-		texCoords.data[i*4 + 2] = v2(1, 1);
-		texCoords.data[i*4 + 3] = v2(0, 1);
+		texCoords[i*4 + 0] = v2(0, 0);
+		texCoords[i*4 + 1] = v2(1, 0);
+		texCoords[i*4 + 2] = v2(1, 1);
+		texCoords[i*4 + 3] = v2(0, 1);
 	}
 }
 

@@ -140,15 +140,15 @@ protected:
 	struct BlendingFaces
 	{
 		BlendingFaces() {}
-		BlendingFaces(GraphShadow* shadow, Material* material, Triangles* triangles) :
+		BlendingFaces(GraphShadow* shadow, Material* material, Faces* faces):
 			shadow(shadow),
 			material(material),
-			triangles(triangles)
+			faces(faces)
 		{}
 
 		GraphShadow*	shadow;
 		Material*		material;
-		Triangles*		triangles;
+		Faces*			faces;
 	};
 
 	struct BlendingTriangle
@@ -178,13 +178,13 @@ private:
 protected:
 // ******************* SERVICES *******************
 	bool (OpenGL_Engine::*BindTexture)(Image& image, bool enable);
-	bool (OpenGL_Engine::*DrawFill_MaterialStd)(OpenGL_Engine::GraphShadow&, const Triangles&, MaterialStd&);
-	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphShadow&, const Triangles&, const TexCoords*);
+	bool (OpenGL_Engine::*DrawFill_MaterialStd)(OpenGL_Engine::GraphShadow&, const Faces&, MaterialStd&);
+	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphShadow&, const Faces&, const TexCoords*);
 	void (OpenGL_Engine::*CleanupDrawTriangles)();
 	void (OpenGL_Engine::*BindTexCoords)(const TexCoords*, const TextureMatrix*);
 	void (OpenGL_Engine::*BindTexCoords3f)(const TexCoords3f*);
 
-	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphShadow&, const Triangles&);
+	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphShadow&, const Faces&);
 	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphShadow&);
 	void (OpenGL_Engine::*DrawNormals)(OpenGL_Engine::GraphShadow&);
 	void (OpenGL_Engine::*DrawVertexes)(OpenGL_Engine::GraphShadow&);
@@ -192,9 +192,9 @@ protected:
 
 // ******************* OpenGL 1.0 *******************
 	bool BindTexture_OpenGL10(Image&, bool enable);
-	bool DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow&, const Triangles&, MaterialStd&);
-	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow&, const Triangles&, const TexCoords*);
-	void DrawWire_OpenGL10(OpenGL_Engine::GraphShadow&, const Triangles&);
+	bool DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow&, const Faces&, MaterialStd&);
+	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow&, const Faces&, const TexCoords*);
+	void DrawWire_OpenGL10(OpenGL_Engine::GraphShadow&, const Faces&);
 	void DrawLines_OpenGL10(OpenGL_Engine::GraphShadow&);
 	void DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow&);
 	void DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow&);
@@ -202,14 +202,14 @@ protected:
 
 // ******************* OpenGL 1.1 *******************
 	bool BindTexture_OpenGL11(Image& image, bool enable);
-	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow&, const Triangles&, const TexCoords*);
-	void DrawWire_OpenGL11(OpenGL_Engine::GraphShadow&, const Triangles&);
+	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow&, const Faces&, const TexCoords*);
+	void DrawWire_OpenGL11(OpenGL_Engine::GraphShadow&, const Faces&);
 	void DrawLines_OpenGL11(OpenGL_Engine::GraphShadow&);
 	void BindTexCoords_OpenGL11(const TexCoords*, const TextureMatrix*);
 	void BindTexCoords3f_OpenGL11(const TexCoords3f*);
 
 // ******************* OpenGL 1.3 *******************
-	bool DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow&, const Triangles&, MaterialStd&);
+	bool DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow&, const Faces&, MaterialStd&);
 
 	void drawBump(GraphShadow &e, const TexCoords *coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image *img);
 	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterialVector *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent);
@@ -229,7 +229,7 @@ protected:
 	 tangentCache tangentSpaceCache;
 
 // ******************* OpenGL 1.5 *******************
-	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphShadow&, const Triangles&, const TexCoords*);
+	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphShadow&, const Faces&, const TexCoords*);
 	void CleanupDrawTriangles_OpenGL15();
 	void BindTexCoords_OpenGL15(const TexCoords*, const TextureMatrix*);
 	void BindTexCoords3f_OpenGL15(const TexCoords3f*);
@@ -237,17 +237,17 @@ protected:
 
 
 	template<class Class> 
-	bool BindVBO(Class *v, int mode, int mode2, int elCnt);
+	bool BindVBO(Class*, int mode, int mode2, int elCnt);
 
 	void cleanBuffer(uid bufId);
 // ******************* OpenGL 2.0 *******************
-	bool DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow&, const Triangles&, MaterialStd&);
+	bool DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow&, const Faces&, MaterialStd&);
 	GLSL *BindShader(Shader*);
 	void bindTextureToShader(GLSL* program, const char* name, int imageNum, Image* image);
 	void unbindTexCoords();
 
 // ******************* OpenGL all *******************
-	void DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles* triangles, Material* material);
+	void DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Faces* triangles, Material* material);
 
 	bool		focused;
 	ProcessInfo info;

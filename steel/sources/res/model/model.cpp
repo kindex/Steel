@@ -76,32 +76,34 @@ void Model::generateNormals()
 
 
 	v3Vector facenormal;
-    facenormal.resize(triangleAll.data.size());
+	facenormal.resize(triangleAll.triangles.size());
 
-    normals.data.resize(vertexes.data.size());
+    normals.resize(vertexes.size());
 
-    for (unsigned int i=0; i<normals.data.size(); i++)
+    for (unsigned int i=0; i < normals.size(); i++)
     {
-        normals.data[i].loadZero();
+        normals[i].loadZero();
     }
     // Pods4et normalej poligonov
-    for (unsigned int i=0; i<triangleAll.data.size(); i++)
+	for (unsigned int i=0; i < triangleAll.triangles.size(); i++)
     {
-		int a = triangleAll.data[i].a[0];
-        int b = triangleAll.data[i].a[1];
-        int c = triangleAll.data[i].a[2];
+		int a = triangleAll.triangles[i].a[0];
+        int b = triangleAll.triangles[i].a[1];
+        int c = triangleAll.triangles[i].a[2];
 
-        v3 p = vertexes.data[b] - vertexes.data[a];
-        v3 q = vertexes.data[c] - vertexes.data[a];
+        v3 p = vertexes[b] - vertexes[a];
+        v3 q = vertexes[c] - vertexes[a];
         facenormal[i] = p*q;
         if (facenormal[i] == v3(0,0,0)) facenormal[i] = v3(0,1,0); // TEMP TODO - Up
         facenormal[i].normalize();
-        normals.data[a] += facenormal[i];
-        normals.data[b] += facenormal[i];
-        normals.data[c] += facenormal[i];
+        normals[a] += facenormal[i];
+        normals[b] += facenormal[i];
+        normals[c] += facenormal[i];
     }
-    for (unsigned int i=0; i<normals.data.size(); i++)
-        normals.data[i].normalize();
+    for (unsigned int i=0; i<normals.size(); i++)
+	{
+        normals[i].normalize();
+	}
 
 // TODO - speed up
 
@@ -150,38 +152,44 @@ void Model::generateNormals()
 */
 //    normals.resize(vertexes.size());
 
-    for (unsigned int i=0; i<normals.data.size(); i++)
-        normals.data[i].loadZero();
+    for (unsigned int i=0; i<normals.size(); i++)
+	{
+        normals[i].loadZero();
+	}
 
-    for (unsigned int i=0; i<triangleAll.data.size(); i++)
+    for (unsigned int i=0; i<triangleAll.triangles.size(); i++)
     {
-        int a = triangleAll.data[i].a[0];
-        int b = triangleAll.data[i].a[1];
-        int c = triangleAll.data[i].a[2];
-        normals.data[a] += facenormal[i];
-        normals.data[b] += facenormal[i];
-        normals.data[c] += facenormal[i];
+        int a = triangleAll.triangles[i].a[0];
+        int b = triangleAll.triangles[i].a[1];
+        int c = triangleAll.triangles[i].a[2];
+        normals[a] += facenormal[i];
+        normals[b] += facenormal[i];
+        normals[c] += facenormal[i];
     }
-    for (unsigned int i=0; i<normals.data.size(); i++)
-        normals.data[i].normalize();
+    for (unsigned int i=0; i<normals.size(); i++)
+	{
+        normals[i].normalize();
+	}
 }
 
 void Model::updateAABB()
 {
 	frame.clear();
-	for(v3Vector::iterator it = vertexes.data.begin(); it != vertexes.data.end(); it++)
+	for (v3Vector::iterator it = vertexes.begin(); it != vertexes.end(); it++)
+	{
 		frame.merge(*it);
+	}
 }
 
 
 float Model::calculateVolume() // вычислить объём
 {
 	float volume = 0;
-	for EACH(TriangleVector, triangleAll.data, it)
+	for EACH(TriangleVector, triangleAll.triangles, it)
 	{
-		v3 a(vertexes.data[it->a[0]]);
-		v3 b(vertexes.data[it->a[1]]);
-		v3 c(vertexes.data[it->a[2]]);
+		v3 a(vertexes[it->a[0]]);
+		v3 b(vertexes[it->a[1]]);
+		v3 c(vertexes[it->a[2]]);
 		volume += (a*b)&c;
 	}
 

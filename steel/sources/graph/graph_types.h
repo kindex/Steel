@@ -69,20 +69,8 @@ struct Light
 };
 
 //	kind : 2d only
-class TexCoords: public BufferedElement
-{
-public:
-	v2Vector data;
-
-	TexCoords(): BufferedElement(), data(0) {}
-};
-
-class TexCoords3f: public BufferedElement
-{
-public:
-	v3Vector data;
-};
-
+class TexCoords: public v2Vector, public BufferedElement{};
+class TexCoords3f: public v3Vector, public BufferedElement{};
 
 class GLine // al-a triangle
 {

@@ -22,7 +22,7 @@
 
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow& e, const Triangles& triangles, MaterialStd& material)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow& e, const Faces& triangles, MaterialStd& material)
 {
 	if (GL_EXTENSION_MULTITEXTURE)
 	{
@@ -73,7 +73,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow& e,
 				if(!e.texCoords.empty())
 					texCoords = e.texCoords[0];
 
-			assert(texCoords->data.size() == e.vertexes->data.size(), "TexCoords.size != Vertex.size");
+			assert(texCoords->size() == e.vertexes->size(), "TexCoords.size != Vertex.size");
 			if(BindTexCoords != NULL) (this->*BindTexCoords)(texCoords, &material.textureMatrix);
 			currentTextureArb++;
 		}
@@ -252,9 +252,9 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 		return;
 	}
 
-	if(!vertex || !texcoord || texcoord->data.size() != vertex->data.size()) return;
+	if (!vertex || !texcoord || texcoord->size() != vertex->size()) return;
 
-    unsigned int size = vertex->data.size();
+    unsigned int size = vertex->size();
 //    tangentSpaceLight.resize(s); // TODO
 
 /*	v3List *S, *T;
@@ -271,14 +271,14 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 
 	for(FaceMaterialVector::const_iterator it = faceMaterials->begin(); it != faceMaterials->end(); it++)
 	{
-		Triangles *triangle = it->triangles;
+		Faces *triangle = it->triangles;
 		
 
-		for (unsigned int i=0; i<triangle->data.size(); i++)
+		for (unsigned int i=0; i<faces->triangles.size(); i++)
 		{
-			int a = triangle->data[i].a[0];
-			int b = triangle->data[i].a[1];
-			int c = triangle->data[i].a[2];
+			int a = faces->triangles[i].a[0];
+			int b = faces->triangles[i].a[1];
+			int c = faces->triangles[i].a[2];
 			int e, f; // from e to f
 
 			v2 me;
@@ -323,8 +323,8 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 		tangentSpaceCache[id].t = T;
 	}
 */
-	v3Vector &S = (*sTangent)->data;
-	v3Vector &T = (*tTangent)->data;
+	v3Vector &S = **sTangent;
+	v3Vector &T = **tTangent;
 	S.resize(size);
 	T.resize(size);
 
@@ -332,21 +332,21 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
     
 	for(FaceMaterialVector::const_iterator it = faceMaterials->begin(); it != faceMaterials->end(); it++)
 	{
-		Triangles *triangle = it->triangles;
+		Faces* faces = it->faces;
 		
-		for (unsigned int a=0; a < triangle->data.size(); a++)
+		for (size_t a=0; a < faces->triangles.size(); a++)
 		{
-			long i1 = triangle->data[a].a[0];
-			long i2 = triangle->data[a].a[1];
-			long i3 = triangle->data[a].a[2];
+			long i1 = faces->triangles[a].a[0];
+			long i2 = faces->triangles[a].a[1];
+			long i3 = faces->triangles[a].a[2];
         
-			const v3& vertex1 = vertex->data[i1];
-			const v3& vertex2 = vertex->data[i2];
-			const v3& vertex3 = vertex->data[i3];
+			const v3& vertex1 = vertex->at(i1);
+			const v3& vertex2 = vertex->at(i2);
+			const v3& vertex3 = vertex->at(i3);
         
-			const v2& w1 = texcoord->data[i1];
-			const v2& w2 = texcoord->data[i2];
-			const v2& w3 = texcoord->data[i3];
+			const v2& w1 = texcoord->at(i1);
+			const v2& w2 = texcoord->at(i2);
+			const v2& w3 = texcoord->at(i3);
         
 			float x1 = vertex2.x - vertex1.x;
 			float x2 = vertex3.x - vertex1.x;
@@ -371,9 +371,9 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 	}
 
 
-	for (long a = 0; a < (int)vertex->data.size(); a++)
+	for (long a = 0; a < (int)vertex->size(); a++)
     {
-		const v3& n = normal->data[a];
+		const v3& n = normal->at(a);
         v3 t = S[a];
         
         // Gram-Schmidt orthogonalize
@@ -398,12 +398,12 @@ void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f &sTangent, const TexC
 	v3Vector &tl = tangentSpaceLight;
 
     // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
-    for (unsigned int i=0; i<vertex.data.size(); i++)
+    for (unsigned int i=0; i<vertex.size(); i++)
     {
-		v3 lightVector =  objectLightPosition - vertex.data[i];
-		tl[i].x = sTangent.data[i].dotProduct(lightVector); // scalar product
-		tl[i].y = tTangent.data[i].dotProduct(lightVector);
-		tl[i].z = normal.data[i].dotProduct(lightVector);
+		v3 lightVector =  objectLightPosition - vertex[i];
+		tl[i].x = sTangent[i].dotProduct(lightVector); // scalar product
+		tl[i].y = tTangent[i].dotProduct(lightVector);
+		tl[i].z = normal[i].dotProduct(lightVector);
     }
 }
 
@@ -482,12 +482,12 @@ void OpenGL_Engine::drawBump(GraphShadow &e, const TexCoords *coords, matrix34 c
     tangentSpaceLightBufferedArray tangentSpaceLight;
 	tangentSpaceLight.changed = true;
 	tangentSpaceLight.id = bufId;
-	tangentSpaceLight.data.resize(e.vertexes->data.size());
+	tangentSpaceLight.resize(e.vertexes->size());
 
 	TexCoords3f *sTangent, *tTangent;
 
 	getTangentSpace(e.vertexes, coords, e.faceMaterials, e.normals, &sTangent, &tTangent);
-	genTangentSpaceLight(*sTangent, *tTangent, *e.vertexes, *e.normals, matrix, light, tangentSpaceLight.data);
+	genTangentSpaceLight(*sTangent, *tTangent, *e.vertexes, *e.normals, matrix, light, tangentSpaceLight);
 
 	if(BindTexCoords3f) (this->*BindTexCoords3f)(&tangentSpaceLight);
 

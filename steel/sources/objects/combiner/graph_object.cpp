@@ -70,28 +70,28 @@ bool GraphObjectMesh::InitFromConfig(Config& conf)
 	int vert = vertexesConfig->size();
 	int trg  = trianglesConfig->size();
 
-	vertexes = new Vertexes; vertexes->changed = false;	vertexes->data.resize(vert);
-	texCoords = new TexCoords; texCoords->changed = false;	texCoords->data.resize(vert);
+	vertexes = new Vertexes; vertexes->changed = false;	vertexes->resize(vert);
+	texCoords = new TexCoords; texCoords->changed = false;	texCoords->resize(vert);
 
 	for(int i = 0; i < vert; i++)
 	{
-		vertexes->data[i] = vertexesConfig->getArrayElement(i)->getv3("");
+		vertexes->at(i) = vertexesConfig->getArrayElement(i)->getv3("");
 		
-		texCoords->data[i].x = texCoordsConfig ->getArrayElement(i)->getf("[0]");
-		texCoords->data[i].y = texCoordsConfig ->getArrayElement(i)->getf("[1]");
+		texCoords->at(i).x = texCoordsConfig ->getArrayElement(i)->getf("[0]");
+		texCoords->at(i).y = texCoordsConfig ->getArrayElement(i)->getf("[1]");
 	}
 
 	faces = new FaceMaterialVector(1);
 	faces->at(0).material = m;
-	faces->at(0).triangles = new Triangles;
-	faces->at(0).triangles->changed = false;
-	faces->at(0).triangles->data.resize(trg);
+	faces->at(0).faces = new Faces;
+	faces->at(0).faces->triangles.changed = false;
+	faces->at(0).faces->triangles.resize(trg);
 
 	for(int i = 0; i < trg; i++)
 	{
-		faces->at(0).triangles->data[i].a[0] =  trianglesConfig->getArrayElement(i)->geti("[0]");
-		faces->at(0).triangles->data[i].a[1] =  trianglesConfig->getArrayElement(i)->geti("[1]");
-		faces->at(0).triangles->data[i].a[2] =  trianglesConfig->getArrayElement(i)->geti("[2]");
+		faces->at(0).faces->triangles[i].a[0] =  trianglesConfig->getArrayElement(i)->geti("[0]");
+		faces->at(0).faces->triangles[i].a[1] =  trianglesConfig->getArrayElement(i)->geti("[1]");
+		faces->at(0).faces->triangles[i].a[2] =  trianglesConfig->getArrayElement(i)->geti("[2]");
 	}
 
 	return true;
@@ -112,11 +112,11 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 	int vert = 6*4;
 	int trg  = 12;
 
-	vertexes = new Vertexes; vertexes->changed = false;	
-	normals = new Vertexes; normals->changed = false;	
-	texCoords = new TexCoords; texCoords->changed = false;
+	vertexes	= new Vertexes; vertexes->changed = false;	
+	normals		= new Vertexes; normals->changed = false;	
+	texCoords	= new TexCoords; texCoords->changed = false;
 
-#define t(a, b, c, d, e) vertexes->data.push_back(v3(a*0.5f*size.x, b*0.5f*size.y, c*0.5f*size.z)); texCoords->data.push_back(v2(d, e))
+#define t(a, b, c, d, e) vertexes->push_back(v3(a*0.5f*size.x, b*0.5f*size.y, c*0.5f*size.z)); texCoords->push_back(v2(d, e))
 
 	t(-1, -1, -1, 0, 0);	t(+1, -1, -1, 1, 0);	t(+1, -1, +1, 1, 1);
 	t(-1, -1, -1, 0, 0);	t(+1, -1, +1, 1, 1);	t(-1, -1, +1, 0, 1);
@@ -138,23 +138,27 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 
 	faces = new FaceMaterialVector(1);
 	faces->at(0).material = m;
-	faces->at(0).triangles = new Triangles;
-	faces->at(0).triangles->changed = false;
-	faces->at(0).triangles->data.resize(trg);
+	faces->at(0).faces = new Faces;
+	faces->at(0).faces->triangles.changed = false;
+	faces->at(0).faces->triangles.resize(trg);
 
 	for(int i=0; i < trg; i++)
-		if(i*3+2 < (int)vertexes->data.size())
-		faces->at(0).triangles->data[i].set(i*3, i*3+1, i*3+2);
-
-	normals->data.resize(vertexes->data.size());
-	for EACH(TriangleVector, faces->at(0).triangles->data, it)
 	{
-		v3 a = vertexes->data[it->a[1]] - vertexes->data[it->a[0]];
-		v3 b = vertexes->data[it->a[2]] - vertexes->data[it->a[0]];
+		if(i*3+2 < (int)vertexes->size())
+		{
+			faces->at(0).faces->triangles[i].set(i*3, i*3+1, i*3+2);
+		}
+	}
+
+	normals->resize(vertexes->size());
+	for EACH(TriangleVector, faces->at(0).faces->triangles, it)
+	{
+		v3 a = vertexes->at(it->a[1]) - vertexes->at(it->a[0]);
+		v3 b = vertexes->at(it->a[2]) - vertexes->at(it->a[0]);
 		v3 normal = (a*b).getNormalized();
-		normals->data[it->a[0]] = normal;
-		normals->data[it->a[1]] = normal;
-		normals->data[it->a[2]] = normal;
+		normals->at(it->a[0]) = normal;
+		normals->at(it->a[1]) = normal;
+		normals->at(it->a[2]) = normal;
 	}
 
 	return true;

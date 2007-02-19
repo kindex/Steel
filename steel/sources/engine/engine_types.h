@@ -29,7 +29,6 @@ struct Triangle // anti-clockwise direction (one side Triangle)
 
 	unsigned int a[3];
 };
-typedef pvector<Triangle> TriangleVector;
 
 // One triangle, indexes of vertexes
 struct Quad // anti-clockwise direction (one side Triangle)
@@ -41,7 +40,6 @@ struct Quad // anti-clockwise direction (one side Triangle)
 	size_t a[4];
 };
 typedef pvector<Quad> QuadVector;
-
 
 // Массив значений, который может быть кеширован в графическом ускорителе
 class BufferedElement
@@ -59,20 +57,15 @@ public:
 	void	setChanged(bool _changed) {changed = _changed; }
 };
 
-// массив вершин многогранника
-struct Vertexes: public BufferedElement
-{
-	v3Vector data;
+class TriangleVector : public pvector<Triangle>, public BufferedElement {};
 
-	Vertexes(): BufferedElement(), data(0) {}
-};
+// массив вершин многогранника
+struct Vertexes: public v3Vector, public BufferedElement {};
 
 // массив треугольников многогранника
-struct Triangles: public BufferedElement
-{
-	TriangleVector data;
-
-	Triangles(): BufferedElement(), data(0) {}
+struct Faces
+{	
+	TriangleVector triangles;
 };
 
 class Camera

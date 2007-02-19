@@ -50,7 +50,7 @@ const TexCoords* OpenGL_Engine::GraphShadow::getTexCoords(const MaterialStd::Tex
 }
 
 
-void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Triangles *triangles, Material *material)
+void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Faces *triangles, Material *material)
 {
 	if (material != NULL)
 	{
@@ -237,7 +237,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
 		for EACH(FaceMaterialVector, skippedFaces, jt)
 		{
-			blendingFaces.push_back(BlendingFaces(GS(*it), jt->material, jt->triangles));
+			blendingFaces.push_back(BlendingFaces(GS(*it), jt->material, jt->faces));
 		}
 	}
 
@@ -250,13 +250,13 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 		{
 			if (it->shadow->positionKind != POSITION_SCREEN)
 			{
-				for EACH(TriangleVector, it->triangles->data, jt)
+				for EACH(TriangleVector, it->faces->triangles, jt)
 				{
 					BlendingTriangle newBlendingTriangle;
 					newBlendingTriangle.vertex[0] = jt->a[0];
 					newBlendingTriangle.vertex[1] = jt->a[1];
 					newBlendingTriangle.vertex[2] = jt->a[2];
-					v3 center = (it->shadow->realPosition * it->shadow->vertexes->data[jt->a[0]] + it->shadow->realPosition * it->shadow->vertexes->data[jt->a[1]] + it->shadow->realPosition * it->shadow->vertexes->data[jt->a[2]])/3.0;
+					v3 center = (it->shadow->realPosition * it->shadow->vertexes->at(jt->a[0]) + it->shadow->realPosition * it->shadow->vertexes->at(jt->a[1]) + it->shadow->realPosition * it->shadow->vertexes->at(jt->a[2]))/3.0;
 					newBlendingTriangle.distance = (info.camera.getPosition() - center).getLength();
 					newBlendingTriangle.material = it->material;
 					newBlendingTriangle.shadow = it->shadow;
@@ -276,11 +276,11 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
 		for EACH(BlendingTriangleVector, blendingTriangles, it)
 		{
-			Triangles triangles;
-			triangles.data.push_back(Triangle(it->vertex[0], it->vertex[1], it->vertex[2]));
-			triangles.changed = true;
-			triangles.setId(0);
-			DrawFill_Material(*it->shadow, &triangles, it->material);
+			Faces faces;
+			faces.triangles.push_back(Triangle(it->vertex[0], it->vertex[1], it->vertex[2]));
+			faces.triangles.changed = true;
+			faces.triangles.setId(0);
+			DrawFill_Material(*it->shadow, &faces, it->material);
 		}
 
 		glPopAttrib();
@@ -316,39 +316,39 @@ void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces
 		{
 			if (it->material->blend == TEXTURE_MODE_NONE)
 			{
-				DrawFill_Material(e, it->triangles, it->material);
+				DrawFill_Material(e, it->faces, it->material);
 			}
 			else
 			{
-				skippedFaces.push_back(FaceMaterial(it->material, it->triangles));
+				skippedFaces.push_back(FaceMaterial(it->material, it->faces));
 			}
 		}
 	}
 
-	if(conf->getb("drawWire") && e.faceMaterials != NULL && DrawWire != NULL)
+	if (conf->getb("drawWire") && e.faceMaterials != NULL && DrawWire != NULL)
 	{
 		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
 		{
-			(this->*DrawWire)(e, *it->triangles);
+			(this->*DrawWire)(e, *it->faces);
 		}
 	}
 
-	if(conf->getb("drawLines") && DrawLines)
+	if (conf->getb("drawLines") && DrawLines)
 	{
 		(this->*DrawLines)(e);
 	}
 
-	if(conf->getb("drawNormals") && DrawNormals)
+	if (conf->getb("drawNormals") && DrawNormals)
 	{
 		(this->*DrawNormals)(e);
 	}
 
-	if(conf->getb("drawVertexes") && DrawVertexes)
+	if (conf->getb("drawVertexes") && DrawVertexes)
 	{
 		(this->*DrawVertexes)(e);
 	}
 
-	if(conf->getb("drawAABB") && DrawAABB)
+	if (conf->getb("drawAABB") && DrawAABB)
 	{
 		(this->*DrawAABB)(e);
 	}
@@ -685,7 +685,7 @@ void OpenGL_Engine::GraphShadow::calculateAABB()
 
 	if (vertexes != NULL)
 	{
-		for EACH_CONST(v3Vector, vertexes->data, i)
+		for EACH_CONST(Vertexes, *vertexes, i)
 		{
 			aabb.merge(*i);
 		}
