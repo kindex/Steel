@@ -42,6 +42,7 @@
 411. OpenGL: custom normal map mipmap levels. / *. KindeX. [9]. (3h).
 413. OpenGL: implement texture units choosing in material config. / *. KindeX. [9]. (2d).
 446. Logger: put in log revision number, compilation date and compilation computer name. / *. KindeX. [10]. (1d).
+486. Res. Remeber resources with error. Do not load image, if it fails before. / *. KindeX. [10]. (2d)
 
 ** Freezed Construction ****************************************************************************
 345. PNG. PNG file loader same as BMP loader. / Kane. KindeX. [4.]
