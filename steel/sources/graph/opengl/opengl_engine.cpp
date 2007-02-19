@@ -124,11 +124,6 @@ void OpenGL_Engine::popPosition(GraphShadow& e)
 	}
 }
 
-
-
-
-
-
 bool OpenGL_Engine::isVisible(AABB aabb)
 {
 /*	matrix34 proj; TODO
@@ -169,6 +164,34 @@ void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
 		object->realPositionCalculated = true;
 	}
 }
+
+
+	struct BlendingFaces
+	{
+		BlendingFaces() {}
+		BlendingFaces(OpenGL_Engine::GraphShadow* shadow, Material* material, Faces* faces):
+			shadow(shadow),
+			material(material),
+			faces(faces)
+		{}
+
+		OpenGL_Engine::GraphShadow*	shadow;
+		Material*		material;
+		Faces*			faces;
+	};
+
+	struct BlendingTriangle
+	{
+		size_t			vetexCount;
+		size_t			vertex[4];
+		Material*		material;
+		float			distance;
+		OpenGL_Engine::GraphShadow*	shadow;
+
+		const bool operator < (const BlendingTriangle& second) {return distance > second.distance; }
+	};
+	typedef pvector<BlendingTriangle> BlendingTriangleVector;
+
 
 bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 {
@@ -253,10 +276,25 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 				for EACH(TriangleVector, it->faces->triangles, jt)
 				{
 					BlendingTriangle newBlendingTriangle;
+					newBlendingTriangle.vetexCount = 3;
 					newBlendingTriangle.vertex[0] = jt->a[0];
 					newBlendingTriangle.vertex[1] = jt->a[1];
 					newBlendingTriangle.vertex[2] = jt->a[2];
 					v3 center = (it->shadow->realPosition * it->shadow->vertexes->at(jt->a[0]) + it->shadow->realPosition * it->shadow->vertexes->at(jt->a[1]) + it->shadow->realPosition * it->shadow->vertexes->at(jt->a[2]))/3.0;
+					newBlendingTriangle.distance = (info.camera.getPosition() - center).getLength();
+					newBlendingTriangle.material = it->material;
+					newBlendingTriangle.shadow = it->shadow;
+					blendingTriangles.push_back(newBlendingTriangle);
+				}
+				for EACH(QuadVector, it->faces->quads, jt)
+				{
+					BlendingTriangle newBlendingTriangle;
+					newBlendingTriangle.vetexCount = 4;
+					newBlendingTriangle.vertex[0] = jt->a[0];
+					newBlendingTriangle.vertex[1] = jt->a[1];
+					newBlendingTriangle.vertex[2] = jt->a[2];
+					newBlendingTriangle.vertex[3] = jt->a[3];
+					v3 center = (it->shadow->realPosition * it->shadow->vertexes->at(jt->a[0]) + it->shadow->realPosition * it->shadow->vertexes->at(jt->a[1]) + it->shadow->realPosition * it->shadow->vertexes->at(jt->a[2]) + it->shadow->realPosition * it->shadow->vertexes->at(jt->a[3]))/4.0;
 					newBlendingTriangle.distance = (info.camera.getPosition() - center).getLength();
 					newBlendingTriangle.material = it->material;
 					newBlendingTriangle.shadow = it->shadow;
@@ -277,10 +315,20 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 		for EACH(BlendingTriangleVector, blendingTriangles, it)
 		{
 			Faces faces;
-			faces.triangles.push_back(Triangle(it->vertex[0], it->vertex[1], it->vertex[2]));
-			faces.triangles.changed = true;
-			faces.triangles.setId(0);
-			DrawFill_Material(*it->shadow, &faces, it->material);
+			if (it->vetexCount == 3)
+			{
+				faces.triangles.push_back(Triangle(it->vertex[0], it->vertex[1], it->vertex[2]));
+				faces.triangles.changed = true;
+				faces.triangles.setId(0);
+				DrawFill_Material(*it->shadow, &faces, it->material);
+			}
+			else if (it->vetexCount == 4)
+			{
+				faces.quads.push_back(Quad(it->vertex[0], it->vertex[1], it->vertex[2], it->vertex[3]));
+				faces.quads.changed = true;
+				faces.quads.setId(0);
+				DrawFill_Material(*it->shadow, &faces, it->material);
+			}
 		}
 
 		glPopAttrib();

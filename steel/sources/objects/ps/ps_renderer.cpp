@@ -21,7 +21,7 @@ void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 	cameraPosition = info.camera.getPosition();
 
 	int cnt = set->particles.size();
-	for(int i=0; i<cnt; i++)
+	for(int i=0; i < cnt; i++)
 	{
 		int i4 = i*4;
 		v3 pos = set->particles[i]->position;
@@ -49,9 +49,9 @@ void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 
 		// углы спарйта
 		vertexes[i4 + 0]  = pos + per1 - per2;
-		vertexes[i4 + 1]  = pos + -per1 - per2;
+		vertexes[i4 + 1]  = pos + per1 + per2;
 		vertexes[i4 + 2]  = pos + -per1 + per2;
-		vertexes[i4 + 3]  = pos + per1 + per2;
+		vertexes[i4 + 3]  = pos + -per1 - per2;
 
 		// нормали к углам спарйта
 		normals[i4 + 0] = dir;
@@ -78,8 +78,8 @@ void SpriteRenderer::initSprites()
 	face[0].material = material;
 
 	face[0].faces = new Faces;
-	face[0].faces->triangles.id = objectIdGenerator.genUid();
-	face[0].faces->triangles.changed = false;
+	face[0].faces->quads.id = objectIdGenerator.genUid();
+	face[0].faces->quads.changed = false;
 
 	normals.id = objectIdGenerator.genUid();
 	vertexes.id = objectIdGenerator.genUid();
@@ -96,14 +96,13 @@ void SpriteRenderer::initSprites(int begin, int end)
 
 	vertexes.resize(end*4);
 	normals.resize(end*4);
-	face[0].faces->triangles.resize(end*2);
+	face[0].faces->quads.resize(end);
 
-	for(int j = begin; j<end; j++)
+	for(int j = begin; j < end; j++)
 	{
-		for(int i=0; i<3; i++)
+		for(int i=0; i < 4; i++)
 		{
-			face[0].faces->triangles[j*2 + 0].a[i] = j*4 + 3-i;
-			face[0].faces->triangles[j*2 + 1].a[i] = j*4 + 3-(i+2)%4;
+			face[0].faces->quads[j].a[i] = j*4 + i;
 		}
 	}
 
@@ -111,9 +110,9 @@ void SpriteRenderer::initSprites(int begin, int end)
 	for(int i=begin; i<end; i++)
 	{
 		texCoords[i*4 + 0] = v2(0, 0);
-		texCoords[i*4 + 1] = v2(1, 0);
+		texCoords[i*4 + 1] = v2(0, 1);
 		texCoords[i*4 + 2] = v2(1, 1);
-		texCoords[i*4 + 3] = v2(0, 1);
+		texCoords[i*4 + 3] = v2(1, 0);
 	}
 }
 

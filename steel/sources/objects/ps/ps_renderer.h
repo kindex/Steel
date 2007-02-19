@@ -18,13 +18,13 @@
 #include "../../graph/material.h"
 #include "../../graph/graph_interface.h"
 
-typedef	enum
+enum SpriteAlign
 {
 	SPRITE_ALIGN_CAMERA,
 	SPRITE_ALIGN_Z,
 	SPRITE_ALIGN_SCREEN,
 	SPRITE_ALIGN_CUSTOM
-} SpriteAlign;
+};
 
 // система - модель из множества полигонов - спрайтов
 class SpriteRenderer: public ParticleRenderer

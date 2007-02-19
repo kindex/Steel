@@ -64,7 +64,7 @@ public:
 
 
 // ********************* SHADOWS *************************
-protected:
+public:
 	struct OpenGL_Buffer
 	{
 		enum buffer_kind
@@ -137,30 +137,6 @@ protected:
 	map<uid, LightShadow*> lights;
 	std::map<uid, OpenGL_Buffer> buffer;
 
-	struct BlendingFaces
-	{
-		BlendingFaces() {}
-		BlendingFaces(GraphShadow* shadow, Material* material, Faces* faces):
-			shadow(shadow),
-			material(material),
-			faces(faces)
-		{}
-
-		GraphShadow*	shadow;
-		Material*		material;
-		Faces*			faces;
-	};
-
-	struct BlendingTriangle
-	{
-		unsigned int	vertex[3];
-		Material*		material;
-		float			distance;
-		GraphShadow*	shadow;
-
-		const bool operator < (const BlendingTriangle& second) {return distance > second.distance; }
-	};
-	typedef pvector<BlendingTriangle> BlendingTriangleVector;
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image* zeroNormal;

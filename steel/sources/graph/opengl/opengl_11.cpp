@@ -219,6 +219,25 @@ void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow& e, const Faces
 		glPopClientAttrib();
 		glPopAttrib();
 	}
+
+	if (e.vertexes != NULL && !faces.quads.empty() && !e.vertexes->empty())// если есть полигоны и вершины
+	{
+		total.objectCount++;
+		total.vertexCount += e.vertexes->size();
+		total.triangleCount += faces.quads.size();
+
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
+
+		glPolygonMode (GL_FRONT, GL_LINE);
+
+		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->front());	glEnableClientState(GL_VERTEX_ARRAY);
+
+		glDrawElements(GL_QUADS, faces.quads.size()*4, GL_UNSIGNED_INT, &faces.quads.front().a[0]);
+
+		glPopClientAttrib();
+		glPopAttrib();
+	}
 }
 
 void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphShadow &e)

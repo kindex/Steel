@@ -39,7 +39,6 @@ struct Quad // anti-clockwise direction (one side Triangle)
 
 	size_t a[4];
 };
-typedef pvector<Quad> QuadVector;
 
 // Массив значений, который может быть кеширован в графическом ускорителе
 class BufferedElement
@@ -58,6 +57,7 @@ public:
 };
 
 class TriangleVector : public pvector<Triangle>, public BufferedElement {};
+class QuadVector : public pvector<Quad>, public BufferedElement {};
 
 // массив вершин многогранника
 struct Vertexes: public v3Vector, public BufferedElement {};
@@ -65,7 +65,8 @@ struct Vertexes: public v3Vector, public BufferedElement {};
 // массив треугольников многогранника
 struct Faces
 {	
-	TriangleVector triangles;
+	TriangleVector	triangles;
+	QuadVector		quads;
 };
 
 class Camera
