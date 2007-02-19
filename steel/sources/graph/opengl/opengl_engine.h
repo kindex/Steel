@@ -82,7 +82,7 @@ protected:
 		steel::time lastUsedTime;
 		bool	loaded;
 		buffer_kind kind;
-		char	*object;
+		char*	object;
 	};
 
 #define GS(shadow) (static_cast<GraphShadow*>(shadow))
@@ -97,13 +97,13 @@ protected:
 		bool 			realPositionCalculated;
 
 		// *** Polyhedra ****
-		const FaceMaterialVector *faceMaterials;
-		const Vertexes		*vertexes;
-		const Normals		*normals;
-		unsigned int		 textureCount;
-		pvector<const TexCoords*> texCoords;
+		const FaceMaterialVector*	faceMaterials;
+		const Vertexes*				vertexes;
+		const Normals*				normals;
+		unsigned int				textureCount;
+		pvector<const TexCoords*>	texCoords;
 
-		const GLines		*lines;
+		const GLines*				lines;
 
 		AABB		aabb;
 		bool		aabbCalculated;
@@ -125,13 +125,13 @@ protected:
 
 	struct LightShadow
 	{
-		v3 position;
-		Light *light;
-		GameObject *object;
-		GraphShadow *shadow;
-		bool changed; // position
-
 		LightShadow();
+
+		v3				position;
+		Light*			light;
+		GameObject*		object;
+		GraphShadow*	shadow;
+		bool			changed; // position
 	};
 
 	map<uid, LightShadow*> lights;

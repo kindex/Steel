@@ -25,19 +25,23 @@ struct Triangle // anti-clockwise direction (one side Triangle)
 {
 	Triangle(){}
 	Triangle(unsigned int _0, unsigned int _1, unsigned int _2) { set(_0, _1, _2); }
-
-	void set(unsigned int _0, unsigned int _1, unsigned int _2) 
-	{ 
-		a[0] = _0;
-		a[1] = _1;
-		a[2] = _2;
-	}
+	void set(unsigned int _0, unsigned int _1, unsigned int _2) { a[0] = _0;	a[1] = _1;	a[2] = _2;	}
 
 	unsigned int a[3];
-
-
 };
 typedef pvector<Triangle> TriangleVector;
+
+// One triangle, indexes of vertexes
+struct Quad // anti-clockwise direction (one side Triangle)
+{
+	Quad(){}
+	Quad(size_t _0, size_t _1, size_t _2, size_t _3) { set(_0, _1, _2, _3); }
+	void set(size_t _0, size_t _1, size_t _2, size_t _3) { a[0] = _0;	a[1] = _1;	a[2] = _2;	a[3] = _3;}
+
+	size_t a[4];
+};
+typedef pvector<Quad> QuadVector;
+
 
 // ћассив значений, который может быть кеширован в графическом ускорителе
 class BufferedElement
