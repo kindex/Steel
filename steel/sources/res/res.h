@@ -2,7 +2,7 @@
 	File: res/res.h
 	Unit: res
 	Part of: Steel engine
-	(C) DiVision, 2003-2006
+	(C) DiVision, 2003-2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz at gmail]
 	License:
@@ -20,6 +20,7 @@
 #include "../steel.h"
 
 #include <map>
+#include <set>
 #include <string>
 
 #include "../common/types.h"
@@ -35,11 +36,9 @@ std::string getFullPath(const std::string &filename, const std::string &director
 // Стек текущих директорий. Используется только коллекцией ресурсов.
 class ResStack
 {
-protected:
-	int level;
-	svector<std::string> dirs;
-
 public:
+	ResStack(): level(0), dirs(0) {}
+
 	bool	push(std::string directory);
 	bool	pushFullPath(std::string path);
 
@@ -48,10 +47,12 @@ public:
 	std::string top();
 	std::string getFullName(const std::string &name);
 
+protected:
+	int level;
+	svector<std::string> dirs;
+
 	template<class T>
 	friend class ResCollection;
-
-	ResStack(): level(0), dirs(0) {}
 };
 extern ResStack resStack;
 
@@ -64,16 +65,15 @@ extern ResStack resStack;
 	От них наследуются загрузчики, которые переопределяют метод init.
 	init загружает ресурс или генерирует по строковому идентификатору.
 */
-class Res//: public virtual BufferedElement
+class Res
 {
-protected:
-	uid resId; // уникальный идентификатор
 public:
-//	virtual bool init(const std::string name, const std::string dir) = 0;
-
 	uid	getId() { return resId; }
 	void setId(uid id) { resId = id; }
 	virtual ~Res() {}
+
+protected:
+	uid resId; // уникальный идентификатор
 };
 
 
@@ -104,24 +104,14 @@ public:
 
 	// У процедуры add есть второй параметр типа bool. Если он равняется false, то после загрузки ресурса текущая директория не восстанавливается и надо это делать вручную с помощью вызова pop.
 	void pop() { resStack.pop(); }
-
-
-protected:
-	std::string id; // строковой идентификатор коллекции (image, model)
-	std::map<const std::string,int> index; // отображение полных имён ресурсов на индекс в массиве data. Для увеличения скорости поиска по имени.
-	std::map<T*,int> resIndex; // отображение указателя ресурса на индекс в массиве data. Для увеличения скорости удаления ресурса по ссылке на него.
-
-	struct ResStorage
-	{
-		T*		object;		// ссылка на ресурс
-		uid		id;			// уникальный идентификатор ресурса
-		int		links;		// количество ссылок на этот ресурс. При добавлении дублируемого ресурса счётчик увеличивается на 1. При удалении -  уменьшается на 1. Если количество ссылок становится равным 1, то ресурс удаляется из коллекции. (аналогично Linux ext2fs)
-		std::string name;	// полное имя ресурса
-	};
-	svector<ResStorage> data; // массив хранимых ресурсов и дополнительная информация к каждому ресурсу.
-
 	// тип: функция для геренирования копии класса, унаследованного от Res
 	typedef T*(funcCreateResClass)(const std::string filename, const std::string baseName); 
+	// Добавляет функцию для создания класса, котоыре умеет загружать ресурс
+	void registerResLoader(funcCreateResClass* _func)	{		classes.push_back(_func);	}
+	void setId(std::string _id) { id = _id; } // устанавливает идентификатор коллекии
+	void clearFailedResourcesCache() { failedResourcesCache.clear(); }
+
+protected:
 
 // Массивы классов для рагрузки ресурсов каждого типа
 	pvector<funcCreateResClass*> classes;
@@ -137,10 +127,20 @@ protected:
 
 	virtual T* addForce(std::string name, bool pop = true);
 
-public:
-	// Добавляет функцию для создания класса, котоыре умеет загружать ресурс
-	void registerResLoader(funcCreateResClass *_func)	{		classes.push_back(_func);	}
-	void setId(std::string _id) { id = _id; } // устанавливает идентификатор коллекии
+
+	std::string id; // строковой идентификатор коллекции (image, model)
+	std::map<const std::string,int> index; // отображение полных имён ресурсов на индекс в массиве data. Для увеличения скорости поиска по имени.
+	std::map<T*,int> resIndex; // отображение указателя ресурса на индекс в массиве data. Для увеличения скорости удаления ресурса по ссылке на него.
+
+	struct ResStorage
+	{
+		T*		object;		// ссылка на ресурс
+		uid		id;			// уникальный идентификатор ресурса
+		int		links;		// количество ссылок на этот ресурс. При добавлении дублируемого ресурса счётчик увеличивается на 1. При удалении -  уменьшается на 1. Если количество ссылок становится равным 1, то ресурс удаляется из коллекции. (аналогично Linux ext2fs)
+		std::string name;	// полное имя ресурса
+	};
+	svector<ResStorage> data; // массив хранимых ресурсов и дополнительная информация к каждому ресурсу.
+	std::set<std::string> failedResourcesCache;
 };
 
 
@@ -153,7 +153,7 @@ T* ResCollection<T>::add(const std::string &name, bool pop)
 	std::string name2 = resStack.getFullName(name);
 	int index = getIndex(name2);
 
-	if(index < 0)
+	if (index < 0)
 	{
 		return addForce(name2, pop);
 	}
@@ -162,7 +162,9 @@ T* ResCollection<T>::add(const std::string &name, bool pop)
 		data[index].links++;
 
 		if(!pop)
+		{
 			resStack.pushFullPath(name2);
+		}
 
 		return data[index].object;
 	}
@@ -245,6 +247,13 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
 	resStack.push(baseDirectory);
 	std::string fullResName = createPath(baseDirectory, name);
 
+	if (failedResourcesCache.find(fullResName) != failedResourcesCache.end())
+	{
+		log_msg("res " + id, "Ignoring " + fullResName);
+		if (pop) resStack.pop();
+		return NULL;
+	}
+
 	log_msg("res " + id, "Loading " + fullResName);
 
     int s = classes.size();
@@ -252,7 +261,7 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
 	{
 		T *obj = (*classes[i])(name, baseDirectory);
 
-		if(obj == NULL) continue;
+		if (obj == NULL) continue;
 
 		ResStorage newResStorage;
 		newResStorage.id = obj->getId();
@@ -271,7 +280,9 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
 		return obj;
 	}
 	log_msg("res error " + id, "Failed " + fullResName);
-	if(pop) resStack.pop();
+	if (pop) resStack.pop();
+
+	failedResourcesCache.insert(fullResName);
 
 	return NULL;
 }

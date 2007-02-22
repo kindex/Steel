@@ -78,7 +78,7 @@ bool OpenALEngine::init(Config& _conf)
 	// check for errors
 	if (!pDevice)
 	{
-		log_msg("openal init", "ERROR: Default sound device not present!");
+		log_msg("openal init warning", "Default sound device not present");
 		return false;
 	}
 	log_msg("openal init", "OK  Default sound device is present!");
@@ -89,7 +89,6 @@ bool OpenALEngine::init(Config& _conf)
 //	log_msg("openal init", alcGetString((pDevice),ALC_MINOR_VERSION) );
 
 	
-
 	// creating rendering context
 	log_msg("openal init", "Creating rendering context...");
 	pContext = alcCreateContext(pDevice, NULL);
@@ -98,26 +97,25 @@ bool OpenALEngine::init(Config& _conf)
 		log_msg("openal init", "ERROR: Cannot create rendering context!");
 		return false;
 	}
-	log_msg("openal init", "OK  Rendering context has been created!");
+	log_msg("openal init", "Rendering context has been created");
 
 	alcMakeContextCurrent(pContext);
 
 	masterVolume = conf->getf("mastervolume", 1.0f);
 
-	log_msg("openal init", "OpenAL has been initialized!");
-
+	log_msg("openal init", "OpenAL has been initialized");
 
 	/**/
 // TESTING
-	log_msg("openal init", "\tVendor: " + (string)(ALchar *)alGetString(AL_VENDOR));
-	log_msg("openal init", "\tVersion: " + (string)(ALchar *)alGetString(AL_VERSION));
-	log_msg("openal init", "\tRenderer: " + (string)(ALchar *)alGetString(AL_RENDERER));
-	log_msg("openal init", "\tExtensions: " + (string)(ALchar *)alGetString(AL_EXTENSIONS));
+	log_msg("openal init", "Vendor: " + (string)(ALchar*)alGetString(AL_VENDOR));
+	log_msg("openal init", "Version: " + (string)(ALchar*)alGetString(AL_VERSION));
+	log_msg("openal init", "Renderer: " + (string)(ALchar*)alGetString(AL_RENDERER));
+	log_msg("openal init", "Extensions: " + (string)(ALchar*)alGetString(AL_EXTENSIONS));
 /**/
 	const ALchar *pCDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
 	if (pCDeviceList)
 	{
-		log_msg("openal init","\nAvailable Capture Devices are:");
+		log_msg("openal init", "Available Capture Devices are:");
 
 		while (*pCDeviceList)
 		{
@@ -126,12 +124,14 @@ bool OpenALEngine::init(Config& _conf)
 		}
 	}
 	else
-		log_msg("openal init", "!!!!! no capture devices");
+	{
+		log_msg("openal init", "no audio capture devices");
+	}
 
-	const ALchar *pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+	const ALchar* pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
 	if (pDeviceList)
 	{
-		log_msg("openal init",  "\nAvailable Devices are:");
+		log_msg("openal init", "Available Devices are:");
 
 		while (*pDeviceList)
 		{
@@ -140,32 +140,38 @@ bool OpenALEngine::init(Config& _conf)
 		}
 	}
 	else
-		log_msg("openal init", "!!!!! no devices");
-	log_msg("openal init", "\nDefault capture device:");
+	{
+		log_msg("openal init", "no devices");
+	}
+
+	log_msg("openal init", "Default capture device:");
 	if (pCDeviceList)
+	{
 		log_msg("openal init", alcGetString(NULL, ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER));
+	}
 	else
+	{
 		log_msg("openal init", "no default capture device");
+	}
 
-	log_msg("openal init", "\nDefault device:");
+	log_msg("openal init", "Default device:");
 	if (pDeviceList)
+	{
 		log_msg("openal init", alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER));
+	}
 	else
+	{
 		log_msg("openal init", "no default device");
-
-
-
-/**/
-
+	}
 
 	if (enabledEAX)
 	{
 	// check for EAX 2.0 support
 		log_msg("openal init", "Checking for EAX 2.0 support...");
-		if ( !alIsExtensionPresent((ALchar*)"EAX2.0") )
+		if (!alIsExtensionPresent((ALchar*)"EAX2.0"))
 		{
 	//		std::cout << "\nNo EAX found!\n";
-			log_msg("openal init", "ERROR: No EAX 2.0 found!");
+			log_msg("openal init warning", "No EAX 2.0 found");
 			enabledEAX = 0;
 		//	return false; 
 		}
@@ -177,13 +183,13 @@ bool OpenALEngine::init(Config& _conf)
 
 		if ( !m_EAXSet || !m_EAXGet )
 		{
-			log_msg("openal init", "ERROR: EAX internal problems!");
+			log_msg("openal init error", "EAX internal problems");
 			//std::cout << "\nEAX problems.\n";
 			return false;
 		}
-		log_msg("openal init", "EAX 2.0 has been initialized!");
+		log_msg("openal init", "EAX 2.0 has been initialized");
 	};
-/**/
+
 	return true;
 }
 
@@ -217,15 +223,17 @@ void OpenALEngine::setListenerEnvironment(unsigned long environment)
 {
 	if (enabledEAX)
 	{
-		if ( m_EAXSet )
+		if (m_EAXSet)
+		{
 			 m_EAXSet(&DSPROPSETID_EAX_ListenerProperties,
 							DSPROPERTY_EAXLISTENER_ENVIRONMENT,
 							0,
 							&environment,
 							sizeof(unsigned long));
+		}
 		else
 		{
-			log_msg("openal audio", "ERROR: Cannot set environment!");
+			log_msg("openal audio error", "Cannot set environment");
 			//std::cout << "\nCannot set environment.\n";
 		}
 	}
