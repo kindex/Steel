@@ -20,6 +20,7 @@
 #include "../../steel.h"
 
 #include <string>
+#include <set>
 
 #if STEEL_OS == OS_LINUX
 #include <GL/gl.h>			// Header File For The OpenGL32 Library
@@ -78,6 +79,7 @@ private:
 	Image* white;
 	Image* none;
 	Shader shaderStd;
+
 	int maxLightsInShader;
 	GraphShadow *currentShadow;
 
@@ -139,7 +141,7 @@ private:
 	void cleanBuffer(uid bufId);
 // ******************* OpenGL 2.0 *******************
 	bool DrawFill_MaterialStd_OpenGL20(GraphShadow&, const Faces&, MaterialStd&);
-	GLSL *BindShader(Shader*);
+	GLSL* BindShader(Shader*);
 	void bindTextureToShader(GLSL* program, const char* name, int imageNum, Image* image);
 	void unbindTexCoords();
 

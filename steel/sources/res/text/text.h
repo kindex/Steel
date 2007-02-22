@@ -28,6 +28,7 @@ enum TextFormat
 class Text: public Res
 {
 protected:
+	std::string filename;
 	char *text;
 	int length;
 	TextFormat format;

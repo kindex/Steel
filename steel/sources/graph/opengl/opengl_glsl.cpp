@@ -50,13 +50,14 @@ bool GLSL::init(Shader* _shader)
 		return false;
 	}
 
-
     glGetObjectParameterivARB(programId, GL_OBJECT_LINK_STATUS_ARB, &linked);
 
     loadLog(programId);
 
     if (!linked)
+	{
         return false;
+	}
 
 	return true;
 }

@@ -118,38 +118,28 @@ public:
 struct Shader
 {
 	uid		id;
-	Text	*vertexShader;
-	Text	*fragmentShader;
+	Text*	vertexShader;
+	Text*	fragmentShader;
+	bool failed;
 
-	Shader(): vertexShader(NULL), fragmentShader(NULL) { id = id = objectIdGenerator.genUid(); }
+	Shader(): failed(false), vertexShader(NULL), fragmentShader(NULL) { id = id = objectIdGenerator.genUid(); }
 
-	virtual uid	 getId()				{ return id; }
-};
-
-class MaterialShader: public Material
-{
-	Shader shader;
-
-	bool InitFromConfig(Config *config);
+	uid	 getId(){ return id; }
 };
 
 //тип смешивания двух текстур
-typedef	enum
+enum TextureBlendMode
 {
 	TEXTURE_BLEND_MODE_NONE,
 	TEXTURE_BLEND_MODE_REPLACE,
 	TEXTURE_BLEND_MODE_ADD,
 	TEXTURE_BLEND_MODE_MUL,
 	TEXTURE_BLEND_MODE_BLEND
-} TextureBlendMode;
-
-class MaterialCustom: public Material
-{
-
 };
 
-Material *getMaterialClass(std::string _class);
-Material *createMaterial(Config*);
-Material *createMaterial(std::string);
+
+Material* getMaterialClass(std::string _class);
+Material* createMaterial(Config*);
+Material* createMaterial(std::string);
 
 #endif

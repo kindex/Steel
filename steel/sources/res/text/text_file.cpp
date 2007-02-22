@@ -22,9 +22,10 @@ using namespace std;
 bool TextFile::init(const std::string name, const std::string dir)
 {
 	std::string file = dir + "/" + name;
+	this->filename = file;
 
 	rstream f(file); // no binary acces, only text
-	if(f.fail()) 
+	if (f.fail()) 
 	{
 		log_msg("res conf error", "Cannot open file " + file);
 		return false;

@@ -23,12 +23,10 @@ namespace opengl
 {
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow &e, const Faces& triangles, MaterialStd& material)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material)
 {
 	if (GL_EXTENSION_GLSL)
 	{
-		total.batchCount++;
-
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 		
@@ -85,11 +83,11 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow &e, const Faces& t
 			}
 			glPopMatrix();
 
-			TexCoords3f *sTangent = NULL;
-			TexCoords3f *tTangent = NULL;
+			TexCoords3f* sTangent = NULL;
+			TexCoords3f* tTangent = NULL;
 			getTangentSpace(e.vertexes, e.getTexCoords(material.normal_map), e.faceMaterials, e.normals, &sTangent, &tTangent);
 
-			if(sTangent != NULL)	
+			if (sTangent != NULL)	
 			{ 
 				glActiveTextureARB(GL_TEXTURE0_ARB + 7);
 				glClientActiveTextureARB(GL_TEXTURE0_ARB + 7);
@@ -97,17 +95,20 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow &e, const Faces& t
 				(this->*BindTexCoords3f)(sTangent);
 			}
 
-			(this->*DrawTriangles)(e, triangles, NULL);
+			(this->*DrawTriangles)(e, faces, NULL);
 
 			program->unbind();
-		}
+			if(CleanupDrawTriangles != NULL)
+			{
+				(this->*CleanupDrawTriangles)();
+			}
 
-		if(CleanupDrawTriangles != NULL)
+			unbindTexCoords();
+		}
+		else // shader is not loaded
 		{
-			(this->*CleanupDrawTriangles)();
+			DrawFill_MaterialStd_OpenGL13(e, faces, material);
 		}
-
-		unbindTexCoords();
 
 		glPopClientAttrib();
 	   	glPopAttrib();
@@ -133,25 +134,32 @@ void OpenGL_Engine::bindTextureToShader(GLSL *program, const char *name, int ima
 }
 
 
-GLSL *OpenGL_Engine::BindShader(Shader *shader)
+GLSL* OpenGL_Engine::BindShader(Shader* shader)
 {
-// TODO:
+	if (shader->failed)
+	{
+		return NULL;
+	}
 	uid id = shader->getId(); 
 
-	OpenGL_Buffer &buf = buffer[id];
+	OpenGL_Buffer& buf = buffer[id];
 
-	if(!buf.loaded)
+	if (!buf.loaded)
 	{
-		GLSL *GLSL_Shader = new GLSL;
-		if(GLSL_Shader->init(shader))
+		GLSL* GLSL_Shader = new GLSL;
+		if (GLSL_Shader->init(shader))
 		{
 			buf.loaded = true;
 			buf.glid = GLSL_Shader->getGL_Id();
 			buf.object = (char*)GLSL_Shader;
 		}
+		else
+		{
+			shader->failed = true;
+		}
 	}
 
-	if(buf.loaded)
+	if (buf.loaded)
 	{
 		// setup variables
 		glUseProgramObjectARB(buf.glid);
