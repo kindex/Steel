@@ -177,9 +177,13 @@ bool ResCollection<T>::remove(T* object)
     std::map<T*,int>::const_iterator it = resIndex.find(object);
      
 	if(it == resIndex.end())
+	{
 		return false;
-	else 
+	}
+	else
+	{
 		return removeRaw(it->second);
+	}
 #else
 // TODO
 	if(resIndex.find(object) == resIndex.end())
@@ -194,16 +198,20 @@ template<class T>
 bool ResCollection<T>::remove(const std::string &name)
 {
 	int index = getIndex(name);
-	if(index < 0)
+	if (index < 0)
+	{
 		return false;
+	}
 	else
+	{
 		return removeRaw(index);
+	}
 }
 
 template<class T>
 bool ResCollection<T>::removeRaw(int index)
 {
-	if(data[index].links > 0)
+	if (data[index].links > 0)
 	{
 		data[index].links--;
 		if(data[index].links == 0)
@@ -211,7 +219,9 @@ bool ResCollection<T>::removeRaw(int index)
 		return true;
 	}
 	else
+	{
 		return false;// уже удалён
+	}
 }
 
 template<class T>
@@ -226,7 +236,7 @@ bool ResCollection<T>::purge(int delIndex)
 	log_msg("res del " + id, "Deleting resourse " + data[delIndex].name);
 	delete data[delIndex].object;
 
-	if(delIndex + 1 < (int)data.size())
+	if (delIndex + 1 < (int)data.size())
 	{
 		index[data.back().name] = delIndex;
 		resIndex[data.back().object] = delIndex;
@@ -259,7 +269,7 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
     int s = classes.size();
 	for(int i = 0; i < s; i++)
 	{
-		T *obj = (*classes[i])(name, baseDirectory);
+		T* obj = (*classes[i])(name, baseDirectory);
 
 		if (obj == NULL) continue;
 
@@ -292,10 +302,14 @@ template<class T>
 inline T* ResCollection<T>::operator[] (const std::string& name) 
 {
 	int i = getIndex(name);
-	if(i<0)
+	if (i < 0)
+	{
 		return NULL;
+	}
 	else
+	{
 		return data[i].object;
+	}
 }
 
 template<class T>
@@ -303,9 +317,13 @@ inline int ResCollection<T>::getIndex(const std::string name)
 {
 	std::map<const std::string,int>::const_iterator it = index.find(name);
 	if(it != index.end())
+	{
 		return it->second;	
+	}
 	else 
+	{
 		return -1;
+	}
 }  /*If exist - return*, esle 0 */
 
 

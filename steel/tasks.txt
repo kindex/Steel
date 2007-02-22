@@ -42,19 +42,18 @@
 411. OpenGL: custom normal map mipmap levels. / *. KindeX. [9]. (3h).
 413. OpenGL: implement texture units choosing in material config. / *. KindeX. [9]. (2d).
 446. Logger: put in log revision number, compilation date and compilation computer name. / *. KindeX. [10]. (1d).
-486. Res. Remeber resources with error. Do not load image, if it fails before. / *. KindeX. [10]. (1d)
-487. Res. OpenGL. Remeber GLSL shaders with error. Do not compile shader, if it fails before. / *. KindeX. [10]. (1d)
 
 ** Freezed Construction ****************************************************************************
 345. PNG. PNG file loader same as BMP loader. / Kane. KindeX. [4.]
-367. OpenGL 2.0. Shaders, dynamic lighting (many lights). / KindeX. [1]
+367. OpenGL 2.0. Shaders, dynamic lighting (many lights), shader fro ATI. / KindeX. [1]
 462. Tests: implement selftests for configs. / *. KindeX. [5].
 
 ** Construction ************************************************************************************
 459. Particle System Documentation: Research configuration parameters / Def, Kindex. Def. [3]. (3d) 
 
-
 ** Done Construction *******************************************************************************
+486. Res. Remeber resources with error. Do not load image, if it fails before. / *. KindeX. [10]. (1d)
+487. Res. OpenGL. Remeber GLSL shaders with error. Do not compile shader, if it fails before. / *. KindeX. [10]. (1d)
 348. Config bug. Error in finding value by templates through parent config. / KindeX. KindeX. [5].
 406. Kinematics: add simple rotation and path movement to objects (combiner). Local coordinate system. / KindeX. KindeX. [1].
 
