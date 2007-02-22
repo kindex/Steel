@@ -31,7 +31,7 @@ public:
 	{
 		int vertexCount;
 		int triangleCount;
-		int objectCount;
+		int batchCount;
 		int globalObjectCount;
 	} total;
 

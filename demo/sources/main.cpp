@@ -174,9 +174,8 @@ int main(int argc, char *argv[])
 		{
 			(graph->*(graph->setCaptionOpenGL_Window))(
 				std::string("Sleel engine")
-				+ " Obj: " + IntToStr(graph->total.objectCount)
-				+ " Trg: " + IntToStr(graph->total.triangleCount)
-//				+ " Col: " + IntToStr(game.getCollisionCount())
+				+ " Batches: " + IntToStr(graph->total.batchCount)
+				+ " Faces: " + IntToStr(graph->total.triangleCount)
 				+ " FPS " + timer.getfps_s()
 			);
 

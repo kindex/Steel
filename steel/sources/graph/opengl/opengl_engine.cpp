@@ -202,7 +202,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
 	total.vertexCount = 0;
 	total.triangleCount = 0;
-	total.objectCount = 0;
+	total.batchCount = 0;
 
 	int size = objects.size();
 
@@ -537,7 +537,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	DrawVertexes = &OpenGL_Engine::DrawVertexes_OpenGL10;
 	DrawAABB = &OpenGL_Engine::DrawAABB_OpenGL10;
 
-	if(version >= 11)
+	if (version >= 11)
 	{
 		BindTexture = &OpenGL_Engine::BindTexture_OpenGL11;
 		DrawTriangles = &OpenGL_Engine::DrawTriangles_OpenGL11;
@@ -547,15 +547,15 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		BindTexCoords3f = &OpenGL_Engine::BindTexCoords3f_OpenGL11;
 	}
 
-	if(version >= 13)
+	if (version >= 13)
 	{
 		if(GL_EXTENSION_MULTITEXTURE)
 			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL13;
 	}
 
-	if(version >= 15)
+	if (version >= 15)
 	{
-		if(GL_EXTENSION_VBO)
+		if (GL_EXTENSION_VBO)
 		{
 			DrawTriangles = &OpenGL_Engine::DrawTriangles_OpenGL15;
 			CleanupDrawTriangles = &OpenGL_Engine::CleanupDrawTriangles_OpenGL15;
@@ -564,7 +564,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		}
 	}
 
-	if(GL_EXTENSION_GLSL && conf->getb("use_glsl", true))
+	if (version >= 20 && GL_EXTENSION_GLSL && conf->getb("use_glsl", true))
 	{
 		DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
 		shaderStd.vertexShader = resText.add("material/" + conf->gets("std_shader", "std") + ".vert");

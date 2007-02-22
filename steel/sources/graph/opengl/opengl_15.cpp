@@ -49,6 +49,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow& e, const Faces& faces, c
 		//Draw All
 		if (!faces.triangles.empty())
 		{
+			total.batchCount++;
 			if (BindVBO(&faces.triangles, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 3))
 			{
 				glDrawElements(GL_TRIANGLES, faces.triangles.size()*3, GL_UNSIGNED_INT, 0);
@@ -61,6 +62,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow& e, const Faces& faces, c
 
 		if (!faces.quads.empty())
 		{
+			total.batchCount++;
 			if (BindVBO(&faces.quads, 0, GL_ELEMENT_ARRAY_BUFFER_ARB, 4))
 			{
 				glDrawElements(GL_QUADS, faces.quads.size()*4, GL_UNSIGNED_INT, 0);

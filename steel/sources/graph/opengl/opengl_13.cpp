@@ -26,8 +26,6 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow& e,
 {
 	if (GL_EXTENSION_MULTITEXTURE)
 	{
-		total.objectCount++;
-
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
@@ -35,10 +33,11 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow& e,
 
 		bool bump_map = material.normal_map.image != NULL && conf->geti("drawBump") && !e.lights.empty() && e.normals != NULL && GL_EXTENSION_DOT3 && GL_EXTENSION_TEXTURE_CUBE_MAP;
 		bool diffuse_map = material.diffuse_map.image != NULL && conf->geti("drawTexture");
+		bool emission_map = material.emission_map.image != NULL && conf->geti("drawTexture");
 		//bool reflect_map = material.reflect_map.image != NULL && conf->geti("drawReflect") && GL_EXTENSION_TEXTURE_CUBE_MAP;
 		int currentTextureArb = 0;
 
-		if(bump_map)
+		if (bump_map)
 		{
 			const TexCoords *texCoords = e.getTexCoords(material.normal_map);
 
@@ -51,7 +50,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow& e,
 			currentTextureArb +=2;
 		}
 
-		if(diffuse_map)
+		if (diffuse_map)
 		{
 			glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
@@ -67,50 +66,60 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow& e,
 
 			const TexCoords *texCoords = NULL;
 
-			if(material.diffuse_map.texCoordsUnit < e.texCoords.size())
+			if (material.diffuse_map.texCoordsUnit < e.texCoords.size())
+			{
 				texCoords = e.texCoords[material.diffuse_map.texCoordsUnit];
-			else
-				if(!e.texCoords.empty())
-					texCoords = e.texCoords[0];
+			}
+			else if(!e.texCoords.empty())
+			{
+				texCoords = e.texCoords[0];
+			}
 
 			assert(texCoords->size() == e.vertexes->size(), "TexCoords.size != Vertex.size");
 			if(BindTexCoords != NULL) (this->*BindTexCoords)(texCoords, &material.textureMatrix);
 			currentTextureArb++;
 		}
 
-/*		if(reflect_map) // карта отражения
+		if (emission_map)
 		{
-			GLint mode = GL_REPLACE;
-			if(currentTextureArb > 0)
-				mode = GL_MODULATE;
-
-			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 			glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
 			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
+			glDisable(GL_TEXTURE_COORD_ARRAY);
 
-			(this->*BindTexture)(material.reflect_map.image, true); // Cube texture (auto detect from Image)
+			GLint mode = GL_REPLACE;
+			if (currentTextureArb > 0)
+			{
+				mode = GL_ADD;
+			}
 
-			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_EXT);
-            glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_EXT);
-            glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP_EXT);
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 
-			glEnable(GL_TEXTURE_GEN_S);
-            glEnable(GL_TEXTURE_GEN_T);
-            glEnable(GL_TEXTURE_GEN_R);
+			(this->*BindTexture)(*material.emission_map.image, true);
 
-//			glEnable(GL_AUTO_NORMAL);
-//			glEnable(GL_NORMALIZE);
+			const TexCoords *texCoords = NULL;
 
-			currentTextureArb += 1;
+			if (material.diffuse_map.texCoordsUnit < e.texCoords.size())
+			{
+				texCoords = e.texCoords[material.diffuse_map.texCoordsUnit];
+			}
+			else if (!e.texCoords.empty())
+			{
+				texCoords = e.texCoords[0];
+			}
+
+			assert(texCoords->size() == e.vertexes->size(), "TexCoords.size != Vertex.size");
+			(this->*BindTexCoords)(texCoords, &material.textureMatrix);
+			currentTextureArb++;
 		}
-*/
 
-		if(!diffuse_map)
+		if (!diffuse_map)
+		{
 			glColor4fv(material.color.getfv());
+		}
 
-		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL);
+		(this->*DrawTriangles)(e, triangles, NULL);
 
-		if(CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
+		if (CleanupDrawTriangles != NULL) (this->*CleanupDrawTriangles)();
 
 		for(uidVector::const_iterator it = buffersToDelete.begin(); it != buffersToDelete.end(); it++)
 		{
@@ -126,93 +135,6 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow& e,
 	}
 	return false;
 }
-
-/*	if(material != NULL && GL_EXTENSION_MULTITEXTURE)
-	{
-
-		total.objectCount++;
-
-		glPushAttrib(GL_ALL_ATTRIB_BITS);
-		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
-		int texCount = material.getTextureCount();
-
-		if(texCount>0)
-		{
-			switch(material.getTexture(0)->mode)
-			{
-				case TEXTURE_BLEND_MODE_MUL:	
-						glEnable(GL_BLEND);
-						glBlendFunc(GL_DST_COLOR, GL_ZERO);
-						break;
-				case TEXTURE_BLEND_MODE_ADD:
-						glEnable(GL_BLEND);
-						glBlendFunc(GL_ONE, GL_ONE);
-						break;
-				case TEXTURE_BLEND_MODE_REPLACE: 
-				default:
-					glDisable(GL_BLEND);
-					break;
-			}
-		}
-
-		TextureBlendMode inheritedMode = TEXTURE_BLEND_MODE_NONE, currentMode;
-		int currentTextureArb = 0;
-
-		// TODO check OPENGL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS
-		for(int i=0; i<texCount; i++)
-		{
-			const Texture *texture = material.getTexture(i); // текущая текстура
-
-			if(inheritedMode == TEXTURE_BLEND_MODE_NONE)
-				currentMode = texture->mode;
-			else
-			{
-				currentMode = inheritedMode;
-				inheritedMode = TEXTURE_BLEND_MODE_NONE;
-			}
-
-			// skip texture
-			if(texture->format == TEXTURE_FORMAT_SHADER
-				|| texture->format == TEXTURE_FORMAT_REFLECT && !GL_EXTENSION_TEXTURE_CUBE_MAP)
-			{
-				inheritedMode = currentMode;
-				continue;
-			}
-
-			glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
-			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
-			glDisable(GL_TEXTURE_COORD_ARRAY);
-
-			// режим мультитекстурирования
-			GLint mode = GL_REPLACE;
-			if(currentTextureArb>0)
-			{
-				switch(currentMode)
-				{
-					case TEXTURE_BLEND_MODE_MUL: 	mode = GL_MODULATE; break;
-					case TEXTURE_BLEND_MODE_ADD:	mode = GL_ADD;		break; // TODO: GL_ADD_SIGNED_ARB ??
-					case TEXTURE_BLEND_MODE_BLEND:	mode = GL_BLEND;	break;
-					default: mode = GL_REPLACE;		break;
-				}
-			}
-
-			else
-
-			{
-				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-				if(BindTexCoords) (this->*BindTexCoords)(NULL);
-				currentTextureArb++;
-			}
-
-	}
-		
-		if(DrawTriangles) (this->*DrawTriangles)(e, triangles, NULL, total);
-
-		glPopClientAttrib();
-	   	glPopAttrib();
-	}
-*/
-
 
 static v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 {
@@ -406,67 +328,6 @@ void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f &sTangent, const TexC
 		tl[i].z = normal[i].dotProduct(lightVector);
     }
 }
-
-/*
-void OpenGL_Engine::drawDistColor(DrawElement &e, matrix34 const matrix, v3 const light, float const distance)
-{
-	float *coords = new float[e.vertexes->size()];
-
-	int i = 0;
-	for(Vertexes::iterator it = e.vertexes->begin(); it != e.vertexes->end(); it++)
-	{
-		float d = (light-(*it)).getLength();
-		float c = 1 - d/distance;
-		if(c<0) c = 0;
-		if(c>1) c = 1;
-		coords[i] = c;
-		i++;
-	}
-
-	glBindTexture(GL_TEXTURE_2D, distMap);
-    glEnable(GL_TEXTURE_2D);
-
-	glTexCoordPointer(1, GL_FLOAT, 0, coords);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    drawFaces(e);
-
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	delete coords;
-}
-
-
-bool OpenGL_Engine::drawDiffuse(DrawElement &e, matrix34 const matrix, v3 const light)
-{
-//	if(GL_TEXTURE_CUBE_MAP_ARB_supported)
-	{
-		v3List *sTangent, *tTangent, *tangentSpaceLight;
-
-//		getTangentSpace(e.vertexes, e.mapcoord, e.triangle, e.normals, &sTangent, &tTangent);
-//		genTangentSpaceLight(*sTangent, *tTangent, *e.vertexes, *e.normals, matrix, light, &tangentSpaceLight);
-
-	//Bind normalisation cube map to texture unit 1
-		glEnable(GL_TEXTURE_CUBE_MAP_ARB);
-
-		glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, lightCubeMap);
-
-		glTexCoordPointer(3, GL_FLOAT, 12, &tangentSpaceLight->front());
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-		drawFaces(e);
-
-		glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-		delete tangentSpaceLight;
-		return true;
-	}
-//	else
-//		return false;
-}
-*/
 
 void OpenGL_Engine::drawBump(GraphShadow &e, const TexCoords *coords, matrix34 const matrix, v3 const light, uid bufId, int curTexArb, Image *img)
 {

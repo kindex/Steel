@@ -19,7 +19,7 @@
 // нарисовать множество полигонов с указанным материалом / glVertexPointer
 void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow& e, const Faces& faces, const TexCoords* coords)
 {
-	if (e.vertexes != NULL && !faces.triangles.empty() && !e.vertexes->empty())// если есть полигоны и вершины
+	if (e.vertexes != NULL && !(faces.triangles.empty() && faces.quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
@@ -27,7 +27,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow& e, const 
 		total.vertexCount += e.vertexes->size();
 		total.triangleCount += faces.triangles.size();
 			
-		if(coords)	
+		if (coords)	
 		{ 
 			glTexCoordPointer(2, GL_FLOAT, 0, &coords->front());
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -43,8 +43,16 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow& e, const 
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->front());	
 		glEnableClientState(GL_VERTEX_ARRAY);
 
-		//Draw All
-		glDrawElements(GL_TRIANGLES, faces.triangles.size()*3/*a,b,c*/, GL_UNSIGNED_INT, &faces.triangles.front().a[0]);
+		if (!faces.triangles.empty())
+		{
+			total.batchCount++;
+			glDrawElements(GL_TRIANGLES, faces.triangles.size()*3, GL_UNSIGNED_INT, &faces.triangles.front().a[0]);
+		}
+		if (!faces.quads.empty())
+		{
+			total.batchCount++;
+			glDrawElements(GL_QUADS, faces.quads.size()*4, GL_UNSIGNED_INT, &faces.quads.front().a[0]);
+		}
 
 		glPopClientAttrib();
 		glPopAttrib();
@@ -53,13 +61,15 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow& e, const 
 
 void OpenGL_Engine::BindTexCoords_OpenGL11(const TexCoords* coords, const TextureMatrix* textureMatrix)
 {
-	if(coords != NULL)
+	if (coords != NULL)
 	{ 
 		glTexCoordPointer(2, GL_FLOAT, 0, &coords->front());	
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
 	}
 	else
+	{
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	}
 
 	if (textureMatrix != NULL && textureMatrixLevel == 0)
 	{
@@ -73,7 +83,7 @@ void OpenGL_Engine::BindTexCoords_OpenGL11(const TexCoords* coords, const Textur
 
 void OpenGL_Engine::BindTexCoords3f_OpenGL11(const TexCoords3f* coords)
 {
-	if(coords != NULL)
+	if (coords != NULL)
 	{ 
 		glTexCoordPointer(3, GL_FLOAT, 0, &coords->front());
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -91,7 +101,9 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enable)
 
 	bool loaded = false;
 	if(buffer.find(id) != buffer.end())
+	{
 		loaded = buffer[id].loaded;
+	}
 
 	OpenGL_Buffer &buf = buffer[id];
 
@@ -203,17 +215,15 @@ void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow& e, const Faces
 {
 	if (e.vertexes != NULL && !faces.triangles.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
-		total.objectCount++;
 		total.vertexCount += e.vertexes->size();
 		total.triangleCount += faces.triangles.size();
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
-
 		glPolygonMode (GL_FRONT, GL_LINE);
-
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->front());	glEnableClientState(GL_VERTEX_ARRAY);
 
+		total.batchCount++;
 		glDrawElements(GL_TRIANGLES, faces.triangles.size()*3/*A,b,c*/, GL_UNSIGNED_INT, &faces.triangles.front().a[0]);
 
 		glPopClientAttrib();
@@ -222,17 +232,15 @@ void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow& e, const Faces
 
 	if (e.vertexes != NULL && !faces.quads.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
-		total.objectCount++;
 		total.vertexCount += e.vertexes->size();
 		total.triangleCount += faces.quads.size();
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
-
 		glPolygonMode (GL_FRONT, GL_LINE);
-
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->front());	glEnableClientState(GL_VERTEX_ARRAY);
 
+		total.batchCount++;
 		glDrawElements(GL_QUADS, faces.quads.size()*4, GL_UNSIGNED_INT, &faces.quads.front().a[0]);
 
 		glPopClientAttrib();
@@ -244,7 +252,6 @@ void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphShadow &e)
 {
 	if (e.vertexes != NULL && e.lines != NULL && !e.lines->index.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
-		total.objectCount++;
 		total.vertexCount += e.vertexes->size();
 		total.triangleCount += e.lines->index.size();
 		
@@ -254,6 +261,7 @@ void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphShadow &e)
 		// TODO color
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->front());	glEnableClientState(GL_VERTEX_ARRAY);
 
+		total.batchCount++;
 		glDrawElements(GL_LINES, e.lines->index.size()*2, GL_UNSIGNED_INT, &e.lines->index.front().a[0]);
 
 		glPopClientAttrib();

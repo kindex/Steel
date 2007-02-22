@@ -24,7 +24,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e,
 {
 	if (GL_EXTENSION_GLSL)
 	{
-		total.objectCount++;
+		total.batchCount++;
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
