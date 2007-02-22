@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 		return 2;
 	}
 // ******************* GRAPH ************************
-	OpenGL_Engine* graph = new OpenGL_Engine();
+	opengl::OpenGL_Engine* graph = new opengl::OpenGL_Engine();
 	if (!graph->init(steelConfig->find("graph"), input))
 	{
 		error("demo.conf", "Fatal error: cannot find graph config");

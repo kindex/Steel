@@ -16,7 +16,10 @@
 #include "../../res/res_main.h"
 #include <gl/glu.h>
 
-bool GLSL::init(Shader *_shader)
+namespace opengl
+{
+
+bool GLSL::init(Shader* _shader)
 {
 	if(!GL_EXTENSION_GLSL) return false;
 
@@ -268,3 +271,4 @@ int     GLSL :: locForUniformName ( const char * name )
     return glGetUniformLocationARB ( programId, name );
 }
 
+} // namespace opengl

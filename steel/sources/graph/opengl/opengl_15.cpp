@@ -17,6 +17,9 @@
 #include "opengl_engine.h"
 #include "../../libs/opengl/libext.h"
 
+namespace opengl
+{
+
 void OpenGL_Engine::CleanupDrawTriangles_OpenGL15()
 {
 	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
@@ -209,3 +212,5 @@ bool OpenGL_Engine::BindVBO(Class* v, int mode, int mode2, int elCnt)
 		return false;
 	}
 }
+
+} // namespace opengl

@@ -27,7 +27,31 @@
 #include "helper.h"
 
 #include <string>
-class GameObject;
+
+class Engine;
+
+struct Shadow
+{
+	GameObject* object;
+	GameObject* parent;
+	Engine* engine;
+//		int storageType; //  ??
+	uid objectId; // инентификатор объекта (uid)
+	int shadowIndex; // индекс этой структуры (кеша) в массиве shadow
+
+	// время последнего изменения объекта. Если отлично от того, что возвращает Object::getModificationTime(), то надо обновить кеш.
+//		ModificationTime modificationTime, childrenModificationTime;
+	// список детей объекта (uid)
+	pvector<uid> children;
+
+	Shadow(Engine *aEngine): object(NULL), parent(NULL), engine(aEngine) {}
+	virtual void fill(GameObject *object);
+	// овновляюет место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
+	// возвращает true, если была обнавлена вся информация
+	virtual bool cache();
+	virtual ~Shadow() {}
+	virtual void setParent(GameObject *aparent) {parent = aparent; }
+};
 
 class Engine : public BaseInterface
 {
@@ -52,28 +76,6 @@ protected:
 		хранится в Shadow. В унаследованных от Engine классах
 		класс Shadow дополняется
 	*/
-	struct Shadow
-	{
-		GameObject	*object;
-		GameObject	*parent;
-		Engine	*engine;
-//		int storageType; //  ??
-		uid objectId; // инентификатор объекта (uid)
-		int shadowIndex; // индекс этой структуры (кеша) в массиве shadow
-
-		// время последнего изменения объекта. Если отлично от того, что возвращает Object::getModificationTime(), то надо обновить кеш.
-//		ModificationTime modificationTime, childrenModificationTime;
-		// список детей объекта (uid)
-		pvector<uid> children;
-
-		Shadow(Engine *aEngine): object(NULL), parent(NULL), engine(aEngine) {}
-		virtual void fill(GameObject *object);
-		// овновляюет место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
-		// возвращает true, если была обнавлена вся информация
-		virtual bool cache();
-		virtual ~Shadow() {}
-		virtual void setParent(GameObject *aparent) {parent = aparent; }
-	};
 	typedef pvector<Shadow*> ShadowPVector;
 	// кеш объектов
 	ShadowPVector shadows;

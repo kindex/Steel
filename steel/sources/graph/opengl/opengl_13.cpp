@@ -20,9 +20,11 @@
 #include "opengl_engine.h"
 #include "../../libs/opengl/libext.h"
 
+namespace opengl
+{
 
 // нарисовать множество полигонов с указанным материалом / Multitexture
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow& e, const Faces& triangles, MaterialStd& material)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(GraphShadow& e, const Faces& triangles, MaterialStd& material)
 {
 	if (GL_EXTENSION_MULTITEXTURE)
 	{
@@ -364,3 +366,4 @@ void OpenGL_Engine::drawBump(GraphShadow &e, const TexCoords *coords, matrix34 c
 	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB_ARB, GL_PREVIOUS_ARB);
 }
 
+} // namespace opengl

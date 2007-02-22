@@ -16,8 +16,11 @@
 #include "opengl_engine.h"
 #include "../../libs/opengl/libext.h"
 
+namespace opengl
+{
+
 // нарисовать множество полигонов с указанным материалом / glVertexPointer
-void OpenGL_Engine::DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow& e, const Faces& faces, const TexCoords* coords)
+void OpenGL_Engine::DrawTriangles_OpenGL11(GraphShadow& e, const Faces& faces, const TexCoords* coords)
 {
 	if (e.vertexes != NULL && !(faces.triangles.empty() && faces.quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
 	{
@@ -211,7 +214,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enable)
 
 
 
-void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow& e, const Faces& faces)
+void OpenGL_Engine::DrawWire_OpenGL11(GraphShadow& e, const Faces& faces)
 {
 	if (e.vertexes != NULL && !faces.triangles.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
@@ -248,7 +251,7 @@ void OpenGL_Engine::DrawWire_OpenGL11(OpenGL_Engine::GraphShadow& e, const Faces
 	}
 }
 
-void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphShadow &e)
+void OpenGL_Engine::DrawLines_OpenGL11(GraphShadow &e)
 {
 	if (e.vertexes != NULL && e.lines != NULL && !e.lines->index.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
@@ -268,3 +271,5 @@ void OpenGL_Engine::DrawLines_OpenGL11(OpenGL_Engine::GraphShadow &e)
 		glPopAttrib();
     }
 }
+
+} // namespace opengl

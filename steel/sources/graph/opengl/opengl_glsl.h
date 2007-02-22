@@ -19,50 +19,55 @@
 #include "../../libs/opengl/libext.h"
 #include "../../res/text/text.h"
 
+namespace opengl
+{
+
 class GLSL
 {
-protected:
-	GLuint programId, vertexShaderId, fragmentShaderId;
-	Shader *shader;
 public:
 	GLSL(): programId(0), vertexShaderId(0), fragmentShaderId(0)
 		, shader(NULL)
-		//, conf(NULL) 
 	{};
 
 	~GLSL();
 
 	GLuint getProgramId() { return programId; }
-	bool LoadShader(GLuint shader, Text *text);
+	bool LoadShader(GLuint shader, Text* text);
 
 	bool init(Shader*);
 	bool isError();
 	void loadLog(GLuint object);
 	void bind();
 	void unbind();
-	bool setTexture(const char *name, int texNum);
+	bool setTexture(const char* name, int texNum);
 
 	GLuint getGL_Id() { return programId;}
 
 //    bool        setUniformVector  ( const char * name, const Vector4D& value  );
 //    bool        setUniformVector  ( int loc,            const Vector4D& value );
-    bool        setUniformVector  ( const char * name, const v3& value  );
+    bool        setUniformVector  ( const char* name, const v3& value  );
     bool        setUniformVector  ( int loc,            const v3& value );
-    bool        setUniformVector  ( const char * name, const v2& value  );
+    bool        setUniformVector  ( const char* name, const v2& value  );
     bool        setUniformVector  ( int loc,            const v2& value );
     bool        setUniformFloat   (const std::string &name, float value);
     bool        setUniformFloat   ( int loc,            float value           );
 //    bool        setUniformMatrix  ( const char * name, const Matrix4x4& value );
-    bool        setUniformMatrix  ( const char * name, const matrix33&  value );
-    bool        setUniformMatrix  ( const char * name, float value [16]       );
-    bool        setUniformInt     ( const char * name, int value              );
+    bool        setUniformMatrix  ( const char* name, const matrix33&  value );
+    bool        setUniformMatrix  ( const char* name, float value [16]       );
+    bool        setUniformInt     ( const char* name, int value              );
     bool        setUniformInt     ( int loc,            int value             );
 //    Vector4D    getUniformVector  ( const char * name );
     //Vector4D    getUniformVector  ( int loc            );
 
     int         locForUniformName ( const char * name );
 
+protected:
+	GLuint programId;
+	GLuint vertexShaderId;
+	GLuint fragmentShaderId;
+	Shader* shader;
 };
 
+} // namespace opengl
 
 #endif

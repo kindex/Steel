@@ -96,7 +96,7 @@ void PhysicEngine::setConfig(Config& _config)
 }
 
 
-Engine::Shadow* PhysicEngine::getShadowClass(GameObject *object)
+Shadow* PhysicEngine::getShadowClass(GameObject *object)
 {
 	return new ParticleShadow(this);
 }

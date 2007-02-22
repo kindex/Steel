@@ -16,7 +16,10 @@
 #include "opengl_engine.h"
 #include "../../libs/opengl/libext.h"
 
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow& e, const Faces& triangles, MaterialStd& material)
+namespace opengl
+{
+
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(GraphShadow& e, const Faces& triangles, MaterialStd& material)
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 	glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
@@ -60,7 +63,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow& e,
 
 
 // нарисовать множество полигонов с указанным материалом
-void OpenGL_Engine::DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow& e, const Faces& faces, const TexCoords* coords)
+void OpenGL_Engine::DrawTriangles_OpenGL10(GraphShadow& e, const Faces& faces, const TexCoords* coords)
 {
 	if (e.vertexes && !(faces.triangles.empty() && faces.quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
 	{
@@ -141,7 +144,7 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image& image, bool enable)
 }
 
 // нарисовать множество полигонов как сетку (только рёбра)
-void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow& e, const Faces& faces)
+void OpenGL_Engine::DrawWire_OpenGL10(GraphShadow& e, const Faces& faces)
 {
 	if (e.vertexes != NULL && !(faces.triangles.empty()&&faces.quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
 	{
@@ -171,7 +174,7 @@ void OpenGL_Engine::DrawWire_OpenGL10(OpenGL_Engine::GraphShadow& e, const Faces
 }
 
 // нарисовать множество линий
-void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e)
+void OpenGL_Engine::DrawLines_OpenGL10(GraphShadow &e)
 {
 	if(e.vertexes && e.lines && !e.lines->index.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
@@ -191,7 +194,7 @@ void OpenGL_Engine::DrawLines_OpenGL10(OpenGL_Engine::GraphShadow &e)
 }
 
 // нарисовать нормали к вершинам
-void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e)
+void OpenGL_Engine::DrawNormals_OpenGL10(GraphShadow &e)
 {
 	if(e.normals != NULL && e.vertexes != NULL && e.vertexes->size() == e.normals->size())
 	{
@@ -216,7 +219,7 @@ void OpenGL_Engine::DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow &e)
 }
 
 // нарисовать вершины
-void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e)
+void OpenGL_Engine::DrawVertexes_OpenGL10(GraphShadow &e)
 {
 	if(e.vertexes && !e.vertexes->empty())
 	{
@@ -236,7 +239,7 @@ void OpenGL_Engine::DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow &e)
 }
 
 // нарисовать AABB
-void OpenGL_Engine::DrawAABB_OpenGL10(OpenGL_Engine::GraphShadow &e)
+void OpenGL_Engine::DrawAABB_OpenGL10(GraphShadow &e)
 {
 	AABB &c = e.aabb;
 	if(c.empty()) return;
@@ -270,4 +273,5 @@ void OpenGL_Engine::DrawAABB_OpenGL10(OpenGL_Engine::GraphShadow &e)
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
+} // namespace opengl
 

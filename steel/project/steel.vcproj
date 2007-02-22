@@ -901,6 +901,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\sources\graph\opengl\opengl_private.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\graph\opengl\opengl_private.h"
+						>
+					</File>
+					<File
 						RelativePath="..\sources\graph\opengl\opengl_sdl_engine.cpp"
 						>
 					</File>

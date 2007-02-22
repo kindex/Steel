@@ -31,26 +31,14 @@
 #include <algorithm>
 #include <gl/glu.h>
 
+namespace opengl
+{
+
 using namespace std;
 
-const TexCoords* OpenGL_Engine::GraphShadow::getTexCoords(const MaterialStd::TextureStd& texture)
-{
-	if (texture.texCoordsUnit < texCoords.size())
-	{
-		return texCoords[texture.texCoordsUnit];
-	}
-	else
-	{
-		if (!texCoords.empty())
-		{
-			return texCoords[0];
-		}
-	}
-	return NULL;
-}
 
 
-void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Faces *triangles, Material *material)
+void OpenGL_Engine::DrawFill_Material(GraphShadow& e, const Faces* faces, Material* material)
 {
 	if (material != NULL)
 	{
@@ -59,7 +47,7 @@ void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Faces
 		case MATERIAL_STD:	
 			if (DrawFill_MaterialStd != NULL)
 			{
-				if ((this->*DrawFill_MaterialStd)(e, *triangles, *static_cast<MaterialStd*>(material)))
+				if ((this->*DrawFill_MaterialStd)(e, *faces, *static_cast<MaterialStd*>(material)))
 				{
 					return;
 				}
@@ -67,7 +55,7 @@ void OpenGL_Engine::DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Faces
 			break;
 		}
 
-		DrawFill_Material(e, triangles, material->reserve);
+		DrawFill_Material(e, faces, material->reserve);
 	}
 }
 
@@ -134,19 +122,6 @@ bool OpenGL_Engine::isVisible(AABB aabb)
 	return true;
 }
 
-/*void OpenGL_Engine::cleanCache()
-{
-	for(map<uid, OpenGL_Buffer>::iterator it = buffer.begin(); it != buffer.end(); it++)
-	{
-		uid id = it->first;
-		OpenGL_Buffer &buf = it->second;
-		if(buf.temp)
-		{
-
-		}
-	}
-}*/
-
 void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
 {
 	if (object->realPositionCalculated) return;
@@ -166,31 +141,6 @@ void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
 }
 
 
-	struct BlendingFaces
-	{
-		BlendingFaces() {}
-		BlendingFaces(OpenGL_Engine::GraphShadow* shadow, Material* material, Faces* faces):
-			shadow(shadow),
-			material(material),
-			faces(faces)
-		{}
-
-		OpenGL_Engine::GraphShadow*	shadow;
-		Material*		material;
-		Faces*			faces;
-	};
-
-	struct BlendingTriangle
-	{
-		size_t			vetexCount;
-		size_t			vertex[4];
-		Material*		material;
-		float			distance;
-		OpenGL_Engine::GraphShadow*	shadow;
-
-		const bool operator < (const BlendingTriangle& second) {return distance > second.distance; }
-	};
-	typedef pvector<BlendingTriangle> BlendingTriangleVector;
 
 
 bool OpenGL_Engine::process(IN const ProcessInfo& _info)
@@ -693,16 +643,6 @@ void OpenGL_Engine::prepare(GraphShadow& shadow, matrix34 matrix, GameObject* pa
 	}*/
 }
 
-void OpenGL_Engine::GraphShadow::fill(GameObject *object)
-{
-	Shadow::fill(object);
-}
-
-bool OpenGL_Engine::GraphShadow::cache()
-{
-	return  false;
-}
-
 void OpenGL_Engine::onResize(int width, int height)
 {
 	conf->setValued("window.width", width);
@@ -711,12 +651,7 @@ void OpenGL_Engine::onResize(int width, int height)
 		(this->*RepairOpenGL_Window)();
 }
 
-OpenGL_Engine::LightShadow::LightShadow(): 
-	light(NULL), 
-	object(NULL)
-{}
-
-OpenGL_Engine::GraphShadow::GraphShadow(Engine *engine): 
+GraphShadow::GraphShadow(Engine *engine): 
 	Shadow(engine), 
 	faceMaterials(NULL), 
 	vertexes(NULL), 
@@ -727,27 +662,6 @@ OpenGL_Engine::GraphShadow::GraphShadow(Engine *engine):
 	aabbCalculated(false) 
 {}
 
-void OpenGL_Engine::GraphShadow::calculateAABB()
-{
-	aabb.clear();
-
-	if (vertexes != NULL)
-	{
-		for EACH_CONST(Vertexes, *vertexes, i)
-		{
-			aabb.merge(*i);
-		}
-	}
-	aabbCalculated = true;
-}
-
-bool OpenGL_Engine::GraphShadow::isCrossingLight(const LightShadow* light)
-{
-	AABB realaabb = aabb;
-	realaabb.mul(realPosition);
-	return realaabb.isCrossingSphere(light->position, light->light->maxDistance);
-}
-
 void OpenGL_Engine::unbindTexCoords()
 {
 	if (textureMatrixLevel > 0)
@@ -756,3 +670,5 @@ void OpenGL_Engine::unbindTexCoords()
 		textureMatrixLevel = 0;
 	}
 }
+
+} // namespace opengl

@@ -27,14 +27,18 @@
 //#include <GL/glaux.h>		// Header File For The Glaux Library
 #elif STEEL_OS == OS_WIN32
 #include <windows.h>		// Header File For Windows
-#include "../../libs/opengl/libext.h"		// Header File For The Glaux Library
+#include "../../libs/opengl/libext.h"
 #endif
 
 #include "../graph_engine.h"
 #include "../../input/input.h"
 #include "opengl_glsl.h"
+#include "opengl_private.h"
 
-class OpenGL_Engine: public GraphEngine
+namespace opengl
+{
+
+class OpenGL_Engine : public GraphEngine
 {
 // ******************* GRAPH INTERFACE *************************
 public:
@@ -64,79 +68,9 @@ public:
 
 
 // ********************* SHADOWS *************************
-public:
-	struct OpenGL_Buffer
-	{
-		enum buffer_kind
-		{
-			none,
-			image,
-			array,
-			index,
-			shader
-		};
-
-		int		size;
-		GLuint	glid;
-		int		usedCnt, loadCnt;
-		steel::time lastUsedTime;
-		bool	loaded;
-		buffer_kind kind;
-		char*	object;
-	};
-
-#define GS(shadow) (static_cast<GraphShadow*>(shadow))
-
-	struct LightShadow;
-	typedef pvector<LightShadow*> LightShadowPVector;
-	struct GraphShadow: public Shadow // множество треугольников одного материала
-	{
-		PositionKind	positionKind;
-		ObjectPosition	position; // global or screen
-		ObjectPosition	realPosition; // global, calculated from position anbd parent
-		bool 			realPositionCalculated;
-
-		// *** Polyhedra ****
-		const FaceMaterialVector*	faceMaterials;
-		const Vertexes*				vertexes;
-		const Normals*				normals;
-		unsigned int				textureCount;
-		pvector<const TexCoords*>	texCoords;
-
-		const GLines*				lines;
-
-		AABB		aabb;
-		bool		aabbCalculated;
-		bool		visible;
-		float		distance; // расстояние до камеры
-
-		LightShadowPVector lights; // lights to this onject
-		
-
-		GraphShadow(Engine *engine);
-		void calculateAABB();
-		bool isCrossingLight(const LightShadow*);
-		void fill(GameObject *object);
-		bool cache();
-
-		const TexCoords* getTexCoords(const MaterialStd::TextureStd &texture);
-//		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
-	};
-
-	struct LightShadow
-	{
-		LightShadow();
-
-		v3				position;
-		Light*			light;
-		GameObject*		object;
-		GraphShadow*	shadow;
-		bool			changed; // position
-	};
-
+private:
 	map<uid, LightShadow*> lights;
 	std::map<uid, OpenGL_Buffer> buffer;
-
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image* zeroNormal;
@@ -145,47 +79,44 @@ public:
 	Image* none;
 	Shader shaderStd;
 	int maxLightsInShader;
-
-private:
 	GraphShadow *currentShadow;
+
 	void addChild(GraphShadow &, GameObject*);
 
-
-protected:
 // ******************* SERVICES *******************
 	bool (OpenGL_Engine::*BindTexture)(Image& image, bool enable);
-	bool (OpenGL_Engine::*DrawFill_MaterialStd)(OpenGL_Engine::GraphShadow&, const Faces&, MaterialStd&);
-	void (OpenGL_Engine::*DrawTriangles)(OpenGL_Engine::GraphShadow&, const Faces&, const TexCoords*);
+	bool (OpenGL_Engine::*DrawFill_MaterialStd)(GraphShadow&, const Faces&, MaterialStd&);
+	void (OpenGL_Engine::*DrawTriangles)(GraphShadow&, const Faces&, const TexCoords*);
 	void (OpenGL_Engine::*CleanupDrawTriangles)();
 	void (OpenGL_Engine::*BindTexCoords)(const TexCoords*, const TextureMatrix*);
 	void (OpenGL_Engine::*BindTexCoords3f)(const TexCoords3f*);
 
-	void (OpenGL_Engine::*DrawWire)(OpenGL_Engine::GraphShadow&, const Faces&);
-	void (OpenGL_Engine::*DrawLines)(OpenGL_Engine::GraphShadow&);
-	void (OpenGL_Engine::*DrawNormals)(OpenGL_Engine::GraphShadow&);
-	void (OpenGL_Engine::*DrawVertexes)(OpenGL_Engine::GraphShadow&);
-	void (OpenGL_Engine::*DrawAABB)(OpenGL_Engine::GraphShadow&);
+	void (OpenGL_Engine::*DrawWire)(GraphShadow&, const Faces&);
+	void (OpenGL_Engine::*DrawLines)(GraphShadow&);
+	void (OpenGL_Engine::*DrawNormals)(GraphShadow&);
+	void (OpenGL_Engine::*DrawVertexes)(GraphShadow&);
+	void (OpenGL_Engine::*DrawAABB)(GraphShadow&);
 
 // ******************* OpenGL 1.0 *******************
 	bool BindTexture_OpenGL10(Image&, bool enable);
-	bool DrawFill_MaterialStd_OpenGL10(OpenGL_Engine::GraphShadow&, const Faces&, MaterialStd&);
-	void DrawTriangles_OpenGL10(OpenGL_Engine::GraphShadow&, const Faces&, const TexCoords*);
-	void DrawWire_OpenGL10(OpenGL_Engine::GraphShadow&, const Faces&);
-	void DrawLines_OpenGL10(OpenGL_Engine::GraphShadow&);
-	void DrawNormals_OpenGL10(OpenGL_Engine::GraphShadow&);
-	void DrawVertexes_OpenGL10(OpenGL_Engine::GraphShadow&);
-	void DrawAABB_OpenGL10(OpenGL_Engine::GraphShadow&);
+	bool DrawFill_MaterialStd_OpenGL10(GraphShadow&, const Faces&, MaterialStd&);
+	void DrawTriangles_OpenGL10(GraphShadow&, const Faces&, const TexCoords*);
+	void DrawWire_OpenGL10(GraphShadow&, const Faces&);
+	void DrawLines_OpenGL10(GraphShadow&);
+	void DrawNormals_OpenGL10(GraphShadow&);
+	void DrawVertexes_OpenGL10(GraphShadow&);
+	void DrawAABB_OpenGL10(GraphShadow&);
 
 // ******************* OpenGL 1.1 *******************
 	bool BindTexture_OpenGL11(Image& image, bool enable);
-	void DrawTriangles_OpenGL11(OpenGL_Engine::GraphShadow&, const Faces&, const TexCoords*);
-	void DrawWire_OpenGL11(OpenGL_Engine::GraphShadow&, const Faces&);
-	void DrawLines_OpenGL11(OpenGL_Engine::GraphShadow&);
+	void DrawTriangles_OpenGL11(GraphShadow&, const Faces&, const TexCoords*);
+	void DrawWire_OpenGL11(GraphShadow&, const Faces&);
+	void DrawLines_OpenGL11(GraphShadow&);
 	void BindTexCoords_OpenGL11(const TexCoords*, const TextureMatrix*);
 	void BindTexCoords3f_OpenGL11(const TexCoords3f*);
 
 // ******************* OpenGL 1.3 *******************
-	bool DrawFill_MaterialStd_OpenGL13(OpenGL_Engine::GraphShadow&, const Faces&, MaterialStd&);
+	bool DrawFill_MaterialStd_OpenGL13(GraphShadow&, const Faces&, MaterialStd&);
 
 	void drawBump(GraphShadow &e, const TexCoords *coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image *img);
 	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterialVector *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent);
@@ -193,37 +124,27 @@ protected:
 
 	typedef TexCoords3f tangentSpaceLightBufferedArray;
 
-	struct TangentSpaceCache
-	{
-		TexCoords3f t, b;
-	};
-
-	typedef 
-		std::map<int, TangentSpaceCache>
-		tangentCache;
-
-	 tangentCache tangentSpaceCache;
+	tangentCache tangentSpaceCache;
 
 // ******************* OpenGL 1.5 *******************
-	void DrawTriangles_OpenGL15(OpenGL_Engine::GraphShadow&, const Faces&, const TexCoords*);
+	void DrawTriangles_OpenGL15(GraphShadow&, const Faces&, const TexCoords*);
 	void CleanupDrawTriangles_OpenGL15();
 	void BindTexCoords_OpenGL15(const TexCoords*, const TextureMatrix*);
 	void BindTexCoords3f_OpenGL15(const TexCoords3f*);
 	int textureMatrixLevel;
-
 
 	template<class Class> 
 	bool BindVBO(Class*, int mode, int mode2, int elCnt);
 
 	void cleanBuffer(uid bufId);
 // ******************* OpenGL 2.0 *******************
-	bool DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow&, const Faces&, MaterialStd&);
+	bool DrawFill_MaterialStd_OpenGL20(GraphShadow&, const Faces&, MaterialStd&);
 	GLSL *BindShader(Shader*);
 	void bindTextureToShader(GLSL* program, const char* name, int imageNum, Image* image);
 	void unbindTexCoords();
 
 // ******************* OpenGL all *******************
-	void DrawFill_Material(OpenGL_Engine::GraphShadow &e, const Faces* triangles, Material* material);
+	void DrawFill_Material(GraphShadow &e, const Faces* triangles, Material* material);
 
 	bool		focused;
 	ProcessInfo info;
@@ -247,20 +168,20 @@ public:
 	GraphShadow* getShadow(GameObject* object) { return (GraphShadow*)Engine::getShadow(object); }
 	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id); }
 	 
-	Shadow* getShadowClass(GameObject *object) { return new GraphShadow(this); }
+	Shadow*		getShadowClass(GameObject *object) { return new GraphShadow(this); }
 
 
 // ****************** WINDOW FUNCTION **********************
 	struct WindowInformation {};
-	WindowInformation *windowInformation;
+	WindowInformation* windowInformation;
 
 	bool isFocusedOpenGL_Window() { return focused; }
 	void onResize(int width, int height);
 
-	bool (OpenGL_Engine::*CreateOpenGL_Window)(Input *input);
+	bool (OpenGL_Engine::*CreateOpenGL_Window)(Input* input);
 	bool (OpenGL_Engine::*RepairOpenGL_Window)();
 	bool (OpenGL_Engine::*DeleteOpenGL_Window)();
-	bool (OpenGL_Engine::*setCaptionOpenGL_Window)(std::string caption);
+	bool (OpenGL_Engine::*setCaptionOpenGL_Window)(const std::string& caption);
 	bool (OpenGL_Engine::*FlushOpenGL_Window)(); // Swap buffers
 
 #ifdef LIB_SDL
@@ -269,7 +190,7 @@ public:
 	bool CreateOpenGL_Window_SDL(Input *input);
 	bool FlushOpenGL_Window_SDL(); // Swap buffers
 	bool DeleteOpenGL_Window_SDL();
-	bool setCaptionOpenGL_Window_SDL(std::string caption);
+	bool setCaptionOpenGL_Window_SDL(const std::string& caption);
 #endif
 
 #if STEEL_OS == OS_WIN32
@@ -279,9 +200,11 @@ public:
 	bool FlushOpenGL_Window_WinAPI(); // Swap buffers
 	bool DeleteOpenGL_Window_WinAPI();
 	bool RepairOpenGL_Window_WinAPI();
-	bool setCaptionOpenGL_Window_WinAPI(std::string caption);
+	bool setCaptionOpenGL_Window_WinAPI(const std::string& caption);
 #endif
 
-};
+}; // class OpenGL_Engine
+
+} // namespace opengl
 
 #endif

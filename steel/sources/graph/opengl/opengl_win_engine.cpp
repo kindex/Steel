@@ -24,7 +24,11 @@
 #include "../../input/input.h"
 #include "../../common/utils.h"
 
+
 extern HINSTANCE hInstance;
+
+namespace opengl
+{
 
 static pvector<OpenGL_Engine*> engines;
 
@@ -381,7 +385,7 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input *input)
 }
 
 
-bool OpenGL_Engine::setCaptionOpenGL_Window_WinAPI(std::string caption)
+bool OpenGL_Engine::setCaptionOpenGL_Window_WinAPI(const std::string& caption)
 {
 	SetWindowText(((WindowInformationWinAPI*)windowInformation)->handle, caption.c_str() );
 	return true;
@@ -392,6 +396,8 @@ bool OpenGL_Engine::DeleteOpenGL_Window_WinAPI() // repair window on resize
 	// TODO
 	return true;
 }
+
+} // namespace opengl
 
 
 #endif

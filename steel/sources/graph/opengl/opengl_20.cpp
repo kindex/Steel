@@ -19,8 +19,11 @@
 #include "../../libs/opengl/libext.h"
 #include <string>
 
+namespace opengl
+{
+
 // нарисовать множество полигонов с указанным материалом / Multitexture
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(OpenGL_Engine::GraphShadow &e, const Faces& triangles, MaterialStd& material)
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow &e, const Faces& triangles, MaterialStd& material)
 {
 	if (GL_EXTENSION_GLSL)
 	{
@@ -158,3 +161,4 @@ GLSL *OpenGL_Engine::BindShader(Shader *shader)
 	return false;
 }
 
+} // namespace opengl

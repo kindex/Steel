@@ -15,6 +15,9 @@
 #include "../../steel.h"
 #include "opengl_engine.h"
 
+namespace opengl
+{
+
 bool OpenGL_Engine::isSupportingInterface(IN const InterfaceId id)
 {
 	return (id & (INTERFACE_GRAPH)) == id;
@@ -140,3 +143,5 @@ const ProcessInfo& OpenGL_Engine::getProcessInfo()
 {
 	return info;
 }
+
+} // namespace opengl

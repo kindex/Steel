@@ -26,6 +26,9 @@
 #include <libintl.h>
 #endif
 
+namespace opengl
+{
+
 struct WindowInformationSDL: public OpenGL_Engine::WindowInformation
 {
 	SDL_Surface *surface;	// SDL surface
@@ -125,10 +128,12 @@ bool OpenGL_Engine::DeleteOpenGL_Window_SDL()
 	return OpenGL_Engine::deinit();
 }
 
-bool OpenGL_Engine::setCaptionOpenGL_Window_SDL(std::string caption)
+bool OpenGL_Engine::setCaptionOpenGL_Window_SDL(const std::string& caption)
 {
 	SDL_WM_SetCaption(caption.c_str(),caption.c_str());
 	return true;
 }
+
+} // namespace opengl
 
 #endif
