@@ -22,8 +22,11 @@ class GameFreeScene : public Game
 public:
 	GameFreeScene();
 	bool init(Config& _conf, Input& _input);
+	void start();
+	void pause();
+	void unpause();
 	void deinit();
-	void process(IN const TimeInfo&);
+	void process();
 
 	GameObjectFactory* createGameObjectFactory() const;
 
@@ -38,6 +41,8 @@ public:
 	void handleEventKeyUp(std::string key);
 	void handleMouse(double dx, double dy);
 
+	void updatePhysicTime();
+
 
 	//////////
 	void processKeyboard();
@@ -51,11 +56,16 @@ protected:
  	GameObject*		world;
  	GameLight*		light;
 	ProcessInfo		info;
+	Timer			graphTimer;
+	Timer			audioTimer;
+	Timer			physicTimer;
+	Timer			infoTimer;
+	TimeInfo		timeInfo;
 
 	float speedup, speed;
 	float accSpeed, brakeSpeed;
 
-	bool _alive, paused;
+	bool _alive, paused, firstframe;
 	int framesToPass;
 };
 

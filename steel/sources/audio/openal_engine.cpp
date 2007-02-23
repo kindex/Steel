@@ -405,5 +405,14 @@ bool OpenALEngine::setCurrentObject(GameObject* object)
 	return false;
 }
 
+void OpenALEngine::pause()
+{
+	// TODO:
+}
+
+void OpenALEngine::unpause()
+{
+	// TODO:
+}
 
 #endif

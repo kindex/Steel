@@ -146,13 +146,19 @@ void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
 bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 {
 	// TODO repair DC 
-
 	info = _info;
 	processCamera();
 
 	total.vertexCount = 0;
 	total.triangleCount = 0;
 	total.batchCount = 0;
+
+	drawFaceFlag = conf->getb("drawFace", true);
+	drawWireFlag = conf->getb("drawWire", false) && DrawWire != NULL;
+	drawLinesFlag = conf->getb("drawLines", false) && DrawLines != NULL;
+	drawNormalsFlag = conf->getb("drawNormals", false) && DrawNormals != NULL;
+	drawVertexesFlag = conf->getb("drawVertexes", false) && DrawVertexes != NULL;
+	drawAABBFlag = conf->getb("drawAABB", false) && DrawAABB;
 
 	int size = objects.size();
 
@@ -194,9 +200,9 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	}
 
 	GLbitfield clear = 0;
-	if(conf->geti("clearColor", 1))	clear |= GL_COLOR_BUFFER_BIT;
-	if(conf->geti("clearDepth", 1))	clear |= GL_DEPTH_BUFFER_BIT;
-	if(clear)
+	if (conf->getb("clearColor", true))	clear |= GL_COLOR_BUFFER_BIT;
+	if (conf->getb("clearDepth", true))	clear |= GL_DEPTH_BUFFER_BIT;
+	if (clear)
 	{
 		glClear(clear);
 	}
@@ -308,7 +314,7 @@ void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces
 {
 	pushPosition(e);
 
-	if (conf->getb("drawFace") && e.faceMaterials != NULL)
+	if (drawFaceFlag && e.faceMaterials != NULL)
 	{
 		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
 		{
@@ -323,7 +329,7 @@ void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces
 		}
 	}
 
-	if (conf->getb("drawWire") && e.faceMaterials != NULL && DrawWire != NULL)
+	if (drawWireFlag && e.faceMaterials != NULL)
 	{
 		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
 		{
@@ -331,22 +337,22 @@ void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces
 		}
 	}
 
-	if (conf->getb("drawLines") && DrawLines)
+	if (drawLinesFlag)
 	{
 		(this->*DrawLines)(e);
 	}
 
-	if (conf->getb("drawNormals") && DrawNormals)
+	if (drawNormalsFlag)
 	{
 		(this->*DrawNormals)(e);
 	}
 
-	if (conf->getb("drawVertexes") && DrawVertexes)
+	if (drawVertexesFlag)
 	{
 		(this->*DrawVertexes)(e);
 	}
 
-	if (conf->getb("drawAABB") && DrawAABB)
+	if (drawAABBFlag)
 	{
 		(this->*DrawAABB)(e);
 	}
@@ -670,5 +676,11 @@ void OpenGL_Engine::unbindTexCoords()
 		textureMatrixLevel = 0;
 	}
 }
+
+bool OpenGL_Engine::setCaption(const std::string& caption)
+{
+	return (this->*setCaptionOpenGL_Window)(caption);
+}
+
 
 } // namespace opengl

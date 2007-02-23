@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: Demo
 	Part of: DiVision intro
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2004-2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
@@ -17,7 +17,7 @@
 bool GameFreeScene::init(Config& _conf, Input& _input)
 {
 	conf = &_conf;
-	if(!conf)
+	if (!conf)
 	{
 		log_msg("error game res", "Cannot load game config");
 		return false;
@@ -37,15 +37,15 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 
 	spectator.velocity.loadZero();
 
-	Config *scene = conf->find("scene");
-	if(scene == NULL)
+	Config* scene = conf->find("scene");
+	if (scene == NULL)
 	{
 		error("game res", "Cannot find scene config");
 		return false;
 	}
 
 	world = createGameObject(scene);
-	if(world == NULL)
+	if (world == NULL)
 	{
 		error("game", "Cannot init scene");
 		return false;
@@ -58,7 +58,7 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 		light->InitFromConfig(*flashlightConf);
 		light->enable();
 	}
-	if(light != NULL)
+	if (light != NULL)
 	{
 		light->setPosition(spectator.camera.getPosition());
 	}
@@ -70,6 +70,14 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 	paused = conf->geti("paused", 0) == 1;
 	framesToPass = 0;
 	speedup = 1;
+	speed = 0.01f;
+	timeInfo.currentTime = 0.0f;
+	timeInfo.frameLength = 0.0f;
+
+	audioTimer.start(); audioTimer.pause();
+	physicTimer.start(); physicTimer.pause();
+	infoTimer.start(); infoTimer.pause();
+	graphTimer.start(); graphTimer.pause();
 
 	return true;
 }
@@ -79,10 +87,24 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 void GameFreeScene::handleEventKeyDown(std::string key)
 {
 	if (key == "escape") _alive = false;
-	if (key == "pause") paused = !paused;
-	if (key == "n") framesToPass = 1;
+	if (key == "pause") 
+	{
+		paused = !paused;
+		if (paused)
+		{
+			pause();
+		}
+		else
+		{
+			unpause();
+		}
+	}
+	if (key == "n") 
+	{
+		framesToPass = 1;
+	}
 
-/*	if(key == "f1") physicEngine->conf->toggle("helperDrawLines");*/
+/*	if (key == "f1") physicEngine->conf->toggle("helperDrawLines");*/
 	if (key == "f2") graphEngine->conf->toggle("drawFace");
 	if (key == "f3") graphEngine->conf->toggle("drawWire");
 	if (key == "f4") graphEngine->conf->toggle("drawBump");
@@ -118,22 +140,22 @@ void GameFreeScene::handleEventKeyDown(std::string key)
 
 void GameFreeScene::processKeyboard()
 {
-	if(input->isMouseCaptured())
+	if (input->isMouseCaptured())
 	{
 		v3 dir(0,0,0);
-		if(input->isPressed("w")) 	dir += v3(1,0,0);
-		if(input->isPressed("s")) 	dir += v3(-1,0,0);
-		if(input->isPressed("a")) 	dir += v3(0, +1, 0);
-		if(input->isPressed("d")) 	dir += v3(0, -1, 0);
-		if(input->isPressed("q")) 	dir += v3(0, 0, +1);
-		if(input->isPressed("z")) 	dir += v3(0, 0, -1);
+		if (input->isPressed("w")) 	dir += v3(1,0,0);
+		if (input->isPressed("s")) 	dir += v3(-1,0,0);
+		if (input->isPressed("a")) 	dir += v3(0, +1, 0);
+		if (input->isPressed("d")) 	dir += v3(0, -1, 0);
+		if (input->isPressed("q")) 	dir += v3(0, 0, +1);
+		if (input->isPressed("z")) 	dir += v3(0, 0, -1);
 
-		if(dir.getLength()>EPSILON)
+		if (dir.getLength() > EPSILON)
 		{
 			spectator.velocity += dir*accSpeed*(float)speed;
 			float len = spectator.velocity.getLength();
-			float maxspeed = conf->getf("camera_max_speed", 10);
-			if(len > maxspeed) 
+			float maxspeed = conf->getf("camera.max_speed", 10);
+			if (len > maxspeed) 
 			{
 				spectator.velocity  = spectator.velocity.getNormalized()*maxspeed;
 			}
@@ -155,14 +177,15 @@ void GameFreeScene::handleMouse(double dx, double dy)
 	v3 dir = spectator.camera.getDirection();
 	dir.rotateZ((float)dx);
 
-	if(dy<0 && dir.dotProduct(v3(0,0, 1))<0.99 || 
-		dy>0 && dir.dotProduct(v3(0,0, -1))<0.99 )
-
-	dir.rotateAxis((float)dy, v3(-dir.y, dir.x, 0));
+	if (dy<0 && dir.dotProduct(v3(0,0, 1))<0.99 || 
+		dy>0 && dir.dotProduct(v3(0,0, -1))<0.99)
+	{
+		dir.rotateAxis((float)dy, v3(-dir.y, dir.x, 0));
+	}
 	spectator.camera.setDirection(dir);
 }
 
-void GameFreeScene::process(IN const TimeInfo& timeInfo)
+void GameFreeScene::process()
 {
 	processKeyboard();
 
@@ -172,16 +195,60 @@ void GameFreeScene::process(IN const TimeInfo& timeInfo)
 					+ spectator.velocity.z*v3(0, 0, 1);
 
 	spectator.camera.setPosition(spectator.camera.getPosition() + cameraSpeed*(float)speed);
-	
+
+	updatePhysicTime();
 	info.timeInfo = timeInfo;
 	info.camera = spectator.camera;
 
-	if (!paused || framesToPass>0)
+	if (timeInfo.frameLength > EPSILON)
 	{
-		static steel::time totalPhysicTime = 0;
-		steel::time frame = 0.01f*speedup;
-
 		world->process(info);
+		physicTimer.incframe();
+
+		if (light != NULL)
+		{
+			light->setPosition(spectator.camera.getPosition());
+		}
+	}
+
+	if (!firstframe && infoTimer.lap() >= 0.5)
+	{
+		infoTimer.nextlap();
+		graphEngine->setCaption(
+			std::string("Sleel engine")
+			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
+			+ " Faces: " + IntToStr(graphEngine->total.triangleCount)
+			+ " FPS " + graphTimer.getfps_s()
+		);
+		speed = 1.0f/graphTimer.getfps();
+		if (speed > 0.1) speed = 0.1f;
+	}
+	if (firstframe)
+	{
+		infoTimer.start();
+		infoTimer.nextlap();
+		graphTimer.start();
+		if (!paused)
+		{
+			physicTimer.start();
+			audioTimer.start();
+		}
+		firstframe = false;
+	}
+}
+
+void GameFreeScene::updatePhysicTime()
+{
+	if (paused && framesToPass > 0)
+	{
+		physicTimer.add(0.01f);
+	}
+	
+	if (!paused || framesToPass > 0)
+	{
+		timeInfo.currentTime = physicTimer.total();
+		timeInfo.frameLength = physicTimer.lap(); physicTimer.nextlap();
+		if (info.timeInfo.frameLength > 0.1f) info.timeInfo.frameLength = 0.1f;
 
 		if (framesToPass>0)
 		{
@@ -191,13 +258,13 @@ void GameFreeScene::process(IN const TimeInfo& timeInfo)
 		{
 			framesToPass = 0;
 		}
-
-		if (light != NULL)
-		{
-			light->setPosition(spectator.camera.getPosition());
-		}
+	}
+	else
+	{
+		timeInfo.frameLength = 0.0f;
 	}
 }
+
 
 void GameFreeScene::bind(GraphEngine& engine)
 {
@@ -246,7 +313,7 @@ void GameFreeScene::bind(AudioEngine& engine)
     EAX_ENVIRONMENT_DIZZY,
     EAX_ENVIRONMENT_PSYCHOTIC
 	*/
-	if(world != NULL)
+	if (world != NULL)
 	{
 		engine.inject(*world);
 	}
@@ -255,6 +322,10 @@ void GameFreeScene::bind(AudioEngine& engine)
 
 void GameFreeScene::draw(GraphEngine& graph)
 {
+	graphTimer.incframe();
+
+	info.timeInfo.currentTime = graphTimer.total();
+	info.timeInfo.frameLength = graphTimer.lap(); graphTimer.nextlap();
 	graph.process(info);
 }
 
@@ -295,4 +366,30 @@ GameFreeScene::GameFreeScene():
 	speed(0.01f) // TODO: autoSpeed
 {}
 	
+void GameFreeScene::start()
+{
+	firstframe = true;
+}
+
+void GameFreeScene::pause()
+{
+	audioTimer.pause();
+	physicTimer.pause();
+
+	if (audioEngine != NULL)
+	{
+		audioEngine->pause();
+	}
+}
+
+void GameFreeScene::unpause()
+{
+	audioTimer.resume();
+	physicTimer.resume();
+
+	if (audioEngine != NULL)
+	{
+		audioEngine->unpause();
+	}
+}
 

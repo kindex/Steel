@@ -40,6 +40,7 @@ public:
 	virtual bool remove(GameObject *object);
 	
 	virtual bool process(IN const ProcessInfo&) abstract;
+	virtual bool setCaption(const std::string& caption) abstract;
 
 	// Draw colelcted information. May be called few times without recollection information
 	virtual bool isVisible(AABB box) abstract;

@@ -22,7 +22,7 @@ class GamePS: public GameFreeScene
 public:
 	GamePS();
 	bool init(Config& _conf, Input& _input);
-	void process(IN const TimeInfo&);
+	void process();
 
 private:
 	PhysicEngine* physicEngine;

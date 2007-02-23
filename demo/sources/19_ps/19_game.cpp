@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: Demo 19
 	Part of: DiVision intro
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2004-2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
 	License:
@@ -29,9 +29,13 @@ bool GamePS::init(Config& _conf, Input& _input)
 	return true;
 }
 
-void GamePS::process(IN const TimeInfo& info)
+void GamePS::process()
 {
-	GameFreeScene::process(info);
-	physicEngine->process(info);
+	GameFreeScene::process();
+	
+	if (timeInfo.frameLength > EPSILON)
+	{
+		physicEngine->process(timeInfo);
+	}
 }
 

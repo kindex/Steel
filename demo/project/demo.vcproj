@@ -349,6 +349,10 @@
 					RelativePath="..\data\19_ps\main.scene"
 					>
 				</File>
+				<File
+					RelativePath="..\data\19_ps\ps.scene"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="room"

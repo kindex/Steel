@@ -81,6 +81,8 @@ public:
 
 	void setListener(const Listener &aListener);
 	bool init(Config& _conf);
+	void pause();
+	void unpause();
 	bool deinit();
 	bool inject(GameObject& object);
 	bool process();

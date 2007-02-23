@@ -83,6 +83,14 @@ private:
 	int maxLightsInShader;
 	GraphShadow *currentShadow;
 
+
+	bool drawFaceFlag;
+	bool drawWireFlag;
+	bool drawLinesFlag;
+	bool drawNormalsFlag;
+	bool drawVertexesFlag;
+	bool drawAABBFlag;
+
 	void addChild(GraphShadow &, GameObject*);
 
 // ******************* SERVICES *******************
@@ -179,6 +187,7 @@ public:
 
 	bool isFocusedOpenGL_Window() { return focused; }
 	void onResize(int width, int height);
+	bool setCaption(const std::string& caption);
 
 	bool (OpenGL_Engine::*CreateOpenGL_Window)(Input* input);
 	bool (OpenGL_Engine::*RepairOpenGL_Window)();

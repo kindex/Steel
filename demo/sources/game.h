@@ -33,8 +33,11 @@ class Game : public GameInput
 {
 public:
 	virtual bool init(Config &_conf, Input &_input) abstract;
+	virtual void start() abstract;
+	virtual void pause() abstract;
+	virtual void unpause() abstract;
 	virtual void deinit() abstract;
-	virtual void process(IN const TimeInfo&) abstract;
+	virtual void process() abstract;
 	virtual bool isAlive() abstract;
 
 	virtual GameObjectFactory* createGameObjectFactory() const abstract;

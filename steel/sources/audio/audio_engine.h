@@ -54,6 +54,8 @@ public:
 
 	virtual bool init(Config& _conf) abstract;
 	virtual bool clear() { return true; } 
+	virtual void pause()  abstract; 
+	virtual void unpause()  abstract; 
 	virtual bool deinit() abstract;
 	virtual void setListener(const Listener &aListener) { listener = aListener; }
 	virtual void setListenerEnvironment(unsigned long environment) abstract;

@@ -65,9 +65,6 @@ int main(int argc, char *argv[])
 		return 99;
 	}
 
-	Timer timer;
-	timer.start();	timer.pause();
-
 	float speed = 0.01f; // 100 FPS
 
 	Config* steelConfig = resConfig.add("../conf/demo.conf");
@@ -123,74 +120,38 @@ int main(int argc, char *argv[])
 	if (audio != NULL)
 	{
 		game->bind(*audio);
-		game->insonify(*audio);
+		game->insonify(*audio); // TODO: ?
 	}
 		
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;
 	log_msg("core", "Entering main loop");
-	
-	bool first = true;
-	steel::time	lastFrameTime = timer.total();
 
-	while(input->isAlive() && game->isAlive())
+	game->start();
+
+	bool first = true;
+
+	while (input->isAlive() && game->isAlive())
 	{
 		(input->*(input->Process))();
 		double dx = 0, dy = 0;
 		input->getMouseDelta(dx, dy);
 		
 		game->handleMouse(dx, -dy);
-
-		if(speed < 0.0 || speed>0.01 && timer.total()<2)
-		{
-			speed = 0.01f;
-		}
-	
-//		game->setspeed(speed, timer.total());
-	
-		if(!first)
-		{
-			steel::time time = timer.total() - lastFrameTime;
-			if(time>0)
-			{
-				TimeInfo info;
-				info.currentTime = timer.total();
-				info.frameLength = time;
-				game->process(info);
-			}
-			lastFrameTime = timer.total();
-		}
+		game->process();
 
 		game->draw(*graph);
-		if(audio != NULL)
+		if (audio != NULL)
 		{
 			game->insonify(*audio);
 		}
 
-		timer.incframe();
-
-		if(captionUdateTime + 0.5 < timer.total())
-		{
-			(graph->*(graph->setCaptionOpenGL_Window))(
-				std::string("Sleel engine")
-				+ " Batches: " + IntToStr(graph->total.batchCount)
-				+ " Faces: " + IntToStr(graph->total.triangleCount)
-				+ " FPS " + timer.getfps_s()
-			);
-
-			speed = 1.0f/timer.getfps();
-			if(speed > 0.1f) speed = 0.1f;
-
-			captionUdateTime = timer.total();
-		}
-		if(first)
+		if (first)
 		{
 			first = false;
 			log_msg("core", "Main loop: first frame passed");
-			timer.resume();
 		}
-//		globalFrameNumber++;
 	}
 	log_msg("core", "Exit from main loop");
 // ******************* MAIN LOOP ************************

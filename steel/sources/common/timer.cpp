@@ -34,14 +34,14 @@ steel::time Timer::getfps()
 {
 	double ts = total();
 	double cur = ts - curIntervalStartTime;
-	if(cur >= UPDATE_FPS_TIME)
+	if (cur >= UPDATE_FPS_TIME)
 	{
 		lastIntervalTime = cur;
 		curIntervalStartTime = ts;
 		lastIntervalFrameCnt = frameCnt;
 		frameCnt = 0;
 	}
-	if(lastIntervalTime > 0.0)
+	if (lastIntervalTime > 0.0)
 	{
 		fps = lastIntervalFrameCnt/lastIntervalTime;
 	}
@@ -69,11 +69,12 @@ double Timer::timestamp()
 
 void Timer::start()
 {
-	startTime = timestamp();
-	skip	= 0.0;
-	active	= true;
-	frameCnt = 0;
-	fps		= -1.0;
+	startTime	= timestamp();
+	skip		= 0.0;
+	active		= true;
+	frameCnt	= 0;
+	fps			= -1.0;
+	lastlap		= 0;
 	lastIntervalTime		= 0.0;
 	curIntervalStartTime	= 0;
 	lastIntervalFrameCnt	= 0;
@@ -81,4 +82,47 @@ void Timer::start()
 	totalFrames				= 0;
 }
 
+steel::time Timer::total()
+{
+	if (active)
+	{
+		return (steel::time)((timestamp() - startTime) - skip);
+	}
+	else
+	{
+		return (steel::time)((pausedTime - startTime) - skip);
+	}
+}
+
+void Timer::pause()
+{
+	active		= false;
+	pausedTime  = timestamp();
+}
+
+void Timer::resume()
+{
+	if(!active)
+	{
+		active	= true;
+		skip	+= (timestamp() - pausedTime);
+	}
+}
+
+steel::time Timer::lap()
+{
+	return (steel::time)(total() - lastlap);
+}
+
+void Timer::nextlap()
+{
+	lastlap = total();
+}
+
+void Timer::add(steel::time addedTime)
+{
+	skip -= addedTime;
+}
+
 Timer globalTimer;
+

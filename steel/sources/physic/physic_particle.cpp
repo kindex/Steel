@@ -201,7 +201,7 @@ bool PhysicEngine::process(IN const TimeInfo& info)
 
 bool PhysicEngine::clear()
 {
-	while(!objects.empty())
+	while (!objects.empty())
 	{
 		remove(objects.back());
 	}
