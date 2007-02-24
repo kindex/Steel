@@ -318,13 +318,16 @@ void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces
 	{
 		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
 		{
-			if (it->material->blend == TEXTURE_MODE_NONE)
+			if (it->material != NULL)
 			{
-				DrawFill_Material(e, it->faces, it->material);
-			}
-			else
-			{
-				skippedFaces.push_back(FaceMaterial(it->material, it->faces));
+				if (it->material->blend == TEXTURE_MODE_NONE)
+				{
+					DrawFill_Material(e, it->faces, it->material);
+				}
+				else
+				{
+					skippedFaces.push_back(FaceMaterial(it->material, it->faces));
+				}
 			}
 		}
 	}
@@ -585,7 +588,6 @@ void OpenGL_Engine::prepare(GraphShadow& shadow, matrix34 matrix, GameObject* pa
 	shadow.object->updateInformation(*this);
 
 	shadow.setParent(parent);
-	shadow.cache();
 
 	for EACH(uidVector, shadow.children, it)
 	{

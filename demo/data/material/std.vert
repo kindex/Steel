@@ -14,11 +14,11 @@ uniform int blending;
 varying vec3 lightDir[4];// TBN space
 varying vec3 viewDir;     // tbn
 varying	vec3 pixel_position; // global
-varying vec3 viewDirGlobal;     // global
+varying vec3 viewDirGlobal;  // global
 varying vec2 texCoord0;
 
 vec3 t,b,n;
-vec3 pixel_normal; // global
+varying vec3 pixel_normal; // global
 
 void calcLightDir(in int i)
 {

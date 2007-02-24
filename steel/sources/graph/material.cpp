@@ -62,6 +62,7 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 //	reflect_map.InitFromConfig(conf->find("reflect_map"));
 	specular_map.InitFromConfig(conf->find("specular_map"));
 	emission_map.InitFromConfig(conf->find("emission_map"));
+	env_map.InitFromConfig(conf->find("env_map"));
 
 	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f))); // TODO:
 
@@ -80,27 +81,27 @@ bool MaterialStd::TextureStd::InitFromConfig(Config *config)
 	{
 		return false;
 	}
-	k					= config->getf ("k", 1.0f);
-
-	texCoordsUnit		= config->geti ("texCoordsUnit", 0);
+	k = config->getf ("k", 1.0f);
+	texCoordsUnit = config->geti ("texCoordsUnit", 0);
 
 	return image != NULL;
 }
 
-bool MaterialStd::TextureReflect::InitFromConfig(Config *config)
+bool MaterialStd::TextureEnv::InitFromConfig(Config *config)
 {
-	if(config == NULL) return false;
+	if (config == NULL) return false;
 	string name = "/" + config->getPath("image"); 
-	if(!name.empty()) image = resImage.add(name);
+	if (!name.empty()) cubeMap = resImage.add(name);
 
+	k = config->getf ("k", 1.0f);
 
 	string m = config->gets("type", "mirror");
-	if(m == "sky") type = TEXTURE_REFLECT_SKY;
-	if(m == "mirror") type = TEXTURE_REFLECT_SKY;
+	if (m == "custom") type = TEXTURE_REFLECT_CUSTOM;
+	if (m == "sky") type = TEXTURE_REFLECT_SKY;
+	if (m == "mirror") type = TEXTURE_REFLECT_SKY;
 	else type = TEXTURE_REFLECT_MIRROR;
 
-	return image != NULL;
-
+	return cubeMap != NULL;
 }
 
 
@@ -119,7 +120,7 @@ Material::~Material()
 }
 
 
-Material *createMaterial(Config* conf)
+Material* createMaterial(Config* conf)
 {
 	if(conf == NULL) return NULL;
 
@@ -130,7 +131,7 @@ Material *createMaterial(Config* conf)
 	return material;
 }
 
-Material *createMaterial(std::string path)
+Material* createMaterial(std::string path)
 {
 	return createMaterial(resConfig.add(path));
 }

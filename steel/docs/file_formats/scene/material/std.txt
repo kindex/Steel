@@ -15,6 +15,7 @@ diffuse2_map	texture_std	microtexture
 normal_map	texture_std
 specular_map	texture_std
 emission_map	texture_std
+env_map		texture_env
 
 specular_map.power	float	степень блика (болше - блик ярче) [16]
 

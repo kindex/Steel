@@ -36,10 +36,20 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 		{
 			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
 
-			bindTextureToShader(program, "diffuse_map", 0, material.diffuse_map.image ? material.diffuse_map.image : none);
-			bindTextureToShader(program, "normal_map", 2, material.normal_map.image ? material.normal_map.image : zeroNormal);
-			bindTextureToShader(program, "emission_map", 3, material.emission_map.image ? material.emission_map.image : black);
-			bindTextureToShader(program, "specular_map", 4, material.specular_map.image ? material.specular_map.image : white);
+			bindTextureToShader(program, "diffuse_map",  0, material.diffuse_map.image  ? material.diffuse_map.image  : none);
+			bindTextureToShader(program, "normal_map",   1, material.normal_map.image   ? material.normal_map.image   : zeroNormal);
+			bindTextureToShader(program, "emission_map", 2, material.emission_map.image ? material.emission_map.image : black);
+			bindTextureToShader(program, "specular_map", 3, material.specular_map.image ? material.specular_map.image : white);
+			if (material.env_map.cubeMap != NULL)
+			{
+				bindTextureToShader(program, "env_map", 4, material.env_map.cubeMap);
+				program->setUniformFloat("env_k", material.env_map.k);
+			}
+			else
+			{
+				bindTextureToShader(program, "env_map", 4, none);
+				program->setUniformFloat("env_k", 0.0f);
+			}
 
 			program->setUniformFloat("material.specularPower", material.specularPower);
 			program->setUniformFloat("material.speculark", material.specular_map.k);
@@ -117,9 +127,9 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 	return false;
 }
 
-void OpenGL_Engine::bindTextureToShader(GLSL *program, const char *name, int imageNum, Image *image)
+void OpenGL_Engine::bindTextureToShader(GLSL* program, const char* name, int imageNum, Image* image)
 {
-	if(image != NULL)
+	if (image != NULL)
 	{
 		glActiveTextureARB(GL_TEXTURE0_ARB + imageNum);
 		glClientActiveTextureARB(GL_TEXTURE0_ARB + imageNum);

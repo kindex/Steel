@@ -14,12 +14,14 @@
 #include "transformation_list.h"
 #include "rotation.h"
 #include "movement.h"
+#include "scaler.h"
 
 Transformation* transformationFactory(const std::string& className)
 {
-	if(className == "rotation") return new Rotation;
-	if(className == "movement") return new Movement;
-	if(className == "transformation_list") return new TransformationList;
+	if (className == "rotation") return new Rotation;
+	if (className == "movement") return new Movement;
+	if (className == "scaler") return new Scaler;
+	if (className == "transformation_list") return new TransformationList;
 
 	error("objects", std::string("Transformation class '") + className + "' not found");
 	return NULL;

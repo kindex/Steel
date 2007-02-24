@@ -1054,6 +1054,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\sources\objects\transformation\scaler.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\objects\transformation\scaler.h"
+						>
+					</File>
+					<File
 						RelativePath="..\sources\objects\transformation\transformation.cpp"
 						>
 					</File>

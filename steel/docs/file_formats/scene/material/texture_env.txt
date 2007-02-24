@@ -1,0 +1,6 @@
+steel::MaterialStd::TextureEnv
+
+
+image			path	Path to cube image
+type	['mirror', 'sky', 'custom']
+

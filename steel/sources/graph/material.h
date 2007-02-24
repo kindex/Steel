@@ -66,9 +66,10 @@ enum TextureMode
 	TEXTURE_MODE_BLEND
 };
 
-enum TextureReflectType
+enum TextureEnvType
 {
 	TEXTURE_REFLECT_NONE,
+	TEXTURE_REFLECT_CUSTOM,
 	TEXTURE_REFLECT_MIRROR,
 	TEXTURE_REFLECT_SKY
 };
@@ -85,25 +86,26 @@ class MaterialStd: public Material
 {
 public:
 	MaterialStd();
-	bool InitFromConfig(Config *config);
+	bool InitFromConfig(Config* config);
 
 	struct TextureStd
 	{
-		Image *image;
+		Image* image;
 		unsigned int texCoordsUnit;
 		float k;
 
 		TextureStd(): image(NULL), texCoordsUnit(0), k(0.0) {}
-		bool InitFromConfig(Config *config);
+		bool InitFromConfig(Config* config);
 	};
 
-	struct TextureReflect
+	struct TextureEnv
 	{
-		Image *image;
-		TextureReflectType type;
+		Image* cubeMap;
+		TextureEnvType type;
+		float k;
 
-		TextureReflect(): image(NULL) {}
-		bool InitFromConfig(Config *config);
+		TextureEnv(): cubeMap(NULL) {}
+		bool InitFromConfig(Config* config);
 	};
 
 //private:
@@ -111,7 +113,13 @@ public:
 
 	TextureMatrix textureMatrix;
 
-	TextureStd diffuse_map, diffuse2_map, normal_map, specular_map, emission_map;
+	TextureStd diffuse_map;
+	TextureStd diffuse2_map;
+	TextureStd normal_map;
+	TextureStd specular_map;
+	TextureStd emission_map;
+	TextureEnv env_map;
+
 	color4f color;
 };
 

@@ -72,7 +72,6 @@ struct GraphShadow : public Shadow // множество треугольник�
 	void calculateAABB();
 	bool isCrossingLight(const LightShadow*);
 	void fill(GameObject *object);
-	bool cache();
 
 	const TexCoords* getTexCoords(const MaterialStd::TextureStd &texture);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }

@@ -37,11 +37,6 @@ void GraphShadow::fill(GameObject* object)
 	Shadow::fill(object);
 }
 
-bool GraphShadow::cache()
-{
-	return  false;
-}
-
 LightShadow::LightShadow(): 
 	light(NULL), 
 	object(NULL)

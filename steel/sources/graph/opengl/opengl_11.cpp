@@ -103,25 +103,25 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enable)
 	uid	id = image.getId();
 
 	bool loaded = false;
-	if(buffer.find(id) != buffer.end())
+	if (buffer.find(id) != buffer.end())
 	{
 		loaded = buffer[id].loaded;
 	}
 
 	OpenGL_Buffer &buf = buffer[id];
 
-	if(loaded)
+	if (loaded)
 	{
-		switch(image.getDimension())
+		switch (image.getDimension())
 		{
 			case IMAGE_2D:
-				if(enable) glEnable(GL_TEXTURE_2D);
+				if (enable) glEnable(GL_TEXTURE_2D);
 				glBindTexture(GL_TEXTURE_2D, buf.glid);
 				break;
 			case IMAGE_CUBE:
-				if(GL_EXTENSION_TEXTURE_CUBE_MAP)
+				if (GL_EXTENSION_TEXTURE_CUBE_MAP)
 				{
-					if(enable) glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+					if (enable) glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 					glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
 					break;
 				}
@@ -138,31 +138,31 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enable)
 		glGenTextures(1, &buf.glid);
 
 		int format;
-		if(image.getFormat() == IMAGE_RGB) format = GL_RGB; 
-		else if(image.getFormat() == IMAGE_RGBA) format = GL_RGBA;
+		if (image.getFormat() == IMAGE_RGB) format = GL_RGB; 
+		else if (image.getFormat() == IMAGE_RGBA) format = GL_RGBA;
 		else return false;
 
 		int width = image.getWidth();
 		int heigth = image.getHeight();
 
-		switch(image.getDimension())
+		switch (image.getDimension())
 		{
 			case IMAGE_2D:
-				if(!GL_EXTENSION_TEXTURE_NON2POWER)
+				if (!GL_EXTENSION_TEXTURE_NON2POWER)
 				{
-					if((width & (width - 1) )!= 0)
+					if ((width & (width - 1) )!= 0)
 					{
 						log_msg("graph opengl res error", "Texture width is not power of 2 ("+ IntToStr(width) + ")");
 						return false;
 					}
-					if((heigth & (heigth - 1)) != 0)
+					if ((heigth & (heigth - 1)) != 0)
 					{
 						log_msg("graph opengl res error", "Texture heigth is not power of 2 ("+ IntToStr(heigth) + ")");
 						return false;
 					}
 				}
 
-				if(enable) glEnable(GL_TEXTURE_2D);
+				if (enable) glEnable(GL_TEXTURE_2D);
 				glBindTexture(GL_TEXTURE_2D, buf.glid);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -173,18 +173,18 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enable)
 					format,  GL_UNSIGNED_BYTE , image.getBitmap());
 				break;
 			case IMAGE_CUBE:
-				if(GL_EXTENSION_TEXTURE_CUBE_MAP)
+				if (GL_EXTENSION_TEXTURE_CUBE_MAP)
 				{
-					if(enable) glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+					if (enable) glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 					glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, buf.glid);
 
 					int w = image.getWidth();
 					int h = image.getHeight();
 					int bpp = image.getBpp()/8;
 
-					if(w*6 != h) return false; // 6 images in one
+					if (w*6 != h) return false; // 6 images in one
 
-					for(int i=0; i<6; i++)
+					for (int i=0; i<6; i++)
 					{
 						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i,	0, 
 							GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image.getBitmap() + w*w*bpp*i);

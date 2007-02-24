@@ -37,19 +37,19 @@ GameObject* createGameObject(Config* conf)
 	if(conf == NULL) return NULL;
 
 	GameObject* obj = gameObjectFactory->createGameObject(conf->gets("class"));
-	if(obj == NULL) 
+	if (obj == NULL) 
 	{
 		error("objects", string("GameObject class '") + conf->gets("class") + "' not found");
 		return NULL;
 	}
 
-	v3 origin =  conf->getv3("origin");
+	v3 origin = conf->getv3("origin");
 	ObjectPosition pos;
 	pos.loadIdentity();
 	pos.setTranslation(origin);
 
 	bool result = obj->InitFromConfig(*conf);
-	if(!result)
+	if (!result)
 	{
 		delete obj; obj = NULL;
 	}

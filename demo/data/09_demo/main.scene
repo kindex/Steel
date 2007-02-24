@@ -1,0 +1,113 @@
+# Main scene 
+{
+class = 'combiner'
+objects = 
+(
+
+[room.scene#] 
+{
+	transformation = 
+		{
+			class = 'scaler'
+			scale = (5 5 4)
+		}
+}
+
+{
+class = 'combiner'
+origin = (5 0 0)
+
+	transformation = 
+		{
+			class = 'rotation'
+			rotationAxis = (0 0 1)
+			speed = 1
+		}
+
+graph = 
+{
+class = 'model'
+file = 'teapot'
+material = 
+{
+class = 'std'
+blend = 0
+diffuse_map =
+{ 
+	image = '../17_intro/GALVPLAT'
+	texCoordsRotation = 0.0
+	texCoordsScale = (1 1 1)
+	texCoordsTranslation = (0 0 0)
+	k = 1
+}
+
+specular_map = 
+{
+	image = '../17_intro/GALVPLAT'
+	power = 20
+	k = 10
+}
+emission_map = 
+{
+//	image = 'pento2'
+	k = 1
+}
+normal_map = 
+{
+//	image = 'skel_wall.normal'
+	image = 'normalmap'
+}
+}
+}
+}
+
+[#objects[1]]{
+origin = (-8 0 0)
+graph = { file = 't' 
+material = {
+env_map = {	
+image = '/image/env/tsccity'
+k = 0.5
+}
+emission_map = 
+{
+	image = 'pento2'
+	k = 1
+}
+}
+}
+}
+[#objects[1]]{
+origin = (0 8 0)
+graph = { file = 't2' material= {env_map = {	image = '/image/env/tsccity'}}}
+}
+[#objects[1]]{
+origin = (0 -8 0)
+graph = { file = 'torus' material= {env_map = {	image = '/image/env/tsccity'}}
+}
+
+	transformation = 
+	{
+	class = 'transformation_list'
+	transformations =
+	(
+		{
+			class = 'rotation'
+			rotationAxis = (0 1 0)
+			speed = 2
+			origin = (0 0 3)
+		}
+		{
+			class = 'movement'
+			direction = (0 0 3)
+			speed = 0
+			type = 'sin'
+//			bias = -3
+			origin = (0.3 0  -3.0)
+		}
+	)
+	}
+}
+
+) // objects
+} // scene

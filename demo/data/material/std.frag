@@ -31,28 +31,30 @@ uniform struct
 } lights[4];
 
 uniform sampler2D diffuse_map;
-uniform sampler2D diffuse2_map;
 uniform sampler2D normal_map;
 uniform sampler2D emission_map;
 uniform sampler2D specular_map;
+uniform samplerCube env_map;
+
 uniform int blending;
+uniform float env_k;
 
 varying vec3 viewDir;     // tbn
-
 varying	vec3 pixel_position;// global
-
 varying vec3 lightDirGlobal;  // global
+varying vec3 viewDirGlobal;     // global
+varying vec3 pixel_normal; // global
 
 varying vec2 texCoord0;
 varying vec3 lightDir[4];// TBN space
 
-    vec3 norm;
-    vec3 r;
-    vec3 color;
-    float intensity;
-    float spec;
-    float d;
-	vec3 viewDirN;
+vec3 norm;
+vec3 r;
+vec3 color;
+float intensity;
+float spec;
+float d;
+vec3 viewDirN;
 
 vec3 calcLighting(in int i)
 {
@@ -93,13 +95,12 @@ vec3 calcLighting(in int i)
 	}
 	
 	return localcolor;
-	
 }
 
 
 void main (void)
 {
-	viewDirN = normalize(viewDir);// global
+	viewDirN = normalize(viewDir);// tbn
 	
 	color = vec3(texture2D(emission_map, texCoord0))*material.emissionk; // emission
 	
@@ -120,6 +121,12 @@ void main (void)
 				}
 			}
 		}
+	}
+
+	if (env_k > 0.0)
+	{
+	    r = reflect(viewDirN, norm);
+		color += textureCube(env_map, r).rgb * env_k;
 	}
 	
 	if (blending == 0)

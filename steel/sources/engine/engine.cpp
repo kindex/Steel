@@ -26,18 +26,6 @@ void Shadow::fill(GameObject* object)
 //	modificationTime = childrenModificationTime = -1;
 }
 
-bool Shadow::cache()
-{
-/*	ModificationTime newTime = object->getModificationTime();
-	if(modificationTime < newTime)
-	{
-		modificationTime = newTime;
-		return true;
-	}
-	else*/
-		return false;
-}
-
 
 bool Engine::makeShadowForObject(GameObject* object)
 {

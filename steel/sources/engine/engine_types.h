@@ -89,6 +89,13 @@ private:
 
 struct TimeInfo
 {
+	TimeInfo() {}
+	TimeInfo(IN const steel::time currentTime, 
+			 IN const steel::time frameLength) :
+		currentTime(currentTime),
+		frameLength(frameLength)
+	{}
+
 	steel::time currentTime;
 	steel::time frameLength;
 };

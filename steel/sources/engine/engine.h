@@ -48,7 +48,6 @@ struct Shadow
 	virtual void fill(GameObject *object);
 	// овновляюет место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
 	// возвращает true, если была обнавлена вся информация
-	virtual bool cache();
 	virtual ~Shadow() {}
 	virtual void setParent(GameObject *aparent) {parent = aparent; }
 };

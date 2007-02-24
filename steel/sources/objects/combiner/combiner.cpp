@@ -80,18 +80,20 @@ bool Combiner::InitFromConfig(Config& conf)
 			}
 			else
 			{
+				TimeInfo info(0.0f, 0.0f);
+				transformation->process(info);
 				position = transformation->getPosition();
 			}
 		}
 	}
 
 	ConfigArray* objectsConfig = conf.getArray("objects");
-	if(objectsConfig != NULL)
+	if (objectsConfig != NULL)
 	{
-		const ConfigArray &objectsArray =  *static_cast<ConfigArray*>(objectsConfig);
+		const ConfigArray& objectsArray = *static_cast<ConfigArray*>(objectsConfig);
 		for EACH_CONST(ConfigArray, objectsArray, it)
 		{
-			GameObject *newObject = createGameObject(*it);
+			GameObject* newObject = createGameObject(*it);
 			if (newObject != NULL)
 			{
 				objects.push_back(newObject);
@@ -150,16 +152,22 @@ void Combiner::bindEngine(Engine& engine)
 
 bool Combiner::updateInformation(Engine& engine)
 {
-	if (engine.isSupportingInterface(INTERFACE_GRAPH) && graph != NULL)
+	if (engine.isSupportingInterface(INTERFACE_GRAPH))
 	{
 		dynamic_cast<GraphInterface*>(&engine)->setPosition(position*origin);
-		return graph->updateInformation(engine);
+		if (graph != NULL)
+		{
+			return graph->updateInformation(engine);
+		}
 	}
 	// test audio update
-	if (engine.isSupportingInterface(INTERFACE_AUDIO) && audio != NULL)
+	if (engine.isSupportingInterface(INTERFACE_AUDIO))
 	{
 		dynamic_cast<AudioInterface*>(&engine)->setPosition(position*origin);
-		return audio->updateInformation(engine);
+		if (audio != NULL)
+		{
+			return audio->updateInformation(engine);
+		}
 	}
 	return false;
 }
