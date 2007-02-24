@@ -99,3 +99,21 @@ Shadow* Engine::getShadow(uid id)
 	else
 		return NULL;
 }
+
+void Camera::set(const v3 &_position, const v3& _direction, const v3& _upVector)
+{
+	v3 eye = _position;
+	v3 up = _upVector;
+	v3 dir = _direction;
+	v3 right = dir.crossProduct(up).getNormalized();
+	up = -dir.crossProduct(right);
+
+	position	= _position;
+	direction	= _direction.getNormalized();
+	upVector	= up;
+}
+
+void Camera::setUpVector(const v3& _upVector)
+{ 
+	upVector = _upVector.getNormalized();
+}

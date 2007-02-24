@@ -51,6 +51,7 @@ protected:
 	Config*			conf;
 	Input*			input;
 	Spectator		spectator;
+	Spectator		flashlight;
 	GraphEngine*	graphEngine;
 	AudioEngine*	audioEngine;
  	GameObject*		world;

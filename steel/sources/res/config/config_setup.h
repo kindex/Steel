@@ -18,5 +18,6 @@
 
 void setup(PConfig& conf, const std::string& path, Config* newValue);
 bool executeScript(Config* conf, std::string script);
+bool executeCommand(Config* conf, std::string command);
 
 #endif

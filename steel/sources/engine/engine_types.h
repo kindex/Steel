@@ -76,7 +76,9 @@ public:
 
     void setPosition (const v3 &_position)	{ position	= _position; }
 	void setDirection(const v3& _direction)	{ direction	= _direction.getNormalized(); }
-    void setUpVector (const v3& _upVector)	{ upVector	= _upVector.getNormalized(); }
+    void setUpVector (const v3& _upVector);
+	void set(const v3 &_position, const v3& _direction, const v3& _upVector);
+
 	v3	getDirection()	const { return direction; }
 	v3  getPosition()	const { return position; }
 	v3  getUpVector()	const { return upVector; }

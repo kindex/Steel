@@ -72,6 +72,7 @@ public:
 private:
 	map<uid, LightShadow*> lights;
 	std::map<uid, OpenGL_Buffer> buffer;
+	Flags flags;
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
 	Image* zeroNormal;
@@ -79,17 +80,12 @@ private:
 	Image* white;
 	Image* none;
 	Shader shaderStd;
+	Shader shaderDebug;
 
 	int maxLightsInShader;
-	GraphShadow *currentShadow;
+	GraphShadow* currentShadow;
 
 
-	bool drawFaceFlag;
-	bool drawWireFlag;
-	bool drawLinesFlag;
-	bool drawNormalsFlag;
-	bool drawVertexesFlag;
-	bool drawAABBFlag;
 
 	void addChild(GraphShadow &, GameObject*);
 
@@ -150,8 +146,10 @@ private:
 // ******************* OpenGL 2.0 *******************
 	bool DrawFill_MaterialStd_OpenGL20(GraphShadow&, const Faces&, MaterialStd&);
 	GLSL* BindShader(Shader*);
-	void bindTextureToShader(GLSL* program, const std::string& name, int imageNum, Image* image);
+	void bindTextureToShader(GLSL& program, const std::string& name, int imageNum, Image* image);
 	void unbindTexCoords();
+	void DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, GLSL& program);
+	void DrawFill_SetupDebugShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, GLSL& program);
 
 // ******************* OpenGL all *******************
 	void DrawFill_Material(GraphShadow &e, const Faces* triangles, Material* material);

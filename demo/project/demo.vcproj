@@ -338,6 +338,14 @@
 				Name="material"
 				>
 				<File
+					RelativePath="..\data\material\debug.frag"
+					>
+				</File>
+				<File
+					RelativePath="..\data\material\debug.vert"
+					>
+				</File>
+				<File
 					RelativePath="..\data\material\std.frag"
 					>
 				</File>

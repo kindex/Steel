@@ -124,6 +124,20 @@ typedef
 	std::map<int, TangentSpaceCache>
 	tangentCache;
 
+struct Flags
+{
+	bool drawFace;
+	bool drawWire;
+	bool drawLines;
+	bool drawNormals;
+	bool drawVertexes;
+	bool drawAABB;
+
+	bool useDebugShader;
+	int	debugShaderMode;
+};
+
+
 }
 
 #endif

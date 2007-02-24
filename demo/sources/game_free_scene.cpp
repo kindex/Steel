@@ -13,6 +13,7 @@
 
 #include "game_free_scene.h"
 #include <audio/openal_engine.h>
+#include <res/config/config_setup.h>
 
 bool GameFreeScene::init(Config& _conf, Input& _input)
 {
@@ -63,6 +64,7 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 		light->setPosition(spectator.camera.getPosition());
 	}
 
+	flashlight = spectator;
 
 // ******************* PHYSIC **************************
 
@@ -111,6 +113,21 @@ void GameFreeScene::handleEventKeyDown(std::string key)
 	if (key == "f5") graphEngine->conf->toggle("drawVertexes");
 	if (key == "f7") graphEngine->conf->toggle("drawNormals");
 	if (key == "f8") graphEngine->conf->toggle("drawAABB");
+	if (key == "f9")
+	{
+		graphEngine->conf->toggle("use_debug_shader");
+		executeCommand(graphEngine->conf, "debug_shader_mode = 2");
+	}
+	if (key == "f11")
+	{
+		graphEngine->conf->toggle("use_debug_shader");
+		executeCommand(graphEngine->conf, "debug_shader_mode = 1");
+	}
+	if (key == "f12")
+	{
+		graphEngine->conf->toggle("use_debug_shader");
+		executeCommand(graphEngine->conf, "debug_shader_mode = 0");
+	}
 
 	if (key == "f6") 
 	{
@@ -182,14 +199,7 @@ void GameFreeScene::handleMouse(double dx, double dy)
 	{
 		dir.rotateAxis((float)dy, v3(-dir.y, dir.x, 0));
 	}
-	spectator.camera.setDirection(dir);
-
-	v3 eye = spectator.camera.getPosition();
-	v3 up = v3(0.0f, 0.0f, 1.0f);
-	
-	v3 right = dir.crossProduct(up).getNormalized();
-	up = -dir.crossProduct(right);
-	spectator.camera.setUpVector(up);
+	spectator.camera.set(spectator.camera.getPosition(), dir, v3(0.0f, 0.0f, 1.0f));
 }
 
 void GameFreeScene::process()
@@ -214,9 +224,28 @@ void GameFreeScene::process()
 
 		if (light != NULL)
 		{
-			light->setPosition(spectator.camera.getPosition(), 
-								spectator.camera.getDirection(), 
-								spectator.camera.getUpVector());
+			v3 lightAt = flashlight.camera.getDirection() + flashlight.camera.getPosition();
+			v3 spectatorAt = spectator.camera.getDirection() + spectator.camera.getPosition();
+
+			v3 speedDir = (spectatorAt - lightAt).getNormalized();
+			float speedLength = (spectatorAt - lightAt).getLength();
+
+			flashlight.velocity += speedDir*100.0f*sqr(speedLength)*info.timeInfo.frameLength;
+			v3 moved = flashlight.velocity*info.timeInfo.frameLength;
+	
+			speedLength *= 5;
+			if (speedLength > 1.0) speedLength = 1.0;
+			flashlight.velocity *= sqrt(speedLength);
+
+			lightAt += moved;
+
+			flashlight.camera.set(spectator.camera.getPosition(),
+									lightAt - spectator.camera.getPosition(),
+									spectator.camera.getUpVector());
+
+			light->setPosition(flashlight.camera.getPosition(), 
+								flashlight.camera.getDirection(), 
+								flashlight.camera.getUpVector());
 		}
 	}
 

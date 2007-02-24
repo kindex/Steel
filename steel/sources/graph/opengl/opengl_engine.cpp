@@ -156,12 +156,14 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	total.triangleCount = 0;
 	total.batchCount = 0;
 
-	drawFaceFlag = conf->getb("drawFace", true);
-	drawWireFlag = conf->getb("drawWire", false) && DrawWire != NULL;
-	drawLinesFlag = conf->getb("drawLines", false) && DrawLines != NULL;
-	drawNormalsFlag = conf->getb("drawNormals", false) && DrawNormals != NULL;
-	drawVertexesFlag = conf->getb("drawVertexes", false) && DrawVertexes != NULL;
-	drawAABBFlag = conf->getb("drawAABB", false) && DrawAABB;
+	flags.drawFace = conf->getb("drawFace", true);
+	flags.drawWire = conf->getb("drawWire", false) && DrawWire != NULL;
+	flags.drawLines = conf->getb("drawLines", false) && DrawLines != NULL;
+	flags.drawNormals = conf->getb("drawNormals", false) && DrawNormals != NULL;
+	flags.drawVertexes = conf->getb("drawVertexes", false) && DrawVertexes != NULL;
+	flags.drawAABB = conf->getb("drawAABB", false) && DrawAABB;
+	flags.useDebugShader = conf->getb("use_debug_shader", false);
+	flags.debugShaderMode = conf->geti("debug_shader_mode", 2);
 
 	int size = objects.size();
 
@@ -331,7 +333,7 @@ void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces
 {
 	pushPosition(e);
 
-	if (drawFaceFlag && e.faceMaterials != NULL)
+	if (flags.drawFace && e.faceMaterials != NULL)
 	{
 		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
 		{
@@ -349,7 +351,7 @@ void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces
 		}
 	}
 
-	if (drawWireFlag && e.faceMaterials != NULL)
+	if (flags.drawWire && e.faceMaterials != NULL)
 	{
 		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
 		{
@@ -357,22 +359,22 @@ void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces
 		}
 	}
 
-	if (drawLinesFlag)
+	if (flags.drawLines)
 	{
 		(this->*DrawLines)(e);
 	}
 
-	if (drawNormalsFlag)
+	if (flags.drawNormals)
 	{
 		(this->*DrawNormals)(e);
 	}
 
-	if (drawVertexesFlag)
+	if (flags.drawVertexes)
 	{
 		(this->*DrawVertexes)(e);
 	}
 
-	if (drawAABBFlag)
+	if (flags.drawAABB)
 	{
 		(this->*DrawAABB)(e);
 	}
@@ -475,9 +477,9 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 
-	log_msg("graph opengl opengl_info", "Renderer: " + (string)(const char *)glGetString(GL_RENDERER));
-	log_msg("graph opengl opengl_info", "Version: " + (string)(const char *)glGetString(GL_VERSION));
-	log_msg("graph opengl opengl_info", "Vendor: " + (string)(const char *)glGetString(GL_VENDOR));
+	log_msg("graph opengl opengl_info", "Renderer: " + (string)(const char*)glGetString(GL_RENDERER));
+	log_msg("graph opengl opengl_info", "Version: " + (string)(const char*)glGetString(GL_VERSION));
+	log_msg("graph opengl opengl_info", "Vendor: " + (string)(const char*)glGetString(GL_VENDOR));
 
 	string openglVersions = (const char *)glGetString(GL_VERSION);
 	int openglVersioni;
@@ -525,13 +527,15 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 
 	if (version >= 13)
 	{
-		if(GL_EXTENSION_MULTITEXTURE)
+		if (GL_EXTENSION_MULTITEXTURE)
+		{
 			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL13;
+		}
 	}
 
 	if (version >= 15)
 	{
-		if (GL_EXTENSION_VBO)
+		if (GL_EXTENSION_VBO && conf->getb("use_vbo", true))
 		{
 			DrawTriangles = &OpenGL_Engine::DrawTriangles_OpenGL15;
 			CleanupDrawTriangles = &OpenGL_Engine::CleanupDrawTriangles_OpenGL15;
@@ -543,9 +547,14 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	if (version >= 20 && GL_EXTENSION_GLSL && conf->getb("use_glsl", true))
 	{
 		DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
+
 		shaderStd.vertexShader = resText.add("material/" + conf->gets("std_shader", "std") + ".vert");
 		shaderStd.fragmentShader = resText.add("material/" + conf->gets("std_shader", "std") + ".frag");
-		maxLightsInShader = conf->geti("max_lights", 1);
+
+		shaderDebug.vertexShader = resText.add("material/" + conf->gets("debug_shader", "debug") + ".vert");
+		shaderDebug.fragmentShader = resText.add("material/" + conf->gets("debug_shader", "debug") + ".frag");
+
+		maxLightsInShader = conf->geti("max_lights", 4);
 	}
 	textureMatrixLevel = 0;
 
