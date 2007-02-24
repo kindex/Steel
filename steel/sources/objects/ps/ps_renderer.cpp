@@ -43,7 +43,7 @@ void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 		// per1 и per2 - это направляющие сторон спрайта
 		v3 per1(-dir.y, dir.x, 0); // перендикуляр к dir
 		per1.normalize();
-		v3 per2 = dir.vectorProduct(per1); // перпендикуляр к dir и per1
+		v3 per2 = dir.crossProduct(per1); // перпендикуляр к dir и per1
 		per1 *= set->particles[i]->size; // умножаем на размер спарйта
 		per2 *= set->particles[i]->size;
 

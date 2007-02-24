@@ -1,8 +1,8 @@
-﻿*** Steel Engine 1.1.0 alpha 2 (2007 feb) 
+﻿*** Steel Engine 1.1.0(500) alpha 2 (2007 feb 28)
 +Particle system
 +Transformation (simple physic)
 
-*** Steel Engine 1.1.0 alpha 1 (2006 dec) 
+*** Steel Engine 1.1.0 alpha 1 (2006 dec 31) 
 многие кардинальные изменения архитектуры. База для первых демок
 
 +Object Shadow: кеш игровый объектов в движке
@@ -17,7 +17,7 @@
 +3D OpenGL engine: автоопреденение возможностей видеокарты, поддержка OpenGL 1.0, 1.1, 1.3, 1.5, 2.0. GLSL
 
 
-*** Steel Engine 1.0.1 (2006 june 10, r148, steel_demo-14-r1-particle_system)
+*** Steel Engine 1.0.1(148) (2006 june 10, steel_demo-14-r1-particle_system)
 выпушена как баналаврская работы KindeX'a и Def'a. Отточка архитектуры
 
 +3D Collision detection: polygonal objects

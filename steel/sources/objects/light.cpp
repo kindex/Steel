@@ -12,6 +12,7 @@
  ************************************************************/
 #include "../steel.h"
 #include "light.h"
+#include "../res/res_main.h"
 
 bool GameLight::InitFromConfig(Config& conf)
 {
@@ -34,6 +35,9 @@ bool GameLight::InitFromConfig(Config& conf)
 	light->minDistance = conf.getf("minDistance", 1.0f);
 	light->maxDistance = conf.getf("maxDistance", 10.0f);
 	light->k = conf.getf("k", 1.0f);
+	light->up = conf.getv3("up", v3(0.0f, 0.0f, 0.1f));
+
+	light->cubeMap = resImage.add(conf.getPath("cube_map"));
 
 	bool enabled = conf.getb("enabled", true);
 	if (enabled)
@@ -103,4 +107,13 @@ void GameLight::toggleEnable()
 	{
 		enable();
 	}
+}
+
+void GameLight::setPosition(const v3& _position, 
+							const v3& _direction,
+							const v3& _up)
+{
+	position.setTranslation(_position);
+	light->direction = _direction;
+	light->up = _up;
 }

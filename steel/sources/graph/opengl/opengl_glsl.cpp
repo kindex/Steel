@@ -165,9 +165,9 @@ bool GLSL::setTexture(const char *name, int texNum)
 }
 
 
-bool    GLSL :: setUniformVector ( const char * name, const v3& value )
+bool GLSL :: setUniformVector ( const std::string& name, const v3& value )
 {
-    int loc = glGetUniformLocationARB ( programId, name );
+	int loc = glGetUniformLocationARB ( programId, name.c_str() );
 
     if ( loc < 0 )
         return false;
@@ -203,7 +203,7 @@ bool    GLSL :: setUniformVector  ( int loc, const v2& value )
     return true;
 }
 
-bool GLSL::setUniformFloat(const std::string &name, float value)
+bool GLSL::setUniformFloat(const std::string& name, float value)
 {
 	int loc = glGetUniformLocationARB(programId, name.c_str());
 
@@ -224,9 +224,9 @@ bool    GLSL :: setUniformFloat ( int loc, float value )
     return true;
 }
 
-bool    GLSL :: setUniformInt ( const char * name, int value )
+bool    GLSL :: setUniformInt (const std::string& name, int value )
 {
-    int loc = glGetUniformLocationARB ( programId, name );
+	int loc = glGetUniformLocationARB ( programId, name.c_str() );
 
     if ( loc < 0 )
         return false;

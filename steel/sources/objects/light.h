@@ -34,7 +34,10 @@ public:
 	void process(IN const ProcessInfo&){}
 	bool InitFromConfig(IN Config&);
 
-	void setPosition(const v3 _position) { position.setTranslation(_position); }
+	void setPosition(const v3& _position) { position.setTranslation(_position); }
+	void setPosition(const v3& position, 
+					 const v3& direction,
+					 const v3& up);
 	void enable();
 	void disable();
 	void toggleEnable();

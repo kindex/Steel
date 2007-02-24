@@ -88,10 +88,10 @@ struct v3
 	inline void loadOne()	{	x=y=z=1.0f;	}
 	
 	//vector algebra
-	inline v3 vectorProduct(const v3 & a) const
+	inline v3 crossProduct(const v3 & a) const
 	{	v3 temp; temp.set(y*a.z - z*a.y, z*a.x - x*a.z, x*a.y - y*a.x); return temp;	}
 
-	inline v3 operator*(const v3 a) const	{	return vectorProduct(a);	}
+	inline v3 operator*(const v3 a) const	{	return crossProduct(a);	}
 
 	inline float dotProduct(const v3 & A) const	{	return x*A.x + y*A.y + z*A.z;	}
 	inline float operator&(const v3 a) const		{	return dotProduct(a);	}

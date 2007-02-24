@@ -45,16 +45,16 @@ public:
 
 //    bool        setUniformVector  ( const char * name, const Vector4D& value  );
 //    bool        setUniformVector  ( int loc,            const Vector4D& value );
-    bool        setUniformVector  ( const char* name, const v3& value  );
+	bool        setUniformVector  ( const std::string& name, const v3& value  );
     bool        setUniformVector  ( int loc,            const v3& value );
     bool        setUniformVector  ( const char* name, const v2& value  );
     bool        setUniformVector  ( int loc,            const v2& value );
-    bool        setUniformFloat   (const std::string &name, float value);
+    bool        setUniformFloat   (const std::string& name, float value);
     bool        setUniformFloat   ( int loc,            float value           );
 //    bool        setUniformMatrix  ( const char * name, const Matrix4x4& value );
     bool        setUniformMatrix  ( const char* name, const matrix33&  value );
     bool        setUniformMatrix  ( const char* name, float value [16]       );
-    bool        setUniformInt     ( const char* name, int value              );
+    bool        setUniformInt     ( const std::string& name, int value              );
     bool        setUniformInt     ( int loc,            int value             );
 //    Vector4D    getUniformVector  ( const char * name );
     //Vector4D    getUniformVector  ( int loc            );

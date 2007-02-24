@@ -20,8 +20,8 @@ Listener::Listener()
 	velocity = { 0.0f, 0.0f, 0.0f };
 	orientation = { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f };
 	*/
-	setPosition(0.0f, 0.0f, 0.0f);
-	setVelocity(0.0f, 0.0f, 0.0f);
+	setPosition(v3(0.0f, 0.0f, 0.0f));
+	setVelocity(v3(0.0f, 0.0f, 0.0f));
 	setOrientation(v3(0.0f, 0.0f, -1.0f), v3(0.0f, 0.0f, 1.0f));
 }
 

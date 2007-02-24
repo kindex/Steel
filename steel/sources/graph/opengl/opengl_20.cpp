@@ -69,6 +69,8 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 			glMatrixMode(GL_MODELVIEW);
 			glPushMatrix();
 			glLoadIdentity();
+
+			bool cubeMapSet = false;
 			for(int i = 0; i < lightCount; i++)
 			{
 				float pos[4];
@@ -90,6 +92,23 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 				program->setUniformFloat(lighti + ".minDistance", e.lights[i]->light->minDistance);
 				program->setUniformFloat(lighti + ".maxDistance", e.lights[i]->light->maxDistance);
 				program->setUniformFloat(lighti + ".sqrtAttenuation", e.lights[i]->light->sqrtAttenuation);
+				program->setUniformVector(lighti + ".up", e.lights[i]->light->up);
+				program->setUniformVector(lighti + ".direction", e.lights[i]->light->direction);
+
+				if (e.lights[i]->light->cubeMap != NULL && !cubeMapSet)
+				{
+					program->setUniformInt(lighti + ".type", 1);
+					bindTextureToShader(program, "light_cube_map", 5, e.lights[i]->light->cubeMap);
+					cubeMapSet = true;
+				}
+				else
+				{
+					program->setUniformInt(lighti + ".type", 0);
+				}
+			}
+			if (!cubeMapSet)
+			{
+				bindTextureToShader(program, "light_cube_map", 5, none);
 			}
 			glPopMatrix();
 
@@ -127,7 +146,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 	return false;
 }
 
-void OpenGL_Engine::bindTextureToShader(GLSL* program, const char* name, int imageNum, Image* image)
+void OpenGL_Engine::bindTextureToShader(GLSL* program, const std::string& name, int imageNum, Image* image)
 {
 	if (image != NULL)
 	{
@@ -136,7 +155,7 @@ void OpenGL_Engine::bindTextureToShader(GLSL* program, const char* name, int ima
 
 		(this->*BindTexture)(*image, false);
 
-		if(!program->setTexture(name, imageNum))
+		if (!program->setTexture(name.c_str(), imageNum))
 		{
 			error("glsl error", std::string("Cannot find texture '") + name + "' in shader");
 		}

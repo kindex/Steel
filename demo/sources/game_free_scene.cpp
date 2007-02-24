@@ -183,6 +183,13 @@ void GameFreeScene::handleMouse(double dx, double dy)
 		dir.rotateAxis((float)dy, v3(-dir.y, dir.x, 0));
 	}
 	spectator.camera.setDirection(dir);
+
+	v3 eye = spectator.camera.getPosition();
+	v3 up = v3(0.0f, 0.0f, 1.0f);
+	
+	v3 right = dir.crossProduct(up).getNormalized();
+	up = -dir.crossProduct(right);
+	spectator.camera.setUpVector(up);
 }
 
 void GameFreeScene::process()
@@ -207,7 +214,9 @@ void GameFreeScene::process()
 
 		if (light != NULL)
 		{
-			light->setPosition(spectator.camera.getPosition());
+			light->setPosition(spectator.camera.getPosition(), 
+								spectator.camera.getDirection(), 
+								spectator.camera.getUpVector());
 		}
 	}
 
@@ -332,10 +341,10 @@ void GameFreeScene::draw(GraphEngine& graph)
 void GameFreeScene::insonify(AudioEngine& _audioEngine)
 {
 	Listener listener;
-	v3 eye = spectator.camera.getPosition();
-	v3 direction = spectator.camera.getDirection();
-	listener.setPosition(eye.x, eye.y, eye.z);
-	listener.setOrientation(v3(direction.x, direction.y, direction.z), v3(0,0,1));
+
+	listener.setPosition(spectator.camera.getPosition());
+	listener.setOrientation(spectator.camera.getDirection(), spectator.camera.getUpVector());
+
 	_audioEngine.setListener(listener);
 }
 

@@ -20,6 +20,7 @@
 #include "../math/maths.h"
 #include "../math/vector3d.h"
 #include "../math/vector2d.h"
+#include "../res/image/image.h"
 
 
 struct color4f
@@ -37,9 +38,9 @@ struct color4f
 
 enum LightType
 {
-	LIGHT_NONE,
-	LIGHT_DIFFUSE, // omni?
-	LIGHT_TARGET // spot
+	LIGHT_DIFFUSE = 0, // omni?
+	LIGHT_CUBE_MAP = 1, // cube texture
+	LIGHT_TARGET = 2 // spot
 };
 
 struct Light
@@ -48,6 +49,7 @@ struct Light
 	LightType type;
 	v3 position;
 	v3 direction; // orientation? angle, target point?
+	v3 up; // needed for cube map
 
 	float intensivity; // intensivity * color
 	float constantAttenuation;
@@ -63,7 +65,7 @@ struct Light
 
 	bool castShadows;
 	float angle; // LIGHT_TARGET light cone angle
-//	Image *cubeMap; // cube map
+	Image* cubeMap; // cube map
 
 	Light();
 };

@@ -306,6 +306,10 @@
 		<Filter
 			Name="data"
 			>
+			<File
+				RelativePath="..\data\flashlight.conf"
+				>
+			</File>
 			<Filter
 				Name="17_intro"
 				>

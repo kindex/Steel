@@ -21,13 +21,14 @@ uniform struct
 
 uniform struct
 {
-//	int type;
+	int type;
 	float sqrtAttenuation;
 	float minDistance;
 	float maxDistance;
 //	sampler2D map;
-//	sampler3D cube_map;
 	float k;
+	vec3 up;
+	vec3 direction;
 } lights[4];
 
 uniform sampler2D diffuse_map;
@@ -35,6 +36,7 @@ uniform sampler2D normal_map;
 uniform sampler2D emission_map;
 uniform sampler2D specular_map;
 uniform samplerCube env_map;
+uniform samplerCube light_cube_map;
 
 uniform int blending;
 uniform float env_k;
@@ -78,6 +80,7 @@ vec3 calcLighting(in int i)
 			gl_LightSource[i].quadraticAttenuation * distFromLight*distFromLight
 			);
 
+	
 		localcolor = gl_LightSource[i].ambient.rgb;
 	       
 		vec3 lightDirN = lightDir[i]; // TBN
@@ -92,6 +95,20 @@ vec3 calcLighting(in int i)
 	    
 		localcolor += spec * vec3(texture2D(specular_map, texCoord0))*gl_LightSource[i].specular.rgb;
 		localcolor *= attenuation;
+		if (lights[i].type == 1) // cube map
+		{
+			vec3 lightViewDir = pixel_position - vec3(gl_LightSource[i].position);
+
+			float a = dot(lightViewDir, lights[i].direction);
+			float b = dot(lightViewDir, cross(lights[i].direction, lights[i].up));
+			float c = dot(lightViewDir, lights[i].up);
+			vec3 texCoords = vec3(-b, -c, -a);
+			vec3 texColor = textureCube(light_cube_map, texCoords).rgb;
+			
+			localcolor.r *= texColor.r;
+			localcolor.g *= texColor.g;
+			localcolor.b *= texColor.b;
+		}
 	}
 	
 	return localcolor;

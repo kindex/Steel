@@ -150,7 +150,7 @@ private:
 // ******************* OpenGL 2.0 *******************
 	bool DrawFill_MaterialStd_OpenGL20(GraphShadow&, const Faces&, MaterialStd&);
 	GLSL* BindShader(Shader*);
-	void bindTextureToShader(GLSL* program, const char* name, int imageNum, Image* image);
+	void bindTextureToShader(GLSL* program, const std::string& name, int imageNum, Image* image);
 	void unbindTexCoords();
 
 // ******************* OpenGL all *******************
