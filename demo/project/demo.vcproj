@@ -366,6 +366,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="09_demo"
+				>
+				<File
+					RelativePath="..\data\09_demo\main.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\09_demo\room.scene"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="objects"

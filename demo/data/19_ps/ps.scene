@@ -5,7 +5,7 @@ emitter =
 	{
 	class = 'simple'
 	particle_size = 0.1
-	init_size = 20
+	init_size = 30
 	position_dispersion = 1
 	} 
 renderer = 

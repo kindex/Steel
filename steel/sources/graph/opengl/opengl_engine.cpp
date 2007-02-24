@@ -2,7 +2,7 @@
 	File: graph/opengl/opengl_engine.cpp
 	Unit: opengl
 	Part of: Steel engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2004-2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz at gmail]
 		* Kane [J. Anton, kane@mail.berlios.de]
@@ -114,11 +114,14 @@ void OpenGL_Engine::popPosition(GraphShadow& e)
 
 bool OpenGL_Engine::isVisible(AABB aabb)
 {
-/*	matrix34 proj; TODO
+	// TODO:
+/*
+	matrix34 proj; 
 	glGetFloatv(GL_PROJECTION_MATRIX, proj.a);
 	box.mul(proj);
 
-	return box.intersect(aabb(v3(-1.1,-1.1,0), v3(1.1,1.1,2)));*/
+	return box.intersect(aabb(v3(-1.1,-1.1,0), v3(1.1,1.1,2)));
+*/
 	return true;
 }
 
@@ -192,10 +195,12 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 		if (!shadow.aabb.empty())
 		{
 			for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
+			{
 				if (shadow.isCrossingLight(jt->second))
 				{
 					shadow.lights.push_back(jt->second);
 				}
+			}
 		}
 	}
 
@@ -267,37 +272,49 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 		glDepthFunc(GL_LESS);
 		glEnable(GL_BLEND);		
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+		BlendingTriangle* prev = NULL;
+		Faces faces;
+		faces.triangles.changed = true;
+		faces.triangles.setId(0);
+		faces.quads.changed = true;
+		faces.quads.setId(0);
 
 		for EACH(BlendingTriangleVector, blendingTriangles, it)
 		{
-			Faces faces;
-			if (it->vetexCount == 3)
+			if (prev != NULL && (
+					prev->shadow != it->shadow || 
+					it->vetexCount == 3 && !faces.quads.empty() ||
+					it->vetexCount == 4 && !faces.triangles.empty()
+				))
+			{
+				DrawFill_Material(*prev->shadow, &faces, prev->material);
+				faces.quads.clear();
+				faces.triangles.clear();
+			}
+			prev = &(*it);
+			if (it->vetexCount == 3) // 3 - triangle
 			{
 				faces.triangles.push_back(Triangle(it->vertex[0], it->vertex[1], it->vertex[2]));
-				faces.triangles.changed = true;
-				faces.triangles.setId(0);
-				DrawFill_Material(*it->shadow, &faces, it->material);
 			}
-			else if (it->vetexCount == 4)
+			else // 4 - quads
 			{
 				faces.quads.push_back(Quad(it->vertex[0], it->vertex[1], it->vertex[2], it->vertex[3]));
-				faces.quads.changed = true;
-				faces.quads.setId(0);
-				DrawFill_Material(*it->shadow, &faces, it->material);
 			}
 		}
+		DrawFill_Material(*prev->shadow, &faces, prev->material);
 
 		glPopAttrib();
 	}
 
-	if(conf->geti("swapBuffers", 1))
+	if (conf->geti("swapBuffers", 1))
 	{
 //		glFlush(); // TODO: flush in thread
 		(this->*FlushOpenGL_Window)();
 	}
 
 	GLenum errorCode = glGetError();
-	if(errorCode != 0)
+	if (errorCode != 0)
 	{
 		log_msg("error opengl", string("OpenGL error #") + IntToStr(errorCode));
 	}

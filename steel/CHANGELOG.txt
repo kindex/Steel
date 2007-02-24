@@ -1,7 +1,11 @@
-*** Steel Engine 1.1.0 (2006 dec ??) 
+﻿*** Steel Engine 1.1.0 alpha 2 (2007 feb) 
++Particle system
++Transformation (simple physic)
+
+*** Steel Engine 1.1.0 alpha 1 (2006 dec) 
 многие кардинальные изменения архитектуры. База для первых демок
 
-+Object Shadow: кеш игровый обхектов в движке
++Object Shadow: кеш игровый объектов в движке
 +Passive engine interface: интерфйс был перенесён в движок, что упростило использование объектов (Client-Server архитектура)
 +Config: новый формат хранения конфигов с шаблонами
 -resModel, resConf, resScript: убраны старые форматы ресурсов. Теперь всё это умеет делать Config.

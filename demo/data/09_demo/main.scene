@@ -109,5 +109,21 @@ graph = { file = 'torus' material= {env_map = {	image = '/image/env/tsccity'}}
 	}
 }
 
+
+{
+class = 'combiner'
+audio = 
+	{
+		class = 'simple';
+		position = (0 0 0);
+		file = 'Fallen_World-Polly';
+		gain = 0.6;
+		pitch = 1.0;
+		isLoop = 0;
+		rolloffFactor = 0.0;
+		sourceRelative = 1;
+	} // audio
+}
+
 ) // objects
 } // scene
