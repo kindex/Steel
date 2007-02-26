@@ -14,10 +14,9 @@
  ************************************************************/
 
 #include "../../steel.h"
-#include "opengl_glsl.h"
-#include "opengl_engine.h"
-#include "../../libs/opengl/libext.h"
 #include <string>
+#include "../../libs/opengl/libext.h"
+#include "opengl_engine.h"
 
 namespace opengl
 {
@@ -25,9 +24,13 @@ namespace opengl
 void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, GLSL& program)
 {
 	bindTextureToShader(program, "diffuse_map",  0, material.diffuse_map.image  ? material.diffuse_map.image  : none);
-	bindTextureToShader(program, "normal_map",   1, material.normal_map.image   ? material.normal_map.image   : zeroNormal);
 	bindTextureToShader(program, "emission_map", 2, material.emission_map.image ? material.emission_map.image : black);
-	bindTextureToShader(program, "specular_map", 3, material.specular_map.image ? material.specular_map.image : white);
+	bindTextureToShader(program, "normal_map",   1, material.normal_map.image   ? material.normal_map.image   : zeroNormal);
+
+	if (flags.lighting)
+	{
+		bindTextureToShader(program, "specular_map", 3, material.specular_map.image ? material.specular_map.image : white); // TODO: env map koef
+	}
 	if (material.env_map.cubeMap != NULL)
 	{
 		bindTextureToShader(program, "env_map", 4, material.env_map.cubeMap);
@@ -50,66 +53,72 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 
 	program.setUniformInt("blending", material.blend);
 
-	int lightCount = (int)e.lights.size();
-	if (lightCount > maxLightsInShader) lightCount = maxLightsInShader;
-
-	program.setUniformInt("lightCount", lightCount);
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-
-	bool cubeMapSet = false;
-	for(int i = 0; i < lightCount; i++)
+	if (flags.lighting)
 	{
-		float pos[4];
-		pos[0] = e.lights[i]->position.x;
-		pos[1] = e.lights[i]->position.y;
-		pos[2] = e.lights[i]->position.z;
-		pos[3] = 0.0f;
-		glLightfv(GL_LIGHT0 + i,GL_POSITION, (float*)pos);
-		glLightf(GL_LIGHT0 + i,	GL_CONSTANT_ATTENUATION,	e.lights[i]->light->constantAttenuation);
-		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION,		e.lights[i]->light->linearAttenuation);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION,	e.lights[i]->light->quadraticAttenuation);
+		int lightCount = (int)e.lights.size();
+		if (lightCount > maxLightsInShader) lightCount = maxLightsInShader;
 
-		glLightfv(GL_LIGHT0 + i, GL_AMBIENT,	e.lights[i]->light->ambient.getfv());
-		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE,	e.lights[i]->light->diffuse.getfv());
-		glLightfv(GL_LIGHT0 + i, GL_SPECULAR,	e.lights[i]->light->specular.getfv());
+		program.setUniformInt("lightCount", lightCount);
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
 
-		std::string lighti = std::string("lights[") + IntToStr(i) + "]";
-		program.setUniformFloat(lighti + ".k", e.lights[i]->light->k);
-		program.setUniformFloat(lighti + ".minDistance", e.lights[i]->light->minDistance);
-		program.setUniformFloat(lighti + ".maxDistance", e.lights[i]->light->maxDistance);
-		program.setUniformFloat(lighti + ".sqrtAttenuation", e.lights[i]->light->sqrtAttenuation);
-		program.setUniformVector(lighti + ".up", e.lights[i]->light->up);
-		program.setUniformVector(lighti + ".direction", e.lights[i]->light->direction);
-
-		if (e.lights[i]->light->cubeMap != NULL && !cubeMapSet)
+		bool cubeMapSet = false;
+		for(int i = 0; i < lightCount; i++)
 		{
-			program.setUniformInt(lighti + ".type", 1);
-			bindTextureToShader(program, "light_cube_map", 5, e.lights[i]->light->cubeMap);
-			cubeMapSet = true;
+			float pos[4];
+			pos[0] = e.lights[i]->position.x;
+			pos[1] = e.lights[i]->position.y;
+			pos[2] = e.lights[i]->position.z;
+			pos[3] = 0.0f;
+			glLightfv(GL_LIGHT0 + i,GL_POSITION, (float*)pos);
+			glLightf(GL_LIGHT0 + i,	GL_CONSTANT_ATTENUATION,	e.lights[i]->light->constantAttenuation);
+			glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION,		e.lights[i]->light->linearAttenuation);
+			glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION,	e.lights[i]->light->quadraticAttenuation);
+
+			glLightfv(GL_LIGHT0 + i, GL_AMBIENT,	e.lights[i]->light->ambient.getfv());
+			glLightfv(GL_LIGHT0 + i, GL_DIFFUSE,	e.lights[i]->light->diffuse.getfv());
+			glLightfv(GL_LIGHT0 + i, GL_SPECULAR,	e.lights[i]->light->specular.getfv());
+
+			std::string lighti = std::string("lights[") + IntToStr(i) + "]";
+			program.setUniformFloat(lighti + ".k", e.lights[i]->light->k);
+			program.setUniformFloat(lighti + ".minDistance", e.lights[i]->light->minDistance);
+			program.setUniformFloat(lighti + ".maxDistance", e.lights[i]->light->maxDistance);
+			program.setUniformFloat(lighti + ".sqrtAttenuation", e.lights[i]->light->sqrtAttenuation);
+			program.setUniformVector(lighti + ".up", e.lights[i]->light->up);
+			program.setUniformVector(lighti + ".direction", e.lights[i]->light->direction);
+
+			if (e.lights[i]->light->cubeMap != NULL && !cubeMapSet)
+			{
+				program.setUniformInt(lighti + ".type", 1);
+				bindTextureToShader(program, "light_cube_map", 5, e.lights[i]->light->cubeMap);
+				cubeMapSet = true;
+			}
+			else
+			{
+				program.setUniformInt(lighti + ".type", 0);
+			}
 		}
-		else
+		if (!cubeMapSet)
 		{
-			program.setUniformInt(lighti + ".type", 0);
+			bindTextureToShader(program, "light_cube_map", 5, none);
 		}
+		glPopMatrix();
 	}
-	if (!cubeMapSet)
+
+	if (flags.lighting)
 	{
-		bindTextureToShader(program, "light_cube_map", 5, none);
-	}
-	glPopMatrix();
+		TexCoords3f* sTangent = NULL;
+		TexCoords3f* tTangent = NULL;
+		getTangentSpace(e.vertexes, e.getTexCoords(material.normal_map), e.faceMaterials, e.normals, &sTangent, &tTangent);
 
-	TexCoords3f* sTangent = NULL;
-	TexCoords3f* tTangent = NULL;
-	getTangentSpace(e.vertexes, e.getTexCoords(material.normal_map), e.faceMaterials, e.normals, &sTangent, &tTangent);
-
-	if (sTangent != NULL)	
-	{ 
-		glActiveTextureARB(GL_TEXTURE0_ARB + 7);
-		glClientActiveTextureARB(GL_TEXTURE0_ARB + 7);
-		
-		(this->*BindTexCoords3f)(sTangent);
+		if (sTangent != NULL)	
+		{ 
+			glActiveTextureARB(GL_TEXTURE0_ARB + 7);
+			glClientActiveTextureARB(GL_TEXTURE0_ARB + 7);
+			
+			(this->*BindTexCoords3f)(sTangent);
+		}
 	}
 }
 
@@ -145,9 +154,13 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 		
 		GLSL* program = NULL;
-		if (flags.useDebugShader)
+		if (!flags.textures)
 		{
-			program = BindShader(&shaderDebug);
+			program = BindShader(&shaderNoTexture, StringDict());
+		}
+		else if (flags.useDebugShader)
+		{
+			program = BindShader(&shaderDebug, StringDict());
 			if (program != NULL)
 			{
 				(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
@@ -156,7 +169,10 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 		}
 		else // use_std_shader
 		{
-			program = BindShader(&shaderStd);
+			StringDict parameters;
+			parameters["lighting"] = IntToStr(flags.lighting);
+			parameters["lighcount"] = "4";
+			program = BindShader(&shaderStd, parameters);
 			if (program != NULL)
 			{
 				(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
@@ -204,37 +220,47 @@ void OpenGL_Engine::bindTextureToShader(GLSL& program, const std::string& name, 
 	}
 }
 
-
-GLSL* OpenGL_Engine::BindShader(Shader* shader)
+bool OpenGL_Engine::loadShader(Shader* shader, const StringDict& parameters)
 {
-	if (shader->failed)
+	GLSL* GLSL_Shader = new GLSL;
+	ShaderOpenGL_ObjectKey key(shader->id, parameters);
+	shaders.insert(make_pair(key, ShaderOpenGL_Object()));
+	ShaderDict::iterator it = shaders.find(key);
+
+	if (GLSL_Shader->init(shader, parameters))
+	{
+//		it->second.loaded = true;
+		it->second.glid = GLSL_Shader->getGL_Id();
+		it->second.GLSL_Shader = GLSL_Shader;
+		it->second.failed = false;
+		return true;
+	}
+	else
+	{
+		it->second.failed = true;
+		return false;
+	}
+}
+
+GLSL* OpenGL_Engine::BindShader(Shader* shader, const StringDict& parameters)
+{
+	ShaderOpenGL_ObjectKey key(shader->id, parameters);
+	ShaderDict::iterator it = shaders.find(key);
+
+	if (it == shaders.end())
+	{
+		loadShader(shader, parameters);
+		it = shaders.find(key);
+	}
+
+	if (it->second.failed)
 	{
 		return NULL;
 	}
-	uid id = shader->getId(); 
-
-	OpenGL_Buffer& buf = buffer[id];
-
-	if (!buf.loaded)
+	else
 	{
-		GLSL* GLSL_Shader = new GLSL;
-		if (GLSL_Shader->init(shader))
-		{
-			buf.loaded = true;
-			buf.glid = GLSL_Shader->getGL_Id();
-			buf.object = (char*)GLSL_Shader;
-		}
-		else
-		{
-			shader->failed = true;
-		}
-	}
-
-	if (buf.loaded)
-	{
-		// setup variables
-		glUseProgramObjectARB(buf.glid);
-		return (GLSL*)buf.object;
+		glUseProgramObjectARB(it->second.glid);
+		return it->second.GLSL_Shader;
 	}
 	
 	return false;

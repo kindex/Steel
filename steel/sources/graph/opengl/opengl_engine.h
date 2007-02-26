@@ -72,6 +72,7 @@ public:
 private:
 	map<uid, LightShadow*> lights;
 	std::map<uid, OpenGL_Buffer> buffer;
+	ShaderDict shaders;
 	Flags flags;
 
 	GLuint normalisationCubeMap, lightCubeMap, distMap; // TODO: remove
@@ -81,13 +82,12 @@ private:
 	Image* none;
 	Shader shaderStd;
 	Shader shaderDebug;
+	Shader shaderNoTexture;
 
 	int maxLightsInShader;
 	GraphShadow* currentShadow;
 
-
-
-	void addChild(GraphShadow &, GameObject*);
+	void addChild(GraphShadow&, GameObject*);
 
 // ******************* SERVICES *******************
 	bool (OpenGL_Engine::*BindTexture)(Image& image, bool enable);
@@ -145,7 +145,9 @@ private:
 	void cleanBuffer(uid bufId);
 // ******************* OpenGL 2.0 *******************
 	bool DrawFill_MaterialStd_OpenGL20(GraphShadow&, const Faces&, MaterialStd&);
-	GLSL* BindShader(Shader*);
+	GLSL* BindShader(Shader*, const StringDict& parameters);
+	bool loadShader(Shader* shader, const StringDict& parameters);
+
 	void bindTextureToShader(GLSL& program, const std::string& name, int imageNum, Image* image);
 	void unbindTexCoords();
 	void DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, GLSL& program);
@@ -153,6 +155,8 @@ private:
 
 // ******************* OpenGL all *******************
 	void DrawFill_Material(GraphShadow &e, const Faces* triangles, Material* material);
+
+	void render(); // main function, render to screen or texture
 
 	bool		focused;
 	ProcessInfo info;

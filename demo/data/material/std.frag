@@ -19,24 +19,26 @@ uniform struct
 	float emissionk;
 } material;
 
-uniform struct
-{
-	int type;
-	float sqrtAttenuation;
-	float minDistance;
-	float maxDistance;
-//	sampler2D map;
-	float k;
-	vec3 up;
-	vec3 direction;
-} lights[4];
+#if lighting == 1
+	varying vec3 lightDir[lighcount];// TBN space
+	uniform struct
+	{
+		int type;
+		float sqrtAttenuation;
+		float minDistance;
+		float maxDistance;
+		float k;
+		vec3 up;
+		vec3 direction;
+	} lights[lighcount];
+	uniform samplerCube light_cube_map;
+	uniform sampler2D specular_map;
+#endif
 
-uniform sampler2D diffuse_map;
 uniform sampler2D normal_map;
+uniform sampler2D diffuse_map;
 uniform sampler2D emission_map;
-uniform sampler2D specular_map;
 uniform samplerCube env_map;
-uniform samplerCube light_cube_map;
 
 uniform int blending;
 uniform float env_k;
@@ -48,7 +50,7 @@ varying vec3 viewDirGlobal;     // global
 varying vec3 pixel_normal; // global
 
 varying vec2 texCoord0;
-varying vec3 lightDir[4];// TBN space
+
 
 vec3 norm;
 vec3 r;
@@ -58,6 +60,7 @@ float spec;
 float d;
 vec3 viewDirN;
 
+#if lighting == 1
 vec3 calcLighting(in int i)
 {
 	float distFromLight = distance(pixel_position, vec3(gl_LightSource[i].position));
@@ -80,7 +83,6 @@ vec3 calcLighting(in int i)
 			gl_LightSource[i].quadraticAttenuation * distFromLight*distFromLight
 			);
 
-	
 		localcolor = gl_LightSource[i].ambient.rgb;
 	       
 		vec3 lightDirN = lightDir[i]; // TBN
@@ -113,7 +115,7 @@ vec3 calcLighting(in int i)
 	
 	return localcolor;
 }
-
+#endif
 
 void main (void)
 {
@@ -125,20 +127,20 @@ void main (void)
     norm = (norm - 0.5) * 2.0;
     norm.y = -norm.y;
     norm = normalize(norm); // TBN
-    r = reflect(viewDirN, norm);
 
+#if lighting == 1
 	if (lightCount > 0)	{
-		color += calcLighting(0);
-		if (lightCount > 1)	{
-			color += calcLighting(1);
-			if (lightCount > 2)	{
-				color += calcLighting(2);
-				if (lightCount > 3)	{
-					color += calcLighting(3);
-				}
-			}
-		}
-	}
+	color += calcLighting(0);
+	if (lightCount > 1)	{
+	color += calcLighting(1);
+	if (lightCount > 2)	{
+	color += calcLighting(2);
+	if (lightCount > 3)	{
+	color += calcLighting(3);
+	}}}}
+#else
+	color += texture2D(diffuse_map, texCoord0).rgb;
+#endif
 
 	if (env_k > 0.0)
 	{

@@ -1,6 +1,9 @@
 #ifndef _COMMON_CONTAINERS_H_
 #define _COMMON_CONTAINERS_H_
 
+typedef std::map<std::string, std::string> StringDict;
+
+
 /*template<class T >
 void append(IN OUT std::vector<T>& base, IN std::vector<T>& tail)
 {

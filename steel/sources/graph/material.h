@@ -131,7 +131,7 @@ struct Shader
 	bool failed;
 
 	Shader(): failed(false), vertexShader(NULL), fragmentShader(NULL) { id = id = objectIdGenerator.genUid(); }
-
+	void load(const std::string& filename);
 	uid	 getId(){ return id; }
 };
 

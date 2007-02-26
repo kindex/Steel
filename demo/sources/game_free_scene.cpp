@@ -106,7 +106,7 @@ void GameFreeScene::handleEventKeyDown(std::string key)
 		framesToPass = 1;
 	}
 
-/*	if (key == "f1") physicEngine->conf->toggle("helperDrawLines");*/
+	if (key == "f1") graphEngine->conf->toggle("lighting");
 	if (key == "f2") graphEngine->conf->toggle("drawFace");
 	if (key == "f3") graphEngine->conf->toggle("drawWire");
 	if (key == "f4") graphEngine->conf->toggle("drawBump");
@@ -224,7 +224,7 @@ void GameFreeScene::process()
 
 		if (light != NULL)
 		{
-			v3 lightAt = flashlight.camera.getDirection() + flashlight.camera.getPosition();
+/*			v3 lightAt = flashlight.camera.getDirection() + flashlight.camera.getPosition();
 			v3 spectatorAt = spectator.camera.getDirection() + spectator.camera.getPosition();
 
 			v3 speedDir = (spectatorAt - lightAt).getNormalized();
@@ -242,6 +242,9 @@ void GameFreeScene::process()
 			flashlight.camera.set(spectator.camera.getPosition(),
 									lightAt - spectator.camera.getPosition(),
 									spectator.camera.getUpVector());
+*/
+
+			flashlight.camera = spectator.camera;
 
 			light->setPosition(flashlight.camera.getPosition(), 
 								flashlight.camera.getDirection(), 

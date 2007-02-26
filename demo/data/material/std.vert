@@ -1,3 +1,5 @@
+
+
 //
 // vertex shader
 //
@@ -11,22 +13,24 @@ uniform struct
 
 uniform int lightCount;
 uniform int blending;
-varying vec3 lightDir[4];// TBN space
 varying vec3 viewDir;     // tbn
 varying	vec3 pixel_position; // global
 varying vec3 viewDirGlobal;  // global
 varying vec2 texCoord0;
-
-vec3 t,b,n;
 varying vec3 pixel_normal; // global
 
-void calcLightDir(in int i)
-{
-	vec3 lightDirGlobal = normalize(vec3(gl_LightSource[i].position) - pixel_position); // global
-	lightDir[i] = vec3(	dot(t, lightDirGlobal),
-						dot(b, lightDirGlobal),
-						dot(n, lightDirGlobal));
-}
+vec3 t,b,n;
+
+#if lighting == 1
+	varying vec3 lightDir[lighcount];// TBN space
+	void calcLightDir(in int i)
+	{
+		vec3 lightDirGlobal = normalize(vec3(gl_LightSource[i].position) - pixel_position); // global
+		lightDir[i] = vec3(	dot(t, lightDirGlobal),
+							dot(b, lightDirGlobal),
+							dot(n, lightDirGlobal));
+	}
+#endif
 
 void main(void)
 {
@@ -51,6 +55,7 @@ void main(void)
 	viewDir.y = dot(b, viewDirGlobal);
 	viewDir.z = dot(n, viewDirGlobal);
 
+#if lighting == 1
 	if (lightCount > 0){
 		calcLightDir(0);
 		if (lightCount > 1)	{
@@ -63,4 +68,6 @@ void main(void)
 			}
 		}
 	}
+#endif
+
 }

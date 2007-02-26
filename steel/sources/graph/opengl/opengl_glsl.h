@@ -18,6 +18,7 @@
 #include "../graph_engine.h"
 #include "../../libs/opengl/libext.h"
 #include "../../res/text/text.h"
+#include "../../common/containers.h"
 
 namespace opengl
 {
@@ -32,9 +33,10 @@ public:
 	~GLSL();
 
 	GLuint getProgramId() { return programId; }
-	bool LoadShader(GLuint shader, Text* text);
+	bool loadShader(GLuint shader, Text* text, const StringDict& parameters);
+	std::string getShaderCode(Text* text, const StringDict& parameters);
 
-	bool init(Shader*);
+	bool init(Shader*, const StringDict& parameters);
 	bool isError();
 	void loadLog(GLuint object);
 	void bind();

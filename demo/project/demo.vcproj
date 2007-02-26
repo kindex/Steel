@@ -346,6 +346,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\data\material\no_texture.frag"
+					>
+				</File>
+				<File
+					RelativePath="..\data\material\no_texture.vert"
+					>
+				</File>
+				<File
 					RelativePath="..\data\material\std.frag"
 					>
 				</File>

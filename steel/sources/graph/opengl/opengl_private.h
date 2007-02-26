@@ -16,9 +16,32 @@
 
 #include "../../libs/opengl/libext.h"
 #include "../graph_engine.h"
+#include "../../common/containers.h"
+#include "opengl_glsl.h"
+#include <map>
 
 namespace opengl
 {
+
+struct ShaderOpenGL_ObjectKey
+{
+	ShaderOpenGL_ObjectKey(uid id, StringDict parameters) : id(id), parameters(parameters) {}
+
+	uid			id;
+	StringDict	parameters;
+	bool operator < (const ShaderOpenGL_ObjectKey& second) const
+	{
+		return id < second.id || id == second.id && parameters < second.parameters;
+	}
+};
+
+struct ShaderOpenGL_Object
+{
+	GLSL*	GLSL_Shader;
+	GLuint	glid;
+	bool	failed;
+};
+typedef std::map<ShaderOpenGL_ObjectKey, ShaderOpenGL_Object> ShaderDict;
 
 struct OpenGL_Buffer
 {
@@ -126,6 +149,9 @@ typedef
 
 struct Flags
 {
+	bool lighting;
+	bool textures;
+
 	bool drawFace;
 	bool drawWire;
 	bool drawLines;

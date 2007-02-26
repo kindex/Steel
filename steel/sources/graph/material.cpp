@@ -135,3 +135,9 @@ Material* createMaterial(std::string path)
 {
 	return createMaterial(resConfig.add(path));
 }
+
+void Shader::load(const std::string& filename)
+{
+	vertexShader = resText.add(filename + ".vert");
+	fragmentShader = resText.add(filename + ".frag");
+}

@@ -19,17 +19,17 @@
 namespace opengl
 {
 
-bool GLSL::init(Shader* _shader)
+bool GLSL::init(Shader* _shader, const StringDict& parameters)
 {
-	if(!GL_EXTENSION_GLSL) return false;
+	if (!GL_EXTENSION_GLSL) return false;
 
 	shader = _shader;
 
 	programId = glCreateProgramObjectARB();
-	if(isError()) return false;
+	if (isError()) return false;
 
     vertexShaderId = glCreateShaderObjectARB (GL_VERTEX_SHADER_ARB);
-   	if(!LoadShader(vertexShaderId, shader->vertexShader))
+   	if (!loadShader(vertexShaderId, shader->vertexShader, parameters))
 	{
 		loadLog(programId);
 		return false;
@@ -37,8 +37,11 @@ bool GLSL::init(Shader* _shader)
     glAttachObjectARB(programId, vertexShaderId);
 
     fragmentShaderId = glCreateShaderObjectARB (GL_FRAGMENT_SHADER_ARB);
-   	if(!LoadShader(fragmentShaderId, shader->fragmentShader))
+   	if (!loadShader(fragmentShaderId, shader->fragmentShader, parameters))
+	{
+		loadLog(programId);
 		return false;
+	}
     glAttachObjectARB(programId, fragmentShaderId);
 
 
@@ -62,22 +65,38 @@ bool GLSL::init(Shader* _shader)
 	return true;
 }
 
-bool GLSL::LoadShader(GLuint shader, Text *text)
+std::string GLSL::getShaderCode(Text* text, const StringDict& parameters)
 {
-	const char *body = (const char *) text->getText();
-    int			len  = text->getLength();
+	std::string shaderOriginal = text->getText();
+	std::string defines;
+
+	for EACH_CONST(StringDict, parameters, it)
+	{
+		defines += "#define " + it->first + " " + it->second + "\n";
+	}
+	defines += "#line 2\n";
+
+	return defines + shaderOriginal;
+}
+
+bool GLSL::loadShader(GLuint shader, Text* text, const StringDict& parameters)
+{
+	std::string shaderCode = getShaderCode(text, parameters);
+	debug(shaderCode);
+
+	const char *body = (const char*)shaderCode.c_str();
+    int			len  = shaderCode.length();
     GLint       compileStatus;
 
     glShaderSourceARB(shader, 1, &body,  &len);
-
-                                        // compile the particle vertex shader, and print out
     glCompileShaderARB(shader);
 
-    if (isError())              // check for OpenGL errors
-        return false;
+    if (isError())
+	{
+		return false;
+	}
 
     glGetObjectParameterivARB(shader, GL_OBJECT_COMPILE_STATUS_ARB, &compileStatus);
-
     loadLog(shader);
 
     return compileStatus != 0;

@@ -156,12 +156,15 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	total.triangleCount = 0;
 	total.batchCount = 0;
 
+	flags.lighting = conf->getb("lighting", true);
+	flags.textures = conf->getb("textures", true);
 	flags.drawFace = conf->getb("drawFace", true);
 	flags.drawWire = conf->getb("drawWire", false) && DrawWire != NULL;
 	flags.drawLines = conf->getb("drawLines", false) && DrawLines != NULL;
 	flags.drawNormals = conf->getb("drawNormals", false) && DrawNormals != NULL;
 	flags.drawVertexes = conf->getb("drawVertexes", false) && DrawVertexes != NULL;
 	flags.drawAABB = conf->getb("drawAABB", false) && DrawAABB;
+
 	flags.useDebugShader = conf->getb("use_debug_shader", false);
 	flags.debugShaderMode = conf->geti("debug_shader_mode", 2);
 
@@ -190,7 +193,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 		jt->second->position = jt->second->light->position * jt->second->shadow->realPosition;
 	}
 
-	for EACH(ShadowPVector,  shadows, it)
+	for EACH(ShadowPVector, shadows, it)
 	{
 		GraphShadow &shadow = *GS(*it);
 		shadow.lights.clear();
@@ -213,6 +216,26 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	{
 		glClear(clear);
 	}
+
+	render();
+
+	if (conf->geti("swapBuffers", 1))
+	{
+//		glFlush(); // TODO: flush in thread
+		(this->*FlushOpenGL_Window)();
+	}
+
+	GLenum errorCode = glGetError();
+	if (errorCode != 0)
+	{
+		log_msg("error opengl", string("OpenGL error #") + IntToStr(errorCode));
+	}
+
+	return true;
+}
+
+void OpenGL_Engine::render()
+{
 	pvector<BlendingFaces> blendingFaces;
 //	steel::vector<int> elementAlpha;
 // В начале выводим только непрозрачные объекты
@@ -308,20 +331,6 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
 		glPopAttrib();
 	}
-
-	if (conf->geti("swapBuffers", 1))
-	{
-//		glFlush(); // TODO: flush in thread
-		(this->*FlushOpenGL_Window)();
-	}
-
-	GLenum errorCode = glGetError();
-	if (errorCode != 0)
-	{
-		log_msg("error opengl", string("OpenGL error #") + IntToStr(errorCode));
-	}
-
-	return true;
 }
 
 /*
@@ -548,11 +557,9 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	{
 		DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
 
-		shaderStd.vertexShader = resText.add("material/" + conf->gets("std_shader", "std") + ".vert");
-		shaderStd.fragmentShader = resText.add("material/" + conf->gets("std_shader", "std") + ".frag");
-
-		shaderDebug.vertexShader = resText.add("material/" + conf->gets("debug_shader", "debug") + ".vert");
-		shaderDebug.fragmentShader = resText.add("material/" + conf->gets("debug_shader", "debug") + ".frag");
+		shaderStd.load("material/" + conf->gets("std_shader", "std"));
+		shaderDebug.load("material/" + conf->gets("debug_shader", "debug"));
+		shaderNoTexture.load("material/" + conf->gets("no_texture_shader", "no_texture"));
 
 		maxLightsInShader = conf->geti("max_lights", 4);
 	}
