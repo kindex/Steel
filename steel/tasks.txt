@@ -31,7 +31,6 @@
 344. JPEG. JPEG file loader same as BMP loader. / KindeX. [3]. (3d). 20061231 (steel 1.1)
 405. ASE. ASE scene file loader. / KindeX. [3]. (3d).
 448. OpenGL: autoresize images that image size is power of 2. / KindeX. [3]. (1d).
-401. OpenGL: shadows. / KindeX. KindeX. [4]. (3d).
 460. Tests: implement selftests for math. / *. KindeX. [5]. (2d).
 461. Tests: implement selftests for vector. / *. KindeX. [5]. (2d).
 404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. KindeX. [6]. (1w).
@@ -43,19 +42,21 @@
 
 ** Freezed Construction ****************************************************************************
 345. PNG. PNG file loader same as BMP loader. / Kane. KindeX. [4.]
-367. OpenGL 2.0. Shaders, dynamic lighting (many lights), shader fro ATI. / KindeX. [1]
+367. OpenGL 2.0. Shaders, dynamic lighting (many lights), shader for ATI. / KindeX. [1]
 462. Tests: implement selftests for configs. / *. KindeX. [5].
 
 ** Construction ************************************************************************************
-369. CD. Collision detection for particles. / Def, KindeX. KindeX. [7]. (1w).
-402. OpenGL: blending. Glass, sprites (with correct lighting). Sort blending polygons. / KindeX. KindeX. [4]. (3d).
-459. Particle System Documentation: Research configuration parameters / Def, Kindex. Def. [3]. (3d) 
+503. Audio, Res: Ogg loader. / Kuzmi4.
+401. OpenGL: shadows. / KindeX.
+369. CD. Collision detection for particles. / Def, KindeX.
+402. OpenGL: blending. Glass, sprites (with correct lighting). Sort blending polygons. / KindeX.
+459. Particle System Documentation: Research configuration parameters / Def.
 
 ** Done Construction *******************************************************************************
-486. Res. Remeber resources with error. Do not load image, if it fails before. / *. KindeX. [10]. (1d)
-487. Res. OpenGL. Remeber GLSL shaders with error. Do not compile shader, if it fails before. / *. KindeX. [10]. (1d)
-348. Config bug. Error in finding value by templates through parent config. / KindeX. KindeX. [5].
-406. Kinematics: add simple rotation and path movement to objects (combiner). Local coordinate system. / KindeX. KindeX. [1].
+486. Res. Remeber resources with error. Do not load image, if it fails before. / KindeX.
+487. Res. OpenGL. Remeber GLSL shaders with error. Do not compile shader, if it fails before. / KindeX.
+348. Config bug. Error in finding value by templates through parent config. / KindeX.
+406. Kinematics: add simple rotation and path movement to objects (combiner). Local coordinate system. / KindeX.
 
 
 ** Testing *****************************************************************************************
