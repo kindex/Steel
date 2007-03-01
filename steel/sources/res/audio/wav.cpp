@@ -54,7 +54,7 @@ bool WAV::init(const std::string name, const std::string dir)
 	format = FORMAT_MONO16;
 	data = NULL;
 	size = 0;
-	frequency = 22050;
+	frequency = 44100;
 	loop = false;
 	if (buffer_)
 	{

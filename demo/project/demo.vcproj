@@ -150,7 +150,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;STEEL_COMPILER_VERSION=80;LIB_OPENAL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				PrecompiledHeaderFile="$(IntDir)\steel.pch"
 				WarningLevel="3"
 				SuppressStartupBanner="true"

@@ -18,11 +18,6 @@
 #include "audio.h"
 
 
-#define FORMAT_MONO8                          0x1100
-#define FORMAT_MONO16                         0x1101
-#define FORMAT_STEREO8                        0x1102
-#define FORMAT_STEREO16                       0x1103
-
 typedef struct				// WAV File-header
 {
 	unsigned char id[4];	// ALubyte

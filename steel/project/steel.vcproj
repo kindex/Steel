@@ -20,7 +20,7 @@
 			IntermediateDirectory="..\temp\$(SolutionName).VS8.$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
-			UseOfMFC="0"
+			UseOfMFC="1"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
 			>
@@ -53,7 +53,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;STEEL_COMPILER_VERSION=80;LIB_STEEL;LIB_OPENAL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				PrecompiledHeaderFile="$(IntDir)\steel.pch"
 				AssemblerListingLocation="$(IntDir)\"
 				WarningLevel="3"
@@ -529,6 +529,10 @@
 					</File>
 					<File
 						RelativePath="..\sources\res\audio\audio.h"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\res\audio\ogg.cpp"
 						>
 					</File>
 					<File

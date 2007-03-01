@@ -116,7 +116,7 @@ bool registerResources()
 	resModel.setId("model");	resModel.registerResLoader(createClass<Model_3DS, Model>);
 	resText.setId("text");	resText.registerResLoader(createClass<TextFile, Text>);
 	resAudio.registerResLoader(createClass<WAV, Audio>);            resAudio.setId("audio");
-//	resAudio.registerResLoader(createClass<Audio, OGG>);            
+	resAudio.registerResLoader(createClass<OGG, Audio>);            resAudio.setId("audio");
 
 	return true;
 }

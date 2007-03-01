@@ -28,6 +28,10 @@
 #include "main.h"
 #include "game_factory.h"
 
+// Kuzmich's awful tests
+#include <objects/combiner/combiner.h>
+#include <objects/combiner/audio/simple_sound.h>
+
 using namespace std;
 
 std::string commandLine;
@@ -101,7 +105,18 @@ int main(int argc, char *argv[])
 		delete audio;
 		audio = NULL;
 	}
-
+	// Kuzmich's awful tests
+	AudioObject* obj = new SimpleSound();
+	Sound* tWav = new Sound();
+	Sound* tOgg = new Sound();
+	tWav->sound = resAudio.add("audio/thunder");
+	tOgg->sound = resAudio.add("audio/intro");
+	tWav->isLoop = true;
+	tOgg->isLoop = true;
+	tOgg->gain = .8f;
+	obj->engine = audio;
+	obj->soundPlay(tWav);
+	obj->soundPlay(tOgg);
 // ******************* GAME *************************
 	GameFactory gameFactory;
 	Game* game = gameFactory.createGame(steelConfig->gets("game_class"));
