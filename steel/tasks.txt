@@ -31,13 +31,15 @@
 344. JPEG. JPEG file loader same as BMP loader. / KindeX. [3]. (3d). 20061231 (steel 1.1)
 405. ASE. ASE scene file loader. / KindeX. [3]. (3d).
 448. OpenGL: autoresize images that image size is power of 2. / KindeX. [3]. (1d).
-460. Tests: implement selftests for math. / *. KindeX. [5]. (2d).
-461. Tests: implement selftests for vector. / *. KindeX. [5]. (2d).
-404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. KindeX. [6]. (1w).
+404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. KindeX. [5]. (1w).
+505. AudioRes: scalable loader. / Kuzmi4. KindeX. [5]
+
 475. Design and implement input engine in style of graph engine (callback, config, memory). / *. KindeX. [8]. (1w).
 400. Config comments. Load comment from config to dump configs with comments. / *. KindeX. [9]. (3h).
 411. OpenGL: custom normal map mipmap levels. / *. KindeX. [9]. (3h).
 413. OpenGL: implement texture units choosing in material config. / *. KindeX. [9]. (2d).
+460. Tests: implement selftests for math. / *. KindeX. [9]. (2d).
+461. Tests: implement selftests for vector. / *. KindeX. [9]. (2d).
 446. Logger: put in log revision number, compilation date and compilation computer name. / *. KindeX. [10]. (1d).
 
 ** Freezed Construction ****************************************************************************
