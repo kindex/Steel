@@ -20,19 +20,6 @@ varying vec2 texCoord0;
 varying vec3 texCoord7;
 varying vec3 pixel_normal; // global
 
-vec3 t,b,n;
-
-#if lighting == 1
-	varying vec3 lightDir[lighcount];// TBN space
-	void calcLightDir(in int i)
-	{
-		vec3 lightDirGlobal = normalize(vec3(gl_LightSource[i].position) - pixel_position); // global
-		lightDir[i] = vec3(	dot(t, lightDirGlobal),
-							dot(b, lightDirGlobal),
-							dot(n, lightDirGlobal));
-	}
-#endif
-
 void main(void)
 {
     vec3 pos;
@@ -40,6 +27,7 @@ void main(void)
     vec3 r;
     vec3 v;
     vec3 binormal;
+    vec3 t,b,n;
     
 	pixel_position = vec3 ( gl_ModelViewMatrix * gl_Vertex ); // global
 	pixel_normal = normalize ( gl_NormalMatrix * gl_Normal ); // global
@@ -56,20 +44,4 @@ void main(void)
 	viewDir.x = dot(t, viewDirGlobal);
 	viewDir.y = dot(b, viewDirGlobal);
 	viewDir.z = dot(n, viewDirGlobal);
-
-#if lighting == 1
-	if (lightCount > 0){
-		calcLightDir(0);
-		if (lightCount > 1)	{
-			calcLightDir(1);
-			if (lightCount > 2)	{
-				calcLightDir(2);
-				if (lightCount > 3)	{
-					calcLightDir(3);
-				}
-			}
-		}
-	}
-#endif
-
 }

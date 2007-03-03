@@ -20,7 +20,6 @@ uniform struct
 } material;
 
 #if lighting == 1
-	varying vec3 lightDir[lighcount];// TBN space
 	uniform struct
 	{
 		int type;
@@ -61,8 +60,6 @@ float d;
 vec3 viewDirN;
 vec3 t,b,n;
 
-vec3 lightDir1[lighcount];// TBN space
-
 #if lighting == 1
 vec3 calcLighting(in int i)
 {
@@ -89,19 +86,18 @@ vec3 calcLighting(in int i)
 		localcolor = gl_LightSource[i].ambient.rgb;
 
 		vec3 lightDirGlobal = normalize(vec3(gl_LightSource[i].position) - pixel_position); // global
-		lightDir1[i] = vec3(	dot(t, lightDirGlobal),
+		vec3 lightDir = vec3(	dot(t, lightDirGlobal),
 							dot(b, lightDirGlobal),
 							dot(n, lightDirGlobal));
 
-       
-		vec3 lightDirN = lightDir1[i]; // TBN
-		lightDirN = normalize(lightDirN);
+
+		lightDir = normalize(lightDir);
 		
-		intensity = max(dot(lightDirN, norm), 0.0) * material.diffusek;
+		intensity = max(dot(lightDir, norm), 0.0) * material.diffusek;
 		
 		localcolor = vec3(texture2D(diffuse_map, texCoord0))*max(intensity, 0.0)*gl_LightSource[i].diffuse.rgb;
 	    
-		spec = max(dot(r, lightDirN), 0.0);
+		spec = max(dot(r, lightDir), 0.0);
 		spec = pow(spec, material.specularPower) * material.speculark;
 	    
 		localcolor += spec * vec3(texture2D(specular_map, texCoord0))*gl_LightSource[i].specular.rgb;
@@ -135,7 +131,7 @@ vec3 calcLighting(in int i)
 void main (void)
 {
 	t = gl_NormalMatrix * texCoord7.xyz;
-	n = gl_NormalMatrix * pixel_normal.xyz;
+	n = pixel_normal.xyz;
 	b = cross(n, t);
 	
 	viewDirN = normalize(viewDir);// tbn
