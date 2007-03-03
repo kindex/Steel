@@ -52,6 +52,7 @@ struct Shader
 	std::string getShaderDecription() const;
 
 	GLint findVariable(const std::string& name);
+	void clearCache();
 
 private:
 	OpenGL_Engine&	engine;
@@ -69,6 +70,11 @@ private:
 
 	typedef std::map<std::string, GLint> VariableLocationCache;
 	VariableLocationCache variableLocationCache;
+
+	std::map<GLint, float> floatCache;
+	std::map<GLint, int> intCache;
+	std::map<GLint, v3> v3Cache;
+	std::map<GLint, GLint> imageCache;
 };
 
 struct ShaderKey

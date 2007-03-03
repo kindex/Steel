@@ -100,25 +100,6 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 // ------------ Draw Scene ---------------
 	collectInformationFromObjects();
 
-	program = NULL;
-	if (flags.glsl)
-	{
-		if (!flags.textures)
-		{
-			program = bindShader(flags.shaderNoTexture, StringDict());
-		}
-		else if (flags.useDebugShader)
-		{
-			program = bindShader(flags.shaderDebug, StringDict());
-		}
-		else// use_std_shader
-		{
-			StringDict parameters;
-			parameters["lighting"] = IntToStr(flags.lighting);
-			parameters["lighcount"] = "4";
-			program = bindShader(flags.shaderStd, parameters);
-		}
-	}
 	render();
 	program->unbind();
 
@@ -141,8 +122,42 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	return true;
 }
 
+void OpenGL_Engine::setupShaderVariable(const std::string& key, const std::string& value)
+{
+	if (currentShaderVariables[key] != value)
+	{
+		currentShaderVariables[key] = value;
+		program = bindShader(flags.shaderStd, currentShaderVariables);
+	}
+}
+
 void OpenGL_Engine::render()
 {
+	program = NULL;
+	if (flags.glsl)
+	{
+		if (!flags.textures)
+		{
+			program = bindShader(flags.shaderNoTexture, StringDict());
+		}
+		else if (flags.useDebugShader)
+		{
+			program = bindShader(flags.shaderDebug, StringDict());
+		}
+		else// use_std_shader
+		{
+			currentShaderVariables.clear();
+			currentShaderVariables["lighting"] = IntToStr(flags.lighting);
+			currentShaderVariables["lighcount"] = "4";
+			currentShaderVariables["blending"] = "0";
+			program = bindShader(flags.shaderStd, currentShaderVariables);
+		}
+		if (program != NULL)
+		{
+			program->clearCache();
+		}
+	}
+
 	pvector<BlendingFaces> blendingFaces;
 // В начале выводим только непрозрачные объекты
 
@@ -156,6 +171,14 @@ void OpenGL_Engine::render()
 		}
 	}
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
+	if (flags.textures && !flags.useDebugShader)
+	{
+		currentShaderVariables.clear();
+		currentShaderVariables["lighting"] = IntToStr(flags.lighting);
+		currentShaderVariables["lighcount"] = "4";
+		currentShaderVariables["blending"] = "1";
+		program = bindShader(flags.shaderStd, currentShaderVariables);
+	}
 
 	if (flags.blend && flags.transparent && !blendingFaces.empty())
 	{
@@ -474,6 +497,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		StringDict parameters;
 		parameters["lighting"] = IntToStr(flags.lighting);
 		parameters["lighcount"] = "4";
+		parameters["blending"] = "0";
 		if (bindShader(flags.shaderStd, parameters))
 		{
 			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;

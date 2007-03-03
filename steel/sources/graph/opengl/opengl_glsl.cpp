@@ -39,6 +39,8 @@ bool Shader::init(Text*	_vertexShader, Text* _fragmentShader, const StringDict& 
 	fragmentShader = _fragmentShader;
 	parameters = _parameters;
 
+	log_msg("opengl glsl", "Compiling " + getShaderDecription());
+
 	programId = glCreateProgramObjectARB();
 	if (isError()) return false;
 
@@ -221,10 +223,15 @@ GLint Shader::findVariable(const std::string& name)
 bool Shader::setUniformFloat(const std::string& name, float value)
 {
 	GLint loc = findVariable(name);
-
+	std::map<GLint, float>::iterator it = floatCache.find(loc);
+	if (it != floatCache.end() && it->second == value)
+	{
+		return true; // already set
+	}
 	if (loc >= 0)
 	{
 		glUniform1fARB(loc, value);
+		floatCache[loc] = value;
 		return true;
 	}
 
@@ -234,10 +241,15 @@ bool Shader::setUniformFloat(const std::string& name, float value)
 bool Shader::setUniformVector(const std::string& name, const v3& value)
 {
 	GLint loc = findVariable(name);
-
+	std::map<GLint, v3>::iterator it = v3Cache.find(loc);
+	if (it != v3Cache.end() && it->second == value)
+	{
+		return true; // already set
+	}
     if (loc >= 0)
 	{
 	    glUniform3fvARB(loc, 1, value);
+		v3Cache[loc] = value;
         return true;
 	}
     return false;
@@ -246,9 +258,15 @@ bool Shader::setUniformVector(const std::string& name, const v3& value)
 bool Shader::setUniformInt(const std::string& name, int value)
 {
 	GLint loc = findVariable(name);
+	std::map<GLint, int>::iterator it = intCache.find(loc);
+	if (it != intCache.end() && it->second == value)
+	{
+		return true; // already set
+	}
     if (loc >= 0)
 	{
 		glUniform1iARB(loc, value);
+		intCache[loc] = value;
 	    return true;
 	}
 	return false;
@@ -265,9 +283,16 @@ void Shader::bindTexture(const std::string& name, Image* image)
 		(engine.*(engine.BindTexture))(*image, false);
 
 		GLint loc = findVariable(name);
+		std::map<GLint, GLint>::iterator it = imageCache.find(loc);
+		if (it != imageCache.end() && it->second == textureIndex)
+		{
+			textureIndex++;
+			return;
+		}
 		if (loc >= 0)
 		{
 			glUniform1iARB(loc, textureIndex);
+			imageCache[loc] = textureIndex;
 			textureIndex++;
 		}
 		else
@@ -279,7 +304,14 @@ void Shader::bindTexture(const std::string& name, Image* image)
 
 std::string Shader::getShaderDecription() const
 {
-	return fragmentShader->getFileName() + " (" + joinMap(parameters, ", ") + ")";
+	if (fragmentShader != NULL)
+	{
+		return fragmentShader->getFileName() + " (" + joinMap(parameters, ", ") + ")";
+	}
+	else
+	{
+		return "<unknown source> (" + joinMap(parameters, ", ") + ")";
+	}
 }
 
 void Shader::clearTextures()
@@ -287,5 +319,12 @@ void Shader::clearTextures()
 	textureIndex = 0;
 }
 
+void Shader::clearCache()
+{
+	floatCache.clear();
+	intCache.clear();
+	v3Cache.clear();
+	imageCache.clear();
+}
 
 } // namespace opengl

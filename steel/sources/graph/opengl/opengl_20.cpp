@@ -26,10 +26,10 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 	shader.clearTextures();
 	shader.bindTexture("diffuse_map",  material.diffuse_map.image  ? material.diffuse_map.image  : none);
 	shader.bindTexture("emission_map", material.emission_map.image ? material.emission_map.image : black);
-	shader.bindTexture("normal_map",   material.normal_map.image   ? material.normal_map.image   : zeroNormal);
 
 	if (flags.lighting)
 	{
+		shader.bindTexture("normal_map",   material.normal_map.image   ? material.normal_map.image   : zeroNormal);
 		shader.bindTexture("specular_map", material.specular_map.image ? material.specular_map.image : white); // TODO: env map koef
 	}
 	if (material.env_map.cubeMap != NULL)
@@ -48,18 +48,14 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 	shader.setUniformFloat("material.diffusek", material.diffuse_map.k);
 	shader.setUniformFloat("material.emissionk", material.emission_map.k);
 
-	shader.setUniformVector("camera.position", info.camera.getPosition());
 	shader.setUniformVector("camera.direction", info.camera.getDirection());
+	shader.setUniformVector("camera.position", info.camera.getPosition());
 	shader.setUniformVector("camera.upVector", info.camera.getUpVector());
-
-	shader.setUniformInt("blending", material.blend);
 
 	if (flags.lighting)
 	{
-		int lightCount = (int)e.lights.size();
-		if (lightCount > flags.maxLightsInShader) lightCount = flags.maxLightsInShader;
+		int lightCount = min((int)e.lights.size(), flags.maxLightsInShader);
 
-		shader.setUniformInt("lightCount", lightCount);
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		glLoadIdentity();
@@ -162,6 +158,8 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 		}
 		if (flags.textures) // use_std_shader
 		{
+			setupShaderVariable("lighcount", IntToStr(min((int)e.lights.size(), flags.maxLightsInShader)));
+
 			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
 			DrawFill_SetupStdShader_OpenGL20(e, faces, material, *program);
 		}

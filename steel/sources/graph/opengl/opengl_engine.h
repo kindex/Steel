@@ -149,6 +149,8 @@ private:
 	void DrawFill_SetupDebugShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
 	friend struct Shader;
 	Shader* program;
+	StringDict currentShaderVariables;
+	void setupShaderVariable(const std::string& key, const std::string& value);
 // ******************* OpenGL all *******************
 	void collectInformationFromObjects();
 	void render(); // main function, render to screen or texture

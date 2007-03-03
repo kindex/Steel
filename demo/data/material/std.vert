@@ -9,8 +9,6 @@ uniform struct
 	vec3 upVector;
 } camera;
 
-uniform int lightCount;
-uniform int blending;
 varying vec3 viewDir;     // tbn
 varying	vec3 pixel_position; // global
 varying vec3 viewDirGlobal;  // global

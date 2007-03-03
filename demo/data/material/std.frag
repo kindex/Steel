@@ -8,8 +8,6 @@ uniform struct
 	vec3 upVector;
 } camera;
 
-uniform int lightCount;
-
 uniform struct
 {
 	float specularPower;
@@ -38,7 +36,6 @@ uniform sampler2D diffuse_map;
 uniform sampler2D emission_map;
 uniform samplerCube env_map;
 
-uniform int blending;
 uniform float env_k;
 
 varying vec3 viewDir;     // tbn
@@ -59,7 +56,7 @@ float d;
 vec3 viewDirN;
 vec3 t,b,n;
 
-#if lighting == 1
+#if lighting == 1 && lighcount >= 1
 vec3 calcLighting(in int i)
 {
 	float distFromLight = distance(pixel_position, vec3(gl_LightSource[i].position));
@@ -129,6 +126,9 @@ vec3 calcLighting(in int i)
 
 void main (void)
 {
+    color = vec3(texture2D(emission_map, texCoord0))*material.emissionk; // emission
+
+#if lighting == 1 && lighcount >= 1
     t = gl_NormalMatrix * texCoord7.xyz;
     n = pixel_normal.xyz;
     b = cross(n, t);
@@ -140,21 +140,20 @@ void main (void)
 	
     viewDirN = normalize(viewDir);// tbn
     r = reflect(viewDirN, norm);
-	
-    color = vec3(texture2D(emission_map, texCoord0))*material.emissionk; // emission
-	
 
-#if lighting == 1
-	if (lightCount > 0)	{
 	color += calcLighting(0);
-	if (lightCount > 1)	{
+#if lighcount >= 2
 	color += calcLighting(1);
-	if (lightCount > 2)	{
+#if lighcount >= 3
 	color += calcLighting(2);
-	if (lightCount > 3)	{
+#if lighcount >= 4
 	color += calcLighting(3);
-	}}}}
-#else
+#endif
+#endif
+#endif
+#endif
+
+#if lighting == 0
 	color += texture2D(diffuse_map, texCoord0).rgb;
 #endif
 
@@ -163,20 +162,10 @@ void main (void)
 		color += textureCube(env_map, r).rgb * env_k;
 	}
 	
-	if (blending == 0)
-	{
-	    gl_FragColor = vec4(color, 1.0); // no blending
-	}
-	else if (blending == 1)
-	{
-	    gl_FragColor = vec4(color, texture2D(diffuse_map, texCoord0).a + texture2D(diffuse_map, texCoord0).a); // blend factor from texture
-	}
-	else if (blending == 2)
-	{
-	    gl_FragColor = vec4(color, clamp((color.r + color.g + color.b)/3.0, 0.0, 1.0)); // blend factor ~ white
-	}
-	else
-	{
-	    gl_FragColor = vec4(color, 1.0 - clamp((color.r + color.g + color.b)/3.0, 0.0, 1.0)); // blend factor ~ white
-	}
+#if blending == 0
+    gl_FragColor = vec4(color, 1.0); // no blending
+#endif
+#if blending == 1
+    gl_FragColor = vec4(color, texture2D(diffuse_map, texCoord0).a + texture2D(diffuse_map, texCoord0).a); // blend factor from texture
+#endif
 }
