@@ -27,6 +27,7 @@
 ** Open ********************************************************************************************
 
 368. Path Kinematic. Physic Engine - Object movement by trajectory. / KindeX. KindeX. [1]. (1w).
+515. OpenGL bug: shader on ATI. / KindeX. [2].
 364. Quake MAP. Quake MAP (scene) loader. / *. KindeX. [3]. (3d).
 344. JPEG. JPEG file loader same as BMP loader. / KindeX. [3]. (3d). 20061231 (steel 1.1)
 405. ASE. ASE scene file loader. / KindeX. [3]. (3d).
@@ -44,17 +45,17 @@
 
 ** Freezed Construction ****************************************************************************
 345. PNG. PNG file loader same as BMP loader. / Kane. KindeX. [4.]
-367. OpenGL 2.0. Shaders, dynamic lighting (many lights), shader for ATI. / KindeX. [1]
 462. Tests: implement selftests for configs. / *. KindeX. [5].
 
 ** Construction ************************************************************************************
 503. Audio, Res: Ogg loader. / Kuzmi4.
 401. OpenGL: shadows. / KindeX.
 369. CD. Collision detection for particles. / Def, KindeX.
-402. OpenGL: blending. Glass, sprites (with correct lighting). Sort blending polygons. / KindeX.
 459. Particle System Documentation: Research configuration parameters / Def.
 
 ** Done Construction *******************************************************************************
+367. OpenGL 2.0. Shaders, dynamic lighting (many lights). / KindeX. [1]
+402. OpenGL: blending. Glass, sprites (with correct lighting). Sort blending polygons. / KindeX.
 486. Res. Remeber resources with error. Do not load image, if it fails before. / KindeX.
 487. Res. OpenGL. Remeber GLSL shaders with error. Do not compile shader, if it fails before. / KindeX.
 348. Config bug. Error in finding value by templates through parent config. / KindeX.
