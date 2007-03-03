@@ -148,6 +148,18 @@ void main (void)
 	color += calcLighting(2);
 #if lighcount >= 4
 	color += calcLighting(3);
+#if lighcount >= 5
+	color += calcLighting(5);
+#if lighcount >= 6
+	color += calcLighting(6);
+#if lighcount >= 7
+	color += calcLighting(7);
+#if lighcount >= 8
+	color += calcLighting(8);
+#endif
+#endif
+#endif
+#endif
 #endif
 #endif
 #endif

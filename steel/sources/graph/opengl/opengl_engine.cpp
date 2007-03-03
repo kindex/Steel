@@ -101,7 +101,6 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	collectInformationFromObjects();
 
 	render();
-	program->unbind();
 
 	renderDebug();
 
@@ -148,13 +147,7 @@ void OpenGL_Engine::render()
 		{
 			currentShaderVariables.clear();
 			currentShaderVariables["lighting"] = IntToStr(flags.lighting);
-			currentShaderVariables["lighcount"] = "4";
 			currentShaderVariables["blending"] = "0";
-			program = bindShader(flags.shaderStd, currentShaderVariables);
-		}
-		if (program != NULL)
-		{
-			program->clearCache();
 		}
 	}
 
@@ -173,11 +166,7 @@ void OpenGL_Engine::render()
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
 	if (flags.textures && !flags.useDebugShader)
 	{
-		currentShaderVariables.clear();
-		currentShaderVariables["lighting"] = IntToStr(flags.lighting);
-		currentShaderVariables["lighcount"] = "4";
-		currentShaderVariables["blending"] = "1";
-		program = bindShader(flags.shaderStd, currentShaderVariables);
+		setupShaderVariable("blending", "1");
 	}
 
 	if (flags.blend && flags.transparent && !blendingFaces.empty())
@@ -259,6 +248,7 @@ void OpenGL_Engine::render()
 
 		glPopAttrib();
 	}
+	program->unbind();
 }
 
 /*
@@ -433,7 +423,9 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	int openglVersioni;
 	
 	if(openglVersions.length() >= 3)
+	{
 		openglVersioni = (openglVersions[0] - '0')*10 + (openglVersions[2] - '0');
+	}
 	else
 	{
 		log_msg("graph opengl error opengl_info", "Could not detect OpenGL version. Using 1.0");
@@ -494,18 +486,41 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	setupVariables();
 	if (version >= 20 && GL_EXTENSION_GLSL && conf->getb("use_glsl", true))
 	{
+		flags.maxLightsInShader = conf->geti("max_lights", 4);
 		StringDict parameters;
 		parameters["lighting"] = IntToStr(flags.lighting);
-		parameters["lighcount"] = "4";
+		parameters["lighcount"] = IntToStr(flags.maxLightsInShader);
 		parameters["blending"] = "0";
 		if (bindShader(flags.shaderStd, parameters))
 		{
-			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
 			flags.glsl = true;
+			log_msg("info opengl glsl", "Your video driver supports GLSL. Test shader compiled succesefully. Max light count is set to " + IntToStr(flags.maxLightsInShader));
 		}
 		else
 		{
-			log_msg("warning opengl glsl", "Your video driver supports GLSL, but it cannot compile default shader. Swithing to mutitexture renderer (OepnGL 1.3)");
+			flags.maxLightsInShader--;
+			while (flags.maxLightsInShader > 0)
+			{
+				parameters["lighcount"] = IntToStr(flags.maxLightsInShader);
+				if (bindShader(flags.shaderStd, parameters))
+				{
+					break;
+				}
+				flags.maxLightsInShader--;
+			}
+			if (flags.maxLightsInShader <= 0)
+			{
+				log_msg("warning opengl glsl", "Your video driver supports GLSL, but it cannot compile default shader. Swithing to mutitexture renderer (OepnGL 1.3)");
+			}
+			else
+			{
+				log_msg("warning opengl glsl", "Your video driver supports GLSL, but max light count will be limited to " + IntToStr(flags.maxLightsInShader));
+				flags.glsl = true;
+			}
+		}
+		if (flags.glsl)
+		{
+			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
 		}
 	}
 	else
@@ -768,7 +783,6 @@ void OpenGL_Engine::setupVariables()
 	flags.drawAABB = conf->getb("drawAABB", false) && DrawAABB;
 	flags.useDebugShader = conf->getb("use_debug_shader", false);
 	flags.debugShaderMode = conf->geti("debug_shader_mode", 2);
-	flags.maxLightsInShader = conf->geti("max_lights", 4);
 
 	flags.shaderStd = "material/" + conf->gets("std_shader", "std");
 	flags.shaderDebug = "material/" + conf->gets("debug_shader", "debug");
