@@ -36,7 +36,8 @@
 404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. KindeX. [5]. (1w).
 505. AudioRes: scalable loader. / Kuzmi4. KindeX. [5]
 518. Particle system emitter. Add more parameters. / KindeX. [5]. (1d).
-519. Particle system renderer: meta-balls. / Def. [5]. (1d).
+519. Particle system renderer: meta-balls. / Def. [5].
+521. Document engine. / KindeX. [5]. (1w).
 
 475. Design and implement input engine in style of graph engine (callback, config, memory). / *. KindeX. [8]. (1w).
 400. Config comments. Load comment from config to dump configs with comments. / *. KindeX. [9]. (3h).
