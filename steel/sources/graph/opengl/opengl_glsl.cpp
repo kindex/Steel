@@ -82,8 +82,6 @@ std::string GLSL::getShaderCode(Text* text, const StringDict& parameters)
 bool GLSL::loadShader(GLuint shader, Text* text, const StringDict& parameters)
 {
 	std::string shaderCode = getShaderCode(text, parameters);
-	debug(shaderCode);
-
 	const char *body = (const char*)shaderCode.c_str();
     int			len  = shaderCode.length();
     GLint       compileStatus;

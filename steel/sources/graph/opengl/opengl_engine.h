@@ -156,7 +156,9 @@ private:
 // ******************* OpenGL all *******************
 	void DrawFill_Material(GraphShadow &e, const Faces* triangles, Material* material);
 
+	void collectInformationFromObjects();
 	void render(); // main function, render to screen or texture
+	void renderDebug();
 
 	bool		focused;
 	ProcessInfo info;
@@ -172,7 +174,8 @@ public:
 	void updateRealPosition(IN OUT GraphShadow* object);
 
 	void prepare(GraphShadow&, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
-	void process(GraphShadow&, OUT FaceMaterialVector& skippedFaces);
+	void drawObject(GraphShadow&, OUT FaceMaterialVector& skippedFaces);
+
 	bool isVisible(AABB box);
 	void pushPosition(GraphShadow&);
 	void popPosition(GraphShadow&);

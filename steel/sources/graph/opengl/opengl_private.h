@@ -151,6 +151,8 @@ struct Flags
 {
 	bool lighting;
 	bool textures;
+	bool blend;
+	bool transparent;
 
 	bool drawFace;
 	bool drawWire;

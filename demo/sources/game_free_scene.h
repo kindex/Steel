@@ -51,11 +51,11 @@ protected:
 	Config*			conf;
 	Input*			input;
 	Spectator		spectator;
-	Spectator		flashlight;
+	Spectator		flashlightPosition;
 	GraphEngine*	graphEngine;
 	AudioEngine*	audioEngine;
  	GameObject*		world;
- 	GameLight*		light;
+ 	GameLight*		flashlight;
 	ProcessInfo		info;
 	Timer			graphTimer;
 	Timer			audioTimer;

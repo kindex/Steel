@@ -55,16 +55,13 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 	Config* flashlightConf = resConfig.add("flashlight.conf");
 	if (flashlightConf != NULL)
 	{
-		light = new GameLight();
-		light->InitFromConfig(*flashlightConf);
-		light->enable();
-	}
-	if (light != NULL)
-	{
-		light->setPosition(spectator.camera.getPosition());
+		flashlight = new GameLight();
+		flashlight->InitFromConfig(*flashlightConf);
+		flashlight->enable();
+		flashlightPosition = spectator;
+		flashlight->setPosition(flashlightPosition.camera.getPosition());
 	}
 
-	flashlight = spectator;
 
 // ******************* PHYSIC **************************
 
@@ -109,7 +106,7 @@ void GameFreeScene::handleEventKeyDown(std::string key)
 	if (key == "f1") graphEngine->conf->toggle("lighting");
 	if (key == "f2") graphEngine->conf->toggle("drawFace");
 	if (key == "f3") graphEngine->conf->toggle("drawWire");
-	if (key == "f4") graphEngine->conf->toggle("drawBump");
+	if (key == "f4") graphEngine->conf->toggle("blend");
 	if (key == "f5") graphEngine->conf->toggle("drawVertexes");
 	if (key == "f7") graphEngine->conf->toggle("drawNormals");
 	if (key == "f8") graphEngine->conf->toggle("drawAABB");
@@ -147,9 +144,9 @@ void GameFreeScene::handleEventKeyDown(std::string key)
 
 	if (key == "f")
 	{
-		if (light != NULL)
+		if (flashlight != NULL)
 		{
-			light->toggleEnable();
+			flashlight->toggleEnable();
 		}
 	}
 }
@@ -222,7 +219,7 @@ void GameFreeScene::process()
 		world->process(info);
 		physicTimer.incframe();
 
-		if (light != NULL)
+		if (flashlight != NULL && conf->getb("flashlight"))
 		{
 /*			v3 lightAt = flashlight.camera.getDirection() + flashlight.camera.getPosition();
 			v3 spectatorAt = spectator.camera.getDirection() + spectator.camera.getPosition();
@@ -244,11 +241,11 @@ void GameFreeScene::process()
 									spectator.camera.getUpVector());
 */
 
-			flashlight.camera = spectator.camera;
+			flashlightPosition.camera = spectator.camera;
 
-			light->setPosition(flashlight.camera.getPosition(), 
-								flashlight.camera.getDirection(), 
-								flashlight.camera.getUpVector());
+			flashlight->setPosition(flashlightPosition.camera.getPosition(), 
+									flashlightPosition.camera.getDirection(), 
+									flashlightPosition.camera.getUpVector());
 		}
 	}
 
@@ -314,9 +311,9 @@ void GameFreeScene::bind(GraphEngine& engine)
 	{
 		engine.inject(world);
 	}
-	if (light != NULL)
+	if (flashlight != NULL && conf->getb("flashlight"))
 	{
-		engine.inject(light);
+		engine.inject(flashlight);
 	}
 }
 
@@ -403,7 +400,7 @@ GameFreeScene::GameFreeScene():
 	graphEngine(NULL),
 	audioEngine(NULL),
  	world(NULL),
- 	light(NULL),
+ 	flashlight(NULL),
 	speed(0.01f) // TODO: autoSpeed
 {}
 	

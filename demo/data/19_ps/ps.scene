@@ -15,7 +15,7 @@ renderer =
 		{
 			class = 'std'
 			blend = 1
-			emission_map =
+			diffuse_map =
 			{ 
 				image = 'wsmoke'
 				k = 1

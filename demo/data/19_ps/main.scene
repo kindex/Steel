@@ -11,11 +11,13 @@ objects =
 	renderer = 
 		{
 		material =  {
-			emission_map = {image = 'bsmoke'}
+			diffuse_map = {image = 'bsmoke'}
 		}
 	}
 }
 
+
+//[/light.conf#]{origin = (1 1 1)}
 
 ) // objects
 } // scene

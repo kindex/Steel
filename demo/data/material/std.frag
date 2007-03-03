@@ -154,7 +154,7 @@ void main (void)
 	}
 	else if (blending == 1)
 	{
-	    gl_FragColor = vec4(color, texture2D(emission_map, texCoord0).a); // blend factor from texture
+	    gl_FragColor = vec4(color, texture2D(diffuse_map, texCoord0).a + texture2D(diffuse_map, texCoord0).a); // blend factor from texture
 	}
 	else if (blending == 2)
 	{

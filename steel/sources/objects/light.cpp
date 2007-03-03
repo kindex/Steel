@@ -35,7 +35,8 @@ bool GameLight::InitFromConfig(Config& conf)
 	light->minDistance = conf.getf("minDistance", 1.0f);
 	light->maxDistance = conf.getf("maxDistance", 10.0f);
 	light->k = conf.getf("k", 1.0f);
-	light->up = conf.getv3("up", v3(0.0f, 0.0f, 0.1f));
+	light->up = conf.getv3("up", v3(0.0f, 0.0f, 1.0f));
+	light->direction = conf.getv3("direction", v3(1.0f, 0.0f, 0.0f));
 
 	light->cubeMap = resImage.add(conf.getPath("cube_map"));
 

@@ -259,7 +259,7 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
 
 	if (failedResourcesCache.find(fullResName) != failedResourcesCache.end())
 	{
-		log_msg("res " + id, "Ignoring " + fullResName);
+//		log_msg("res " + id, "Ignoring " + fullResName);
 		if (pop) resStack.pop();
 		return NULL;
 	}

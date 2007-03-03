@@ -143,31 +143,8 @@ void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
 	}
 }
 
-
-
-
-bool OpenGL_Engine::process(IN const ProcessInfo& _info)
+void OpenGL_Engine::collectInformationFromObjects()
 {
-	// TODO repair DC 
-	info = _info;
-	processCamera();
-
-	total.vertexCount = 0;
-	total.triangleCount = 0;
-	total.batchCount = 0;
-
-	flags.lighting = conf->getb("lighting", true);
-	flags.textures = conf->getb("textures", true);
-	flags.drawFace = conf->getb("drawFace", true);
-	flags.drawWire = conf->getb("drawWire", false) && DrawWire != NULL;
-	flags.drawLines = conf->getb("drawLines", false) && DrawLines != NULL;
-	flags.drawNormals = conf->getb("drawNormals", false) && DrawNormals != NULL;
-	flags.drawVertexes = conf->getb("drawVertexes", false) && DrawVertexes != NULL;
-	flags.drawAABB = conf->getb("drawAABB", false) && DrawAABB;
-
-	flags.useDebugShader = conf->getb("use_debug_shader", false);
-	flags.debugShaderMode = conf->geti("debug_shader_mode", 2);
-
 	int size = objects.size();
 
 	for(int i=0; i < size; i++)
@@ -208,7 +185,33 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 			}
 		}
 	}
+}
 
+bool OpenGL_Engine::process(IN const ProcessInfo& _info)
+{
+// TODO repair DC 
+// ----------- Setup Variables ------------------------
+	info = _info;
+	processCamera();
+
+	total.vertexCount = 0;
+	total.triangleCount = 0;
+	total.batchCount = 0;
+
+	flags.lighting = conf->getb("lighting", true);
+	flags.textures = conf->getb("textures", true);
+	flags.drawFace = conf->getb("drawFace", true);
+	flags.blend = conf->getb("blend", true);
+	flags.transparent = conf->getb("transparent", true);
+	flags.drawWire = conf->getb("drawWire", false) && DrawWire != NULL;
+	flags.drawLines = conf->getb("drawLines", false) && DrawLines != NULL;
+	flags.drawNormals = conf->getb("drawNormals", false) && DrawNormals != NULL;
+	flags.drawVertexes = conf->getb("drawVertexes", false) && DrawVertexes != NULL;
+	flags.drawAABB = conf->getb("drawAABB", false) && DrawAABB;
+	flags.useDebugShader = conf->getb("use_debug_shader", false);
+	flags.debugShaderMode = conf->geti("debug_shader_mode", 2);
+
+// ------------- Clear Screen ------------
 	GLbitfield clear = 0;
 	if (conf->getb("clearColor", true))	clear |= GL_COLOR_BUFFER_BIT;
 	if (conf->getb("clearDepth", true))	clear |= GL_DEPTH_BUFFER_BIT;
@@ -217,19 +220,24 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 		glClear(clear);
 	}
 
+// ------------ Draw Scene ---------------
+	collectInformationFromObjects();
 	render();
+	renderDebug();
+
+// ------------- Post draw ---------------
 
 	if (conf->geti("swapBuffers", 1))
 	{
 //		glFlush(); // TODO: flush in thread
 		(this->*FlushOpenGL_Window)();
 	}
-
 	GLenum errorCode = glGetError();
 	if (errorCode != 0)
 	{
 		log_msg("error opengl", string("OpenGL error #") + IntToStr(errorCode));
 	}
+// -----------------------------------
 
 	return true;
 }
@@ -237,12 +245,11 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 void OpenGL_Engine::render()
 {
 	pvector<BlendingFaces> blendingFaces;
-//	steel::vector<int> elementAlpha;
 // В начале выводим только непрозрачные объекты
 	for EACH(ShadowPVector, shadows, it)
 	{
 		FaceMaterialVector skippedFaces;
-		process(*GS(*it), skippedFaces);
+		drawObject(*GS(*it), skippedFaces);
 
 		for EACH(FaceMaterialVector, skippedFaces, jt)
 		{
@@ -252,7 +259,7 @@ void OpenGL_Engine::render()
 
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
 
-	if (conf->geti("drawAlpha")>0 && !blendingFaces.empty())
+	if (flags.blend && flags.transparent && !blendingFaces.empty())
 	{
 		BlendingTriangleVector blendingTriangles;
 		for EACH(pvector<BlendingFaces>, blendingFaces, it)
@@ -338,7 +345,7 @@ void OpenGL_Engine::render()
 Отвечает за вывод графичесткого элемента.
 */
 
-void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces)
+void OpenGL_Engine::drawObject(GraphShadow& e, OUT FaceMaterialVector& skippedFaces)
 {
 	pushPosition(e);
 
@@ -348,46 +355,57 @@ void OpenGL_Engine::process(GraphShadow& e, OUT FaceMaterialVector& skippedFaces
 		{
 			if (it->material != NULL)
 			{
-				if (it->material->blend == TEXTURE_MODE_NONE)
+				if (it->material->blend == TEXTURE_MODE_NONE || (!flags.blend && flags.transparent))
 				{
 					DrawFill_Material(e, it->faces, it->material);
 				}
-				else
+				else if (flags.transparent)
 				{
 					skippedFaces.push_back(FaceMaterial(it->material, it->faces));
 				}
 			}
 		}
 	}
+	popPosition(e);
+}
 
-	if (flags.drawWire && e.faceMaterials != NULL)
+void OpenGL_Engine::renderDebug()
+{
+	if (flags.drawWire)
 	{
-		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
+		for EACH(ShadowPVector, shadows, e)
 		{
-			(this->*DrawWire)(e, *it->faces);
+			if (GS(*e)->faceMaterials != NULL)
+			{
+				pushPosition(*GS(*e));
+				for EACH_CONST(FaceMaterialVector, *GS(*e)->faceMaterials, it)
+				{
+					(this->*DrawWire)(*GS(*e), *it->faces);
+				}
+				popPosition(*GS(*e));
+			}
 		}
 	}
-
-	if (flags.drawLines)
-	{
-		(this->*DrawLines)(e);
+#define drawAllShadowsDebug(flag, function) \
+	if (flag) \
+	{ \
+		for EACH(ShadowPVector, shadows, e) \
+		{ \
+			if (GS(*e)->faceMaterials != NULL) \
+			{ \
+				pushPosition(*GS(*e)); \
+				(function)(*GS(*e)); \
+				popPosition(*GS(*e)); \
+			} \
+		} \
 	}
 
-	if (flags.drawNormals)
-	{
-		(this->*DrawNormals)(e);
-	}
+	drawAllShadowsDebug(flags.drawLines, this->*DrawLines);
+	drawAllShadowsDebug(flags.drawNormals, this->*DrawNormals);
+	drawAllShadowsDebug(flags.drawVertexes, this->*DrawVertexes);
+	drawAllShadowsDebug(flags.drawAABB, this->*DrawAABB);
 
-	if (flags.drawVertexes)
-	{
-		(this->*DrawVertexes)(e);
-	}
-
-	if (flags.drawAABB)
-	{
-		(this->*DrawAABB)(e);
-	}
-	popPosition(e);
+#undef drawAllShadowsDebug
 }
 
 
