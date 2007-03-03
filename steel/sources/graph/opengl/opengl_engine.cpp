@@ -36,30 +36,6 @@ namespace opengl
 
 using namespace std;
 
-
-
-void OpenGL_Engine::DrawFill_Material(GraphShadow& e, const Faces* faces, Material* material)
-{
-	if (material != NULL)
-	{
-		switch(material->getMaterialType())
-		{
-		case MATERIAL_STD:	
-			if (DrawFill_MaterialStd != NULL)
-			{
-				if ((this->*DrawFill_MaterialStd)(e, *faces, *static_cast<MaterialStd*>(material)))
-				{
-					return;
-				}
-			}
-			break;
-		}
-
-		DrawFill_Material(e, faces, material->reserve);
-	}
-}
-
-
 void OpenGL_Engine::collectInformationFromObjects()
 {
 	int size = objects.size();
@@ -110,29 +86,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 // ----------- Setup Variables ------------------------
 	info = _info;
 	processCamera();
-
-	total.vertexCount = 0;
-	total.triangleCount = 0;
-	total.batchCount = 0;
-
-	flags.lighting = conf->getb("lighting", true);
-	flags.textures = conf->getb("textures", true);
-	flags.drawFace = conf->getb("drawFace", true);
-	flags.blend = conf->getb("blend", true);
-	flags.transparent = conf->getb("transparent", true);
-	flags.bump = conf->getb("bump", true);
-	flags.drawWire = conf->getb("drawWire", false) && DrawWire != NULL;
-	flags.drawLines = conf->getb("drawLines", false) && DrawLines != NULL;
-	flags.drawNormals = conf->getb("drawNormals", false) && DrawNormals != NULL;
-	flags.drawVertexes = conf->getb("drawVertexes", false) && DrawVertexes != NULL;
-	flags.drawAABB = conf->getb("drawAABB", false) && DrawAABB;
-	flags.useDebugShader = conf->getb("use_debug_shader", false);
-	flags.debugShaderMode = conf->geti("debug_shader_mode", 2);
-	flags.maxLightsInShader = conf->geti("max_lights", 4);
-
-	flags.shaderStd = "material/" + conf->gets("std_shader", "std");
-	flags.shaderDebug = "material/" + conf->gets("debug_shader", "debug");
-	flags.shaderNoTexture = "material/" + conf->gets("no_texture_shader", "no_texture");
+	setupVariables();
 
 // ------------- Clear Screen ------------
 	GLbitfield clear = 0;
@@ -146,7 +100,27 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 // ------------ Draw Scene ---------------
 	collectInformationFromObjects();
 
+	program = NULL;
+	if (flags.glsl)
+	{
+		if (!flags.textures)
+		{
+			program = bindShader(flags.shaderNoTexture, StringDict());
+		}
+		else if (flags.useDebugShader)
+		{
+			program = bindShader(flags.shaderDebug, StringDict());
+		}
+		else// use_std_shader
+		{
+			StringDict parameters;
+			parameters["lighting"] = IntToStr(flags.lighting);
+			parameters["lighcount"] = "4";
+			program = bindShader(flags.shaderStd, parameters);
+		}
+	}
 	render();
+	program->unbind();
 
 	renderDebug();
 
@@ -171,6 +145,7 @@ void OpenGL_Engine::render()
 {
 	pvector<BlendingFaces> blendingFaces;
 // В начале выводим только непрозрачные объекты
+
 	for EACH(ShadowPVector, shadows, it)
 	{
 		FaceMaterialVector skippedFaces;
@@ -243,7 +218,7 @@ void OpenGL_Engine::render()
 					it->vetexCount == 4 && !faces.triangles.empty()
 				))
 			{
-				DrawFill_Material(*prev->shadow, &faces, prev->material);
+				(this->*DrawFill_MaterialStd)(*prev->shadow, faces, *static_cast<MaterialStd*>(prev->material));
 				faces.quads.clear();
 				faces.triangles.clear();
 			}
@@ -257,7 +232,7 @@ void OpenGL_Engine::render()
 				faces.quads.push_back(Quad(it->vertex[0], it->vertex[1], it->vertex[2], it->vertex[3]));
 			}
 		}
-		DrawFill_Material(*prev->shadow, &faces, prev->material);
+		(this->*DrawFill_MaterialStd)(*prev->shadow, faces, *static_cast<MaterialStd*>(prev->material));
 
 		glPopAttrib();
 	}
@@ -280,7 +255,7 @@ void OpenGL_Engine::drawObject(GraphShadow& e, OUT FaceMaterialVector& skippedFa
 			{
 				if (it->material->blend == TEXTURE_MODE_NONE || (!flags.blend && flags.transparent))
 				{
-					DrawFill_Material(e, it->faces, it->material);
+					(this->*DrawFill_MaterialStd)(e, *it->faces, *static_cast<MaterialStd*>(it->material));
 				}
 				else if (flags.transparent)
 				{
@@ -493,15 +468,29 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 			BindTexCoords3f = &OpenGL_Engine::BindTexCoords3f_OpenGL15;
 		}
 	}
-
+	setupVariables();
 	if (version >= 20 && GL_EXTENSION_GLSL && conf->getb("use_glsl", true))
 	{
-		DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
-
+		StringDict parameters;
+		parameters["lighting"] = IntToStr(flags.lighting);
+		parameters["lighcount"] = "4";
+		if (bindShader(flags.shaderStd, parameters))
+		{
+			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
+			flags.glsl = true;
+		}
+		else
+		{
+			log_msg("warning opengl glsl", "Your video driver supports GLSL, but it cannot compile default shader. Swithing to mutitexture renderer (OepnGL 1.3)");
+		}
+	}
+	else
+	{
+		flags.glsl = false;
 	}
 	textureMatrixLevel = 0;
 
-	normalisationCubeMap	= generateNormalisationCubeMap();
+	normalisationCubeMap = generateNormalisationCubeMap();
 	zeroNormal = resImage.add("zero");
 	white = resImage.add("white");
 	black = resImage.add("black");
@@ -734,6 +723,32 @@ void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
 		object->realPosition = object->position * parent->realPosition;
 		object->realPositionCalculated = true;
 	}
+}
+
+void OpenGL_Engine::setupVariables()
+{
+	total.vertexCount = 0;
+	total.triangleCount = 0;
+	total.batchCount = 0;
+
+	flags.lighting = conf->getb("lighting", true);
+	flags.textures = conf->getb("textures", true);
+	flags.drawFace = conf->getb("drawFace", true);
+	flags.blend = conf->getb("blend", true);
+	flags.transparent = conf->getb("transparent", true);
+	flags.bump = conf->getb("bump", true);
+	flags.drawWire = conf->getb("drawWire", false) && DrawWire != NULL;
+	flags.drawLines = conf->getb("drawLines", false) && DrawLines != NULL;
+	flags.drawNormals = conf->getb("drawNormals", false) && DrawNormals != NULL;
+	flags.drawVertexes = conf->getb("drawVertexes", false) && DrawVertexes != NULL;
+	flags.drawAABB = conf->getb("drawAABB", false) && DrawAABB;
+	flags.useDebugShader = conf->getb("use_debug_shader", false);
+	flags.debugShaderMode = conf->geti("debug_shader_mode", 2);
+	flags.maxLightsInShader = conf->geti("max_lights", 4);
+
+	flags.shaderStd = "material/" + conf->gets("std_shader", "std");
+	flags.shaderDebug = "material/" + conf->gets("debug_shader", "debug");
+	flags.shaderNoTexture = "material/" + conf->gets("no_texture_shader", "no_texture");
 }
 
 

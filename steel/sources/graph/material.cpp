@@ -73,11 +73,11 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 
 bool MaterialStd::TextureStd::InitFromConfig(Config *config)
 {
-	if(config == NULL) return false;
-	string name = "/" + config->getPath("image"); 
-	if(!name.empty()) image = resImage.add(name);
+	if (config == NULL) return false;
+	string name = config->getPath("image");
+	if (!name.empty()) image = resImage.add("/" + name);
 	
-	if(image == NULL)
+	if (image == NULL)
 	{
 		return false;
 	}

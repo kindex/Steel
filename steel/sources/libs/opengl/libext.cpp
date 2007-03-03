@@ -319,7 +319,7 @@ static void * getProcAddress ( const char * name )
 }
 
 #ifdef	_WIN32
-bool	initWin32Extensions()
+bool initWin32Extensions()
 {
 	wglGetExtensionsStringARB = (PFNWGLGETEXTENSIONSSTRINGARBPROC) getProcAddress ( "wglGetExtensionsStringARB" );
 
@@ -548,9 +548,9 @@ void OpenGL_ExtensionsInit()
 	glDepthBoundsEXT		= (PFNGLDEPTHBOUNDSEXTPROC)			getProcAddress ( "glDepthBoundsEXT" );
 
 #ifdef	_WIN32
-	initWin32Extensions ();
+	initWin32Extensions();
 #else
-	initLinuxExtensions ();
+	initLinuxExtensions();
 #endif
 
 	GL_EXTENSION_MULTITEXTURE = OpenGL_ExtensionsIsSupported("GL_ARB_multitexture");
@@ -562,7 +562,7 @@ void OpenGL_ExtensionsInit()
 	GL_EXTENSION_DOT3 = OpenGL_ExtensionsIsSupported("GL_EXT_texture_env_dot3") && GL_EXTENSION_TEXTURE_CUBE_MAP;
 	GL_EXTENSION_TEXTURE_NON2POWER = OpenGL_ExtensionsIsSupported("GL_ARB_texture_non_power_of_two");
 
-	GL_EXTENSION_GLSL = 
+	GL_EXTENSION_GLSL =
 		OpenGL_ExtensionsIsSupported("GL_ARB_shading_language_100") &&
 		OpenGL_ExtensionsIsSupported("GL_ARB_shader_objects") &&
 		OpenGL_ExtensionsIsSupported("GL_ARB_vertex_shader") &&
@@ -638,12 +638,11 @@ void OpenGL_ExtensionsPrintfInfo()				// print info about card, driver, version 
 		log_msg("opengl_info", "MAX_VARYING_FLOATS: " + IntToStr(GL_EXTENSION_MAX_VARYING_FLOATS));
 		log_msg("opengl_info", "MAX_FRAGMENT_UNIFORM_COMPONENTS: " + IntToStr(GL_EXTENSION_MAX_FRAGMENT_UNIFORM_COMPONENTS));
 		log_msg("opengl_info", "MAX_TEXTURE_COORDS: " + IntToStr(GL_EXTENSION_MAX_TEXTURE_COORDS));
-
-
 	}
 	else
+	{
 		log_msg("opengl_info", "No GLSL");
-
+	}
 
 	const char *exts = (char*)glGetString(GL_EXTENSIONS);
 	log_msg("graph opengl opengl_info", std::string("Supported GL extensions: ") + strLineEnum(exts, ' ', '\n' ));

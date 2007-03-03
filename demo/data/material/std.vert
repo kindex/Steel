@@ -1,5 +1,3 @@
-
-
 //
 // vertex shader
 //

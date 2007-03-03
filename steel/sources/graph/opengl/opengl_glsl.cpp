@@ -88,13 +88,18 @@ std::string Shader::getShaderCode(Text* text, const StringDict& parameters)
 	{
 		defines += "#define " + it->first + " " + it->second + "\n";
 	}
-	defines += "#line 2\n";
+	defines += "#line 1\n";
 
 	return defines + shaderOriginal;
 }
 
 bool Shader::loadShader(GLuint shader, Text* text, const StringDict& parameters)
 {
+	if (text == NULL)
+	{
+		return false;
+	}
+
 	std::string shaderCode = getShaderCode(text, parameters);
 	const char *body = (const char*)shaderCode.c_str();
     int			len  = shaderCode.length();
@@ -119,12 +124,12 @@ bool Shader::isError()
 {
  	GLenum glErr = glGetError();
 
-    if ( glErr == GL_NO_ERROR )
+    if (glErr == GL_NO_ERROR)
 	{
     	return false;
 	}
 
-    error("opengl glsl", (const char*)gluErrorString (glErr));
+    error("opengl glsl", (const char*)gluErrorString(glErr));
     return true;
 }
 
@@ -142,35 +147,44 @@ void Shader::loadLog(GLuint object)
     GLcharARB   buffer [2048];
     GLcharARB * infoLog;
 
-    glGetObjectParameterivARB ( object, GL_OBJECT_INFO_LOG_LENGTH_ARB, &logLength );
+    glGetObjectParameterivARB(object, GL_OBJECT_INFO_LOG_LENGTH_ARB, &logLength);
 
     if (isError())          // check for OpenGL errors
+	{
         return;
+	}
 
     if (logLength < 1 )
+	{
         return;
+	}
                                     // try to avoid allocating buffer
     if (logLength > (int)sizeof(buffer))
     {
-        infoLog = (GLcharARB*) malloc ( logLength );
+        infoLog = (GLcharARB*)malloc(logLength);
 
-        if ( infoLog == NULL )
+        if (infoLog == NULL)
         {
             error("opengl glsl error", "Could not allocate log buffer");
-
             return;
         }
     }
     else
+	{
         infoLog = buffer;
+	}
 
-    glGetInfoLogARB ( object, logLength, &charsWritten, infoLog );
+    glGetInfoLogARB(object, logLength, &charsWritten, infoLog);
 
-	if(strlen(infoLog)>0)
-		log_msg("opengl glsl info", infoLog);
+	if (strlen(infoLog) > 0)
+	{
+		log_msg("opengl glsl warning", "Shader " + getShaderDecription() + " compile message " + infoLog);
+	}
 
-    if ( infoLog != buffer )
-        free ( infoLog );
+    if (infoLog != buffer)
+	{
+        free(infoLog);
+	}
 }
 
 void Shader::bind()

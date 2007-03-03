@@ -134,6 +134,7 @@ struct Flags
 	bool blend;
 	bool transparent;
 	bool bump;
+	bool glsl;
 
 	bool drawFace;
 	bool drawWire;

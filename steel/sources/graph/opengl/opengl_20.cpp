@@ -126,7 +126,7 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 void OpenGL_Engine::DrawFill_SetupDebugShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader)
 {
 	shader.clearTextures();
-	shader.bindTexture("normal_map",   material.normal_map.image   ? material.normal_map.image   : zeroNormal);
+	shader.bindTexture("normal_map",   material.normal_map.image ? material.normal_map.image : zeroNormal);
 
 	shader.setUniformVector("camera.position", info.camera.getPosition());
 	shader.setUniformVector("camera.direction", info.camera.getDirection());
@@ -155,51 +155,24 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 		
-		Shader* program = NULL;
-		if (!flags.textures)
+		if (flags.useDebugShader)
 		{
-			program = bindShader(flags.shaderNoTexture, StringDict());
+			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
+			DrawFill_SetupDebugShader_OpenGL20(e, faces, material, *program);
 		}
-		else if (flags.useDebugShader)
+		if (flags.textures) // use_std_shader
 		{
-			program = bindShader(flags.shaderDebug, StringDict());
-			if (program != NULL)
-			{
-				(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
-				DrawFill_SetupDebugShader_OpenGL20(e, faces, material, *program);
-			}
-		}
-		else // use_std_shader
-		{
-			StringDict parameters;
-			parameters["lighting"] = IntToStr(flags.lighting);
-			parameters["lighcount"] = "4";
-
-			program = bindShader(flags.shaderStd, parameters);
-
-			if (program != NULL)
-			{
-				(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
-				DrawFill_SetupStdShader_OpenGL20(e, faces, material, *program);
-			} 
+			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
+			DrawFill_SetupStdShader_OpenGL20(e, faces, material, *program);
 		}
 
-		if (program != NULL)
+		(this->*DrawTriangles)(e, faces, NULL);
+		if (CleanupDrawTriangles != NULL)
 		{
-			(this->*DrawTriangles)(e, faces, NULL);
-
-			program->unbind();
-			if (CleanupDrawTriangles != NULL)
-			{
-				(this->*CleanupDrawTriangles)();
-			}
-
-			unbindTexCoords();
+			(this->*CleanupDrawTriangles)();
 		}
-		else // shader is not loaded
-		{
-			DrawFill_MaterialStd_OpenGL13(e, faces, material);
-		}
+
+		unbindTexCoords();
 
 		glPopClientAttrib();
 	   	glPopAttrib();

@@ -348,7 +348,14 @@ std::string Config::getPath(const std::string &path, const std::string &_default
 		base = this->getConfigFilePath();
 	}
 
-	return createPath(base, res);
+	if (!res.empty())
+	{
+		return createPath(base, res);
+	}
+	else
+	{
+		return std::string();
+	}
 }
 
 

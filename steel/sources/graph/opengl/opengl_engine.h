@@ -148,13 +148,12 @@ private:
 	void DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
 	void DrawFill_SetupDebugShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
 	friend struct Shader;
-
+	Shader* program;
 // ******************* OpenGL all *******************
-	void DrawFill_Material(GraphShadow &e, const Faces* triangles, Material* material);
-
 	void collectInformationFromObjects();
 	void render(); // main function, render to screen or texture
 	void renderDebug();
+	void setupVariables();
 
 	bool		focused;
 	ProcessInfo info;

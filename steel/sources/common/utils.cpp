@@ -204,12 +204,11 @@ std::string strLineEnum(const char *s, char a, char b)
 	{
 		if(!r[i].empty())
 		{
-			res += "\n\t\t" + IntToStr(i) + ": " + r[i];
+			res += "\t" + IntToStr(i) + ": " + r[i];
 		}
 	}
 	return res;
 }
-
 
 string escape(string base, char escapedChar)
 {

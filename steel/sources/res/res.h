@@ -264,7 +264,7 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
 		return NULL;
 	}
 
-	log_msg("res " + id, "Loading " + fullResName);
+//	log_msg("res " + id, "Loading " + fullResName);
 
     int s = classes.size();
 	for(int i = 0; i < s; i++)
@@ -284,7 +284,7 @@ T* ResCollection<T>::addForce(std::string name, bool pop)
 		index[fullResName] = data.size() - 1;
 		resIndex[obj] = data.size() - 1;
 	
-		log_msg("res " + id, "OK " + fullResName);
+//		log_msg("res " + id, "OK " + fullResName);
 		if(pop) resStack.pop();
 
 		return obj;

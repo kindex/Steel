@@ -28,7 +28,14 @@ Config* ResCollectionConfig::addForce(std::string name, bool pop)
 	resStack.push(baseDirectory);
 	std::string fullResName = createPath(baseDirectory, name);
 
-	log_msg("res " + id, "Loading " + fullResName);
+	if (failedResourcesCache.find(fullResName) != failedResourcesCache.end())
+	{
+//		log_msg("res " + id, "Ignoring " + fullResName);
+		if (pop) resStack.pop();
+		return NULL;
+	}
+
+//	log_msg("res " + id, "Loading " + fullResName);
 
 	Config *obj = NULL;
 	TextFile *file = new TextFile();
@@ -59,7 +66,7 @@ Config* ResCollectionConfig::addForce(std::string name, bool pop)
 		index[fullResName] = data.size() - 1;
 		resIndex[obj] = data.size() - 1;
 
-		log_msg("res " + id, "OK " + fullResName);
+//		log_msg("res " + id, "OK " + fullResName);
 		if(pop) resStack.pop();
 
 		return obj;
@@ -68,7 +75,7 @@ Config* ResCollectionConfig::addForce(std::string name, bool pop)
 	{
 		log_msg("res error " + id, "Failed " + baseDirectory + "/" + name);
 		if(pop) resStack.pop();
-
+		failedResourcesCache.insert(fullResName);
 		return NULL;
 	}
 }

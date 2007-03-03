@@ -1,8 +1,7 @@
 //
 // fragment shader
 //
-
-uniform struct 
+uniform struct
 {
 	vec3 position;
 	vec3 direction;
