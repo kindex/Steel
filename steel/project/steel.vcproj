@@ -500,6 +500,10 @@
 					Name="text"
 					>
 					<File
+						RelativePath="..\sources\res\text\text.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\sources\res\text\text.h"
 						>
 					</File>
@@ -692,6 +696,10 @@
 			<Filter
 				Name="common"
 				>
+				<File
+					RelativePath="..\sources\common\containers.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\sources\common\containers.h"
 					>

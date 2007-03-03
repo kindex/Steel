@@ -27,46 +27,23 @@ enum TextFormat
 
 class Text: public Res
 {
+public:
+	Text(): text(NULL), length(0) {}
+
+	// сам текст в виде z-terminated string (в конце /0)
+	char *getText() const;
+	int getLength() const;// длина текста без /0
+	TextFormat getFormat() const;
+	char getChar(int index);
+	void Cleanup();
+	~Text();
+	std::string getFileName() const;
+
 protected:
 	std::string filename;
 	char *text;
 	int length;
 	TextFormat format;
-
-public:
-	Text(): text(NULL), length(0) {}
-
-	// сам текст в виде z-terminated string (в конце /0)
-	char *getText() const
-	{ 
-		return text; 
-	}
-
-	// длина текста без /0
-	int getLength() const
-	{ 
-		return length; 
-	}
-
-	TextFormat getFormat() const
-	{
-		return TEXT_ASCII;
-	}
-
-	char getChar(int index)
-	{
-		return text[index];
-	}
-
-	void Cleanup()
-	{
-		if(text) { delete [] text; length = 0; text = NULL; }
-	}
-
-	~Text()
-	{
-		if(text) delete [] text; 
-	}
 };
 
 #endif

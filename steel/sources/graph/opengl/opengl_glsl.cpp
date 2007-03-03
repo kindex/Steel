@@ -2,7 +2,7 @@
 	File: graph/opengl/opengl_glsl.cpp
 	Unit: opengl
 	Part of: Steel engine
-	(C) DiVision, 2006
+	(C) DiVision, 2006-2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz at gmail]
 	License:
@@ -15,21 +15,35 @@
 #include "opengl_glsl.h"
 #include "../../res/res_main.h"
 #include <gl/glu.h>
+#include "opengl_engine.h"
 
 namespace opengl
 {
 
-bool GLSL::init(Shader* _shader, const StringDict& parameters)
+Shader::Shader(OpenGL_Engine& engine):
+	engine(engine),
+	vertexShader(NULL),
+	fragmentShader(NULL),
+	programId(0),
+	vertexShaderId(0),
+	fragmentShaderId(0),
+	id(objectIdGenerator.genUid())
+{}
+
+
+bool Shader::init(Text*	_vertexShader, Text* _fragmentShader, const StringDict& _parameters)
 {
 	if (!GL_EXTENSION_GLSL) return false;
 
-	shader = _shader;
+	vertexShader = _vertexShader;
+	fragmentShader = _fragmentShader;
+	parameters = _parameters;
 
 	programId = glCreateProgramObjectARB();
 	if (isError()) return false;
 
     vertexShaderId = glCreateShaderObjectARB (GL_VERTEX_SHADER_ARB);
-   	if (!loadShader(vertexShaderId, shader->vertexShader, parameters))
+   	if (!loadShader(vertexShaderId, vertexShader, parameters))
 	{
 		loadLog(programId);
 		return false;
@@ -37,7 +51,7 @@ bool GLSL::init(Shader* _shader, const StringDict& parameters)
     glAttachObjectARB(programId, vertexShaderId);
 
     fragmentShaderId = glCreateShaderObjectARB (GL_FRAGMENT_SHADER_ARB);
-   	if (!loadShader(fragmentShaderId, shader->fragmentShader, parameters))
+   	if (!loadShader(fragmentShaderId, fragmentShader, parameters))
 	{
 		loadLog(programId);
 		return false;
@@ -65,7 +79,7 @@ bool GLSL::init(Shader* _shader, const StringDict& parameters)
 	return true;
 }
 
-std::string GLSL::getShaderCode(Text* text, const StringDict& parameters)
+std::string Shader::getShaderCode(Text* text, const StringDict& parameters)
 {
 	std::string shaderOriginal = text->getText();
 	std::string defines;
@@ -79,7 +93,7 @@ std::string GLSL::getShaderCode(Text* text, const StringDict& parameters)
 	return defines + shaderOriginal;
 }
 
-bool GLSL::loadShader(GLuint shader, Text* text, const StringDict& parameters)
+bool Shader::loadShader(GLuint shader, Text* text, const StringDict& parameters)
 {
 	std::string shaderCode = getShaderCode(text, parameters);
 	const char *body = (const char*)shaderCode.c_str();
@@ -101,26 +115,27 @@ bool GLSL::loadShader(GLuint shader, Text* text, const StringDict& parameters)
 }
 
 
-bool GLSL::isError()
+bool Shader::isError()
 {
- 	GLenum  glErr   = glGetError();
+ 	GLenum glErr = glGetError();
 
     if ( glErr == GL_NO_ERROR )
+	{
     	return false;
+	}
 
-    log_msg("opengl glsl error", (const char *) gluErrorString (glErr));		// XXX: what about gluErrorString errors ?
-
+    error("opengl glsl", (const char*)gluErrorString (glErr));
     return true;
 }
 
-GLSL::~GLSL()
+Shader::~Shader()
 {
-	if(programId) glDeleteObjectARB(programId);                   // it will also detach shaders
-	if(vertexShaderId) glDeleteObjectARB(vertexShaderId);
-	if(fragmentShaderId) glDeleteObjectARB(fragmentShaderId);
+	if (programId) glDeleteObjectARB(programId);                   // it will also detach shaders
+	if (vertexShaderId) glDeleteObjectARB(vertexShaderId);
+	if (fragmentShaderId) glDeleteObjectARB(fragmentShaderId);
 }
 
-void GLSL::loadLog(GLuint object)
+void Shader::loadLog(GLuint object)
 {
     int         logLength     = 0;
     int         charsWritten  = 0;
@@ -158,135 +173,105 @@ void GLSL::loadLog(GLuint object)
         free ( infoLog );
 }
 
-void GLSL::bind()
+void Shader::bind()
 {
 	glUseProgramObjectARB(programId);
 }
 
-void GLSL::unbind()
+void Shader::unbind()
 {
 	glUseProgramObjectARB(0);
 }
 
 
-bool GLSL::setTexture(const char *name, int texNum)
+GLint Shader::findVariable(const std::string& name)
 {
-	int loc = glGetUniformLocationARB(programId, name);
-	if(loc != -1)
+	VariableLocationCache::iterator it = variableLocationCache.find(name);
+	if (it != variableLocationCache.end())
 	{
-		glUniform1iARB(loc, texNum);
-		return true;
+		return it->second;
 	}
 	else
-		return false;
-}
-
-
-bool GLSL :: setUniformVector ( const std::string& name, const v3& value )
-{
-	int loc = glGetUniformLocationARB ( programId, name.c_str() );
-
-    if ( loc < 0 )
-        return false;
-
-    glUniform3fvARB ( loc, 1, value );
-
-    return true;
-}
-
-bool    GLSL :: setUniformVector  ( int loc, const v3& value )
-{
-    glUniform3fvARB ( loc, 1, value );
-
-    return true;
-}
-
-bool    GLSL :: setUniformVector ( const char * name, const v2& value )
-{
-    int loc = glGetUniformLocationARB ( programId, name );
-
-    if ( loc < 0 )
-        return false;
-
-    glUniform2fvARB ( loc, 1, value );
-
-    return true;
-}
-
-bool    GLSL :: setUniformVector  ( int loc, const v2& value )
-{
-    glUniform2fvARB ( loc, 1, value );
-
-    return true;
-}
-
-bool GLSL::setUniformFloat(const std::string& name, float value)
-{
-	int loc = glGetUniformLocationARB(programId, name.c_str());
-
-    if (loc < 0)
 	{
-        return false;
+		GLint loc = glGetUniformLocationARB(programId, name.c_str());
+		variableLocationCache.insert(make_pair(name, loc));
+		if (loc < 0)
+		{
+			error("opengl glsl", std::string("Cannot find variable '") + name + "' in shader " + getShaderDecription());
+		}
+		return loc;
+	}
+}
+
+
+bool Shader::setUniformFloat(const std::string& name, float value)
+{
+	GLint loc = findVariable(name);
+
+	if (loc >= 0)
+	{
+		glUniform1fARB(loc, value);
+		return true;
 	}
 
-    glUniform1fARB(loc, value);
-
     return true;
 }
 
-bool    GLSL :: setUniformFloat ( int loc, float value )
+bool Shader::setUniformVector(const std::string& name, const v3& value)
 {
-    glUniform1fARB ( loc, value );
+	GLint loc = findVariable(name);
 
-    return true;
+    if (loc >= 0)
+	{
+	    glUniform3fvARB(loc, 1, value);
+        return true;
+	}
+    return false;
 }
 
-bool    GLSL :: setUniformInt (const std::string& name, int value )
+bool Shader::setUniformInt(const std::string& name, int value)
 {
-	int loc = glGetUniformLocationARB ( programId, name.c_str() );
-
-    if ( loc < 0 )
-        return false;
-
-    glUniform1iARB ( loc, value );
-
-    return true;
+	GLint loc = findVariable(name);
+    if (loc >= 0)
+	{
+		glUniform1iARB(loc, value);
+	    return true;
+	}
+	return false;
 }
 
-bool    GLSL :: setUniformInt ( int loc, int value )
-{
-    glUniform1iARB ( loc, value );
 
-    return true;
+void Shader::bindTexture(const std::string& name, Image* image)
+{
+	if (image != NULL)
+	{
+		glActiveTextureARB(GL_TEXTURE0_ARB + textureIndex);
+		glClientActiveTextureARB(GL_TEXTURE0_ARB + textureIndex);
+
+		(engine.*(engine.BindTexture))(*image, false);
+
+		GLint loc = findVariable(name);
+		if (loc >= 0)
+		{
+			glUniform1iARB(loc, textureIndex);
+			textureIndex++;
+		}
+		else
+		{
+			error("glsl error", std::string("Cannot find texture '") + name + "' in shader " + getShaderDecription());
+		}
+	}
 }
 
-bool    GLSL :: setUniformMatrix  ( const char * name, float value [16] )
+std::string Shader::getShaderDecription() const
 {
-    int loc = glGetUniformLocationARB ( programId, name );
-
-    if ( loc < 0 )
-        return false;
-
-    glUniformMatrix4fvARB ( loc, 1, GL_FALSE, value );
-
-    return true;
+	return fragmentShader->getFileName() + " (" + joinMap(parameters, ", ") + ")";
 }
 
-bool    GLSL :: setUniformMatrix  ( const char * name, const matrix33& value )
+void Shader::clearTextures()
 {
-    int loc = glGetUniformLocationARB ( programId, name );
-
-    if ( loc < 0 )
-        return false;
-
-	glUniformMatrix3fvARB ( loc, 1, GL_FALSE, &value.data.a[0] );
-
-    return true;
+	textureIndex = 0;
 }
 
-int     GLSL :: locForUniformName ( const char * name )
-{
-    return glGetUniformLocationARB ( programId, name );
-}
 
 } // namespace opengl

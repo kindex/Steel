@@ -2,7 +2,7 @@
 	File: graph/opengl/opengl_glsl.h
 	Unit: opengl
 	Part of: Steel engine
-	(C) DiVision, 2006
+	(C) DiVision, 2006-2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz at gmail]
 	License:
@@ -23,52 +23,68 @@
 namespace opengl
 {
 
-class GLSL
-{
-public:
-	GLSL(): programId(0), vertexShaderId(0), fragmentShaderId(0)
-		, shader(NULL)
-	{};
+class OpenGL_Engine;
 
-	~GLSL();
+struct Shader
+{
+	Shader(OpenGL_Engine& engine);
+	~Shader();
+
+	uid	 getId(){ return id; }
 
 	GLuint getProgramId() { return programId; }
 	bool loadShader(GLuint shader, Text* text, const StringDict& parameters);
 	std::string getShaderCode(Text* text, const StringDict& parameters);
 
-	bool init(Shader*, const StringDict& parameters);
+	bool init(Text*	_vertexShader, Text* _fragmentShader, const StringDict& parameters);
 	bool isError();
 	void loadLog(GLuint object);
 	void bind();
 	void unbind();
-	bool setTexture(const char* name, int texNum);
 
 	GLuint getGL_Id() { return programId;}
 
-//    bool        setUniformVector  ( const char * name, const Vector4D& value  );
-//    bool        setUniformVector  ( int loc,            const Vector4D& value );
-	bool        setUniformVector  ( const std::string& name, const v3& value  );
-    bool        setUniformVector  ( int loc,            const v3& value );
-    bool        setUniformVector  ( const char* name, const v2& value  );
-    bool        setUniformVector  ( int loc,            const v2& value );
-    bool        setUniformFloat   (const std::string& name, float value);
-    bool        setUniformFloat   ( int loc,            float value           );
-//    bool        setUniformMatrix  ( const char * name, const Matrix4x4& value );
-    bool        setUniformMatrix  ( const char* name, const matrix33&  value );
-    bool        setUniformMatrix  ( const char* name, float value [16]       );
-    bool        setUniformInt     ( const std::string& name, int value              );
-    bool        setUniformInt     ( int loc,            int value             );
-//    Vector4D    getUniformVector  ( const char * name );
-    //Vector4D    getUniformVector  ( int loc            );
+	void clearTextures();
+	void bindTexture(const std::string& name, Image* image);
+    bool setUniformFloat	(const std::string& name,	const float);
+	bool setUniformVector	(const std::string& name,	const v3&);
+	bool setUniformInt		(const std::string& name,	const int);
+	std::string getShaderDecription() const;
 
-    int         locForUniformName ( const char * name );
+	GLint findVariable(const std::string& name);
 
-protected:
-	GLuint programId;
-	GLuint vertexShaderId;
-	GLuint fragmentShaderId;
-	Shader* shader;
+private:
+	OpenGL_Engine&	engine;
+	uid		id;
+	Text*	vertexShader;
+	Text*	fragmentShader;
+	bool	failed;
+	GLuint	programId;
+	GLuint	vertexShaderId;
+	GLuint	fragmentShaderId;
+	GLuint	glid;
+	StringDict	parameters;
+
+	int		textureIndex;
+
+	typedef std::map<std::string, GLint> VariableLocationCache;
+	VariableLocationCache variableLocationCache;
 };
+
+struct ShaderKey
+{
+	ShaderKey(std::string, StringDict parameters) : id(id), parameters(parameters) {}
+
+	const	std::string	id;
+	const	StringDict	parameters;
+	bool operator < (const ShaderKey& second) const
+	{
+		return id < second.id || id == second.id && parameters < second.parameters;
+	}
+};
+
+
+typedef std::map<ShaderKey, Shader*> ShaderDict;
 
 } // namespace opengl
 

@@ -23,26 +23,6 @@
 namespace opengl
 {
 
-struct ShaderOpenGL_ObjectKey
-{
-	ShaderOpenGL_ObjectKey(uid id, StringDict parameters) : id(id), parameters(parameters) {}
-
-	uid			id;
-	StringDict	parameters;
-	bool operator < (const ShaderOpenGL_ObjectKey& second) const
-	{
-		return id < second.id || id == second.id && parameters < second.parameters;
-	}
-};
-
-struct ShaderOpenGL_Object
-{
-	GLSL*	GLSL_Shader;
-	GLuint	glid;
-	bool	failed;
-};
-typedef std::map<ShaderOpenGL_ObjectKey, ShaderOpenGL_Object> ShaderDict;
-
 struct OpenGL_Buffer
 {
 	enum OpenGL_BuferKind
@@ -164,6 +144,11 @@ struct Flags
 
 	bool useDebugShader;
 	int	debugShaderMode;
+
+	std::string shaderStd;
+	std::string shaderDebug;
+	std::string shaderNoTexture;
+	int maxLightsInShader;
 };
 
 

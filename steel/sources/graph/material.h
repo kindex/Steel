@@ -16,7 +16,6 @@
 
 #include "../steel.h"
 #include "../res/image/image.h"
-#include "../res/text/text.h"
 #include "graph_types.h"
 #include "../res/config/config.h"
 
@@ -24,7 +23,7 @@ enum MaterialType
 {
 	MATERIAL_NONE,
 	MATERIAL_STD,
-	MATERIAL_SHADER,
+	MATERIAL_SHADER
 };
 
 enum BlendType
@@ -121,18 +120,6 @@ public:
 	TextureEnv env_map;
 
 	color4f color;
-};
-
-struct Shader
-{
-	uid		id;
-	Text*	vertexShader;
-	Text*	fragmentShader;
-	bool failed;
-
-	Shader(): failed(false), vertexShader(NULL), fragmentShader(NULL) { id = id = objectIdGenerator.genUid(); }
-	void load(const std::string& filename);
-	uid	 getId(){ return id; }
 };
 
 //тип смешивания двух текстур

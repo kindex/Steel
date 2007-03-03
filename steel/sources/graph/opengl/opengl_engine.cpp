@@ -59,89 +59,6 @@ void OpenGL_Engine::DrawFill_Material(GraphShadow& e, const Faces* faces, Materi
 	}
 }
 
-OpenGL_Engine::OpenGL_Engine(): 
-	BindTexture(NULL), 
-	DrawFill_MaterialStd(NULL), 
-	DrawTriangles(NULL),
-	CleanupDrawTriangles(NULL),
-	BindTexCoords(NULL),
-	BindTexCoords3f(NULL),
-	DrawWire(NULL),
-	DrawLines(NULL),  
-	DrawNormals(NULL),
-	DrawVertexes(NULL),
-	DrawAABB(NULL),
-	
-	windowInformation(NULL),
-
-	CreateOpenGL_Window(NULL),
-	RepairOpenGL_Window(NULL),
-	DeleteOpenGL_Window(NULL),
-	setCaptionOpenGL_Window(NULL),
-	FlushOpenGL_Window(NULL),
-	currentShadow(NULL) 
-{}
-
-
-void OpenGL_Engine::pushPosition(GraphShadow& e)
-{
-	if (e.positionKind == POSITION_SCREEN)
-	{
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glPushMatrix();
-	}
-	glMatrixMode(GL_MODELVIEW);
-
-	glPushMatrix();
-
-	float m[16]; // TODO
-	m[0] = e.realPosition.data.matrix.data.m[0][0];	m[1] = e.realPosition.data.matrix.data.m[1][0];	m[2] = e.realPosition.data.matrix.data.m[2][0];	m[3]  = 0;
-	m[4] = e.realPosition.data.matrix.data.m[0][1];	m[5] = e.realPosition.data.matrix.data.m[1][1];	m[6] = e.realPosition.data.matrix.data.m[2][1];	m[7]  = 0;
-	m[8] = e.realPosition.data.matrix.data.m[0][2];	m[9] = e.realPosition.data.matrix.data.m[1][2];	m[10]= e.realPosition.data.matrix.data.m[2][2];	m[11] = 0;
-	m[12]= e.realPosition.data.vector.x;			m[13]= e.realPosition.data.vector.y;			m[14]= e.realPosition.data.vector.z;			m[15] = 1;
-	glLoadMatrixf(m);
-}
-
-void OpenGL_Engine::popPosition(GraphShadow& e)
-{
-	glPopMatrix();
-	if (e.positionKind == POSITION_SCREEN)
-	{
-		glPopMatrix();
-	}
-}
-
-bool OpenGL_Engine::isVisible(AABB aabb)
-{
-	// TODO:
-/*
-	matrix34 proj; 
-	glGetFloatv(GL_PROJECTION_MATRIX, proj.a);
-	box.mul(proj);
-
-	return box.intersect(aabb(v3(-1.1,-1.1,0), v3(1.1,1.1,2)));
-*/
-	return true;
-}
-
-void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
-{
-	if (object->realPositionCalculated) return;
-
-	if (object->positionKind == POSITION_GLOBAL || object->positionKind == POSITION_SCREEN || object->parent == NULL)
-	{
-		object->realPosition = object->position;
-		object->realPositionCalculated = true;
-	}
-	else
-	{
-		GraphShadow* parent = getShadow(object->parent);
-		updateRealPosition(parent);
-		object->realPosition = object->position * parent->realPosition;
-		object->realPositionCalculated = true;
-	}
-}
 
 void OpenGL_Engine::collectInformationFromObjects()
 {
@@ -211,6 +128,11 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	flags.drawAABB = conf->getb("drawAABB", false) && DrawAABB;
 	flags.useDebugShader = conf->getb("use_debug_shader", false);
 	flags.debugShaderMode = conf->geti("debug_shader_mode", 2);
+	flags.maxLightsInShader = conf->geti("max_lights", 4);
+
+	flags.shaderStd = "material/" + conf->gets("std_shader", "std");
+	flags.shaderDebug = "material/" + conf->gets("debug_shader", "debug");
+	flags.shaderNoTexture = "material/" + conf->gets("no_texture_shader", "no_texture");
 
 // ------------- Clear Screen ------------
 	GLbitfield clear = 0;
@@ -223,7 +145,9 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
 // ------------ Draw Scene ---------------
 	collectInformationFromObjects();
+
 	render();
+
 	renderDebug();
 
 // ------------- Post draw ---------------
@@ -251,13 +175,11 @@ void OpenGL_Engine::render()
 	{
 		FaceMaterialVector skippedFaces;
 		drawObject(*GS(*it), skippedFaces);
-
 		for EACH(FaceMaterialVector, skippedFaces, jt)
 		{
 			blendingFaces.push_back(BlendingFaces(GS(*it), jt->material, jt->faces));
 		}
 	}
-
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
 
 	if (flags.blend && flags.transparent && !blendingFaces.empty())
@@ -576,11 +498,6 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	{
 		DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
 
-		shaderStd.load("material/" + conf->gets("std_shader", "std"));
-		shaderDebug.load("material/" + conf->gets("debug_shader", "debug"));
-		shaderNoTexture.load("material/" + conf->gets("no_texture_shader", "no_texture"));
-
-		maxLightsInShader = conf->geti("max_lights", 4);
 	}
 	textureMatrixLevel = 0;
 
@@ -734,6 +651,89 @@ void OpenGL_Engine::unbindTexCoords()
 bool OpenGL_Engine::setCaption(const std::string& caption)
 {
 	return (this->*setCaptionOpenGL_Window)(caption);
+}
+OpenGL_Engine::OpenGL_Engine(): 
+	BindTexture(NULL), 
+	DrawFill_MaterialStd(NULL), 
+	DrawTriangles(NULL),
+	CleanupDrawTriangles(NULL),
+	BindTexCoords(NULL),
+	BindTexCoords3f(NULL),
+	DrawWire(NULL),
+	DrawLines(NULL),  
+	DrawNormals(NULL),
+	DrawVertexes(NULL),
+	DrawAABB(NULL),
+	
+	windowInformation(NULL),
+
+	CreateOpenGL_Window(NULL),
+	RepairOpenGL_Window(NULL),
+	DeleteOpenGL_Window(NULL),
+	setCaptionOpenGL_Window(NULL),
+	FlushOpenGL_Window(NULL),
+	currentShadow(NULL)
+{}
+
+
+void OpenGL_Engine::pushPosition(GraphShadow& e)
+{
+	if (e.positionKind == POSITION_SCREEN)
+	{
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glPushMatrix();
+	}
+	glMatrixMode(GL_MODELVIEW);
+
+	glPushMatrix();
+
+	float m[16]; // TODO
+	m[0] = e.realPosition.data.matrix.data.m[0][0];	m[1] = e.realPosition.data.matrix.data.m[1][0];	m[2] = e.realPosition.data.matrix.data.m[2][0];	m[3]  = 0;
+	m[4] = e.realPosition.data.matrix.data.m[0][1];	m[5] = e.realPosition.data.matrix.data.m[1][1];	m[6] = e.realPosition.data.matrix.data.m[2][1];	m[7]  = 0;
+	m[8] = e.realPosition.data.matrix.data.m[0][2];	m[9] = e.realPosition.data.matrix.data.m[1][2];	m[10]= e.realPosition.data.matrix.data.m[2][2];	m[11] = 0;
+	m[12]= e.realPosition.data.vector.x;			m[13]= e.realPosition.data.vector.y;			m[14]= e.realPosition.data.vector.z;			m[15] = 1;
+	glLoadMatrixf(m);
+}
+
+void OpenGL_Engine::popPosition(GraphShadow& e)
+{
+	glPopMatrix();
+	if (e.positionKind == POSITION_SCREEN)
+	{
+		glPopMatrix();
+	}
+}
+
+bool OpenGL_Engine::isVisible(AABB aabb)
+{
+	// TODO:
+/*
+	matrix34 proj; 
+	glGetFloatv(GL_PROJECTION_MATRIX, proj.a);
+	box.mul(proj);
+
+	return box.intersect(aabb(v3(-1.1,-1.1,0), v3(1.1,1.1,2)));
+*/
+	return true;
+}
+
+void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
+{
+	if (object->realPositionCalculated) return;
+
+	if (object->positionKind == POSITION_GLOBAL || object->positionKind == POSITION_SCREEN || object->parent == NULL)
+	{
+		object->realPosition = object->position;
+		object->realPositionCalculated = true;
+	}
+	else
+	{
+		GraphShadow* parent = getShadow(object->parent);
+		updateRealPosition(parent);
+		object->realPosition = object->position * parent->realPosition;
+		object->realPositionCalculated = true;
+	}
 }
 
 

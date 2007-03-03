@@ -310,7 +310,7 @@ void GameFreeScene::draw(GraphEngine& graph)
 	info.timeInfo.frameLength = graphTimer.lap(); graphTimer.nextlap();
 
 
-//	if (timeInfo.frameLength > EPSILON)
+	if (!paused)
 	{
 		if (flashlight != NULL && conf->getb("flashlight"))
 		{
