@@ -130,18 +130,20 @@ vec3 calcLighting(in int i)
 
 void main (void)
 {
-	t = gl_NormalMatrix * texCoord7.xyz;
-	n = pixel_normal.xyz;
-	b = cross(n, t);
-	
-	viewDirN = normalize(viewDir);// tbn
-	
-	color = vec3(texture2D(emission_map, texCoord0))*material.emissionk; // emission
-	
+    t = gl_NormalMatrix * texCoord7.xyz;
+    n = pixel_normal.xyz;
+    b = cross(n, t);
+
     norm = vec3(texture2D(normal_map, texCoord0));
     norm = (norm - 0.5) * 2.0;
     norm.y = -norm.y;
     norm = normalize(norm); // TBN
+	
+    viewDirN = normalize(viewDir);// tbn
+    r = reflect(viewDirN, norm);
+	
+    color = vec3(texture2D(emission_map, texCoord0))*material.emissionk; // emission
+	
 
 #if lighting == 1
 	if (lightCount > 0)	{
@@ -159,7 +161,6 @@ void main (void)
 
 	if (env_k > 0.0)
 	{
-	    r = reflect(viewDirN, norm);
 		color += textureCube(env_map, r).rgb * env_k;
 	}
 	
