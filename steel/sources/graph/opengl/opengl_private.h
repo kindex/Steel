@@ -103,12 +103,12 @@ struct GraphShadow : public Shadow // множество треугольник�
 struct LightShadow
 {
 	LightShadow();
-
-	v3				position;
+ 
+	v3				position; // global
 	Light*			light;
 	GameObject*		object;
 	GraphShadow*	shadow;
-	bool			changed; // position
+	bool			changed; // position is changed
 };
 
 struct BlendingFaces
@@ -153,6 +153,7 @@ struct Flags
 	bool textures;
 	bool blend;
 	bool transparent;
+	bool bump;
 
 	bool drawFace;
 	bool drawWire;

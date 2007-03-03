@@ -218,35 +218,6 @@ void GameFreeScene::process()
 	{
 		world->process(info);
 		physicTimer.incframe();
-
-		if (flashlight != NULL && conf->getb("flashlight"))
-		{
-/*			v3 lightAt = flashlight.camera.getDirection() + flashlight.camera.getPosition();
-			v3 spectatorAt = spectator.camera.getDirection() + spectator.camera.getPosition();
-
-			v3 speedDir = (spectatorAt - lightAt).getNormalized();
-			float speedLength = (spectatorAt - lightAt).getLength();
-
-			flashlight.velocity += speedDir*100.0f*sqr(speedLength)*info.timeInfo.frameLength;
-			v3 moved = flashlight.velocity*info.timeInfo.frameLength;
-	
-			speedLength *= 5;
-			if (speedLength > 1.0) speedLength = 1.0;
-			flashlight.velocity *= sqrt(speedLength);
-
-			lightAt += moved;
-
-			flashlight.camera.set(spectator.camera.getPosition(),
-									lightAt - spectator.camera.getPosition(),
-									spectator.camera.getUpVector());
-*/
-
-			flashlightPosition.camera = spectator.camera;
-
-			flashlight->setPosition(flashlightPosition.camera.getPosition(), 
-									flashlightPosition.camera.getDirection(), 
-									flashlightPosition.camera.getUpVector());
-		}
 	}
 
 	if (!firstframe && infoTimer.lap() >= 0.5)
@@ -321,36 +292,9 @@ void GameFreeScene::bind(AudioEngine& engine)
 {
 	audioEngine = &engine;
 #ifdef LIB_OPENAL
-	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_GENERIC);
+	audioEngine->setListenerEnvironment(EAX_ENVIRONMENT_GENERIC); // TODO: rename const, main program must be independent from Audio Engine
 #endif
-	/*
-	EAX_ENVIRONMENT_GENERIC,
-    EAX_ENVIRONMENT_PADDEDCELL,
-    EAX_ENVIRONMENT_ROOM,
-    EAX_ENVIRONMENT_BATHROOM,
-    EAX_ENVIRONMENT_LIVINGROOM,
-    EAX_ENVIRONMENT_STONEROOM,
-    EAX_ENVIRONMENT_AUDITORIUM,
-    EAX_ENVIRONMENT_CONCERTHALL,
-    EAX_ENVIRONMENT_CAVE,
-    EAX_ENVIRONMENT_ARENA,
-    EAX_ENVIRONMENT_HANGAR,
-    EAX_ENVIRONMENT_CARPETEDHALLWAY,
-    EAX_ENVIRONMENT_HALLWAY,
-    EAX_ENVIRONMENT_STONECORRIDOR,
-    EAX_ENVIRONMENT_ALLEY,
-    EAX_ENVIRONMENT_FOREST,
-    EAX_ENVIRONMENT_CITY,
-    EAX_ENVIRONMENT_MOUNTAINS,
-    EAX_ENVIRONMENT_QUARRY,
-    EAX_ENVIRONMENT_PLAIN,
-    EAX_ENVIRONMENT_PARKINGLOT,
-    EAX_ENVIRONMENT_SEWERPIPE,
-    EAX_ENVIRONMENT_UNDERWATER,
-    EAX_ENVIRONMENT_DRUGGED,
-    EAX_ENVIRONMENT_DIZZY,
-    EAX_ENVIRONMENT_PSYCHOTIC
-	*/
+
 	if (world != NULL)
 	{
 		engine.inject(*world);
@@ -364,6 +308,20 @@ void GameFreeScene::draw(GraphEngine& graph)
 
 	info.timeInfo.currentTime = graphTimer.total();
 	info.timeInfo.frameLength = graphTimer.lap(); graphTimer.nextlap();
+
+
+//	if (timeInfo.frameLength > EPSILON)
+	{
+		if (flashlight != NULL && conf->getb("flashlight"))
+		{
+			flashlightPosition.camera = spectator.camera;
+
+			flashlight->setPosition(flashlightPosition.camera.getPosition(), 
+									flashlightPosition.camera.getDirection(), 
+									flashlightPosition.camera.getUpVector());
+		}
+	}
+
 	graph.process(info);
 }
 

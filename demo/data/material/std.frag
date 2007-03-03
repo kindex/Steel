@@ -48,8 +48,8 @@ varying	vec3 pixel_position;// global
 varying vec3 lightDirGlobal;  // global
 varying vec3 viewDirGlobal;     // global
 varying vec3 pixel_normal; // global
-
 varying vec2 texCoord0;
+varying vec3 texCoord7;
 
 
 vec3 norm;
@@ -59,6 +59,9 @@ float intensity;
 float spec;
 float d;
 vec3 viewDirN;
+vec3 t,b,n;
+
+vec3 lightDir1[lighcount];// TBN space
 
 #if lighting == 1
 vec3 calcLighting(in int i)
@@ -84,8 +87,14 @@ vec3 calcLighting(in int i)
 			);
 
 		localcolor = gl_LightSource[i].ambient.rgb;
-	       
-		vec3 lightDirN = lightDir[i]; // TBN
+
+		vec3 lightDirGlobal = normalize(vec3(gl_LightSource[i].position) - pixel_position); // global
+		lightDir1[i] = vec3(	dot(t, lightDirGlobal),
+							dot(b, lightDirGlobal),
+							dot(n, lightDirGlobal));
+
+       
+		vec3 lightDirN = lightDir1[i]; // TBN
 		lightDirN = normalize(lightDirN);
 		
 		intensity = max(dot(lightDirN, norm), 0.0) * material.diffusek;
@@ -112,6 +121,12 @@ vec3 calcLighting(in int i)
 			localcolor.b *= texColor.b;
 		}
 	}
+
+#ifdef debug	
+	if (abs(gl_LightSource[i].position.x - pixel_position.x) < 0.01)localcolor +=  vec3(1.0, 0.0, 0.0);
+	if (abs(gl_LightSource[i].position.y - pixel_position.y) < 0.01)localcolor +=  vec3(0.0, 1.0, 0.0);
+	if (abs(gl_LightSource[i].position.z - pixel_position.z) < 0.01)localcolor +=  vec3(0.0, 0.0, 1.0);
+#endif
 	
 	return localcolor;
 }
@@ -119,6 +134,10 @@ vec3 calcLighting(in int i)
 
 void main (void)
 {
+	t = gl_NormalMatrix * texCoord7.xyz;
+	n = gl_NormalMatrix * pixel_normal.xyz;
+	b = cross(n, t);
+	
 	viewDirN = normalize(viewDir);// tbn
 	
 	color = vec3(texture2D(emission_map, texCoord0))*material.emissionk; // emission

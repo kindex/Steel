@@ -71,7 +71,7 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 			pos[1] = e.lights[i]->position.y;
 			pos[2] = e.lights[i]->position.z;
 			pos[3] = 0.0f;
-			glLightfv(GL_LIGHT0 + i,GL_POSITION, (float*)pos);
+			glLightfv(GL_LIGHT0 + i,GL_POSITION, pos);
 			glLightf(GL_LIGHT0 + i,	GL_CONSTANT_ATTENUATION,	e.lights[i]->light->constantAttenuation);
 			glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION,		e.lights[i]->light->linearAttenuation);
 			glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION,	e.lights[i]->light->quadraticAttenuation);

@@ -203,6 +203,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	flags.drawFace = conf->getb("drawFace", true);
 	flags.blend = conf->getb("blend", true);
 	flags.transparent = conf->getb("transparent", true);
+	flags.bump = conf->getb("bump", true);
 	flags.drawWire = conf->getb("drawWire", false) && DrawWire != NULL;
 	flags.drawLines = conf->getb("drawLines", false) && DrawLines != NULL;
 	flags.drawNormals = conf->getb("drawNormals", false) && DrawNormals != NULL;

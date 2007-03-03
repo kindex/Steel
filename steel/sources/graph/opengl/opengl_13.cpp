@@ -33,10 +33,9 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(GraphShadow& e, const Faces& t
 
 		pvector<uid> buffersToDelete;
 
-		bool bump_map = material.normal_map.image != NULL && conf->geti("drawBump") && !e.lights.empty() && e.normals != NULL && GL_EXTENSION_DOT3 && GL_EXTENSION_TEXTURE_CUBE_MAP;
-		bool diffuse_map = material.diffuse_map.image != NULL && conf->geti("drawTexture");
-		bool emission_map = material.emission_map.image != NULL && conf->geti("drawTexture");
-		//bool reflect_map = material.reflect_map.image != NULL && conf->geti("drawReflect") && GL_EXTENSION_TEXTURE_CUBE_MAP;
+		bool bump_map = material.normal_map.image != NULL && flags.bump && !e.lights.empty() && e.normals != NULL && GL_EXTENSION_DOT3 && GL_EXTENSION_TEXTURE_CUBE_MAP;
+		bool diffuse_map = material.diffuse_map.image != NULL && flags.textures;
+		bool emission_map = material.emission_map.image != NULL && flags.textures;
 		int currentTextureArb = 0;
 
 		if (bump_map)

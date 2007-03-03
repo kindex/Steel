@@ -41,6 +41,7 @@ public:
 	void enable();
 	void disable();
 	void toggleEnable();
+	const Light* getLight() const { return light; }
 
 private:
 	Light*			light;
