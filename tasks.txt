@@ -49,6 +49,7 @@
 446. Logger: put in log revision number, compilation date and compilation computer name. / *. KindeX. [10]. (1d).
 
 * Demo *
+523. Choosing object in scene, binding light and camera to other objects. /  KindeX. [3].
 407. Create demo scene for Steel 1.1 public demo: lighting, simple kinematics, particle system. / Def. KindeX. [4]. (2w).
 
 * WURPS *
