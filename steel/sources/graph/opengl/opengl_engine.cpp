@@ -100,7 +100,14 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 // ------------ Draw Scene ---------------
 	collectInformationFromObjects();
 
-	render();
+	if (flags.shadows)
+	{
+		renderShadows();
+	}
+	else
+	{
+		renderNormal();
+	}
 
 	renderDebug();
 
@@ -137,7 +144,7 @@ void OpenGL_Engine::setupShaderVariable(const std::string& key, const std::strin
 	}
 }
 
-void OpenGL_Engine::render()
+void OpenGL_Engine::renderNormal()
 {
 	program = NULL;
 	if (flags.glsl)
@@ -253,6 +260,62 @@ void OpenGL_Engine::render()
 		(this->*DrawFill_MaterialStd)(*prev->shadow, faces, *static_cast<MaterialStd*>(prev->material));
 
 		glPopAttrib();
+	}
+	if (program != NULL)
+	{
+		program->unbind();
+	}
+}
+
+void OpenGL_Engine::renderShadows()
+{
+	program = bindShader("material/shadow", StringDict());
+	if (program == NULL)
+	{
+		return;
+	}
+
+	for EACH(ShadowPVector, shadows, it)
+	{
+		GraphShadow& e = *GS(*it);
+	
+		pushPosition(e);
+		if (e.faceMaterials != NULL && !e.lights.empty())
+		{
+			program->setUniformVector("lightPos", e.lights[0]->position);
+			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
+			{
+				if (e.vertexes != NULL && !(faces->faces->triangles.empty()&& faces->faces->quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
+				{
+					for EACH_CONST(TriangleVector, faces->faces->triangles, it)
+					{
+						glBegin(GL_QUADS);
+						for (int i = 0; i < 3; i++)
+						{
+							glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+							glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
+							glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
+							glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+						}
+						glEnd();
+					}
+
+					for EACH_CONST(QuadVector, faces->faces->quads, it)
+					{
+						glBegin(GL_QUADS);
+						for (int i = 0; i < 4; i++)
+						{
+							glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+							glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
+							glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
+							glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+						}
+						glEnd();
+					}
+				}
+			}
+		}
+		popPosition(e);
 	}
 	program->unbind();
 }
@@ -498,7 +561,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		parameters["lighcount"] = IntToStr(flags.maxLightsInShader);
 		parameters["blending"] = "0";
 		parameters["reflecting"] = "1";
-		if (bindShader(flags.shaderStd, parameters))
+		if (loadShader(flags.shaderStd, parameters))
 		{
 			flags.glsl = true;
 			log_msg("info opengl glsl", "Your video driver supports GLSL. Test shader compiled succesefully. Max light count is set to " + IntToStr(flags.maxLightsInShader));
@@ -509,7 +572,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 			while (flags.maxLightsInShader > 0)
 			{
 				parameters["lighcount"] = IntToStr(flags.maxLightsInShader);
-				if (bindShader(flags.shaderStd, parameters))
+				if (loadShader(flags.shaderStd, parameters))
 				{
 					break;
 				}
@@ -707,7 +770,8 @@ OpenGL_Engine::OpenGL_Engine():
 	DeleteOpenGL_Window(NULL),
 	setCaptionOpenGL_Window(NULL),
 	FlushOpenGL_Window(NULL),
-	currentShadow(NULL)
+	currentShadow(NULL),
+	program(NULL)
 {}
 
 
@@ -783,6 +847,8 @@ void OpenGL_Engine::setupVariables()
 	flags.blend = conf->getb("blend", true);
 	flags.transparent = conf->getb("transparent", true);
 	flags.bump = conf->getb("bump", true);
+	flags.shadows = conf->getb("shadows", true);
+
 	flags.drawWire = conf->getb("drawWire", false) && DrawWire != NULL;
 	flags.drawLines = conf->getb("drawLines", false) && DrawLines != NULL;
 	flags.drawNormals = conf->getb("drawNormals", false) && DrawNormals != NULL;

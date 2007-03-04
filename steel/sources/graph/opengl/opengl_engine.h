@@ -153,9 +153,16 @@ private:
 	void setupShaderVariable(const std::string& key, const std::string& value, bool compile = true);
 // ******************* OpenGL all *******************
 	void collectInformationFromObjects();
-	void render(); // main function, render to screen or texture
+	void renderNormal(); // main function, render to screen or texture
+	void renderShadows(); // main function, render to screen or texture
 	void renderDebug();
 	void setupVariables();
+	void prepare(GraphShadow&, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
+	void drawObject(GraphShadow&, OUT FaceMaterialVector& skippedFaces);
+	void updateRealPosition(IN OUT GraphShadow* object);
+	bool isVisible(AABB box);
+	void pushPosition(GraphShadow&);
+	void popPosition(GraphShadow&);
 
 	bool		focused;
 	ProcessInfo info;
@@ -168,14 +175,6 @@ public:
 	bool init(Config* _conf, Input *input);
 	bool process(IN const ProcessInfo&);
 	bool deinit();
-	void updateRealPosition(IN OUT GraphShadow* object);
-
-	void prepare(GraphShadow&, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
-	void drawObject(GraphShadow&, OUT FaceMaterialVector& skippedFaces);
-
-	bool isVisible(AABB box);
-	void pushPosition(GraphShadow&);
-	void popPosition(GraphShadow&);
 	
 	GraphShadow* getShadow(GameObject* object) { return (GraphShadow*)Engine::getShadow(object); }
 	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id); }

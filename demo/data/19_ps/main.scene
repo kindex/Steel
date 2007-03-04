@@ -17,7 +17,7 @@ objects =
 }
 
 
-//[/light.conf#]{origin = (1 1 1)}
+[/light.conf#]{origin = (1 1 1)}
 
 ) // objects
 } // scene

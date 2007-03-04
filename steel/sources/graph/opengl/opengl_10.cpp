@@ -146,7 +146,7 @@ bool OpenGL_Engine::BindTexture_OpenGL10(Image& image, bool enable)
 // нарисовать множество полигонов как сетку (только рёбра)
 void OpenGL_Engine::DrawWire_OpenGL10(GraphShadow& e, const Faces& faces)
 {
-	if (e.vertexes != NULL && !(faces.triangles.empty()&&faces.quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
+	if (e.vertexes != NULL && !(faces.triangles.empty()&& faces.quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		total.vertexCount += e.vertexes->size();
 		total.triangleCount += faces.triangles.size();

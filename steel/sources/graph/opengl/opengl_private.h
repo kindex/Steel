@@ -70,7 +70,6 @@ struct GraphShadow : public Shadow // множество треугольник�
 
 	LightShadowPVector lights; // lights to this onject
 	
-
 	GraphShadow(Engine *engine);
 	void calculateAABB();
 	bool isCrossingLight(const LightShadow*);
@@ -135,6 +134,7 @@ struct Flags
 	bool transparent;
 	bool bump;
 	bool glsl;
+	bool shadows;
 
 	bool drawFace;
 	bool drawWire;
