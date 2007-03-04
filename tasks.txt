@@ -38,6 +38,7 @@
 518. Particle system emitter. Add more parameters. / KindeX. [5]. (1d).
 519. Particle system renderer: meta-balls. / Def. [5].
 522. Particle system simple animator for fire, smoke. / Def. [5].
+524. Particle system trigger: wind. / KindeX. [5].
 521. Document engine. / KindeX. [5]. (1w).
 
 475. Design and implement input engine in style of graph engine (callback, config, memory). / *. KindeX. [8]. (1w).
