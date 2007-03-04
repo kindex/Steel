@@ -63,31 +63,26 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 		bool cubeMapSet = false;
 		for(int i = 0; i < lightCount; i++)
 		{
-			float pos[4];
-			pos[0] = e.lights[i]->position.x;
-			pos[1] = e.lights[i]->position.y;
-			pos[2] = e.lights[i]->position.z;
-			pos[3] = 0.0f;
-			glLightfv(GL_LIGHT0 + i,GL_POSITION, pos);
-			glLightf(GL_LIGHT0 + i,	GL_CONSTANT_ATTENUATION,	e.lights[i]->light->constantAttenuation);
-			glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION,		e.lights[i]->light->linearAttenuation);
-			glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION,	e.lights[i]->light->quadraticAttenuation);
+			std::string lighti = std::string("lights[") + IntToStr(i) + "].";
+			shader.setUniformVector(lighti + "position", e.lights[i]->position);
+			shader.setUniformFloat(lighti + "constantAttenuation", e.lights[i]->light->constantAttenuation);
+			shader.setUniformFloat(lighti + "linearAttenuation", e.lights[i]->light->linearAttenuation);
+			shader.setUniformFloat(lighti + "quadraticAttenuation", e.lights[i]->light->quadraticAttenuation);
 
-			glLightfv(GL_LIGHT0 + i, GL_AMBIENT,	e.lights[i]->light->ambient.getfv());
-			glLightfv(GL_LIGHT0 + i, GL_DIFFUSE,	e.lights[i]->light->diffuse.getfv());
-			glLightfv(GL_LIGHT0 + i, GL_SPECULAR,	e.lights[i]->light->specular.getfv());
+			shader.setUniformVector(lighti + "ambient", e.lights[i]->light->ambient);
+			shader.setUniformVector(lighti + "diffuse", e.lights[i]->light->diffuse);
+			shader.setUniformVector(lighti + "specular", e.lights[i]->light->specular);
 
-			std::string lighti = std::string("lights[") + IntToStr(i) + "]";
-			shader.setUniformFloat(lighti + ".k", e.lights[i]->light->k);
-			shader.setUniformFloat(lighti + ".minDistance", e.lights[i]->light->minDistance);
-			shader.setUniformFloat(lighti + ".maxDistance", e.lights[i]->light->maxDistance);
-			shader.setUniformFloat(lighti + ".sqrtAttenuation", e.lights[i]->light->sqrtAttenuation);
-			shader.setUniformVector(lighti + ".up", e.lights[i]->light->up);
-			shader.setUniformVector(lighti + ".direction", e.lights[i]->light->direction);
+			shader.setUniformFloat(lighti + "k", e.lights[i]->light->k);
+			shader.setUniformFloat(lighti + "minDistance", e.lights[i]->light->minDistance);
+			shader.setUniformFloat(lighti + "maxDistance", e.lights[i]->light->maxDistance);
+			shader.setUniformFloat(lighti + "sqrtAttenuation", e.lights[i]->light->sqrtAttenuation);
+			shader.setUniformVector(lighti + "up", e.lights[i]->light->up);
+			shader.setUniformVector(lighti + "direction", e.lights[i]->light->direction);
 
 			if (e.lights[i]->light->cubeMap != NULL && !cubeMapSet)
 			{
-				shader.setUniformInt(lighti + ".type", 1);
+				shader.setUniformInt(lighti + "type", 1);
 				shader.bindTexture("light_cube_map", e.lights[i]->light->cubeMap);
 				cubeMapSet = true;
 			}

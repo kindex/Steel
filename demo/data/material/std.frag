@@ -17,16 +17,27 @@ uniform struct
 } material;
 
 #if lighting == 1
+#if lighcount >= 1
 	uniform struct
 	{
 		int type;
+		vec3 position;
+		float constantAttenuation;
+		float linearAttenuation;
+		float quadraticAttenuation;
 		float sqrtAttenuation;
 		float minDistance;
 		float maxDistance;
+		
+		vec3 ambient;
+		vec3 diffuse;
+		vec3 specular;
+		
 		float k;
 		vec3 up;
 		vec3 direction;
 	} lights[lighcount];
+#endif
 	uniform samplerCube light_cube_map;
 	uniform sampler2D specular_map;
 #endif
@@ -59,7 +70,7 @@ vec3 t,b,n;
 #if lighting == 1 && lighcount >= 1
 vec3 calcLighting(in int i)
 {
-	float distFromLight = distance(pixel_position, vec3(gl_LightSource[i].position));
+	float distFromLight = distance(pixel_position, vec3(lights[i].position));
 	
 	vec3 localcolor;
 	float attenuation;
@@ -73,15 +84,15 @@ vec3 calcLighting(in int i)
 		if (distFromLight < lights[i].minDistance) distFromLight = lights[i].minDistance; // minDistance
 	
 		attenuation = lights[i].k / ( 
-			gl_LightSource[i].constantAttenuation +
+			lights[i].constantAttenuation +
 			lights[i].sqrtAttenuation * sqrt(distFromLight) +
-			gl_LightSource[i].linearAttenuation * distFromLight +
-			gl_LightSource[i].quadraticAttenuation * distFromLight*distFromLight
+			lights[i].linearAttenuation * distFromLight +
+			lights[i].quadraticAttenuation * distFromLight*distFromLight
 			);
 
-		localcolor = gl_LightSource[i].ambient.rgb;
+		localcolor = lights[i].ambient.rgb;
 
-		vec3 lightDirGlobal = normalize(vec3(gl_LightSource[i].position) - pixel_position); // global
+		vec3 lightDirGlobal = normalize(vec3(lights[i].position) - pixel_position); // global
 		vec3 lightDir = vec3(	dot(t, lightDirGlobal),
 							dot(b, lightDirGlobal),
 							dot(n, lightDirGlobal));
@@ -91,16 +102,16 @@ vec3 calcLighting(in int i)
 		
 		intensity = max(dot(lightDir, norm), 0.0) * material.diffusek;
 		
-		localcolor = vec3(texture2D(diffuse_map, texCoord0))*max(intensity, 0.0)*gl_LightSource[i].diffuse.rgb;
+		localcolor = vec3(texture2D(diffuse_map, texCoord0))*max(intensity, 0.0)*lights[i].diffuse.rgb;
 	    
 		spec = max(dot(r, lightDir), 0.0);
 		spec = pow(spec, material.specularPower) * material.speculark;
 	    
-		localcolor += spec * vec3(texture2D(specular_map, texCoord0))*gl_LightSource[i].specular.rgb;
+		localcolor += spec * vec3(texture2D(specular_map, texCoord0))*lights[i].specular.rgb;
 		localcolor *= attenuation;
 		if (lights[i].type == 1) // cube map
 		{
-			vec3 lightViewDir = pixel_position - vec3(gl_LightSource[i].position);
+			vec3 lightViewDir = pixel_position - vec3(lights[i].position);
 
 			float a = dot(lightViewDir, lights[i].direction);
 			float b = dot(lightViewDir, cross(lights[i].direction, lights[i].up));
@@ -115,9 +126,9 @@ vec3 calcLighting(in int i)
 	}
 
 #ifdef debug	
-	if (abs(gl_LightSource[i].position.x - pixel_position.x) < 0.01)localcolor +=  vec3(1.0, 0.0, 0.0);
-	if (abs(gl_LightSource[i].position.y - pixel_position.y) < 0.01)localcolor +=  vec3(0.0, 1.0, 0.0);
-	if (abs(gl_LightSource[i].position.z - pixel_position.z) < 0.01)localcolor +=  vec3(0.0, 0.0, 1.0);
+	if (abs(lights[i].position.x - pixel_position.x) < 0.01)localcolor +=  vec3(1.0, 0.0, 0.0);
+	if (abs(lights[i].position.y - pixel_position.y) < 0.01)localcolor +=  vec3(0.0, 1.0, 0.0);
+	if (abs(lights[i].position.z - pixel_position.z) < 0.01)localcolor +=  vec3(0.0, 0.0, 1.0);
 #endif
 	
 	return localcolor;
