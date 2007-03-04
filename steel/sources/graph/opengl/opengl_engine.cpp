@@ -292,38 +292,38 @@ struct ShadowFace
 void OpenGL_Engine::renderShadows()
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-//	//program = bindShader("material/no_texture", StringDict());
-////	if (program == NULL)return;
-//	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-//
-//	for EACH(ShadowPVector, shadows, it)
-//	{
-//		GraphShadow& e = *GS(*it);
-//		pushPosition(e);
-//		if (e.faceMaterials != NULL && !e.lights.empty())
-//		{
-//			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
-//			{
-//				if (faces->material->blend == 0)
-//				{
-//					(this->*DrawTriangles)(e, *faces->faces, NULL);
-//				}
-//			}
-//		}
-//		popPosition(e);
-//	}
+	//program = bindShader("material/no_texture", StringDict());
+//	if (program == NULL)return;
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+
+	for EACH(ShadowPVector, shadows, it)
+	{
+		GraphShadow& e = *GS(*it);
+		pushPosition(e);
+		if (e.faceMaterials != NULL && !e.lights.empty())
+		{
+			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
+			{
+				if (faces->material->blend == 0)
+				{
+					(this->*DrawTriangles)(e, *faces->faces, NULL);
+				}
+			}
+		}
+		popPosition(e);
+	}
 //	program->unbind();
 
-//	program = bindShader("material/shadow", StringDict());
-//	if (program == NULL) return;
+	program = bindShader("material/shadow", StringDict());
+	if (program == NULL) return;
 
 	glDepthMask(GL_FALSE);
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_STENCIL_TEST);
-	glColorMask(GL_TRUE, GL_TRUE, GL_FALSE, GL_FALSE);
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 	glStencilFunc(GL_ALWAYS, 0, 0xffffffff);
 
-	for (int step = 0; step < 1; step++)
+	for (int step = 0; step < 2; step++)
 	{
 		if (step == 0)
 		{
@@ -340,10 +340,10 @@ void OpenGL_Engine::renderShadows()
 		{
 			GraphShadow& e = *GS(*it);
 		
-//			pushPosition(e);
+			pushPosition(e);
 			if (e.faceMaterials != NULL && !e.lights.empty())
 			{
-//				program->setUniformVector("lightPos", e.lights[0]->position);
+				program->setUniformVector("lightPos", e.lights[0]->position);
 				for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 				{
 					if (e.vertexes != NULL && !(faces->faces->triangles.empty()&& faces->faces->quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
@@ -361,55 +361,38 @@ void OpenGL_Engine::renderShadows()
 
 							triangles[i].visible = byRightSide(e.lights[0]->position, a);
 
-							if (false && triangles[i].visible)
-							{
-								glDepthFunc(GL_ALWAYS);
-								glColor3f(1.0, 0, 0);
-								glLineWidth(3);
-								glBegin(GL_LINE_LOOP);
-									glTexCoord1f(0.0f); glVertex3fv(a.base.getfv());
-									glTexCoord1f(0.0f); glVertex3fv((a.base + a.a).getfv());
-									glTexCoord1f(0.0f); glVertex3fv((a.base + a.b).getfv());
-								glEnd();
-
-								v3 c = a.base + a.a/3 + a.b/3;
-								glBegin(GL_LINE_LOOP);
-									glTexCoord1f(0.0f); glVertex3fv(c.getfv());
-									glTexCoord1f(0.0f); glVertex3fv((c + (a.a*a.b)).getfv());
-								glEnd();
-							}
 
 							if (triangles[i].visible)
 							{
-								glDepthFunc(GL_ALWAYS);
-								glColor3f(1.0, 0, 0);
-								glLineWidth(3);
+								//glDepthFunc(GL_ALWAYS);
+								//glColor3f(1.0, 0, 0);
+								//glLineWidth(3);
 
-								//glBegin(GL_QUADS);
-								//for (int i = 0; i < 3; i++)
-								//{
-								//	glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-								//	glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
-								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
-								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-								//}
+								glBegin(GL_QUADS);
+								for (int i = 0; i < 3; i++)
+								{
+									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
+									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
+									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+								}
+								glEnd();
+
+								//glColor3f(1, 0, 0);
+								//glBegin(GL_LINE_LOOP);
+								//glTexCoord1f(0.0f); glVertex3fv(a.base.getfv());
+								//glTexCoord1f(0.0f); glVertex3fv((a.base + a.a).getfv());
+								//glTexCoord1f(0.0f); glVertex3fv((a.base + a.b).getfv());
 								//glEnd();
 
-								glColor3f(1, 0, 0);
-								glBegin(GL_LINE_LOOP);
-								glTexCoord1f(0.0f); glVertex3fv(a.base.getfv());
-								glTexCoord1f(0.0f); glVertex3fv((a.base + a.a).getfv());
-								glTexCoord1f(0.0f); glVertex3fv((a.base + a.b).getfv());
-								glEnd();
-
-								glColor3f(0, 1, 0);
-								pushPosition(e);
-								glBegin(GL_LINE_LOOP);
-								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[0]));
-								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[1]));
-								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[2]));
-								glEnd();
-								popPosition(e);
+								//glColor3f(0, 1, 0);
+								//pushPosition(e);
+								//glBegin(GL_LINE_LOOP);
+								//glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[0]));
+								//glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[1]));
+								//glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[2]));
+								//glEnd();
+								//popPosition(e);
 
 							}
 
@@ -509,7 +492,7 @@ void OpenGL_Engine::renderShadows()
 					}
 				}
 			}
-//			popPosition(e);
+			popPosition(e);
 		}
 	}
 //	program->unbind();
@@ -532,7 +515,7 @@ void OpenGL_Engine::renderShadows()
 	//glPopMatrix();
 
 	glDepthMask(GL_FALSE);
-//	renderNormal();
+	renderNormal();
 
 	glPopAttrib();
 }
@@ -1008,6 +991,17 @@ void OpenGL_Engine::pushPosition(GraphShadow& e)
 	m[8] = e.realPosition.data.matrix.data.m[0][2];	m[9] = e.realPosition.data.matrix.data.m[1][2];	m[10]= e.realPosition.data.matrix.data.m[2][2];	m[11] = 0;
 	m[12]= e.realPosition.data.vector.x;			m[13]= e.realPosition.data.vector.y;			m[14]= e.realPosition.data.vector.z;			m[15] = 1;
 	glLoadMatrixf(m);
+/*
+		     (m[0]   m[4]   m[8]    m[12]	)	 ( v[0]	)
+		     |m[1]   m[5]   m[9]	m[13]	|	 | v[1]	|
+	  M(v) = |m[2]   m[6]   m[10]   m[14]	| x	 | v[2]	|
+		     (m[3]   m[7]   m[11]   m[15]	)	 ( v[3]	)
+
+( 1    0	 0    x	  )
+| 0    1	 0    y	  |
+| 0    0	 1    z	  |
+( 0    0	 0    1	  )
+*/
 }
 
 void OpenGL_Engine::popPosition(GraphShadow& e)

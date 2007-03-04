@@ -110,7 +110,7 @@ void matrix33::setRotationX(const float sin, const float cos)
 {
 	data.m[0][0] = 1;		data.m[0][1] = 0;	data.m[0][2] = 0;
 	data.m[1][0] = 0;		data.m[1][1] = cos;	data.m[1][2] = -sin;
-	data.m[2][0] = 0;		data.m[2][1] = sin;data.m[2][2] = cos;
+	data.m[2][0] = 0;		data.m[2][1] = sin; data.m[2][2] = cos;
 }
 
 void matrix33::setRotationY(const float sin, const float cos)
@@ -130,17 +130,17 @@ void matrix33::setScale(const v3 scale)
 void operator*=(v3 &operand1, const matrix33 operand2)
 {
 	v3 copy = operand1;
-	operand1.x = copy.x*operand2.data.m[0][0] + copy.y*operand2.data.m[0][1] + copy.z*operand2.data.m[0][2];
-	operand1.y = copy.x*operand2.data.m[1][0] + copy.y*operand2.data.m[1][1] + copy.z*operand2.data.m[1][2];
-	operand1.z = copy.x*operand2.data.m[2][0] + copy.y*operand2.data.m[2][1] + copy.z*operand2.data.m[2][2];
+	operand1.x = copy.x*operand2.data.m[0][0] + copy.y*operand2.data.m[1][0] + copy.z*operand2.data.m[2][0];
+	operand1.y = copy.x*operand2.data.m[0][1] + copy.y*operand2.data.m[1][1] + copy.z*operand2.data.m[2][1];
+	operand1.z = copy.x*operand2.data.m[0][2] + copy.y*operand2.data.m[1][2] + copy.z*operand2.data.m[2][2];
 }
 
 v3 matrix33::operator*(const v3 operand) const
 {
 	v3 result;
-	result.x = operand.x*data.m[0][0] + operand.y*data.m[1][0] + operand.z*data.m[2][0];
-	result.y = operand.x*data.m[0][1] + operand.y*data.m[1][1] + operand.z*data.m[2][1];
-	result.z = operand.x*data.m[0][2] + operand.y*data.m[1][2] + operand.z*data.m[2][2];
+	result.x = operand.x*data.m[0][0] + operand.y*data.m[0][1] + operand.z*data.m[0][2];
+	result.y = operand.x*data.m[1][0] + operand.y*data.m[1][1] + operand.z*data.m[1][2];
+	result.z = operand.x*data.m[2][0] + operand.y*data.m[2][1] + operand.z*data.m[2][2];
 	return result;
 }
 
