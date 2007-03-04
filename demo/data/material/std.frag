@@ -46,7 +46,6 @@ uniform sampler2D normal_map;
 uniform sampler2D diffuse_map;
 uniform sampler2D emission_map;
 uniform samplerCube env_map;
-
 uniform float env_k;
 
 varying vec3 viewDir;     // tbn
@@ -139,7 +138,7 @@ void main (void)
 {
     color = vec3(texture2D(emission_map, texCoord0))*material.emissionk; // emission
 
-#if lighting == 1 && lighcount >= 1
+#if (lighting == 1 && lighcount >= 1) || (reflecting == 1)
     t = gl_NormalMatrix * texCoord7.xyz;
     n = pixel_normal.xyz;
     b = cross(n, t);
@@ -152,6 +151,7 @@ void main (void)
     viewDirN = normalize(viewDir);// tbn
     r = reflect(viewDirN, norm);
 
+#if lighting == 1 && lighcount >= 1
 	color += calcLighting(0);
 #if lighcount >= 2
 	color += calcLighting(1);
@@ -167,24 +167,25 @@ void main (void)
 	color += calcLighting(7);
 #if lighcount >= 8
 	color += calcLighting(8);
+#endif // #if lighcount >= 8
 #endif
 #endif
 #endif
 #endif
-#endif
-#endif
-#endif
-#endif
+#endif // #if lighcount >= 3
+#endif // #if lighcount >= 2
+#endif // #if lighting == 1 && lighcount >= 1
+
+#endif // #if (lighting == 1 && lighcount >= 1) || (reflecting == 1)
 
 #if lighting == 0
 	color += texture2D(diffuse_map, texCoord0).rgb;
 #endif
 
-	if (env_k > 0.0)
-	{
-		color += textureCube(env_map, r).rgb * env_k;
-	}
-	
+#if reflecting == 1
+	color += textureCube(env_map, r).rgb * env_k;
+#endif
+
 #if blending == 0
     gl_FragColor = vec4(color, 1.0); // no blending
 #endif

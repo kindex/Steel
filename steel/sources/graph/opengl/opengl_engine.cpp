@@ -121,12 +121,19 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	return true;
 }
 
-void OpenGL_Engine::setupShaderVariable(const std::string& key, const std::string& value)
+void OpenGL_Engine::setupShaderVariable(const std::string& key, const std::string& value, bool compile)
 {
 	if (currentShaderVariables[key] != value)
 	{
 		currentShaderVariables[key] = value;
-		program = bindShader(flags.shaderStd, currentShaderVariables);
+		if (compile)
+		{
+			program = bindShader(flags.shaderStd, currentShaderVariables);
+			if (program == NULL) // shader compile error
+			{
+				flags.glsl = false;
+			}
+		}
 	}
 }
 
@@ -150,7 +157,6 @@ void OpenGL_Engine::render()
 			currentShaderVariables["blending"] = "0";
 		}
 	}
-
 	pvector<BlendingFaces> blendingFaces;
 // В начале выводим только непрозрачные объекты
 
@@ -491,6 +497,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		parameters["lighting"] = IntToStr(flags.lighting);
 		parameters["lighcount"] = IntToStr(flags.maxLightsInShader);
 		parameters["blending"] = "0";
+		parameters["reflecting"] = "1";
 		if (bindShader(flags.shaderStd, parameters))
 		{
 			flags.glsl = true;

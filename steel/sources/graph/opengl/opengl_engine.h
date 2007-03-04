@@ -150,7 +150,7 @@ private:
 	friend struct Shader;
 	Shader* program;
 	StringDict currentShaderVariables;
-	void setupShaderVariable(const std::string& key, const std::string& value);
+	void setupShaderVariable(const std::string& key, const std::string& value, bool compile = true);
 // ******************* OpenGL all *******************
 	void collectInformationFromObjects();
 	void render(); // main function, render to screen or texture

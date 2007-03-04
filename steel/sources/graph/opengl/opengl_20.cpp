@@ -24,23 +24,23 @@ namespace opengl
 void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader)
 {
 	shader.clearTextures();
-	shader.bindTexture("diffuse_map",  material.diffuse_map.image  ? material.diffuse_map.image  : none);
 	shader.bindTexture("emission_map", material.emission_map.image ? material.emission_map.image : black);
 
-	if (flags.lighting)
+	int lightCount = min((int)e.lights.size(), flags.maxLightsInShader);
+
+	if (flags.lighting && lightCount >= 1)
+	{
+		shader.bindTexture("diffuse_map",  material.diffuse_map.image  ? material.diffuse_map.image  : none);
+		shader.bindTexture("specular_map", material.specular_map.image ? material.specular_map.image : white); // TODO: env map koef
+	}
+	if (flags.lighting && lightCount >= 1 || material.env_map.cubeMap != NULL)
 	{
 		shader.bindTexture("normal_map",   material.normal_map.image   ? material.normal_map.image   : zeroNormal);
-		shader.bindTexture("specular_map", material.specular_map.image ? material.specular_map.image : white); // TODO: env map koef
 	}
 	if (material.env_map.cubeMap != NULL)
 	{
 		shader.bindTexture("env_map", material.env_map.cubeMap);
 		shader.setUniformFloat("env_k", material.env_map.k);
-	}
-	else
-	{
-		shader.bindTexture("env_map", none);
-		shader.setUniformFloat("env_k", 0.0f);
 	}
 
 	shader.setUniformFloat("material.specularPower", material.specularPower);
@@ -54,8 +54,6 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 
 	if (flags.lighting)
 	{
-		int lightCount = min((int)e.lights.size(), flags.maxLightsInShader);
-
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		glLoadIdentity();
@@ -91,7 +89,7 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 				shader.setUniformInt(lighti + ".type", 0);
 			}
 		}
-		if (!cubeMapSet)
+		if (!cubeMapSet && lightCount)
 		{
 			shader.bindTexture("light_cube_map", none);
 		}
@@ -141,7 +139,7 @@ void OpenGL_Engine::DrawFill_SetupDebugShader_OpenGL20(GraphShadow& e, const Fac
 // нарисовать множество полигонов с указанным материалом / Multitexture
 bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material)
 {
-	if (GL_EXTENSION_GLSL)
+	if (flags.glsl)
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
@@ -153,8 +151,12 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 		}
 		if (flags.textures) // use_std_shader
 		{
-			setupShaderVariable("lighcount", IntToStr(min((int)e.lights.size(), flags.maxLightsInShader)));
-
+			setupShaderVariable("lighcount", IntToStr(min((int)e.lights.size(), flags.maxLightsInShader)), false);
+			setupShaderVariable("reflecting", IntToStr(material.env_map.cubeMap != NULL ? 1 : 0));
+			if (!flags.glsl)
+			{
+				return false; // shader compile error
+			}
 			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
 			DrawFill_SetupStdShader_OpenGL20(e, faces, material, *program);
 		}
@@ -171,7 +173,10 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 	   	glPopAttrib();
 		return true;
 	}
-	return false;
+	else
+	{
+		return DrawFill_MaterialStd_OpenGL13(e, faces, material);
+	}
 }
 
 
