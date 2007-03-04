@@ -21,6 +21,50 @@
 namespace opengl
 {
 
+// нарисовать множество полигонов с указанным материалом / Multitexture
+bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material)
+{
+	if (flags.glsl)
+	{
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
+		
+		if (flags.useDebugShader)
+		{
+			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
+			DrawFill_SetupDebugShader_OpenGL20(e, faces, material, *program);
+		}
+		if (flags.textures) // use_std_shader
+		{
+			setupShaderVariable("lighcount", IntToStr(min((int)e.lights.size(), flags.maxLightsInShader)), false);
+			setupShaderVariable("reflecting", IntToStr(material.env_map.cubeMap != NULL ? 1 : 0));
+			if (!flags.glsl)
+			{
+				return false; // shader compile error
+			}
+			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
+			DrawFill_SetupStdShader_OpenGL20(e, faces, material, *program);
+		}
+
+		(this->*DrawTriangles)(e, faces, NULL);
+		if (CleanupDrawTriangles != NULL)
+		{
+			(this->*CleanupDrawTriangles)();
+		}
+
+		unbindTexCoords();
+
+		glPopClientAttrib();
+	   	glPopAttrib();
+		return true;
+	}
+	else
+	{
+		return DrawFill_MaterialStd_OpenGL13(e, faces, material);
+	}
+}
+
+
 void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader)
 {
 	shader.clearTextures();
@@ -136,48 +180,6 @@ void OpenGL_Engine::DrawFill_SetupDebugShader_OpenGL20(GraphShadow& e, const Fac
 	}
 }
 
-// нарисовать множество полигонов с указанным материалом / Multitexture
-bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material)
-{
-	if (flags.glsl)
-	{
-		glPushAttrib(GL_ALL_ATTRIB_BITS);
-		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
-		
-		if (flags.useDebugShader)
-		{
-			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
-			DrawFill_SetupDebugShader_OpenGL20(e, faces, material, *program);
-		}
-		if (flags.textures) // use_std_shader
-		{
-			setupShaderVariable("lighcount", IntToStr(min((int)e.lights.size(), flags.maxLightsInShader)), false);
-			setupShaderVariable("reflecting", IntToStr(material.env_map.cubeMap != NULL ? 1 : 0));
-			if (!flags.glsl)
-			{
-				return false; // shader compile error
-			}
-			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
-			DrawFill_SetupStdShader_OpenGL20(e, faces, material, *program);
-		}
-
-		(this->*DrawTriangles)(e, faces, NULL);
-		if (CleanupDrawTriangles != NULL)
-		{
-			(this->*CleanupDrawTriangles)();
-		}
-
-		unbindTexCoords();
-
-		glPopClientAttrib();
-	   	glPopAttrib();
-		return true;
-	}
-	else
-	{
-		return DrawFill_MaterialStd_OpenGL13(e, faces, material);
-	}
-}
 
 
 Shader* OpenGL_Engine::loadShader(const std::string& path, const StringDict& parameters)

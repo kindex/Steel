@@ -364,6 +364,7 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input *input)
     ppfd->iPixelType = PFD_TYPE_RGBA;
     ppfd->cColorBits = conf->geti("screen.depth");
     ppfd->cDepthBits = conf->geti("screen.depth");
+	ppfd->cStencilBits = conf->getb("shadows") ? 32 : 0;
 
     if((pixelformat = ChoosePixelFormat(((WindowInformationWinAPI*)windowInformation)->DC, ppfd)) == 0 )    {        MessageBox(NULL, "ChoosePixelFormat failed", "Error", MB_OK);        return FALSE;    }
     if(SetPixelFormat(((WindowInformationWinAPI*)windowInformation)->DC, pixelformat, ppfd) == FALSE)    {        MessageBox(NULL, "SetPixelFormat failed", "Error", MB_OK);        return FALSE;    }

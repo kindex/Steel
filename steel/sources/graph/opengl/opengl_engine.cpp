@@ -27,6 +27,7 @@
 #include "../../libs/opengl/libext.h"
 #include "ext/normalisation_cube_map.h"
 #include "../../res/res_main.h"
+#include "../../math/plane.h"
 
 #include <algorithm>
 #include <gl/glu.h>
@@ -92,6 +93,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	GLbitfield clear = 0;
 	if (conf->getb("clearColor", true))	clear |= GL_COLOR_BUFFER_BIT;
 	if (conf->getb("clearDepth", true))	clear |= GL_DEPTH_BUFFER_BIT;
+	if (flags.shadows)	clear |= GL_STENCIL_BUFFER_BIT;
 	if (clear)
 	{
 		glClear(clear);
@@ -269,55 +271,134 @@ void OpenGL_Engine::renderNormal()
 
 void OpenGL_Engine::renderShadows()
 {
-	program = bindShader("material/shadow", StringDict());
-	if (program == NULL)
-	{
-		return;
-	}
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	//program = bindShader("material/no_texture", StringDict());
+//	if (program == NULL)return;
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 
 	for EACH(ShadowPVector, shadows, it)
 	{
 		GraphShadow& e = *GS(*it);
-	
 		pushPosition(e);
 		if (e.faceMaterials != NULL && !e.lights.empty())
 		{
-			program->setUniformVector("lightPos", e.lights[0]->position);
 			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 			{
-				if (e.vertexes != NULL && !(faces->faces->triangles.empty()&& faces->faces->quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
+				if (faces->material->blend == 0)
 				{
-					for EACH_CONST(TriangleVector, faces->faces->triangles, it)
-					{
-						glBegin(GL_QUADS);
-						for (int i = 0; i < 3; i++)
-						{
-							glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-							glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
-							glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
-							glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-						}
-						glEnd();
-					}
-
-					for EACH_CONST(QuadVector, faces->faces->quads, it)
-					{
-						glBegin(GL_QUADS);
-						for (int i = 0; i < 4; i++)
-						{
-							glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-							glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
-							glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
-							glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-						}
-						glEnd();
-					}
+					(this->*DrawTriangles)(e, *faces->faces, NULL);
 				}
 			}
 		}
 		popPosition(e);
 	}
+//	program->unbind();
+
+	program = bindShader("material/shadow", StringDict());
+	if (program == NULL) return;
+
+	glDepthMask(GL_FALSE);
+	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_STENCIL_TEST);
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+	glStencilFunc(GL_ALWAYS, 0, 0xffffffff);
+
+	for (int step = 0; step < 2; step++)
+	{
+		if (step == 0)
+		{
+			glFrontFace(GL_CCW);
+			glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+		}
+		else
+		{
+			glFrontFace(GL_CW);
+			glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
+		}
+
+		for EACH(ShadowPVector, shadows, it)
+		{
+			GraphShadow& e = *GS(*it);
+		
+			pushPosition(e);
+			if (e.faceMaterials != NULL && !e.lights.empty())
+			{
+				program->setUniformVector("lightPos", e.lights[0]->position);
+				for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
+				{
+					if (e.vertexes != NULL && !(faces->faces->triangles.empty()&& faces->faces->quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
+					{
+						for EACH_CONST(TriangleVector, faces->faces->triangles, it)
+						{
+							Plane a;
+							a.base = e.vertexes->at( it->a[0] );
+							a.a = e.vertexes->at( it->a[1] ) - a.base;
+							a.b = e.vertexes->at( it->a[2] ) - a.base;
+
+							if (byRightSide(e.lights[0]->position, a))
+							{
+								glBegin(GL_QUADS);
+								for (int i = 0; i < 3; i++)
+								{
+									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
+									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
+									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+								}
+								glEnd();
+							}
+						}
+
+
+						for EACH_CONST(QuadVector, faces->faces->quads, it)
+						{
+							Plane a;
+							a.base = e.vertexes->at( it->a[0] );
+							a.a = e.vertexes->at( it->a[1] ) - a.base;
+							a.b = e.vertexes->at( it->a[2] ) - a.base;
+
+							if (byRightSide(e.lights[0]->position, a))
+							{
+								glBegin(GL_QUADS);
+								for (int i = 0; i < 4; i++)
+								{
+									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
+									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
+									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+								}
+								glEnd();
+							}
+						}
+					}
+				}
+			}
+			popPosition(e);
+		}
+	}
 	program->unbind();
+
+	glEnable(GL_STENCIL_TEST);
+
+	glFrontFace(GL_CCW);
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	glStencilFunc(GL_EQUAL, 0, 0xffffffff);
+
+	//glMatrixMode(GL_PROJECTION);
+	//glPushMatrix();
+	//glLoadIdentity();
+	//glBegin(GL_QUADS);
+	//	glVertex2f(-0.9, 0.9);
+	//	glVertex2f(-0.9,-0.9);
+	//	glVertex2f( 0.9,-0.9);
+	//	glVertex2f( 0.8, 0.8);
+	//glEnd();
+	//glPopMatrix();
+
+	glDepthMask(GL_FALSE);
+	renderNormal();
+
+	glPopAttrib();
 }
 
 /*
@@ -440,14 +521,14 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	#endif
 
 	#if STEEL_OS == OS_WIN32
-		if(CreateOpenGL_Window == NULL)	UseWinAPI();
+		if (CreateOpenGL_Window == NULL)	UseWinAPI();
 	#endif
 
 	#ifdef LIB_SDL
-		if(CreateOpenGL_Window == NULL)	UseSDL();
+		if (CreateOpenGL_Window == NULL)	UseSDL();
 	#endif
 
-	if(CreateOpenGL_Window == NULL)
+	if (CreateOpenGL_Window == NULL)
 	{
 		error("graph opengl sdl opengl_info", "Cannot find VideoAPI");
 		return false;
