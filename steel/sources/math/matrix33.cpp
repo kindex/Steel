@@ -83,8 +83,8 @@ void matrix33::loadZero()
 void matrix33::operator*=(const matrix33 o)
 {
 	matrix33 copy = *this; // copy
-	const m33 &b = copy.data.m;
-	const m33 &a = o.data.m;
+	const m33& b = copy.data.m;
+	const m33& a = o.data.m;
 
 	data.m[0][0] = a[0][0]*b[0][0] + a[0][1]*b[1][0] + a[0][2]*b[2][0];
 	data.m[0][1] = a[0][0]*b[0][1] + a[0][1]*b[1][1] + a[0][2]*b[2][1];
@@ -161,7 +161,7 @@ void matrix33::setRotationAxis(const float s, const float c, const v3 v)
 
 void matrix33::getInverse(matrix33 &res) const
 {
-	const m33 &m = data.m;
+	const m33& m = data.m;
 
 	float det = 
 		+ m[0][0]*(m[1][1]*m[2][2] - m[1][2]*m[2][1])

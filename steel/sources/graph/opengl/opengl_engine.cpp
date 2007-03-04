@@ -269,41 +269,61 @@ void OpenGL_Engine::renderNormal()
 	}
 }
 
+struct ShadowEdge
+{
+	int triangle[2];
+	int vertex[2];
+	int count;
+
+	ShadowEdge(int trg, int a, int b) : count(1) 
+	{ 
+		triangle[0] = trg; 
+		vertex[0] = a; 
+		vertex[1] = b;
+	}
+};
+
+struct ShadowFace
+{
+	int e[4];
+	bool visible;
+};
+
 void OpenGL_Engine::renderShadows()
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	//program = bindShader("material/no_texture", StringDict());
-//	if (program == NULL)return;
-	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-
-	for EACH(ShadowPVector, shadows, it)
-	{
-		GraphShadow& e = *GS(*it);
-		pushPosition(e);
-		if (e.faceMaterials != NULL && !e.lights.empty())
-		{
-			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
-			{
-				if (faces->material->blend == 0)
-				{
-					(this->*DrawTriangles)(e, *faces->faces, NULL);
-				}
-			}
-		}
-		popPosition(e);
-	}
+//	//program = bindShader("material/no_texture", StringDict());
+////	if (program == NULL)return;
+//	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+//
+//	for EACH(ShadowPVector, shadows, it)
+//	{
+//		GraphShadow& e = *GS(*it);
+//		pushPosition(e);
+//		if (e.faceMaterials != NULL && !e.lights.empty())
+//		{
+//			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
+//			{
+//				if (faces->material->blend == 0)
+//				{
+//					(this->*DrawTriangles)(e, *faces->faces, NULL);
+//				}
+//			}
+//		}
+//		popPosition(e);
+//	}
 //	program->unbind();
 
-	program = bindShader("material/shadow", StringDict());
-	if (program == NULL) return;
+//	program = bindShader("material/shadow", StringDict());
+//	if (program == NULL) return;
 
 	glDepthMask(GL_FALSE);
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_STENCIL_TEST);
-	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+	glColorMask(GL_TRUE, GL_TRUE, GL_FALSE, GL_FALSE);
 	glStencilFunc(GL_ALWAYS, 0, 0xffffffff);
 
-	for (int step = 0; step < 2; step++)
+	for (int step = 0; step < 1; step++)
 	{
 		if (step == 0)
 		{
@@ -320,63 +340,179 @@ void OpenGL_Engine::renderShadows()
 		{
 			GraphShadow& e = *GS(*it);
 		
-			pushPosition(e);
+//			pushPosition(e);
 			if (e.faceMaterials != NULL && !e.lights.empty())
 			{
-				program->setUniformVector("lightPos", e.lights[0]->position);
+//				program->setUniformVector("lightPos", e.lights[0]->position);
 				for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 				{
 					if (e.vertexes != NULL && !(faces->faces->triangles.empty()&& faces->faces->quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
 					{
+						svector<ShadowEdge> edges;
+						svector<ShadowFace> triangles(faces->faces->triangles.size());
+
+						int i = 0;
 						for EACH_CONST(TriangleVector, faces->faces->triangles, it)
 						{
 							Plane a;
-							a.base = e.vertexes->at( it->a[0] );
-							a.a = e.vertexes->at( it->a[1] ) - a.base;
-							a.b = e.vertexes->at( it->a[2] ) - a.base;
+							a.base = e.realPosition*e.vertexes->at(it->a[0]);
+							a.a = e.realPosition*e.vertexes->at(it->a[1]) - a.base;
+							a.b = e.realPosition*e.vertexes->at(it->a[2]) - a.base;
 
-							if (byRightSide(e.lights[0]->position, a))
+							triangles[i].visible = byRightSide(e.lights[0]->position, a);
+
+							if (false && triangles[i].visible)
 							{
+								glDepthFunc(GL_ALWAYS);
+								glColor3f(1.0, 0, 0);
+								glLineWidth(3);
+								glBegin(GL_LINE_LOOP);
+									glTexCoord1f(0.0f); glVertex3fv(a.base.getfv());
+									glTexCoord1f(0.0f); glVertex3fv((a.base + a.a).getfv());
+									glTexCoord1f(0.0f); glVertex3fv((a.base + a.b).getfv());
+								glEnd();
+
+								v3 c = a.base + a.a/3 + a.b/3;
+								glBegin(GL_LINE_LOOP);
+									glTexCoord1f(0.0f); glVertex3fv(c.getfv());
+									glTexCoord1f(0.0f); glVertex3fv((c + (a.a*a.b)).getfv());
+								glEnd();
+							}
+
+							if (triangles[i].visible)
+							{
+								glDepthFunc(GL_ALWAYS);
+								glColor3f(1.0, 0, 0);
+								glLineWidth(3);
+
+								//glBegin(GL_QUADS);
+								//for (int i = 0; i < 3; i++)
+								//{
+								//	glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+								//	glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
+								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
+								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+								//}
+								//glEnd();
+
+								glColor3f(1, 0, 0);
+								glBegin(GL_LINE_LOOP);
+								glTexCoord1f(0.0f); glVertex3fv(a.base.getfv());
+								glTexCoord1f(0.0f); glVertex3fv((a.base + a.a).getfv());
+								glTexCoord1f(0.0f); glVertex3fv((a.base + a.b).getfv());
+								glEnd();
+
+								glColor3f(0, 1, 0);
+								pushPosition(e);
+								glBegin(GL_LINE_LOOP);
+								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[0]));
+								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[1]));
+								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[2]));
+								glEnd();
+								popPosition(e);
+
+							}
+
+							for (int j = 0; j<3; j++)
+							{
+								int vert1 = it->a[j + 0];
+								int vert2 = it->a[(j + 1)%3];
+
+								bool found = false;
+								int eind = 0;
+								for EACH(svector<ShadowEdge>, edges, edge)
+								{
+									if (edge->count == 1 && 
+										edge->vertex[0] == vert1 && edge->vertex[1] == vert2 ||
+										edge->vertex[0] == vert2 && edge->vertex[1] == vert1)
+									{
+										// found second
+										found = true;
+										break;
+									}
+									eind++;
+								}
+
+								if (found)
+								{
+									edges[eind].count++;
+									edges[eind].triangle[1] = i;
+								}
+								else
+								{
+									edges.push_back(ShadowEdge(i, vert1, vert2));
+								}
+							}
+							i++;
+						}
+
+						for EACH(svector<ShadowEdge>, edges, edge)
+						{
+							if (
+								edge->count == 1 && triangles[edge->triangle[0]].visible || 
+								edge->count == 2 && triangles[edge->triangle[0]].visible != triangles[edge->triangle[1]].visible
+								)
+							{
+								int vert1;
+								int vert2;
+//								if (triangles[edge->triangle[0]].visible)
+								{
+									vert1 = edge->vertex[0];
+									vert2 = edge->vertex[1];
+								}
+//								else
+								{
+//									vert1 = edge->vertex[1];
+//									vert2 = edge->vertex[0];
+								}
+
+								//glDepthFunc(GL_ALWAYS);
+								//glColor3f(1.0, 0, 0);
+								//glLineWidth(3);
+								//glBegin(GL_LINES);
+								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+								//glEnd();
+
 								glBegin(GL_QUADS);
 								for (int i = 0; i < 3; i++)
 								{
-									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
-									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
-									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+									//glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+									//glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+									//glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+									//glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
 								}
 								glEnd();
 							}
 						}
 
+						//for EACH_CONST(QuadVector, faces->faces->quads, it)
+						//{
+						//	Plane a;
+						//	a.base = e.vertexes->at( it->a[0] );
+						//	a.a = e.vertexes->at( it->a[1] ) - a.base;
+						//	a.b = e.vertexes->at( it->a[2] ) - a.base;
 
-						for EACH_CONST(QuadVector, faces->faces->quads, it)
-						{
-							Plane a;
-							a.base = e.vertexes->at( it->a[0] );
-							a.a = e.vertexes->at( it->a[1] ) - a.base;
-							a.b = e.vertexes->at( it->a[2] ) - a.base;
-
-							if (byRightSide(e.lights[0]->position, a))
-							{
-								glBegin(GL_QUADS);
-								for (int i = 0; i < 4; i++)
-								{
-									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
-									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
-									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-								}
-								glEnd();
-							}
-						}
+						//	if (byRightSide(e.lights[0]->position, a))
+						//	{
+						//		glBegin(GL_QUADS);
+						//		for (int i = 0; i < 4; i++)
+						//		{
+						//			glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+						//			glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
+						//			glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
+						//			glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+						//		}
+						//		glEnd();
+						//	}
+						//}
 					}
 				}
 			}
-			popPosition(e);
+//			popPosition(e);
 		}
 	}
-	program->unbind();
+//	program->unbind();
 
 	glEnable(GL_STENCIL_TEST);
 
@@ -396,7 +532,7 @@ void OpenGL_Engine::renderShadows()
 	//glPopMatrix();
 
 	glDepthMask(GL_FALSE);
-	renderNormal();
+//	renderNormal();
 
 	glPopAttrib();
 }
@@ -711,8 +847,6 @@ void OpenGL_Engine::processCamera()
 {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    
-//	gluPerspective( camera.fov, (float)window.width/window.height, front, back );
 
 	double cameraAspectRatio = conf->getd("window.width") / conf->getd("window.height");
 
@@ -722,9 +856,9 @@ void OpenGL_Engine::processCamera()
 	v3 cameraCenter = cameraPosition + info.camera.getDirection();
 	v3 cameraUp = info.camera.getUpVector();
 
-    gluLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z,
-			cameraCenter.x, cameraCenter.y, cameraCenter.z,
-			cameraUp.x, cameraUp.y, cameraUp.z);
+    gluLookAt(	cameraPosition.x,	cameraPosition.y,	cameraPosition.z,
+				cameraCenter.x,		cameraCenter.y,		cameraCenter.z,
+				cameraUp.x,			cameraUp.y,			cameraUp.z);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
