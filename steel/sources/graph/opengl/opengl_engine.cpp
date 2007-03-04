@@ -350,6 +350,7 @@ void OpenGL_Engine::renderShadows()
 					{
 						svector<ShadowEdge> edges;
 						svector<ShadowFace> triangles(faces->faces->triangles.size());
+						svector<svector<int> > vertexes(e.vertexes->size());
 
 						int i = 0;
 						for EACH_CONST(TriangleVector, faces->faces->triangles, it)
@@ -361,41 +362,6 @@ void OpenGL_Engine::renderShadows()
 
 							triangles[i].visible = byRightSide(e.lights[0]->position, a);
 
-
-							if (triangles[i].visible)
-							{
-								//glDepthFunc(GL_ALWAYS);
-								//glColor3f(1.0, 0, 0);
-								//glLineWidth(3);
-
-								glBegin(GL_QUADS);
-								for (int i = 0; i < 3; i++)
-								{
-									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
-									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%3] ).getfv());
-									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-								}
-								glEnd();
-
-								//glColor3f(1, 0, 0);
-								//glBegin(GL_LINE_LOOP);
-								//glTexCoord1f(0.0f); glVertex3fv(a.base.getfv());
-								//glTexCoord1f(0.0f); glVertex3fv((a.base + a.a).getfv());
-								//glTexCoord1f(0.0f); glVertex3fv((a.base + a.b).getfv());
-								//glEnd();
-
-								//glColor3f(0, 1, 0);
-								//pushPosition(e);
-								//glBegin(GL_LINE_LOOP);
-								//glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[0]));
-								//glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[1]));
-								//glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(it->a[2]));
-								//glEnd();
-								//popPosition(e);
-
-							}
-
 							for (int j = 0; j<3; j++)
 							{
 								int vert1 = it->a[j + 0];
@@ -403,8 +369,9 @@ void OpenGL_Engine::renderShadows()
 
 								bool found = false;
 								int eind = 0;
-								for EACH(svector<ShadowEdge>, edges, edge)
+								for EACH(svector<int>, vertexes[vert1], vertNum)
 								{
+									ShadowEdge* edge = &edges[*vertNum];
 									if (edge->count == 1 && 
 										edge->vertex[0] == vert1 && edge->vertex[1] == vert2 ||
 										edge->vertex[0] == vert2 && edge->vertex[1] == vert1)
@@ -423,6 +390,8 @@ void OpenGL_Engine::renderShadows()
 								}
 								else
 								{
+									vertexes[vert1].push_back(edges.size());
+									vertexes[vert2].push_back(edges.size());
 									edges.push_back(ShadowEdge(i, vert1, vert2));
 								}
 							}
@@ -438,57 +407,61 @@ void OpenGL_Engine::renderShadows()
 							{
 								int vert1;
 								int vert2;
-//								if (triangles[edge->triangle[0]].visible)
+								if (triangles[edge->triangle[0]].visible)
 								{
 									vert1 = edge->vertex[0];
 									vert2 = edge->vertex[1];
 								}
-//								else
+								else
 								{
-//									vert1 = edge->vertex[1];
-//									vert2 = edge->vertex[0];
+									vert1 = edge->vertex[1];
+									vert2 = edge->vertex[0];
 								}
 
-								//glDepthFunc(GL_ALWAYS);
-								//glColor3f(1.0, 0, 0);
-								//glLineWidth(3);
-								//glBegin(GL_LINES);
-								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
-								//glEnd();
+
+								glPushAttrib(GL_ALL_ATTRIB_BITS);
+								glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
+								glDepthFunc(GL_ALWAYS);
+								glColor3f(1.0, 0, 0);
+								glLineWidth(2);
+								glDepthMask(GL_TRUE);
+								glBegin(GL_LINE_LOOP);
+								glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+								glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+								glEnd();
+								glPopAttrib();
 
 								glBegin(GL_QUADS);
-								for (int i = 0; i < 3; i++)
-								{
-									//glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
-									//glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-									//glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-									//glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
-								}
+								glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+								glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
 								glEnd();
 							}
 						}
 
-						//for EACH_CONST(QuadVector, faces->faces->quads, it)
-						//{
-						//	Plane a;
-						//	a.base = e.vertexes->at( it->a[0] );
-						//	a.a = e.vertexes->at( it->a[1] ) - a.base;
-						//	a.b = e.vertexes->at( it->a[2] ) - a.base;
+						for EACH_CONST(QuadVector, faces->faces->quads, it)
+						{
+							Plane a;
+							a.base = e.vertexes->at( it->a[0] );
+							a.a = e.vertexes->at( it->a[1] ) - a.base;
+							a.b = e.vertexes->at( it->a[2] ) - a.base;
 
-						//	if (byRightSide(e.lights[0]->position, a))
-						//	{
-						//		glBegin(GL_QUADS);
-						//		for (int i = 0; i < 4; i++)
-						//		{
-						//			glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-						//			glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
-						//			glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
-						//			glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-						//		}
-						//		glEnd();
-						//	}
-						//}
+							if (byRightSide(e.lights[0]->position, a))
+							{
+								glBegin(GL_QUADS);
+								for (int i = 0; i < 4; i++)
+								{
+									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
+									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
+									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+								}
+								glEnd();
+							}
+						}
 					}
 				}
 			}
