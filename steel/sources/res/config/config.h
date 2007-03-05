@@ -88,6 +88,7 @@ public:
 	// директория, из которой был загружен конфиг
 	std::string getConfigFilePath() const;
 	virtual void setFilePath(const std::string &_file) { file = _file; }
+	Config* getParent() { return parent; }
 
 	friend class ConfigParser;
 
@@ -101,7 +102,6 @@ protected:
 
 	virtual std::string genFullId(std::string someConfigId) const;
 	const Config* getParent() const { return parent; }
-	Config* getParent() { return parent; }
 	void setParent(Config *_parent) { parent = _parent; }
 
 	const std::string getIndent(int level) const;

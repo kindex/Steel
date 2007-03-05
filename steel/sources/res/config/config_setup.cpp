@@ -69,6 +69,10 @@ void setup(PConfig& conf, const std::string& path, Config* newValue)
 	}
 	else
 	{
+		svector<std::string> path2;
+		explode('.', path, path2);
+		Config* obj = conf->find(path);
+		Config* patient = obj->getParent();
 /*		site_t a = path.find_first_of(".[");
 		if (a != path.npos)
 		{
@@ -76,9 +80,9 @@ void setup(PConfig& conf, const std::string& path, Config* newValue)
 			if (path[a] == '.') // struct
 		}TODO: split path*/
 		
-		if (conf->getType() == CONFIG_VALUE_STRUCT)
+		if (patient->getType() == CONFIG_VALUE_STRUCT)
 		{
-			static_cast<ConfigStruct*>(conf)->setValue(path, newValue);
+			static_cast<ConfigStruct*>(patient)->setValue(path2.back(), newValue);
 		}
 	}
 }

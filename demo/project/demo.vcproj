@@ -410,6 +410,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="21_shadows"
+				>
+				<File
+					RelativePath="..\data\21_shadows\main.scene"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="objects"
