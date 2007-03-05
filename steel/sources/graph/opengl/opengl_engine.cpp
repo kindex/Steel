@@ -368,25 +368,27 @@ void OpenGL_Engine::renderShadows()
 								int vert2 = it->a[(j + 1)%3];
 
 								bool found = false;
-								int eind = 0;
-								for EACH(svector<int>, vertexes[vert1], vertNum)
+								int eind = -1;
+								for EACH(svector<int>, vertexes[vert1], edgeIndex)
 								{
-									ShadowEdge* edge = &edges[*vertNum];
+									ShadowEdge* edge = &edges[*edgeIndex];
 									if (edge->count == 1 && 
 										edge->vertex[0] == vert1 && edge->vertex[1] == vert2 ||
 										edge->vertex[0] == vert2 && edge->vertex[1] == vert1)
 									{
 										// found second
 										found = true;
+										eind = *edgeIndex;
 										break;
 									}
-									eind++;
 								}
 
 								if (found)
 								{
 									edges[eind].count++;
 									edges[eind].triangle[1] = i;
+									vertexes[vert1].push_back(eind);
+									vertexes[vert2].push_back(eind);
 								}
 								else
 								{
@@ -419,25 +421,25 @@ void OpenGL_Engine::renderShadows()
 								}
 
 
-								glPushAttrib(GL_ALL_ATTRIB_BITS);
-								glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
-								glDepthFunc(GL_ALWAYS);
-								glColor3f(1.0, 0, 0);
-								glLineWidth(2);
-								glDepthMask(GL_TRUE);
-								glBegin(GL_LINE_LOOP);
-								glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
-								glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
-								glEnd();
-								glPopAttrib();
+								//glPushAttrib(GL_ALL_ATTRIB_BITS);
+								//glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
+								//glDepthFunc(GL_ALWAYS);
+								//glColor3f(1.0, 0, 0);
+								//glLineWidth(2);
+								//glDepthMask(GL_TRUE);
+								//glBegin(GL_LINE_LOOP);
+								//	glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+								//	glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+								//glEnd();
+								//glPopAttrib();
 
 								glBegin(GL_QUADS);
-								glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
-								glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-								glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
 								glEnd();
 							}
 						}
@@ -468,24 +470,13 @@ void OpenGL_Engine::renderShadows()
 			popPosition(e);
 		}
 	}
-//	program->unbind();
+	program->unbind();
 
 	glEnable(GL_STENCIL_TEST);
 
 	glFrontFace(GL_CCW);
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	glStencilFunc(GL_EQUAL, 0, 0xffffffff);
-
-	//glMatrixMode(GL_PROJECTION);
-	//glPushMatrix();
-	//glLoadIdentity();
-	//glBegin(GL_QUADS);
-	//	glVertex2f(-0.9, 0.9);
-	//	glVertex2f(-0.9,-0.9);
-	//	glVertex2f( 0.9,-0.9);
-	//	glVertex2f( 0.8, 0.8);
-	//glEnd();
-	//glPopMatrix();
 
 	glDepthMask(GL_FALSE);
 	renderNormal();

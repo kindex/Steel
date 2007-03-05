@@ -27,16 +27,25 @@ origin = (1 0.5 1.2)
 
 	transformation = 
 	{
+		class = 'transformation_list'
+		transformations =
+		(
+		{
 			class = 'rotation'
 			rotationAxis = (0 0 1)
 			speed = 0.3
+		}
+		{
+			class = 'scaler'
+			scale = (0.1 0.1 0.1)
+		}
+		)
 	}
 
 graph = 
 {
-class = 'box'
-size = (0.3 0.1 0.1)
-//file = '/09_demo/teapot'
+class = 'model'
+file = '/09_demo/teapot'
 material = 
 {
 class = 'std'
