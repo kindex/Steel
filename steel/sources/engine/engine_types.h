@@ -44,16 +44,16 @@ struct Quad // anti-clockwise direction (one side Triangle)
 class BufferedElement
 {
 public:
-	// true, если этот массив был изменён с прошлого раза
-	bool	changed;
-	// уникальный идентификатор для массива данных
-	uid		id;
-public:
 	BufferedElement(): changed(true) { id = objectIdGenerator.genUid(); }
 	uid		getId() const { return id; }
 	void	setId(uid _id) { id = _id; changed = false; }
 	bool	wasChanged() const { return changed; }
 	void	setChanged(bool _changed) {changed = _changed; }
+
+	// если этот массив был изменён с прошлого раза, то true
+	bool	changed;
+	// уникальный идентификатор для массива данных
+	uid		id;
 };
 
 class TriangleVector : public pvector<Triangle>, public BufferedElement {};

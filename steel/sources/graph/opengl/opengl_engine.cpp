@@ -269,19 +269,6 @@ void OpenGL_Engine::renderNormal()
 	}
 }
 
-struct ShadowEdge
-{
-	int triangle[2];
-	int vertex[2];
-	int count;
-
-	ShadowEdge(int trg, int a, int b) : count(1) 
-	{ 
-		triangle[0] = trg; 
-		vertex[0] = a; 
-		vertex[1] = b;
-	}
-};
 
 struct ShadowFace
 {
@@ -339,16 +326,17 @@ void OpenGL_Engine::renderShadows()
 		for EACH(ShadowPVector, shadows, it)
 		{
 			GraphShadow& e = *GS(*it);
+			e.calculateEgdes();
 		
 			pushPosition(e);
-			if (e.faceMaterials != NULL && !e.lights.empty())
+			if (e.faceMaterials != NULL && !e.lights.empty() && e.vertexes != NULL && !e.vertexes->empty())
 			{
 				program->setUniformVector("lightPos", e.lights[0]->position);
+				int faceNumber = 0;
 				for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 				{
-					if (e.vertexes != NULL && !(faces->faces->triangles.empty()&& faces->faces->quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
+					if (!(faces->faces->triangles.empty() &&  faces->faces->quads.empty()))
 					{
-						svector<ShadowEdge> edges;
 						svector<ShadowFace> triangles(faces->faces->triangles.size());
 						svector<svector<int> > vertexes(e.vertexes->size());
 
@@ -360,56 +348,19 @@ void OpenGL_Engine::renderShadows()
 							a.a = e.realPosition*e.vertexes->at(it->a[1]) - a.base;
 							a.b = e.realPosition*e.vertexes->at(it->a[2]) - a.base;
 
-							triangles[i].visible = byRightSide(e.lights[0]->position, a);
-
-							for (int j = 0; j<3; j++)
-							{
-								int vert1 = it->a[j + 0];
-								int vert2 = it->a[(j + 1)%3];
-
-								bool found = false;
-								int eind = -1;
-								for EACH(svector<int>, vertexes[vert1], edgeIndex)
-								{
-									ShadowEdge* edge = &edges[*edgeIndex];
-									if (edge->count == 1 && 
-										edge->vertex[0] == vert1 && edge->vertex[1] == vert2 ||
-										edge->vertex[0] == vert2 && edge->vertex[1] == vert1)
-									{
-										// found second
-										found = true;
-										eind = *edgeIndex;
-										break;
-									}
-								}
-
-								if (found)
-								{
-									edges[eind].count++;
-									edges[eind].triangle[1] = i;
-									vertexes[vert1].push_back(eind);
-									vertexes[vert2].push_back(eind);
-								}
-								else
-								{
-									vertexes[vert1].push_back(edges.size());
-									vertexes[vert2].push_back(edges.size());
-									edges.push_back(ShadowEdge(i, vert1, vert2));
-								}
-							}
-							i++;
+							triangles[i++].visible = byRightSide(e.lights[0]->position, a);
 						}
 
-						for EACH(svector<ShadowEdge>, edges, edge)
+						for EACH(EdgeVector, e.edges[faceNumber], edge)
 						{
 							if (
-								edge->count == 1 && triangles[edge->triangle[0]].visible || 
-								edge->count == 2 && triangles[edge->triangle[0]].visible != triangles[edge->triangle[1]].visible
+								edge->faceCount == 1 && triangles[edge->faces[0]].visible || 
+								edge->faceCount == 2 && triangles[edge->faces[0]].visible != triangles[edge->faces[1]].visible
 								)
 							{
 								int vert1;
 								int vert2;
-								if (triangles[edge->triangle[0]].visible)
+								if (triangles[edge->faces[0]].visible)
 								{
 									vert1 = edge->vertex[0];
 									vert2 = edge->vertex[1];
@@ -465,6 +416,7 @@ void OpenGL_Engine::renderShadows()
 							}
 						}
 					}
+					faceNumber++;
 				}
 			}
 			popPosition(e);

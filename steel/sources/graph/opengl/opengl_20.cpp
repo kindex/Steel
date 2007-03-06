@@ -130,7 +130,7 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 			}
 			else
 			{
-				shader.setUniformInt(lighti + ".type", 0);
+				shader.setUniformInt(lighti + "type", 0);
 			}
 		}
 		if (!cubeMapSet && lightCount)
