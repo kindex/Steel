@@ -18,8 +18,17 @@
 #include <steel.h>
 #include <common/logger.h>
 
+#include <objects/combiner/combiner.h>
+#include <objects/combiner/audio/simple_sound.h>
+
+
 bool test()
 {
+	return true;
+}
 
+
+bool test(AudioEngine* audio)
+{
 	return true;
 }

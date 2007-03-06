@@ -26,5 +26,6 @@ int main(int argc, char *argv[]);
 #endif
 
 bool test();
+bool test(AudioEngine*);
 
 #endif
