@@ -1,0 +1,385 @@
+﻿<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="resources_files/filelist.xml">
+<title>Steel Engine: концепция</title>
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	margin-bottom:5.95pt;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	margin-bottom:5.95pt;
+	margin-left:2.85pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	font-family:Arial;
+	font-weight:bold;
+	font-style:italic;}
+h3
+	{margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:5.65pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{margin-top:3.0pt;
+	margin-right:14.2pt;
+	margin-bottom:3.0pt;
+	margin-left:1.0cm;
+	text-indent:1.0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.code, li.code, div.code
+	{mso-style-name:code;
+	margin-top:3.0pt;
+	margin-right:14.2pt;
+	margin-bottom:3.0pt;
+	margin-left:1.0cm;
+	text-indent:1.0cm;
+	mso-pagination:widow-orphan;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+span.codechar
+	{mso-style-name:codechar;
+	font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:2.0cm 42.5pt 2.0cm 3.0cm;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+<meta name=CREATED content="20060330;17111829">
+<meta name=CHANGED content="20060330;18132082">
+</head>
+
+<body lang=RU link=blue vlink=purple style='tab-interval:35.4pt'>
+
+<div class=Section1>
+
+<h1>Ресурсы<span style='mso-ansi-language:EN-US'> <span lang=EN-US>(Resource
+Collection)<o:p></o:p></span></span></h1>
+
+<p>Существует 5 основных типов ресурсов: <b>Config</b>, <b><span lang=EN-US
+style='mso-ansi-language:EN-US'>Image</span></b>, <b><span lang=EN-US
+style='mso-ansi-language:EN-US'>Model</span></b>, <b><span lang=EN-US
+style='mso-ansi-language:EN-US'>Material</span></b>, <b><span lang=EN-US
+style='mso-ansi-language:EN-US'>Script</span></b>. Для хранения каждого типа
+ресурса существует своя коллекция ресурсов (Соответственно resConfig, resImage
+и т.д.)</p>
+
+<p>Для загрузки картинки нужно указать её относительное имя без расширения.</p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>Image *a = <span
+class=GramE>resImage.add(</span>“dir/name”);<o:p></o:p></span></p>
+
+<p>Коллекция попробует загрузить ресурс всеми определёнными способами по
+порядку. Для указания своего способа загрузки существует функция <b>registerResLoader</b>.
+Она принимает указатель <span class=GramE>на</span> <span class=GramE>функция</span>,
+которая создаёт ресурс по указанному имени и директории (точки отсчёта имён). В
+принципе, эта функция может и не загружать ресурс, а создавать его на лету.</p>
+
+<p>&nbsp;</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>resModel.registerResLoader(</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'>createClass&lt;_3DS, Model&gt;);<o:p></o:p></span></p>
+
+<p>Функция createClass создаёт класс _3DS, вызывает его загрузчик init,
+устанавливает уникальный идентификатор и возвращает созданный класс. В
+registerResLoader можно передать и другой загрузчик. Например, createImage, <span
+class=GramE>которая</span> загружает изображения всех возможных комбинаций
+типов. Она сама ищет нужный файл по указанному параметру name. Остальные
+параметры могут быть как указанными явно, так и опущенными. </p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>name[</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'>.cube][.normal|.height][.bmp|.tga]<o:p></o:p></span></p>
+
+<p>cube – кубическая текстура. 6 текстур в одной сверху-вниз (+X, -X, +Y, -Y,
++Z, -Z)</p>
+
+<p>normal – карта нормалей</p>
+
+<p>height – карты высот. Преобразовываетя <span class=GramE>к варте</span>
+нормалей</p>
+
+<p>bmp, tga – конкретные типы хранения изображений.</p>
+
+<p>&nbsp;</p>
+
+<p>Передаваемое имя файла в <span lang=EN-US style='mso-ansi-language:EN-US'>resImage</span>.<span
+lang=EN-US style='mso-ansi-language:EN-US'>add</span>(“<span lang=EN-US
+style='mso-ansi-language:EN-US'>dir</span>/<span lang=EN-US style='mso-ansi-language:
+EN-US'>name</span>”) указываетя относительно текущей директории в коллекции.
+Текущая директория меняется при рекурсивном вызове загрузчиков. Например, <span
+lang=EN-US style='mso-ansi-language:EN-US'>config</span> -&gt; <span
+lang=EN-US style='mso-ansi-language:EN-US'>model</span> -&gt; <span lang=EN-US
+style='mso-ansi-language:EN-US'>material</span> -&gt; <span lang=EN-US
+style='mso-ansi-language:EN-US'>image</span>. То есть, имя файла указывается
+относительно директории предыдущего загруженного ресурса. Имя может содержать
+директории (<span lang=EN-US style='mso-ansi-language:EN-US'>dir</span>/<span
+lang=EN-US style='mso-ansi-language:EN-US'>file</span>, ../<span lang=EN-US
+style='mso-ansi-language:EN-US'>dir</span>/<span lang=EN-US style='mso-ansi-language:
+EN-US'>file</span>). Можно указать абсолютный путь к ресурсу – для того надо
+начать путь <span lang=EN-US style='mso-ansi-language:EN-US'>c</span> /.
+Максимальная глубина вложенности рекурсивных вызовов – 100. Для первого вызовы
+текущей директорией является <span lang=EN-US style='mso-ansi-language:EN-US'><a
+href="#_Структура_каталогов">res</a></span> (корень ресурсов). Полное имя
+ресурса – имя относительно корня.</p>
+
+<p>У процедуры <span lang=EN-US style='mso-ansi-language:EN-US'>add</span> есть
+второй параметр типа <span lang=EN-US style='mso-ansi-language:EN-US'>bool</span>.
+Если он равняется <span lang=EN-US style='mso-ansi-language:EN-US'>false</span>,
+то после загрузки ресурса текущая директория не восстанавливается и надо это делать
+вручную с помощью вызова <span lang=EN-US style='mso-ansi-language:EN-US'>pop</span>.</p>
+
+<p>Удаление ресурсов происходит с помощью функции <span lang=EN-US
+style='mso-ansi-language:EN-US'>remove</span>(<span lang=EN-US
+style='mso-ansi-language:EN-US'>string</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>FullName</span>). У каждого ресурса
+есть количество ссылок, которые ссылаются на него (<span lang=EN-US
+style='mso-ansi-language:EN-US'>links</span>) – сколько раз его хотели
+загрузить. При запросе на загрузку ресурса с уже существующим именем ресурс не
+загружается, а возвращается уже загруженный из коллекции и увеличивается
+количество ссылок. При вызове <span lang=EN-US style='mso-ansi-language:EN-US'>remove</span><span
+lang=EN-US> </span>количество ссылок уменьшается. Если ссылок больше нет (=0),
+то ресурс удаляется физически (Вызывается его деструктор).</p>
+
+<p>Итого, ресурсы надо освобождать, иначе они до завершения программы будут в
+коллекции. Внутри коллекции не могут дублироваться полные имена, но могут быть
+два файла с одинаковым именем, но в разных директориях. Кроме того, в двух
+разных коллекциях могут находиться два ресурса с одинаковыми полными именами.
+Это достигается благодаря тому, что имена ресурсов хранятся без расширений.
+Можно без проблем изменить формат хранения ресурса (другое расширение) без
+изменения ссылок на него. То есть, в директории могут быть файлы <span
+lang=EN-US style='mso-ansi-language:EN-US'>model</span>.3<span lang=EN-US
+style='mso-ansi-language:EN-US'>ds</span><span lang=EN-US> </span>и <span
+lang=EN-US style='mso-ansi-language:EN-US'>model</span>.<span lang=EN-US
+style='mso-ansi-language:EN-US'>bmp</span>, ресурсы будут в двух коллекциях, и
+их имена будут <span lang=EN-US style='mso-ansi-language:EN-US'>model</span>.</p>
+
+<h3><a name="_Toc142999579"><span lang=EN-US style='mso-ansi-language:EN-US'>ResCollection</span></a></h3>
+
+<p>Модуль для хранения, загрузки и контроля над игровыми ресурсами, такими как:
+<span lang=EN-US style='mso-ansi-language:EN-US'>image</span>, <span
+lang=EN-US style='mso-ansi-language:EN-US'>model</span>, <span lang=EN-US
+style='mso-ansi-language:EN-US'>audio</span>. Главный класс <span lang=EN-US
+style='mso-ansi-language:EN-US'>ResCollection</span> получает запросы на
+загрузку ресурсов, обрабатывает их, исключает дублирование ресурсов.</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>ResCollection</span><span
+lang=EN-US> </span>является шаблоном и может хранить любых потомков
+класса-параметра.</span></p>
+
+<p>Поля:</p>
+
+<p>string id – строковой идентификатор коллекции (image, model)</p>
+
+<p>vector&lt;ResStorage&gt; data – массив хранимых ресурсов и дополнительная
+информация к каждому ресурсу.</p>
+
+<p>&nbsp;</p>
+
+<p>ResStorage:</p>
+
+<p>object - ссылка на ресурс</p>
+
+<p>id - уникальный идентификатор ресурса</p>
+
+<p>links – количество ссылок на этот ресурс. При добавлении дублируемого ресурса
+счётчик увеличивается на 1. При удалении -&nbsp; уменьшается на 1. Если
+количество ссылок становится равным 1, то ресурс удаляется из коллекции<span
+class=GramE>.</span> (<span class=GramE>а</span>налогично Linux ext2fs).</p>
+
+<p>name – полное имя ресурса.</p>
+
+<p>&nbsp;</p>
+
+<p>index – отображение полных имён ресурсов на индекс в массиве data. Для
+увеличения скорости поиска по имени.</p>
+
+<p>resIndex – отображение указателя ресурса на индекс в массиве data. Для
+увеличения скорости удаления ресурса по ссылке на него.</p>
+
+<p>&nbsp;</p>
+
+<p>Interface:</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>operator</span>[</span>],
+<span lang=EN-US style='mso-ansi-language:EN-US'>get</span>&nbsp; - Вернуть
+ресурс по полному имени</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>add</span></span>
+- Добавить ресурс по имени и типу, если ресурса еще нет в коллекции</p>
+
+<p>remove - удалить ресурс</p>
+
+<p>pop – описание выше</p>
+
+<p>&nbsp;</p>
+
+<h3><a name="_Toc142999580"></a><span class=GramE><span style='mso-bookmark:
+_Toc142999580'><span lang=EN-US style='mso-ansi-language:EN-US'>rstream</span></span></span><span
+style='mso-bookmark:_Toc142999580'></span></h3>
+
+<p>Вся работа с файловой системой должна происходить через этот класс. Он
+отвечает за чтение файла из файловой системы или архивов. Интерфейс класса
+совместим с <span lang=EN-US style='mso-ansi-language:EN-US'>fstream</span>.</p>
+
+<h3><a name="_Toc142999581">objectIdGenerator</a></h3>
+
+<p>Этот класс отвечает за генерирование уникальных идентификаторов для всех
+объектов (сродни <span lang=EN-US style='mso-ansi-language:EN-US'>sequence</span><span
+lang=EN-US> </span>в <span lang=EN-US style='mso-ansi-language:EN-US'>PostgreSQL</span>).</p>
+
+<h3><a name="_Toc142999582"><span lang=EN-US style='mso-ansi-language:EN-US'>Res</span></a></h3>
+
+<p>Класс - храниель и рагрузчик одного ресурса. Хранение - стандартизовано для
+каждого типа ресурса. Загруска - для каждого типа может быть несколько классов
+для загрузки. От этого класса наследуются классы для хранения ресурсов для
+каждого типа (image, model). В них реализуется деструктор, который уничтожает
+структуры, созданные при загрузке. От них наследуются загрузчики, которые
+переопределяют метод init. init загружает ресурс или генерирует по строковому
+идентификатору.</p>
+
+<h3><a name="_Toc142999583"><span lang=EN-US style='mso-ansi-language:EN-US'>Text</span></a></h3>
+
+<p>Это самый простой тип ресурса.</p>
+
+<p><span class=GramE>Предназначен</span> для хранения текста. Загружает текст
+из текстового файла. Внутренне представление – <span lang=EN-US
+style='mso-ansi-language:EN-US'>unsigned</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>char</span><span lang=EN-US> </span>*.(<span
+lang=EN-US style='mso-ansi-language:EN-US'>ASCII</span>)</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>unsigned</span></span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>char</span>
+*<span lang=EN-US style='mso-ansi-language:EN-US'>getText</span>(<span
+lang=EN-US style='mso-ansi-language:EN-US'>void</span>) <span lang=EN-US
+style='mso-ansi-language:EN-US'>const</span> – сам текст в виде <span
+lang=EN-US style='mso-ansi-language:EN-US'>z</span>-<span lang=EN-US
+style='mso-ansi-language:EN-US'>terminated</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>string</span> (в конце /0)</p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>int getLength(void) const –
+</span>длина<span style='mso-ansi-language:EN-US'> </span>текста<span
+style='mso-ansi-language:EN-US'> </span>без<span lang=EN-US style='mso-ansi-language:
+EN-US'> /0&nbsp;<o:p></o:p></span></p>
+
+<h3 style='margin-left:0cm'><a name="_Toc142999584"><span lang=EN-US
+style='mso-ansi-language:EN-US'>Config</span></a><span lang=EN-US
+style='mso-ansi-language:EN-US'><o:p></o:p></span></h3>
+
+<p>Смотрите<span style='mso-ansi-language:EN-US'> <span lang=EN-US>config.html<o:p></o:p></span></span></p>
+
+<h3><a name="_Toc142999585"><span lang=EN-US style='mso-ansi-language:EN-US'>Image</span></a><span
+lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h3>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>TODO:<b><o:p></o:p></b></span></p>
+
+<h3><a name="_Toc142999586"><span lang=EN-US style='mso-ansi-language:EN-US'>Model</span></a><span
+lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h3>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>TODO</span>:<b><o:p></o:p></b></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>&nbsp;</span></p>
+
+<h3>Составители</h3>
+
+<p>Андрей Иванов (KindeX)</p>
+
+<p>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>

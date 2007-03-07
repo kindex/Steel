@@ -1,0 +1,420 @@
+﻿<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="base_types_files/filelist.xml">
+<title>Steel Engine: концепция</title>
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	margin-bottom:5.95pt;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	margin-bottom:5.95pt;
+	margin-left:2.85pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	font-family:Arial;
+	font-weight:bold;
+	font-style:italic;}
+h3
+	{margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:5.65pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{margin-top:3.0pt;
+	margin-right:14.2pt;
+	margin-bottom:3.0pt;
+	margin-left:1.0cm;
+	text-indent:1.0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.code, li.code, div.code
+	{mso-style-name:code;
+	margin-top:3.0pt;
+	margin-right:14.2pt;
+	margin-bottom:3.0pt;
+	margin-left:1.0cm;
+	text-indent:1.0cm;
+	mso-pagination:widow-orphan;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+span.codechar
+	{mso-style-name:codechar;
+	font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:2.0cm 42.5pt 2.0cm 3.0cm;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+<meta name=CREATED content="20060330;17111829">
+<meta name=CHANGED content="20060330;18132082">
+</head>
+
+<body lang=RU link=blue vlink=purple style='tab-interval:35.4pt'>
+
+<div class=Section1>
+
+<h1>Базовые типы данных (<span lang=EN-US style='mso-ansi-language:EN-US'>math</span>,
+<span lang=EN-US style='mso-ansi-language:EN-US'>common</span>)</h1>
+
+<h3><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>uid</span></span></h3>
+
+<p><span class=GramE><b><span lang=EN-US style='mso-ansi-language:EN-US'>uid</span></b></span>
+(<span lang=EN-US style='mso-ansi-language:EN-US'>unique</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>identifier</span>)
+– идентификатор объекта или ресурса, положительное целое число (<span
+lang=EN-US style='mso-ansi-language:EN-US'>unsigned</span><span lang=EN-US> </span><span
+lang=EN-US style='mso-ansi-language:EN-US'>int</span>). У двух разных объектов
+должны быть различные идентификаторы.</p>
+
+<p>За генерацию уникальных идентификаторов отвечает класс <b>IdGenerator</b> (<span
+lang=EN-US style='mso-ansi-language:EN-US'>interface</span>.<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span>). Для каждого типа объектов существует
+свой идентификатор. Для <a href="#_Object">игровых объектов</a>&nbsp; - <b>objectIdGenerator</b>.</p>
+
+<p><a name="_Toc142999592"></a><a name="_PositionKind"></a><b>PositionKind<o:p></o:p></b></p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>enum</span>{</span>
+<span lang=EN-US style='mso-ansi-language:EN-US'>local</span>, <span
+lang=EN-US style='mso-ansi-language:EN-US'>global</span> }</p>
+
+<p>Тип положения объекта: <span lang=EN-US style='mso-ansi-language:EN-US'>local</span><span
+lang=EN-US> </span>– относительно родителя, <span lang=EN-US style='mso-ansi-language:
+EN-US'>global</span><span lang=EN-US> </span>– в глобальной системе координат.</p>
+
+<p>&nbsp;</p>
+
+<h3><a name="_Toc142999593"></a><a name="_ObjectPosition"></a><span lang=EN-US
+style='mso-ansi-language:EN-US'>Math</span></h3>
+
+<p>Основные геометрические типы данных хранятся в директории <span lang=EN-US
+style='mso-ansi-language:EN-US'>math</span>. </p>
+
+<h3><a name="_Toc142999594"></a><a name="_v3_(vector3d.h)"></a><span
+lang=EN-US style='mso-ansi-language:EN-US'>v</span>3 (<span lang=EN-US
+style='mso-ansi-language:EN-US'>vector</span>3<span lang=EN-US
+style='mso-ansi-language:EN-US'>d</span>.<span lang=EN-US style='mso-ansi-language:
+EN-US'>h</span>)</h3>
+
+<p>Используется для хранения трёхмерного вектора, положения точки в
+пространстве, направляющих прямых, нормалей к плоскостям и т.д.</p>
+
+<p>Содержит 3 поля: float x, y, z;</p>
+
+<p>Конструкторы: </p>
+
+<p>v3() – не инициализирует ничего (для повышения производительности)</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>v3(</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'>float x, float y, float z)<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>&nbsp;<o:p></o:p></span></p>
+
+<p>Чтение и запись полей осуществляется по их именам. Кроме <span class=GramE>того</span>
+доступен operator[](int i) для доступа к полям: 0 - x, 1 - y, 2 – z</p>
+
+<p>Инициализация: loadZero(), loadOne()</p>
+
+<p>И множество полезных операторов: векторное и скалярное произведение, + - * /
+</p>
+
+<p>operator== и operator!= сравнивают вектора по компонентам.</p>
+
+<p>Полезные<span style='mso-ansi-language:EN-US'> </span>функции<span
+lang=EN-US style='mso-ansi-language:EN-US'>: getLength, normalize,
+getNormalized, getSquaredLength<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>&nbsp;<o:p></o:p></span></p>
+
+<p>Кроме <span class=GramE>того</span> доступена упрощенная версия v3 без
+конструктора. v3simple. Можно использовать только тогда, когда нельзя
+использовать v3 (например, в union).</p>
+
+<h3><a name="_Toc142999595"><span lang=EN-US style='mso-ansi-language:EN-US'>v</span>2
+(</a><span style='mso-bookmark:_Toc142999595'></span><span lang=EN-US
+style='mso-ansi-language:EN-US'>vector</span>2<span lang=EN-US
+style='mso-ansi-language:EN-US'>d</span>.<span lang=EN-US style='mso-ansi-language:
+EN-US'>h</span>)</h3>
+
+<p>Полностью аналогичен классу <span lang=EN-US style='mso-ansi-language:EN-US'><a
+href="#_v3_(vector3d.h)">v<span lang=RU style='mso-ansi-language:RU'>3</span></a></span>.
+Реже используется и поэтому может не содержать все функции, которые есть в <span
+lang=EN-US style='mso-ansi-language:EN-US'>v</span>3. При необходимости можно
+добавить их.</p>
+
+<h3><a name="_Toc142999596"></a><a name="_matrix33"></a>matrix33</h3>
+
+<p>Квадратная матрица 3x3. Используется как матрица преобразования координат.</p>
+
+<p>Содержит 3 строчки по 3 числа в каждой. Доступ к полям осуществляется по
+имени. 9 чисел доступны двумя способами: как одномерный массив из 9ти элементов
+и как двумерный массив 3x3 (первый индекс – номер строки).</p>
+
+<p>Нет конструктора, так как этот класс используется в union.</p>
+
+<p>Инициализаторы: loadIdentity (единичная матрица), loadZero (нулевая
+матрица).</p>
+
+<p>Пергруженные операторы: + - * /</p>
+
+<p>matrix33 operator*(matrix33 operand) перемножает 2 матрицы. Из первой
+берутся строки, из второй столбцы.</p>
+
+<p>setRotation[X, Y, Z, Axis] делают матрицу матрицей поворота вдоль указанной
+оси на указанный угол в радианах. </p>
+
+<p>setScale – делает матрицу масштабирования</p>
+
+<p>getInverse – возвращает обратную матрицу</p>
+
+<p>&nbsp;</p>
+
+<p>Примеры использования: изменения системы координат</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>matrix</span>33</span>
+<span lang=EN-US style='mso-ansi-language:EN-US'>a</span>,<span lang=EN-US
+style='mso-ansi-language:EN-US'>b</span>,<span lang=EN-US style='mso-ansi-language:
+EN-US'>c</span>;</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>a.setRotationX(</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'>1);<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>b = <span class=GramE>a.getInverse(</span>);<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>c</span> = <span
+lang=EN-US style='mso-ansi-language:EN-US'>a</span>*<span lang=EN-US
+style='mso-ansi-language:EN-US'>b</span>; // должна получиться единичная
+матрица</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>v</span>3(</span>1,2,3)*<span
+lang=EN-US style='mso-ansi-language:EN-US'>a</span>; // вектор (1,2,3)
+повернутый на 1 радиан в положительном направлении вдоль оси <span lang=EN-US
+style='mso-ansi-language:EN-US'>X</span></p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>b.setRotationY(</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'>2);<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>c = a*b;<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>v</span>3(1,2,3)*<span
+lang=EN-US style='mso-ansi-language:EN-US'>c</span>; // вектор (1,2,3)
+повернутый на 1 радиан в положительном направлении вдоль оси <span lang=EN-US
+style='mso-ansi-language:EN-US'>X</span>, и после этого еще на 2 радиана вдоль
+оси <span lang=EN-US style='mso-ansi-language:EN-US'>Y</span></p>
+
+<h3><a name="_Toc142999597"></a><a name="_matrix34"></a>matrix34</h3>
+
+<p>Матрица из трёх строк и четырёх столбцов. Служит эмуляцией матрицы 4x4, к
+которой нижняя строка равна (0,0,0,1). Интерфейс аналогичен <a href="#_matrix33">matrix33</a>.
+<b>matrix34</b> состоит из matrix33 (первые 3 колонки) и v3 (четвертая колонка)</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>setTranslation</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'> </span>и<span lang=EN-US
+style='mso-ansi-language:EN-US'> getTranslation </span>работают<span
+style='mso-ansi-language:EN-US'> </span>с<span style='mso-ansi-language:EN-US'>
+</span>вектором<span lang=EN-US style='mso-ansi-language:EN-US'>. </span>Эти
+функции делают матрицу переноса.</p>
+
+<p>&nbsp;</p>
+
+<p>Примеры использования: изменения системы координат</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>matrix</span>34</span>
+<span lang=EN-US style='mso-ansi-language:EN-US'>a</span>,<span lang=EN-US
+style='mso-ansi-language:EN-US'>b</span>, <span lang=EN-US style='mso-ansi-language:
+EN-US'>c</span>;</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>a.setRotationZ(</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'>M_PI/2);<o:p></o:p></span></p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>a.setTranslation(</span></span><span
+lang=EN-US style='mso-ansi-language:EN-US'>v3(1,0,0));<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>&nbsp;<o:p></o:p></span></p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>c</span></span>
+*= <span lang=EN-US style='mso-ansi-language:EN-US'>a</span>*<span lang=EN-US
+style='mso-ansi-language:EN-US'>a</span>;</p>
+
+<p>&nbsp;</p>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>v</span>3</span>
+<span lang=EN-US style='mso-ansi-language:EN-US'>result</span> = <span
+lang=EN-US style='mso-ansi-language:EN-US'>c</span>*<span lang=EN-US
+style='mso-ansi-language:EN-US'>v</span>3(0,0,0); // должно получиться (1,1,0)</p>
+
+<h3><a name="_Toc142999598"><span lang=EN-US style='mso-ansi-language:EN-US'>ObjectPosition</span></a><span
+lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></h3>
+
+<p>Синоним<span style='mso-ansi-language:EN-US'> <span lang=EN-US><a
+href="#_matrix34">matrix34</a><o:p></o:p></span></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>&nbsp;<o:p></o:p></span></p>
+
+<h3><a name="_Toc142999599">Глобальные</a><span style='mso-bookmark:_Toc142999599'><span
+style='mso-ansi-language:EN-US'> </span>переменные</span><span
+style='mso-bookmark:_Toc142999599'></span><span lang=EN-US style='mso-ansi-language:
+EN-US'><o:p></o:p></span></h3>
+
+<p><span class=GramE><b><span lang=EN-US style='mso-ansi-language:EN-US'>res</span></b></span><span
+lang=EN-US style='mso-ansi-language:EN-US'>, <b>objectIdGenerator</b>, <b>globalTimer</b><o:p></o:p></span></p>
+
+<h3><a name="_Toc142999601">Директивы</a></h3>
+
+<p><b><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL</span>_</b><b><span
+lang=EN-US style='mso-ansi-language:EN-US'>OS</span></b><span lang=EN-US> </span>–
+отвечает за компиляцию для под определённую ОС<span lang=EN-US
+style='mso-ansi-language:EN-US'> (<b>OS_WIN32</b>=1, <b>OS_LINUX</b>=2)<o:p></o:p></span></p>
+
+<p><b><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL_COMPILER</span></b><span
+lang=EN-US style='mso-ansi-language:EN-US'> – </span>содержит<span
+style='mso-ansi-language:EN-US'> </span>идентификатор<span style='mso-ansi-language:
+EN-US'> </span>компилятора<span lang=EN-US style='mso-ansi-language:EN-US'> (<b>COMPILER
+_VS8</b>=1, <b>COMPILER _GCC</b>=2)<o:p></o:p></span></p>
+
+<p>Эти директивы выставляются в проектных файлах как параметры компилятора (-<span
+lang=EN-US style='mso-ansi-language:EN-US'>D</span>), а не определяются внутри
+кода.</p>
+
+<p><span class=GramE><b><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL</span>_</b><b><span
+lang=EN-US style='mso-ansi-language:EN-US'>COMPILER</span>_</b><b><span
+lang=EN-US style='mso-ansi-language:EN-US'>VERSION</span></b><span lang=EN-US> </span>–
+версия компилятора, умноженная на 10.</span> Например, вместо 8.0 будет 80, а
+вместо 3.4.2 будет 34.</p>
+
+<p><b><span lang=EN-US style='mso-ansi-language:EN-US'>STEEL</span>_</b><b><span
+lang=EN-US style='mso-ansi-language:EN-US'>VECTOR</span></b><span lang=EN-US> </span>-
+определена, когда <span lang=EN-US style='mso-ansi-language:EN-US'>svector</span><span
+lang=EN-US> </span>использует реализацию <span lang=EN-US style='mso-ansi-language:
+EN-US'>steel</span>::<span lang=EN-US style='mso-ansi-language:EN-US'>vector</span><span
+lang=EN-US> </span>(<span lang=EN-US style='mso-ansi-language:EN-US'>common</span>/<span
+lang=EN-US style='mso-ansi-language:EN-US'>steel</span>_<span lang=EN-US
+style='mso-ansi-language:EN-US'>vector</span>.<span lang=EN-US
+style='mso-ansi-language:EN-US'>h</span>), иначе использует <span lang=EN-US
+style='mso-ansi-language:EN-US'>std</span>::<span lang=EN-US style='mso-ansi-language:
+EN-US'>vector</span></p>
+
+<p><b><span lang=EN-US style='mso-ansi-language:EN-US'>LIB</span>_</b><b><span
+lang=EN-US style='mso-ansi-language:EN-US'>SDL</span></b> – определена, когда
+проект компилируется с поддержкой <span lang=EN-US style='mso-ansi-language:
+EN-US'>SDL</span></p>
+
+<p><b>LIB_STEEL</b> – <span class=GramE>определена</span> при компиляции
+проекта в статическую библиотеку.</p>
+
+<p><span class=GramE><b><span lang=EN-US style='mso-ansi-language:EN-US'>LIB</span>_</b><b><span
+lang=EN-US style='mso-ansi-language:EN-US'>OPENAL</span></b><span lang=EN-US> </span>–
+определена, если проект использует <span lang=EN-US style='mso-ansi-language:
+EN-US'>OpenAL</span>.</span></p>
+
+<p>&nbsp;</p>
+
+<h3><a name="_Toc142999602">Пространство</a> имён</h3>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>std, steel, opengl</span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>&nbsp;</span></p>
+
+<h3>Составители</h3>
+
+<p>Андрей Иванов (KindeX)</p>
+
+<p>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
