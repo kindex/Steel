@@ -67,6 +67,8 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f))); // TODO:
 
 	specularPower = conf->getf("specular_map.power", 16.0);
+	castShadows = conf->getb("castShadows", true);
+	catchShadows = conf->getb("catchShadows", true);
 
 	return true; 
 }

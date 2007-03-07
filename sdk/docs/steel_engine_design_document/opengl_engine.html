@@ -1,0 +1,368 @@
+﻿<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="opengl_engine_files/filelist.xml">
+<title>Steel Engine: концепция</title>
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	margin-bottom:5.95pt;
+	margin-left:0cm;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	margin-bottom:5.95pt;
+	margin-left:2.85pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	font-family:Arial;
+	font-weight:bold;
+	font-style:italic;}
+h3
+	{margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:5.65pt;
+	text-indent:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+p
+	{margin-top:3.0pt;
+	margin-right:14.2pt;
+	margin-bottom:3.0pt;
+	margin-left:1.0cm;
+	text-indent:1.0cm;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.code, li.code, div.code
+	{mso-style-name:code;
+	margin-top:3.0pt;
+	margin-right:14.2pt;
+	margin-bottom:3.0pt;
+	margin-left:1.0cm;
+	text-indent:1.0cm;
+	mso-pagination:widow-orphan;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+span.codechar
+	{mso-style-name:codechar;
+	font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:2.0cm 42.5pt 2.0cm 3.0cm;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:88628416;
+	mso-list-type:hybrid;
+	mso-list-template-ids:136767174 -1821625640 68747289 68747291 68747279 68747289 68747291 68747279 68747289 68747291;}
+@list l0:level1
+	{mso-level-tab-stop:74.7pt;
+	mso-level-number-position:left;
+	margin-left:74.7pt;
+	text-indent:-18.0pt;}
+@list l0:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:110.7pt;
+	mso-level-number-position:left;
+	margin-left:110.7pt;
+	text-indent:-18.0pt;}
+@list l1
+	{mso-list-id:993340963;
+	mso-list-template-ids:-1576351336;}
+@list l1:level1
+	{mso-level-text:"%1\.0\.";
+	mso-level-tab-stop:106.2pt;
+	mso-level-number-position:left;
+	margin-left:106.2pt;
+	text-indent:-49.5pt;}
+@list l1:level2
+	{mso-level-text:"%1\.%2\.";
+	mso-level-tab-stop:141.6pt;
+	mso-level-number-position:left;
+	margin-left:141.6pt;
+	text-indent:-49.5pt;}
+@list l1:level3
+	{mso-level-text:"%1\.%2\.%3\.";
+	mso-level-tab-stop:177.0pt;
+	mso-level-number-position:left;
+	margin-left:177.0pt;
+	text-indent:-49.5pt;}
+@list l1:level4
+	{mso-level-text:"%1\.%2\.%3\.%4\.";
+	mso-level-tab-stop:212.4pt;
+	mso-level-number-position:left;
+	margin-left:212.4pt;
+	text-indent:-49.5pt;}
+@list l1:level5
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.";
+	mso-level-tab-stop:252.3pt;
+	mso-level-number-position:left;
+	margin-left:252.3pt;
+	text-indent:-54.0pt;}
+@list l1:level6
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.";
+	mso-level-tab-stop:287.7pt;
+	mso-level-number-position:left;
+	margin-left:287.7pt;
+	text-indent:-54.0pt;}
+@list l1:level7
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.";
+	mso-level-tab-stop:341.1pt;
+	mso-level-number-position:left;
+	margin-left:341.1pt;
+	text-indent:-72.0pt;}
+@list l1:level8
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.%8\.";
+	mso-level-tab-stop:376.5pt;
+	mso-level-number-position:left;
+	margin-left:376.5pt;
+	text-indent:-72.0pt;}
+@list l1:level9
+	{mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.%8\.%9\.";
+	mso-level-tab-stop:429.9pt;
+	mso-level-number-position:left;
+	margin-left:429.9pt;
+	text-indent:-90.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]-->
+<meta name=CREATED content="20060330;17111829">
+<meta name=CHANGED content="20060330;18132082">
+</head>
+
+<body lang=RU style='tab-interval:35.4pt'>
+
+<div class=Section1>
+
+<h1><span lang=EN-US style='mso-ansi-language:EN-US'>OpenGL</span><span
+lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:EN-US'>Engine</span>
+(Графический движок)</h1>
+
+<p><span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>OpenGL</span>
+имеет множество расширений, которые могут как поддерживаться видеокартой, так и
+не поддерживаться.</span> <span class=GramE><span lang=EN-US style='mso-ansi-language:
+EN-US'>OpenGL</span><span lang=EN-US> </span><span lang=EN-US style='mso-ansi-language:
+EN-US'>Engine</span><span lang=EN-US> </span>предоставляет свой интерфейс
+доступа к возможностям видео-ускорителя без вникания в технические детали
+реализации, версии и производителя драйвера.</span><span lang=EN-US
+style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<h3><span lang=EN-US style='mso-ansi-language:EN-US'>OpenGL versions<o:p></o:p></span></h3>
+
+<p>Основные версии <span lang=EN-US style='mso-ansi-language:EN-US'>OpenGL</span>:</p>
+
+<p>1.0<span lang=EN-US style='mso-ansi-language:EN-US'>:</span><span
+lang=EN-US> </span>Минимальная функциональность. Сейчас нет таких машин,
+которые поддерживают только 1.0. Но для общего стиля эта версия оставлена.</p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>1.1: </span><span
+lang=EN-US style='font-size:10.0pt;font-family:"Courier New";mso-ansi-language:
+EN-US;mso-no-proof:yes'>glVertexPointer, Image object<o:p></o:p></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>1.3: <span class=SpellE>Mulitexture</span>,
+</span>простой<span style='mso-ansi-language:EN-US'> <span lang=EN-US>bump (dot3),
+cube maps<o:p></o:p></span></span></p>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>1.5: Vertex Buffer Object<o:p></o:p></span></p>
+
+<p>2.0: <span class=GramE><span lang=EN-US style='mso-ansi-language:EN-US'>GLSL</span>.</span>
+Именно на эту версию сделан упор. Остальные версии нужны для того, чтобы на старых
+машинах движок хоть как-то работал бы.</p>
+
+<p>В связи с неоднозначности версии (версия может быть 1.5, но с <span
+lang=EN-US style='mso-ansi-language:EN-US'>GLSL</span>) движок содержит
+указатели на функции, реализующие различные из сервисов. Например, указатель на
+<span class=SpellE>DrawTriangles</span> может содержать реализацию для 1.0, 1.1
+и 1.5 версий.<span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<h3><span lang=EN-US style='mso-ansi-language:EN-US'>Interface<o:p></o:p></span></h3>
+
+<p>Клиент графического движка не может напрямую использовать функции для <span
+class=SpellE>отрисовки</span>. Он может использовать только <span class=SpellE>инрефейсы</span>
+<span class=SpellE>Engine</span> и <span class=SpellE>GraphInterface</span>. Они
+в основном сообщают движку о том, как выглядит объект, а движок уже сам наилучшим
+образом рисует его (если его надо рисовать).</p>
+
+<p>В<span style='mso-ansi-language:EN-US'> </span>этот<span style='mso-ansi-language:
+EN-US'> </span>интерфейс<span style='mso-ansi-language:EN-US'> </span>входит<span
+lang=EN-US style='mso-ansi-language:EN-US'>:<o:p></o:p></span></p>
+
+<p>Форма<span style='mso-ansi-language:EN-US'> </span>объекта<span lang=EN-US
+style='mso-ansi-language:EN-US'>: vertexes, faces (triangles, quads), texture
+coordinates, <span class=SpellE>normals</span>, lines (</span>для<span
+style='mso-ansi-language:EN-US'> </span>отладки<span lang=EN-US
+style='mso-ansi-language:EN-US'>), AABB<o:p></o:p></span></p>
+
+<p>Материал для набора граней</p>
+
+<p>Для чтения доступны координаты камеры и информация о времени и длительности
+кадра (<span class=SpellE>ProcessInfo</span>).</p>
+
+<p>Эту информацию можно сообщать движку в любое время, начиная сразу же после
+момента добавления в движок (<span lang=EN-US style='mso-ansi-language:EN-US'>inject</span><span
+lang=EN-US> </span>– <span class=SpellE><span lang=EN-US style='mso-ansi-language:
+EN-US'>beforeInject</span></span>).</p>
+
+<h3><span lang=EN-US style='mso-ansi-language:EN-US'>Material</span></h3>
+
+<p><span lang=EN-US style='mso-ansi-language:EN-US'>TODO:<o:p></o:p></span></p>
+
+<h3><span lang=EN-US style='mso-ansi-language:EN-US'>Process<o:p></o:p></span></h3>
+
+<p><span class=SpellE>Отрисовка</span> одного кадра происходит внутри <span
+lang=EN-US style='mso-ansi-language:EN-US'>process</span>().</p>
+
+<p>Вначале обновляется информация. В это время каждому обрабатываемому объекту посылается
+сообщение <span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>UpdateInformation</span></span>,
+и при желании он может обновить информацию. Обычно меняется положение объекта,
+хотя может <span class=GramE>изменится</span> как форма, так и материал. Так
+как материал содержит текстуры, то таким образом можно добиться <span
+class=SpellE>видеотекстур</span>.<span lang=EN-US style='mso-ansi-language:
+EN-US'><o:p></o:p></span></p>
+
+<p>После этого <span class=SpellE>кешируются</span> переменные из <span
+class=SpellE>конфига</span>. Между кадрами можно менять значения этих
+переменных, например, включая отладочный вывод (<span class=SpellE><span
+lang=EN-US style='mso-ansi-language:EN-US'>drawWire</span></span>).</p>
+
+<p>Порядок <span class=SpellE>отрисовки</span> сцены (с тенями).</p>
+
+<p style='margin-left:74.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+tab-stops:list 74.7pt'><![if !supportLists]><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>заполняем
+<span lang=EN-US style='mso-ansi-language:EN-US'>z</span>-<span lang=EN-US
+style='mso-ansi-language:EN-US'>buffer</span><span lang=EN-US> </span>объектами,
+которые принимают тени (<span lang=EN-US style='mso-ansi-language:EN-US'>material</span>.<span
+class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>catchShadows</span></span>)
++ статическое освещение. [<span lang=EN-US style='mso-ansi-language:EN-US'>replace</span>]</p>
+
+<p style='margin-left:74.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+tab-stops:list 74.7pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
+EN-US'><span style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>For
+each light with <span class=SpellE>castShadows</span> = true<o:p></o:p></span></p>
+
+<p style='margin-left:110.7pt;text-indent:-18.0pt;mso-list:l0 level2 lfo2;
+tab-stops:list 110.7pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
+EN-US'><span style='mso-list:Ignore'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>применяем<span style='mso-ansi-language:EN-US'> <span
+lang=EN-US>Volume Shadows </span></span>для<span style='mso-ansi-language:EN-US'>
+</span>заполнения<span style='mso-ansi-language:EN-US'> <span lang=EN-US>stencil-buffer
+(<span class=SpellE>material.dropShadows</span> = true).<o:p></o:p></span></span></p>
+
+<p style='margin-left:110.7pt;text-indent:-18.0pt;mso-list:l0 level2 lfo2;
+tab-stops:list 110.7pt'><![if !supportLists]><span style='mso-list:Ignore'>b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>закрашиваем
+ну часть экрана, что не попадает в тень от этого фонаря. <span lang=EN-US
+style='mso-ansi-language:EN-US'>[add]</span></p>
+
+<p style='margin-left:74.7pt;text-indent:-18.0pt;mso-list:l0 level1 lfo2;
+tab-stops:list 74.7pt'><![if !supportLists]><span style='mso-list:Ignore'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>рисуем
+оставшиеся объекты (<span lang=EN-US style='mso-ansi-language:EN-US'>material</span>.<span
+class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>dropShadows</span></span>
+= <span lang=EN-US style='mso-ansi-language:EN-US'>true</span>) освещенные
+фонарями без <span class=SpellE><span lang=EN-US style='mso-ansi-language:EN-US'>castShadows</span></span>
++ статическое освещение. [<span lang=EN-US style='mso-ansi-language:EN-US'>add</span>]</p>
+
+<p><o:p>&nbsp;</o:p></p>
+
+<p>Результат может быть помещён либо на экран, либо в текстуру (зеркало, монитор),
+которую можно наклеить на стену или применить <span class=SpellE>постэффект</span>.</p>
+
+<h3>Составители</h3>
+
+<p>Андрей Иванов (KindeX)</p>
+
+<p>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>

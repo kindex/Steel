@@ -873,6 +873,10 @@
 					Name="OpenGL"
 					>
 					<File
+						RelativePath="..\sources\graph\opengl\opengl_10.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\sources\graph\opengl\opengl_11.cpp"
 						>
 					</File>
@@ -933,10 +937,6 @@
 						</File>
 						<File
 							RelativePath="..\sources\graph\opengl\ext\normalisation_cube_map.h"
-							>
-						</File>
-						<File
-							RelativePath="..\sources\graph\opengl\opengl_10.cpp"
 							>
 						</File>
 					</Filter>

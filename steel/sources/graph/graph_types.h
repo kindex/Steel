@@ -57,7 +57,7 @@ struct Light
 	float linearAttenuation;
 	float quadraticAttenuation;
 	float minDistance; // max distance without rolloff
-	float maxDistance; // max distance without rolloff
+	float maxDistance;
 	v3 ambient;
 	v3 diffuse;
 	v3 specular;

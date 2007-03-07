@@ -38,6 +38,8 @@ bool GameLight::InitFromConfig(Config& conf)
 	light->up = conf.getv3("up", v3(0.0f, 0.0f, 1.0f));
 	light->direction = conf.getv3("direction", v3(1.0f, 0.0f, 0.0f));
 
+	light->castShadows = conf.getb("castShadows", true);
+
 	light->cubeMap = resImage.add(conf.getPath("cube_map"));
 
 	bool enabled = conf.getb("enabled", true);

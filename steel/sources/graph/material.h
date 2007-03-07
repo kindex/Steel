@@ -120,6 +120,8 @@ public:
 	TextureEnv env_map;
 
 	color4f color;
+	bool dropShadows;
+	bool catchShadows;
 };
 
 //тип смешивания двух текстур
