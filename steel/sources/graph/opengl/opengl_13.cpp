@@ -318,7 +318,7 @@ void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f &sTangent, const TexC
 
 	v3 objectLightPosition = inverseModelMatrix*light;
 
-	v3Vector &tl = tangentSpaceLight;
+	v3Vector& tl = tangentSpaceLight;
 
     // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
     for (unsigned int i=0; i<vertex.size(); i++)

@@ -75,7 +75,7 @@ struct GraphShadow : public Shadow // множество треугольник�
 {
 	PositionKind	positionKind;
 	ObjectPosition	position; // global or screen
-	ObjectPosition	realPosition; // global, calculated from position anbd parent
+	ObjectPosition	realPosition; // global, calculated from position and parent
 	bool 			realPositionCalculated;
 
 	// *** Polyhedra ****

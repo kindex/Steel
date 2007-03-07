@@ -301,8 +301,11 @@ void OpenGL_Engine::renderShadows()
 	}
 //	program->unbind();
 
-	program = bindShader("material/shadow", StringDict());
-	if (program == NULL) return;
+	if (flags.glsl)
+	{
+		program = bindShader("material/shadow", StringDict());
+		if (program == NULL) return;
+	}
 
 	glDepthMask(GL_FALSE);
 	glDepthFunc(GL_LEQUAL);
@@ -326,12 +329,19 @@ void OpenGL_Engine::renderShadows()
 		for EACH(ShadowPVector, shadows, it)
 		{
 			GraphShadow& e = *GS(*it);
-			e.calculateEgdes();
-		
-			pushPosition(e);
+			if (flags.glsl)
+			{
+				pushPosition(e);
+			}
 			if (e.faceMaterials != NULL && !e.lights.empty() && e.vertexes != NULL && !e.vertexes->empty())
 			{
-				program->setUniformVector("lightPos", e.lights[0]->position);
+				e.calculateEgdes();
+
+				if (program != NULL)
+				{
+					program->setUniformVector("lightPos", e.lights[0]->position);
+				}
+
 				int faceNumber = 0;
 				for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 				{
@@ -373,6 +383,7 @@ void OpenGL_Engine::renderShadows()
 
 
 								//glPushAttrib(GL_ALL_ATTRIB_BITS);
+								//glDisable(GL_STENCIL_TEST);
 								//glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
 								//glDepthFunc(GL_ALWAYS);
 								//glColor3f(1.0, 0, 0);
@@ -386,43 +397,66 @@ void OpenGL_Engine::renderShadows()
 								//glEnd();
 								//glPopAttrib();
 
-								glBegin(GL_QUADS);
-									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
-									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
-								glEnd();
-							}
-						}
-
-						for EACH_CONST(QuadVector, faces->faces->quads, it)
-						{
-							Plane a;
-							a.base = e.vertexes->at( it->a[0] );
-							a.a = e.vertexes->at( it->a[1] ) - a.base;
-							a.b = e.vertexes->at( it->a[2] ) - a.base;
-
-							if (byRightSide(e.lights[0]->position, a))
-							{
-								glBegin(GL_QUADS);
-								for (int i = 0; i < 4; i++)
+								if (flags.glsl)
 								{
-									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-									glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
-									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
-									glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+									glBegin(GL_QUADS);
+										glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+										glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+										glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+										glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+									glEnd();
 								}
-								glEnd();
+								else
+								{
+									v3 vert1g = e.realPosition*e.vertexes->at(vert1);
+									v3 vert2g = e.realPosition*e.vertexes->at(vert2);
+									v3 vert1s = vert1g + (vert1g - e.lights[0]->position)*10.0;
+									v3 vert2s = vert2g + (vert2g - e.lights[0]->position)*10.0;
+
+									glBegin(GL_QUADS);
+										glVertex3fv(vert1s.getfv());
+										glVertex3fv(vert2s.getfv());
+										glVertex3fv(vert2g.getfv());
+										glVertex3fv(vert1g.getfv());
+									glEnd();
+								}
 							}
 						}
+
+						//for EACH_CONST(QuadVector, faces->faces->quads, it)
+						//{
+						//	Plane a;
+						//	a.base = e.vertexes->at( it->a[0] );
+						//	a.a = e.vertexes->at( it->a[1] ) - a.base;
+						//	a.b = e.vertexes->at( it->a[2] ) - a.base;
+
+						//	if (byRightSide(e.lights[0]->position, a))
+						//	{
+						//		glBegin(GL_QUADS);
+						//		for (int i = 0; i < 4; i++)
+						//		{
+						//			glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+						//			glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
+						//			glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
+						//			glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
+						//		}
+						//		glEnd();
+						//	}
+						//}
 					}
 					faceNumber++;
 				}
 			}
-			popPosition(e);
+			if (flags.glsl)
+			{
+				popPosition(e);
+			}
 		}
 	}
-	program->unbind();
+	if (flags.glsl)
+	{
+		program->unbind();
+	}
 
 	glEnable(GL_STENCIL_TEST);
 
