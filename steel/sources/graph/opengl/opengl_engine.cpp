@@ -133,7 +133,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 void OpenGL_Engine::setupShaderVariable(const std::string& key, const std::string& value, bool compile)
 {
 	StringDict::iterator it = currentShaderVariables.find(key);
-	if (it == currentShaderVariables.end() || it->second != value || needToCompile)
+//	if (it == currentShaderVariables.end() || it->second != value || needToCompile)
 	{
 		currentShaderVariables[key] = value;
 		if (compile)

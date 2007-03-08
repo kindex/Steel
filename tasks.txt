@@ -27,7 +27,6 @@
 ** Open ********************************************************************************************
 * Steel Egine *
 368. Path Kinematic. Object movement by trajectory. / KindeX. KindeX. [1]. (1w).
-515. OpenGL bug: shader on ATI. / KindeX. [2].
 364. Quake MAP. Quake MAP (scene) loader. / *. KindeX. [3]. (3d).
 344. JPEG. JPEG file loader same as BMP loader. / KindeX. [3]. (3d).
 405. ASE. ASE scene file loader. / KindeX. [3]. (3d).
@@ -36,10 +35,10 @@
 404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. KindeX. [5]. (1w).
 505. AudioRes: scalable loader. / Kuzmi4. KindeX. [5]
 518. Particle system emitter. Add more parameters. / KindeX. [5]. (1d).
-519. Particle system renderer: meta-balls. / Def. [5].
+522. Particle system simple animator for fire, smoke. / Def. [5].
 
-522. Particle system simple animator for fire, smoke. / Def. [7].
 524. Particle system trigger: wind. / KindeX. [7].
+519. Particle system renderer: meta-balls. / Def. [8].
 475. Design and implement input engine in style of graph engine (callback, config, memory). / *. KindeX. [8]. (1w).
 400. Config comments. Load comment from config to dump configs with comments. / *. KindeX. [9]. (3h).
 411. OpenGL: custom normal map mipmap levels. / *. KindeX. [9]. (3h).
@@ -73,6 +72,7 @@
 
 ** Done Construction *******************************************************************************
 * Steel Egine *
+515. OpenGL bug: shader on ATI. / KindeX. [2].
 367. OpenGL 2.0. Shaders, dynamic lighting (many lights). / KindeX. [1]
 402. OpenGL: blending. Glass, sprites (with correct lighting). Sort blending polygons. / KindeX.
 486. Res. Remeber resources with error. Do not load image, if it fails before. / KindeX.

@@ -59,7 +59,6 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 	diffuse_map.InitFromConfig(conf->find("diffuse_map"));
 	diffuse2_map.InitFromConfig(conf->find("diffuse2_map"));
 	normal_map.InitFromConfig(conf->find("normal_map"));
-//	reflect_map.InitFromConfig(conf->find("reflect_map"));
 	specular_map.InitFromConfig(conf->find("specular_map"));
 	emission_map.InitFromConfig(conf->find("emission_map"));
 	env_map.InitFromConfig(conf->find("env_map"));
