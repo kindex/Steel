@@ -237,7 +237,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../sdk/libs/openal32.lib ../../sdk/libs/eaxguid.lib ../../sdk/libs/eax.lib opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
+				AdditionalDependencies="../../sdk/libs/openal32.lib ../../sdk/libs/eaxguid.lib ../../sdk/libs/eax.lib ../../sdk/libs/ogg.lib ../../sdk/libs/vorbisfile.lib opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
 			/>
 			<Tool
 				Name="VCALinkTool"

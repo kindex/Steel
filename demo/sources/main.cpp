@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 		delete audio;
 		audio = NULL;
 	}
-
+	test(audio);
 // ******************* GAME *************************
 	GameFactory gameFactory;
 	Game* game = gameFactory.createGame(steelConfig->gets("game_class"));

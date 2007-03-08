@@ -17,7 +17,7 @@ uniform struct
 } material;
 
 #if lighting == 1
-#if lighcount >= 1
+#if lightcount >= 1
 	uniform struct
 	{
 		int type;
@@ -36,7 +36,7 @@ uniform struct
 		float k;
 		vec3 up;
 		vec3 direction;
-	} lights[lighcount];
+	} lights[lightcount];
 #endif
 	uniform samplerCube light_cube_map;
 	uniform sampler2D specular_map;
@@ -66,7 +66,7 @@ float d;
 vec3 viewDirN;
 vec3 t,b,n;
 
-#if lighting == 1 && lighcount >= 1
+#if lighting == 1 && lightcount >= 1
 vec3 calcLighting(in int i)
 {
 	float distFromLight = distance(pixel_position, vec3(lights[i].position));
@@ -138,7 +138,7 @@ void main (void)
 {
     color = vec3(texture2D(emission_map, texCoord0))*material.emissionk; // emission
 
-#if (lighting == 1 && lighcount >= 1) || (reflecting == 1)
+#if (lighting == 1 && lightcount >= 1) || (reflecting == 1)
     t = gl_NormalMatrix * texCoord7.xyz;
     n = pixel_normal.xyz;
     b = cross(n, t);
@@ -151,32 +151,32 @@ void main (void)
     viewDirN = normalize(viewDir);// tbn
     r = reflect(viewDirN, norm);
 
-#if lighting == 1 && lighcount >= 1
+#if lighting == 1 && lightcount >= 1
 	color += calcLighting(0);
-#if lighcount >= 2
+#if lightcount >= 2
 	color += calcLighting(1);
-#if lighcount >= 3
+#if lightcount >= 3
 	color += calcLighting(2);
-#if lighcount >= 4
+#if lightcount >= 4
 	color += calcLighting(3);
-#if lighcount >= 5
+#if lightcount >= 5
 	color += calcLighting(5);
-#if lighcount >= 6
+#if lightcount >= 6
 	color += calcLighting(6);
-#if lighcount >= 7
+#if lightcount >= 7
 	color += calcLighting(7);
-#if lighcount >= 8
+#if lightcount >= 8
 	color += calcLighting(8);
-#endif // #if lighcount >= 8
+#endif // #if lightcount >= 8
 #endif
 #endif
 #endif
 #endif
-#endif // #if lighcount >= 3
-#endif // #if lighcount >= 2
-#endif // #if lighting == 1 && lighcount >= 1
+#endif // #if lightcount >= 3
+#endif // #if lightcount >= 2
+#endif // #if lighting == 1 && lightcount >= 1
 
-#endif // #if (lighting == 1 && lighcount >= 1) || (reflecting == 1)
+#endif // #if (lighting == 1 && lightcount >= 1) || (reflecting == 1)
 
 #if lighting == 0
 	color += texture2D(diffuse_map, texCoord0).rgb;

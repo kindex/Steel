@@ -132,7 +132,8 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
 void OpenGL_Engine::setupShaderVariable(const std::string& key, const std::string& value, bool compile)
 {
-	if (currentShaderVariables[key] != value)
+	StringDict::iterator it = currentShaderVariables.find(key);
+	if (it == currentShaderVariables.end() || it->second != value || needToCompile)
 	{
 		currentShaderVariables[key] = value;
 		if (compile)
@@ -141,7 +142,13 @@ void OpenGL_Engine::setupShaderVariable(const std::string& key, const std::strin
 			if (program == NULL) // shader compile error
 			{
 				flags.glsl = false;
+				needToCompile = true;
 			}
+			needToCompile = false;
+		}
+		else
+		{
+			needToCompile = true;
 		}
 	}
 }
@@ -163,7 +170,9 @@ void OpenGL_Engine::renderNormal()
 		{
 			currentShaderVariables.clear();
 			currentShaderVariables["lighting"] = IntToStr(flags.lighting);
-			currentShaderVariables["blending"] = "0";
+			currentShaderVariables["lightcount"] = "0";
+			currentShaderVariables["reflecting"] = "0";
+			setupShaderVariable("blending", "0");
 		}
 	}
 	pvector<BlendingFaces> blendingFaces;
@@ -705,10 +714,11 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	setupVariables();
 	if (version >= 20 && GL_EXTENSION_GLSL && conf->getb("use_glsl", true))
 	{
+		needToCompile = true;
 		flags.maxLightsInShader = conf->geti("max_lights", 4);
 		StringDict parameters;
 		parameters["lighting"] = IntToStr(flags.lighting);
-		parameters["lighcount"] = IntToStr(flags.maxLightsInShader);
+		parameters["lightcount"] = IntToStr(flags.maxLightsInShader);
 		parameters["blending"] = "0";
 		parameters["reflecting"] = "1";
 		if (loadShader(flags.shaderStd, parameters))
@@ -721,7 +731,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 			flags.maxLightsInShader--;
 			while (flags.maxLightsInShader > 0)
 			{
-				parameters["lighcount"] = IntToStr(flags.maxLightsInShader);
+				parameters["lightcount"] = IntToStr(flags.maxLightsInShader);
 				if (loadShader(flags.shaderStd, parameters))
 				{
 					break;

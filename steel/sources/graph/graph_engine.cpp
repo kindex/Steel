@@ -20,13 +20,22 @@
 
 bool GraphEngine::inject(GameObject* object)
 {
-	if(!object->isSuportingInterface(*this)) return false;
+	if (!object->isSuportingInterface(*this))
+	{
+		return false;
+	}
 
 	// если объект не хочет добавляться
-	if(!object->beforeInject(*this)) return false;
+	if (!object->beforeInject(*this))
+	{
+		return false;
+	}
 
 	// кешируем объект
-	if(!makeShadowForObject(object)) return false;
+	if (!makeShadowForObject(object))
+	{
+		return false;
+	}
 	// список глобальных объектов
 	objects.push_back(object);
 

@@ -314,6 +314,7 @@ bool OpenALEngine::soundPlay(Sound* sound)
 		alGenBuffers(1, &shadow->buffer.buffer);
 		CheckALError();
 		alBufferData(shadow->buffer.buffer, sound->sound->format, sound->sound->data, sound->sound->size, sound->sound->frequency);
+		//alBufferi(shadow->buffer.buffer, AL_FREQUENCY, 22050);
 		CheckALError();
 	//		if (sound->data)
 	//			free(sound->data);

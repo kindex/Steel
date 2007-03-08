@@ -36,7 +36,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 		}
 		if (flags.textures) // use_std_shader
 		{
-			setupShaderVariable("lighcount", IntToStr(min((int)e.lights.size(), flags.maxLightsInShader)), false);
+			setupShaderVariable("lightcount", IntToStr(min((int)e.lights.size(), flags.maxLightsInShader)), false);
 			setupShaderVariable("reflecting", IntToStr(material.env_map.cubeMap != NULL ? 1 : 0));
 			if (!flags.glsl)
 			{

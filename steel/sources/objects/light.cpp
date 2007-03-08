@@ -62,7 +62,10 @@ void GameLight::bindEngine(Engine& engine)
 	{
 		this->engine = dynamic_cast<GraphInterface*>(&engine);
 		this->engine->setPosition(position);
-		if (enabled && light != NULL) this->engine->addLight(light);
+		if (enabled && light != NULL)
+		{
+			this->engine->addLight(light);
+		}
 	}
 }
 
