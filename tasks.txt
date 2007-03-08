@@ -37,10 +37,9 @@
 505. AudioRes: scalable loader. / Kuzmi4. KindeX. [5]
 518. Particle system emitter. Add more parameters. / KindeX. [5]. (1d).
 519. Particle system renderer: meta-balls. / Def. [5].
-522. Particle system simple animator for fire, smoke. / Def. [5].
-524. Particle system trigger: wind. / KindeX. [5].
-521. Document engine. / KindeX. [5]. (1w).
 
+522. Particle system simple animator for fire, smoke. / Def. [7].
+524. Particle system trigger: wind. / KindeX. [7].
 475. Design and implement input engine in style of graph engine (callback, config, memory). / *. KindeX. [8]. (1w).
 400. Config comments. Load comment from config to dump configs with comments. / *. KindeX. [9]. (3h).
 411. OpenGL: custom normal map mipmap levels. / *. KindeX. [9]. (3h).
@@ -51,7 +50,9 @@
 
 * Demo *
 523. Choosing object in scene, binding light and camera to other objects. /  KindeX. [3].
-407. Create demo scene for Steel 1.1 public demo: lighting, simple kinematics, particle system. / Def. KindeX. [4]. (2w).
+407. Create demo scene for Steel 1.1 public demo: lighting, simple kinematics, particle system. / Def. KindeX. [4].
+* 20 labirint
+540. Create labirint demo. / Def. KindeX. [6].
 
 * WURPS *
 409. Create VC++ project using steel engine as lib. / KindeX. KindeX. [1]. (2h).
@@ -64,6 +65,7 @@
 
 ** Construction ************************************************************************************
 * Steel Egine *
+521. Document engine. / KindeX. [5]. (1w).
 503. Audio, Res: Ogg loader. / Kuzmi4.
 401. OpenGL: shadows. / KindeX.
 369. CD. Collision detection for particles. / Def, KindeX.
