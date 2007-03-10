@@ -25,7 +25,6 @@ uniform struct
 		float constantAttenuation;
 		float linearAttenuation;
 		float quadraticAttenuation;
-		float sqrtAttenuation;
 		float minDistance;
 		float maxDistance;
 		
@@ -84,7 +83,6 @@ vec3 calcLighting(in int i)
 	
 		attenuation = lights[i].k / ( 
 			lights[i].constantAttenuation +
-			lights[i].sqrtAttenuation * sqrt(distFromLight) +
 			lights[i].linearAttenuation * distFromLight +
 			lights[i].quadraticAttenuation * distFromLight*distFromLight
 			);

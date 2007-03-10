@@ -1,6 +1,7 @@
 // Default vertex shader
 
 uniform vec3 lightPos;
+uniform float maxDistance;
 
 void main(void)
 {
@@ -11,7 +12,8 @@ void main(void)
 	else // second vertex
 	{
 		vec3 realPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
-		vec3 newPos = realPos + normalize(realPos - lightPos)*10.0;
+		vec3 distanceFromPos = realPos - lightPos;
+		vec3 newPos = lightPos + normalize(distanceFromPos)*maxDistance;
 		gl_Position = gl_ProjectionMatrix * vec4(newPos, 1.0);
 	}
 }

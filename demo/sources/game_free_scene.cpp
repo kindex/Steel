@@ -227,6 +227,7 @@ void GameFreeScene::process()
 			std::string("Sleel engine")
 			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
 			+ " Faces: " + IntToStr(graphEngine->total.triangleCount)
+			+ " Lights: " + IntToStr(graphEngine->total.lightCount)
 			+ " FPS " + graphTimer.getfps_s()
 		);
 		speed = 1.0f/graphTimer.getfps();

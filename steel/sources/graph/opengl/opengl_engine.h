@@ -170,6 +170,7 @@ private:
 	bool isVisible(AABB box);
 	void pushPosition(GraphShadow&);
 	void popPosition(GraphShadow&);
+	bool rayTrace(Line lineSegment);
 
 	bool		focused;
 	ProcessInfo info;

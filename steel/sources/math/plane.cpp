@@ -14,15 +14,15 @@
 #include "plane.h"
 
 /*
-Находится ли точка между лучами (base + a*t) и (base + b*t)
+Находится ли точка между лучами (base + a*t) и (base + b*s)
 */
 bool isBetween(v3 point, const v3 base, const v3 a, const v3 b)
 {
 	point -= base;
-	v3 ab = a*b;
+	v3 ab = a.crossProduct(b);
 	float k1 =(ab)&(a*point);
 	float k2 =(ab)&(point*b);
-	return k1>-EPSILON && k2>-EPSILON;
+	return k1>-EPSILON2 && k2>-EPSILON2;
 }
 
 bool isCross(const Plane a, const Line b, float &k)
@@ -33,10 +33,16 @@ bool isCross(const Plane a, const Line b, float &k)
 
 	v3 a_b = (a.base-b.base);
 	v3 abxaa = a.b*a.a;
-	if(abxaa.getSquaredLengthd()<EPSILON2) return false;
+	if (abxaa.getSquaredLengthd()<EPSILON2)
+	{
+		return false;
+	}
 	v3 baxaaxabxaa =  (b.a * a.a) * abxaa;
 	double len2 = baxaaxabxaa.getSquaredLengthd();
-	if(len2<EPSILON2) return false;
+	if (len2<EPSILON2)
+	{
+		return false;
+	}
 
 	k = (((a_b*a.a)*(abxaa)) & baxaaxabxaa) / (float)len2;
 
@@ -47,7 +53,10 @@ bool isCross(const Plane a, const Line b, float &k)
 // если да, то возвращается k
 bool isCrossTrgLine(const Plane a, const Line b, float &k)
 {
-	if(!isCross(a, b, k)) return false;
+	if (!isCross(a, b, k))
+	{
+		return false;
+	}
 
 	v3 p = b.point(k);
 
@@ -83,8 +92,14 @@ bool crossMLineLine(const Line a, const v3 direction, const Line b, float &k)
 { 
 	Plane p(a.base, a.a, direction);
 
-	if(!isCross(p, b, k)) return false;
-	if(k<-EPSILON || k>1+ EPSILON) return false;
+	if (!isCross(p, b, k))
+	{
+		return false;
+	}
+	if (k<-EPSILON || k>1+ EPSILON)
+	{
+		return false;
+	}
 
 	v3 point = b.point(k);
 

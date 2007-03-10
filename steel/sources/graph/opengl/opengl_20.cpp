@@ -138,7 +138,6 @@ void OpenGL_Engine::SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, 
 			shader.setUniformFloat(lighti + "k", light.k);
 			shader.setUniformFloat(lighti + "minDistance", light.minDistance);
 			shader.setUniformFloat(lighti + "maxDistance", light.maxDistance);
-			shader.setUniformFloat(lighti + "sqrtAttenuation", light.sqrtAttenuation);
 			shader.setUniformVector(lighti + "up", light.up);
 			shader.setUniformVector(lighti + "direction", light.direction);
 

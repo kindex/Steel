@@ -62,6 +62,7 @@ void OpenGL_Engine::collectInformationFromObjects()
 	for EACH(LightMap, lights, jt)
 	{
 		jt->second->position = jt->second->light->position * jt->second->shadow->realPosition;
+		total.lightCount++;
 	}
 
 	for EACH(ShadowPVector, shadows, it)
@@ -102,8 +103,10 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	collectInformationFromObjects();
 
 	renderShadows();
-
 	renderDebug();
+
+	Line lineSegment(info.camera.getPosition(), info.camera.getDirection());
+	rayTrace(lineSegment);
 
 // ------------- Post draw ---------------
 
@@ -321,8 +324,6 @@ void OpenGL_Engine::prepareShadowEdges()
 
 void OpenGL_Engine::renderCatchLight(const LightShadow& light)
 {
-	// render add (2b)
-
 	flags.current.simpleLighting = false;
 	flags.current.shadowLighting = true;
 	flags.current.onlyLight = light.light->id;
@@ -398,19 +399,30 @@ void OpenGL_Engine::renderShadows()
 		{
 			if (light->second->light->castShadows)
 			{
-				castShadow(*light->second); // render stencil (2a)
-				renderCatchLight(*light->second); // render stencil (2b)
+				castShadow(*light->second); // stencil (2a)
+				renderCatchLight(*light->second); // add light (2b)
 			}
 		}
 	}
 	renderNoShadows();
-
+	program->unbind();
 	glPopAttrib();
+
+	for EACH(LightMap, lights, light)
+	{
+		glColor3f(1.0, 0, 0);
+		glPointSize(10);
+		glBegin(GL_POINTS);
+			glVertex3fv(light->second->position);
+		glEnd();
+	}
 }
 
 void OpenGL_Engine::castShadow(const LightShadow& light)
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+	float maxDistance = light.light->maxDistance;
 
 	glClear(GL_STENCIL_BUFFER_BIT);
 	glDepthMask(GL_FALSE);
@@ -423,6 +435,7 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 	if (program != NULL)
 	{
 		program->setUniformVector("lightPos", light.position);
+		program->setUniformFloat("maxDistance", maxDistance);
 	}
 
 	for (int step = 0; step < 2; step++)
@@ -517,8 +530,8 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 								{
 									v3 vert1g = e.realPosition*e.vertexes->at(vert1);
 									v3 vert2g = e.realPosition*e.vertexes->at(vert2);
-									v3 vert1s = vert1g + (vert1g - light.position)*10.0;
-									v3 vert2s = vert2g + (vert2g - light.position)*10.0;
+									v3 vert1s = vert1g + (vert1g - light.position)*maxDistance;
+									v3 vert2s = vert2g + (vert2g - light.position)*maxDistance;
 
 									glBegin(GL_QUADS);
 										glVertex3fv(vert1s.getfv());
@@ -1022,6 +1035,7 @@ void OpenGL_Engine::setupVariables()
 	total.vertexCount = 0;
 	total.triangleCount = 0;
 	total.batchCount = 0;
+	total.lightCount = 0;
 
 	flags.lighting = conf->getb("lighting", true);
 	flags.textures = conf->getb("textures", true);
@@ -1043,6 +1057,53 @@ void OpenGL_Engine::setupVariables()
 	flags.shaderDebug = "material/" + conf->gets("debug_shader", "debug");
 	flags.shaderNoTexture = "material/" + conf->gets("no_texture_shader", "no_texture");
 }
+
+bool OpenGL_Engine::rayTrace(Line lineSegment)
+{
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	glDepthFunc(GL_ALWAYS);
+	for EACH(ShadowPVector, shadows, it)
+	{
+		GraphShadow& e = *GS(*it);
+		if (e.faceMaterials != NULL)
+		{
+			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
+			{
+				if (faces->material->dropShadows)
+				{
+					for EACH(TriangleVector, faces->faces->triangles, it)
+					{
+						Plane triangle;
+						triangle.base = e.position * e.vertexes->at(it->a[0]);
+						triangle.a = e.position * e.vertexes->at(it->a[1]) - triangle.base;
+						triangle.b = e.position * e.vertexes->at(it->a[2]) - triangle.base;
+	
+						float k;
+						if (isCrossTrgLine(triangle, lineSegment, k))
+						{
+							if (k > 0.0 && k < 10.0)
+							{
+								glPointSize(2);
+								glBegin(GL_POINTS);
+									glVertex3fv(lineSegment.point(k));
+								glEnd();
+
+								glBegin(GL_LINE_LOOP);
+									glVertex3fv(triangle.base.getfv());
+									glVertex3fv((triangle.base + triangle.a).getfv());
+									glVertex3fv((triangle.base + triangle.b).getfv());
+								glEnd();
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	glPopAttrib();
+	return false;
+}
+
 
 
 } // namespace opengl

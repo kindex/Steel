@@ -29,10 +29,11 @@ public:
 
 	struct GraphTotalInfo
 	{
-		int vertexCount;
-		int triangleCount;
-		int batchCount;
-		int globalObjectCount;
+		size_t vertexCount;
+		size_t triangleCount;
+		size_t batchCount;
+		size_t globalObjectCount;
+		size_t lightCount;
 	} total;
 
 	// Collect information about object: how to render it

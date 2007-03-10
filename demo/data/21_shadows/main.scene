@@ -29,7 +29,7 @@ transformation =
 		speed = 1
 	}
 objects =	(
-				[/light.conf#]{origin = (0 1 1)}
+//				[/light.conf#]{origin = (0 1 1)}
 			)
 }
 
@@ -115,11 +115,11 @@ graph =
 }
 
 
-[/light.conf#] {
+/*[/light.conf#] {
 	origin = (0 1 1)
 	castShadows = 0
 }
-
+*/
 
 ) // objects
 } // scene
