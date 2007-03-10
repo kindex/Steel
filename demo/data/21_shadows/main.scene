@@ -3,7 +3,12 @@
 class = 'combiner'
 objects = 
 (
-[/room/room.scene#] {}
+
+[/light.conf#] {
+	origin = (0 1 1)
+	castShadows = 1
+}
+
 {
 class = 'combiner'
 origin = (0 0 0)
@@ -14,7 +19,7 @@ transformation =
 		speed = 1
 	}
 objects =	(
-//				[/light.conf#]{origin = (0 1 1)}
+				[/light.conf#]{origin = (0 1 1)}
 			)
 }
 
@@ -32,6 +37,7 @@ objects =	(
 			)
 }
 
+[/room/room.scene#] {}
 
 {
 class = 'combiner'
@@ -100,11 +106,6 @@ graph =
 }
 
 
-/*[/light.conf#] {
-	origin = (0 1 1)
-	castShadows = 0
-}
-*/
 
 ) // objects
 } // scene

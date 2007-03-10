@@ -14,6 +14,7 @@
 #include "game_free_scene.h"
 #include <audio/openal_engine.h>
 #include <res/config/config_setup.h>
+#include <objects/combiner/combiner.h>
 
 bool GameFreeScene::init(Config& _conf, Input& _input)
 {
@@ -78,6 +79,10 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 	infoTimer.start(); infoTimer.pause();
 	graphTimer.start(); graphTimer.pause();
 
+	//static_cast<GameLight*>(static_cast<Combiner*>(world)->getObject(0))->toggleEnable();
+//	static_cast<GameLight*>(static_cast<Combiner*>(world)->getObject(0))->toggleEnable();
+
+
 	return true;
 }
 
@@ -132,15 +137,32 @@ void GameFreeScene::handleEventKeyDown(std::string key)
 		graphEngine->conf->toggle("clearDepth");
 	}
 
-	if (key == "1") speedup = 0.01f;
-	if (key == "2") speedup = 0.05f;
-	if (key == "3") speedup = 0.2f;
-	if (key == "4") speedup = 0.5f;
-	if (key == "5") speedup = 1;
-	if (key == "6") speedup = 2;
-	if (key == "7") speedup = 5;
-	if (key == "8") speedup = 20;
-	if (key == "9") speedup = 50;
+	//if (key == "1") speedup = 0.01f;
+	//if (key == "2") speedup = 0.05f;
+	//if (key == "3") speedup = 0.2f;
+	//if (key == "4") speedup = 0.5f;
+	//if (key == "5") speedup = 1;
+	//if (key == "6") speedup = 2;
+	//if (key == "7") speedup = 5;
+	//if (key == "8") speedup = 20;
+	//if (key == "9") speedup = 50;
+
+	if (key == "1")
+	{
+		static_cast<GameLight*>(static_cast<Combiner*>(world)->getObject(0))->toggleEnable();
+	}
+	if (key == "2")
+	{
+		static_cast<GameLight*>(
+			static_cast<Combiner*>(static_cast<Combiner*>(world)->getObject(1))->getObject(0)
+			)->toggleEnable();
+	}
+	if (key == "3")
+	{
+		static_cast<GameLight*>(
+			static_cast<Combiner*>(static_cast<Combiner*>(world)->getObject(2))->getObject(0)
+			)->toggleEnable();
+	}
 
 	if (key == "f")
 	{
