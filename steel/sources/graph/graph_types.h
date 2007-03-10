@@ -65,6 +65,8 @@ struct Light
 	bool castShadows;
 	float angle; // LIGHT_TARGET light cone angle
 	Image* cubeMap; // cube map
+	Image* flare;
+	float flareSize;
 
 	Light();
 };

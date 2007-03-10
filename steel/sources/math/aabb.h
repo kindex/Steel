@@ -14,13 +14,12 @@
 #ifndef __MATH_AABB_H
 #define __MATH_AABB_H
 
+#include "../steel.h"
+
 #include "vector3d.h"
 #include "matrix34.h"
 
 #include "../common/types.h"
-#undef min
-#undef max
-
 #undef min
 #undef max
 

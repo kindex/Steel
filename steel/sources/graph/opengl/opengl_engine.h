@@ -152,11 +152,10 @@ private:
 	friend struct Shader;
 	Shader* program;
 	StringDict currentShaderVariables;
-	bool setupShaderVariables(const StringDict& variables);
 // ******************* OpenGL all *******************
 	void collectInformationFromObjects();
-	void renderNormal(); // main function, render to screen or texture
-	void renderShadows(); // main function, render to screen or texture
+	void render();
+	void renderTransparent();
 	void renderNoShadows();
 	void renderCatchShadows();
 	void prepareShadowEdges();
@@ -169,7 +168,7 @@ private:
 	bool isVisible(AABB box);
 	void pushPosition(GraphShadow&);
 	void popPosition(GraphShadow&);
-	bool rayTrace(Line lineSegment);
+	bool rayTrace(Line lineSegment, bool shadowed);
 
 	bool		focused;
 	ProcessInfo info;

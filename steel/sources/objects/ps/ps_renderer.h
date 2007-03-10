@@ -17,14 +17,7 @@
 #include "particle_system.h"
 #include "../../graph/material.h"
 #include "../../graph/graph_interface.h"
-
-enum SpriteAlign
-{
-	SPRITE_ALIGN_CAMERA,
-	SPRITE_ALIGN_Z,
-	SPRITE_ALIGN_SCREEN,
-	SPRITE_ALIGN_CUSTOM
-};
+#include "../../math/sprite.h"
 
 // система - модель из множества полигонов - спрайтов
 class SpriteRenderer: public ParticleRenderer

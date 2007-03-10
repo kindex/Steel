@@ -13,7 +13,7 @@
 ************************************************************/
 #include "ps_renderer.h"
 #include "../../res/res_main.h"
-
+#include "../../math/sprite.h"
 void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 {
 	initSprites(vertexes.size()/4, set->particles.size());
@@ -24,40 +24,18 @@ void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 	for(int i=0; i < cnt; i++)
 	{
 		int i4 = i*4;
-		v3 pos = set->particles[i]->position;
+		calculateSprite(info.camera,
+						set->particles[i]->position,
+						set->particles[i]->size,
+						align,
+						customAlign,
+						vertexes[i4 + 0],
+						vertexes[i4 + 1],
+						vertexes[i4 + 2],
+						vertexes[i4 + 3],
+						normals[i4 + 0]);
 
-		v3 dir;
-//В зависимости от типа выравнивания рассчитываем перпендикуляр к плоскости спрайта (dir).
-//cameraDirection – ось камеры
-//cameraEye – положение камеры
-//pos – положение спрайта
-		switch(align)
-		{
-			case SPRITE_ALIGN_SCREEN:	dir = -info.camera.getDirection(); break;
-			case SPRITE_ALIGN_CAMERA:	dir = info.camera.getPosition() - pos; break;
-			case SPRITE_ALIGN_Z:		dir = info.camera.getPosition() - pos; dir.z = 0; break;
-			case SPRITE_ALIGN_CUSTOM:	dir = customAlign; break;
-		}
-
-		dir.normalize();
-		// per1 и per2 - это направляющие сторон спрайта
-		v3 per1(-dir.y, dir.x, 0); // перендикуляр к dir
-		per1.normalize();
-		v3 per2 = dir.crossProduct(per1); // перпендикуляр к dir и per1
-		per1 *= set->particles[i]->size; // умножаем на размер спарйта
-		per2 *= set->particles[i]->size;
-
-		// углы спарйта
-		vertexes[i4 + 0]  = pos + per1 - per2;
-		vertexes[i4 + 1]  = pos + per1 + per2;
-		vertexes[i4 + 2]  = pos + -per1 + per2;
-		vertexes[i4 + 3]  = pos + -per1 - per2;
-
-		// нормали к углам спарйта
-		normals[i4 + 0] = dir;
-		normals[i4 + 1] = dir;
-		normals[i4 + 2] = dir;
-		normals[i4 + 3] = dir;
+		normals[i4 + 1] = normals[i4 + 2] = normals[i4 + 3] = normals[i4 + 0];
 	}
 }
 

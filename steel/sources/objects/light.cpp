@@ -40,6 +40,8 @@ bool GameLight::InitFromConfig(Config& conf)
 	light->castShadows = conf.getb("castShadows", true);
 
 	light->cubeMap = resImage.add(conf.getPath("cube_map"));
+	light->flare = resImage.add(conf.getPath("flare"));
+	light->flareSize = conf.getf("flareSize", 1.0f);
 
 	bool enabled = conf.getb("enabled", true);
 	if (enabled)

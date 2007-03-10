@@ -329,6 +329,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\sources\math\sprite.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\math\sprite.h"
+					>
+				</File>
+				<File
 					RelativePath="..\sources\math\vector2d.cpp"
 					>
 				</File>

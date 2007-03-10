@@ -28,6 +28,7 @@
 #include "ext/normalisation_cube_map.h"
 #include "../../res/res_main.h"
 #include "../../math/plane.h"
+#include "../../math/sprite.h"
 
 #include <algorithm>
 #include <gl/glu.h>
@@ -102,7 +103,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 // ------------ Draw Scene ---------------
 	collectInformationFromObjects();
 
-	renderShadows();
+	render();
 	renderDebug();
 
 // ------------- Post draw ---------------
@@ -122,64 +123,39 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	return true;
 }
 
-bool OpenGL_Engine::setupShaderVariables(const StringDict& variables)
+void OpenGL_Engine::renderTransparent()
 {
-	currentShaderVariables = variables;
-	program = bindShader(flags.shaderStd, currentShaderVariables);
-	if (program == NULL) // shader compile error
+	if (!flags.blending || flags.current.transparent)
 	{
-		return false;
+		return;
 	}
-	else
-	{
-		return true;
-	}
-}
-
-void OpenGL_Engine::renderNormal()
-{
-	program = NULL;
-	if (flags.glsl)
-	{
-		if (!flags.textures)
-		{
-			program = bindShader(flags.shaderNoTexture, StringDict());
-		}
-		else if (flags.useDebugShader)
-		{
-			program = bindShader(flags.shaderDebug, StringDict());
-		}
-		else // use_std_shader
-		{
-			StringDict vars;
-			vars["lighting"] = IntToStr(flags.lighting);
-			vars["lightcount"] = "0";
-			vars["reflecting"] = "0";
-			vars["blending"] = "0";
-			setupShaderVariables(vars);
-		}
-	}
+	flags.current.transparent = true;
 	pvector<BlendingFaces> blendingFaces;
 // В начале выводим только непрозрачные объекты
 
 	for EACH(ShadowPVector, shadows, it)
 	{
-		FaceMaterialVector skippedFaces;
-		drawObject(*GS(*it), skippedFaces);
-		for EACH(FaceMaterialVector, skippedFaces, jt)
+		GraphShadow& e = *GS(*it);
+		if (e.faceMaterials != NULL)
 		{
-			blendingFaces.push_back(BlendingFaces(GS(*it), jt->material, jt->faces));
+			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, jt)
+			{
+				if (jt->material != NULL && jt->material->blend)
+				{
+					blendingFaces.push_back(BlendingFaces(&e, jt->material, jt->faces));
+				}
+			}
 		}
 	}
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
-	if (flags.textures && !flags.useDebugShader)
+	if (flags.textures)
 	{
 		StringDict vars;
 		vars["lighting"] = IntToStr(flags.lighting);
 		vars["lightcount"] = "0";
 		vars["reflecting"] = "0";
 		vars["blending"] = "1";
-		setupShaderVariables(vars);
+		program = bindShader(flags.shaderStd, vars);
 	}
 
 	if (flags.blending && flags.current.transparent && !blendingFaces.empty())
@@ -346,7 +322,7 @@ void OpenGL_Engine::renderNoShadows()
 }
 
 
-void OpenGL_Engine::renderShadows()
+void OpenGL_Engine::render()
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
@@ -366,15 +342,48 @@ void OpenGL_Engine::renderShadows()
 	renderNoShadows();
 	program->unbind();
 	glPopAttrib();
+	
+	renderTransparent();
 
-	for EACH(LightMap, lights, light)
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	glDisable(GL_DEPTH_TEST);
+	glDepthMask(GL_FALSE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	for EACH(LightMap, lights, lightIt)
 	{
-		glColor3f(1.0, 0, 0);
-		glPointSize(10);
-		glBegin(GL_POINTS);
-			glVertex3fv(light->second->position);
+		Light& light = *lightIt->second->light;
+		if (rayTrace(Line(info.camera.getPosition(), lightIt->second->position - info.camera.getPosition()), false))
+		{
+			continue;
+		}
+
+		v3 vertex1;
+		v3 vertex2;
+		v3 vertex3;
+		v3 vertex4;
+		v3 normal;
+		calculateSprite(info.camera,
+					lightIt->second->position,
+					light.flareSize,
+					SPRITE_ALIGN_SCREEN,
+					v3(),
+					vertex1,
+					vertex2,
+					vertex3,
+					vertex4,
+					normal);
+
+		(this->*BindTexture)(*light.flare, true);
+		glBegin(GL_QUADS);
+			glTexCoord2f(1.0, 0.0); glVertex3fv(vertex1.getfv());
+			glTexCoord2f(1.0, 1.0); glVertex3fv(vertex2.getfv());
+			glTexCoord2f(0.0, 1.0); glVertex3fv(vertex3.getfv());
+			glTexCoord2f(0.0, 0.0); glVertex3fv(vertex4.getfv());
 		glEnd();
 	}
+	glPopAttrib();
 }
 
 void OpenGL_Engine::castShadow(const LightShadow& light)
@@ -382,7 +391,7 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 	
 	Line lineSegment(info.camera.getPosition(), light.position - info.camera.getPosition());
-	bool inShadowVolume = rayTrace(lineSegment);
+	bool inShadowVolume = rayTrace(lineSegment, true);
 
 	float maxDistance = light.light->maxDistance;
 
@@ -1054,7 +1063,7 @@ void OpenGL_Engine::setupVariables()
 	flags.shaderNoTexture = "material/" + conf->gets("no_texture_shader", "no_texture");
 }
 
-bool OpenGL_Engine::rayTrace(Line lineSegment)
+bool OpenGL_Engine::rayTrace(Line lineSegment, bool shadowed)
 {
 	for EACH(ShadowPVector, shadows, it)
 	{
@@ -1063,7 +1072,7 @@ bool OpenGL_Engine::rayTrace(Line lineSegment)
 		{
 			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 			{
-				if (faces->material->dropShadows)
+				if (shadowed <= faces->material->dropShadows)
 				{
 					for EACH(TriangleVector, faces->faces->triangles, it)
 					{

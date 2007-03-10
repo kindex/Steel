@@ -66,12 +66,12 @@
 * Steel Egine *
 521. Document engine. / KindeX. [5]. (1w).
 503. Audio, Res: Ogg loader. / Kuzmi4.
-401. OpenGL: shadows. / KindeX.
 369. CD. Collision detection for particles. / Def, KindeX.
 459. Particle System Documentation: Research configuration parameters / Def.
 
 ** Done Construction *******************************************************************************
 * Steel Egine *
+401. OpenGL: shadows. / KindeX.
 515. OpenGL bug: shader on ATI. / KindeX. [2].
 367. OpenGL 2.0. Shaders, dynamic lighting (many lights). / KindeX. [1]
 402. OpenGL: blending. Glass, sprites (with correct lighting). Sort blending polygons. / KindeX.

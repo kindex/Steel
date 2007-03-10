@@ -4,21 +4,6 @@ class = 'combiner'
 objects = 
 (
 [/room/room.scene#] {}
-
-
-[/19_ps/ps.scene#] { emitter = {	origin = (1 0 1.8) } }
-/*
-[/19_ps/ps.scene#] { 
-	emitter = {	origin = (1 0 0.8) } 
-	renderer = 
-		{
-		material =  {
-			diffuse_map = {image = 'bsmoke'}
-		}
-	}
-}
-*/
-
 {
 class = 'combiner'
 origin = (0 0 0)

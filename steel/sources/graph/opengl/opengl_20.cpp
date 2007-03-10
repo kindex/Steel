@@ -41,7 +41,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 			vars["lightcount"] = IntToStr(StdShaderGetLightCount(e, faces, material));
 			vars["reflecting"] = IntToStr(material.env_map.cubeMap != NULL ? 1 : 0);
 			vars["blending"] = IntToStr(flags.blending && flags.current.transparent && material.blend);
-			setupShaderVariables(vars);
+			program = bindShader(flags.shaderStd, vars);
 			if (program == NULL)
 			{
 				return false; // shader compile error
