@@ -105,9 +105,6 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	renderShadows();
 	renderDebug();
 
-	Line lineSegment(info.camera.getPosition(), info.camera.getDirection());
-	rayTrace(lineSegment);
-
 // ------------- Post draw ---------------
 
 	if (conf->geti("swapBuffers", 1))
@@ -322,43 +319,6 @@ void OpenGL_Engine::prepareShadowEdges()
 	}
 }
 
-void OpenGL_Engine::renderCatchLight(const LightShadow& light)
-{
-	flags.current.simpleLighting = false;
-	flags.current.shadowLighting = true;
-	flags.current.onlyLight = light.light->id;
-
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	glEnable(GL_STENCIL_TEST);
-
-	glFrontFace(GL_CCW);
-	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-	glStencilFunc(GL_EQUAL, 0, 0xffffffff);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_ONE, GL_ONE);
-	glDepthFunc(GL_LEQUAL);
-	glDepthMask(GL_FALSE);
-
-	for EACH(ShadowPVector, shadows, it)
-	{
-		GraphShadow& e = *GS(*it);
-		pushPosition(e);
-		if (flags.drawFace && e.faceMaterials != NULL)
-		{
-			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
-			{
-				if (it->material != NULL && it->material->blend == TEXTURE_MODE_NONE)
-				{
-					(this->*DrawFill_MaterialStd)(e, *it->faces, *static_cast<MaterialStd*>(it->material));
-				}
-			}
-		}
-		popPosition(e);
-	}
-	glPopAttrib();
-}
-
 void OpenGL_Engine::renderNoShadows()
 {
 	flags.current.transparent = false;
@@ -399,8 +359,7 @@ void OpenGL_Engine::renderShadows()
 		{
 			if (light->second->light->castShadows)
 			{
-				castShadow(*light->second); // stencil (2a)
-				renderCatchLight(*light->second); // add light (2b)
+				castShadow(*light->second); // step 2
 			}
 		}
 	}
@@ -421,6 +380,9 @@ void OpenGL_Engine::renderShadows()
 void OpenGL_Engine::castShadow(const LightShadow& light)
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	
+	Line lineSegment(info.camera.getPosition(), light.position - info.camera.getPosition());
+	bool inShadowVolume = rayTrace(lineSegment);
 
 	float maxDistance = light.light->maxDistance;
 
@@ -442,12 +404,12 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 	{
 		if (step == 0)
 		{
-			glFrontFace(GL_CCW);
+			glFrontFace(inShadowVolume ? GL_CW : GL_CCW);
 			glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
 		}
 		else
 		{
-			glFrontFace(GL_CW);
+			glFrontFace(inShadowVolume ? GL_CCW : GL_CW);
 			glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
 		}
 
@@ -553,6 +515,40 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 		}
 	}
 	program->unbind();
+	glPopAttrib();
+
+	flags.current.simpleLighting = false;
+	flags.current.shadowLighting = true;
+	flags.current.onlyLight = light.light->id;
+
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	glEnable(GL_STENCIL_TEST);
+
+	glFrontFace(GL_CCW);
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	glStencilFunc(GL_EQUAL, inShadowVolume ? 1 : 0, 0xffffffff);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE, GL_ONE);
+	glDepthFunc(GL_LEQUAL);
+	glDepthMask(GL_FALSE);
+
+	for EACH(ShadowPVector, shadows, it)
+	{
+		GraphShadow& e = *GS(*it);
+		pushPosition(e);
+		if (flags.drawFace && e.faceMaterials != NULL)
+		{
+			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
+			{
+				if (it->material != NULL && it->material->blend == TEXTURE_MODE_NONE)
+				{
+					(this->*DrawFill_MaterialStd)(e, *it->faces, *static_cast<MaterialStd*>(it->material));
+				}
+			}
+		}
+		popPosition(e);
+	}
 	glPopAttrib();
 }
 
@@ -1060,8 +1056,6 @@ void OpenGL_Engine::setupVariables()
 
 bool OpenGL_Engine::rayTrace(Line lineSegment)
 {
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	glDepthFunc(GL_ALWAYS);
 	for EACH(ShadowPVector, shadows, it)
 	{
 		GraphShadow& e = *GS(*it);
@@ -1081,18 +1075,9 @@ bool OpenGL_Engine::rayTrace(Line lineSegment)
 						float k;
 						if (isCrossTrgLine(triangle, lineSegment, k))
 						{
-							if (k > 0.0 && k < 10.0)
+							if (k > 0.0 && k < 1.0)
 							{
-								glPointSize(2);
-								glBegin(GL_POINTS);
-									glVertex3fv(lineSegment.point(k));
-								glEnd();
-
-								glBegin(GL_LINE_LOOP);
-									glVertex3fv(triangle.base.getfv());
-									glVertex3fv((triangle.base + triangle.a).getfv());
-									glVertex3fv((triangle.base + triangle.b).getfv());
-								glEnd();
+								return true;
 							}
 						}
 					}
@@ -1100,7 +1085,6 @@ bool OpenGL_Engine::rayTrace(Line lineSegment)
 			}
 		}
 	}
-	glPopAttrib();
 	return false;
 }
 

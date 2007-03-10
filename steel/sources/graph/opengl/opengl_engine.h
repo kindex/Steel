@@ -160,7 +160,6 @@ private:
 	void renderNoShadows();
 	void renderCatchShadows();
 	void prepareShadowEdges();
-	void renderCatchLight(const LightShadow& light);
 	void renderDebug();
 	void castShadow(const LightShadow& light);
 	void setupVariables();
