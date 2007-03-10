@@ -59,7 +59,7 @@ void OpenGL_Engine::collectInformationFromObjects()
 		updateRealPosition(s);
 	}
 
-	for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
+	for EACH(LightMap, lights, jt)
 	{
 		jt->second->position = jt->second->light->position * jt->second->shadow->realPosition;
 	}
@@ -93,7 +93,6 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	GLbitfield clear = 0;
 	if (conf->getb("clearColor", true))	clear |= GL_COLOR_BUFFER_BIT;
 	if (conf->getb("clearDepth", true))	clear |= GL_DEPTH_BUFFER_BIT;
-	if (flags.shadows)	clear |= GL_STENCIL_BUFFER_BIT;
 	if (clear)
 	{
 		glClear(clear);
@@ -102,14 +101,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 // ------------ Draw Scene ---------------
 	collectInformationFromObjects();
 
-	if (flags.shadows)
-	{
-		renderShadows();
-	}
-	else
-	{
-		renderNormal();
-	}
+	renderShadows();
 
 	renderDebug();
 
@@ -130,26 +122,17 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	return true;
 }
 
-void OpenGL_Engine::setupShaderVariable(const std::string& key, const std::string& value, bool compile)
+bool OpenGL_Engine::setupShaderVariables(const StringDict& variables)
 {
-	StringDict::iterator it = currentShaderVariables.find(key);
-//	if (it == currentShaderVariables.end() || it->second != value || needToCompile)
+	currentShaderVariables = variables;
+	program = bindShader(flags.shaderStd, currentShaderVariables);
+	if (program == NULL) // shader compile error
 	{
-		currentShaderVariables[key] = value;
-		if (compile)
-		{
-			program = bindShader(flags.shaderStd, currentShaderVariables);
-			if (program == NULL) // shader compile error
-			{
-				flags.glsl = false;
-				needToCompile = true;
-			}
-			needToCompile = false;
-		}
-		else
-		{
-			needToCompile = true;
-		}
+		return false;
+	}
+	else
+	{
+		return true;
 	}
 }
 
@@ -166,13 +149,14 @@ void OpenGL_Engine::renderNormal()
 		{
 			program = bindShader(flags.shaderDebug, StringDict());
 		}
-		else// use_std_shader
+		else // use_std_shader
 		{
-			currentShaderVariables.clear();
-			currentShaderVariables["lighting"] = IntToStr(flags.lighting);
-			currentShaderVariables["lightcount"] = "0";
-			currentShaderVariables["reflecting"] = "0";
-			setupShaderVariable("blending", "0");
+			StringDict vars;
+			vars["lighting"] = IntToStr(flags.lighting);
+			vars["lightcount"] = "0";
+			vars["reflecting"] = "0";
+			vars["blending"] = "0";
+			setupShaderVariables(vars);
 		}
 	}
 	pvector<BlendingFaces> blendingFaces;
@@ -190,10 +174,15 @@ void OpenGL_Engine::renderNormal()
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
 	if (flags.textures && !flags.useDebugShader)
 	{
-		setupShaderVariable("blending", "1");
+		StringDict vars;
+		vars["lighting"] = IntToStr(flags.lighting);
+		vars["lightcount"] = "0";
+		vars["reflecting"] = "0";
+		vars["blending"] = "1";
+		setupShaderVariables(vars);
 	}
 
-	if (flags.blend && flags.transparent && !blendingFaces.empty())
+	if (flags.blending && flags.current.transparent && !blendingFaces.empty())
 	{
 		BlendingTriangleVector blendingTriangles;
 		for EACH(pvector<BlendingFaces>, blendingFaces, it)
@@ -285,42 +274,156 @@ struct ShadowFace
 	bool visible;
 };
 
-void OpenGL_Engine::renderShadows()
+void OpenGL_Engine::renderCatchShadows()
 {
+	flags.current.transparent = false;
+	flags.current.simpleLighting = true;
+	flags.current.shadowLighting = false;
+	flags.current.onlyLight = 0;
+	flags.current.shadowDebug = 0;
+
+	for EACH(ShadowPVector, shadows, it)
+	{
+		GraphShadow& e = *GS(*it);
+		if (e.faceMaterials != NULL)
+		{
+			pushPosition(e);
+			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
+			{
+				if (faces->material->blend == 0 && faces->material->catchShadows)
+				{
+					(this->*DrawFill_MaterialStd)(e, *faces->faces, *faces->material);
+				}
+			}
+			popPosition(e);
+		}
+	}
+}
+
+void OpenGL_Engine::prepareShadowEdges()
+{
+	for EACH(ShadowPVector, shadows, it)
+	{
+		GraphShadow& e = *GS(*it);
+		if (e.faceMaterials != NULL)
+		{
+			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
+			{
+				if (faces->material->dropShadows)
+				{
+					e.calculateEgdes();
+					break;
+				}
+			}
+		}
+	}
+}
+
+void OpenGL_Engine::renderCatchLight(const LightShadow& light)
+{
+	// render add (2b)
+
+	flags.current.simpleLighting = false;
+	flags.current.shadowLighting = true;
+	flags.current.onlyLight = light.light->id;
+
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	//program = bindShader("material/no_texture", StringDict());
-//	if (program == NULL)return;
-	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+	glEnable(GL_STENCIL_TEST);
+
+	glFrontFace(GL_CCW);
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	glStencilFunc(GL_EQUAL, 0, 0xffffffff);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE, GL_ONE);
+	glDepthFunc(GL_LEQUAL);
+	glDepthMask(GL_FALSE);
 
 	for EACH(ShadowPVector, shadows, it)
 	{
 		GraphShadow& e = *GS(*it);
 		pushPosition(e);
-		if (e.faceMaterials != NULL && !e.lights.empty())
+		if (flags.drawFace && e.faceMaterials != NULL)
 		{
-			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
+			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
 			{
-				if (faces->material->blend == 0)
+				if (it->material != NULL && it->material->blend == TEXTURE_MODE_NONE)
 				{
-					(this->*DrawTriangles)(e, *faces->faces, NULL);
+					(this->*DrawFill_MaterialStd)(e, *it->faces, *static_cast<MaterialStd*>(it->material));
 				}
 			}
 		}
 		popPosition(e);
 	}
-//	program->unbind();
+	glPopAttrib();
+}
 
-	if (flags.glsl)
+void OpenGL_Engine::renderNoShadows()
+{
+	flags.current.transparent = false;
+	flags.current.simpleLighting = true;
+	flags.current.shadowLighting = true;
+	flags.current.onlyLight = 0;
+	flags.current.shadowDebug = 0;
+
+	for EACH(ShadowPVector, shadows, it)
 	{
-		program = bindShader("material/shadow", StringDict());
-		if (program == NULL) return;
+		GraphShadow& e = *GS(*it);
+		if (e.faceMaterials != NULL)
+		{
+			pushPosition(e);
+			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
+			{
+				if (faces->material->blend == 0 && (!faces->material->catchShadows || !flags.shadows))
+				{
+					(this->*DrawFill_MaterialStd)(e, *faces->faces, *faces->material);
+				}
+			}
+			popPosition(e);
+		}
 	}
+}
 
+
+void OpenGL_Engine::renderShadows()
+{
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+	if (flags.shadows)
+	{
+		renderCatchShadows(); // step 1
+		prepareShadowEdges(); // step 2
+
+		for EACH(LightMap, lights, light)
+		{
+			if (light->second->light->castShadows)
+			{
+				castShadow(*light->second); // render stencil (2a)
+				renderCatchLight(*light->second); // render stencil (2b)
+			}
+		}
+	}
+	renderNoShadows();
+
+	glPopAttrib();
+}
+
+void OpenGL_Engine::castShadow(const LightShadow& light)
+{
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+	glClear(GL_STENCIL_BUFFER_BIT);
 	glDepthMask(GL_FALSE);
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_STENCIL_TEST);
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 	glStencilFunc(GL_ALWAYS, 0, 0xffffffff);
+
+	program = bindShader("material/shadow", StringDict());
+	if (program != NULL)
+	{
+		program->setUniformVector("lightPos", light.position);
+	}
 
 	for (int step = 0; step < 2; step++)
 	{
@@ -338,23 +441,16 @@ void OpenGL_Engine::renderShadows()
 		for EACH(ShadowPVector, shadows, it)
 		{
 			GraphShadow& e = *GS(*it);
-			if (flags.glsl)
+			if (e.faceMaterials != NULL && e.vertexes != NULL && !e.vertexes->empty())
 			{
-				pushPosition(e);
-			}
-			if (e.faceMaterials != NULL && !e.lights.empty() && e.vertexes != NULL && !e.vertexes->empty())
-			{
-				e.calculateEgdes();
-
-				if (program != NULL)
+				if (flags.glsl)
 				{
-					program->setUniformVector("lightPos", e.lights[0]->position);
+					pushPosition(e);
 				}
-
 				int faceNumber = 0;
 				for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 				{
-					if (!(faces->faces->triangles.empty() &&  faces->faces->quads.empty()))
+					if (!(faces->faces->triangles.empty() &&  faces->faces->quads.empty()) && faces->material->dropShadows)
 					{
 						svector<ShadowFace> triangles(faces->faces->triangles.size());
 						svector<svector<int> > vertexes(e.vertexes->size());
@@ -367,7 +463,7 @@ void OpenGL_Engine::renderShadows()
 							a.a = e.realPosition*e.vertexes->at(it->a[1]) - a.base;
 							a.b = e.realPosition*e.vertexes->at(it->a[2]) - a.base;
 
-							triangles[i++].visible = byRightSide(e.lights[0]->position, a);
+							triangles[i++].visible = byRightSide(light.position, a);
 						}
 
 						for EACH(EdgeVector, e.edges[faceNumber], edge)
@@ -390,21 +486,23 @@ void OpenGL_Engine::renderShadows()
 									vert2 = edge->vertex[0];
 								}
 
-
-								//glPushAttrib(GL_ALL_ATTRIB_BITS);
-								//glDisable(GL_STENCIL_TEST);
-								//glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
-								//glDepthFunc(GL_ALWAYS);
-								//glColor3f(1.0, 0, 0);
-								//glLineWidth(2);
-								//glDepthMask(GL_TRUE);
-								//glBegin(GL_LINE_LOOP);
-								//	glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
-								//	glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
-								//	glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
-								//glEnd();
-								//glPopAttrib();
+								if (flags.current.shadowDebug)
+								{
+									glPushAttrib(GL_ALL_ATTRIB_BITS);
+									glDisable(GL_STENCIL_TEST);
+									glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
+									glDepthFunc(GL_ALWAYS);
+									glColor3f(1.0, 0, 0);
+									glLineWidth(2);
+									glDepthMask(GL_TRUE);
+									glBegin(GL_LINE_LOOP);
+										glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+										glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+										glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert2).getfv());
+										glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at(vert1).getfv());
+									glEnd();
+									glPopAttrib();
+								}
 
 								if (flags.glsl)
 								{
@@ -419,8 +517,8 @@ void OpenGL_Engine::renderShadows()
 								{
 									v3 vert1g = e.realPosition*e.vertexes->at(vert1);
 									v3 vert2g = e.realPosition*e.vertexes->at(vert2);
-									v3 vert1s = vert1g + (vert1g - e.lights[0]->position)*10.0;
-									v3 vert2s = vert2g + (vert2g - e.lights[0]->position)*10.0;
+									v3 vert1s = vert1g + (vert1g - light.position)*10.0;
+									v3 vert2s = vert2g + (vert2g - light.position)*10.0;
 
 									glBegin(GL_QUADS);
 										glVertex3fv(vert1s.getfv());
@@ -431,53 +529,20 @@ void OpenGL_Engine::renderShadows()
 								}
 							}
 						}
-
-						//for EACH_CONST(QuadVector, faces->faces->quads, it)
-						//{
-						//	Plane a;
-						//	a.base = e.vertexes->at( it->a[0] );
-						//	a.a = e.vertexes->at( it->a[1] ) - a.base;
-						//	a.b = e.vertexes->at( it->a[2] ) - a.base;
-
-						//	if (byRightSide(e.lights[0]->position, a))
-						//	{
-						//		glBegin(GL_QUADS);
-						//		for (int i = 0; i < 4; i++)
-						//		{
-						//			glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-						//			glTexCoord1f(1.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
-						//			glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[(1 + i)%4] ).getfv());
-						//			glTexCoord1f(0.0f); glVertex3fv(e.vertexes->at( it->a[0 + i] ).getfv());
-						//		}
-						//		glEnd();
-						//	}
-						//}
 					}
 					faceNumber++;
 				}
-			}
-			if (flags.glsl)
-			{
-				popPosition(e);
+				if (flags.glsl)
+				{
+					popPosition(e);
+				}
 			}
 		}
 	}
-	if (flags.glsl)
-	{
-		program->unbind();
-	}
-
-	glEnable(GL_STENCIL_TEST);
-
-	glFrontFace(GL_CCW);
-	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-	glStencilFunc(GL_EQUAL, 0, 0xffffffff);
-
-	glDepthMask(GL_FALSE);
-	renderNormal();
-
+	program->unbind();
 	glPopAttrib();
 }
+
 
 /*
 Сердце Графического движка.
@@ -487,18 +552,17 @@ void OpenGL_Engine::renderShadows()
 void OpenGL_Engine::drawObject(GraphShadow& e, OUT FaceMaterialVector& skippedFaces)
 {
 	pushPosition(e);
-
 	if (flags.drawFace && e.faceMaterials != NULL)
 	{
 		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
 		{
 			if (it->material != NULL)
 			{
-				if (it->material->blend == TEXTURE_MODE_NONE || (!flags.blend && flags.transparent))
+				if (it->material->blend == TEXTURE_MODE_NONE || (!flags.blending && flags.current.transparent))
 				{
 					(this->*DrawFill_MaterialStd)(e, *it->faces, *static_cast<MaterialStd*>(it->material));
 				}
-				else if (flags.transparent)
+				else if (flags.current.transparent)
 				{
 					skippedFaces.push_back(FaceMaterial(it->material, it->faces));
 				}
@@ -714,7 +778,6 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	setupVariables();
 	if (version >= 20 && GL_EXTENSION_GLSL && conf->getb("use_glsl", true))
 	{
-		needToCompile = true;
 		flags.maxLightsInShader = conf->geti("max_lights", 4);
 		StringDict parameters;
 		parameters["lighting"] = IntToStr(flags.lighting);
@@ -824,56 +887,6 @@ void OpenGL_Engine::prepare(GraphShadow& shadow, matrix34 matrix, GameObject* pa
 	{
 		shadow.calculateAABB();
 	}
-
-/*	if(shadow->childrenModificationTime < shadow->object->getChildrenModificationTime())
-	{
-		shadow->childrenModificationTime = shadow->object->getChildrenModificationTime();
-
-		ShadowHash newChildrenId;
-
-		int count = G(shadow->object)->getGraphChildrenCount();
-		for(int i = 0; i < count; i++) // add new + cache
-		{
-			GraphObject *child = G(shadow->object)->getGraphChildren(i);
-			uid id = child->getId();
-			newChildrenId[id] = i;
-
-			if(idHash.find(id) == idHash.end())
-			{
-				// add new object to shadow
-				makeShadowForObject(child);
-				makeShadowForChildren(child);
-
-				shadow->children.push_back(id);
-			}
-			getShadow(child)->cache();
-		}
-		int size = shadow->children.size();
-
-		for(int i = 0; i < size; i++)
-		{
-			uid id = shadow->children[i];
-			if(newChildrenId.find(id) == newChildrenId.end())
-			{
-				int n = findSid(id);
-				deleteShadowForChildren(n);
-				deleteShadowForObject(n);
-				shadow->children[i] = shadow->children.back();
-				shadow->children.pop_back();
-				size--;
-				i--;
-			}
-		}
-	}
-
-*/
-/*	int count = G(shadow->object)->getGraphChildrenCount();
-	for(int i = 0; i < count; i++)
-	{
-		GraphObject *child = G(shadow->object)->getGraphChildren(i);
-		
-		prepare(getShadow(child), globalTime, time);
-	}*/
 }
 
 void OpenGL_Engine::onResize(int width, int height)
@@ -1013,8 +1026,8 @@ void OpenGL_Engine::setupVariables()
 	flags.lighting = conf->getb("lighting", true);
 	flags.textures = conf->getb("textures", true);
 	flags.drawFace = conf->getb("drawFace", true);
-	flags.blend = conf->getb("blend", true);
-	flags.transparent = conf->getb("transparent", true);
+	flags.blending = conf->getb("blending", true);
+//	flags.transparent = conf->getb("transparent", true);
 	flags.bump = conf->getb("bump", true);
 	flags.shadows = conf->getb("shadows", true);
 

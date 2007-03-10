@@ -70,7 +70,8 @@ public:
 
 // ********************* SHADOWS *************************
 private:
-	map<uid, LightShadow*> lights;
+	typedef map<uid, LightShadow*> LightMap;
+	LightMap lights;
 	std::map<uid, OpenGL_Buffer> buffer;
 	ShaderDict shaders;
 	Flags flags;
@@ -145,18 +146,23 @@ private:
 	Shader* loadShader(const std::string&, const StringDict& parameters);
 
 	void unbindTexCoords();
-	void DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
-	void DrawFill_SetupDebugShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
+	void SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
+	size_t StdShaderGetLightCount(GraphShadow& e, const Faces& faces, MaterialStd& material);
+	void SetupDebugShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
 	friend struct Shader;
 	Shader* program;
 	StringDict currentShaderVariables;
-	bool needToCompile;
-	void setupShaderVariable(const std::string& key, const std::string& value, bool compile = true);
+	bool setupShaderVariables(const StringDict& variables);
 // ******************* OpenGL all *******************
 	void collectInformationFromObjects();
 	void renderNormal(); // main function, render to screen or texture
 	void renderShadows(); // main function, render to screen or texture
+	void renderNoShadows();
+	void renderCatchShadows();
+	void prepareShadowEdges();
+	void renderCatchLight(const LightShadow& light);
 	void renderDebug();
+	void castShadow(const LightShadow& light);
 	void setupVariables();
 	void prepare(GraphShadow&, matrix34 matrix = matrix34::getIdentity(), GameObject *parent = NULL);
 	void drawObject(GraphShadow&, OUT FaceMaterialVector& skippedFaces);

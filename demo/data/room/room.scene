@@ -9,7 +9,7 @@ objects =
 [#objects[0]] {	origin = (0  2.5 2)	graph = {size = (5 0.1 4)}}
 [#objects[2]] {	origin = (0 -2.5 2)}
 
-[wall.scene#] {	origin = (0 0 -0.05)	graph = {size = (5 5 0.1) material = {diffuse_map = {image = 'floor2' k = 3}}}}
+[wall.scene#] {	origin = (0 0 -0.05)	graph = {size = (5 5 0.1) material = {catchShadows = 0 diffuse_map = {image = 'floor2' k = 3}}}}
 [wall.scene#] {	origin = (0 0 4)	graph = {size = (5 5 0.1) material = {diffuse_map = {image = 'ceil' k = 3}}}}
 
 

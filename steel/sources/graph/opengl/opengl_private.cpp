@@ -132,5 +132,16 @@ void GraphShadow::calculateEgdes()
 	}
 }
 
+bool LightShadow::needToBeRendered(const Flags& flags) const
+{
+	bool ok =	 light->castShadows && flags.current.shadowLighting || 
+				!light->castShadows && flags.current.simpleLighting;
+
+	if (flags.current.onlyLight != 0)
+	{
+		ok = ok && light->id == flags.current.onlyLight;
+	}
+	return ok;
+}
 
 } // namespace opengl

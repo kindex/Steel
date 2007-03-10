@@ -103,7 +103,7 @@ void GameFreeScene::handleEventKeyDown(std::string key)
 		framesToPass = 1;
 	}
 
-	if (key == "f1") graphEngine->conf->toggle("lighting");
+	if (key == "f1") graphEngine->conf->toggle("shadows");
 	if (key == "f2") graphEngine->conf->toggle("drawFace");
 	if (key == "f3") graphEngine->conf->toggle("drawWire");
 	if (key == "f4") graphEngine->conf->toggle("blend");

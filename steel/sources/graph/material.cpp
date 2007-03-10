@@ -17,7 +17,7 @@
 #include "../common/utils.h"
 using namespace std;
 
-Material *getMaterialClass(std::string _class)
+MaterialStd* getMaterialClass(const std::string& _class)
 {
 	if (_class == "std") return new MaterialStd;
 //	if (_class == "shader") return new MaterialShader;
@@ -121,18 +121,18 @@ Material::~Material()
 }
 
 
-Material* createMaterial(Config* conf)
+MaterialStd* createMaterial(Config* conf)
 {
-	if(conf == NULL) return NULL;
+	if (conf == NULL) return NULL;
 
-	Material* material = getMaterialClass(conf->gets("class"));
-	if(material == NULL) return NULL;
+	MaterialStd* material = getMaterialClass(conf->gets("class"));
+	if (material == NULL) return NULL;
 
 	material->InitFromConfig(conf);
 	return material;
 }
 
-Material* createMaterial(std::string path)
+MaterialStd* createMaterial(const std::string& path)
 {
 	return createMaterial(resConfig.add(path));
 }

@@ -135,8 +135,8 @@ enum TextureBlendMode
 };
 
 
-Material* getMaterialClass(std::string _class);
-Material* createMaterial(Config*);
-Material* createMaterial(std::string);
+MaterialStd* getMaterialClass(const std::string& _class);
+MaterialStd* createMaterial(Config*);
+MaterialStd* createMaterial(const std::string&);
 
 #endif

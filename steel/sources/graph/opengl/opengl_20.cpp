@@ -32,18 +32,22 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 		if (flags.useDebugShader)
 		{
 			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
-			DrawFill_SetupDebugShader_OpenGL20(e, faces, material, *program);
+			SetupDebugShader_OpenGL20(e, faces, material, *program);
 		}
 		if (flags.textures) // use_std_shader
 		{
-			setupShaderVariable("lightcount", IntToStr(min((int)e.lights.size(), flags.maxLightsInShader)), false);
-			setupShaderVariable("reflecting", IntToStr(material.env_map.cubeMap != NULL ? 1 : 0));
-			if (!flags.glsl)
+			StringDict vars;
+			vars["lighting"] = IntToStr(flags.lighting);
+			vars["lightcount"] = IntToStr(StdShaderGetLightCount(e, faces, material));
+			vars["reflecting"] = IntToStr(material.env_map.cubeMap != NULL ? 1 : 0);
+			vars["blending"] = IntToStr(flags.blending && flags.current.transparent && material.blend);
+			setupShaderVariables(vars);
+			if (program == NULL)
 			{
 				return false; // shader compile error
 			}
 			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
-			DrawFill_SetupStdShader_OpenGL20(e, faces, material, *program);
+			SetupStdShader_OpenGL20(e, faces, material, *program);
 		}
 
 		(this->*DrawTriangles)(e, faces, NULL);
@@ -64,28 +68,36 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 	}
 }
 
+size_t OpenGL_Engine::StdShaderGetLightCount(GraphShadow& e, const Faces& faces, MaterialStd& material)
+{
+	if (flags.lighting)
+	{
+		size_t result = 0;
+		for EACH(LightShadowPVector, e.lights, it)
+		{
+			LightShadow& lightShadow = **it;
+			if (lightShadow.needToBeRendered(flags))
+			{
+				result++;
+			}
+			if (result >= flags.maxLightsInShader)
+			{
+				return result;
+			}
+		}
+		return result;
+	}
+	else
+	{
+		return 0;
+	}
+}
 
-void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader)
+
+void OpenGL_Engine::SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader)
 {
 	shader.clearTextures();
 	shader.bindTexture("emission_map", material.emission_map.image ? material.emission_map.image : black);
-
-	int lightCount = min((int)e.lights.size(), flags.maxLightsInShader);
-
-	if (flags.lighting && lightCount >= 1)
-	{
-		shader.bindTexture("diffuse_map",  material.diffuse_map.image  ? material.diffuse_map.image  : none);
-		shader.bindTexture("specular_map", material.specular_map.image ? material.specular_map.image : white); // TODO: env map koef
-	}
-	if (flags.lighting && lightCount >= 1 || material.env_map.cubeMap != NULL)
-	{
-		shader.bindTexture("normal_map",   material.normal_map.image   ? material.normal_map.image   : zeroNormal);
-	}
-	if (material.env_map.cubeMap != NULL)
-	{
-		shader.bindTexture("env_map", material.env_map.cubeMap);
-		shader.setUniformFloat("env_k", material.env_map.k);
-	}
 
 	shader.setUniformFloat("material.specularPower", material.specularPower);
 	shader.setUniformFloat("material.speculark", material.specular_map.k);
@@ -103,40 +115,70 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 		glLoadIdentity();
 
 		bool cubeMapSet = false;
-		for(int i = 0; i < lightCount; i++)
+		size_t lightIndex = 0;
+		for EACH(LightShadowPVector, e.lights, it)
 		{
-			std::string lighti = std::string("lights[") + IntToStr(i) + "].";
-			shader.setUniformVector(lighti + "position", e.lights[i]->position);
-			shader.setUniformFloat(lighti + "constantAttenuation", e.lights[i]->light->constantAttenuation);
-			shader.setUniformFloat(lighti + "linearAttenuation", e.lights[i]->light->linearAttenuation);
-			shader.setUniformFloat(lighti + "quadraticAttenuation", e.lights[i]->light->quadraticAttenuation);
+			LightShadow& lightShadow = **it;
+			Light& light = *lightShadow.light;
+			if (!lightShadow.needToBeRendered(flags))
+			{
+				continue;
+			}
 
-			shader.setUniformVector(lighti + "ambient", e.lights[i]->light->ambient);
-			shader.setUniformVector(lighti + "diffuse", e.lights[i]->light->diffuse);
-			shader.setUniformVector(lighti + "specular", e.lights[i]->light->specular);
+			std::string lighti = std::string("lights[") + IntToStr(lightIndex) + "].";
+			shader.setUniformVector(lighti + "position", lightShadow.position);
+			shader.setUniformFloat(lighti + "constantAttenuation", light.constantAttenuation);
+			shader.setUniformFloat(lighti + "linearAttenuation", light.linearAttenuation);
+			shader.setUniformFloat(lighti + "quadraticAttenuation", light.quadraticAttenuation);
 
-			shader.setUniformFloat(lighti + "k", e.lights[i]->light->k);
-			shader.setUniformFloat(lighti + "minDistance", e.lights[i]->light->minDistance);
-			shader.setUniformFloat(lighti + "maxDistance", e.lights[i]->light->maxDistance);
-			shader.setUniformFloat(lighti + "sqrtAttenuation", e.lights[i]->light->sqrtAttenuation);
-			shader.setUniformVector(lighti + "up", e.lights[i]->light->up);
-			shader.setUniformVector(lighti + "direction", e.lights[i]->light->direction);
+			shader.setUniformVector(lighti + "ambient", light.ambient);
+			shader.setUniformVector(lighti + "diffuse", light.diffuse);
+			shader.setUniformVector(lighti + "specular", light.specular);
 
-			if (e.lights[i]->light->cubeMap != NULL && !cubeMapSet)
+			shader.setUniformFloat(lighti + "k", light.k);
+			shader.setUniformFloat(lighti + "minDistance", light.minDistance);
+			shader.setUniformFloat(lighti + "maxDistance", light.maxDistance);
+			shader.setUniformFloat(lighti + "sqrtAttenuation", light.sqrtAttenuation);
+			shader.setUniformVector(lighti + "up", light.up);
+			shader.setUniformVector(lighti + "direction", light.direction);
+
+			if (light.cubeMap != NULL && !cubeMapSet)
 			{
 				shader.setUniformInt(lighti + "type", 1);
-				shader.bindTexture("light_cube_map", e.lights[i]->light->cubeMap);
+				shader.bindTexture("light_cube_map", light.cubeMap);
 				cubeMapSet = true;
 			}
 			else
 			{
 				shader.setUniformInt(lighti + "type", 0);
 			}
+			lightIndex++;
+			if (lightIndex >= flags.maxLightsInShader)
+			{
+				break;
+			}
 		}
-		if (!cubeMapSet && lightCount)
+		size_t lightCount = lightIndex;
+		if (!cubeMapSet && lightCount >= 1)
 		{
 			shader.bindTexture("light_cube_map", none);
 		}
+
+		if (flags.lighting && lightCount >= 1)
+		{
+			shader.bindTexture("diffuse_map",  material.diffuse_map.image  ? material.diffuse_map.image  : none);
+			shader.bindTexture("specular_map", material.specular_map.image ? material.specular_map.image : white); // TODO: env map koef
+		}
+		if (flags.lighting && lightCount >= 1 || material.env_map.cubeMap != NULL)
+		{
+			shader.bindTexture("normal_map",   material.normal_map.image   ? material.normal_map.image   : zeroNormal);
+		}
+		if (material.env_map.cubeMap != NULL)
+		{
+			shader.bindTexture("env_map", material.env_map.cubeMap);
+			shader.setUniformFloat("env_k", material.env_map.k);
+		}
+
 		glPopMatrix();
 	}
 
@@ -156,7 +198,7 @@ void OpenGL_Engine::DrawFill_SetupStdShader_OpenGL20(GraphShadow& e, const Faces
 	}
 }
 
-void OpenGL_Engine::DrawFill_SetupDebugShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader)
+void OpenGL_Engine::SetupDebugShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader)
 {
 	shader.clearTextures();
 	shader.bindTexture("normal_map",   material.normal_map.image ? material.normal_map.image : zeroNormal);

@@ -46,14 +46,14 @@ public:
 	AABB getFrame();
 
 private:
-	Material*	material;
-	Vertexes	vertexes;
+	MaterialStd*	material;
+	Vertexes		vertexes;
+	TexCoords		texCoords;
+	Normals			normals;
+	v3				cameraPosition;
+	SpriteAlign		align;
+	v3				customAlign;
 	FaceMaterialVector	face;
-	TexCoords	texCoords;
-	Normals		normals;
-	v3			cameraPosition;
-	SpriteAlign	align;
-	v3			customAlign;
 };
 
 // каждая частица - отдельная модель (объект)

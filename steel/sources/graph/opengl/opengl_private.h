@@ -105,17 +105,6 @@ struct GraphShadow : public Shadow // множество треугольник�
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 };
 
-struct LightShadow
-{
-	LightShadow();
- 
-	v3				position; // global
-	Light*			light;
-	GameObject*		object;
-	GraphShadow*	shadow;
-	bool			changed; // position is changed
-};
-
 struct BlendingFaces
 {
 	BlendingFaces() {}
@@ -154,13 +143,21 @@ typedef
 
 struct Flags
 {
+	struct
+	{
+		bool transparent;
+		bool simpleLighting;
+		bool shadowLighting;
+		bool shadowDebug;
+		uid	onlyLight;
+	} current;
+
+	bool shadows;
 	bool lighting;
 	bool textures;
-	bool blend;
-	bool transparent;
+	bool blending;
 	bool bump;
 	bool glsl;
-	bool shadows;
 
 	bool drawFace;
 	bool drawWire;
@@ -170,14 +167,25 @@ struct Flags
 	bool drawAABB;
 
 	bool useDebugShader;
-	int	debugShaderMode;
+	size_t debugShaderMode;
 
 	std::string shaderStd;
 	std::string shaderDebug;
 	std::string shaderNoTexture;
-	int maxLightsInShader;
+	size_t maxLightsInShader;
 };
 
+struct LightShadow
+{
+	LightShadow();
+ 
+	v3				position; // global
+	Light*			light;
+	GameObject*		object;
+	GraphShadow*	shadow;
+	bool			changed; // position is changed
+	bool			needToBeRendered(const Flags& flags) const;
+};
 
 }
 

@@ -28,9 +28,9 @@
 struct FaceMaterial
 {
 	FaceMaterial() {}
-	FaceMaterial(Material* material, Faces* faces) : material(material), faces(faces) {}
+	FaceMaterial(MaterialStd* material, Faces* faces) : material(material), faces(faces) {}
 
-	Material*		material;
+	MaterialStd*	material;
 	Faces*			faces;
 	std::string		name;
 };

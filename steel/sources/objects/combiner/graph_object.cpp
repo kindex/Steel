@@ -56,12 +56,12 @@ void GraphObjectCustom::bindEngine(Engine& engine)
 // ***************** Mesh *****************
 bool GraphObjectMesh::InitFromConfig(Config& conf)
 {
-	ConfigArray *vertexesConfig = conf.getArray("vertexes");  if(vertexesConfig == NULL) return false;
-	ConfigArray *trianglesConfig = conf.getArray("triangles");if(trianglesConfig == NULL) return false;
-	ConfigArray *texCoordsConfig = conf.getArray("texCoords");if(texCoordsConfig == NULL || texCoordsConfig->size() != vertexesConfig->size()) return false;
-	Config *materialConfig = conf.find("material");
+	ConfigArray* vertexesConfig = conf.getArray("vertexes");  if(vertexesConfig == NULL) return false;
+	ConfigArray* trianglesConfig = conf.getArray("triangles");if(trianglesConfig == NULL) return false;
+	ConfigArray* texCoordsConfig = conf.getArray("texCoords");if(texCoordsConfig == NULL || texCoordsConfig->size() != vertexesConfig->size()) return false;
+	Config* materialConfig = conf.find("material");
 
-	Material *m = NULL;
+	MaterialStd* m = NULL;
 	if(materialConfig != NULL)
 	{
 		m = createMaterial(materialConfig);
@@ -103,7 +103,7 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 	Config* materialConfig = conf.find("material");
 	v3 size = conf.getv3("size", v3(1.0f, 1.0f, 1.0f));
 
-	Material* m = NULL;
+	MaterialStd* m = NULL;
 	if(materialConfig != NULL)
 	{
 		m = createMaterial(materialConfig);
