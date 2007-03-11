@@ -29,15 +29,15 @@ protected:
 
 public:
 	rstream(): failed(true) {}
-	rstream(std::string s, std::string ext = "", ios_base::openmode _Mode = std::ios::binary) 
+	rstream(const std::string& s, const std::string& ext = "", ios_base::openmode _Mode = std::ios::binary) 
 	{ 
 		open(s, ext, _Mode);
 	}
 	
 	bool fail() { return failed || std::ifstream::fail(); }
-	bool open(std::string s, std::string ext = "", ios_base::openmode _Mode = std::ios::binary);
+	bool open(const std::string& s, const std::string& ext = "", ios_base::openmode _Mode = std::ios::binary);
 
-	void read(void *dest, int size);
+	void read(void* dest, int size);
 	void skip(int n);// skip n byten in input stream
 };
 

@@ -15,16 +15,15 @@
 #define __RES__CONFIG_COLLECTION_H
 
 #include "../../steel.h"
+#include "../res_collection.h"
+class Config;
 
-#include "config.h"
-#include "../res.h"
-
-class ResCollectionConfig: public ResCollection<Config>
+class ResCollectionConfig : public ResCollection<Config>
 {
 protected:
-	Config* addForce(std::string& name, bool pop);
+	Config* addForce(const std::string& name, bool pop);
 };
 
-extern ResCollectionConfig		resConfig;
+extern ResCollectionConfig resConfig;
 
 #endif

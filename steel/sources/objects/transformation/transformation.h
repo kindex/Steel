@@ -15,7 +15,10 @@
 #define __OBJECTS__TRANSFORMATOR_H__
 
 #include "../../steel.h"
-#include "../../engine/game_object.h"
+#include "../../engine/interface.h"
+#include <string>
+struct TimeInfo;
+class Config;
 
 class Transformation
 {

@@ -12,6 +12,8 @@
  ************************************************************/
 
 #include "rotation.h"
+#include "../../engine/engine_types.h"
+#include "../../res/config/config.h"
 
 bool Rotation::InitFromConfig(IN Config& conf)
 {

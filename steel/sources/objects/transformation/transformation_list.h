@@ -16,6 +16,7 @@
 
 #include "../../steel.h"
 #include "transformation.h"
+#include "../../common/pvector.h"
 
 class TransformationList : public Transformation
 {

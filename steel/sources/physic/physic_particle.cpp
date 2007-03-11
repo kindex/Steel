@@ -12,6 +12,7 @@
  ************************************************************/
 
 #include "physic_particle.h"
+#include "../common/containers.h"
 
 bool PhysicEngine::setCurrentObject(GameObject* object)
 {

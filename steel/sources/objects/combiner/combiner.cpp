@@ -16,6 +16,10 @@
 #include "../../steel.h"
 #include "combiner.h"
 #include "../game_object_factory.h"
+#include "../../audio/audio_interface.h"
+#include "graph_object.h"
+#include "audio_object.h"
+#include "../transformation/transformation.h"
 
 using namespace std;
 

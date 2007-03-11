@@ -20,6 +20,8 @@
 #include "3ds.h"
 #include "../res_main.h"
 #include "../../common/utils.h"
+#include "../../graph/material.h"
+
 using namespace std;
 
 

@@ -32,12 +32,30 @@
 #endif
 
 #include "../graph_engine.h"
-#include "../../input/input.h"
-#include "opengl_glsl.h"
 #include "opengl_private.h"
+
+class Input;
+struct TextureMatrix;
+struct Line;
 
 namespace opengl
 {
+
+class Shader;
+struct ShaderKey
+{
+	ShaderKey(const std::string& id, StringDict parameters) : id(id), parameters(parameters) {}
+
+	const	std::string	id;
+	const	StringDict	parameters;
+	bool operator < (const ShaderKey& second) const
+	{
+		return id < second.id || id == second.id && parameters < second.parameters;
+	}
+};
+
+typedef std::map<ShaderKey, Shader*> ShaderDict;
+
 
 class OpenGL_Engine : public GraphEngine
 {
@@ -70,7 +88,7 @@ public:
 
 // ********************* SHADOWS *************************
 private:
-	typedef map<uid, LightShadow*> LightMap;
+	typedef std::map<uid, LightShadow*> LightMap;
 	LightMap lights;
 	std::map<uid, OpenGL_Buffer> buffer;
 	ShaderDict shaders;
@@ -121,9 +139,9 @@ private:
 // ******************* OpenGL 1.3 *******************
 	bool DrawFill_MaterialStd_OpenGL13(GraphShadow&, const Faces&, MaterialStd&);
 
-	void drawBump(GraphShadow &e, const TexCoords *coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image *img);
-	void getTangentSpace(const Vertexes*, TexCoords const *mapcoord, const FaceMaterialVector *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent);
-	void genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light, v3Vector &tangentSpaceLight);
+	void drawBump(GraphShadow& e, const TexCoords* coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image* img);
+	void getTangentSpace(const Vertexes*, const TexCoords* mapcoord, const FaceMaterialVector* faceMaterials, const Normals* normal, TexCoords3f** sTangent, TexCoords3f** tTangent);
+	void genTangentSpaceLight(const TexCoords3f& sTangent, const TexCoords3f& tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light, pvector<v3>& tangentSpaceLight);
 
 	typedef TexCoords3f tangentSpaceLightBufferedArray;
 
@@ -149,7 +167,7 @@ private:
 	void SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
 	size_t StdShaderGetLightCount(GraphShadow& e, const Faces& faces, MaterialStd& material);
 	void SetupDebugShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
-	friend struct Shader;
+	friend class Shader;
 	Shader* program;
 	StringDict currentShaderVariables;
 // ******************* OpenGL all *******************
@@ -169,7 +187,7 @@ private:
 	bool isVisible(AABB box);
 	void pushPosition(GraphShadow&);
 	void popPosition(GraphShadow&);
-	bool rayTrace(Line lineSegment, bool shadowed);
+	bool rayTrace(const Line& lineSegment, bool shadowed);
 
 	bool		focused;
 	ProcessInfo info;
@@ -179,7 +197,7 @@ public:
 	OpenGL_Engine();
 
 	void processCamera();
-	bool init(Config* _conf, Input *input);
+	bool init(Config* _conf, Input* input);
 	bool process(IN const ProcessInfo&);
 	bool deinit();
 	
@@ -206,7 +224,7 @@ public:
 #ifdef LIB_SDL
 	void UseSDL();
 
-	bool CreateOpenGL_Window_SDL(Input *input);
+	bool CreateOpenGL_Window_SDL(Input* input);
 	bool FlushOpenGL_Window_SDL(); // Swap buffers
 	bool DeleteOpenGL_Window_SDL();
 	bool setCaptionOpenGL_Window_SDL(const std::string& caption);
@@ -215,7 +233,7 @@ public:
 #if STEEL_OS == OS_WIN32
 	void UseWinAPI();
 
-	bool CreateOpenGL_Window_WinAPI(Input *input);
+	bool CreateOpenGL_Window_WinAPI(Input* input);
 	bool FlushOpenGL_Window_WinAPI(); // Swap buffers
 	bool DeleteOpenGL_Window_WinAPI();
 	bool RepairOpenGL_Window_WinAPI();

@@ -18,6 +18,9 @@
 #include "../steel.h"
 #include "engine.h"
 #include "game_object.h"
+#include "../common/logger.h"
+#include "engine_types.h"
+#include "../common/utils.h"
 
 void Shadow::fill(GameObject* object)
 {

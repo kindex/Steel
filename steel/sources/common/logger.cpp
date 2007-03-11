@@ -17,6 +17,7 @@
 
 #include "logger.h"
 #include "utils.h"
+#include "timer.h"
 
 #if STEEL_OS == OS_WIN32
 #include <windows.h>

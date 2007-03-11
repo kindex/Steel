@@ -17,6 +17,7 @@
 
 #include "../steel.h"
 #include "graph_engine.h"
+#include "../engine/game_object.h"
 
 bool GraphEngine::inject(GameObject* object)
 {

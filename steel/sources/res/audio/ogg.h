@@ -17,14 +17,6 @@
 #include "../../steel.h"
 #include "audio.h"
 
-#include "ogg/ogg.h"
-#include "vorbis/codec.h"
-#include "vorbis/vorbisenc.h"
-#include "vorbis/vorbisfile.h"
-
-#pragma comment(lib, "ogg.lib")
-#pragma comment(lib, "vorbisfile.lib")
-
 class OGG : public Audio
 {
 public:

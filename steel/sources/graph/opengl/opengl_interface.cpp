@@ -14,6 +14,7 @@
 
 #include "../../steel.h"
 #include "opengl_engine.h"
+#include "../../engine/game_object.h"
 
 namespace opengl
 {
@@ -36,14 +37,14 @@ void OpenGL_Engine::addLight(Light* light)
 
 void OpenGL_Engine::removeLight(uid id)
 {
-	map<uid, LightShadow*>::iterator it = lights.find(id);
+	std::map<uid, LightShadow*>::iterator it = lights.find(id);
 	delete it->second;
 	lights.erase(it);
 }
 
 void OpenGL_Engine::updateLight(uid id, Light* light)
 {
-	map<uid, LightShadow*>::iterator it = lights.find(id);
+	std::map<uid, LightShadow*>::iterator it = lights.find(id);
 	it->second->light = light;
 	it->second->changed = true;
 }

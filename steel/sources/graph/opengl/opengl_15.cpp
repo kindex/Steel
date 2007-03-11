@@ -16,6 +16,7 @@
 #include "../../steel.h"
 #include "opengl_engine.h"
 #include "../../libs/opengl/libext.h"
+#include "../material.h"
 
 namespace opengl
 {

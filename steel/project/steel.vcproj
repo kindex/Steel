@@ -365,6 +365,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\sources\res\res_collection.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\res\res_collection.h"
+					>
+				</File>
+				<File
 					RelativePath="..\sources\res\res_main.cpp"
 					>
 				</File>
@@ -704,7 +712,27 @@
 						>
 					</File>
 					<File
+						RelativePath="..\sources\audio\openal\eax.h"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\audio\openal\efx-creative.h"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\audio\openal\EFX-Util.h"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\audio\openal\efx.h"
+						>
+					</File>
+					<File
 						RelativePath="..\sources\audio\openal\openal_types.h"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\audio\openal\xram.h"
 						>
 					</File>
 				</Filter>

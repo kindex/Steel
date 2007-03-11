@@ -15,6 +15,10 @@
 #include <audio/openal_engine.h>
 #include <res/config/config_setup.h>
 #include <objects/combiner/combiner.h>
+#include <audio/openal/eax.h>
+#include <common/logger.h>
+#include <common/utils.h>
+#include <res/res_main.h>
 
 bool GameFreeScene::init(Config& _conf, Input& _input)
 {
@@ -88,7 +92,7 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 
 
 
-void GameFreeScene::handleEventKeyDown(std::string key)
+void GameFreeScene::handleEventKeyDown(const std::string& key)
 {
 	if (key == "escape") _alive = false;
 	if (key == "pause") 
@@ -365,7 +369,7 @@ void GameFreeScene::deinit()
 }
 
 
-void GameFreeScene::handleEventKeyUp(std::string key)
+void GameFreeScene::handleEventKeyUp(const std::string& key)
 {
 }
 

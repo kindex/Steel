@@ -13,6 +13,7 @@
 ************************************************************/
 #include "emitter.h"
 #include "../../common/utils.h"
+#include "../../res/config/config.h"
 
 
 void SimpleEmitter::born(Particle &particle, int index)

@@ -21,9 +21,10 @@
 #include "../steel.h"
 #include "graph_interface.h"
 #include "../engine/interface.h"
-#include "../engine/game_object.h"
 
-class GraphEngine: public Engine, public GraphInterface
+class GameObject;
+
+class GraphEngine : public Engine, public GraphInterface
 {
 public:
 
@@ -37,8 +38,8 @@ public:
 	} total;
 
 	// Collect information about object: how to render it
-	virtual bool inject(GameObject *object);
-	virtual bool remove(GameObject *object);
+	virtual bool inject(GameObject* object);
+	virtual bool remove(GameObject* object);
 	
 	virtual bool process(IN const ProcessInfo&) abstract;
 	virtual bool setCaption(const std::string& caption) abstract;

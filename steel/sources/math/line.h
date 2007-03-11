@@ -23,15 +23,13 @@
  base - точка остчёта (нижний угол)
  b - напрявляющaя */
 
-struct Line3 // Line 3D
+struct Line // Line 3D
 {	v3	base, a;
 
-	Line3() {}
-	Line3(v3 _base, v3 _a): base(_base), a(_a) {}
+	Line() {}
+	Line(v3 _base, v3 _a): base(_base), a(_a) {}
 	v3 point(const float s) const  { return base + a*s; }
 };
-
-typedef Line3 Line;
 
 // пересечение двух линий
 bool isCross(const Line a, const Line b, float &t, float &s);

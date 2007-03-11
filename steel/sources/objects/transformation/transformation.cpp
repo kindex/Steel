@@ -15,6 +15,9 @@
 #include "rotation.h"
 #include "movement.h"
 #include "scaler.h"
+#include "../../common/logger.h"
+#include "../../common/utils.h"
+#include "../../res/config/config.h"
 
 Transformation* transformationFactory(const std::string& className)
 {

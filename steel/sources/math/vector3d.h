@@ -15,7 +15,6 @@
 #define __MATH_VECTOR3D_H
 
 #include "maths.h"
-#include "../common/pvector.h"
 
 struct v3;
 
@@ -216,8 +215,5 @@ inline void v3simple::operator/=(const float a)
 	else
 	{	x/=a; y/=a; z/=a;	}
 }
-
-typedef steel::pvector<v3> v3Vector;
-
 
 #endif	// __MATH_VECTOR3D_H

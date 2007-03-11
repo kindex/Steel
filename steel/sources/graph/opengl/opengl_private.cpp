@@ -12,11 +12,12 @@
  ************************************************************/
 
 #include "opengl_private.h"
+#include "../material.h"
 
 namespace opengl
 {
 
-const TexCoords* GraphShadow::getTexCoords(const MaterialStd::TextureStd& texture)
+const TexCoords* GraphShadow::getTexCoords(const TextureStd& texture)
 {
 	if (texture.texCoordsUnit < texCoords.size())
 	{

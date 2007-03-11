@@ -23,30 +23,30 @@
 
 #include <string>
 
-ParticleEmitter* findParticleEmitter(const string &_class)
+ParticleEmitter* findParticleEmitter(const std::string& _class)
 {
 	if(_class == "simple") return new SimpleEmitter;
 
-	error("ps", string("ParticleEmitter class '") + _class + "' not found");
+	error("ps", std::string("ParticleEmitter class '") + _class + "' not found");
 	return NULL;
 }
 
-ParticleAnimator* findParticleAnimator(const string &_class)
+ParticleAnimator* findParticleAnimator(const std::string& _class)
 {
 	if(_class == "UniPSanimator") return new UniPSanimator;
 	if(_class == "simple") return new SimpleAnimator;
 
-	error("ps", string("ParticleAnimator class '") + _class + "' not found");
+	error("ps", std::string("ParticleAnimator class '") + _class + "' not found");
 	return NULL;
 }
 
-ParticleRenderer* findParticleRenderer(const string &_class)
+ParticleRenderer* findParticleRenderer(const std::string& _class)
 {
 	if(_class == "sprite") return new SpriteRenderer;
 	if(_class == "object") return new ObjectPSRenderer;
 	if(_class == "dummy")  return new DummyPSRenderer;
 
-	error("ps", string("ParticleRenderer class '") + _class + "' not found");
+	error("ps", std::string("ParticleRenderer class '") + _class + "' not found");
 	return NULL;
 }
 

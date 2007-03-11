@@ -15,9 +15,10 @@
 #define __RES__MATERIAL_H
 
 #include "../steel.h"
-#include "../res/image/image.h"
 #include "graph_types.h"
-#include "../res/config/config.h"
+
+class Image;
+class Config;
 
 enum MaterialType
 {
@@ -80,22 +81,22 @@ struct TextureMatrix
 	float texCoordsRotation;
 };
 
+struct TextureStd
+{
+	Image* image;
+	unsigned int texCoordsUnit;
+	float k;
+
+	TextureStd(): image(NULL), texCoordsUnit(0), k(0.0) {}
+	bool InitFromConfig(Config* config);
+};
+
 
 class MaterialStd: public Material
 {
 public:
 	MaterialStd();
 	bool InitFromConfig(Config* config);
-
-	struct TextureStd
-	{
-		Image* image;
-		unsigned int texCoordsUnit;
-		float k;
-
-		TextureStd(): image(NULL), texCoordsUnit(0), k(0.0) {}
-		bool InitFromConfig(Config* config);
-	};
 
 	struct TextureEnv
 	{

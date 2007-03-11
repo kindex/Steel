@@ -24,11 +24,13 @@
 #include "../res/res.h"
 #include "../res/config/config.h"
 #include "../math/vector3d.h"
-#include "helper.h"
+#include "interface.h"
 
 #include <string>
 
 class Engine;
+class EngineHelper;
+class GameObject;
 
 struct Shadow
 {
@@ -44,8 +46,8 @@ struct Shadow
 	// список детей объекта (uid)
 	pvector<uid> children;
 
-	Shadow(Engine *aEngine): object(NULL), parent(NULL), engine(aEngine) {}
-	virtual void fill(GameObject *object);
+	Shadow(Engine* aEngine): object(NULL), parent(NULL), engine(aEngine) {}
+	virtual void fill(GameObject* object);
 	// овновляюет место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
 	// возвращает true, если была обнавлена вся информация
 	virtual ~Shadow() {}

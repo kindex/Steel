@@ -2,7 +2,7 @@
 	File: audio/audio_engine.h
 	Unit: OpenAL Engine
 	Part of: Steel Engine
-	(C) DiVision, 2004-2006
+	(C) DiVision, 2004-2007
 	Authors:
 		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 	License:
@@ -19,29 +19,8 @@
 
 #ifdef LIB_OPENAL
 
-#include <string>
-#include <iostream>
-#include <windows.h>
-#include <fstream>
-#include <map>
-
-#include "openal/al.h"
-#include "openal/alc.h"
-//#include "openal/alu.h"
-//#include "openal/alut.h"
-#include "openal/eax.h"
-
 #include "audio_engine.h"
-
 #include "openal/openal_types.h"
-
-//#include "../objects/audio_sound.h"
-
-//#pragma comment(lib, "openal32.lib")
-//#pragma comment(lib, "alut.lib")
-#pragma comment(lib, "eaxguid.lib")
-
-using namespace std;
 
 class OpenALEngine: public AudioEngine
 {
@@ -65,21 +44,20 @@ protected:
 		//Sound* sound;
 		Buffer buffer;
 		Source source;
-		AudioShadow(Engine *aEngine): Shadow(aEngine) {}
+		AudioShadow(Engine* aEngine): Shadow(aEngine) {}
 	};
+	typedef std::map<uid, AudioShadow*> AudioShadowMap;
 // AUDIO SHADOW ==============================
 
-	AudioShadow *currentShadow;
-	GameObject *currentObject;
+	AudioShadow* currentShadow;
+	GameObject* currentObject;
 
-	map<uid, AudioShadow*> shadows;
+	AudioShadowMap shadows;
 
 	// to discuss: vector<Sound*> sounds;	-- "playing" sounds
 
 public:
-	
-
-	void setListener(const Listener &aListener);
+	void setListener(const Listener& aListener);
 	bool init(Config& _conf);
 	void pause();
 	void unpause();
@@ -87,11 +65,10 @@ public:
 	bool inject(GameObject& object);
 	bool process();
 
-
-	AudioShadow* getShadowClass(GameObject *object) { return new AudioShadow(this); }
+	AudioShadow* getShadowClass(GameObject* object) { return new AudioShadow(this); }
 
 	void addChild(GameObject* child);
-	void addChild(AudioShadow &shadow, GameObject *child);
+	void addChild(AudioShadow& shadow, GameObject* child);
 
 	void deleteChild(GameObject* child){}
 	void clearChildren() {}
@@ -102,8 +79,6 @@ public:
 	{
 		return (id & INTERFACE_AUDIO) == id;
 	}
-
-	
 
 	// Configuration/Option Parameters
 	bool enabledEAX;

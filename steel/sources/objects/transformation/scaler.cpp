@@ -12,6 +12,7 @@
  ************************************************************/
 
 #include "scaler.h"
+#include "../../res/config/config.h"
 
 bool Scaler::InitFromConfig(IN Config& conf)
 {

@@ -19,14 +19,13 @@
 
 using namespace std;
 
-Config* ResCollectionConfig::addForce(std::string& name, bool pop)
+Config* ResCollectionConfig::addForce(const std::string& name, bool pop)
 {
 	std::string baseDirectory;
 	std::string newName;
 	splitPath(name, baseDirectory, newName);
-	name = newName;
 	resStack.push(baseDirectory);
-	std::string fullResName = createPath(baseDirectory, name);
+	std::string fullResName = createPath(baseDirectory, newName);
 
 	if (failedResourcesCache.find(fullResName) != failedResourcesCache.end())
 	{
@@ -39,7 +38,7 @@ Config* ResCollectionConfig::addForce(std::string& name, bool pop)
 
 	Config* obj = NULL;
 	TextFile* file = new TextFile();
-	if (!file->init(name, baseDirectory))
+	if (!file->init(newName, baseDirectory))
 	{
 		delete file;
 		file = NULL;
@@ -79,7 +78,7 @@ Config* ResCollectionConfig::addForce(std::string& name, bool pop)
 	}
 	else
 	{
-		log_msg("res error " + id, "Failed " + baseDirectory + "/" + name);
+		log_msg("res error " + id, "Failed " + baseDirectory + "/" + newName);
 		if (pop) resStack.pop();
 		failedResourcesCache.insert(fullResName);
 		return NULL;

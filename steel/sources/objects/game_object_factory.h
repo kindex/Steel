@@ -15,7 +15,9 @@
 #define __OBJECTS__GAME_OBJECT_FACTORY_H
 
 #include "../steel.h"
-#include "../engine/game_object.h"
+#include <string>
+class GameObject;
+class Config;
 
 class GameObjectFactory
 {
@@ -25,7 +27,7 @@ public:
 
 extern GameObjectFactory* gameObjectFactory;
 
-GameObject *createGameObject(Config *conf);
+GameObject* createGameObject(Config* conf);
 
 
 #endif

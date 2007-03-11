@@ -10,8 +10,10 @@
 		Звуковой движок. Тип звука. Набор параметров.
  ************************************************************/
 
-#include "../res/audio/audio.h"
 #include "../math/vector3d.h"
+#include "../engine/id_generator.h"
+
+class Audio;
 
 #ifndef __SOUND_H
 #define __SOUND_H

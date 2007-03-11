@@ -17,8 +17,10 @@
 #include "../../libs/opengl/libext.h"
 #include "../graph_engine.h"
 #include "../../common/containers.h"
-#include "opengl_glsl.h"
 #include <map>
+
+struct TextureStd;
+class MaterialStd;
 
 namespace opengl
 {
@@ -101,21 +103,21 @@ struct GraphShadow : public Shadow // множество треугольник�
 	void fill(GameObject* object);
 	void calculateEgdes();
 
-	const TexCoords* getTexCoords(const MaterialStd::TextureStd &texture);
+	const TexCoords* getTexCoords(const TextureStd& texture);
 //		bool	operator < (const DrawElement &sec) const { return distance > sec.distance; }
 };
 
 struct BlendingFaces
 {
 	BlendingFaces() {}
-	BlendingFaces(GraphShadow* shadow, Material* material, Faces* faces):
+	BlendingFaces(GraphShadow* shadow, MaterialStd* material, Faces* faces):
 		shadow(shadow),
 		material(material),
 		faces(faces)
 	{}
 
 	GraphShadow*	shadow;
-	Material*		material;
+	MaterialStd*	material;
 	Faces*			faces;
 };
 
@@ -123,7 +125,7 @@ struct BlendingTriangle
 {
 	size_t			vetexCount;
 	size_t			vertex[4];
-	Material*		material;
+	MaterialStd*	material;
 	float			distance;
 	GraphShadow*	shadow;
 

@@ -18,10 +18,9 @@
 
 #include "../../steel.h"
 #include "../../engine/game_object.h"
-#include "../../graph/graph_interface.h"
-#include "graph_object.h"
-#include "audio_object.h"
-#include "../transformation/transformation.h"
+class GraphObject;
+class AudioObject;
+class Transformation;
 
 class Combiner: public GameObject
 {

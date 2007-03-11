@@ -350,14 +350,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\data\material\no_texture.frag"
-					>
-				</File>
-				<File
-					RelativePath="..\data\material\no_texture.vert"
-					>
-				</File>
-				<File
 					RelativePath="..\data\material\shadow.frag"
 					>
 				</File>

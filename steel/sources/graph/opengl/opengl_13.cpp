@@ -19,6 +19,8 @@
 #include "../../steel.h"
 #include "opengl_engine.h"
 #include "../../libs/opengl/libext.h"
+#include "../../common/logger.h"
+#include "../material.h"
 
 namespace opengl
 {
@@ -246,8 +248,8 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
 		tangentSpaceCache[id].t = T;
 	}
 */
-	v3Vector &S = **sTangent;
-	v3Vector &T = **tTangent;
+	pvector<v3>& S = **sTangent;
+	pvector<v3>& T = **tTangent;
 	S.resize(size);
 	T.resize(size);
 
@@ -311,14 +313,14 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
     }
 };
 
-void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f &sTangent, const TexCoords3f &tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light,	v3Vector &tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f& sTangent, const TexCoords3f &tTangent, const Vertexes& vertex, const Normals& normal,	const matrix34 matrix, const v3 light,	pvector<v3>& tangentSpaceLight)
 {
 	matrix34 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();
 
 	v3 objectLightPosition = inverseModelMatrix*light;
 
-	v3Vector& tl = tangentSpaceLight;
+	pvector<v3>& tl = tangentSpaceLight;
 
     // vi4isljaem vektor napravlennij na isto4nik sveta v tangensnom prostranstve kazhdoj ver6ini
     for (unsigned int i=0; i<vertex.size(); i++)

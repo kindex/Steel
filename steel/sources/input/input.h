@@ -25,11 +25,11 @@
 #endif
 
 #include "game_input.h"
-#include "../res/res_main.h"
 
 #include <string>
 #include <map>
 
+class Config;
 
 class Input
 {

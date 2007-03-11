@@ -12,6 +12,8 @@
  ************************************************************/
 
 #include "transformation_list.h"
+#include "../../engine/engine_types.h"
+#include "../../res/config/config.h"
 
 bool TransformationList::InitFromConfig(IN Config& conf)
 {

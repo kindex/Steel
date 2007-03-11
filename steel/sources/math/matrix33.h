@@ -18,6 +18,7 @@
 #ifndef __MATRIX33_H
 #define __MATRIX33_H
 
+#include "../steel.h"
 #include "vector3d.h"
 
 struct matrix33
@@ -83,7 +84,7 @@ struct matrix33
 	void getInverse(matrix33 &operand) const;
 };
 
-v3 operator*(IN const v3& operand1, IN const matrix33& operand2);
+v3 operator*(const v3& operand1, const matrix33& operand2);
 
 
 #endif

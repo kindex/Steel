@@ -16,6 +16,8 @@
 #include "config_parser.h"
 #include "../text/text_string.h"
 #include <math.h>
+#include "../../common/logger.h"
+#include "../../common/utils.h"
 
 using namespace std;
 

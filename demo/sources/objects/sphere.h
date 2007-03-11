@@ -17,6 +17,7 @@
 #include <steel.h>
 #include <graph/graph_interface.h>
 #include <graph/graph_engine.h>
+#include <engine/game_object.h>
 
 class Sphere: public GameObject
 {

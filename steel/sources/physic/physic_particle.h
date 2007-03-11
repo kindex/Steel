@@ -15,7 +15,7 @@
 #define _PHYSIC_PARTICLE_H_
 #include "../steel.h"
 #include "physic_interface.h"
-
+#include "../engine/engine_types.h"
 
 class PhysicEngine: public Engine, public PhysicParticleInterface
 {

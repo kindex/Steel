@@ -13,6 +13,7 @@
 
 #include "kar98k.h"
 #include <res/res_main.h>
+#include <audio/sound.h>
 
 Kar98k::Kar98k()
 {

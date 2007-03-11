@@ -16,22 +16,17 @@
 
 #include "../../steel.h"
 #include "../../engine/game_object.h"
-#include "../../res/audio/audio.h"
-#include "../../audio/sound.h"
-#include "../../audio/audio_engine.h"
-
+class Sound;
+class AudioInterface;
 class AudioObject;
 
-AudioObject* audioObjectFactory(const string &_class);
+AudioObject* audioObjectFactory(const std::string& _class);
 
 class AudioObject: public GameObject
 {
 public:
 	AudioObject();
-	bool isSuportingInterface(Engine& engine)
-	{
-		return engine.isSupportingInterface(INTERFACE_AUDIO);
-	}
+	bool isSuportingInterface(Engine& engine);
 	void bindEngine(Engine&);
 	
 //protected:
@@ -41,7 +36,7 @@ public:
 	AudioInterface* engine;
 
 private:
-	vector<Sound*> sounds;	// ???						// ???
+	std::vector<Sound*> sounds;	// ???						// ???
 };
 
 #endif

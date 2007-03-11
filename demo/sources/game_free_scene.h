@@ -16,6 +16,7 @@
 
 #include "game.h"
 #include <objects/light.h>
+#include <common/timer.h>
 
 class GameFreeScene : public Game
 {
@@ -37,8 +38,8 @@ public:
 	void insonify(AudioEngine&);
 	bool isAlive() {return _alive;} 
 
-	void handleEventKeyDown(std::string key);
-	void handleEventKeyUp(std::string key);
+	void handleEventKeyDown(const std::string& key);
+	void handleEventKeyUp(const std::string& key);
 	void handleMouse(double dx, double dy);
 
 	void updatePhysicTime();

@@ -42,7 +42,7 @@ void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 AABB SpriteRenderer::getFrame()
 {
 	AABB frame;
-	for EACH(v3Vector, vertexes, it)
+	for EACH(pvector<v3>, vertexes, it)
 	{
 		frame.merge(*it);
 	}

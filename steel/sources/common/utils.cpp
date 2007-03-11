@@ -43,7 +43,7 @@ float prand()
 }
 
 // convert string to v3 (vector components are devided with ',' [X,Y,Z])
-v3	stov3(string s)
+v3 stov3(const std::string& s)
 {
 	svector<string> v;
 	explode(',', s, v);
@@ -70,7 +70,7 @@ string IntToStr(int a)
 }
 
 // split string into array of strings with delimiter
-void explode(IN const char delimiter, IN const std::string& s, OUT svector<std::string>& res)
+void explode(IN const char delimiter, const std::string& s, OUT svector<std::string>& res)
 {
 	string::size_type last, start = 0, len = s.length();
 	while(start <= len)
@@ -88,11 +88,14 @@ void explode(IN const char delimiter, IN const std::string& s, OUT svector<std::
 }
 
 // concat array of string into one string
-string implode(const char delimiter, const svector<std::string>& elements)
+std::string implode(const char delimiter, const svector<std::string>& elements)
 {
-	if(elements.empty()) return "";
+	if (elements.empty())
+	{
+		return "";
+	}
 
-	string res;
+	std::string res;
 	svector<string>::const_iterator it = elements.begin();
 	res = *it;
 	it++;
@@ -105,7 +108,7 @@ string implode(const char delimiter, const svector<std::string>& elements)
 }
 
 // вернуть диреторию, в которой находится файл (выбросить имя файла из полного пути)
-std::string getPath(std::string fullpath)
+std::string getPath(const std::string& fullpath)
 {
 	svector<std::string> path;
 	explode('/', fullpath, path);
@@ -115,7 +118,7 @@ std::string getPath(std::string fullpath)
 }
 
 // split full path to path + filename
-void splitPath(std::string fullpath, std::string& path, std::string& filename)
+void splitPath(const std::string& fullpath, OUT std::string& path, OUT std::string& filename)
 {
 	svector<std::string> apath;
 	explode('/', fullpath, apath);
@@ -124,7 +127,7 @@ void splitPath(std::string fullpath, std::string& path, std::string& filename)
 	path = implode('/', apath);
 }
 
-std::string getFileName(std::string fullpath)
+std::string getFileName(const std::string& fullpath)
 {
 	std::string path;
 	std::string filename;
@@ -142,7 +145,7 @@ std::string createPath(const std::string& dir, const std::string& filename)
 
 
 // delete file in directory
-void deleteFile(std::string dir, std::string file)
+void deleteFile(const std::string& dir, const std::string& file)
 {
 	if(file.substr(0,1) != ".")
 		#if STEEL_OS == OS_WIN32
@@ -155,7 +158,7 @@ void deleteFile(std::string dir, std::string file)
 
 
 // delete all files in directory with mask
-void deleteFiles(string dir, string mask)
+void deleteFiles(const std::string& dir, const std::string& mask)
 {
 	#if STEEL_OS == OS_WIN32
 	WIN32_FIND_DATA FindFileData;
@@ -210,24 +213,25 @@ std::string strLineEnum(const char *s, char a, char b)
 	return res;
 }
 
-string escape(string base, char escapedChar)
+string escape(const std::string& base, char escapedChar)
 {
 	string res;
-	for(string::iterator i = base.begin(); i != base.end(); i++)
+	for EACH_CONST(std::string, base, i)
 	{
-		if(*i == escapedChar) res += '\\';
-		if(*i == '\\') res += '\\';
+		if (*i == escapedChar) res += '\\';
+		if (*i == '\\') res += '\\';
 		res += *i;
 	}
 	return res;
 }
 
-std::string trim(std::string string)
+std::string trim(const std::string& string)
 {
-	int i = string.find_first_not_of(" ");
-	string.erase(0, i);
-	i = string.find_last_not_of(" ");
-	string.erase(i+1, string.npos);
+	std::string result = string;
+	int i = result.find_first_not_of(" ");
+	result.erase(0, i);
+	i = result.find_last_not_of(" ");
+	result.erase(i+1, result.npos);
 
-	return string;
+	return result;
 }

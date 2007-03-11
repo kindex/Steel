@@ -26,8 +26,8 @@ class GameInput
 {
 public:
 	// виртуальные обработчики клавиатуры и мышки
-	virtual void handleEventKeyDown(std::string key) abstract;
-	virtual void handleEventKeyUp(std::string key) abstract;
+	virtual void handleEventKeyDown(const std::string& key) abstract;
+	virtual void handleEventKeyUp(const std::string& key) abstract;
 	virtual void handleMouse(double dx, double dy) abstract;
 };
 

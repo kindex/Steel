@@ -14,12 +14,16 @@
 
 #include "audio_object.h"
 #include "audio/simple_sound.h"
+#include "../../common/logger.h"
+#include "../../common/utils.h"
+#include "../../audio/audio_interface.h"
+#include "../../engine/engine.h"
 
-AudioObject* audioObjectFactory(const string &_class)
+AudioObject* audioObjectFactory(const std::string &_class)
 {
 	if(_class == "simple") return new SimpleSound;
 
-	error("objects", string("audio class '") + _class + "' not found");
+	error("objects", std::string("audio class '") + _class + "' not found");
 	return NULL;
 }
 
@@ -64,4 +68,8 @@ void AudioObject::bindEngine(Engine& _engine)
 	// TODO: start playing all scheduled sounds in sounds array
 }
 
+bool AudioObject::isSuportingInterface(Engine& engine)
+{
+	return engine.isSupportingInterface(INTERFACE_AUDIO);
+}
 

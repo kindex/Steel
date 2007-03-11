@@ -19,10 +19,7 @@
 class SimpleSound: public AudioObject
 {
 public:
-	bool isSuportingInterface(IN OUT Engine& engine)
-	{
-		return engine.isSupportingInterface(INTERFACE_AUDIO);
-	}
+	bool isSuportingInterface(IN OUT Engine& engine);
 	bool beforeInject(IN OUT Engine&){ return true; }
 	void afterRemove(IN OUT Engine&){}
 	bool updateInformation(IN OUT Engine&){return false;}

@@ -19,6 +19,8 @@
 #include "../res.h"
 #include <string>
 #include <map>
+#include "../../common/svector.h"
+#include "../../math/vector3d.h"
 
 enum ConfigValueType
 {
@@ -102,19 +104,20 @@ protected:
 
 	virtual std::string genFullId(std::string someConfigId) const;
 	const Config* getParent() const { return parent; }
-	void setParent(Config *_parent) { parent = _parent; }
+	void setParent(Config* _parent) { parent = _parent; }
 
 	const std::string getIndent(int level) const;
 	virtual const std::string DumpPrefix(int level = 0) const;
 	virtual const std::string DumpThis(int level = 0) const abstract;
 	void setFile(std::string _file) { file = _file; }
-	const Config *getRoot() const;
-	Config *getRoot();
+	const Config* getRoot() const;
+	Config* getRoot();
 
 	bool valueIsSet;
 	ConfigValueType type;
-	std::string file, id;
-	Config *parent;
+	std::string file;
+	std::string id;
+	Config* parent;
 	svector<ConfigTemplate> templates;
 };
 

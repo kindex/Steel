@@ -18,6 +18,7 @@
 
 #include "../math/vector3d.h"
 #include "id_generator.h"
+#include "../common/types.h"
 
 
 // One triangle, indexes of vertexes
@@ -60,7 +61,7 @@ class TriangleVector : public pvector<Triangle>, public BufferedElement {};
 class QuadVector : public pvector<Quad>, public BufferedElement {};
 
 // массив вершин многогранника
-struct Vertexes: public v3Vector, public BufferedElement {};
+struct Vertexes: public pvector<v3>, public BufferedElement {};
 
 // массив треугольников многогранника
 struct Faces

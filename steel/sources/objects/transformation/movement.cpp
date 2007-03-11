@@ -13,6 +13,10 @@
 
 #include "movement.h"
 #include <cmath>
+#include "../../common/logger.h"
+#include "../../engine/engine_types.h"
+#include "../../common/utils.h"
+#include "../../res/config/config.h"
 
 bool Movement::InitFromConfig(IN Config& conf)
 {

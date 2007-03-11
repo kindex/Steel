@@ -19,6 +19,8 @@
 #include "light.h"
 #include "combiner/combiner.h"
 #include "ps/particle_system.h"
+#include "../common/logger.h"
+#include "../common/utils.h"
 
 
 GameObjectFactory* gameObjectFactory = NULL;
@@ -39,7 +41,7 @@ GameObject* createGameObject(Config* conf)
 	GameObject* obj = gameObjectFactory->createGameObject(conf->gets("class"));
 	if (obj == NULL) 
 	{
-		error("objects", string("GameObject class '") + conf->gets("class") + "' not found");
+		error("objects", std::string("GameObject class '") + conf->gets("class") + "' not found");
 		return NULL;
 	}
 

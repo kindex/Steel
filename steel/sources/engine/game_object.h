@@ -15,9 +15,12 @@
 #define GAME_OBJECT_H
 
 #include "../steel.h"
-
 #include "interface.h"
-#include "engine.h"
+#include "id_generator.h"
+
+class Engine;
+class Config;
+struct ProcessInfo;
 
 class GameObject
 {
@@ -35,9 +38,9 @@ public:
 	
 	virtual bool updateInformation(IN OUT Engine&) abstract;
 	virtual void bindEngine(IN OUT Engine&) abstract;
-	virtual void process(IN const ProcessInfo&) abstract;
+	virtual void process(const ProcessInfo&) abstract;
 
-	virtual bool InitFromConfig(IN Config&) abstract;
+	virtual bool InitFromConfig(Config&) abstract;
 
 protected:
 	uid id;

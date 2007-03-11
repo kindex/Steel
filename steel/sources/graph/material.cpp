@@ -73,7 +73,7 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 	return true; 
 }
 
-bool MaterialStd::TextureStd::InitFromConfig(Config *config)
+bool TextureStd::InitFromConfig(Config* config)
 {
 	if (config == NULL) return false;
 	string name = config->getPath("image");

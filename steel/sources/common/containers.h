@@ -39,4 +39,18 @@ void append(IN OUT svector<T>& base, IN svector<T>& tail)
 
 std::string joinMap(const StringDict& container, const std::string& glue);
 
+// find in vector, svector, pvector
+template<typename C>
+typename C::const_iterator find(const C& container, typename const C::value_type& value)
+{
+	for EACH_CONST(C, container, it)
+	{
+		if (*it == value)
+		{
+			return it;
+		}
+	}
+	return container.end();
+}
+
 #endif

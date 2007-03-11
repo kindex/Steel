@@ -15,23 +15,25 @@
 #include "wav.h"
 #include "../rstream.h"
 #include <fstream>
+#include <string>
 
-//using namespace std;
+using namespace std;
 
 bool WAV::init(const std::string& name, const std::string& dir)
 {
-
 	// check file existance
 	rstream f;
 	
-	if(!f.open(dir + "/" + name, "wav"))
+	if (!f.open(dir + "/" + name, "wav"))
+	{
 		return false;
+	}
 	
 	fileName = dir + "/" + name + ".wav";
 
-	filebuf *pbuf;
+	std::filebuf* pbuf;
 	long sizel;
-	char *buffer_;
+	char* buffer_;
 
 	pbuf = f.rdbuf();
 	// get file size using buffer's members

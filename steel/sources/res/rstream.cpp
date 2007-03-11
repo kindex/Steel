@@ -44,12 +44,12 @@ void rstream::skip(int n)
 		ok = false;
 }*/
 
-void rstream::read(void *dest, int size)
+void rstream::read(void* dest, int size)
 {
 	std::ifstream::read((char*)dest, size);
 }
 
-bool rstream::open(std::string s, std::string ext, ios_base::openmode _Mode) 
+bool rstream::open(const std::string& s, const std::string& ext, ios_base::openmode _Mode)
 { 
 	ifstream f1, f2;
 

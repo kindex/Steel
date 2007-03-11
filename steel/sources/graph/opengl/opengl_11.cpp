@@ -15,6 +15,9 @@
 #include "../../steel.h"
 #include "opengl_engine.h"
 #include "../../libs/opengl/libext.h"
+#include "../../common/logger.h"
+#include "../material.h"
+#include "../../common/utils.h"
 
 namespace opengl
 {

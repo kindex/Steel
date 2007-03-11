@@ -19,9 +19,7 @@
 #include <fstream>
 
 #include "../steel.h"
-#include "timer.h"
 #include "svector.h"
-#include "utils.h"
 
 struct GlobalErrors
 {

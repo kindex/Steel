@@ -14,6 +14,7 @@
 #ifndef MATH_SPRITE_H
 #define MATH_SPRITE_H
 
+#include "../steel.h"
 #include "vector3d.h"
 
 enum SpriteAlign

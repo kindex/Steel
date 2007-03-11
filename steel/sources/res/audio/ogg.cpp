@@ -15,8 +15,16 @@
 #include "ogg.h"
 #include "../rstream.h"
 #include <fstream>
+#include <string>
+#include "ogg/ogg.h"
+#include "vorbis/codec.h"
+#include "vorbis/vorbisenc.h"
+#include "vorbis/vorbisfile.h"
 
+#pragma comment(lib, "ogg.lib")
+#pragma comment(lib, "vorbisfile.lib")
 
+using namespace std;
 //-----------------------------------------------------------
 //    ov_callback specific functions
 //-----------------------------------------------------------
@@ -61,8 +69,10 @@ bool OGG::init(const std::string& name, const std::string& dir)
 {
 	rstream oggFile;
 	
-	if(!oggFile.open(dir + "/" + name, "ogg"))
+	if (!oggFile.open(dir + "/" + name, "ogg"))
+	{
 		return false;
+	}
 
 	data = NULL;
 	fileName = dir + "/" + name + ".ogg";
@@ -94,8 +104,6 @@ bool OGG::init(const std::string& name, const std::string& dir)
 		// This is not ogg bitstream. Return
 		return false;
 	}
-
-	
 
 	// if not streamed
 	unsigned long blockSize = ov_pcm_total(ogg, -1) * 4;

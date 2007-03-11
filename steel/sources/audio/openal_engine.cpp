@@ -18,6 +18,16 @@
 #include "openal_engine.h"
 #include "../common/logger.h"
 #include "../engine/game_object.h"
+#include "../common/containers.h"
+#include "../res/audio/audio.h"
+#include "sound.h"
+#include <windows.h>
+
+#include "openal/al.h"
+#include "openal/alc.h"
+//#include "openal/alu.h"
+//#include "openal/alut.h"
+#include "openal/eax.h"
 
 
 ALCdevice *pDevice;
@@ -30,7 +40,7 @@ EAXGet m_EAXGet;
 ALboolean OpenALEngine::CheckALCError()
 {
 	ALenum errCode;
-	string err = "ALC error: ";		
+	std::string err = "ALC error: ";		
 	if ((errCode = alcGetError(pDevice)) != ALC_NO_ERROR)
 	{
 		err += (char *)alcGetString(pDevice, errCode);
@@ -43,7 +53,7 @@ ALboolean OpenALEngine::CheckALCError()
 ALboolean OpenALEngine::CheckALError()
 {
 	ALenum errCode;
-	string err = "OpenAL error: ";
+	std::string err = "OpenAL error: ";
 	if ((errCode = alGetError()) != AL_NO_ERROR)
 	{
 		err += (char *)alGetString(errCode);
@@ -107,10 +117,10 @@ bool OpenALEngine::init(Config& _conf)
 
 	/**/
 // TESTING
-	log_msg("openal init", "Vendor: " + (string)(ALchar*)alGetString(AL_VENDOR));
-	log_msg("openal init", "Version: " + (string)(ALchar*)alGetString(AL_VERSION));
-	log_msg("openal init", "Renderer: " + (string)(ALchar*)alGetString(AL_RENDERER));
-	log_msg("openal init", "Extensions: " + (string)(ALchar*)alGetString(AL_EXTENSIONS));
+	log_msg("openal init", "Vendor: " + std::string(alGetString(AL_VENDOR)));
+	log_msg("openal init", "Version: " + std::string(alGetString(AL_VERSION)));
+	log_msg("openal init", "Renderer: " + std::string(alGetString(AL_RENDERER)));
+	log_msg("openal init", "Extensions: " + std::string(alGetString(AL_EXTENSIONS)));
 /**/
 	const ALchar *pCDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
 	if (pCDeviceList)
@@ -199,7 +209,7 @@ bool OpenALEngine::deinit()
 //	for (TBuf::iterator i = buffers.begin(); i != buffers.end(); i++)
 //		alDeleteBuffers(1, &i->second.ID);
 	
-	for (map<uid, AudioShadow*>::iterator it = shadows.begin(); it != shadows.end(); it++)
+	for EACH(AudioShadowMap, shadows, it)
 	{
 		alDeleteBuffers(1, &it->second->buffer.buffer);
 		alDeleteSources(1, &it->second->source.source);
@@ -299,7 +309,7 @@ bool OpenALEngine::soundPlay(Sound* sound)
 	}
 	*/
 
-	map<uid, AudioShadow*>::iterator it = shadows.find(sound->id);
+	AudioShadowMap::iterator it = shadows.find(sound->id);
 	if (it != shadows.end())
 	{
 		alSourceStop(it->second->source.source);
@@ -339,21 +349,21 @@ bool OpenALEngine::soundPlay(Sound* sound)
 
 bool OpenALEngine::soundStop(Sound* sound)
 {
-	map<uid, AudioShadow*>::iterator it = shadows.find(sound->id);
+	AudioShadowMap::iterator it = shadows.find(sound->id);
 	alSourceStop(it->second->source.source);
 	return true;
 }
 
 bool OpenALEngine::soundPause(Sound* sound)
 {
-	map<uid, AudioShadow*>::iterator it = shadows.find(sound->id);
+	AudioShadowMap::iterator it = shadows.find(sound->id);
 	alSourcePause(it->second->source.source);
 	return true;
 }
 
 bool OpenALEngine::soundUpdate(Sound* sound)
 {
-	map<uid, AudioShadow*>::iterator it = shadows.find(sound->id);
+	AudioShadowMap::iterator it = shadows.find(sound->id);
 	alSourcefv(it->second->source.source, AL_POSITION, sound->position);
 	alSourcei(it->second->source.source, AL_LOOPING, sound->isLoop);
 	alSourcef(it->second->source.source, AL_GAIN, sound->gain);

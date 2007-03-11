@@ -14,6 +14,8 @@
 
 #include "config_setup.h"
 #include "config_parser.h"
+#include "../../common/logger.h"
+#include "../../common/utils.h"
 
 using namespace std;
 

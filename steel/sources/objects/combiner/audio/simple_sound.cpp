@@ -12,6 +12,8 @@
  ************************************************************/
 
 #include "simple_sound.h"
+#include "../../../res/res_main.h"
+#include "../../../audio/sound.h"
 
 bool SimpleSound::InitFromConfig(Config& conf)
 {
@@ -55,3 +57,7 @@ void SimpleSound::process(IN const ProcessInfo& info)
 	}
 }
 
+bool SimpleSound::isSuportingInterface(IN OUT Engine& engine)
+{
+	return engine.isSupportingInterface(INTERFACE_AUDIO);
+}

@@ -18,11 +18,8 @@
 #include "../steel.h"
 #include "../engine/engine.h"
 #include "../engine/interface.h"
-
 #include "graph_types.h"
-#include "material.h"
-
-#include "material.h"
+class MaterialStd;
 
 // материал + треугольники, к которым он относится
 struct FaceMaterial

@@ -16,7 +16,7 @@
 
 #include "../steel.h"
 
-#include "sound.h"
+class Sound;
 
 class AudioInterface: public BaseInterface, public ChildrenInterface, public Interface3D
 {

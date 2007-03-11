@@ -14,6 +14,7 @@
 #include <steel.h>
 #include "sphere.h"
 #include <res/res_main.h>
+#include <graph/material.h>
 
 Sphere::Sphere():
 	vertexes(NULL),

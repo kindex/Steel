@@ -17,6 +17,10 @@
 #include <string>
 #include "../../libs/opengl/libext.h"
 #include "opengl_engine.h"
+#include "../../common/utils.h"
+#include "../../res/res_main.h"
+#include "opengl_glsl.h"
+#include "../material.h"
 
 namespace opengl
 {
@@ -232,13 +236,13 @@ Shader* OpenGL_Engine::loadShader(const std::string& path, const StringDict& par
 
 	if (shader->init(resText.add(path + ".vert"), resText.add(path + ".frag"), parameters))
 	{
-		shaders.insert(make_pair(key, shader));
+		shaders.insert(std::make_pair(key, shader));
 		return shader;
 	}
 	else
 	{
 		delete shader;
-		shaders.insert(make_pair(key, static_cast<Shader*>(NULL)));
+		shaders.insert(std::make_pair(key, static_cast<Shader*>(NULL)));
 		return NULL;
 	}
 }

@@ -14,6 +14,7 @@
 #include "graph_object.h"
 #include "../../graph/graph_engine.h"
 #include "../../res/res_main.h"
+#include "../../graph/material.h"
 
 using namespace std;
 

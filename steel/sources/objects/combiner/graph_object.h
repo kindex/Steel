@@ -17,8 +17,8 @@
 #include "../../steel.h"
 #include "../../engine/game_object.h"
 #include "../../graph/graph_interface.h"
-#include "../../res/model/model.h"
 
+class Model;
 class GraphObject;
 
 GraphObject* graphObjectFactory(const std::string& _class);

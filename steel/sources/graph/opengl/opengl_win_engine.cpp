@@ -22,6 +22,7 @@
 
 #include "opengl_engine.h"
 #include "../../input/input.h"
+#include "../../common/logger.h"
 #include "../../common/utils.h"
 
 

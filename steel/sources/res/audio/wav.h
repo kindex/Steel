@@ -17,7 +17,6 @@
 #include "../../steel.h"
 #include "audio.h"
 
-
 typedef struct				// WAV File-header
 {
 	unsigned char id[4];	// ALubyte

@@ -17,16 +17,17 @@
 #include "../../steel.h"
 #include "../graph_engine.h"
 #include "../../libs/opengl/libext.h"
-#include "../../res/text/text.h"
 #include "../../common/containers.h"
+class Text;
 
 namespace opengl
 {
 
 class OpenGL_Engine;
 
-struct Shader
+class Shader
 {
+public:
 	Shader(OpenGL_Engine& engine);
 	~Shader();
 
@@ -76,21 +77,6 @@ private:
 	std::map<GLint, v3> v3Cache;
 	std::map<GLint, GLint> imageCache;
 };
-
-struct ShaderKey
-{
-	ShaderKey(std::string, StringDict parameters) : id(id), parameters(parameters) {}
-
-	const	std::string	id;
-	const	StringDict	parameters;
-	bool operator < (const ShaderKey& second) const
-	{
-		return id < second.id || id == second.id && parameters < second.parameters;
-	}
-};
-
-
-typedef std::map<ShaderKey, Shader*> ShaderDict;
 
 } // namespace opengl
 
