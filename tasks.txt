@@ -26,13 +26,13 @@
 
 ** Open ********************************************************************************************
 * Steel Egine *
-368. Path Kinematic. Object movement by trajectory. / KindeX. KindeX. [1]. (1w).
-364. Quake MAP. Quake MAP (scene) loader. / *. KindeX. [3]. (3d).
-344. JPEG. JPEG file loader same as BMP loader. / KindeX. [3]. (3d).
-405. ASE. ASE scene file loader. / KindeX. [3]. (3d).
-345. PNG. PNG file loader same as BMP loader. / KindeX. [4].
-448. OpenGL: autoresize images that image size is power of 2. / KindeX. [3]. (1d).
-404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. KindeX. [5]. (1w).
+364. Quake MAP. Quake MAP (scene) loader. / *. [3]. (3d).
+344. JPEG. JPEG file loader same as BMP loader. / *. [3]. (3d).
+405. ASE. ASE scene file loader. / *. [3]. (3d).
+345. PNG. PNG file loader same as BMP loader. / *. [4].
+448. OpenGL: autoresize images that image size is power of 2. / *. [3]. (1d).
+549. Skybox. / KindeX. [4]. (2h).
+404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. [5]. (1w).
 505. AudioRes: scalable loader. / Kuzmi4. KindeX. [5]
 518. Particle system emitter. Add more parameters. / KindeX. [5]. (1d).
 522. Particle system simple animator for fire, smoke. / Def. [5].
@@ -64,6 +64,7 @@
 
 ** Construction ************************************************************************************
 * Steel Egine *
+368. Path Kinematic. Object movement by trajectory. / KindeX. [1].
 521. Document engine. / KindeX. [5]. (1w).
 503. Audio, Res: Ogg loader. / Kuzmi4.
 369. CD. Collision detection for particles. / Def, KindeX.

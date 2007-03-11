@@ -25,7 +25,7 @@ bool OpenGL_Engine::isSupportingInterface(IN const InterfaceId id)
 
 void OpenGL_Engine::addLight(Light* light)
 {
-	LightShadow *shadow = new LightShadow();
+	LightShadow* shadow = new LightShadow();
 	shadow->light = light;
 	shadow->shadow = currentShadow;
 	shadow->object = currentShadow->object;

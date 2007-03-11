@@ -106,7 +106,7 @@ Config* Config::find(const std::string &path)
 void Config::toggle(const std::string &path)
 {
 	Config *c = find(path);
-	if(c != NULL)
+	if (c != NULL)
 	{
 		if(c->getType() == CONFIG_VALUE_NUMBER)
 		{

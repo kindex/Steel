@@ -90,7 +90,11 @@ void GameLight::enable()
 {
 	if (!enabled)
 	{
-		if (engine != NULL) engine->addLight(light);
+		if (engine != NULL)
+		{
+			dynamic_cast<BaseInterface*>(engine)->setCurrentObject(this);
+			engine->addLight(light);
+		}
 		enabled = true;
 	}
 }
@@ -99,7 +103,11 @@ void GameLight::disable()
 {
 	if (enabled)
 	{
-		if (engine != NULL) engine->removeLight(light->id);
+		if (engine != NULL)
+		{
+			dynamic_cast<BaseInterface*>(engine)->setCurrentObject(this);
+			engine->removeLight(light->id);
+		}
 		enabled = false;
 	}
 }

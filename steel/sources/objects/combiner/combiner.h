@@ -34,6 +34,7 @@ public:
 	void bindEngine(IN OUT Engine&);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+	GameObject* getObject(size_t index) { return objects[index]; }
 
 protected:
 	GraphObject*    graph;
