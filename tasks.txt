@@ -26,6 +26,7 @@
 
 ** Open ********************************************************************************************
 * Steel Egine *
+550. Shadow maps (prerendered) / KindeX. [2].
 364. Quake MAP. Quake MAP (scene) loader. / *. [3]. (3d).
 344. JPEG. JPEG file loader same as BMP loader. / *. [3]. (3d).
 405. ASE. ASE scene file loader. / *. [3]. (3d).
