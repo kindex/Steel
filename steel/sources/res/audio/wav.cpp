@@ -18,7 +18,7 @@
 
 //using namespace std;
 
-bool WAV::init(const std::string name, const std::string dir)
+bool WAV::init(const std::string& name, const std::string& dir)
 {
 
 	// check file existance

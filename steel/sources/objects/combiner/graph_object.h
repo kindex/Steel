@@ -21,7 +21,7 @@
 
 class GraphObject;
 
-GraphObject* graphObjectFactory(const std::string &_class);
+GraphObject* graphObjectFactory(const std::string& _class);
 
 class GraphObject: public GameObject
 {

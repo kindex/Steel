@@ -28,7 +28,7 @@
 class OGG : public Audio
 {
 public:
-	bool init(const std::string name, const std::string dir);
+	bool init(const std::string& name, const std::string& dir);
 };
 
 #endif

@@ -18,7 +18,7 @@
 #include <string> 
 
 
-Image* createTGA(const std::string filename) 
+Image* createTGA(const std::string& filename) 
 {
 	TGA *o = new TGA;
 	if(o->init(filename)) 
@@ -33,7 +33,7 @@ Image* createTGA(const std::string filename)
 	}
 }
 
-bool TGA::init(const std::string name)
+bool TGA::init(const std::string& name)
 {  
 	rstream f;
 

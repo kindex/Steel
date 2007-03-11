@@ -36,7 +36,7 @@ struct chainProcessor
 class Model_3DS: public Model
 {
 public:
-	bool init(const std::string name, const std::string dir);
+	bool init(const std::string& name, const std::string dir);
 
 	friend int chain_model_material(Model_3DS &m, rstream &f, int size);
 	friend int chain_triangles(Model_3DS &m, rstream &f, int size);

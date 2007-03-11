@@ -22,7 +22,7 @@
 class ResCollectionConfig: public ResCollection<Config>
 {
 protected:
-	Config* addForce(std::string name, bool pop);
+	Config* addForce(std::string& name, bool pop);
 };
 
 extern ResCollectionConfig		resConfig;

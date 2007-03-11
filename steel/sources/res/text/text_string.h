@@ -21,9 +21,9 @@ class TextString: public Text
 {
 public:
 	TextString() {}
-	TextString(const std::string original);
+	TextString(const std::string& original);
 
-	void Setup(const std::string original);
+	void Setup(const std::string& original);
 };
 
 

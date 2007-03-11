@@ -50,19 +50,24 @@ public:
     void putpixeladd	(float x, float y, float r, float g, float b);
     void clear			(float r, float g, float b);
 
-	int getWidth()	{ return width; }
-	int getHeight()	{ return height; }
-	int getBpp()	{ return bpp; }
-	unsigned char* getBitmap() { return bitmap; }
+	int getWidth()	const { return width; }
+	int getHeight()	const { return height; }
+	int getBpp()	const { return bpp; }
+	const unsigned char* getBitmap() const { return bitmap; }
 
 	void convertFromHeightMapToNormalMap();
 
-	ImageDimension	getDimension() { return dimension; }
+	ImageDimension getDimension() const { return dimension; }
 	void setDimension(ImageDimension _dimension) { dimension = _dimension; }
-	ImageFormat	getFormat() { return format; }
+	ImageFormat	getFormat() const { return format; }
 	void setFormat(ImageFormat _format) { format = _format; }
 	void addAlphaChannel(const Image* alpha);
 	bool convertToRGBA();
+	void append(const Image* end);
+	void resize(size_t newWidth, size_t newHeight);
+	void rotate90();
+	void rotate180();
+	void rotate270();
 
 protected:
     unsigned char* bitmap;

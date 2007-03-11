@@ -17,7 +17,7 @@
 #include "../rstream.h"
 #include <string> 
 
-Image* createBMP(const std::string filename)
+Image* createBMP(const std::string& filename)
 {
 	BMP *o = new BMP;
 	if(o->init(filename))

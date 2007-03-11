@@ -58,7 +58,7 @@ bool ResStack::pushFullPath(std::string path)
 }
 
 
-std::string ResStack::getFullName(const std::string &name)
+std::string ResStack::getFullName(const std::string& name)
 {
 	std::string t = top();
 	return getFullPath(name, t);
@@ -81,7 +81,7 @@ int ResStack::getLevel()
 }
 
 // TODO: обрабатывать /../ и /./
-std::string getFullPath(const std::string &filename, const std::string &directory)
+std::string getFullPath(const std::string& filename, const std::string& directory)
 {
 	if((!filename.empty() && filename[0] == '/'))
 	{

@@ -230,3 +230,100 @@ void Image::addAlphaChannel(const Image* alpha)
 		}
 	}
 }
+
+void Image::append(const Image* end)
+{
+	if (end == NULL || end->getWidth() != this->width || this->bpp != end->getBpp())
+	{
+		resize(width, height + width);
+		return;
+	}
+	size_t oldHeight = height;
+	resize(width, height + end->getHeight());
+
+	memcpy(bitmap + oldHeight*width*bpp/8, end->getBitmap(),  end->getHeight()*width*bpp/8);
+}
+
+void Image::resize(size_t newWidth, size_t newHeight)
+{
+	if (newWidth == width && newHeight > height)
+	{
+		size_t newBitmapSize = newWidth*newHeight*bpp/8;
+	    unsigned char* newBitmap = new unsigned char[newBitmapSize];
+		memcpy(newBitmap, bitmap, bitmapSize);
+		delete[] bitmap;
+		bitmap = newBitmap;
+		width = newWidth;
+		height = newHeight;
+		bitmapSize = newBitmapSize;
+	}
+}
+
+void Image::rotate270()
+{
+	if (width != height)
+	{
+		return;
+	}
+	size_t m = width - 1;
+	for (size_t y = 0; y < height/2; y++)
+		for (size_t x = 0; x < width/2; x++)
+			for (size_t z = 0; z < bpp/8; z++)
+			{
+				size_t LT = (x + y*width)*bpp/8 + z;			unsigned char lt = bitmap[LT];
+				size_t LB = (y + (m-x)*width)*bpp/8 + z;		unsigned char lb = bitmap[LB];
+				size_t RB = (m - x + (m-y)*width)*bpp/8 + z;	unsigned char rb = bitmap[RB];
+				size_t RT = (m-y + x*width)*bpp/8 + z;			unsigned char rt = bitmap[RT];
+
+				bitmap[LT] = rt;
+				bitmap[LB] = lt;
+				bitmap[RB] = lb;
+				bitmap[RT] = rb;
+			}
+}
+
+void Image::rotate90()
+{
+	if (width != height)
+	{
+		return;
+	}
+	size_t m = width-1;
+	for (size_t y = 0; y < height/2; y++)
+		for (size_t x = 0; x < width/2; x++)
+			for (size_t z = 0; z < bpp/8; z++)
+			{
+				size_t LT = (x + y*width)*bpp/8 + z;			unsigned char lt = bitmap[LT];
+				size_t LB = (y + (m-x)*width)*bpp/8 + z;		unsigned char lb = bitmap[LB];
+				size_t RB = (m - x + (m-y)*width)*bpp/8 + z;	unsigned char rb = bitmap[RB];
+				size_t RT = (m-y + x*width)*bpp/8 + z;			unsigned char rt = bitmap[RT];
+
+				bitmap[LT] = lb;
+				bitmap[LB] = rb;
+				bitmap[RB] = rt;
+				bitmap[RT] = lt;
+			}
+}
+
+void Image::rotate180()
+{
+	if (width != height)
+	{
+		return;
+	}
+	size_t m = width - 1;
+	for (size_t y = 0; y < height/2; y++)
+		for (size_t x = 0; x < width/2; x++)
+			for (size_t z = 0; z < bpp/8; z++)
+			{
+				size_t LT = (x + y*width)*bpp/8 + z;			unsigned char lt = bitmap[LT];
+				size_t LB = (y + (m-x)*width)*bpp/8 + z;		unsigned char lb = bitmap[LB];
+				size_t RB = (m - x + (m-y)*width)*bpp/8 + z;	unsigned char rb = bitmap[RB];
+				size_t RT = (m-y + x*width)*bpp/8 + z;			unsigned char rt = bitmap[RT];
+
+				bitmap[LT] = rb;
+				bitmap[LB] = rt;
+				bitmap[RB] = lt;
+				bitmap[RT] = lb;
+			}
+}

@@ -14,12 +14,12 @@
 #include "../../steel.h"
 #include "text_string.h"
 
-TextString::TextString(const std::string original): Text()
+TextString::TextString(const std::string& original): Text()
 {
 	Setup(original);
 }
 
-void TextString::Setup(const std::string original)
+void TextString::Setup(const std::string& original)
 {
 	Cleanup();
 

@@ -20,10 +20,10 @@
 class ResJPEG: public Image
 {
 public:
-	bool init(const std::string name);
+	bool init(const std::string& name);
 };
 
-Image* createJPEG(const std::string filename);
+Image* createJPEG(const std::string& filename);
 
 
 #endif

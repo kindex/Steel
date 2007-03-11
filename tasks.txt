@@ -32,7 +32,6 @@
 405. ASE. ASE scene file loader. / *. [3]. (3d).
 345. PNG. PNG file loader same as BMP loader. / *. [4].
 448. OpenGL: autoresize images that image size is power of 2. / *. [3]. (1d).
-549. Skybox. / KindeX. [4]. (2h).
 404. OpenGL: mirror, reflection, refraction, good glass (p-buffer). / KindeX. [5]. (1w).
 505. AudioRes: scalable loader. / Kuzmi4. KindeX. [5]
 518. Particle system emitter. Add more parameters. / KindeX. [5]. (1d).
@@ -73,6 +72,7 @@
 
 ** Done Construction *******************************************************************************
 * Steel Egine *
+549. Skybox. / KindeX. [4].
 401. OpenGL: shadows. / KindeX.
 515. OpenGL bug: shader on ATI. / KindeX. [2].
 367. OpenGL 2.0. Shaders, dynamic lighting (many lights). / KindeX. [1]

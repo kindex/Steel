@@ -432,6 +432,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\sources\res\image\res_image.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\res\image\res_image.h"
+						>
+					</File>
+					<File
 						RelativePath="..\sources\res\image\tga.cpp"
 						>
 					</File>

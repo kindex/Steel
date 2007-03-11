@@ -17,7 +17,7 @@
 #include "../rstream.h"
 #include <string> 
 
-Image* createJPEG(const std::string filename)
+Image* createJPEG(const std::string& filename)
 {
 	ResJPEG *o = new ResJPEG;
 	if(o->init(filename))
@@ -34,7 +34,7 @@ Image* createJPEG(const std::string filename)
 
 
 
-bool ResJPEG::init(const std::string name)
+bool ResJPEG::init(const std::string& name)
 {  
 	rstream f;
 

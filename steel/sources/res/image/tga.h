@@ -21,10 +21,10 @@
 class TGA: public Image
 {
 public:
-	bool init(const std::string name);
+	bool init(const std::string& name);
 };
 
-Image* createTGA(const std::string filename);
+Image* createTGA(const std::string& filename);
 
 
 #endif

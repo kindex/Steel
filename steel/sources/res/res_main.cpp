@@ -16,6 +16,7 @@
 #include "res_main.h"
 #include "image/bmp.h"
 #include "image/tga.h"
+#include "image/res_image.h"
 #include "model/3ds.h"
 #include "config/config_collection.h"
 #include "text/text_file.h"
@@ -29,68 +30,8 @@ ResCollection<Model>	resModel;
 ResCollection<Text>		resText;
 ResCollection<Audio>	resAudio;
 
-
-// Image filename:
-// name[.cube][.normal|.height|.alpha][.bmp|.tga]
-
-Image* createBitmap(const std::string filename)
-{
-	Image *r;
-	// try to load image2d
-	if((r = createBMP(filename))!= NULL) return r;
-	if((r = createTGA(filename))!= NULL) return r;
-	return NULL;
-}
-
-Image* createImageFormat(const std::string filename)
-{
-	Image* r;
-	// try to load image2d
-	if ((r = createBitmap(filename)) != NULL)
-	{
-		Image* alpha;
-		if ((alpha = createBitmap(filename + ".alpha")) != NULL)
-		{
-			r->addAlphaChannel(alpha);
-			delete alpha;
-		}
-
-		return r;
-	}
-	if((r = createBitmap(filename + ".normal"))	!= NULL)
-	{
-		((Image*)r)->setFormat(IMAGE_RGB);
-		return r;
-	}
-	if((r = createBitmap(filename + ".height")) != NULL)
-	{
-		((Image*)r)->convertFromHeightMapToNormalMap();
-		((Image*)r)->setFormat(IMAGE_RGB);
-		return r;
-	}
-
-	return NULL;
-}
-
-
-Image* createImage(const std::string filename, const std::string base)
-{
-	Image *r;
-	// try to load image2d
-	if((r = createImageFormat(base + "/" +  filename)) != NULL) return r;
-	// try to load cubemap
-	if((r = createImageFormat(base + "/" + filename + ".cube")) != NULL)
-	{
-		((Image*)r)->setDimension(IMAGE_CUBE);
-		return r;
-	}
-	return NULL;
-}
-
-
-
 template<class T, class T2>
-T2* createClass(const std::string filename, const std::string base)
+T2* createClass(const std::string& filename, const std::string& base)
 {
 	if(filename.empty()) return false;
 

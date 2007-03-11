@@ -20,10 +20,10 @@
 class BMP: public Image
 {
 public:
-	bool init(const std::string name);
+	bool init(const std::string& name);
 };
 
-Image* createBMP(const std::string filename);
+Image* createBMP(const std::string& filename);
 
 
 #endif

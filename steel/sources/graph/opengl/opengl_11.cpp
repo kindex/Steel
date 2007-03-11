@@ -172,6 +172,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enable)
 				glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image.getWidth(), image.getHeight(),0,
 					format,  GL_UNSIGNED_BYTE , image.getBitmap());
 				break;
+
 			case IMAGE_CUBE:
 				if (GL_EXTENSION_TEXTURE_CUBE_MAP)
 				{
@@ -186,7 +187,7 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enable)
 
 					for (int i=0; i<6; i++)
 					{
-						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i,	0, 
+						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB + i, 0, 
 							GL_RGBA8, w, w, 0, format, GL_UNSIGNED_BYTE, image.getBitmap() + w*w*bpp*i);
 					}
 

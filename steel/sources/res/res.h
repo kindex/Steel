@@ -31,7 +31,7 @@
 
 
 // Собирает полное имя файла относительно директории. Если имя файла начинается с /, то имя файла считается уже полным
-std::string getFullPath(const std::string &filename, const std::string &directory);
+std::string getFullPath(const std::string& filename, const std::string& directory);
 
 // Стек текущих директорий. Используется только коллекцией ресурсов.
 class ResStack
@@ -45,7 +45,7 @@ public:
 	bool	pop();
 	int		getLevel();
 	std::string top();
-	std::string getFullName(const std::string &name);
+	std::string getFullName(const std::string& name);
 
 protected:
 	int level;
@@ -96,16 +96,16 @@ public:
 	inline T* get(const std::string& name) { return operator[](name); }  // Вернуть ресурс по полному имени
 
 	// Добавить ресурс по имени и типу, если ресурса еще нет в коллекции
-	T* add(const std::string &name, bool pop = true);
+	T* add(const std::string& name, bool pop = true);
 
 	// Удалить ресурс
-	bool remove(const std::string &name);
+	bool remove(const std::string& name);
 	bool remove(T* object);
 
 	// У процедуры add есть второй параметр типа bool. Если он равняется false, то после загрузки ресурса текущая директория не восстанавливается и надо это делать вручную с помощью вызова pop.
 	void pop() { resStack.pop(); }
 	// тип: функция для геренирования копии класса, унаследованного от Res
-	typedef T*(funcCreateResClass)(const std::string filename, const std::string baseName); 
+	typedef T*(funcCreateResClass)(const std::string& filename, const std::string& baseName); 
 	// Добавляет функцию для создания класса, котоыре умеет загружать ресурс
 	void registerResLoader(funcCreateResClass* _func)	{		classes.push_back(_func);	}
 	void setId(std::string _id) { id = _id; } // устанавливает идентификатор коллекии
@@ -121,11 +121,11 @@ protected:
 	virtual bool purge(int delIndex); // физически удаляет ресурс из коллекции
 
 	// Найти номер ресурса по полному имени
-    inline int getIndex(const std::string name);
+    inline int getIndex(const std::string& name);
 	// Проверить, существует ли ресурс с указанным полным именем
 	inline bool find(const std::string& name) {return index.find(name) != index.end(); } 
 
-	virtual T* addForce(std::string name, bool pop = true);
+	virtual T* addForce(std::string& name, bool pop = true);
 
 
 	std::string id; // строковой идентификатор коллекции (image, model)
@@ -146,7 +146,7 @@ protected:
 
 
 template<class T>
-T* ResCollection<T>::add(const std::string &name, bool pop)
+T* ResCollection<T>::add(const std::string& name, bool pop)
 {
 	if (name.empty() || name == "/") return NULL;
 
@@ -195,7 +195,7 @@ bool ResCollection<T>::remove(T* object)
 
 
 template<class T>
-bool ResCollection<T>::remove(const std::string &name)
+bool ResCollection<T>::remove(const std::string& name)
 {
 	int index = getIndex(name);
 	if (index < 0)
@@ -250,7 +250,7 @@ bool ResCollection<T>::purge(int delIndex)
 
 
 template<class T>
-T* ResCollection<T>::addForce(std::string name, bool pop)
+T* ResCollection<T>::addForce(std::string& name, bool pop)
 {
 	std::string baseDirectory;
 	splitPath(name, baseDirectory, name);
@@ -313,7 +313,7 @@ inline T* ResCollection<T>::operator[] (const std::string& name)
 }
 
 template<class T>
-inline int ResCollection<T>::getIndex(const std::string name)   
+inline int ResCollection<T>::getIndex(const std::string& name)   
 {
 	std::map<const std::string,int>::const_iterator it = index.find(name);
 	if(it != index.end())

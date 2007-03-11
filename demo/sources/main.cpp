@@ -43,13 +43,9 @@ int main(int argc, char *argv[])
 
 	deleteFiles("..\\log", "*.log");
 	_mkdir("..\\log");
-
 	logFilter.set("+opengl_info +system_info +windows_info");
-
 	steel::log.open("../steel.log");
-
 	log_msg("core", "Command Line: '" + commandLine + "'");
-	
 	CollectSystemInfo();
 
 	#if STEEL_OS == OS_WIN32

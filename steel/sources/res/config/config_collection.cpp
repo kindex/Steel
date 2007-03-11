@@ -19,7 +19,7 @@
 
 using namespace std;
 
-Config* ResCollectionConfig::addForce(std::string name, bool pop)
+Config* ResCollectionConfig::addForce(std::string& name, bool pop)
 {
 	std::string baseDirectory;
 	std::string newName;
@@ -37,23 +37,29 @@ Config* ResCollectionConfig::addForce(std::string name, bool pop)
 
 //	log_msg("res " + id, "Loading " + fullResName);
 
-	Config *obj = NULL;
-	TextFile *file = new TextFile();
-	if(!file->init(name, baseDirectory)) delete file, file = NULL;
-	if(file != NULL)
+	Config* obj = NULL;
+	TextFile* file = new TextFile();
+	if (!file->init(name, baseDirectory))
+	{
+		delete file;
+		file = NULL;
+	}
+	if (file != NULL)
 	{
 		ConfigParser* parser = new ConfigParser();
 		obj = parser->Parse(file);
-		if(obj != NULL)
+		if (obj != NULL)
 		{
 			obj->setFilePath(fullResName);
 		}
 		delete parser;
 	}
 	else
+	{
 		log_msg("res error " + id, "Not found " + fullResName);
+	}
 
-	if(obj)
+	if (obj != NULL)
 	{
 		ResStorage newResStorage;
 		newResStorage.id = obj->getId();
@@ -74,7 +80,7 @@ Config* ResCollectionConfig::addForce(std::string name, bool pop)
 	else
 	{
 		log_msg("res error " + id, "Failed " + baseDirectory + "/" + name);
-		if(pop) resStack.pop();
+		if (pop) resStack.pop();
 		failedResourcesCache.insert(fullResName);
 		return NULL;
 	}

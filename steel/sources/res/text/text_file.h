@@ -20,7 +20,7 @@
 class TextFile: public Text
 {
 public:
-	bool init(const std::string name, const std::string dir);
+	bool init(const std::string& name, const std::string dir);
 };
 
 char* readfile(std::string file);

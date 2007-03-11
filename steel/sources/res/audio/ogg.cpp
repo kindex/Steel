@@ -57,7 +57,7 @@ int CloseOgg(void *datasource)
 
 //=========================== init
 
-bool OGG::init(const std::string name, const std::string dir)
+bool OGG::init(const std::string& name, const std::string& dir)
 {
 	rstream oggFile;
 	

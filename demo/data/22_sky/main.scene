@@ -23,7 +23,8 @@ dropShadows = 0
 ambient_k = 0
 env_map =
 { 
-	image = '/image/env/tsccity'
+//	image = '/image/env/tsccity'
+	image = '/image/env/network'
 	type = 'sky'
 }
 }

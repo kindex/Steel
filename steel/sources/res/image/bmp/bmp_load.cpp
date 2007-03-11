@@ -59,7 +59,7 @@ typedef struct { // 14 bytes
     } bmpBITMAPINFO;
 
 
-bool BMP::init(const std::string name)
+bool BMP::init(const std::string& name)
 {  
 	// TODO: load through CLASS (WADfile, disk,...)
 	bmpBITMAPFILEHEADER fh; // file header

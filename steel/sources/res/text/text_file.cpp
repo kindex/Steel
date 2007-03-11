@@ -19,7 +19,7 @@
 
 using namespace std;
 
-bool TextFile::init(const std::string name, const std::string dir)
+bool TextFile::init(const std::string& name, const std::string dir)
 {
 	std::string file = dir + "/" + name;
 	this->filename = file;
