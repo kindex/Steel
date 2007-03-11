@@ -1,0 +1,55 @@
+# Main scene 
+{
+class = 'combiner'
+objects = 
+(
+
+[/sun.conf#] {	origin = (90 90 90)}
+[/sun_ambient.conf#] {	origin = (90 90 90)}
+
+{
+class = 'combiner'
+scale = (200 200 200)
+graph = 
+{
+class = 'model'
+file = 'skybox'
+material = 
+{
+class = 'std'
+blend = 0
+catchShadows = 0
+dropShadows = 0
+ambient_k = 0
+env_map =
+{ 
+	image = '/image/env/tsccity'
+	type = 'sky'
+}
+}
+}
+}
+
+{
+class = 'combiner'
+graph = 
+{
+class = 'model'
+file = 'ground'
+material = {
+class = 'std'
+catchShadows = 1
+dropShadows = 1
+diffuse_map = 
+{
+	image = '/room/ceil'
+	k = 1
+}
+
+}
+}
+}
+
+
+) // objects
+} // scene

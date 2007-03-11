@@ -172,7 +172,7 @@ bool GraphObjectModel::InitFromConfig(Config& conf)
 {
 	model = resModel.add(conf.getPath("file"));
 
-	Config *material = conf.find("material");
+	Config* material = conf.find("material");
 	if(material != NULL)
 	{
 		model->faceMaterials[0].material = createMaterial(material);
@@ -193,6 +193,8 @@ void GraphObjectModel::bindEngine(Engine& engine)
 		size_t cnt = model->getFaceMaterials()->size();
 		gengine.setTexCoordsCount(cnt);
 		for (size_t i = 0; i < cnt; i++)
+		{
 			gengine.setTexCoords(i, model->getTexCoords(i));
+		}
 	}
 }

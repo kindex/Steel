@@ -57,7 +57,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 		}
 
 		unbindTexCoords();
-
+		program->unbind();
 		glPopClientAttrib();
 	   	glPopAttrib();
 		return true;
@@ -103,6 +103,7 @@ void OpenGL_Engine::SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, 
 	shader.setUniformFloat("material.speculark", material.specular_map.k);
 	shader.setUniformFloat("material.diffusek", material.diffuse_map.k);
 	shader.setUniformFloat("material.emissionk", material.emission_map.k);
+	shader.setUniformFloat("material.ambientk", material.ambient_k);
 
 	shader.setUniformVector("camera.direction", info.camera.getDirection());
 	shader.setUniformVector("camera.position", info.camera.getPosition());
@@ -176,6 +177,7 @@ void OpenGL_Engine::SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, 
 		{
 			shader.bindTexture("env_map", material.env_map.cubeMap);
 			shader.setUniformFloat("env_k", material.env_map.k);
+			shader.setUniformInt("env_type", material.env_map.type);
 		}
 
 		glPopMatrix();

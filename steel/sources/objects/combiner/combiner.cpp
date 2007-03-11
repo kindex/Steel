@@ -29,7 +29,9 @@ Combiner::Combiner():
 bool Combiner::InitFromConfig(Config& conf)
 {
 	origin.loadIdentity();
+	origin.setScale(conf.getv3("scale", v3(1,1,1)));
 	origin.setTranslation(conf.getv3("origin"));
+
 	position.loadIdentity();
 	positionKind = conf.gets("position_kind", "local") == "local" ? POSITION_LOCAL : POSITION_GLOBAL;
 

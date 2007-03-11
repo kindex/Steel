@@ -66,6 +66,7 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f))); // TODO:
 
 	specularPower = conf->getf("specular_map.power", 16.0);
+	ambient_k = conf->getf("ambient_k", 1.0);
 	dropShadows = conf->getb("dropShadows", true);
 	catchShadows = conf->getb("catchShadows", true);
 
@@ -98,8 +99,8 @@ bool MaterialStd::TextureEnv::InitFromConfig(Config *config)
 
 	string m = config->gets("type", "mirror");
 	if (m == "custom") type = TEXTURE_REFLECT_CUSTOM;
-	if (m == "sky") type = TEXTURE_REFLECT_SKY;
-	if (m == "mirror") type = TEXTURE_REFLECT_SKY;
+	else if (m == "sky") type = TEXTURE_REFLECT_SKY;
+	else if (m == "mirror") type = TEXTURE_REFLECT_MIRROR;
 	else type = TEXTURE_REFLECT_MIRROR;
 
 	return cubeMap != NULL;

@@ -157,6 +157,7 @@ private:
 	void render();
 	void renderTransparent();
 	void renderNoShadows();
+	void renderFlares();
 	void renderCatchShadows();
 	void prepareShadowEdges();
 	void renderDebug();

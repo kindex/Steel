@@ -13,6 +13,7 @@ uniform struct
 	float specularPower;
 	float speculark;
 	float diffusek;
+	float ambientk;
 	float emissionk;
 } material;
 
@@ -46,6 +47,7 @@ uniform sampler2D diffuse_map;
 uniform sampler2D emission_map;
 uniform samplerCube env_map;
 uniform float env_k;
+uniform int env_type;
 
 varying vec3 viewDir;     // tbn
 varying	vec3 pixel_position;// global
@@ -87,19 +89,16 @@ vec3 calcLighting(in int i)
 			lights[i].quadraticAttenuation * distFromLight*distFromLight
 			);
 
-		localcolor = lights[i].ambient.rgb;
-
 		vec3 lightDirGlobal = normalize(vec3(lights[i].position) - pixel_position); // global
-		vec3 lightDir = vec3(	dot(t, lightDirGlobal),
+		vec3 lightDir = vec3(dot(t, lightDirGlobal),
 							dot(b, lightDirGlobal),
 							dot(n, lightDirGlobal));
-
 
 		lightDir = normalize(lightDir);
 		
 		intensity = max(dot(lightDir, norm), 0.0) * material.diffusek;
 		
-		localcolor = vec3(texture2D(diffuse_map, texCoord0))*max(intensity, 0.0)*lights[i].diffuse.rgb;
+		localcolor = vec3(texture2D(diffuse_map, texCoord0))*(max(intensity, 0.0)*lights[i].diffuse.rgb + lights[i].ambient.rgb*material.ambientk);
 	    
 		spec = max(dot(r, lightDir), 0.0);
 		spec = pow(spec, material.specularPower) * material.speculark;
@@ -181,7 +180,14 @@ void main (void)
 #endif
 
 #if reflecting == 1
-	color += textureCube(env_map, r).rgb * env_k;
+	if (env_type == 3)
+	{
+		color += textureCube(env_map, normalize(viewDirGlobal)).rgb * env_k;
+	}
+	else
+	{
+		color += textureCube(env_map, r).rgb * env_k;
+	}
 #endif
 
 #if blending == 0

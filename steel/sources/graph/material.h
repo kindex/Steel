@@ -67,10 +67,10 @@ enum TextureMode
 
 enum TextureEnvType
 {
-	TEXTURE_REFLECT_NONE,
-	TEXTURE_REFLECT_CUSTOM,
-	TEXTURE_REFLECT_MIRROR,
-	TEXTURE_REFLECT_SKY
+	TEXTURE_REFLECT_NONE = 0,
+	TEXTURE_REFLECT_CUSTOM = 1,
+	TEXTURE_REFLECT_MIRROR = 2,
+	TEXTURE_REFLECT_SKY = 3
 };
 
 struct TextureMatrix
@@ -109,6 +109,7 @@ public:
 
 //private:
 	float specularPower;
+	float ambient_k;
 
 	TextureMatrix textureMatrix;
 

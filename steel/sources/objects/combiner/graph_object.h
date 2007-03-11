@@ -41,7 +41,7 @@ public:
 	void process(IN const ProcessInfo&) {}
 
 protected:
-	Model *model;
+	Model* model;
 };
 
 class GraphObjectCustom: public GraphObject
@@ -55,10 +55,10 @@ public:
 	void process(IN const ProcessInfo&) {}
 
 protected:
-	Vertexes *vertexes;
-	Normals  *normals;
-	FaceMaterialVector *faces;
-	TexCoords *texCoords;
+	Vertexes* vertexes;
+	Normals*  normals;
+	FaceMaterialVector* faces;
+	TexCoords* texCoords;
 };
 
 class GraphObjectMesh: public GraphObjectCustom

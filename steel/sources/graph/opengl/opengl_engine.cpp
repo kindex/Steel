@@ -342,9 +342,13 @@ void OpenGL_Engine::render()
 	renderNoShadows();
 	program->unbind();
 	glPopAttrib();
-	
-	renderTransparent();
 
+	renderTransparent();
+	renderFlares();
+}
+
+void OpenGL_Engine::renderFlares()
+{
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 	glDisable(GL_DEPTH_TEST);
 	glDepthMask(GL_FALSE);
@@ -354,34 +358,37 @@ void OpenGL_Engine::render()
 	for EACH(LightMap, lights, lightIt)
 	{
 		Light& light = *lightIt->second->light;
-		if (rayTrace(Line(info.camera.getPosition(), lightIt->second->position - info.camera.getPosition()), false))
+		if (light.flare != NULL)
 		{
-			continue;
+			if (rayTrace(Line(info.camera.getPosition(), lightIt->second->position - info.camera.getPosition()), false))
+			{
+				continue;
+			}
+
+			v3 vertex1;
+			v3 vertex2;
+			v3 vertex3;
+			v3 vertex4;
+			v3 normal;
+			calculateSprite(info.camera,
+						lightIt->second->position,
+						light.flareSize,
+						SPRITE_ALIGN_SCREEN,
+						v3(),
+						vertex1,
+						vertex2,
+						vertex3,
+						vertex4,
+						normal);
+
+			(this->*BindTexture)(*light.flare, true);
+			glBegin(GL_QUADS);
+				glTexCoord2f(1.0, 0.0); glVertex3fv(vertex1.getfv());
+				glTexCoord2f(1.0, 1.0); glVertex3fv(vertex2.getfv());
+				glTexCoord2f(0.0, 1.0); glVertex3fv(vertex3.getfv());
+				glTexCoord2f(0.0, 0.0); glVertex3fv(vertex4.getfv());
+			glEnd();
 		}
-
-		v3 vertex1;
-		v3 vertex2;
-		v3 vertex3;
-		v3 vertex4;
-		v3 normal;
-		calculateSprite(info.camera,
-					lightIt->second->position,
-					light.flareSize,
-					SPRITE_ALIGN_SCREEN,
-					v3(),
-					vertex1,
-					vertex2,
-					vertex3,
-					vertex4,
-					normal);
-
-		(this->*BindTexture)(*light.flare, true);
-		glBegin(GL_QUADS);
-			glTexCoord2f(1.0, 0.0); glVertex3fv(vertex1.getfv());
-			glTexCoord2f(1.0, 1.0); glVertex3fv(vertex2.getfv());
-			glTexCoord2f(0.0, 1.0); glVertex3fv(vertex3.getfv());
-			glTexCoord2f(0.0, 0.0); glVertex3fv(vertex4.getfv());
-		glEnd();
 	}
 	glPopAttrib();
 }
