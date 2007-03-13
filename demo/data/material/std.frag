@@ -11,17 +11,16 @@ uniform struct
 uniform struct
 {
 	float specularPower;
-	float speculark;
-	float diffusek;
-	float ambientk;
-	float emissionk;
+	float specular_k;
+	float diffuse_k;
+	float ambient_k;
+	float emission_k;
 } material;
 
 #if lighting == 1
 #if lightcount >= 1
 	uniform struct
 	{
-		int type;
 		vec3 position;
 		float constantAttenuation;
 		float linearAttenuation;
@@ -29,25 +28,34 @@ uniform struct
 		float minDistance;
 		float maxDistance;
 		
-		vec3 ambient;
-		vec3 diffuse;
-		vec3 specular;
+		vec3 color;
+		float specular_k;
+		float diffuse_k;
 		
 		float k;
-		vec3 up;
-		vec3 direction;
 	} lights[lightcount];
 #endif
-	uniform samplerCube light_cube_map;
+
+#if targetlightcount >= 1
+	uniform struct
+	{
+		vec3 up;
+		vec3 direction;
+		samplerCube cube_map;
+	} targetLights[targetlightcount];
+#endif
+
 	uniform sampler2D specular_map;
 #endif
 
 uniform sampler2D normal_map;
 uniform sampler2D diffuse_map;
 uniform sampler2D emission_map;
-uniform samplerCube env_map;
-uniform float env_k;
-uniform int env_type;
+
+#if mirror == 1 || sky == 1
+	uniform samplerCube env_map;
+	uniform float env_k;
+#endif
 
 varying vec3 viewDir;     // tbn
 varying	vec3 pixel_position;// global
@@ -68,7 +76,7 @@ vec3 viewDirN;
 vec3 t,b,n;
 
 #if lighting == 1 && lightcount >= 1
-vec3 calcLighting(in int i)
+vec3 calcLighting(const in int i)
 {
 	float distFromLight = distance(pixel_position, vec3(lights[i].position));
 	
@@ -96,29 +104,17 @@ vec3 calcLighting(in int i)
 
 		lightDir = normalize(lightDir);
 		
-		intensity = max(dot(lightDir, norm), 0.0) * material.diffusek;
+		intensity = max(dot(lightDir, norm), 0.0)*material.diffuse_k*lights[i].diffuse_k;
 		
-		localcolor = vec3(texture2D(diffuse_map, texCoord0))*(max(intensity, 0.0)*lights[i].diffuse.rgb + lights[i].ambient.rgb*material.ambientk);
+		localcolor = vec3(texture2D(diffuse_map, texCoord0));
+		localcolor *= max(intensity, 0.0) + material.ambient_k;
 	    
 		spec = max(dot(r, lightDir), 0.0);
-		spec = pow(spec, material.specularPower) * material.speculark;
+		spec = pow(spec, material.specularPower)*material.specular_k*lights[i].specular_k;
 	    
-		localcolor += spec * vec3(texture2D(specular_map, texCoord0))*lights[i].specular.rgb;
+		localcolor += spec*vec3(texture2D(specular_map, texCoord0));
 		localcolor *= attenuation;
-		if (lights[i].type == 1) // cube map
-		{
-			vec3 lightViewDir = pixel_position - vec3(lights[i].position);
-
-			float a = dot(lightViewDir, lights[i].direction);
-			float b = dot(lightViewDir, cross(lights[i].direction, lights[i].up));
-			float c = dot(lightViewDir, lights[i].up);
-			vec3 texCoords = vec3(-b, -c, -a);
-			vec3 texColor = textureCube(light_cube_map, texCoords).rgb;
-			
-			localcolor.r *= texColor.r;
-			localcolor.g *= texColor.g;
-			localcolor.b *= texColor.b;
-		}
+		localcolor *= lights[i].color.rgb;
 	}
 
 #ifdef debug	
@@ -131,11 +127,27 @@ vec3 calcLighting(in int i)
 }
 #endif
 
+
+#if targetlightcount >= 1
+vec3 calcTargetLighting(const in int i)
+{
+	vec3 lightViewDir = pixel_position - vec3(lights[i].position);
+
+	float a = dot(lightViewDir, targetLights[i].direction);
+	float b = dot(lightViewDir, cross(targetLights[i].direction, targetLights[i].up));
+	float c = dot(lightViewDir, targetLights[i].up);
+	vec3 texCoords = vec3(-b, -c, -a);
+	vec3 texColor = textureCube(targetLights[i].cube_map, texCoords).rgb;
+
+	return texColor;
+}
+#endif
+
 void main (void)
 {
-    color = vec3(texture2D(emission_map, texCoord0))*material.emissionk; // emission
+    color = vec3(texture2D(emission_map, texCoord0))*material.emission_k; // emission
 
-#if (lighting == 1 && lightcount >= 1) || (reflecting == 1)
+#if (lighting == 1 && lightcount >= 1) || (mirror == 1)
     t = gl_NormalMatrix * texCoord7.xyz;
     n = pixel_normal.xyz;
     b = cross(n, t);
@@ -149,9 +161,16 @@ void main (void)
     r = reflect(viewDirN, norm);
 
 #if lighting == 1 && lightcount >= 1
-	color += calcLighting(0);
+	color += calcLighting(0)
+#if targetlightcount >= 1
+		*calcTargetLighting(0)
+#endif
+	;
 #if lightcount >= 2
 	color += calcLighting(1);
+#if targetlightcount >= 2
+		*calcTargetLighting(1)
+#endif
 #if lightcount >= 3
 	color += calcLighting(2);
 #if lightcount >= 4
@@ -173,23 +192,18 @@ void main (void)
 #endif // #if lightcount >= 2
 #endif // #if lighting == 1 && lightcount >= 1
 
-#endif // #if (lighting == 1 && lightcount >= 1) || (reflecting == 1)
+#endif // #if (lighting == 1 && lightcount >= 1) || (mirror == 1)
 
 #if lighting == 0
 	color += texture2D(diffuse_map, texCoord0).rgb;
 #endif
 
-#if reflecting == 1
-	if (env_type == 3)
-	{
-		color += textureCube(env_map, normalize(viewDirGlobal)).rgb * env_k;
-	}
-	else
-	{
-		color += textureCube(env_map, r).rgb * env_k;
-	}
+#if sky == 1
+	color += textureCube(env_map, normalize(viewDirGlobal)).rgb * env_k;
 #endif
-
+#if mirror == 1
+	color += textureCube(env_map, r).rgb * env_k;
+#endif
 #if blending == 0
     gl_FragColor = vec4(color, 1.0); // no blending
 #endif

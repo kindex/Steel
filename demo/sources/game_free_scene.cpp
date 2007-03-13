@@ -155,6 +155,10 @@ void GameFreeScene::handleEventKeyDown(const std::string& key)
 	{
 		static_cast<GameLight*>(static_cast<Combiner*>(world)->getObject(0))->toggleEnable();
 	}
+	if (key == "0")
+	{
+		static_cast<GameLight*>(static_cast<Combiner*>(world)->getObject(1))->toggleEnable();
+	}
 	if (key == "2")
 	{
 		static_cast<GameLight*>(

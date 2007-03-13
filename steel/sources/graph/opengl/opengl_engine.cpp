@@ -72,9 +72,22 @@ void OpenGL_Engine::collectInformationFromObjects()
 		{
 			for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
 			{
-				if (shadow.isCrossingLight(jt->second))
+				if (jt->second->light->cubeMap != NULL)
 				{
-					shadow.lights.push_back(jt->second);
+					if (shadow.isCrossingLight(jt->second))
+					{
+						shadow.lights.push_back(jt->second);
+					}
+				}
+			}
+			for(map<uid, LightShadow*>::iterator jt = lights.begin(); jt != lights.end(); jt++)
+			{
+				if (jt->second->light->cubeMap == NULL)
+				{
+					if (shadow.isCrossingLight(jt->second))
+					{
+						shadow.lights.push_back(jt->second);
+					}
 				}
 			}
 		}
@@ -146,15 +159,6 @@ void OpenGL_Engine::renderTransparent()
 		}
 	}
 // Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
-	if (flags.textures)
-	{
-		StringDict vars;
-		vars["lighting"] = IntToStr(flags.lighting);
-		vars["lightcount"] = "0";
-		vars["reflecting"] = "0";
-		vars["blending"] = "1";
-		program = bindShader(flags.shaderStd, vars);
-	}
 
 	if (flags.blending && flags.current.transparent && !blendingFaces.empty())
 	{
@@ -805,8 +809,10 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		StringDict parameters;
 		parameters["lighting"] = IntToStr(flags.lighting);
 		parameters["lightcount"] = IntToStr(flags.maxLightsInShader);
+		parameters["targetlightcount"] = "0";
 		parameters["blending"] = "0";
-		parameters["reflecting"] = "1";
+		parameters["mirror"] = "1";
+		parameters["sky"] = "0";
 		if (loadShader(flags.shaderStd, parameters))
 		{
 			flags.glsl = true;

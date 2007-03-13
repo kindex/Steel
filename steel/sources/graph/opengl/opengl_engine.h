@@ -165,7 +165,7 @@ private:
 
 	void unbindTexCoords();
 	void SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
-	size_t StdShaderGetLightCount(GraphShadow& e, const Faces& faces, MaterialStd& material);
+	void StdShaderGetLightCount(GraphShadow& e, const Faces& faces, MaterialStd& material, OUT size_t& lightCount, OUT size_t& targetLightCount);
 	void SetupDebugShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader);
 	friend class Shader;
 	Shader* program;

@@ -57,10 +57,10 @@ struct Light
 	float quadraticAttenuation;
 	float minDistance; // max distance without rolloff
 	float maxDistance;
-	v3 ambient;
-	v3 diffuse;
-	v3 specular;
+	v3 color;
 	float k;
+	float diffuse_k;
+	float specular_k;
 
 	bool castShadows;
 	float angle; // LIGHT_TARGET light cone angle

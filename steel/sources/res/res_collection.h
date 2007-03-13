@@ -127,7 +127,10 @@ protected:
 template<class T>
 T* ResCollection<T>::add(const std::string& name, bool pop)
 {
-	if (name.empty() || name == "/") return NULL;
+	if (name.empty() || name == "/")
+	{
+		return NULL;
+	}
 
 	std::string name2 = resStack.getFullName(name);
 	int index = getIndex(name2);

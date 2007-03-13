@@ -27,13 +27,14 @@ bool GameLight::InitFromConfig(Config& conf)
 	light->linearAttenuation = conf.getf("linearAttenuation", 1.0f);
 	light->quadraticAttenuation = conf.getf("quadraticAttenuation", 0.0f);
 
-	light->ambient = conf.getv3("ambient", v3(0.0f, 0.0f, 0.0f));
-	light->diffuse = conf.getv3("diffuse", v3(1.0f, 1.0f, 1.0f));
-	light->specular = conf.getv3("specular", v3(1.0f, 1.0f, 1.0f));
+	light->color = conf.getv3("color", v3(1.0f, 1.0f, 1.0f));
 
 	light->minDistance = conf.getf("minDistance", 1.0f);
 	light->maxDistance = conf.getf("maxDistance", 10.0f);
 	light->k = conf.getf("k", 1.0f);
+	light->diffuse_k = conf.getf("diffuse_k", 1.0f);
+	light->specular_k = conf.getf("specular)k", 1.0f);
+
 	light->up = conf.getv3("up", v3(0.0f, 0.0f, 1.0f));
 	light->direction = conf.getv3("direction", v3(1.0f, 0.0f, 0.0f));
 

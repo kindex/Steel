@@ -41,6 +41,7 @@ material = {
 class = 'std'
 catchShadows = 1
 dropShadows = 1
+ambient_k = 0.4
 diffuse_map = 
 {
 	image = '/room/ceil'

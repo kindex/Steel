@@ -1,7 +1,7 @@
 #
 {
 class = 'light'
-k = 1
+k = 0.1
 linearAttenuation = 0.07
 maxDistance = 100
 }
