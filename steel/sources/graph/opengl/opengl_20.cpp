@@ -152,7 +152,7 @@ void OpenGL_Engine::SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, 
 			if (light.cubeMap != NULL)
 			{
 				std::string lighti = std::string("targetLights[") + IntToStr(lightIndex) + "].";
-				shader.bindTexture(lighti + "cube_map", light.cubeMap);
+				shader.bindTexture(/*lighti + */ "cube_map", light.cubeMap);
 				shader.setUniformVector(lighti + "up", light.up);
 				shader.setUniformVector(lighti + "direction", light.direction);
 			}

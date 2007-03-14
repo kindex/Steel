@@ -106,7 +106,7 @@ bool OGG::init(const std::string& name, const std::string& dir)
 	}
 
 	// if not streamed
-	unsigned long blockSize = ov_pcm_total(ogg, -1) * 4;
+	unsigned long blockSize = (unsigned long) ov_pcm_total(ogg, -1) * 4;
 
 	comment = ov_comment(ogg, -1);
 	info = ov_info(ogg, -1);
@@ -116,7 +116,7 @@ bool OGG::init(const std::string& name, const std::string& dir)
 	frequency = info->rate;
 	
 
-	long totalRet = 0, ret;
+	unsigned long totalRet = 0, ret;
 	int currentSection;
 	char* PCM = new char[blockSize];
 	while (totalRet < blockSize)

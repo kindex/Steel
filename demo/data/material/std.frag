@@ -41,8 +41,8 @@ uniform struct
 	{
 		vec3 up;
 		vec3 direction;
-		samplerCube cube_map;
 	} targetLights[targetlightcount];
+	uniform samplerCube cube_map;
 #endif
 
 	uniform sampler2D specular_map;
@@ -137,7 +137,7 @@ vec3 calcTargetLighting(const in int i)
 	float b = dot(lightViewDir, cross(targetLights[i].direction, targetLights[i].up));
 	float c = dot(lightViewDir, targetLights[i].up);
 	vec3 texCoords = vec3(-b, -c, -a);
-	vec3 texColor = textureCube(targetLights[i].cube_map, texCoords).rgb;
+	vec3 texColor = textureCube(cube_map, texCoords).rgb; // TODO: cube map
 
 	return texColor;
 }
@@ -162,15 +162,15 @@ void main (void)
 
 #if lighting == 1 && lightcount >= 1
 	color += calcLighting(0)
-#if targetlightcount >= 1
-		*calcTargetLighting(0)
-#endif
+	#if targetlightcount >= 1
+			*calcTargetLighting(0)
+	#endif
 	;
 #if lightcount >= 2
 	color += calcLighting(1);
-#if targetlightcount >= 2
-		*calcTargetLighting(1)
-#endif
+	#if targetlightcount >= 2
+			*calcTargetLighting(1)
+	#endif
 #if lightcount >= 3
 	color += calcLighting(2);
 #if lightcount >= 4
