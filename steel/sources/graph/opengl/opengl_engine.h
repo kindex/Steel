@@ -187,7 +187,7 @@ private:
 	bool isVisible(AABB box);
 	void pushPosition(GraphShadow&);
 	void popPosition(GraphShadow&);
-	bool rayTrace(const Line& lineSegment, bool shadowed);
+	size_t rayTrace(const Line& lineSegment, bool shadowed);
 
 	bool		focused;
 	ProcessInfo info;

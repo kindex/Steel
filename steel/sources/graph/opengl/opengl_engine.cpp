@@ -362,7 +362,7 @@ void OpenGL_Engine::renderFlares()
 		Light& light = *lightIt->second->light;
 		if (light.flare != NULL)
 		{
-			if (rayTrace(Line(info.camera.getPosition(), lightIt->second->position - info.camera.getPosition()), false))
+			if (rayTrace(Line(info.camera.getPosition(), lightIt->second->position - info.camera.getPosition()), false) > 0)
 			{
 				continue;
 			}
@@ -400,7 +400,7 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 	
 	Line lineSegment(info.camera.getPosition(), light.position - info.camera.getPosition());
-	bool inShadowVolume = rayTrace(lineSegment, true);
+	size_t inShadowVolume = rayTrace(lineSegment, true);
 
 	float maxDistance = light.light->maxDistance;
 
@@ -422,12 +422,12 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 	{
 		if (step == 0)
 		{
-			glFrontFace(inShadowVolume ? GL_CW : GL_CCW);
+			glFrontFace(inShadowVolume > 0 ? GL_CW : GL_CCW);
 			glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
 		}
 		else
 		{
-			glFrontFace(inShadowVolume ? GL_CCW : GL_CW);
+			glFrontFace(inShadowVolume > 0 ? GL_CCW : GL_CW);
 			glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
 		}
 
@@ -544,7 +544,7 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 
 	glFrontFace(GL_CCW);
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-	glStencilFunc(GL_EQUAL, inShadowVolume ? 1 : 0, 0xffffffff);
+	glStencilFunc(GL_EQUAL, inShadowVolume > 0? inShadowVolume : 0, 0xffffffff);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ONE);
@@ -1074,8 +1074,9 @@ void OpenGL_Engine::setupVariables()
 	flags.shaderNoTexture = "material/" + conf->gets("no_texture_shader", "no_texture");
 }
 
-bool OpenGL_Engine::rayTrace(const Line& lineSegment, bool shadowed)
+size_t OpenGL_Engine::rayTrace(const Line& lineSegment, bool shadowed)
 {
+	size_t result = 0;
 	for EACH(ShadowPVector, shadows, it)
 	{
 		GraphShadow& e = *GS(*it);
@@ -1091,13 +1092,17 @@ bool OpenGL_Engine::rayTrace(const Line& lineSegment, bool shadowed)
 						triangle.base = e.position * e.vertexes->at(it->a[0]);
 						triangle.a = e.position * e.vertexes->at(it->a[1]) - triangle.base;
 						triangle.b = e.position * e.vertexes->at(it->a[2]) - triangle.base;
+						if ((triangle.a.crossProduct(triangle.b)).dotProduct(lineSegment.a)<0)
+						{
+							continue;
+						}
 	
 						float k;
 						if (isCrossTrgLine(triangle, lineSegment, k))
 						{
 							if (k > 0.0 && k < 1.0)
 							{
-								return true;
+								result++;
 							}
 						}
 					}
@@ -1105,7 +1110,7 @@ bool OpenGL_Engine::rayTrace(const Line& lineSegment, bool shadowed)
 			}
 		}
 	}
-	return false;
+	return result;
 }
 
 
