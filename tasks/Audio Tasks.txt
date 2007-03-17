@@ -22,3 +22,15 @@ KindeX
 
 Я хочу сделать следующим образом. Для проигрывания звука задействуются два буфера. Один играется, другой ждет. 
 Потом наоборот. Вот пока ждет - его надо обновлять "следующей порцией".
+
+
+Tasks for Audio Processing
+
+1. Streaming
+2. Resampling
+	. dynamic load
+	. dynamic unload
+3. Overload method play(Sound*) with play(vector<Sound*>) for queue plaing
+4. self test for audio
+	. automatic
+	. manual
