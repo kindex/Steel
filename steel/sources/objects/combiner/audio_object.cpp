@@ -39,7 +39,7 @@ bool AudioObject::soundPlay(Sound* sound)
 	{
 		engine->soundPlay(sound);
 	}
-
+	
 	return true;
 }
 
@@ -58,6 +58,16 @@ bool AudioObject::soundPause(Sound* sound)
 	if (engine != NULL)
 	{
 		engine->soundPause(sound);
+	}
+	return true;
+}
+
+
+bool AudioObject::soundUpdate(Sound* sound)
+{
+	if (engine != NULL)
+	{
+		engine->soundUpdate(sound);
 	}
 	return true;
 }

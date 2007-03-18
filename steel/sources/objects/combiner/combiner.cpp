@@ -191,6 +191,7 @@ void Combiner::process(IN const ProcessInfo& info)
 	}
 	if (audio != NULL)
 	{
+		audio->setPosition((position*origin).getTranslation());
 		audio->process(info);
 	}
 	for EACH(pvector<GameObject*>, objects, it)

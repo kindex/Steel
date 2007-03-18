@@ -26,6 +26,8 @@ KindeX
 
 Tasks for Audio Processing
 
+
+0. Bing a sound to the object. The object is moving -> the sound is moving with the object.
 1. Streaming
 2. Resampling
 	. dynamic load

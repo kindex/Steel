@@ -42,18 +42,23 @@ void SimpleSound::bindEngine(Engine& aEngine)
 		AudioObject::bindEngine(aEngine);
 		if (delay <= 0.0 && !started)
 		{
-			soundPlay(originalSound);
-			started = true;
+			//soundPlay(originalSound);
+			//started = true;
 		}
 	}
 }
 
 void SimpleSound::process(IN const ProcessInfo& info)
 {
+	originalSound->position = position;
 	if (!started && info.timeInfo.currentTime > delay)
 	{
 		soundPlay(originalSound);
 		started = true;
+	}
+	if (started)
+	{
+		soundUpdate(originalSound);
 	}
 }
 

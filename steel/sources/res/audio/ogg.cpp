@@ -143,7 +143,7 @@ bool OGG::init(const std::string& name, const std::string& dir)
 		//CheckALError();
 	}
 //	delete [] PCM;
-	return (ret > 0);
+	return (ret >= 0);	// fatal bug maybe... -> there was (ret > 0)
 
 
 	//return true;

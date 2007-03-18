@@ -284,8 +284,9 @@ bool OpenALEngine::process()
 {
 	// iterator po vsem objectam - kto 4to ho4et
 //	for (int i = 0; i < objects.size(); i++)
+	//for (AudioShadowMap::iterator it = shadows.begin(); it != shadows.end(); it++)
 	{
-
+		//it->second->
 	}
 	return true;
 }
@@ -312,6 +313,7 @@ bool OpenALEngine::soundPlay(Sound* sound)
 	AudioShadowMap::iterator it = shadows.find(sound->id);
 	if (it != shadows.end())
 	{
+		soundUpdate(sound);
 		alSourceStop(it->second->source.source);
 		alSourcePlay(it->second->source.source);
 	}

@@ -29,12 +29,15 @@ public:
 	bool isSuportingInterface(Engine& engine);
 	void bindEngine(Engine&);
 	
+	void setPosition(v3 newPosition) { position = newPosition; }
 //protected:
-	bool soundPlay(Sound* sound);
-	bool soundStop(Sound* sound);
-	bool soundPause(Sound* sound);
+	bool soundPlay(Sound*);
+	bool soundStop(Sound*);
+	bool soundPause(Sound*);
+	bool soundUpdate(Sound*);
 	AudioInterface* engine;
 
+	v3 position;
 private:
 	std::vector<Sound*> sounds;	// ???						// ???
 };

@@ -27,10 +27,14 @@ public:
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
 
+	//v3 getPosition() { return position; }
+	//void setPosition(v3 newPosition) { position = newPosition; }
 private:
 	Sound*	originalSound;		// must be vector		// ???
 	float	delay;
 	bool	started;
+
+	//v3 position;
 };
 
 #endif
