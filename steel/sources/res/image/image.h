@@ -36,10 +36,10 @@ enum ImageFormat
 class Image: public Res
 {
 public:
-	Image(): Res() { bpp = 0; width = 0; height = 0; bitmap = NULL; bitmapSize = 0; dimension = IMAGE_DIMENSION_NONE; format = IMAGE_FORMAT_NONE; }
-    ~Image() { unload(); }
+	Image();
+    ~Image();
 
-    bool unload();
+    void unload();
     bool createImage(int WIDTH, int HEIGHT, int BPP);
 
     void flipV(); // perevernut' Vertikalno |

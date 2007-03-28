@@ -91,12 +91,14 @@ bool BMP::init(const std::string& name)
 	f.read((char*)&ih.biWidth, siz);
 
 	if (ih.biSizeImage == 0)
-		ih.biSizeImage = ih.biHeight * ih.biWidth * (ih.biBitCount /8);
+	{
+		ih.biSizeImage = ih.biHeight * ih.biWidth * (ih.biBitCount/8);
+	}
 
 	unsigned int bpl  = ih.biWidth*(ih.biBitCount/8); // Bypes per line
 ///unsigned int rbpl = ih.biSizeImage / ih.biHeight; // real bpl
 
-int r;
+	int r;
 
 //    image.init(ih.biWidth, ih.biHeight, 24);
 	switch (ih.biBitCount)
@@ -104,7 +106,10 @@ int r;
 	case 24:
   //   fseek(file,fh.bfOffbits, SEEK_SET );
 		bitmapSize = ih.biSizeImage;
-		if(!createImage(ih.biWidth, ih.biHeight, ih.biBitCount)) return false;
+		if (!createImage(ih.biWidth, ih.biHeight, ih.biBitCount))
+		{
+			return false;
+		}
 
 /*     for (unsigned int i=0; i<ih.biHeight; i++)
      {

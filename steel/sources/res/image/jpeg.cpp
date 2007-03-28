@@ -20,7 +20,7 @@
 Image* createJPEG(const std::string& filename)
 {
 	ResJPEG *o = new ResJPEG;
-	if(o->init(filename))
+	if (o->init(filename))
 	{
 		o->setId(objectIdGenerator.genUid());
 		return o;

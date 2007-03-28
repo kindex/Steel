@@ -19,8 +19,8 @@
 
 Image* createBMP(const std::string& filename)
 {
-	BMP *o = new BMP;
-	if(o->init(filename))
+	BMP* o = new BMP;
+	if (o->init(filename))
 	{
 		o->setId(objectIdGenerator.genUid());
 		return o;

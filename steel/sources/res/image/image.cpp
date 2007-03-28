@@ -175,15 +175,11 @@ void Image::convertFromHeightMapToNormalMap()
 	format = IMAGE_RGB;
 }
 
-bool Image::unload()
+void Image::unload()
 {
-	if (bitmap != NULL)
-	{
-		delete[] bitmap;
-	}
+	delete[] bitmap;
 	bitmap = NULL;
-	bpp = 0; width = 0; height = 0; bitmapSize = 0;
-	return true;
+	bpp = width = height = bitmapSize = 0;
  }
 
 bool Image::convertToRGBA()
@@ -261,7 +257,7 @@ void Image::resize(size_t newWidth, size_t newHeight)
 
 void Image::rotate270()
 {
-	if (width != height)
+	if (width != height || bitmap == NULL)
 	{
 		return;
 	}
@@ -284,7 +280,7 @@ void Image::rotate270()
 
 void Image::rotate90()
 {
-	if (width != height)
+	if (width != height || bitmap == NULL)
 	{
 		return;
 	}
@@ -307,7 +303,7 @@ void Image::rotate90()
 
 void Image::rotate180()
 {
-	if (width != height)
+	if (width != height || bitmap == NULL)
 	{
 		return;
 	}
@@ -326,4 +322,20 @@ void Image::rotate180()
 				bitmap[RB] = lt;
 				bitmap[RT] = lb;
 			}
+}
+
+Image::Image(): 
+	Res(),
+	bpp(0),
+	width(0),
+	height(0),
+	bitmap(NULL),
+	bitmapSize(0),
+	dimension(IMAGE_DIMENSION_NONE),
+	format(IMAGE_FORMAT_NONE) 
+{}
+
+Image::~Image()
+{
+	unload(); 
 }
