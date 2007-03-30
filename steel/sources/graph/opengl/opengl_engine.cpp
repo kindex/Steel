@@ -42,7 +42,7 @@ void OpenGL_Engine::collectInformationFromObjects()
 
 	for(int i=0; i < size; i++)
 	{
-		prepare(*getShadow(objects[i])); /* Update vertexes, faces, ights */
+		prepare(*getShadow(objects[i])); /* Update vertexes, faces, lights */
 	}
 	// update position
 	

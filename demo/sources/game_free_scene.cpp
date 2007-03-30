@@ -254,7 +254,7 @@ void GameFreeScene::process()
 	{
 		infoTimer.nextlap();
 		graphEngine->setCaption(
-			std::string("Sleel engine")
+			std::string("Steel engine")
 			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
 			+ " Faces: " + IntToStr(graphEngine->total.triangleCount)
 			+ " Lights: " + IntToStr(graphEngine->total.lightCount)

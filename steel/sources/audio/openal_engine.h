@@ -24,6 +24,7 @@
 
 class OpenALEngine: public AudioEngine
 {
+
 protected:
 //#define A(object) ((AudioObject*)(object))
 //#define AS(object) ((AudioSound*)(object))
@@ -34,9 +35,11 @@ protected:
 	bool soundUpdate(Sound* sound);
 
 	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???
+	void updateListener(Listener& listener);
+
 	ALboolean CheckALCError();
 	ALboolean CheckALError();
-	void updateListener(Listener& listener);
+
 
 // AUDIO SHADOW ==============================
 	struct AudioShadow: public Shadow
@@ -56,7 +59,8 @@ protected:
 
 	// to discuss: vector<Sound*> sounds;	-- "playing" sounds
 
-public:
+
+	public:
 	void setListener(const Listener& aListener);
 	bool init(Config& _conf);
 	void pause();
@@ -87,6 +91,7 @@ public:
 
 //	Storage* getStorageClass(GameObject *object) { return new Storage(this); }
 //	void makeStorageForChildren(GameObject *object) {};
+
 };
 
 #endif
