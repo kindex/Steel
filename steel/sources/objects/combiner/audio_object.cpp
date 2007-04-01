@@ -34,7 +34,7 @@ AudioObject::AudioObject():
 
 bool AudioObject::soundPlay(Sound* sound)
 {
-	sounds.push_back(sound);
+//	sounds.push_back(sound);
 	if (engine != NULL)
 	{
 		engine->soundPlay(sound);

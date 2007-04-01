@@ -65,19 +65,12 @@ public:
 	
 	//============================
 
-	Listener listener;
-//	std::vector<AudioConfig> config;		// audio configs
+	
 
 protected:
+	Listener listener;
 	float masterVolume;
 	bool enabled;
-
-	//AudioObjectList sources;
-
-
-	// the same as Kindex
-
-	//steel::vector<AudioObject*> objects;
 
 };
 

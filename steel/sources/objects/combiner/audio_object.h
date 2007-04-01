@@ -16,11 +16,15 @@
 
 #include "../../steel.h"
 #include "../../engine/game_object.h"
+#include <map>
+
 class Sound;
 class AudioInterface;
 class AudioObject;
 
 AudioObject* audioObjectFactory(const std::string& _class);
+
+typedef std::map<std::string, Sound*> AudioMap;
 
 class AudioObject: public GameObject
 {
@@ -39,7 +43,9 @@ public:
 
 	v3 position;
 private:
-	std::vector<Sound*> sounds;	// ???						// ???
+	//std::vector<Sound*> sounds;	// ???						// ???
+	AudioMap audio;
+	//typedef std::map<uid, AudioShadow*> AudioShadowMap;
 };
 
 #endif

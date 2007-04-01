@@ -22,24 +22,6 @@
 #include "audio_engine.h"
 #include "openal/openal_types.h"
 
-class OpenALEngine: public AudioEngine
-{
-
-protected:
-//#define A(object) ((AudioObject*)(object))
-//#define AS(object) ((AudioSound*)(object))
-
-	bool soundPlay(Sound* sound);
-	bool soundStop(Sound* sound);
-	bool soundPause(Sound* sound);
-	bool soundUpdate(Sound* sound);
-
-	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???
-	void updateListener(Listener& listener);
-
-	ALboolean CheckALCError();
-	ALboolean CheckALError();
-
 
 // AUDIO SHADOW ==============================
 	struct AudioShadow: public Shadow
@@ -52,15 +34,10 @@ protected:
 	typedef std::map<uid, AudioShadow*> AudioShadowMap;
 // AUDIO SHADOW ==============================
 
-	AudioShadow* currentShadow;
-	GameObject* currentObject;
 
-	AudioShadowMap shadows;
-
-	// to discuss: vector<Sound*> sounds;	-- "playing" sounds
-
-
-	public:
+class OpenALEngine: public AudioEngine
+{
+public:
 	void setListener(const Listener& aListener);
 	bool init(Config& _conf);
 	void pause();
@@ -91,6 +68,33 @@ protected:
 
 //	Storage* getStorageClass(GameObject *object) { return new Storage(this); }
 //	void makeStorageForChildren(GameObject *object) {};
+
+
+protected:
+//#define A(object) ((AudioObject*)(object))
+//#define AS(object) ((AudioSound*)(object))
+
+	bool soundPlay(Sound* sound);
+	bool soundStop(Sound* sound);
+	bool soundPause(Sound* sound);
+	bool soundUpdate(Sound* sound);
+
+	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???
+	void updateListener(Listener& listener);
+
+	ALboolean CheckALCError();
+	ALboolean CheckALError();
+
+
+
+	AudioShadow* currentShadow;
+	GameObject* currentObject;
+
+	AudioShadowMap shadows;
+
+	// to discuss: vector<Sound*> sounds;	-- "playing" sounds
+
+
 
 };
 
