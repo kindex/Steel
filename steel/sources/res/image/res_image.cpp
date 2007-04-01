@@ -86,11 +86,13 @@ Image* createImage(const std::string& filename, const std::string& base)
 	if ((r = createImageFormat(file + ".forward")) != NULL)
 	{
 		r->rotate90();
-		Image* r2 = createImageFormat(file + ".back");	r2->rotate270(); r->append(r2); delete r2;
-		Image* r3 = createImageFormat(file + ".left");	r->append(r3); delete r3;
-		Image* r4 = createImageFormat(file + ".right");	r2->rotate180(); r->append(r4); delete r4;
-		Image* r5 = createImageFormat(file + ".up");	r5->rotate90(); r->append(r5); delete r5;
-		Image* r6 = createImageFormat(file + ".down");	r6->rotate90(); r->append(r6); delete r6;
+		Image* r2;
+		r2 = createImageFormat(file + ".back");	if (r2 != NULL) r2->rotate270();	r->append(r2); delete r2;
+		r2 = createImageFormat(file + ".left");										r->append(r2); delete r2;
+		r2 = createImageFormat(file + ".right");if (r2 != NULL) r2->rotate180();	r->append(r2); delete r2;
+		r2 = createImageFormat(file + ".up");	if (r2 != NULL) r2->rotate90();		r->append(r2); delete r2;
+		r2 = createImageFormat(file + ".down");	if (r2 != NULL) r2->rotate90();		r->append(r2); delete r2;
+
 		r->setDimension(IMAGE_CUBE);
 		return r;
 	}
