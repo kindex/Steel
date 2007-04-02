@@ -47,7 +47,7 @@ private:
 class AudioEngine : public Engine, public AudioInterface
 {
 public:
-	AudioEngine() :  masterVolume(1.0f) {}
+	AudioEngine() :  masterVolume(1.0f), paused(false) {}
 
 	virtual bool init(Config& _conf) abstract;
 	virtual bool clear() { return true; } 
@@ -71,7 +71,7 @@ protected:
 	Listener listener;
 	float masterVolume;
 	bool enabled;
-
+	bool paused;
 };
 
 

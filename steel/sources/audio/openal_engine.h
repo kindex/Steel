@@ -77,6 +77,7 @@ protected:
 	bool soundPlay(Sound* sound);
 	bool soundStop(Sound* sound);
 	bool soundPause(Sound* sound);
+	bool soundUnPause(Sound* sound);
 	bool soundUpdate(Sound* sound);
 
 	void setListenerEnvironment(unsigned long environment);		// extracted from protected ???

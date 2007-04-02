@@ -363,6 +363,13 @@ bool OpenALEngine::soundPause(Sound* sound)
 	return true;
 }
 
+bool OpenALEngine::soundUnPause(Sound* sound)
+{
+	AudioShadowMap::iterator it = shadows.find(sound->id);
+	alSourcePlay(it->second->source.source);
+	return true;
+}
+
 bool OpenALEngine::soundUpdate(Sound* sound)
 {
 	AudioShadowMap::iterator it = shadows.find(sound->id);
@@ -418,14 +425,24 @@ bool OpenALEngine::setCurrentObject(GameObject* object)
 	return false;
 }
 
-void OpenALEngine::pause()
+void OpenALEngine::pause() // engine pause
 {
-	// TODO:
+	paused = true;
+
+	for (AudioShadowMap::iterator it = shadows.begin(); it != shadows.end(); it++)
+	{
+			alSourcePause(it->second->source.source);
+	}
 }
 
-void OpenALEngine::unpause()
+void OpenALEngine::unpause() // engine unpause
 {
-	// TODO:
+	paused = false;
+
+	for (AudioShadowMap::iterator it = shadows.begin(); it != shadows.end(); it++)
+	{
+			alSourcePlay(it->second->source.source);
+	}
 }
 
 #endif
