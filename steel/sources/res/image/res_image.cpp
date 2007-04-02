@@ -82,16 +82,16 @@ Image* createImage(const std::string& filename, const std::string& base)
 		return r;
 	}
 	
-	// try to load cubemap (6 images in one file)
+	// try to load cubemap (six images in six files)
 	if ((r = createImageFormat(file + ".forward")) != NULL)
 	{
 		r->rotate90();
 		Image* r2;
-		r2 = createImageFormat(file + ".back");	if (r2 != NULL) r2->rotate270();	r->append(r2); delete r2;
-		r2 = createImageFormat(file + ".left");										r->append(r2); delete r2;
-		r2 = createImageFormat(file + ".right");if (r2 != NULL) r2->rotate180();	r->append(r2); delete r2;
-		r2 = createImageFormat(file + ".up");	if (r2 != NULL) r2->rotate90();		r->append(r2); delete r2;
-		r2 = createImageFormat(file + ".down");	if (r2 != NULL) r2->rotate90();		r->append(r2); delete r2;
+		r2 = createImageFormat(file + ".back");	if (r2 != NULL) { r2->rotate270();	r->append(r2); delete r2; }
+		r2 = createImageFormat(file + ".left");	if (r2 != NULL) {					r->append(r2); delete r2; }
+		r2 = createImageFormat(file + ".right");if (r2 != NULL) { r2->rotate180();	r->append(r2); delete r2; }
+		r2 = createImageFormat(file + ".up");	if (r2 != NULL) { r2->rotate90();	r->append(r2); delete r2; }
+		r2 = createImageFormat(file + ".down");	if (r2 != NULL) { r2->rotate90();	r->append(r2); delete r2; }
 
 		r->setDimension(IMAGE_CUBE);
 		return r;
