@@ -429,7 +429,7 @@ void OpenALEngine::pause() // engine pause
 {
 	paused = true;
 
-	for (AudioShadowMap::iterator it = shadows.begin(); it != shadows.end(); it++)
+	for EACH(AudioShadowMap, shadows, it)
 	{
 			alSourcePause(it->second->source.source);
 	}
@@ -439,7 +439,7 @@ void OpenALEngine::unpause() // engine unpause
 {
 	paused = false;
 
-	for (AudioShadowMap::iterator it = shadows.begin(); it != shadows.end(); it++)
+	for EACH(AudioShadowMap, shadows, it)
 	{
 			alSourcePlay(it->second->source.source);
 	}

@@ -51,8 +51,8 @@ public:
 
 	virtual bool init(Config& _conf) abstract;
 	virtual bool clear() { return true; } 
-	virtual void pause()  abstract; 
-	virtual void unpause()  abstract; 
+	virtual void pause()  abstract;			// audio engine pause
+	virtual void unpause()  abstract;		// audio engine unpause
 	virtual bool deinit() abstract;
 	virtual void setListener(const Listener &aListener) { listener = aListener; }
 	virtual void setListenerEnvironment(unsigned long environment) abstract;
