@@ -14,6 +14,7 @@
 
 #include "audio_object.h"
 #include "audio/simple_sound.h"
+#include "audio/audio_list.h"
 #include "../../common/logger.h"
 #include "../../common/utils.h"
 #include "../../audio/audio_interface.h"
@@ -21,7 +22,9 @@
 
 AudioObject* audioObjectFactory(const std::string &_class)
 {
-	if(_class == "simple") return new SimpleSound;
+	if (_class == "simple") return new SimpleSound;
+
+	if (_class == "audio_list") return new AudioList;
 
 	error("objects", std::string("audio class '") + _class + "' not found");
 	return NULL;

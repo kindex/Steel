@@ -28,6 +28,7 @@ bool SimpleSound::InitFromConfig(Config& conf)
 	originalSound->sourceRelative = conf.geti("sourceRelative", 0);
 
 	originalSound->sound = resAudio.add(conf.getPath("file"));
+	sndId = conf.gets("sndId", "");
 	delay = conf.getf("delay", 0.0);
 	started = false;
 	//engine->soundPlay(originalSound);

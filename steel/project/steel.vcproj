@@ -1081,6 +1081,14 @@
 						Name="audio"
 						>
 						<File
+							RelativePath="..\sources\objects\combiner\audio\audio_list.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\sources\objects\combiner\audio\audio_list.h"
+							>
+						</File>
+						<File
 							RelativePath="..\sources\objects\combiner\audio\simple_sound.cpp"
 							>
 						</File>

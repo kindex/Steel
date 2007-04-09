@@ -24,8 +24,6 @@ class AudioObject;
 
 AudioObject* audioObjectFactory(const std::string& _class);
 
-typedef std::map<std::string, Sound*> AudioMap;
-
 class AudioObject: public GameObject
 {
 public:
@@ -41,10 +39,13 @@ public:
 	bool soundUpdate(Sound*);
 	AudioInterface* engine;
 
+	std::string sndId;
 	v3 position;
-private:
+protected:
+	
+	
 	//std::vector<Sound*> sounds;	// ???						// ???
-	AudioMap audio;
+//	AudioMap audio;
 	//typedef std::map<uid, AudioShadow*> AudioShadowMap;
 };
 
