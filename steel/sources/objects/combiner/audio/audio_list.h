@@ -1,3 +1,16 @@
+/*id*********************************************************
+	File: objects/combiner/audio/audio_list.h
+	Unit: objects
+	Part of: Steel Engine
+	(C) DiVision, 2006
+	Authors:
+		* Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
+	License:
+		Steel Engine License
+	Description:
+		Сложный аудио-объект, который имеет много звуков (состоит из многих простых аудио-объектов).
+ ************************************************************/
+
 #ifndef __AUDIO_LIST
 #define __AUDIO_LIST
 

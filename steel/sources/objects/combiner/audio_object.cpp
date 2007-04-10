@@ -1,5 +1,5 @@
 /*id*********************************************************
-	File: objects/combiner/audio_object.cpp
+	File: objects/combiner/audio_object.h
 	Unit: objects
 	Part of: Steel Engine
 	(C) DiVision, 2006
@@ -8,7 +8,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Физический аудио-объект.
+		Физический аудио-объект. Класс для управлениями всеми аудио-объектами.
  ************************************************************/
 
 
