@@ -45,7 +45,7 @@ protected:
 	
 	
 	//std::vector<Sound*> sounds;	// ???						// ???
-//	AudioMap audio;
+//	AudioDict audio;
 	//typedef std::map<uid, AudioShadow*> AudioShadowMap;
 };
 

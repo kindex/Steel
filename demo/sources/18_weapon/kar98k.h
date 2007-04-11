@@ -16,6 +16,7 @@
 
 #include <objects/combiner/combiner.h>
 #include <objects/combiner/audio/simple_sound.h>
+#include <objects/combiner/audio/audio_list.h>
 
 class Kar98k : public Combiner
 {
@@ -25,7 +26,9 @@ public:
 	void reload();
 	void rechamber();
 	void fire();
-	AudioObject* kar98k;
+	AudioList* kar98k;	// must be AudioObject* kar98k; then smth like  = new AudioList() ...
+	//GraphObject* ...
+	//PhysObject* ...
 
 private:
 	float caliber;		// = 7.92 mm;
@@ -36,9 +39,9 @@ private:
 	float length;		// length = 1.11 m
 
 	//AudioObject* kar98k;
-	Sound* sndRechamber;
-	Sound* sndReload;
-	Sound* sndFire;
+	//Sound* sndRechamber;
+	//Sound* sndReload;
+	//Sound* sndFire;
 };
 
 #endif

@@ -17,7 +17,7 @@
 #include "../audio_object.h"
 #include "simple_sound.h"
 
-typedef std::map<std::string, SimpleSound*> AudioMap;
+typedef std::map<std::string, SimpleSound*> AudioDict;
 
 class AudioList: public AudioObject
 {
@@ -29,9 +29,12 @@ public:
 	void bindEngine(IN OUT Engine&);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+	bool audioPlay(const std::string& sndId);
 
-private:
-	AudioMap audio;
+
+//private:
+	AudioDict audio;
+	
 };
 
 #endif

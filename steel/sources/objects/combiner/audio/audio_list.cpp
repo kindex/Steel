@@ -49,13 +49,13 @@ bool AudioList::InitFromConfig(IN Config& conf)
 
 void AudioList::bindEngine(Engine& aEngine)
 {
-	for EACH(AudioMap, audio, it)
+	for EACH(AudioDict, audio, it)
 		it->second->bindEngine(aEngine);
 }
 
 void AudioList::process(IN const ProcessInfo& info)
 {
-	for EACH(AudioMap, audio, it)
+	for EACH(AudioDict, audio, it)
 	{
 		it->second->position = position;
 		it->second->process(info);
@@ -66,3 +66,15 @@ bool AudioList::isSuportingInterface(IN OUT Engine& engine)
 {
 	return engine.isSupportingInterface(INTERFACE_AUDIO);
 }
+
+bool AudioList::audioPlay(const std::string& sndId)
+{
+	AudioDict::iterator it = audio.find(sndId);
+	if (it != audio.end())
+	{
+		soundPlay(it->second->originalSound/*audio[sndId]->originalSound*/);
+		return true;
+	}
+
+}
+

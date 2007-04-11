@@ -29,8 +29,10 @@ public:
 
 	//v3 getPosition() { return position; }
 	//void setPosition(v3 newPosition) { position = newPosition; }
-private:
+
 	Sound*	originalSound;		// must be vector		// ???
+private:
+	
 	float	delay;
 	bool	started;
 
