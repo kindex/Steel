@@ -60,6 +60,7 @@
 				PrecompiledHeaderFile="$(IntDir)\steel.pch"
 				AssemblerListingLocation="$(IntDir)\"
 				WarningLevel="3"
+				WarnAsError="true"
 				SuppressStartupBanner="true"
 			/>
 			<Tool

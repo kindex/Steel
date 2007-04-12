@@ -4,7 +4,7 @@ class = 'combiner'
 objects = 
 (
 
-[/sun.conf#] {	origin = (90 90 90)}
+[/sun.conf#] {	origin = (-95 -42 31)}
 [/sun_ambient.conf#] {	origin = (90 90 90)}
 
 {
@@ -41,7 +41,7 @@ material = {
 class = 'std'
 catchShadows = 1
 dropShadows = 1
-ambient_k = 0.4
+ambient_k = 0.5
 diffuse_map = 
 {
 	image = '/room/ceil'
@@ -50,6 +50,23 @@ diffuse_map =
 
 }
 }
+}
+
+
+{
+class = 'combiner'
+audio = 
+	{
+		class = 'simple';
+		position = (0 0 0);
+		file = 'Delerium_-_Dark_Star';
+		gain = 1.0;
+		pitch = 1.0;
+		isLoop = 1;
+		rolloffFactor = 0.0;
+		sourceRelative = 1;
+		delay = 0
+	} // audio
 }
 
 

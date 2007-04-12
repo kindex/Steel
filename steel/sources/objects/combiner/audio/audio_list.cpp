@@ -75,6 +75,6 @@ bool AudioList::audioPlay(const std::string& sndId)
 		soundPlay(it->second->originalSound/*audio[sndId]->originalSound*/);
 		return true;
 	}
-
+	return false;
 }
 

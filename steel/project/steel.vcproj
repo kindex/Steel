@@ -139,9 +139,8 @@
 				PrecompiledHeaderFile="$(IntDir)\steel.pch"
 				AssemblerListingLocation="$(IntDir)\"
 				WarningLevel="3"
-				SuppressStartupBanner="true"
+				WarnAsError="true"
 				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="0"
 				ShowIncludes="false"
 			/>
 			<Tool
