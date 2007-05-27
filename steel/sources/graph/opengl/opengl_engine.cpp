@@ -19,7 +19,6 @@
 #include "opengl_glsl.h"
 #include "../../common/utils.h"
 #include "../../common/logger.h"
-#include "../../common/containers.h"
 #include "../../res/image/image.h"
 #include "../../libs/opengl/libext.h"
 #include "ext/normalisation_cube_map.h"

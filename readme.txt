@@ -14,7 +14,7 @@ pool	Noncence pool (leader FDF)
 
 Team:
 
-* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+* KindeX [Andrey Ivanov, kindexz@kindex.lv, http://kindex.lv]
 Lead programmer, architect
 
 * Def [Alexander Papyshev, 9000gl@gmail.com, aleksandrs.papisevs@gmail.com]

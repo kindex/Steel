@@ -18,7 +18,7 @@
 #include "openal_engine.h"
 #include "../common/logger.h"
 #include "../engine/game_object.h"
-#include "../common/containers.h"
+#include "../common/containers/string_dict.h"
 #include "../res/audio/audio.h"
 #include "sound.h"
 #include <windows.h>

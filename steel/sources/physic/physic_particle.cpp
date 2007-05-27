@@ -12,7 +12,7 @@
  ************************************************************/
 
 #include "physic_particle.h"
-#include "../common/containers.h"
+#include "../common/containers/string_dict.h"
 
 bool PhysicEngine::setCurrentObject(GameObject* object)
 {

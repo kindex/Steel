@@ -1,6 +1,6 @@
 ﻿/*id*********************************************************
-	File: common/containters.cpp
-	Unit: logger
+	File: common/containters/string_dict.h
+	Unit: containters
 	Part of: Steel engine
 	(C) DiVision, 2007
 	Authors:
@@ -8,10 +8,11 @@
 	License:
 		Steel Engine License
 	Description:
-		Полезные типы и функции
+		String Dict
+
  ************************************************************/
 
-#include "containers.h"
+#include "string_dict.h"
 
 std::string joinMap(const StringDict& container, const std::string& glue)
 {

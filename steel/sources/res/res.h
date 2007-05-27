@@ -40,5 +40,6 @@ protected:
 	uid resId; // уникальный идентификатор
 };
 
+void addDataSearchDirectories(const std::string& newDataDir); // in rstream.cpp
 
 #endif

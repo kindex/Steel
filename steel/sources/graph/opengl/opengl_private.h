@@ -16,7 +16,7 @@
 
 #include "../../libs/opengl/libext.h"
 #include "../graph_engine.h"
-#include "../../common/containers.h"
+#include "../../common/containers/string_dict.h"
 #include <map>
 
 struct TextureStd;

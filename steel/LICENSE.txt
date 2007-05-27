@@ -1,5 +1,5 @@
 Steel Engine License
-(C) DiVision 2006
+(C) DiVision 2006, 2007
 
 Sources under this license can use only Steel Engine developers.
 Binaries under this license can use anyone without modifications

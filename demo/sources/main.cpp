@@ -3,7 +3,7 @@
 	Part of: DiVision intro
 	(C) DiVision, 2004-2007
 	Authors:
-		* KindeX [Andrey Ivanov, kindex@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindexz@kindex.lv, http://kindex.lv]
 		* Kane [J. Anton, kane@mail.berlios.de]
 	License:
 		Steel Engine License
@@ -53,6 +53,8 @@ int main(int argc, char *argv[])
 	#endif
 
 	// ******************** RES ************************
+	addDataSearchDirectories("../data/");
+	addDataSearchDirectories("../../../steel.res/demo/data/"); // is needed only in developer mode
 	registerResources();
 
 	if (!test())

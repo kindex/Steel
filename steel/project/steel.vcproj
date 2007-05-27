@@ -16,7 +16,7 @@
 	<Configurations>
 		<Configuration
 			Name="lib_debug|Win32"
-			OutputDirectory="..\..\sdk\steel_lib"
+			OutputDirectory="..\..\..\steel.res\sdk\steel_lib"
 			IntermediateDirectory="..\temp\$(SolutionName).VS8.$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
@@ -740,14 +740,6 @@
 				Name="common"
 				>
 				<File
-					RelativePath="..\sources\common\containers.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\sources\common\containers.h"
-					>
-				</File>
-				<File
 					RelativePath="..\sources\common\logger.cpp"
 					>
 				</File>
@@ -824,6 +816,22 @@
 					</File>
 					<File
 						RelativePath="..\sources\common\test_common\test_svector.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="containers"
+					>
+					<File
+						RelativePath="..\sources\common\containers\string_dict.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\common\containers\string_dict.h"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\common\containers\string_vector.h"
 						>
 					</File>
 				</Filter>

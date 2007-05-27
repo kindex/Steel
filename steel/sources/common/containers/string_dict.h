@@ -1,6 +1,6 @@
 ﻿/*id*********************************************************
-	File: common/containters.h
-	Unit: logger
+	File: common/containters/string_dict.h
+	Unit: containters
 	Part of: Steel engine
 	(C) DiVision, 2007
 	Authors:
@@ -8,16 +8,15 @@
 	License:
 		Steel Engine License
 	Description:
-		Полезные типы и функции
+		String Dict
  ************************************************************/
 
-#ifndef _COMMON_CONTAINERS_H_
-#define _COMMON_CONTAINERS_H_
+#ifndef _COMMON_CONTAINERS_STRING_DICT_H_
+#define _COMMON_CONTAINERS_STRING_DICT_H_
 
 #include <string>
 #include <map>
-#include "svector.h"
-#include "pvector.h"
+#include "../svector.h"
 
 typedef std::map<std::string, std::string> StringDict;
 

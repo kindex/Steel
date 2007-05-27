@@ -17,7 +17,7 @@
 #include "../../steel.h"
 #include "../graph_engine.h"
 #include "../../libs/opengl/libext.h"
-#include "../../common/containers.h"
+#include "../../common/containers/string_dict.h"
 class Text;
 
 namespace opengl
