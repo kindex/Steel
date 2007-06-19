@@ -53,11 +53,12 @@ public:
 	void addChild(ParticleShadow& shadow, GameObject* child);
 	void deleteChild(GameObject* child);
 	void clearChildren();
-	void		setPosition(IN const v3);
-	v3			getPosition();
-	void		setVelocity(IN const v3);
-	v3			getVelocity();
-	void		setConfig(Config&);
+	void setPosition(IN const v3);
+	v3	 getPosition();
+	void setVelocity(IN const v3);
+	v3	 getVelocity();
+	void setConfig(Config&);
+    void addTriangle(const Plane&);
 
 	Shadow* getShadowClass(GameObject* object);
 	virtual bool inject(GameObject* object);
@@ -81,6 +82,7 @@ public:
 protected:
 	pvector<GameObject*>	objects;
 	TimeInfo				timeInfo;
+    pvector<Plane>			planes;
 };
 
 

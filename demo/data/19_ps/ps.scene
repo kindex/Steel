@@ -4,9 +4,9 @@ class = 'ps'
 emitter = 
 	{
 	class = 'simple'
-	particle_size = 0.1
-	init_size = 30
-	position_dispersion = 1
+	particle_size = 0.06
+	init_size = 100
+	position_dispersion = 1.5
 	} 
 renderer = 
 	{
@@ -28,20 +28,20 @@ animator =
 	particle = 
 	{
 		mass=1
-		distance_k = 0.1
+		distance_k = 0.5
 
-		spring_k=0.0
+		spring_k=0
 		spring_r0=0.1
 
 		gravity_k=0.0
 		gravity_power=1
 		gravity_min_dist=0.1
 
-		friction_k=0.1
+		friction_k=0.5
 		friction_power=1
 
 		lj_power1 = -2
-		lj_power2 = -3
+		lj_power2 = -2.115
 	}
 	} 
 }

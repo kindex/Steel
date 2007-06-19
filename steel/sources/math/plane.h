@@ -60,6 +60,7 @@ struct Plane
 	{ 
 		return isCrossTrgLine(*this, b, k); 
 	}
+    v3 reflect(const v3 vector) const;
 };
 
 

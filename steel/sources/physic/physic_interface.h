@@ -20,6 +20,7 @@
 #include "../math/aabb.h"
 #include "../math/matrix34.h"
 #include "../math/vector3d.h"
+#include "../math/plane.h"
 
 struct Velocity
 {
@@ -37,13 +38,15 @@ struct Velocity
 class PhysicParticleInterface : public ChildrenInterface
 {
 public:
-	virtual	void		setPosition(IN const v3) abstract;
-	virtual	v3			getPosition() abstract;
+	virtual	void	setPosition(IN const v3) abstract;
+	virtual	v3		getPosition() abstract;
 
-	virtual void		setVelocity(IN const v3) abstract;
-	virtual v3			getVelocity() abstract;
+	virtual void	setVelocity(IN const v3) abstract;
+	virtual v3		getVelocity() abstract;
 
-	virtual	void		setConfig(Config&) abstract;
+	virtual	void	setConfig(Config&) abstract;
+
+    virtual void	addTriangle(const Plane&) abstract;
 };
 
 #endif

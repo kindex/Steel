@@ -6,9 +6,9 @@ objects =
 [/room/room.scene#] {}
 
 
-[ps.scene#] { emitter = {	origin = (1 0 1.8) } }
+[ps.scene#] { emitter = {	origin = (1 -1.5 2.5) } }
 [ps.scene#] { 
-	emitter = {	origin = (1 0 0.8) } 
+	emitter = {	origin = (1 -2.5 2) } 
 	renderer = 
 		{
 		material =  {

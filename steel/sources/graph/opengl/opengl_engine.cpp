@@ -341,7 +341,10 @@ void OpenGL_Engine::render()
 		}
 	}
 	renderNoShadows();
-	program->unbind();
+    if (program != NULL)
+    {
+	    program->unbind();
+    }
 	glPopAttrib();
 
 	renderTransparent();
@@ -839,7 +842,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 				flags.glsl = true;
 			}
 		}
-		if (flags.glsl)
+        if (flags.glsl && flags.lighting)
 		{
 			DrawFill_MaterialStd = &OpenGL_Engine::DrawFill_MaterialStd_OpenGL20;
 		}

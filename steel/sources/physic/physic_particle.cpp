@@ -96,6 +96,12 @@ void PhysicEngine::setConfig(Config& _config)
 	currentShadow->enabled			= true;
 }
 
+void PhysicEngine::addTriangle(const Plane& plane)
+{
+    planes.push_back(plane);
+}
+
+
 
 Shadow* PhysicEngine::getShadowClass(GameObject *object)
 {
@@ -172,29 +178,59 @@ bool PhysicEngine::process(IN const TimeInfo& info)
 
 	for EACH(ShadowPVector,  shadows, it)
 	{
-	if (static_cast<ParticleShadow*>(*it)->enabled)
-	{
-		ParticleShadow* shadow = static_cast<ParticleShadow*>(*it);
+	    if (static_cast<ParticleShadow*>(*it)->enabled)
+	    {
+		    ParticleShadow* shadow = static_cast<ParticleShadow*>(*it);
 
-		shadow->velocity += info.frameLength*shadow->force/shadow->mass;
-		shadow->force += shadow->velocity.getNormalized() * shadow->velocity.getNormalized();
+		    shadow->velocity += info.frameLength*shadow->force/shadow->mass;
+		    shadow->force += shadow->velocity.getNormalized() * shadow->velocity.getNormalized();
 
-		v3 frictionForce  = 
-			-shadow->velocity.getNormalized() * pow(shadow->velocity.getLength(), shadow->friction_power)*shadow->friction_k;
+		    v3 frictionForce  = 
+			    -shadow->velocity.getNormalized() * pow(shadow->velocity.getLength(), shadow->friction_power)*shadow->friction_k;
 
-		v3 newVelocity = shadow->velocity + info.frameLength*frictionForce/shadow->mass;
+		    v3 newVelocity = shadow->velocity + info.frameLength*frictionForce/shadow->mass;
 
-		if((newVelocity & shadow->velocity) >0) // Ñ_Ð¸Ð>Ð° Ñ'Ñ_Ð÷Ð_Ð¸Ñ_ Ð_Ð÷ Ð_Ð_ÐÐ÷Ñ' Ñ_Ð°Ð·Ð_Ð÷Ñ_Ð_Ñ_Ñ'Ñ_ Ñ'Ð÷Ð>Ð_
-		{
-			shadow->velocity = newVelocity;
-		}
-		else
-		{
-			shadow->velocity.loadZero();
-		}
+		    if ((newVelocity & shadow->velocity) >0)
+		    {
+			    shadow->velocity = newVelocity;
+		    }
+		    else
+		    {
+			    shadow->velocity.loadZero();
+		    }
 
-		shadow->position += shadow->velocity*info.frameLength;
-	}
+            v3 shift = shadow->velocity*info.frameLength;
+            float mink = 10;
+            Plane collision;
+            bool wasCollision = false;
+            for EACH_CONST(pvector<Plane>, planes, it)
+            {
+                float k;
+                if (isCross(*it, Line(shadow->position, shift), k) && k >= 0 && k <= mink && k <= 1 + EPSILON)
+                {
+                    mink = k;
+                    collision = *it;
+                    wasCollision = true;
+                }
+            }
+            if (wasCollision)
+            {
+
+//                if (shift.getSquaredLength() > EPSILON2)
+                {
+        		    shadow->position += shift*mink;
+                }
+
+                shadow->velocity = collision.reflect(shadow->velocity);
+                shadow->velocity *= 0.9; // TODO: physic
+                shadow->position += collision.a.crossProduct(collision.b).getNormalized() * EPSILON * 10;
+
+            }
+            else
+            {
+    		    shadow->position += shift;
+            }
+	    }
 	}
 
 	return true;
@@ -213,4 +249,14 @@ bool PhysicEngine::clear()
 PhysicEngine::PhysicEngine():
 	currentShadow(NULL),
 	Engine()
-{}
+{
+ // Z   
+    addTriangle(Plane(v3(0, 0, 0.5f), v3(1, 0, 0.15), v3(0, 1, -0.3))); // TEMP:
+//    addTriangle(Plane(v3(0, 0, 2.0f), v3(1, 0, 0), v3(0, 1, 0))); // TEMP:
+// Y
+//    addTriangle(Plane(v3(0, -0.6, 0), v3(1, 0, 0), v3(0, 0, 1))); // TEMP:
+    addTriangle(Plane(v3(0, 4, 0), v3(1, 0, 0), v3(0, 0, 1))); // TEMP:
+//// X
+//    addTriangle(Plane(v3(0.4, 0, 0.0f), v3(0, 1, 0), v3(0, 0, 1))); // TEMP:
+//    addTriangle(Plane(v3(1.6, 0, 0.0f), v3(0, 1, 0), v3(0, 0, 1))); // TEMP:
+}

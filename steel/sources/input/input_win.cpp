@@ -120,9 +120,9 @@ void Input::Process_WinAPI()
 	MSG msg;
 	BOOL wasmsg;
 	string key;
-	if (wasmsg = PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	while (wasmsg = PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
-		switch(msg.message)					// If the message wasnt to quit
+		switch (msg.message)					// If the message wasnt to quit
 		{
 		case WM_QUIT:
 			alive = false;
@@ -166,7 +166,7 @@ void Input::Process_WinAPI()
 		TranslateMessage(&msg);						// Find out what the message does
 		DispatchMessage(&msg);						// Execute the message
 	}
-	if(mouseCaptured && focused)
+	if (mouseCaptured && focused)
 	{
 		Point n;
 		GetCursorPos(&n);

@@ -106,3 +106,12 @@ bool crossMLineLine(const Line a, const v3 direction, const Line b, float &k)
 	return  isBetween(point, a.base, direction, a.a) && 
 			isBetween(point, a.base + a.a + direction, -a.a, -direction);
 }
+
+v3 Plane::reflect(const v3 vector) const
+{
+    v3 an = a.getNormalized();
+    v3 bn = b.getNormalized();
+    v3 mid = an*vector.dotProduct(an) + bn*vector.dotProduct(bn);
+    v3 result =  2*mid - vector;
+    return result;
+}
