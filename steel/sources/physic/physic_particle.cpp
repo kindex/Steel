@@ -158,6 +158,8 @@ void PhysicEngine::prepare(ParticleShadow* shadow, GameObject* parent)
 bool PhysicEngine::process(IN const TimeInfo& info)
 {
 	timeInfo = info;
+    timeInfo.frameLength *= speedup;
+//    timeInfo.currentTime *= speedup; // TODO: precize time with speedup
 
 	int size = objects.size();
 
@@ -182,13 +184,13 @@ bool PhysicEngine::process(IN const TimeInfo& info)
 	    {
 		    ParticleShadow* shadow = static_cast<ParticleShadow*>(*it);
 
-		    shadow->velocity += info.frameLength*shadow->force/shadow->mass;
+		    shadow->velocity += timeInfo.frameLength*shadow->force/shadow->mass;
 		    shadow->force += shadow->velocity.getNormalized() * shadow->velocity.getNormalized();
 
 		    v3 frictionForce  = 
 			    -shadow->velocity.getNormalized() * pow(shadow->velocity.getLength(), shadow->friction_power)*shadow->friction_k;
 
-		    v3 newVelocity = shadow->velocity + info.frameLength*frictionForce/shadow->mass;
+		    v3 newVelocity = shadow->velocity + timeInfo.frameLength*frictionForce/shadow->mass;
 
 		    if ((newVelocity & shadow->velocity) >0)
 		    {
@@ -199,7 +201,7 @@ bool PhysicEngine::process(IN const TimeInfo& info)
 			    shadow->velocity.loadZero();
 		    }
 
-            v3 shift = shadow->velocity*info.frameLength;
+            v3 shift = shadow->velocity*timeInfo.frameLength;
             float mink = 10;
             Plane collision;
             bool wasCollision = false;
@@ -235,6 +237,12 @@ bool PhysicEngine::process(IN const TimeInfo& info)
 
 	return true;
 }
+
+void PhysicEngine::setSpeedup(float _speedup)
+{
+    speedup = _speedup;
+}
+
 
 bool PhysicEngine::clear()
 {

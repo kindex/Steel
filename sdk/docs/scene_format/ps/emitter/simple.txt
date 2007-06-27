@@ -1,4 +1,9 @@
 steel::SimpleEmitter
 
 class = 'simple'
-origin	v3
+
+v3		origin
+float	emitter_size
+float	particle_size
+enum	emitter_type
+

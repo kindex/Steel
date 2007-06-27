@@ -14,33 +14,91 @@
 #include "emitter.h"
 #include "../../common/utils.h"
 #include "../../res/config/config.h"
+#include "../../common/logger.h"
 
 
-void SimpleEmitter::born(Particle &particle, int index)
+void SimpleEmitter::born(Particle& particle, int index)
 {
-	particle.position = this->position + v3(frand(), frand(), frand())*conf->getf("position_dispersion", 1.0f);
-	
 	particle.velocity.loadZero();
-	particle.size = conf->getf("particle_size", 1.0f);
 
+    switch (type)
+    {
+        case EMITTER_RANDOM_CUBE:
+        {
+            particle.position = this->position + v3(prand(), prand(), prand())*emitter_size;
+            break;
+        }
+
+        case EMITTER_RANDOM_SPHERE:
+        case EMITTER_RANDOM_FILLED_SPHERE:
+        {
+            float z = prand();
+            float t = frand()*float(M_PI)*2.0f;
+            float r = sqrt(1.0f-sqr(2.0f*z))*0.5f;
+            float x = cos(t)*r;
+            float y = sin(t)*r;
+            v3 radius_vector = v3(x, y, z);
+
+            if (type == EMITTER_RANDOM_FILLED_SPHERE)
+            {
+                radius_vector *= pow(frand(), 1.0f/3.0f);
+            }
+            particle.position = this->position + radius_vector*emitter_size;
+
+            break;
+        }
+
+                //v3 a;
+                //for (;;)
+                //{
+                //    a = prand_v3();
+                //    if (a.getSquaredLength() <= 0.5*0.5)
+                //    {
+                //        break;
+                //    }
+                //}
+
+                //particle.position = this->position + a*emitter_size;
+        case EMITTER_UNIFORM_CUBE:
+        {
+            float w = pow(float(init_size), 1.0f/3.0f);
+            int w2 = int(ceil(w)-EPSILON);
+            int x = index%w2;
+            int y = index/w2%w2;
+            int z = index/w2/w2;
+            particle.position = this->position + v3(x/w, y/w, z/w)*emitter_size;
+            break;
+        }
+
+        default:
+            assert(false, "");
+    }
+
+    v3 radius_vector = particle.position - this->position;
+//    particle.velocity = radius_vector.crossProduct(prand_v3()).getNormalized()*sqrt(radius_vector.getLength());
+
+
+	particle.size = particle_size;
 	particleSystem->particleBorn(index);
 }
 
 
 void SimpleEmitter::process(IN const ProcessInfo& info)
 {
-	if(frand() < 0.0f && set->particles.size() > 1) // delete particle
+	if (frand() < 0.0f && set->particles.size() > 1) // delete particle
 	{
 		int dieId = rand()%set->particles.size(); // particle number
 
 		delete set->particles[dieId];
 
-		if((size_t)(dieId + 1) < set->particles.size())
+		if ((size_t)(dieId + 1) < set->particles.size())
+        {
 			set->particles[dieId] = set->particles.back();
+        }
 		set->particles.pop_back();
 	}
 
-	if(frand() < 0.0f)  // born particle
+	if (frand() < 0.0f)  // born particle
 	{
 		int bornId = set->particles.size();
 		set->particles.resize(bornId + 1);
@@ -55,6 +113,16 @@ bool SimpleEmitter::InitFromConfig(Config& _conf)
 {
 	conf = &_conf;
 	position = conf->getv3("origin");
+    emitter_size = conf->getf("emitter_size", 1.0f);
+    particle_size = conf->getf("particle_size", 1.0f);
+    std::string stype = conf->gets("emitter_type");
+    init_size = (int)ceil(conf->geti("init_size") * set->countScale);
+
+         if (stype == "random_cube") type = EMITTER_RANDOM_CUBE;
+    else if (stype == "random_sphere") type = EMITTER_RANDOM_SPHERE;
+    else if (stype == "random_filled_sphere") type = EMITTER_RANDOM_FILLED_SPHERE;
+    else if (stype == "uniform_cube") type = EMITTER_UNIFORM_CUBE;
+    else type = EMITTER_RANDOM_CUBE;
 
 	return true;
 }

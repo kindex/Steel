@@ -38,9 +38,9 @@ public:
 	void insonify(AudioEngine&);
 	bool isAlive() {return _alive;} 
 
-	void handleEventKeyDown(const std::string& key);
-	void handleEventKeyUp(const std::string& key);
-	void handleMouse(double dx, double dy);
+	virtual void handleEventKeyDown(const std::string& key);
+	virtual void handleEventKeyUp(const std::string& key);
+	virtual void handleMouse(double dx, double dy);
 
 	void updatePhysicTime();
 
@@ -64,8 +64,9 @@ protected:
 	Timer			infoTimer;
 	TimeInfo		timeInfo;
 
-	float speedup, speed;
-	float accSpeed, brakeSpeed;
+	float accSpeed;
+    float brakeSpeed;
+    float speed;
 
 	bool _alive, paused, firstframe;
 	int framesToPass;

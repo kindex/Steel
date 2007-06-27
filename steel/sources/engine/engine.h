@@ -70,7 +70,7 @@ public:
 	// TODO: убрать это. Не вписывает в идею движка
 
 protected:
-	EngineHelper	*helper;
+	EngineHelper* helper;
 
 	/*
 		для увеличения производительности некоторая чать информации об объектах

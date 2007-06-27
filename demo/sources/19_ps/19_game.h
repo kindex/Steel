@@ -21,11 +21,13 @@ class GamePS: public GameFreeScene
 {
 public:
 	GamePS();
+	void handleEventKeyDown(const std::string& key);
 	bool init(Config& _conf, Input& _input);
 	void process();
 
 private:
 	PhysicEngine* physicEngine;
+	float speedup, speed;
 };
 
 #endif

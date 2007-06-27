@@ -42,6 +42,17 @@ float prand()
 	return (float) rand() / (float) RAND_MAX - 0.5f;
 }
 
+v3 prand_v3()
+{
+    return v3(prand(), prand(), prand());
+}
+
+v3 frand_v3()
+{
+    return v3(frand(), frand(), frand());
+}
+
+
 // convert string to v3 (vector components are devided with ',' [X,Y,Z])
 v3 stov3(const std::string& s)
 {

@@ -16,7 +16,7 @@
 
 #include "particle_system.h"
 
-class SimpleEmitter: public ParticleEmitter
+class SimpleEmitter : public ParticleEmitter // Random
 {
 public:
 	void process(IN const ProcessInfo& info);
@@ -25,6 +25,23 @@ public:
 	void born(Particle &particle, int index); // создать частицу
 	void onParticleBorn(int index) {}
 	void onParticleDie(int index) {}
+
+enum EmitterType
+{
+    EMITTER_RANDOM_CUBE,
+    EMITTER_RANDOM_SPHERE,
+    EMITTER_RANDOM_FILLED_SPHERE,
+    EMITTER_UNIFORM_CUBE,
+    EMITTER_UNIFORM_SPHERE,
+    EMITTER_REGULAR,
+};
+
+private:
+    float       emitter_size;
+    float       particle_size;
+    float       emitter_type;
+    int         init_size;
+    EmitterType type;
 };
 
 #endif

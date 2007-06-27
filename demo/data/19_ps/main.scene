@@ -3,11 +3,11 @@
 class = 'combiner'
 objects = 
 (
-[/room/room.scene#] {}
+//[/room/room.scene#] {}
 
 
-[ps.scene#] { emitter = {	origin = (1 -1.5 2.5) } }
-[ps.scene#] { 
+[ps.scene#] { emitter = {	origin = (1 0 1.7) } }
+/*[ps.scene#] { 
 	emitter = {	origin = (1 -2.5 2) } 
 	renderer = 
 		{
@@ -16,7 +16,7 @@ objects =
 		}
 	}
 }
-
+*/
 
 [/light.conf#]{origin = (0 1 1)}
 

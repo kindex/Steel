@@ -44,8 +44,8 @@
 400. Config comments. Load comment from config to dump configs with comments. / *. KindeX. [9]. (3h).
 411. OpenGL: custom normal map mipmap levels. / *. KindeX. [9]. (3h).
 413. OpenGL: implement texture units choosing in material config. / *. KindeX. [9]. (2d).
-460. Tests: implement selftests for math. / *. KindeX. [9]. (2d).
-461. Tests: implement selftests for vector. / *. KindeX. [9]. (2d).
+460. Tests: implement unit-tests for math. / *. KindeX. [9]. (2d).
+461. Tests: implement unit-tests for vector. / *. KindeX. [9]. (2d).
 446. Logger: put in log revision number, compilation date and compilation computer name. / *. KindeX. [10]. (1d).
 
 * Demo *

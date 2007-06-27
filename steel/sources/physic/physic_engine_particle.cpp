@@ -66,7 +66,7 @@ v3 PhysicEngine::calculateForceForParticle(ParticleShadow* shadow)
 	v3 res;
 	res.loadZero();
 
-    res += v3(0, 0, -0.8); // Global gravity
+//    res += v3(0, 0, -0.8); // Global gravity
 
 // реагируем только с частицами, номер которых больше этого
 // для того, чтобы исключить повторную проверку (сила действия равна силе противодействия)

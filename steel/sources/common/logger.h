@@ -41,7 +41,7 @@ extern GlobalErrors globalErrors;
 */
 #define assert(expression, message)		\
 {										\
-	if(!(expression))					\
+	if (!(expression))					\
 	{									\
 		log_msg("assert", message);		\
 		throw;							\

@@ -51,15 +51,15 @@ public:
 		Process(NULL)
 		{}
 
-	virtual ~Input() {}
-	virtual bool init(Config* _conf);
-	virtual void setGame(GameInput* _game) { game = _game; }
+	bool init(Config* _conf);
+	void setGame(GameInput* _game) { game = _game; }
 
-	virtual bool isPressed(std::string key);
-	virtual bool isAlive() { return alive; }
-	virtual void getMouseDelta(double &dx, double &dy);
-	virtual void setMouseCenter(int _cx, int _cy) { cx = _cx; cy = _cy; }
-	virtual bool isMouseCaptured() { return mouseCaptured; }
+	bool isPressed(std::string key);
+	bool isAlive() { return alive; }
+	void getMouseDelta(double &dx, double &dy);
+	void setMouseCenter(int _cx, int _cy) { cx = _cx; cy = _cy; }
+	bool isMouseCaptured() { return mouseCaptured; }
+    void start();
 
 	void (Input::*CaptureMouse)();
 	void (Input::*FreeMouse)();

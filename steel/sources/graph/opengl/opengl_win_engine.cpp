@@ -280,7 +280,7 @@ bool OpenGL_WIN_Engine::changeToFullScpeen()
 	return ok;
 }*/
 
-bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input *input)
+bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input* input)
 {
 	WNDCLASS wndclass;
 
@@ -303,31 +303,52 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input *input)
 		return false;							// Register the class
 	}
 	
-	((WindowInformationWinAPI*)windowInformation)->dwStyle =  WS_OVERLAPPEDWINDOW |
-        WS_CLIPSIBLINGS  |        WS_CLIPCHILDREN;
+	((WindowInformationWinAPI*)windowInformation)->dwStyle =  
+          WS_OVERLAPPEDWINDOW
+        | WS_CLIPSIBLINGS
+        | WS_CLIPCHILDREN;
 
-	if(conf->geti("fullscreen")) 						// Check if we wanted full screen mode
+	if (conf->geti("window.fullscreen")) 						// Check if we wanted full screen mode
 	{													// Set the window properties for full screen mode
 		((WindowInformationWinAPI*)windowInformation)->dwStyle = WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 //		ShowCursor(FALSE);								// Hide the cursor
 	}
-	else if(((WindowInformationWinAPI*)windowInformation)->dwStyle)									// Assign styles to the window depending on the choice
+	else if (((WindowInformationWinAPI*)windowInformation)->dwStyle)									// Assign styles to the window depending on the choice
+    {
 		((WindowInformationWinAPI*)windowInformation)->dwStyle =
-        WS_OVERLAPPEDWINDOW |
-        WS_CLIPSIBLINGS  |        WS_CLIPCHILDREN
-        ;
+              WS_OVERLAPPEDWINDOW 
+            | WS_CLIPSIBLINGS  
+            | WS_CLIPCHILDREN;
+
+        if (conf->getb("window.maximized", true))
+        {
+            ((WindowInformationWinAPI*)windowInformation)->dwStyle |= WS_MAXIMIZE;
+        }
+    }
 
 //	g_hInstance = w.hInstance;							// Assign our global hInstance to the window's hInstance
 
 	//AdjustWindowRect( &rWindow, dwStyle, false);		// Adjust Window To True Requested Size
 
 														// Create the window
-	((WindowInformationWinAPI*)windowInformation)->handle = CreateWindow("steel", "Steel Engine", ((WindowInformationWinAPI*)windowInformation)->dwStyle, 
-		conf->geti("window.left"), conf->geti("window.top"),
-						conf->geti("window.width"), conf->geti("window.height"),
-						NULL, NULL, hInstance, NULL);
+	((WindowInformationWinAPI*)windowInformation)->handle = 
+        CreateWindow("steel", 
+                     "Steel Engine", 
+                     ((WindowInformationWinAPI*)windowInformation)->dwStyle, 
+		             conf->geti("window.left"),
+                     conf->geti("window.top"),
+					 conf->geti("window.width"),
+                     conf->geti("window.height"),
+					 NULL,
+                     NULL,
+                     hInstance,
+                     NULL);
 
-	if(!((WindowInformationWinAPI*)windowInformation)->handle) return false;								// If we could get a handle, return NULL
+	if (!((WindowInformationWinAPI*)windowInformation)->handle)
+    {
+        error("opengl", "Cannot get window handle");
+        return false;								// If we could get a handle, return NULL
+    }
 
 	engines.push_back(this);
 
@@ -342,12 +363,13 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input *input)
 
     if(((WindowInformationWinAPI*)windowInformation)->handle) ((WindowInformationWinAPI*)windowInformation)->DC = GetDC(((WindowInformationWinAPI*)windowInformation)->handle);
 
-    PIXELFORMATDESCRIPTOR pfd, *ppfd;
+    PIXELFORMATDESCRIPTOR  pfd;
+    PIXELFORMATDESCRIPTOR* ppfd;
     int pixelformat;
 
     ppfd = &pfd;
 
-    memset(ppfd,0,sizeof(pfd));
+    memset(ppfd, 0, sizeof(pfd));
 
     ppfd->nSize = sizeof(PIXELFORMATDESCRIPTOR);
     ppfd->nVersion = 1;
@@ -355,11 +377,12 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input *input)
         PFD_DRAW_TO_WINDOW
       | PFD_SUPPORT_OPENGL
       | PFD_GENERIC_ACCELERATED
-      | PFD_GENERIC_FORMAT
-	      ;
+      | PFD_GENERIC_FORMAT;
 
-	if(conf->geti("swapBuffers", 1))
+	if (conf->geti("swapBuffers", 1))
+    {
 	    ppfd->dwFlags |= PFD_DOUBLEBUFFER;
+    }
 
     ppfd->dwLayerMask = PFD_MAIN_PLANE;
     ppfd->iPixelType = PFD_TYPE_RGBA;
@@ -367,8 +390,16 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input *input)
     ppfd->cDepthBits = conf->geti("screen.depth");
 	ppfd->cStencilBits = conf->getb("shadows") ? 32 : 0;
 
-    if((pixelformat = ChoosePixelFormat(((WindowInformationWinAPI*)windowInformation)->DC, ppfd)) == 0 )    {        MessageBox(NULL, "ChoosePixelFormat failed", "Error", MB_OK);        return FALSE;    }
-    if(SetPixelFormat(((WindowInformationWinAPI*)windowInformation)->DC, pixelformat, ppfd) == FALSE)    {        MessageBox(NULL, "SetPixelFormat failed", "Error", MB_OK);        return FALSE;    }
+    if ((pixelformat = ChoosePixelFormat(((WindowInformationWinAPI*)windowInformation)->DC, ppfd)) == 0)
+    {        
+        MessageBox(NULL, "ChoosePixelFormat failed", "Error", MB_OK);
+        return false;
+    }
+    if (SetPixelFormat(((WindowInformationWinAPI*)windowInformation)->DC, pixelformat, ppfd) == FALSE)
+    {        
+        MessageBox(NULL, "SetPixelFormat failed", "Error", MB_OK);
+        return false;
+    }
 
     ((WindowInformationWinAPI*)windowInformation)->RC = wglCreateContext(((WindowInformationWinAPI*)windowInformation)->DC);
     wglMakeCurrent(((WindowInformationWinAPI*)windowInformation)->DC, ((WindowInformationWinAPI*)windowInformation)->RC);
@@ -376,12 +407,15 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input *input)
 	//if(conf->geti("fullscreen"))
 	  // 	changeToFullScpeen();							// Go to full screen
 
+    std::stringstream
 	log_msg("opengl graph", "Video mode has been set! (" +	
 		IntToStr(conf->geti("window.width")) + "x" + 
 		IntToStr(conf->geti("window.height")) + "x" +
 		IntToStr(conf->geti("screen.depth"))+ ")" );
 
 	((WindowInformationWinAPI*)windowInformation)->return_pressed = false;
+
+    input->start();
 
 	return true;
 }

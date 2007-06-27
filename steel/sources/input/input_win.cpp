@@ -58,7 +58,6 @@ string Input::DecodeKey_WinAPI(MSG p)
 		case WM_KEYDOWN:
 			switch(p.wParam)
 			{
-
 				case VK_RETURN: key = "return"; break;
 				case VK_ESCAPE: key = "escape"; break;
 				case VK_SPACE: key = "space"; break;
@@ -77,13 +76,23 @@ string Input::DecodeKey_WinAPI(MSG p)
 						key.resize(1);
 						key[0] = c;
 					}
-					if(c>='A' && c<='Z')
+                    else if(c>='A' && c<='Z')
 					{
 						key.resize(1);
 						key[0] = c + ('a'-'A');
 					}
-					if(c>=VK_F1 && c<=VK_F24)
+					else if(c>=VK_F1 && c<=VK_F24)
+                    {
 						key = "f" + IntToStr(c-VK_F1 + 1); break;
+                    }
+                    else if (c == VK_OEM_MINUS)
+                    {
+                        key = "-";
+                    }
+                    else if (c == VK_OEM_PLUS)
+                    {
+                        key = "+";
+                    }
 
 					break;
 			}

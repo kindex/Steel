@@ -2,12 +2,13 @@
 {
 class = 'ps'
 emitter = 
-	{
+{
 	class = 'simple'
-	particle_size = 0.06
-	init_size = 100
-	position_dispersion = 1.5
-	} 
+	particle_size = 0.01
+	init_size = 125
+	emitter_size = 1
+	emitter_type = 'uniform_cube'
+}
 renderer = 
 	{
 	class = 'sprite'
@@ -28,20 +29,20 @@ animator =
 	particle = 
 	{
 		mass=1
-		distance_k = 0.5
+		distance_k = 0.05
 
 		spring_k=0
-		spring_r0=0.1
+		spring_r0=0.0
 
-		gravity_k=0.0
-		gravity_power=1
+		gravity_k=0.000
+		gravity_power=-2
 		gravity_min_dist=0.1
 
-		friction_k=0.5
-		friction_power=1
+		friction_k=1.0
+		friction_power=3
 
 		lj_power1 = -2
-		lj_power2 = -2.115
+		lj_power2 = -2.01
 	}
 	} 
 }

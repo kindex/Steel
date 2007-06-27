@@ -403,12 +403,12 @@ double ConfigParser::ParseNumber()
 
 Config* ConfigParser::ParseNull()
 {
-	bool fail = false;
-	fail = fail || getc() != 'n';
-	fail = fail || getc() != 'u';
-	fail = fail || getc() != 'l';
-	fail = fail || getc() != 'l';
-	if(fail)
+	bool failed = false;
+	failed = failed || getc() != 'n';
+	failed = failed || getc() != 'u';
+	failed = failed || getc() != 'l';
+	failed = failed || getc() != 'l';
+	if(failed)
 	{
 		LOG_PARSE_ERROR(string("Expecting null"));
 	}

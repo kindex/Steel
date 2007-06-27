@@ -64,6 +64,7 @@ public:
 	virtual bool inject(GameObject* object);
 	virtual bool remove(GameObject* object);
 	virtual bool process(IN const TimeInfo& info);
+    virtual void setSpeedup(float speedup);
 	bool clear();
 	void prepare(ParticleShadow* shadow, GameObject* parent);
 	ParticleShadow* getShadow(GameObject* object) { return static_cast<ParticleShadow*>(Engine::getShadow(object)); }
@@ -83,6 +84,7 @@ protected:
 	pvector<GameObject*>	objects;
 	TimeInfo				timeInfo;
     pvector<Plane>			planes;
+    float                   speedup;
 };
 
 

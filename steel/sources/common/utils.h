@@ -25,6 +25,9 @@
 float frand();
 // random float number in interval [-0.5..+0.5)
 float prand();
+v3 prand_v3();
+v3 frand_v3();
+
 // convert string to v3 (vector components are devided with ',' [X,Y,Z])
 v3	stov3(const std::string& s);
 // convert float number into string

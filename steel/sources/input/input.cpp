@@ -86,10 +86,6 @@ bool Input::init(Config* _conf)
 		return false;
 	}
 
-
-	if(conf->geti("mouse.capture", 0))
-		(this->*CaptureMouse)();
-
 	sensetivity = conf->getd("mouse.sensetivity", 1);
 	lastdx = 0;
 	lastdy = 0;
@@ -106,3 +102,10 @@ void Input::getMouseDelta(double &dx, double &dy)
 	dy = lastdy*sensetivity*MOUSE_SENS; lastdy = 0;
 }
 
+void Input::start()
+{
+	if(conf->geti("mouse.capture", 0))
+    {
+		(this->*CaptureMouse)();
+    }
+}
