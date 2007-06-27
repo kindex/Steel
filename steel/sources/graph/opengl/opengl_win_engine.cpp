@@ -24,6 +24,7 @@
 #include "../../input/input.h"
 #include "../../common/logger.h"
 #include "../../common/utils.h"
+#include <sstream>
 
 
 extern HINSTANCE hInstance;
@@ -41,7 +42,7 @@ struct WindowInformationWinAPI: public OpenGL_Engine::WindowInformation
 	HDC		DC;    // Window Handle, Device Context
 	HGLRC	RC; // Rendering Context - for OpenGL
 	DWORD	dwStyle;
-	Input	*input;
+	Input*	input;
 
 	WindowInformationWinAPI(): input(NULL) {}
 };
@@ -407,11 +408,22 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input* input)
 	//if(conf->geti("fullscreen"))
 	  // 	changeToFullScpeen();							// Go to full screen
 
-    std::stringstream
-	log_msg("opengl graph", "Video mode has been set! (" +	
-		IntToStr(conf->geti("window.width")) + "x" + 
-		IntToStr(conf->geti("window.height")) + "x" +
-		IntToStr(conf->geti("screen.depth"))+ ")" );
+    std::stringstream s;
+	s << "Video mode has been set! (" 
+		<< conf->geti("window.width") << "x"
+		<< conf->geti("window.height") << "x"
+		<< conf->geti("screen.depth");
+	if (conf->getb("window.maximized", true))
+	{
+		s << ",maximized";
+	}
+	if (conf->geti("window.fullscreen"))
+	{
+		s << ",fullscreen";
+	}
+	s << ")";
+
+	log_msg("opengl graph", s.str());
 
 	((WindowInformationWinAPI*)windowInformation)->return_pressed = false;
 
