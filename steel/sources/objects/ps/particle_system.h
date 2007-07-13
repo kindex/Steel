@@ -73,18 +73,18 @@ protected:
 class ParticleRenderer: public ParticleProcessor
 {
 public:
-	virtual bool updateInformation(IN OUT Engine&) abstract;
-	virtual bool beforeInject(IN OUT Engine&) abstract;
-	virtual void afterRemove(IN OUT Engine&) abstract;
+	virtual bool updateInformation(IN OUT Engine&, IN const InterfaceId id) abstract;
+    virtual bool beforeInject(IN OUT Engine&, IN const InterfaceId id) { return true; }
+    virtual void afterRemove(IN OUT Engine&, IN const InterfaceId id) {}
 };
 
 // класс, который анимирует частицы (физика частиц)
 class ParticleAnimator: public ParticleProcessor
 {
 public:
-	virtual bool updateInformation(IN OUT Engine&) abstract;
-	virtual bool beforeInject(IN OUT Engine&) abstract;
-	virtual void afterRemove(IN OUT Engine&) abstract;
+	virtual bool updateInformation(IN OUT Engine&, IN const InterfaceId id) abstract;
+    virtual bool beforeInject(IN OUT Engine&, IN const InterfaceId id) {return true; }
+    virtual void afterRemove(IN OUT Engine&, IN const InterfaceId id) {}
 };
 
 // система чатиц
@@ -95,13 +95,14 @@ class ParticleSystem: public GameObject
 public:
 	ParticleSystem();
 
-	bool isSuportingInterface(IN OUT Engine&);
-	bool beforeInject(IN OUT Engine&);
-	void afterRemove(IN OUT Engine&);
-	bool updateInformation(IN OUT Engine&);
-	void bindEngine(IN OUT Engine&);
+	bool supportsInterface(IN OUT Engine&, IN const InterfaceId);
+	bool beforeInject(IN OUT Engine&, IN const InterfaceId);
+	void afterRemove(IN OUT Engine&, IN const InterfaceId);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId);
+	void bindEngine(IN OUT Engine&, IN const InterfaceId);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+
 	void particleBorn(int index);
 	void particleDie(int index);
 

@@ -62,7 +62,7 @@ void SimpleEmitter::born(Particle& particle, int index)
         case EMITTER_UNIFORM_CUBE:
         {
             float w = pow(float(init_size), 1.0f/3.0f);
-            int w2 = int(ceil(w)-EPSILON);
+            int w2 = int(ceil(w-EPSILON));
             int x = index%w2;
             int y = index/w2%w2;
             int z = index/w2/w2;

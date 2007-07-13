@@ -83,7 +83,7 @@ struct GraphShadow : public Shadow // множество треугольник�
 	// *** Polyhedra ****
 	const FaceMaterialVector*	faceMaterials;
 	EdgeVectorVector			edges;
-	const Vertexes*				vertexes;
+	const VertexVector*				vertexes;
 	const Normals*				normals;
 	unsigned int				textureCount;
 	pvector<const TexCoords*>	texCoords;

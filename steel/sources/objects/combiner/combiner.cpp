@@ -17,6 +17,8 @@
 #include "combiner.h"
 #include "../game_object_factory.h"
 #include "../../audio/audio_interface.h"
+#include "../../graph/graph_interface.h"
+#include "../../physic/physic_interface.h"
 #include "graph_object.h"
 #include "audio_object.h"
 #include "../transformation/transformation.h"
@@ -26,7 +28,8 @@ using namespace std;
 Combiner::Combiner(): 
 	graph(NULL), 
 	audio(NULL),
-	transformation(NULL)
+	transformation(NULL),
+    polyhedraPhysicSameAsGraph(false)
 {}
 
 
@@ -38,6 +41,8 @@ bool Combiner::InitFromConfig(Config& conf)
 
 	position.loadIdentity();
 	positionKind = conf.gets("position_kind", "local") == "local" ? POSITION_LOCAL : POSITION_GLOBAL;
+
+    polyhedraPhysicSameAsGraph = conf.getb("polyhedraPhysicSameAsGraph");
 
 	Config* graphConf = conf.find("graph");
 	if (graphConf != NULL)
@@ -110,16 +115,17 @@ bool Combiner::InitFromConfig(Config& conf)
 	return true;
 }
 
-bool Combiner::isSuportingInterface(Engine& engine) 
+bool Combiner::supportsInterface(Engine& engine, IN const InterfaceId id) 
 { 
-	if (engine.isSupportingInterface(INTERFACE_GRAPH) ||
-		engine.isSupportingInterface(INTERFACE_AUDIO))
+	if (graph != NULL && id == INTERFACE_GRAPH 
+     || audio != NULL && id == INTERFACE_AUDIO
+     || polyhedraPhysicSameAsGraph && id == INTERFACE_POPYHEDRA_PHYSIC)
 	{
 		return true;
 	}
 	for EACH(pvector<GameObject*>, objects, it)
 	{
-		if ((*it)->isSuportingInterface(engine))
+		if ((*it)->supportsInterface(engine, id))
 		{
 			return true;
 		}
@@ -127,21 +133,26 @@ bool Combiner::isSuportingInterface(Engine& engine)
 	return false;
 }
 
-void Combiner::bindEngine(Engine& engine)
+void Combiner::bindEngine(Engine& engine, IN const InterfaceId id)
 {
-	engine.setCurrentObject(this);
+	engine.setCurrentObject(this, id);
 // TODO:
-	if (engine.isSupportingInterface(INTERFACE_GRAPH) && graph != NULL)
+	if (id == INTERFACE_GRAPH && graph != NULL)
 	{
 		dynamic_cast<GraphInterface*>(&engine)->setPositionKind(positionKind);
 		dynamic_cast<GraphInterface*>(&engine)->setPosition(position*origin);
-		graph->bindEngine(engine);
+		graph->bindEngine(engine, id);
 	}
-	if (engine.isSupportingInterface(INTERFACE_AUDIO) && audio != NULL)
+    else if (id == INTERFACE_AUDIO && audio != NULL)
 	{
 //		dynamic_cast<AudioInterface*>(engine)->setPositionKind(positionKind);
 //		dynamic_cast<AudioInterface*>(engine)->setPosition(position);
-		audio->bindEngine(engine);
+		audio->bindEngine(engine, id);
+	}
+    else if (id == INTERFACE_POPYHEDRA_PHYSIC && polyhedraPhysicSameAsGraph)
+	{
+//        dynamic_cast<PhysicInterface*>(&engine)->setVertexes(graph->
+        graph->bindEngine(engine, id);
 	}
 
 	ChildrenInterface &cEngine = *dynamic_cast<ChildrenInterface*>(&engine);
@@ -149,32 +160,45 @@ void Combiner::bindEngine(Engine& engine)
 
 	for EACH(pvector<GameObject*>, objects, it)
 	{
-		if ((*it)->isSuportingInterface(engine)) 
+		if ((*it)->supportsInterface(engine, id)) 
 		{
 			cEngine.addChild(*it);
 		}
 	}
 }
 
-bool Combiner::updateInformation(Engine& engine)
+bool Combiner::updateInformation(Engine& engine, IN const InterfaceId id)
 {
-	if (engine.isSupportingInterface(INTERFACE_GRAPH))
-	{
-		dynamic_cast<GraphInterface*>(&engine)->setPosition(position*origin);
-		if (graph != NULL)
-		{
-			return graph->updateInformation(engine);
-		}
+	switch (id)
+    {
+        case INTERFACE_GRAPH:
+		    dynamic_cast<GraphInterface*>(&engine)->setPosition(position*origin);
+		    if (graph != NULL)
+		    {
+			    return graph->updateInformation(engine, id);
+		    }
+            break;
+
+        case INTERFACE_AUDIO:
+		    dynamic_cast<AudioInterface*>(&engine)->setPosition(position*origin);
+		    if (audio != NULL)
+		    {
+			    return audio->updateInformation(engine, id);
+		    }
+            break;
+
+        case INTERFACE_POPYHEDRA_PHYSIC:
+            if (polyhedraPhysicSameAsGraph)
+            {
+		        dynamic_cast<PhysicPolyhedraInterface*>(&engine)->setPosition(position*origin);
+		        if (graph != NULL)
+		        {
+			        return graph->updateInformation(engine, id);
+		        }
+            }
+            break;
 	}
-	// test audio update
-	if (engine.isSupportingInterface(INTERFACE_AUDIO))
-	{
-		dynamic_cast<AudioInterface*>(&engine)->setPosition(position*origin);
-		if (audio != NULL)
-		{
-			return audio->updateInformation(engine);
-		}
-	}
+
 	return false;
 }
 

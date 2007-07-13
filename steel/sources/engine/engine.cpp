@@ -30,77 +30,90 @@ void Shadow::fill(GameObject* object)
 }
 
 
-bool Engine::makeShadowForObject(GameObject* object)
+bool Engine::makeShadowForObject(GameObject* object, const InterfaceId id)
 {
 	uid objectId = object->getId();
-	if(idHash.find(objectId) != idHash.end())
+	if (idHash[id].find(objectId) != idHash[id].end())
 	{
 		log_msg("error engine", "Duplicate object " + IntToStr(objectId) + " in shadow");
 		return false;
 	}
 
-	int shadowIndex = shadows.size();
-	
-	Shadow* newStorage = getShadowClass(object);
-	if(newStorage == NULL)
+	Shadow* newStorage = shadowClassFactory(object, id);
+	if (newStorage == NULL)
 	{
 		log_msg("error engine", "Cannot find shadow for object " + IntToStr(objectId));
 		return false;
 	}
 
-	shadows.push_back(newStorage);
+	int shadowIndex = addShadow(newStorage, id);
 
-	idHash[objectId] = shadowIndex;
+	idHash[id][objectId] = shadowIndex;
 	newStorage->shadowIndex = shadowIndex;
 	newStorage->fill(object);
 	makeShadowForObjectPost(object, newStorage);
 	return true;
 }
 
-void Engine::deleteShadowForObject(int sid)
+int Engine::addShadow(Shadow* newStorage, const InterfaceId)
+{
+	shadows.push_back(newStorage);
+    return shadows.size() - 1; // index
+}
+
+void Engine::deleteShadowForObject(int sid, const InterfaceId id)
 {
 	deleteShadowForObjectPost(sid);
 
 	Shadow *shadow = shadows[sid];
-	idHash.erase(shadow->objectId);
+	idHash[id].erase(shadow->objectId);
 	delete shadow;
 
 	if(size_t(sid + 1) < shadows.size())
 	{
 		shadows[sid] = shadows.back();
-		idHash[shadows[sid]->objectId] = sid;
+		idHash[id][shadows[sid]->objectId] = sid;
 	}
 	shadows.pop_back();
 }
 
-void Engine::deleteShadowForChildren(int sid)
+void Engine::deleteShadowForChildren(int sid, const InterfaceId id)
 {
 	int count = shadows[sid]->children.size();
 	for(int i = 0; i < count; i++)
 	{
-		int n = findSid(shadows[sid]->children[i]);
-		deleteShadowForChildren(n);
-		deleteShadowForObject(n);
+		int n = findSid(shadows[sid]->children[i], id);
+		deleteShadowForChildren(n, id);
+		deleteShadowForObject(n, id);
 	}
 }
 
-Shadow* Engine::getShadow(GameObject* object)
+Shadow* Engine::getShadow(GameObject* object, const InterfaceId iid)
 {
 	uid id = object->getId();
-//	assert(idHash.find(id) != idHash.end(), "Object not found in physic shadow");
+    int sid = findSid(id, iid);
 
-	if(idHash.find(id) != idHash.end())
-		return shadows[findSid(id)];
+	if (sid >= 0)
+    {
+		return shadows[sid];
+    }
 	else
+    {
 		return NULL;
+    }
 }
 
-Shadow* Engine::getShadow(uid id)
+Shadow* Engine::getShadow(uid id, const InterfaceId iid)
 {
-	if(idHash.find(id) != idHash.end())
-		return shadows[findSid(id)];
+    int sid = findSid(id, iid);
+	if (sid >= 0)
+    {
+		return shadows[sid];
+    }
 	else
+    {
 		return NULL;
+    }
 }
 
 void Camera::set(const v3 &_position, const v3& _direction, const v3& _upVector)

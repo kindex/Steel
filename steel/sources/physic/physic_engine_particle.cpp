@@ -66,14 +66,12 @@ v3 PhysicEngine::calculateForceForParticle(ParticleShadow* shadow)
 	v3 res;
 	res.loadZero();
 
-//    res += v3(0, 0, -0.8); // Global gravity
-
 // реагируем только с частицами, номер которых больше этого
 // для того, чтобы исключить повторную проверку (сила действия равна силе противодействия)
 
-	for EACH(ShadowPVector,  shadows, it)
+	for EACH(ParticleShadowVector, particles, it)
 	{
-		if (static_cast<ParticleShadow*>(*it)->enabled)
+		if ((*it)->enabled)
 		{
 			res += calculateForceForParticle(shadow, static_cast<ParticleShadow*>(*it));
 		}
@@ -87,7 +85,7 @@ bool PhysicEngine::processParticle(ParticleShadow* shadow)
 {
 
 // -------------------
-//	shadow->force += g*objectStorage->mass*0;
+	shadow->force += globalGravity * shadow->global_gravity_k;
 	shadow->force += calculateForceForParticle(shadow);
 
 // -------------------

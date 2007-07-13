@@ -356,10 +356,6 @@
 				Name="res"
 				>
 				<File
-					RelativePath="..\sources\res\res.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\sources\res\res.h"
 					>
 				</File>
@@ -822,6 +818,10 @@
 				<Filter
 					Name="containers"
 					>
+					<File
+						RelativePath="..\sources\common\containers\set_maker.h"
+						>
+					</File>
 					<File
 						RelativePath="..\sources\common\containers\string_dict.cpp"
 						>

@@ -3,22 +3,46 @@
 class = 'combiner'
 objects = 
 (
-//[/room/room.scene#] {}
 
 
 [ps.scene#] { emitter = {	origin = (1 0 1.7) } }
-/*[ps.scene#] { 
-	emitter = {	origin = (1 -2.5 2) } 
-	renderer = 
-		{
-		material =  {
-			diffuse_map = {image = 'bsmoke'}
+
+
+{
+class = 'combiner'
+origin = (1 0 0.49)
+polyhedraPhysicSameAsGraph = 1
+
+transformation = 
+{
+	class = 'rotation'
+	speed = 0
+	bias = 0.2
+	rotationAxis = (1 0 0)
+}
+
+graph = 
+{
+	class = 'box'
+	size = (2.4 2.4 0.4)
+	
+
+	material = 
+	{
+		class = 'std'
+		blend = 0
+		dropShadows = 1
+		diffuse_map =
+		{ 
+			image = '../17_intro/GALVPLAT'
+			texCoordsRotation = 0.0
+			texCoordsScale = (1 1 1)
+			texCoordsTranslation = (0 0 0)
+			k = 10
 		}
 	}
 }
-*/
-
-[/light.conf#]{origin = (0 1 1)}
+}
 
 
 

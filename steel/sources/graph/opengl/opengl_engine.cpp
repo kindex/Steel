@@ -904,7 +904,7 @@ void OpenGL_Engine::processCamera()
 void OpenGL_Engine::prepare(GraphShadow& shadow, matrix34 matrix, GameObject* parent)
 {
 	currentShadow = &shadow;
-	shadow.object->updateInformation(*this);
+	shadow.object->updateInformation(*this, INTERFACE_GRAPH);
 
 	shadow.setParent(parent);
 

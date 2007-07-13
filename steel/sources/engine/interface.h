@@ -18,26 +18,28 @@
 #include "../math/vector3d.h"
 #include "../math/matrix34.h"
 
-typedef int InterfaceId;
+enum InterfaceId
+{
+    INTERFACE_BASE = 1 << 0,
+    INTERFACE_3D = 1 << 1,
+    INTERFACE_CHILDREN = 1 << 2,
+    INTERFACE_GRAPH_RAW = 1 << 3, // TODO: rename
+    INTERFACE_AUDIO_RAW = 1 << 4, // TODO: rename
+    INTERFACE_PARTICLE_PHYSIC_RAW = 1 << 5, // TODO: rename
+    INTERFACE_POPYHEDRA_PHYSIC_RAW = 1 << 6, // TODO: rename
 
-const InterfaceId INTERFACE_BASE = 1 << 0;
-const InterfaceId INTERFACE_3D = 1 << 1;
-const InterfaceId INTERFACE_CHILDREN = 1 << 2;
-const InterfaceId INTERFACE_GRAPH_RAW = 1 << 3; // TODO: rename
-const InterfaceId INTERFACE_AUDIO_RAW = 1 << 4; // TODO: rename
-const InterfaceId INTERFACE_PARTICLE_PHYSIC_RAW = 1 << 5; // TODO: rename
-
-const InterfaceId INTERFACE_GRAPH = INTERFACE_BASE + INTERFACE_3D + INTERFACE_CHILDREN + INTERFACE_GRAPH_RAW;
-const InterfaceId INTERFACE_AUDIO = INTERFACE_BASE + INTERFACE_3D + INTERFACE_CHILDREN + INTERFACE_AUDIO_RAW;
-const InterfaceId INTERFACE_PARTICLE_PHYSIC = INTERFACE_BASE + INTERFACE_CHILDREN + INTERFACE_PARTICLE_PHYSIC_RAW;
+    INTERFACE_GRAPH = INTERFACE_BASE + INTERFACE_3D + INTERFACE_CHILDREN + INTERFACE_GRAPH_RAW,
+    INTERFACE_AUDIO = INTERFACE_BASE + INTERFACE_3D + INTERFACE_CHILDREN + INTERFACE_AUDIO_RAW,
+    INTERFACE_PARTICLE_PHYSIC = INTERFACE_BASE + INTERFACE_CHILDREN + INTERFACE_PARTICLE_PHYSIC_RAW,
+    INTERFACE_POPYHEDRA_PHYSIC = INTERFACE_BASE + INTERFACE_CHILDREN + INTERFACE_POPYHEDRA_PHYSIC_RAW,
+};
 
 class GameObject;
 
 class BaseInterface
 {
 public:
-	virtual bool setCurrentObject(GameObject*) abstract;
-	virtual bool isSupportingInterface(IN const InterfaceId) abstract;
+	virtual bool setCurrentObject(GameObject*, IN const InterfaceId) abstract;
 };
 
 /*
@@ -59,7 +61,7 @@ enum PositionKind
 class Interface3D
 {
 public:
-	virtual void setPosition(ObjectPosition) abstract;
+	virtual void setPosition(const ObjectPosition&) abstract;
 	virtual void setPositionKind(PositionKind) abstract;
 };
 

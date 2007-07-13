@@ -4,8 +4,8 @@ class = 'ps'
 emitter = 
 {
 	class = 'simple'
-	particle_size = 0.01
-	init_size = 125
+	particle_size = 0.04
+	init_size = 64
 	emitter_size = 1
 	emitter_type = 'uniform_cube'
 }
@@ -29,7 +29,7 @@ animator =
 	particle = 
 	{
 		mass=1
-		distance_k = 0.05
+		distance_k = 0.3
 
 		spring_k=0
 		spring_r0=0.0
@@ -38,11 +38,11 @@ animator =
 		gravity_power=-2
 		gravity_min_dist=0.1
 
-		friction_k=1.0
+		friction_k=2
 		friction_power=3
 
-		lj_power1 = -2
-		lj_power2 = -2.01
+		lj_power1 = -3
+		lj_power2 = -6
 	}
 	} 
 }

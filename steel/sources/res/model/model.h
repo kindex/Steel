@@ -28,18 +28,18 @@ public:
 	float calculateVolume(); // вычислить объём
 	float getVolume(); // вычислить объём
 
-	const Vertexes* getVertexes() const { return &vertexes; }
-	const Normals* getNormals() const { return &normals; }
+	const VertexVector*       getVertexes() const { return &vertexes; }
+	const Normals*            getNormals() const { return &normals; }
 	const FaceMaterialVector* getFaceMaterials() const { return &faceMaterials; }
-	const TexCoords* getTexCoords(int mapNumber) const;
+	const TexCoords*          getTexCoords(int mapNumber) const;
 
 	friend class GraphObjectModel; // TEMP:
 
 protected:
 	AABB				frame;
-    Vertexes			vertexes;    // Vertexes
+    VertexVector		vertexes;    // VertexVector
 
-    Faces				triangleAll;        // Faces
+    Faces				allFaces;        // Faces
 
     TexCoords			texCoords; // Texture coordinates
     Normals				normals;    // Vertex normals
@@ -49,20 +49,11 @@ protected:
 	float				volume;
 
     Model(): name(), volume(-1) { }
-    void updateMaterial();
-    void updateNormals();
 	void updateAABB();
-    void updateTangentSpace();
-    void update()
-    {
-        updateNormals();
-        updateMaterial();
-        updateTangentSpace();
-    }
     void updatetangentSpaceLight();
     void updateReflectCoords();
     void updateSphereMap(v3 &center);
-    int duplicateVertex(int src, v3 newnormal);
+    int  duplicateVertex(int src, v3 newnormal);
 
 	void generateNormals();
 };

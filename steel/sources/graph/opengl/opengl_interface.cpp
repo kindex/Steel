@@ -19,11 +19,6 @@
 namespace opengl
 {
 
-bool OpenGL_Engine::isSupportingInterface(IN const InterfaceId id)
-{
-	return (id & (INTERFACE_GRAPH)) == id;
-}
-
 void OpenGL_Engine::addLight(Light* light)
 {
 	LightShadow* shadow = new LightShadow();
@@ -49,11 +44,11 @@ void OpenGL_Engine::updateLight(uid id, Light* light)
 	it->second->changed = true;
 }
 
-bool OpenGL_Engine::setCurrentObject(GameObject* object)
+bool OpenGL_Engine::setCurrentObject(GameObject* object, const InterfaceId)
 {
 	uid id = object->getId();
 	currentShadow = getShadow(id);
-	if(currentShadow == NULL)
+	if (currentShadow == NULL)
 	{
 		return false;
 	}
@@ -61,7 +56,7 @@ bool OpenGL_Engine::setCurrentObject(GameObject* object)
 	return false;
 }
 
-void OpenGL_Engine::setPosition(ObjectPosition position)
+void OpenGL_Engine::setPosition(const ObjectPosition& position)
 {
 	GS(currentShadow)->position = position;
 }
@@ -81,12 +76,21 @@ void OpenGL_Engine::addChild(GraphShadow &shadow, GameObject *child)
 {
 	uid childUid = child->getId();
 	uidVector::const_iterator it = find(shadow.children, childUid);
-	if(it != currentShadow->children.end()) return ; // child have been added before
-	if(!child->beforeInject(*this)) return; // shild don't want to be added
-	if(!makeShadowForObject(child)) return;
+	if (it != currentShadow->children.end())
+    {
+        return ; // child have been added before
+    }
+	if (!child->beforeInject(*this, INTERFACE_GRAPH))
+    {
+        return; // shild don't want to be added
+    }
+	if (!makeShadowForObject(child, INTERFACE_GRAPH))
+    {
+        return;
+    }
 	shadow.children.push_back(childUid);
-	setCurrentObject(child);
-	child->bindEngine(*this);
+	setCurrentObject(child, INTERFACE_GRAPH);
+	child->bindEngine(*this, INTERFACE_GRAPH);
 	currentShadow = &shadow;
 }
 
@@ -101,7 +105,7 @@ void OpenGL_Engine::clearChildren()
 	// TODO:
 }
 
-void OpenGL_Engine::setVertexes(const Vertexes* vertexes) // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+void OpenGL_Engine::setVertexes(const VertexVector* vertexes) // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
 {
 	GS(currentShadow)->vertexes = vertexes;
 	GS(currentShadow)->aabbCalculated = false;

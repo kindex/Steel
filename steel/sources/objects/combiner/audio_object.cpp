@@ -75,14 +75,14 @@ bool AudioObject::soundUpdate(Sound* sound)
 	return true;
 }
 
-void AudioObject::bindEngine(Engine& _engine)
+void AudioObject::bindEngine(Engine& _engine, IN const InterfaceId id)
 {
 	engine = dynamic_cast<AudioInterface*>(&_engine);
 	// TODO: start playing all scheduled sounds in sounds array
 }
 
-bool AudioObject::isSuportingInterface(Engine& engine)
+bool AudioObject::supportsInterface(Engine& engine, IN const InterfaceId id)
 {
-	return engine.isSupportingInterface(INTERFACE_AUDIO);
+	return id == INTERFACE_AUDIO;
 }
 

@@ -17,8 +17,8 @@
 
 GameObject* DemoGameObjectFactory::createGameObject(IN const std::string& className) const
 {
-	if(className == "sphere")	return new Sphere;
-	if(className == "kar98k")	return new Kar98k;
+	if (className == "sphere")	return new Sphere;
+	if (className == "kar98k")	return new Kar98k;
 
 	return GameObjectFactory::createGameObject(className);
 }

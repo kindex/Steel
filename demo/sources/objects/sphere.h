@@ -25,15 +25,13 @@ public:
 	Sphere();
 	virtual ~Sphere();
 
-	bool beforeInject(IN OUT Engine&){return true;}
-	void afterRemove(IN OUT Engine&){}
-	bool updateInformation(IN OUT Engine&);
-	void bindEngine(IN OUT Engine&);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id);
+	void bindEngine(IN OUT Engine&, IN const InterfaceId id);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
-	bool isSuportingInterface(Engine& engine)
+    bool supportsInterface(Engine& engine, IN const InterfaceId id)
 	{
-		return engine.isSupportingInterface(INTERFACE_GRAPH);
+		return id == INTERFACE_GRAPH;
 	}
 
 
@@ -45,13 +43,15 @@ private:
 	int height;
 	int radius;
 
-	ObjectPosition position;
-	Config	*conf;
+	ObjectPosition      position;
+	Config*             conf;
 
-	Vertexes *vertexes, *normals;
-	FaceMaterialVector *faces;
-	TexCoords *texCoords0, *texCoords1;
-	GraphEngine *graphEngine;
+	VertexVector*       vertexes;
+    VertexVector*       normals;
+	FaceMaterialVector* faces;
+	TexCoords*          texCoords0;
+    TexCoords*          texCoords1;
+	GraphEngine*        graphEngine;
 
 };
 

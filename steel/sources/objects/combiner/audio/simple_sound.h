@@ -19,11 +19,9 @@
 class SimpleSound: public AudioObject
 {
 public:
-	bool isSuportingInterface(IN OUT Engine& engine);
-	bool beforeInject(IN OUT Engine&){ return true; }
-	void afterRemove(IN OUT Engine&){}
-	bool updateInformation(IN OUT Engine&){return false;}
-	void bindEngine(IN OUT Engine&);
+	bool supportsInterface(IN OUT Engine& engine, IN const InterfaceId id);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id){return false;}
+	void bindEngine(IN OUT Engine&, IN const InterfaceId id);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
 

@@ -58,9 +58,9 @@ bool GameLight::InitFromConfig(Config& conf)
 }
 
 
-void GameLight::bindEngine(Engine& engine)
+void GameLight::bindEngine(Engine& engine, IN const InterfaceId id)
 {
-	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	if (id == INTERFACE_GRAPH)
 	{
 		this->engine = dynamic_cast<GraphInterface*>(&engine);
 		this->engine->setPosition(position);
@@ -71,15 +71,15 @@ void GameLight::bindEngine(Engine& engine)
 	}
 }
 
-void GameLight::afterRemove(Engine&)
+void GameLight::afterRemove(Engine&, IN const InterfaceId)
 {
 	engine = NULL;
 }
 
 
-bool GameLight::updateInformation(Engine& engine)
+bool GameLight::updateInformation(Engine& engine, IN const InterfaceId)
 {
-	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	if (id == INTERFACE_GRAPH)
 	{
 		dynamic_cast<GraphInterface*>(&engine)->setPosition(position);
 		return true;
@@ -93,7 +93,7 @@ void GameLight::enable()
 	{
 		if (engine != NULL)
 		{
-			dynamic_cast<BaseInterface*>(engine)->setCurrentObject(this);
+			engine->setCurrentObject(this, INTERFACE_GRAPH);
 			engine->addLight(light);
 		}
 		enabled = true;
@@ -106,7 +106,7 @@ void GameLight::disable()
 	{
 		if (engine != NULL)
 		{
-			dynamic_cast<BaseInterface*>(engine)->setCurrentObject(this);
+			engine->setCurrentObject(this, INTERFACE_GRAPH);
 			engine->removeLight(light->id);
 		}
 		enabled = false;

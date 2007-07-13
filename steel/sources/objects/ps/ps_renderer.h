@@ -24,8 +24,7 @@ class SpriteRenderer: public ParticleRenderer
 {
 public:
 	bool beforeInject(IN OUT Engine&) { return true; }
-	void afterRemove(IN OUT Engine&) {}
-	bool updateInformation(IN OUT Engine&);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id);
 	void bindEngine(IN OUT Engine&);
 	bool InitFromConfig(IN Config&);
 	void process(IN const ProcessInfo& info) {}
@@ -40,7 +39,7 @@ public:
 
 private:
 	MaterialStd*	material;
-	Vertexes		vertexes;
+	VertexVector		vertexes;
 	TexCoords		texCoords;
 	Normals			normals;
 	v3				cameraPosition;
@@ -55,10 +54,8 @@ class ObjectPSRenderer: public ParticleRenderer
 public:
 	bool initParticles();
 	bool InitFromConfig(Config&) { return true;}
-	bool updateInformation(IN OUT Engine&) { return false; }
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id) { return false; }
 	void process(IN const ProcessInfo& info){}
-	bool beforeInject(IN OUT Engine&) { return true; }
-	void afterRemove(IN OUT Engine&) {}
 	void onParticleBorn(int index) {}
 	void onParticleDie(int index) {}
 
@@ -72,10 +69,8 @@ class DummyPSRenderer: public ParticleRenderer
 public:
 	bool initParticles() { return true; }
 	bool InitFromConfig(Config&) { return true;}
-	bool updateInformation(IN OUT Engine&) { return false; }
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id) { return false; }
 	void process(IN const ProcessInfo& info){}
-	bool beforeInject(IN OUT Engine&) { return true; }
-	void afterRemove(IN OUT Engine&) {}
 	void onParticleBorn(int index) {}
 	void onParticleDie(int index) {}
 };

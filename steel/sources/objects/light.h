@@ -23,14 +23,13 @@ public:
 	GameLight(): light(NULL), engine(NULL), enabled(false) { position.loadIdentity(); }
 	~GameLight()	{		delete light;	}
 
-	bool isSuportingInterface(Engine& engine)
+	bool supportsInterface(Engine& engine, IN const InterfaceId id)
 	{
-		return engine.isSupportingInterface(INTERFACE_GRAPH);
+		return id == INTERFACE_GRAPH;
 	}
-	bool beforeInject(IN OUT Engine&){return true;}
-	void afterRemove(IN OUT Engine&);
-	bool updateInformation(IN OUT Engine&);
-	void bindEngine(IN OUT Engine&);
+	void afterRemove(IN OUT Engine&, IN const InterfaceId);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId);
+	void bindEngine(IN OUT Engine&, IN const InterfaceId);
 	void process(IN const ProcessInfo&){}
 	bool InitFromConfig(IN Config&);
 

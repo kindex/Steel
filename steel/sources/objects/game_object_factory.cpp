@@ -27,9 +27,9 @@ GameObjectFactory* gameObjectFactory = NULL;
 
 GameObject* GameObjectFactory::createGameObject(IN const std::string& className) const
 {
-	if(className == "combiner")	return new Combiner;
-	if(className == "ps")		return new ParticleSystem;
-	if(className == "light")	return new GameLight;
+	if (className == "combiner")return new Combiner;
+	if (className == "ps")		return new ParticleSystem;
+	if (className == "light")	return new GameLight;
 
 	return NULL;
 }

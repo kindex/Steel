@@ -33,8 +33,8 @@ ParticleEmitter* findParticleEmitter(const std::string& _class)
 
 ParticleAnimator* findParticleAnimator(const std::string& _class)
 {
-	if(_class == "UniPSanimator") return new UniPSanimator;
-	if(_class == "simple") return new SimpleAnimator;
+	if (_class == "UniPSanimator") return new UniPSanimator;
+	if (_class == "simple") return new SimpleAnimator;
 
 	error("ps", std::string("ParticleAnimator class '") + _class + "' not found");
 	return NULL;
@@ -42,9 +42,9 @@ ParticleAnimator* findParticleAnimator(const std::string& _class)
 
 ParticleRenderer* findParticleRenderer(const std::string& _class)
 {
-	if(_class == "sprite") return new SpriteRenderer;
-	if(_class == "object") return new ObjectPSRenderer;
-	if(_class == "dummy")  return new DummyPSRenderer;
+	if (_class == "sprite") return new SpriteRenderer;
+	if (_class == "object") return new ObjectPSRenderer;
+	if (_class == "dummy")  return new DummyPSRenderer;
 
 	error("ps", std::string("ParticleRenderer class '") + _class + "' not found");
 	return NULL;
@@ -130,62 +130,62 @@ bool ParticleEmitter::initParticles()
 	return true;
 }
 
-bool ParticleSystem::isSuportingInterface(Engine& engine)
+bool ParticleSystem::supportsInterface(Engine& engine, IN const InterfaceId id)
 {
-	return engine.isSupportingInterface(INTERFACE_GRAPH) ||
-			engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC);
+	return id == INTERFACE_GRAPH
+        || id == INTERFACE_PARTICLE_PHYSIC;
 }
 
-bool ParticleSystem::updateInformation(Engine& engine)
+bool ParticleSystem::updateInformation(Engine& engine, IN const InterfaceId id)
 {
-	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	if (id == INTERFACE_GRAPH)
 	{
 //		emitter->updateInformation(engine);
-		renderer->updateInformation(engine);
+		renderer->updateInformation(engine, id);
 		return true;
 	}
-	if (engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC))
+    else if (id == INTERFACE_PARTICLE_PHYSIC)
 	{
-		animator->updateInformation(engine);
+		animator->updateInformation(engine, id);
 	}
 
 	return false;
 }
 
-bool ParticleSystem::beforeInject(Engine& engine)
+bool ParticleSystem::beforeInject(Engine& engine, IN const InterfaceId id)
 {
-	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	if (id == INTERFACE_GRAPH)
 	{
-		return renderer->beforeInject(engine);
+		return renderer->beforeInject(engine, id);
 	}
-	if (engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC))
+	else if (id == INTERFACE_PARTICLE_PHYSIC)
 	{
-		return animator->beforeInject(engine);
+		return animator->beforeInject(engine, id);
 	}
 	return false;
 }
 
-void ParticleSystem::afterRemove(Engine& engine)
+void ParticleSystem::afterRemove(Engine& engine, IN const InterfaceId id)
 {
-	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	if (id == INTERFACE_GRAPH)
 	{
-		return renderer->afterRemove(engine);
+		return renderer->afterRemove(engine, id);
 	}
-	if (engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC))
+	else if (id == INTERFACE_PARTICLE_PHYSIC)
 	{
-		return animator->afterRemove(engine);
+		return animator->afterRemove(engine, id);
 	}
 }
 
-void ParticleSystem::bindEngine(Engine& engine)
+void ParticleSystem::bindEngine(Engine& engine, IN const InterfaceId id)
 {
-	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	if (id == INTERFACE_GRAPH)
 	{
-		return renderer->afterRemove(engine);
+		return renderer->afterRemove(engine, id);
 	}
-	if (engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC))
+	else if (id == INTERFACE_PARTICLE_PHYSIC)
 	{
-		return animator->afterRemove(engine);
+		return animator->afterRemove(engine, id);
 	}
 }
 

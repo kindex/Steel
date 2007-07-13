@@ -17,6 +17,7 @@
 #include "../steel.h"
 #include "../engine/engine.h"
 #include "../engine/game_object.h"
+#include "../engine/engine_types.h"
 #include "../math/aabb.h"
 #include "../math/matrix34.h"
 #include "../math/vector3d.h"
@@ -35,7 +36,7 @@ struct Velocity
 	}
 };
 
-class PhysicParticleInterface : public ChildrenInterface
+class PhysicParticleInterface
 {
 public:
 	virtual	void	setPosition(IN const v3) abstract;
@@ -45,8 +46,22 @@ public:
 	virtual v3		getVelocity() abstract;
 
 	virtual	void	setConfig(Config&) abstract;
-
-    virtual void	addTriangle(const Plane&) abstract;
 };
+
+class PhysicPolyhedraInterface : public Interface3D
+{
+public:
+	virtual void	setVertexes(const VertexVector*) abstract;
+	virtual void	setFaces(const Faces*) abstract;
+};
+
+
+class PhysicInterface : 
+    public PhysicParticleInterface,
+    public PhysicPolyhedraInterface,
+    public ChildrenInterface
+{
+};
+
 
 #endif

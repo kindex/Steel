@@ -49,7 +49,7 @@ void GraphShadow::calculateAABB()
 
 	if (vertexes != NULL)
 	{
-		for EACH_CONST(Vertexes, *vertexes, i)
+		for EACH_CONST(VertexVector, *vertexes, i)
 		{
 			aabb.merge(*i);
 		}

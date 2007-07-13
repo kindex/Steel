@@ -21,6 +21,7 @@
 #include "../math/vector3d.h"
 #include "../math/vector2d.h"
 #include "../res/image/image.h"
+#include "../common/svector.h"
 
 
 struct color4f
@@ -88,6 +89,21 @@ struct GLines
 	pvector<color4f> color; // line color
 };
 
-typedef Vertexes	Normals;
+typedef VertexVector	Normals;
+
+class MaterialStd;
+
+struct FaceMaterial
+{
+	FaceMaterial() {}
+	FaceMaterial(MaterialStd* material, Faces* faces) : material(material), faces(faces) {}
+
+	MaterialStd*	material;
+	Faces*			faces;
+	std::string		name;
+};
+
+typedef svector<FaceMaterial>	FaceMaterialVector;
+
 
 #endif

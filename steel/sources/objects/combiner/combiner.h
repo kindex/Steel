@@ -26,11 +26,9 @@ class Combiner: public GameObject
 {
 public:
 	Combiner();
-	bool isSuportingInterface(IN OUT Engine&);
-	bool beforeInject(IN OUT Engine&){ return true; }
-	void afterRemove(IN OUT Engine&){}
-	bool updateInformation(IN OUT Engine&);
-	void bindEngine(IN OUT Engine&);
+	bool supportsInterface(IN OUT Engine&, IN const InterfaceId);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId);
+	void bindEngine(IN OUT Engine&, IN const InterfaceId);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
 	GameObject* getObject(size_t index) { return objects[index]; }
@@ -42,6 +40,7 @@ protected:
 	ObjectPosition  origin;
 	ObjectPosition  position;
 	PositionKind    positionKind;
+    bool            polyhedraPhysicSameAsGraph;
 
 	pvector<GameObject*> objects;
 };

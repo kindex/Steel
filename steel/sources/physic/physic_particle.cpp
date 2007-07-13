@@ -13,39 +13,107 @@
 
 #include "physic_particle.h"
 #include "../common/containers/string_dict.h"
+#include "../common/logger.h"
 
-bool PhysicEngine::setCurrentObject(GameObject* object)
+bool PhysicEngine::setCurrentObject(GameObject* object, const InterfaceId id)
 {
-	uid id = object->getId();
-	currentShadow = static_cast<ParticleShadow*>(getShadow(id));
-	if(currentShadow == NULL)
-	{
-		return false;
-	}
+	uid objectId = object->getId();
+	
+    switch (id)
+    {
+        case INTERFACE_PARTICLE_PHYSIC:
+            currentParticleShadow = getParticleShadow(objectId);
+            currentShadow = currentParticleShadow;
+            currentPolyhedraShadow = NULL;
+            if (currentParticleShadow == NULL)
+            {
+                return false;
+            }
+            break;
+
+        case INTERFACE_POPYHEDRA_PHYSIC:
+            currentParticleShadow = NULL;
+            currentPolyhedraShadow = getPolyhedraShadow(objectId);
+            currentShadow = currentPolyhedraShadow;
+
+            if (currentPolyhedraShadow == NULL)
+            {
+                return false;
+            }
+            break;
+
+        default:
+            return false;
+    }
 
 	return false;
 }
 
-bool PhysicEngine::isSupportingInterface(IN const InterfaceId id)
+PhysicEngine::ParticleShadow* PhysicEngine::getParticleShadow(uid id)
 {
-	return (id & (INTERFACE_PARTICLE_PHYSIC)) == id;
+    int sid = findSid(id, INTERFACE_PARTICLE_PHYSIC);
+	if (sid >= 0)
+    {
+		return particles[sid];
+    }
+	else
+    {
+		return NULL;
+    }
 }
+
+PhysicEngine::PolyhedraShadow* PhysicEngine::getPolyhedraShadow(uid id)
+{
+    int sid = findSid(id, INTERFACE_POPYHEDRA_PHYSIC);
+	if (sid >= 0)
+    {
+		return polyhedras[sid];
+    }
+	else
+    {
+		return NULL;
+    }
+}
+
 
 void PhysicEngine::addChild(GameObject* child)
 {
 	addChild(*currentShadow, child);
 }
 
-void PhysicEngine::addChild(ParticleShadow& shadow, GameObject* child)
+void PhysicEngine::addChild(Shadow& shadow, GameObject* child)
 {
 	uid childUid = child->getId();
 	uidVector::const_iterator it = find(shadow.children, childUid);
-	if(it != currentShadow->children.end()) return ; // child have been added before
-	if(!child->beforeInject(*this)) return; // shild don't want to be added
-	if(!makeShadowForObject(child)) return;
+	if (it != currentShadow->children.end())
+    {
+        return ; // child have been added before
+    }
+    InterfaceId id;
+    if (child->supportsInterface(*this, INTERFACE_PARTICLE_PHYSIC))
+    {
+        id = INTERFACE_PARTICLE_PHYSIC;
+    }
+    else if (child->supportsInterface(*this, INTERFACE_POPYHEDRA_PHYSIC))
+    {
+        id = INTERFACE_POPYHEDRA_PHYSIC;
+    }
+    else
+    {
+        return;
+    }
+
+    if (!child->beforeInject(*this, id))
+    {
+        return; // shild don't want to be added
+    }
+	if (!makeShadowForObject(child, id))
+    {
+        return;
+    }
 	shadow.children.push_back(childUid);
-	setCurrentObject(child);
-	child->bindEngine(*this);
+	setCurrentObject(child, id);
+	child->bindEngine(*this, id);
 	currentShadow = &shadow;
 }
 
@@ -61,83 +129,181 @@ void PhysicEngine::clearChildren()
 
 void PhysicEngine::setPosition(IN const v3 position)
 {
-	currentShadow->position = position;
+	currentParticleShadow->position = position;
 }
 
 v3 PhysicEngine::getPosition()
 {
-	return currentShadow->position;
+	return currentParticleShadow->position;
 }
 
 void PhysicEngine::setVelocity(IN const v3 velocity)
 {
-	currentShadow->velocity = velocity;
+	currentParticleShadow->velocity = velocity;
 }
 
 v3 PhysicEngine::getVelocity()
 {
-	return currentShadow->velocity;
+	return currentParticleShadow->velocity;
 }
 
 void PhysicEngine::setConfig(Config& _config)
 {
-	currentShadow->config			= &_config;
-	currentShadow->mass				= currentShadow->config->getf("mass", 1.0f);
-	currentShadow->distance_k		= currentShadow->config->getf("distance_k", 1.0f);
-	currentShadow->spring_r0		= currentShadow->config->getf("spring_r0");
-	currentShadow->spring_k			= currentShadow->config->getf("spring_k");
-	currentShadow->gravity_k		= currentShadow->config->getf("gravity_k");
-	currentShadow->gravity_power	= currentShadow->config->getf("gravity_power");
-	currentShadow->gravity_min_dist	= currentShadow->config->getf("gravity_min_dist");
-	currentShadow->friction_k		= currentShadow->config->getf("friction_k");
-	currentShadow->friction_power	= currentShadow->config->getf("friction_power");
-	currentShadow->lj_power1		= currentShadow->config->getf("lj_power1", -2);
-	currentShadow->lj_power2		= currentShadow->config->getf("lj_power2", -3);
-	currentShadow->enabled			= true;
+	currentParticleShadow->config			= &_config;
+	currentParticleShadow->mass				= currentParticleShadow->config->getf("mass", 1.0f);
+	currentParticleShadow->distance_k		= currentParticleShadow->config->getf("distance_k", 1.0f);
+	currentParticleShadow->spring_r0		= currentParticleShadow->config->getf("spring_r0");
+	currentParticleShadow->spring_k			= currentParticleShadow->config->getf("spring_k");
+	currentParticleShadow->gravity_k		= currentParticleShadow->config->getf("gravity_k");
+	currentParticleShadow->gravity_power	= currentParticleShadow->config->getf("gravity_power");
+	currentParticleShadow->gravity_min_dist	= currentParticleShadow->config->getf("gravity_min_dist");
+	currentParticleShadow->friction_k		= currentParticleShadow->config->getf("friction_k");
+	currentParticleShadow->friction_power	= currentParticleShadow->config->getf("friction_power");
+	currentParticleShadow->lj_power1		= currentParticleShadow->config->getf("lj_power1", -2);
+	currentParticleShadow->lj_power2		= currentParticleShadow->config->getf("lj_power2", -3);
+	currentParticleShadow->global_gravity_k = currentParticleShadow->config->getf("global_gravity_k", 1.0f);
+	currentParticleShadow->enabled			= true;
 }
 
-void PhysicEngine::addTriangle(const Plane& plane)
+void PhysicEngine::setVertexes(const VertexVector* vertexes)
 {
-    planes.push_back(plane);
+    currentPolyhedraShadow->vertexes = vertexes;
+}
+
+void PhysicEngine::setFaces(const Faces* faces)
+{
+    currentPolyhedraShadow->faces = faces;
+}
+
+void PhysicEngine::setPosition(const ObjectPosition& position)
+{
+    currentPolyhedraShadow->position = position;
+}
+
+void PhysicEngine::setPositionKind(PositionKind kind)
+{
+    currentPolyhedraShadow->positionKind = kind;
 }
 
 
-
-Shadow* PhysicEngine::getShadowClass(GameObject *object)
+Shadow* PhysicEngine::shadowClassFactory(GameObject* object, const InterfaceId id)
 {
-	return new ParticleShadow(this);
+    switch (id)
+    {
+        case INTERFACE_PARTICLE_PHYSIC:
+            return new ParticleShadow(this);
+
+        case INTERFACE_POPYHEDRA_PHYSIC:
+            return new PolyhedraShadow(this);
+
+        default:
+            assert(false, "");
+    }
 }
 
-bool PhysicEngine::inject(GameObject *object)
+bool PhysicEngine::inject(GameObject* object)
 {
-	if(!object->isSuportingInterface(*this)) return false;
+    InterfaceId id;
+    InterfaceId id2;
+    if (object->supportsInterface(*this, INTERFACE_PARTICLE_PHYSIC))
+    {
+        id  = INTERFACE_PARTICLE_PHYSIC;
+        id2 = INTERFACE_POPYHEDRA_PHYSIC;
+    }
+    else if (object->supportsInterface(*this, INTERFACE_POPYHEDRA_PHYSIC))
+    {
+        id2 = INTERFACE_PARTICLE_PHYSIC;
+        id  = INTERFACE_POPYHEDRA_PHYSIC;
+    }
+    else
+    {
+        return false;
+    }
 
 	// если объект не хочет добавляться
-	if(!object->beforeInject(*this)) return false;
-
+	if (!object->beforeInject(*this, id))
+    {
+        return false;
+    }
 	// кешируем объект
-	if(!makeShadowForObject(object)) return false;
+	if (!makeShadowForObject(object, id))
+    {
+        return false;
+    }
 	// список глобальных объектов
 	objects.push_back(object);
 
-	setCurrentObject(object);
-	object->bindEngine(*this);
+	setCurrentObject(object, id);
+    object->bindEngine(*this, id);
+
+    if (object->supportsInterface(*this, id2))
+    {
+	    if (!object->beforeInject(*this, id2))
+        {
+            return false;
+        }
+	    if (!makeShadowForObject(object, id2))
+        {
+            return false;
+        }
+	    setCurrentObject(object, id2);
+
+        object->bindEngine(*this, id2);
+    }
 
 	return true;
+
 }
 
-bool PhysicEngine::remove(GameObject *object)
+int PhysicEngine::addShadow(Shadow* newStorage, const InterfaceId id)
 {
-	deleteShadowForChildren(findSid(object->getId()));
-	deleteShadowForObject(findSid(object->getId()));
+    switch (id)
+    {
+        case INTERFACE_PARTICLE_PHYSIC:
+            particles.push_back(static_cast<ParticleShadow*>(newStorage));
+            return particles.size() - 1;
+
+        case INTERFACE_POPYHEDRA_PHYSIC:
+            polyhedras.push_back(static_cast<PolyhedraShadow*>(newStorage));
+            return polyhedras.size() - 1;
+
+        default:
+            assert(false, "");
+            throw;
+    }
+}
+
+
+bool PhysicEngine::remove(GameObject* object)
+{
+    bool result;
+    int id = findSid(object->getId(), INTERFACE_PARTICLE_PHYSIC);
+    if (id >= 0)
+    {
+        result = remove(object, INTERFACE_PARTICLE_PHYSIC);
+    }
+    id = findSid(object->getId(), INTERFACE_POPYHEDRA_PHYSIC);
+    if (id >= 0)
+    {
+        result = result || remove(object, INTERFACE_POPYHEDRA_PHYSIC);
+    }
+    return result;
+}
+
+bool PhysicEngine::remove(GameObject* object, const InterfaceId id)
+{
+	deleteShadowForChildren(findSid(object->getId(), id), id);
+	deleteShadowForObject(findSid(object->getId(), id), id);
 	
 	for EACH(pvector<GameObject*>, objects, it)
-		if(*it == object)
+    {
+		if (*it == object)
 		{
 			objects.erase(it);
 			break;
 		}
-	object->afterRemove(*this);
+    }
+	object->afterRemove(*this, INTERFACE_PARTICLE_PHYSIC);
 
 	return true;
 }
@@ -145,15 +311,38 @@ bool PhysicEngine::remove(GameObject *object)
 void PhysicEngine::prepare(ParticleShadow* shadow, GameObject* parent)
 {
 	currentShadow = shadow;
+	currentParticleShadow = shadow;
 
 	shadow->force.loadZero();
-	shadow->object->updateInformation(*this);
+	shadow->object->updateInformation(*this, INTERFACE_PARTICLE_PHYSIC);
 
 	for EACH(uidVector, shadow->children, it)
 	{
-		prepare(getShadow(*it), shadow->object);
+		prepare(getParticleShadow(*it), shadow->object);
 	}
 }
+
+void PhysicEngine::updateRealPosition(IN OUT PolyhedraShadow* object)
+{
+	if (object->realPositionCalculated)
+    {
+        return;
+    }
+
+	if (object->positionKind == POSITION_GLOBAL || object->positionKind == POSITION_SCREEN || object->parent == NULL)
+	{
+		object->realPosition = object->position;
+		object->realPositionCalculated = true;
+	}
+	else
+	{
+        PolyhedraShadow* parent = getPolyhedraShadow(object->parent->getId());
+		updateRealPosition(parent);
+		object->realPosition = object->position * parent->realPosition;
+		object->realPositionCalculated = true;
+	}
+}
+
 
 bool PhysicEngine::process(IN const TimeInfo& info)
 {
@@ -161,33 +350,61 @@ bool PhysicEngine::process(IN const TimeInfo& info)
     timeInfo.frameLength *= speedup;
 //    timeInfo.currentTime *= speedup; // TODO: precize time with speedup
 
-	int size = objects.size();
-
-	for(int i=0; i < size; i++)
+	for EACH(ParticleShadowVector, particles, particle)
 	{
-		prepare(getShadow(objects[i]), NULL);
+		prepare(*particle, NULL);
 	}
+    for EACH(PolyhedraShadowVector, polyhedras, polyhedra)
+	{
+		(*polyhedra)->realPositionCalculated = false;
+        setCurrentObject((*polyhedra)->object, INTERFACE_POPYHEDRA_PHYSIC);
+        (*polyhedra)->object->updateInformation(*this, INTERFACE_POPYHEDRA_PHYSIC);
+	}
+    for EACH(PolyhedraShadowVector, polyhedras, polyhedra)
+	{
+		updateRealPosition(*polyhedra);
+        if ((*polyhedra)->faces != NULL)
+        {
+            const ObjectPosition& realPosition =  (*polyhedra)->realPosition;
+            (*polyhedra)->triangles.clear();
+            const VertexVector& vertexes = *(*polyhedra)->vertexes;
+            VertexVector realVertexes;
+            realVertexes.reserve(vertexes.size());
+            for EACH_CONST(VertexVector, vertexes, vertexIt)
+            {
+                realVertexes.push_back(*vertexIt*realPosition);
+            }
+
+            for EACH_CONST(TriangleVector, (*polyhedra)->faces->triangles, trgIt)
+            {
+                const Triangle& trgIndex = *trgIt;
+                (*polyhedra)->triangles.push_back(Plane(realVertexes[trgIndex.a[0]], 
+                                                        realVertexes[trgIndex.a[1]] - realVertexes[trgIndex.a[0]], 
+                                                        realVertexes[trgIndex.a[2]] - realVertexes[trgIndex.a[0]]));
+            }
+        }
+	}
+
 	// update position
 	
-	for EACH(ShadowPVector,  shadows, it)
+	for EACH(ParticleShadowVector, particles, it)
 	{
-		if (static_cast<ParticleShadow*>(*it)->enabled)
+		if ((*it)->enabled)
 		{
-			processParticle(static_cast<ParticleShadow*>(*it));
-	//		->position += v3(0,0,1)*timeInfo.frameLength;
+			processParticle(*it);
 		}
 	}
 
-	for EACH(ShadowPVector,  shadows, it)
+	for EACH(ParticleShadowVector, particles, it)
 	{
-	    if (static_cast<ParticleShadow*>(*it)->enabled)
+	    if ((*it)->enabled)
 	    {
-		    ParticleShadow* shadow = static_cast<ParticleShadow*>(*it);
+		    ParticleShadow* shadow = *it;
 
 		    shadow->velocity += timeInfo.frameLength*shadow->force/shadow->mass;
 		    shadow->force += shadow->velocity.getNormalized() * shadow->velocity.getNormalized();
 
-		    v3 frictionForce  = 
+		    v3 frictionForce = 
 			    -shadow->velocity.getNormalized() * pow(shadow->velocity.getLength(), shadow->friction_power)*shadow->friction_k;
 
 		    v3 newVelocity = shadow->velocity + timeInfo.frameLength*frictionForce/shadow->mass;
@@ -203,18 +420,25 @@ bool PhysicEngine::process(IN const TimeInfo& info)
 
             v3 shift = shadow->velocity*timeInfo.frameLength;
             float mink = 10;
-            Plane collision;
+            Plane collisionTriangle;
             bool wasCollision = false;
-            for EACH_CONST(pvector<Plane>, planes, it)
+
+            for EACH_CONST(PolyhedraShadowVector, polyhedras, polyhedra)
             {
-                float k;
-                if (isCross(*it, Line(shadow->position, shift), k) && k >= 0 && k <= mink && k <= 1 + EPSILON)
+                for EACH_CONST(PlaneVector, (*polyhedra)->triangles, triangleIt)
                 {
-                    mink = k;
-                    collision = *it;
-                    wasCollision = true;
+                    const Plane& triangle = *triangleIt;
+
+                    float k;
+                    if (isCrossTrgLine(triangle, Line(shadow->position, shift), k) && k >= 0 && k <= mink && k <= 1 + EPSILON)
+                    {
+                        mink = k;
+                        collisionTriangle = triangle;
+                        wasCollision = true;
+                    }
                 }
             }
+
             if (wasCollision)
             {
 
@@ -223,9 +447,9 @@ bool PhysicEngine::process(IN const TimeInfo& info)
         		    shadow->position += shift*mink;
                 }
 
-                shadow->velocity = collision.reflect(shadow->velocity);
-                shadow->velocity *= 0.9; // TODO: physic
-                shadow->position += collision.a.crossProduct(collision.b).getNormalized() * EPSILON * 10;
+                shadow->velocity = collisionTriangle.reflect(shadow->velocity);
+                shadow->velocity *= 0.9f; // TODO: physic
+                shadow->position += collisionTriangle.a.crossProduct(collisionTriangle.b).getNormalized() * 10 * EPSILON;
 
             }
             else
@@ -254,17 +478,18 @@ bool PhysicEngine::clear()
 	return true;
 }
 
+bool PhysicEngine::init(Config& conf)
+{
+    globalGravity = conf.getv3("global_gravity");
+
+    return true;
+}
+
 PhysicEngine::PhysicEngine():
 	currentShadow(NULL),
-	Engine()
+    currentParticleShadow(NULL),
+    currentPolyhedraShadow(NULL),
+	Engine(),
+    globalGravity(v3(0, 0, -1))
 {
- // Z   
-    addTriangle(Plane(v3(0, 0, 0.5f), v3(1, 0, 0.15), v3(0, 1, -0.3))); // TEMP:
-//    addTriangle(Plane(v3(0, 0, 2.0f), v3(1, 0, 0), v3(0, 1, 0))); // TEMP:
-// Y
-//    addTriangle(Plane(v3(0, -0.6, 0), v3(1, 0, 0), v3(0, 0, 1))); // TEMP:
-    addTriangle(Plane(v3(0, 4, 0), v3(1, 0, 0), v3(0, 0, 1))); // TEMP:
-//// X
-//    addTriangle(Plane(v3(0.4, 0, 0.0f), v3(0, 1, 0), v3(0, 0, 1))); // TEMP:
-//    addTriangle(Plane(v3(1.6, 0, 0.0f), v3(0, 1, 0), v3(0, 0, 1))); // TEMP:
 }

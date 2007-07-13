@@ -36,11 +36,11 @@ bool SimpleSound::InitFromConfig(Config& conf)
 	return true;
 }
 
-void SimpleSound::bindEngine(Engine& aEngine)
+void SimpleSound::bindEngine(Engine& aEngine, IN const InterfaceId id)
 {
-	if (aEngine.isSupportingInterface(INTERFACE_AUDIO))
+	if (id == INTERFACE_AUDIO)
 	{		
-		AudioObject::bindEngine(aEngine);
+		AudioObject::bindEngine(aEngine, id);
 		if (delay <= 0.0 && !started)
 		{
 			//soundPlay(originalSound);
@@ -63,7 +63,7 @@ void SimpleSound::process(IN const ProcessInfo& info)
 	}
 }
 
-bool SimpleSound::isSuportingInterface(IN OUT Engine& engine)
+bool SimpleSound::supportsInterface(IN OUT Engine& engine, IN const InterfaceId id)
 {
-	return engine.isSupportingInterface(INTERFACE_AUDIO);
+	return id == INTERFACE_AUDIO;
 }

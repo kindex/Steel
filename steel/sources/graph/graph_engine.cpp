@@ -21,27 +21,27 @@
 
 bool GraphEngine::inject(GameObject* object)
 {
-	if (!object->isSuportingInterface(*this))
+    if (!object->supportsInterface(*this, INTERFACE_GRAPH))
 	{
 		return false;
 	}
 
 	// если объект не хочет добавляться
-	if (!object->beforeInject(*this))
+	if (!object->beforeInject(*this, INTERFACE_GRAPH))
 	{
 		return false;
 	}
 
 	// кешируем объект
-	if (!makeShadowForObject(object))
+	if (!makeShadowForObject(object, INTERFACE_GRAPH))
 	{
 		return false;
 	}
 	// список глобальных объектов
 	objects.push_back(object);
 
-	setCurrentObject(object);
-	object->bindEngine(*this);
+	setCurrentObject(object, INTERFACE_GRAPH);
+	object->bindEngine(*this, INTERFACE_GRAPH);
 
 	return true;
 }
@@ -59,25 +59,27 @@ bool GraphEngine::clear()
 
 bool GraphEngine::remove(GameObject *object)
 {
-	deleteShadowForChildren(findSid(object->getId()));
-	deleteShadowForObject(findSid(object->getId()));
+    deleteShadowForChildren(findSid(object->getId(), INTERFACE_GRAPH), INTERFACE_GRAPH);
+	deleteShadowForObject(findSid(object->getId(), INTERFACE_GRAPH), INTERFACE_GRAPH);
 	
 	for EACH(pvector<GameObject*>, objects, it)
+    {
 		if(*it == object)
 		{
 			objects.erase(it);
 			break;
 		}
-	object->afterRemove(*this);
+    }
+	object->afterRemove(*this, INTERFACE_GRAPH);
 
 	return true;
 }
 
 
 Camera::Camera(): 
-		upVector(v3(0.0, 0.0, 1.0)), 
-		position(0.0, 0.0, 0.0), 
-		direction(v3(1.0, 0.0, 0.0))
+	upVector(v3(0.0, 0.0, 1.0)), 
+	position(0.0, 0.0, 0.0), 
+	direction(v3(1.0, 0.0, 0.0))
 {
 }
 

@@ -64,10 +64,9 @@ bool UniPSanimator::InitFromConfig(Config& _conf)
 	return particleConf != NULL;
 }
 
-bool UniPSanimator::updateInformation(IN OUT Engine& engine)
+bool UniPSanimator::updateInformation(IN OUT Engine& engine, IN const InterfaceId id)
 {
-
-	return false;
+    return false;
 }
 
 void UniPSanimator::process(IN const ProcessInfo& info)
@@ -78,7 +77,7 @@ void UniPSanimator::process(IN const ProcessInfo& info)
 	}
 }
 
-bool UniPSanimator::beforeInject(IN OUT Engine& _engine)
+bool UniPSanimator::beforeInject(IN OUT Engine& _engine, IN const InterfaceId id)
 {
 	engine = static_cast<PhysicEngine*>(&_engine);
 
@@ -90,7 +89,7 @@ bool UniPSanimator::beforeInject(IN OUT Engine& _engine)
 	return true;
 }
 
-void UniPSanimator::afterRemove(IN OUT Engine&) 
+void UniPSanimator::afterRemove(IN OUT Engine&, IN const InterfaceId id) 
 {
 }
 
@@ -110,7 +109,7 @@ bool UniParticle::InitFromConfig(Config&)
 	return true;
 }
 
-bool UniParticle::updateInformation(IN OUT Engine&)
+bool UniParticle::updateInformation(IN OUT Engine&, IN const InterfaceId)
 {
 	return false;
 }
@@ -119,27 +118,18 @@ void UniParticle::process(IN const ProcessInfo& info)
 {
 	if (engine != NULL)
 	{
-		engine->setCurrentObject(this);
+        engine->setCurrentObject(this, INTERFACE_PARTICLE_PHYSIC);
 		particle->position = engine->getPosition();
 		particle->velocity = engine->getVelocity();
 	}
 }
 
-bool UniParticle::beforeInject(IN OUT Engine& engine)
+bool UniParticle::supportsInterface(IN OUT Engine& engine, IN const InterfaceId id)
 {
-	return true;
+	return id == INTERFACE_PARTICLE_PHYSIC;
 }
 
-void UniParticle::afterRemove(IN OUT Engine&)
-{
-}
-
-bool UniParticle::isSuportingInterface(IN OUT Engine& engine)
-{
-	return engine.isSupportingInterface(INTERFACE_PARTICLE_PHYSIC);
-}
-
-void UniParticle::bindEngine(IN OUT Engine& _engine)
+void UniParticle::bindEngine(IN OUT Engine& _engine, IN const InterfaceId id)
 {
 	engine = static_cast<PhysicEngine*>(&_engine);
 	engine->setPosition(particle->position);

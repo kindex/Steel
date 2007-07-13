@@ -24,7 +24,7 @@
 
 class GameObject;
 
-class GraphEngine : public Engine, public GraphInterface
+class GraphEngine : public GraphInterface
 {
 public:
 

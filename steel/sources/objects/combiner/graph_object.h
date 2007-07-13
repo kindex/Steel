@@ -16,7 +16,7 @@
 
 #include "../../steel.h"
 #include "../../engine/game_object.h"
-#include "../../graph/graph_interface.h"
+#include "../../graph/graph_types.h"
 
 class Model;
 class GraphObject;
@@ -26,7 +26,7 @@ GraphObject* graphObjectFactory(const std::string& _class);
 class GraphObject: public GameObject
 {
 public:
-	bool isSuportingInterface(IN OUT Engine&);
+	bool supportsInterface(IN OUT Engine&, IN const InterfaceId id);
 };
 
 class GraphObjectModel: public GraphObject
@@ -34,10 +34,8 @@ class GraphObjectModel: public GraphObject
 public:
 	GraphObjectModel();
 	bool InitFromConfig(Config& conf);
-	void bindEngine(Engine&);
-	bool beforeInject(IN OUT Engine&){return true;}
-	void afterRemove(IN OUT Engine&){}
-	bool updateInformation(IN OUT Engine&){return false;}
+	void bindEngine(Engine&, IN const InterfaceId id);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id){return false;}
 	void process(IN const ProcessInfo&) {}
 
 protected:
@@ -48,17 +46,16 @@ class GraphObjectCustom: public GraphObject
 {
 public:
 	GraphObjectCustom();
-	void bindEngine(Engine&);
-	bool beforeInject(IN OUT Engine&){return true;}
-	void afterRemove(IN OUT Engine&){}
-	bool updateInformation(IN OUT Engine&){return false;}
+	void bindEngine(Engine&, IN const InterfaceId id);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id){return false;}
 	void process(IN const ProcessInfo&) {}
 
 protected:
-	Vertexes* vertexes;
-	Normals*  normals;
+	VertexVector*       vertexes;
+	Normals*            normals;
 	FaceMaterialVector* faces;
-	TexCoords* texCoords;
+	Faces*              allFaces;
+	TexCoords*          texCoords;
 };
 
 class GraphObjectMesh: public GraphObjectCustom

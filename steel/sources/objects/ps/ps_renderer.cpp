@@ -127,9 +127,9 @@ bool SpriteRenderer::initParticles()
 
 
 
-bool SpriteRenderer::updateInformation(Engine& engine)
+bool SpriteRenderer::updateInformation(Engine& engine, IN const InterfaceId id)
 {
-	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	if (id == INTERFACE_GRAPH)
 	{
 		GraphInterface &gengine = *dynamic_cast<GraphInterface*>(&engine);
 

@@ -28,8 +28,8 @@ class AudioObject: public GameObject
 {
 public:
 	AudioObject();
-	bool isSuportingInterface(Engine& engine);
-	void bindEngine(Engine&);
+	bool supportsInterface(Engine& engine, IN const InterfaceId id);
+	void bindEngine(Engine&, IN const InterfaceId id);
 	
 	void setPosition(v3 newPosition) { position = newPosition; }
 //protected:

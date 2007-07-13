@@ -26,18 +26,31 @@ class GameObject
 {
 public:
 	// дефолтовый конструктор присваюивает уникальный идентификатор.
-	GameObject() { id = objectIdGenerator.genUid(); }
+	GameObject()
+    {
+        id = objectIdGenerator.genUid();
+    }
 	virtual ~GameObject() {}
 
 	// Object unique identifier
-	virtual uid	 getId()				{ return id; }
+	virtual uid	 getId()				
+    {
+        return id; 
+    }
 
-	virtual bool isSuportingInterface(IN OUT Engine&) abstract;
-	virtual bool beforeInject(IN OUT Engine&) abstract;
-	virtual void afterRemove(IN OUT Engine&) abstract;
+	virtual bool supportsInterface(IN OUT Engine&, IN const InterfaceId) abstract;
+    virtual bool beforeInject(IN OUT Engine&, IN const InterfaceId) 
+    { 
+        return true;
+    }
+    virtual void afterRemove(IN OUT Engine&, IN const InterfaceId) 
+    {
+    }
 	
-	virtual bool updateInformation(IN OUT Engine&) abstract;
-	virtual void bindEngine(IN OUT Engine&) abstract;
+	virtual bool updateInformation(IN OUT Engine&, IN const InterfaceId) abstract;
+	virtual void bindEngine(IN OUT Engine&, IN const InterfaceId)
+    {
+    }
 	virtual void process(const ProcessInfo&) abstract;
 
 	virtual bool InitFromConfig(Config&) abstract;

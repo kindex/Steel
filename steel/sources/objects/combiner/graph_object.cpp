@@ -15,22 +15,23 @@
 #include "../../graph/graph_engine.h"
 #include "../../res/res_main.h"
 #include "../../graph/material.h"
+#include "../../physic/physic_interface.h"
 
 using namespace std;
 
 GraphObject* graphObjectFactory(const string &_class)
 {
-	if(_class == "mesh")	return new GraphObjectMesh;
-	if(_class == "box")		return new GraphObjectBox;
-	if(_class == "model")	return new GraphObjectModel;
+	if (_class == "mesh")	return new GraphObjectMesh;
+	if (_class == "box")	return new GraphObjectBox;
+	if (_class == "model")	return new GraphObjectModel;
 
 	error("objects", string("GraphObject class '") + _class + "' not found");
 	return NULL;
 }
 
-bool GraphObject::isSuportingInterface(Engine& engine)
+bool GraphObject::supportsInterface(Engine& engine, IN const InterfaceId id)
 { 
-	return engine.isSupportingInterface(INTERFACE_GRAPH);
+	return id == INTERFACE_GRAPH;
 }
 
 
@@ -40,18 +41,33 @@ GraphObjectCustom::GraphObjectCustom():
 	vertexes(NULL), 
 	normals(NULL), 
 	faces(NULL),
-	texCoords(NULL)
+	texCoords(NULL),
+    allFaces(NULL)
 {}
 
 
-void GraphObjectCustom::bindEngine(Engine& engine)
+void GraphObjectCustom::bindEngine(Engine& engine, IN const InterfaceId id)
 {
-	GraphEngine &gengine = *static_cast<GraphEngine*>(&engine);
-	gengine.setVertexes(vertexes);
-	gengine.setNormals(normals);
-	gengine.setFaceMaterials(faces);
-	gengine.setTexCoordsCount(1);
-	gengine.setTexCoords(0, texCoords);
+    switch (id)
+    {
+        case INTERFACE_GRAPH:
+        {
+	        GraphEngine& gengine = *static_cast<GraphEngine*>(&engine);
+	        gengine.setVertexes(vertexes);
+	        gengine.setNormals(normals);
+	        gengine.setFaceMaterials(faces);
+	        gengine.setTexCoordsCount(1);
+	        gengine.setTexCoords(0, texCoords);
+            break;
+        }
+        case INTERFACE_POPYHEDRA_PHYSIC:
+        {
+	        PhysicPolyhedraInterface& pengine = *dynamic_cast<PhysicPolyhedraInterface*>(&engine);
+            pengine.setVertexes(vertexes);
+            pengine.setFaces(allFaces);
+            break;
+        }
+    }
 }
 
 // ***************** Mesh *****************
@@ -71,7 +87,7 @@ bool GraphObjectMesh::InitFromConfig(Config& conf)
 	int vert = vertexesConfig->size();
 	int trg  = trianglesConfig->size();
 
-	vertexes = new Vertexes; vertexes->changed = false;	vertexes->resize(vert);
+	vertexes = new VertexVector; vertexes->changed = false;	vertexes->resize(vert);
 	texCoords = new TexCoords; texCoords->changed = false;	texCoords->resize(vert);
 
 	for(int i = 0; i < vert; i++)
@@ -84,7 +100,7 @@ bool GraphObjectMesh::InitFromConfig(Config& conf)
 
 	faces = new FaceMaterialVector(1);
 	faces->at(0).material = m;
-	faces->at(0).faces = new Faces;
+	faces->at(0).faces = allFaces = new Faces;
 	faces->at(0).faces->triangles.changed = false;
 	faces->at(0).faces->triangles.resize(trg);
 
@@ -105,7 +121,7 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 	v3 size = conf.getv3("size", v3(1.0f, 1.0f, 1.0f));
 
 	MaterialStd* m = NULL;
-	if(materialConfig != NULL)
+	if (materialConfig != NULL)
 	{
 		m = createMaterial(materialConfig);
 	}
@@ -113,8 +129,8 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 	int vert = 6*4;
 	int trg  = 12;
 
-	vertexes	= new Vertexes; vertexes->changed = false;	
-	normals		= new Vertexes; normals->changed = false;	
+	vertexes	= new VertexVector; vertexes->changed = false;	
+	normals		= new VertexVector; normals->changed = false;	
 	texCoords	= new TexCoords; texCoords->changed = false;
 
 #define t(a, b, c, d, e) vertexes->push_back(v3(a*0.5f*size.x, b*0.5f*size.y, c*0.5f*size.z)); texCoords->push_back(v2(d, e))
@@ -139,7 +155,7 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 
 	faces = new FaceMaterialVector(1);
 	faces->at(0).material = m;
-	faces->at(0).faces = new Faces;
+	faces->at(0).faces = allFaces = new Faces;
 	faces->at(0).faces->triangles.changed = false;
 	faces->at(0).faces->triangles.resize(trg);
 
@@ -182,11 +198,11 @@ bool GraphObjectModel::InitFromConfig(Config& conf)
 	return model != NULL;
 }
 
-void GraphObjectModel::bindEngine(Engine& engine)
+void GraphObjectModel::bindEngine(Engine& engine, IN const InterfaceId id)
 {
-	if (engine.isSupportingInterface(INTERFACE_GRAPH))
+	if (id == INTERFACE_GRAPH)
 	{
-		GraphEngine &gengine = *static_cast<GraphEngine*>(&engine);
+		GraphEngine& gengine = *static_cast<GraphEngine*>(&engine);
 		gengine.setVertexes(model->getVertexes());
 		gengine.setNormals(model->getNormals());
 		gengine.setFaceMaterials(model->getFaceMaterials());
@@ -198,4 +214,10 @@ void GraphObjectModel::bindEngine(Engine& engine)
 			gengine.setTexCoords(i, model->getTexCoords(i));
 		}
 	}
+    else if (id == INTERFACE_POPYHEDRA_PHYSIC)
+    {
+		PhysicInterface& pengine = *dynamic_cast<PhysicInterface*>(&engine);
+		pengine.setVertexes(model->getVertexes());
+		pengine.setFaces(&model->allFaces);
+    }
 }

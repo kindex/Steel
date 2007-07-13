@@ -264,17 +264,26 @@ void OpenALEngine::setListener(const Listener &aListener)
 
 bool OpenALEngine::inject(GameObject& object)
 {
-	if(!object.isSuportingInterface(*this)) return false;
+    if (!object.supportsInterface(*this, INTERFACE_AUDIO))
+    {
+        return false;
+    }
 
 	// если объект не хочет добавляться
-	if(!object.beforeInject(*this)) return false;
+	if (!object.beforeInject(*this, INTERFACE_AUDIO))
+    {
+        return false;
+    }
 
 	// кешируем объект
-	if(!makeShadowForObject(&object)) return false;
+	if (!makeShadowForObject(&object, INTERFACE_AUDIO))
+    {
+        return false;
+    }
 	// список глобальных объектов
 
-	setCurrentObject(&object);
-	object.bindEngine(*this);
+	setCurrentObject(&object, INTERFACE_AUDIO);
+	object.bindEngine(*this, INTERFACE_AUDIO);
 
 	return true;
 }
@@ -392,30 +401,39 @@ bool OpenALEngine::soundUpdate(Sound* sound)
 
 void OpenALEngine::addChild(GameObject* child)
 {
-	if(currentShadow != NULL)
+	if (currentShadow != NULL)
 	{
 		addChild(*currentShadow, child);
 	}
 }
 
-void OpenALEngine::addChild(AudioShadow &shadow, GameObject *child)
+void OpenALEngine::addChild(AudioShadow& shadow, GameObject* child)
 {
 	uid childUid = child->getId();
 	pvector<uid>::const_iterator it = find(shadow.children, childUid);
-	if(it != currentShadow->children.end()) return ; // child have been added before
-	if(!child->beforeInject(*this)) return; // shild don't want to be added
-	if(!makeShadowForObject(child)) return;
+	if (it != currentShadow->children.end())
+    {
+        return ; // child have been added before
+    }
+	if (!child->beforeInject(*this, INTERFACE_AUDIO))
+    {
+        return; // shild don't want to be added
+    }
+	if (!makeShadowForObject(child, INTERFACE_AUDIO))
+    {
+        return;
+    }
 	shadow.children.push_back(childUid);
-	setCurrentObject(child);
-	child->bindEngine(*this);
+	setCurrentObject(child, INTERFACE_AUDIO);
+	child->bindEngine(*this, INTERFACE_AUDIO);
 	currentShadow = &shadow;
 }
 
-bool OpenALEngine::setCurrentObject(GameObject* object)
+bool OpenALEngine::setCurrentObject(GameObject* object, const InterfaceId)
 {
 	uid id = object->getId();
-	currentShadow = static_cast<AudioShadow*>(getShadow(id));
-	if(currentShadow == NULL)
+    currentShadow = static_cast<AudioShadow*>(getShadow(id, INTERFACE_AUDIO));
+	if (currentShadow == NULL)
 	{
 		currentObject = NULL;
 		return false;

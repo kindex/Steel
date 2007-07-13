@@ -46,20 +46,16 @@ public:
 	bool inject(GameObject& object);
 	bool process();
 
-	AudioShadow* getShadowClass(GameObject* object) { return new AudioShadow(this); }
+	AudioShadow* shadowClassFactory(GameObject* object, const InterfaceId) { return new AudioShadow(this); }
 
 	void addChild(GameObject* child);
 	void addChild(AudioShadow& shadow, GameObject* child);
 
 	void deleteChild(GameObject* child){}
 	void clearChildren() {}
-	void setPosition(ObjectPosition) {}
+	void setPosition(const ObjectPosition&) {}
 	void setPositionKind(PositionKind) {}
-	bool setCurrentObject(GameObject* object);
-	bool isSupportingInterface(IN const InterfaceId id)
-	{
-		return (id & INTERFACE_AUDIO) == id;
-	}
+	bool setCurrentObject(GameObject* object, IN const InterfaceId);
 
 	// Configuration/Option Parameters
 	bool enabledEAX;

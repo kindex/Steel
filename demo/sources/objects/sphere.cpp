@@ -27,17 +27,17 @@ Sphere::Sphere():
 
 
 
-void Sphere::bindEngine(Engine& engine)
+void Sphere::bindEngine(Engine& engine, IN const InterfaceId id)
 {
-	GraphEngine &gengine = *static_cast<GraphEngine*>(&engine);
+	GraphEngine& gengine = *static_cast<GraphEngine*>(&engine);
 
 	gengine.setPositionKind(POSITION_GLOBAL);
 	gengine.setPosition(ObjectPosition::getIdentity());
 }
 
-bool Sphere::updateInformation(Engine& engine)
+bool Sphere::updateInformation(Engine& engine, IN const InterfaceId id)
 {
-	GraphEngine &gengine = *static_cast<GraphEngine*>(&engine);
+	GraphEngine& gengine = *static_cast<GraphEngine*>(&engine);
 
 	gengine.setPosition(position);
 	gengine.setVertexes(vertexes);
@@ -52,7 +52,7 @@ bool Sphere::updateInformation(Engine& engine)
 
 void Sphere::createSphere()
 {
-	vertexes = new Vertexes;
+	vertexes = new VertexVector;
 	vertexes->setId(objectIdGenerator.genUid());
 	vertexes->setChanged(true);
 	vertexes->resize( (height+1)*radius);

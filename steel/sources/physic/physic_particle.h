@@ -17,7 +17,11 @@
 #include "physic_interface.h"
 #include "../engine/engine_types.h"
 
-class PhysicEngine: public Engine, public PhysicParticleInterface
+typedef pvector<Plane> PlaneVector;
+
+class PhysicEngine: 
+    public Engine, 
+    public PhysicInterface
 {
 	struct ParticleShadow: public Shadow // множество треугольников одного материала
 	{
@@ -42,15 +46,38 @@ class PhysicEngine: public Engine, public PhysicParticleInterface
 
 		float lj_power1;
 		float lj_power2;
+        float global_gravity_k;
 
 		ParticleShadow(Engine* aEngine): Shadow(aEngine), enabled(false) {}
 	};
+    typedef svector<ParticleShadow*> ParticleShadowVector;
+
+    struct PolyhedraShadow: public Shadow // множество треугольников одного материала
+	{
+	    PositionKind	    positionKind;
+	    ObjectPosition	    position; // global or screen
+	    ObjectPosition	    realPosition; // global, calculated from position and parent
+        bool                realPositionCalculated;
+
+        const VertexVector* vertexes;
+        const Faces*        faces;
+        PlaneVector         triangles;
+
+		PolyhedraShadow(Engine* aEngine): 
+            Shadow(aEngine),
+            vertexes(NULL),
+            faces(NULL),
+            positionKind(POSITION_LOCAL),
+            position(matrix34::getIdentity())
+        {
+        }
+	};
+    typedef svector<PolyhedraShadow*> PolyhedraShadowVector;
 
 public:
-	bool setCurrentObject(GameObject*);
-	bool isSupportingInterface(IN const InterfaceId);
+	bool setCurrentObject(GameObject*, IN const InterfaceId);
 	void addChild(GameObject* child);
-	void addChild(ParticleShadow& shadow, GameObject* child);
+	void addChild(Shadow& shadow, GameObject* child);
 	void deleteChild(GameObject* child);
 	void clearChildren();
 	void setPosition(IN const v3);
@@ -58,33 +85,47 @@ public:
 	void setVelocity(IN const v3);
 	v3	 getVelocity();
 	void setConfig(Config&);
-    void addTriangle(const Plane&);
 
-	Shadow* getShadowClass(GameObject* object);
-	virtual bool inject(GameObject* object);
-	virtual bool remove(GameObject* object);
-	virtual bool process(IN const TimeInfo& info);
-    virtual void setSpeedup(float speedup);
-	bool clear();
-	void prepare(ParticleShadow* shadow, GameObject* parent);
-	ParticleShadow* getShadow(GameObject* object) { return static_cast<ParticleShadow*>(Engine::getShadow(object)); }
-	ParticleShadow* getShadow(uid id) { return static_cast<ParticleShadow*>(Engine::getShadow(id)); }
-
-	ParticleShadow* currentShadow;
+	void setVertexes(const VertexVector*);
+	void setFaces(const Faces*);
+	void setPosition(const ObjectPosition&);
+	void setPositionKind(PositionKind);
 
 	PhysicEngine();
+	bool init(Config&);
 
-// ***************************** PARTICLE *************************
-	v3 calculateForceForParticle(ParticleShadow* shadow1, ParticleShadow* shadow2);
-	v3 PhysicEngine::calculateForceForParticle(ParticleShadow* shadow);
-	bool PhysicEngine::processParticle(ParticleShadow* shadow);
+	bool clear();
+	bool inject(GameObject* object);
+
+	bool remove(GameObject* object);
+	bool process(IN const TimeInfo& info);
+    void setSpeedup(float speedup);
 
 
 protected:
+    int addShadow(Shadow* newStorage, const InterfaceId);
+	void updateRealPosition(IN OUT PolyhedraShadow* object);
+	Shadow* shadowClassFactory(GameObject* object, const InterfaceId);
+	void prepare(ParticleShadow* shadow, GameObject* parent);
+	ParticleShadow* getParticleShadow(uid id);
+	PolyhedraShadow* getPolyhedraShadow(uid id);
+	bool remove(GameObject* object, const InterfaceId id);
+
+// ***************************** PARTICLE *************************
+    v3 calculateForceForParticle(ParticleShadow* shadow1, ParticleShadow* shadow2);
+	v3 PhysicEngine::calculateForceForParticle(ParticleShadow* shadow);
+	bool processParticle(ParticleShadow* shadow);
+
+    ParticleShadowVector    particles;
+    PolyhedraShadowVector   polyhedras;
+    Shadow*                 currentShadow;
+	ParticleShadow*         currentParticleShadow;
+	PolyhedraShadow*        currentPolyhedraShadow;
+
 	pvector<GameObject*>	objects;
 	TimeInfo				timeInfo;
-    pvector<Plane>			planes;
     float                   speedup;
+    v3                      globalGravity;
 };
 
 

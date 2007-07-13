@@ -57,11 +57,24 @@ public:
 	uid		id;
 };
 
-class TriangleVector : public pvector<Triangle>, public BufferedElement {};
-class QuadVector : public pvector<Quad>, public BufferedElement {};
+class TriangleVector : 
+    public pvector<Triangle>, 
+    public BufferedElement 
+{
+};
+
+class QuadVector : 
+    public pvector<Quad>, 
+    public BufferedElement
+{
+};
 
 // массив вершин многогранника
-struct Vertexes: public pvector<v3>, public BufferedElement {};
+struct VertexVector : 
+    public pvector<v3>, 
+    public BufferedElement 
+{
+};
 
 // массив треугольников многогранника
 struct Faces

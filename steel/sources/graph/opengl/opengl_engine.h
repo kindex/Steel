@@ -61,12 +61,10 @@ class OpenGL_Engine : public GraphEngine
 {
 // ******************* GRAPH INTERFACE *************************
 public:
-	bool isSupportingInterface(IN const InterfaceId);
-	
-	bool setCurrentObject(GameObject*);
-	void setPosition(ObjectPosition);
+	bool setCurrentObject(GameObject*, IN const InterfaceId);
+	void setPosition(const ObjectPosition&);
 	void setPositionKind(PositionKind);
-	void setVertexes(const Vertexes*); // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	void setVertexes(const VertexVector*); // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
 	void setNormals(const Normals*); // список нормалей в вершинам
 	void setLines(const GLines*); // индексы вершин для линий и цвета линий (for debug)
 	void setFaceMaterials(const FaceMaterialVector*);// массив индексов вершин, которые образуют треугольники (грани) + материалы
@@ -140,8 +138,8 @@ private:
 	bool DrawFill_MaterialStd_OpenGL13(GraphShadow&, const Faces&, MaterialStd&);
 
 	void drawBump(GraphShadow& e, const TexCoords* coords, const matrix34 matrix, const v3 light, uid bufId, int curTexArb, Image* img);
-	void getTangentSpace(const Vertexes*, const TexCoords* mapcoord, const FaceMaterialVector* faceMaterials, const Normals* normal, TexCoords3f** sTangent, TexCoords3f** tTangent);
-	void genTangentSpaceLight(const TexCoords3f& sTangent, const TexCoords3f& tTangent, 	Vertexes const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light, pvector<v3>& tangentSpaceLight);
+	void getTangentSpace(const VertexVector*, const TexCoords* mapcoord, const FaceMaterialVector* faceMaterials, const Normals* normal, TexCoords3f** sTangent, TexCoords3f** tTangent);
+	void genTangentSpaceLight(const TexCoords3f& sTangent, const TexCoords3f& tTangent, 	VertexVector const &vertex, Normals	const &normal,	matrix34 const matrix, const v3 light, pvector<v3>& tangentSpaceLight);
 
 	typedef TexCoords3f tangentSpaceLightBufferedArray;
 
@@ -201,10 +199,10 @@ public:
 	bool process(IN const ProcessInfo&);
 	bool deinit();
 	
-	GraphShadow* getShadow(GameObject* object) { return (GraphShadow*)Engine::getShadow(object); }
-	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id); }
+	GraphShadow* getShadow(GameObject* object) { return (GraphShadow*)Engine::getShadow(object, INTERFACE_GRAPH); }
+	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id, INTERFACE_GRAPH); }
 	 
-	Shadow*		getShadowClass(GameObject *object) { return new GraphShadow(this); }
+    Shadow*		shadowClassFactory(GameObject* object, const InterfaceId) { return new GraphShadow(this); }
 
 
 // ****************** WINDOW FUNCTION **********************

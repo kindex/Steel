@@ -161,7 +161,7 @@ static v3 getstangent(v2 A, v3 B, v3 N, v2 S)
 }
 
 
-void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *texcoord, const FaceMaterialVector *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent)
+void OpenGL_Engine::getTangentSpace(const VertexVector *vertex, const TexCoords *texcoord, const FaceMaterialVector *faceMaterials, Normals const *normal, TexCoords3f **sTangent, TexCoords3f **tTangent)
 { // TODO: mem cleanup
 	int id = vertex->getId();
 	
@@ -313,7 +313,7 @@ void OpenGL_Engine::getTangentSpace(const Vertexes *vertex, const TexCoords *tex
     }
 };
 
-void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f& sTangent, const TexCoords3f &tTangent, const Vertexes& vertex, const Normals& normal,	const matrix34 matrix, const v3 light,	pvector<v3>& tangentSpaceLight)
+void OpenGL_Engine::genTangentSpaceLight(const TexCoords3f& sTangent, const TexCoords3f &tTangent, const VertexVector& vertex, const Normals& normal,	const matrix34 matrix, const v3 light,	pvector<v3>& tangentSpaceLight)
 {
 	matrix34 inverseModelMatrix;
     inverseModelMatrix = matrix.getInverse();

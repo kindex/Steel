@@ -51,13 +51,13 @@ struct Shadow
 	// овновляюет место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
 	// возвращает true, если была обнавлена вся информация
 	virtual ~Shadow() {}
-	virtual void setParent(GameObject *aparent) {parent = aparent; }
+	virtual void setParent(GameObject* aparent) {parent = aparent; }
 };
 
 class Engine : public BaseInterface
 {
 public:
-	Config *conf;
+	Config* conf;
 
 	virtual ~Engine() {}
 //	virtual bool init(std::string _conf) = 0; // initialization
@@ -80,34 +80,43 @@ protected:
 	typedef pvector<Shadow*> ShadowPVector;
 	// кеш объектов
 	ShadowPVector shadows;
-	typedef std::map <uid, int> ShadowHash;
+	
+    typedef std::map<uid, int> UIdMap;
+    typedef std::map<InterfaceId, UIdMap> ShadowHash;
+
 	typedef int sid; // Shadow vector index
 	// отображение идентификаторов объекта на положение в массиве shadow
 	ShadowHash idHash;
-	virtual int findSid(uid id)
+	virtual int findSid(uid sid, InterfaceId iid)
 	{
-		ShadowHash::iterator it = idHash.find(id);
-		if(it == idHash.end())
+        UIdMap& uidmap = idHash[iid];
+		UIdMap::iterator it = uidmap.find(sid);
+		if (it == uidmap.end())
+        {
 			return -1;
+        }
 		else
+        {
 			return it->second;
+        }
 	}
 
 public:
-	virtual Shadow *getShadow(GameObject *object);
-	virtual Shadow* getShadow(uid id);
+	virtual Shadow* getShadow(GameObject* object, const InterfaceId id);
+	virtual Shadow* getShadow(uid id, const InterfaceId iid);
 
 protected:
 	// создаёт место для хранения дополнительной инормации (shadow, кеш объекта) - для одного объекта
-	virtual bool makeShadowForObject(GameObject *object);
-	virtual Shadow* getShadowClass(GameObject *object) abstract;
-	virtual void makeShadowForObjectPost(GameObject *object, Shadow *shadow) {}
+    virtual bool makeShadowForObject(GameObject* object, const InterfaceId);
+	virtual Shadow* shadowClassFactory(GameObject* object, const InterfaceId) abstract;
+	virtual void makeShadowForObjectPost(GameObject* object, Shadow* shadow) {}
+    virtual int addShadow(Shadow*, const InterfaceId);
 
-	virtual void deleteShadowForObject(int sid);
+	virtual void deleteShadowForObject(int sid, const InterfaceId id);
 	virtual void deleteShadowForObjectPost(int sid) {}
 
 	// создаёт место для хранения дополнительной инормации (shadow, кеш объекта) - для детей объекта
-	virtual void deleteShadowForChildren(int sid);
+	virtual void deleteShadowForChildren(int sid, const InterfaceId id);
 };
 
 #endif

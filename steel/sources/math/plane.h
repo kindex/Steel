@@ -63,5 +63,4 @@ struct Plane
     v3 reflect(const v3 vector) const;
 };
 
-
 #endif

@@ -47,10 +47,12 @@ bool AudioList::InitFromConfig(IN Config& conf)
 }
 
 
-void AudioList::bindEngine(Engine& aEngine)
+void AudioList::bindEngine(Engine& aEngine, IN const InterfaceId id)
 {
 	for EACH(AudioDict, audio, it)
-		it->second->bindEngine(aEngine);
+    {
+		it->second->bindEngine(aEngine, id);
+    }
 }
 
 void AudioList::process(IN const ProcessInfo& info)
@@ -62,9 +64,9 @@ void AudioList::process(IN const ProcessInfo& info)
 	}
 }
 
-bool AudioList::isSuportingInterface(IN OUT Engine& engine)
+bool AudioList::supportsInterface(IN OUT Engine& engine, IN const InterfaceId id)
 {
-	return engine.isSupportingInterface(INTERFACE_AUDIO);
+	return id == INTERFACE_AUDIO;
 }
 
 bool AudioList::audioPlay(const std::string& sndId)

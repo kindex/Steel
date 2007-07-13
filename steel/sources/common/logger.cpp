@@ -31,11 +31,14 @@ using namespace std;
 
 bool Logger::open(std::string filename)
 {
-	if(opened) close();
+	if (opened)
+    {
+        close();
+    }
 
 	f.open(filename.c_str(), ios_base::out);
 
-	if(f.bad())
+	if (f.bad())
 	{
 		return false;
 	}
@@ -79,7 +82,9 @@ bool Logger::close( void )
 		return true;
 	}
 	else
+    {
 		return false;
+    }
 }
 
 /*void Logger::out( char *fmt, ... )
@@ -155,7 +160,7 @@ void _log_msg(string keywords, string message)
 	for EACH(svector<string>, keys, it)
 	{
 		string key = *it;
-		if(loggers.find(key) == loggers.end())
+		if (loggers.find(key) == loggers.end())
 		{
 			loggers[key] = new Logger;
 			loggers[key]->open("../log/" + key + ".log");
@@ -163,8 +168,10 @@ void _log_msg(string keywords, string message)
 		loggers[key]->setLevel(steel::log.getLevel());
 		loggers[key]->msg(keywords, message);
 	}
-	if(logFilter.check(keywords))
+	if (logFilter.check(keywords))
+    {
 		steel::log.msg(keywords, message);
+    }
 }
 
 void LogFilter::set(std::string filter)
@@ -176,13 +183,13 @@ void LogFilter::set(std::string filter)
 		filterItem item;
 
 		string k = *it;
-		if(k.empty()) continue;
+		if (k.empty()) continue;
 
 		item.action = true;
-		if(k[0] == '-') item.action = false;
+		if (k[0] == '-') item.action = false;
 
-		if(k[0] == '-') k.erase(0, 1);
-		if(k[0] == '+') k.erase(0, 1);
+		if (k[0] == '-') k.erase(0, 1);
+		if (k[0] == '+') k.erase(0, 1);
 
 		item.keyword = k;
 
@@ -199,10 +206,12 @@ bool LogFilter::check(std::string keywords)
 	for EACH(svector<filterItem>, filters, it)
 	{
 		for EACH(svector<string>, keys, jt)
+        {
 			if (it->keyword == *jt)
 			{
 				return it->action;
 			}
+        }
 	}
 	return true;
 }

@@ -25,12 +25,10 @@ public:
 	void setParticle(Particle *_particle) { particle = _particle; }
 
 	bool InitFromConfig(Config&);
-	bool updateInformation(IN OUT Engine&);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId);
 	void process(IN const ProcessInfo& info);
-	bool beforeInject(IN OUT Engine&);
-	void afterRemove(IN OUT Engine&);
-	bool isSuportingInterface(IN OUT Engine&);
-	void bindEngine(IN OUT Engine&);
+	bool supportsInterface(IN OUT Engine&, IN const InterfaceId);
+	void bindEngine(IN OUT Engine&, IN const InterfaceId);
 
 private:
 	Config*			conf;
@@ -44,10 +42,10 @@ public:
 	UniPSanimator();
 	bool initParticles();
 	bool InitFromConfig(Config&);
-	bool updateInformation(IN OUT Engine&);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id);
 	void process(IN const ProcessInfo& info);
-	bool beforeInject(IN OUT Engine&);
-	void afterRemove(IN OUT Engine&);
+	bool beforeInject(IN OUT Engine&, IN const InterfaceId id);
+	void afterRemove(IN OUT Engine&, IN const InterfaceId id);
 	void onParticleBorn(int index);
 	void onParticleDie(int index) {}
 
@@ -63,10 +61,8 @@ class SimpleAnimator: public ParticleAnimator
 public:
 	bool initParticles();
 	bool InitFromConfig(Config&) {return true;}
-	bool updateInformation(IN OUT Engine&) {return false;}
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id) {return false;}
 	void process(IN const ProcessInfo& info) {return;}
-	bool beforeInject(IN OUT Engine&) {return false;}
-	void afterRemove(IN OUT Engine&) {}
 	void onParticleBorn(int index) {}
 	void onParticleDie(int index) {}
 };

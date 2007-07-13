@@ -19,20 +19,8 @@
 #include "../engine/engine.h"
 #include "../engine/interface.h"
 #include "graph_types.h"
-class MaterialStd;
 
 // материал + треугольники, к которым он относится
-struct FaceMaterial
-{
-	FaceMaterial() {}
-	FaceMaterial(MaterialStd* material, Faces* faces) : material(material), faces(faces) {}
-
-	MaterialStd*	material;
-	Faces*			faces;
-	std::string		name;
-};
-
-typedef svector<FaceMaterial>	FaceMaterialVector;
 
 /*
 Интерфейс для всех объектов в проекте, которые должны рисоваться через 
@@ -53,7 +41,11 @@ public:
 	virtual void updateLight(uid, Light*) abstract;
 };
 
-class GraphInterface : public ChildrenInterface, public Interface3D, public GraphLightInterface
+class GraphInterface : 
+    public ChildrenInterface, 
+    public Interface3D, 
+    public GraphLightInterface,
+    public Engine
 {
 public:
 
@@ -66,7 +58,7 @@ public:
 	// Следующие функции возврящяют ссылки на массивы данных (NULL if none), и должны 
 	// отвечать за хранние этих данных до следующего вызова этой функции
 	// или вызова cleanup
-	virtual void	setVertexes(const Vertexes*) abstract; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	virtual void	setVertexes(const VertexVector*) abstract; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
 	virtual void	setNormals(const Normals*) abstract; // список нормалей в вершинам
 
 	virtual void	setLines(const GLines*) abstract; // индексы вершин для линий и цвета линий (for debug)

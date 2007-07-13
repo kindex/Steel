@@ -11,6 +11,7 @@
  ************************************************************/
 
 #include "19_game.h"
+#include <common/logger.h>
 
 GamePS::GamePS():
 	physicEngine(NULL)
@@ -24,9 +25,16 @@ bool GamePS::init(Config& _conf, Input& _input)
 	}
 	physicEngine = new PhysicEngine;
 
+    Config* physicConfig = _conf.find("physic");
+    if (physicConfig == NULL)
+    {
+        abort_init("game physic", "Cannot find physic config");
+    }
+	physicEngine->init(*physicConfig);
+
 	physicEngine->inject(world);
 
-    speedup = 1;
+    speedup = _conf.getf("speed", 1.0f);
 
 	return true;
 }
