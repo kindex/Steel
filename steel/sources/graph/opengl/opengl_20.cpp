@@ -102,7 +102,6 @@ void OpenGL_Engine::StdShaderGetLightCount(GraphShadow& e, const Faces& faces, M
 	}
 }
 
-
 void OpenGL_Engine::SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, MaterialStd& material, Shader& shader)
 {
 	shader.clearTextures();

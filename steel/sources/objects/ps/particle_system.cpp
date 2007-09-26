@@ -209,3 +209,12 @@ void ParticleSystem::particleDie(int index)
 	animator->onParticleDie(index);
 	renderer->onParticleDie(index);
 }
+
+void ParticleSystem::traverse(Visitor& visitor)
+{
+    for EACH(ParticleVector, particleSet.particles, it)
+    {
+        visitor.postvisit(*it);
+    }
+    visitor.postvisit(this);
+}

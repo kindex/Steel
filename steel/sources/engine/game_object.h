@@ -17,6 +17,7 @@
 #include "../steel.h"
 #include "interface.h"
 #include "id_generator.h"
+#include "visitor.h"
 
 class Engine;
 class Config;
@@ -54,6 +55,11 @@ public:
 	virtual void process(const ProcessInfo&) abstract;
 
 	virtual bool InitFromConfig(Config&) abstract;
+
+    virtual void traverse(Visitor& visitor)
+    {
+        visitor.postvisit(this);
+    }
 
 protected:
 	uid id;

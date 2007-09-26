@@ -5,12 +5,12 @@ objects =
 (
 
 
-[ps.scene#] { emitter = {	origin = (1 0 1.7) } }
+[ps.scene#] { emitter = {	origin = (0 0 1.7) } }
 
 
 {
 class = 'combiner'
-origin = (1 0 0.49)
+origin = (1 0 -0.49)
 polyhedraPhysicSameAsGraph = 1
 
 transformation = 
@@ -25,7 +25,6 @@ graph =
 {
 	class = 'box'
 	size = (2.4 2.4 0.4)
-	
 
 	material = 
 	{
@@ -40,6 +39,24 @@ graph =
 			texCoordsTranslation = (0 0 0)
 			k = 10
 		}
+	}
+}
+}
+
+{
+class = 'combiner'
+origin = (0 0 0)
+
+graph = 
+{
+	class = 'box'
+	size = (1 1 1)
+	material = 
+	{
+		class = 'std'
+		blend = 0.5
+		dropShadows = 0
+		color = (1 0 1)
 	}
 }
 }

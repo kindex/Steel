@@ -29,12 +29,13 @@ struct Particle
 	float size;
 };
 
+typedef pvector<Particle*> ParticleVector;
 // множество частиц
 struct ParticleSet
 {
 	float countScale;
 
-	pvector<Particle*> particles;
+	ParticleVector particles;
 };
 
 class ParticleSystem;
@@ -102,6 +103,7 @@ public:
 	void bindEngine(IN OUT Engine&, IN const InterfaceId);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+    void traverse(Visitor&);
 
 	void particleBorn(int index);
 	void particleDie(int index);

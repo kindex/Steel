@@ -37,8 +37,12 @@ bool WAV::init(const std::string& name, const std::string& dir)
 
 	pbuf = f.rdbuf();
 	// get file size using buffer's members
-	sizel = pbuf->pubseekoff (0,ios::end,ios::in);
-	pbuf->pubseekpos (0,ios::in);
+	sizel = pbuf->pubseekoff(0, ios::end, ios::in);
+    if (sizel < 0)
+    {
+        return false;
+    }
+	pbuf->pubseekpos(0, ios::in);
 	// allocate memory to contain file data
 	buffer_ = new char[sizel];
 	// get file data  

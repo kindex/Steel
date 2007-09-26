@@ -33,11 +33,14 @@ ResCollection<Audio>	resAudio;
 template<class T, class T2>
 T2* createClass(const std::string& filename, const std::string& base)
 {
-	if(filename.empty()) return false;
+	if (filename.empty())
+    {
+        return false;
+    }
 
 	T* object = new T;
 
-	if(object->init(filename, base))
+	if (object->init(filename, base))
 	{
 		object->setId(objectIdGenerator.genUid());
 		return object;
@@ -51,13 +54,20 @@ T2* createClass(const std::string& filename, const std::string& base)
 
 bool registerResources()
 {
-	resConfig.setId("config");
+	resConfig.setId("config"); // custom loader
 
-	resImage.setId("image");	resImage.registerResLoader(createImage);
-	resModel.setId("model");	resModel.registerResLoader(createClass<Model_3DS, Model>);
-	resText.setId("text");	resText.registerResLoader(createClass<TextFile, Text>);
-	resAudio.registerResLoader(createClass<WAV, Audio>);            resAudio.setId("audio");
-	resAudio.registerResLoader(createClass<OGG, Audio>);            resAudio.setId("audio");
+	resImage.setId("image");
+    resImage.registerResLoader(createImage);
+
+    resModel.setId("model");
+    resModel.registerResLoader(createClass<Model_3DS, Model>);
+
+    resText.setId("text");
+    resText.registerResLoader(createClass<TextFile, Text>);
+
+    resAudio.setId("audio");
+	resAudio.registerResLoader(createClass<WAV, Audio>);
+	resAudio.registerResLoader(createClass<OGG, Audio>);
 
 	return true;
 }

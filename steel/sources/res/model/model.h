@@ -32,6 +32,7 @@ public:
 	const Normals*            getNormals() const { return &normals; }
 	const FaceMaterialVector* getFaceMaterials() const { return &faceMaterials; }
 	const TexCoords*          getTexCoords(int mapNumber) const;
+    const Faces*              getAllFaces() const { return &allFaces; }
 
 	friend class GraphObjectModel; // TEMP:
 

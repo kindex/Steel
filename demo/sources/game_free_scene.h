@@ -37,15 +37,13 @@ public:
 	void bind(AudioEngine&);
 	void insonify(AudioEngine&);
 	bool isAlive() {return _alive;} 
+    std::string getWindowCaption();
 
 	virtual void handleEventKeyDown(const std::string& key);
 	virtual void handleEventKeyUp(const std::string& key);
 	virtual void handleMouse(double dx, double dy);
 
 	void updatePhysicTime();
-
-
-	//////////
 	void processKeyboard();
 
 protected:
@@ -68,8 +66,11 @@ protected:
     float brakeSpeed;
     float speed;
 
-	bool _alive, paused, firstframe;
+	bool _alive;
+    bool paused;
+    bool firstframe;
 	int framesToPass;
+    std::string caption;
 };
 
 #endif

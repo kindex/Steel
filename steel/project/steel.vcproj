@@ -1185,6 +1185,10 @@
 					RelativePath="..\sources\engine\interface.h"
 					>
 				</File>
+				<File
+					RelativePath="..\sources\engine\visitor.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="libs"

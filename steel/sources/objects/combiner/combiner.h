@@ -32,6 +32,7 @@ public:
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
 	GameObject* getObject(size_t index) { return objects[index]; }
+    void traverse(Visitor&);
 
 protected:
 	GraphObject*    graph;

@@ -27,6 +27,12 @@ class GraphObject: public GameObject
 {
 public:
 	bool supportsInterface(IN OUT Engine&, IN const InterfaceId id);
+
+	virtual const VertexVector*       getVertexes() const abstract;
+	virtual const Normals*            getNormals() const abstract;
+	virtual const FaceMaterialVector* getFaces() const abstract;
+	virtual const Faces*              getAllFaces() const abstract;
+	virtual const TexCoords*          getTexCoords(int mapNumber) const abstract;
 };
 
 class GraphObjectModel: public GraphObject
@@ -37,6 +43,12 @@ public:
 	void bindEngine(Engine&, IN const InterfaceId id);
 	bool updateInformation(IN OUT Engine&, IN const InterfaceId id){return false;}
 	void process(IN const ProcessInfo&) {}
+
+    const VertexVector*       getVertexes() const;
+    const Normals*            getNormals() const;
+    const FaceMaterialVector* getFaces() const;
+    const Faces*              getAllFaces() const;
+    const TexCoords*          getTexCoords(int mapNumber) const;
 
 protected:
 	Model* model;
@@ -49,6 +61,12 @@ public:
 	void bindEngine(Engine&, IN const InterfaceId id);
 	bool updateInformation(IN OUT Engine&, IN const InterfaceId id){return false;}
 	void process(IN const ProcessInfo&) {}
+
+    const VertexVector*       getVertexes() const { return vertexes; }
+    const Normals*            getNormals() const { return normals; }
+    const FaceMaterialVector* getFaces() const { return faces; }
+    const Faces*              getAllFaces() const { return allFaces; }
+    const TexCoords*          getTexCoords(int mapNumber) const { return texCoords; }
 
 protected:
 	VertexVector*       vertexes;

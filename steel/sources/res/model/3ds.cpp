@@ -275,7 +275,7 @@ bool Model_3DS::init(const std::string& name, const std::string dir)
 {
 	rstream f;
 	
-	if(!f.open(dir + "/" + name, "3ds"))
+	if (!f.open(dir + "/" + name, "3ds") || !f.good())
 	{
 		return false;
 	}

@@ -144,6 +144,7 @@ int main(int argc, char *argv[])
 		{
 			game->insonify(*audio);
 		}
+        graph->setCaption(game->getWindowCaption());
 
 		if (first)
 		{

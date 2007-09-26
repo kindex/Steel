@@ -143,7 +143,7 @@ T* ResCollection<T>::add(const std::string& name, bool pop)
 	{
 		data[index].links++;
 
-		if(!pop)
+		if (!pop)
 		{
 			resStack.pushFullPath(name2);
 		}
@@ -158,7 +158,7 @@ bool ResCollection<T>::remove(T* object)
 #if STEEL_COMPILER == COMPILER_VS8
     std::map<T*,int>::const_iterator it = resIndex.find(object);
      
-	if(it == resIndex.end())
+	if (it == resIndex.end())
 	{
 		return false;
 	}
@@ -196,8 +196,10 @@ bool ResCollection<T>::removeRaw(int index)
 	if (data[index].links > 0)
 	{
 		data[index].links--;
-		if(data[index].links == 0)
-		purge(index);
+		if (data[index].links == 0)
+        {
+		    purge(index);
+        }
 		return true;
 	}
 	else
@@ -243,18 +245,24 @@ T* ResCollection<T>::addForce(const std::string& name, bool pop)
 	if (failedResourcesCache.find(fullResName) != failedResourcesCache.end())
 	{
 //		log_msg("res " + id, "Ignoring " + fullResName);
-		if (pop) resStack.pop();
+		if (pop)
+        {
+            resStack.pop();
+        }
 		return NULL;
 	}
 
 //	log_msg("res " + id, "Loading " + fullResName);
 
     int s = classes.size();
-	for(int i = 0; i < s; i++)
+	for (int i = 0; i < s; i++)
 	{
 		T* obj = (*classes[i])(filename, baseDirectory);
 
-		if (obj == NULL) continue;
+		if (obj == NULL)
+        {
+            continue;
+        }
 
 		ResStorage newResStorage;
 		newResStorage.id = obj->getId();
@@ -268,12 +276,18 @@ T* ResCollection<T>::addForce(const std::string& name, bool pop)
 		resIndex[obj] = data.size() - 1;
 	
 //		log_msg("res " + id, "OK " + fullResName);
-		if(pop) resStack.pop();
+		if (pop)
+        {
+            resStack.pop();
+        }
 
 		return obj;
 	}
 	log_msg("res error " + id, "Failed " + fullResName);
-	if (pop) resStack.pop();
+	if (pop)
+    {
+        resStack.pop();
+    }
 
 	failedResourcesCache.insert(fullResName);
 
@@ -299,7 +313,7 @@ template<class T>
 inline int ResCollection<T>::getIndex(const std::string& name)   
 {
 	std::map<const std::string,int>::const_iterator it = index.find(name);
-	if(it != index.end())
+	if (it != index.end())
 	{
 		return it->second;	
 	}

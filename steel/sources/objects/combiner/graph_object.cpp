@@ -190,7 +190,7 @@ bool GraphObjectModel::InitFromConfig(Config& conf)
 	model = resModel.add(conf.getPath("file"));
 
 	Config* material = conf.find("material");
-	if(material != NULL)
+	if (material != NULL && model != NULL && !model->faceMaterials.empty())
 	{
 		model->faceMaterials[0].material = createMaterial(material);
 	}
@@ -221,3 +221,9 @@ void GraphObjectModel::bindEngine(Engine& engine, IN const InterfaceId id)
 		pengine.setFaces(&model->allFaces);
     }
 }
+
+const VertexVector*       GraphObjectModel::getVertexes() const { return model->getVertexes(); }
+const Normals*            GraphObjectModel::getNormals() const { return model->getNormals(); }
+const FaceMaterialVector* GraphObjectModel::getFaces() const { return model->getFaceMaterials(); }
+const Faces*              GraphObjectModel::getAllFaces() const { return model->getAllFaces(); }
+const TexCoords*          GraphObjectModel::getTexCoords(int mapNumber) const { return model->getTexCoords(mapNumber); }

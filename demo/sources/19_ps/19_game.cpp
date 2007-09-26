@@ -12,9 +12,14 @@
 
 #include "19_game.h"
 #include <common/logger.h>
+#include <engine/visitor.h>
+#include <res/res_main.h>
+#include <objects/ps/particle_system.h>
 
 GamePS::GamePS():
-	physicEngine(NULL)
+	physicEngine(NULL),
+    boundingModel(NULL),
+    crosses(0)
 {}
 
 bool GamePS::init(Config& _conf, Input& _input)
@@ -36,8 +41,74 @@ bool GamePS::init(Config& _conf, Input& _input)
 
     speedup = _conf.getf("speed", 1.0f);
 
+	Config* graphConf = _conf.find("boundingModel");
+	if (graphConf != NULL)
+	{
+        std::string graphClass = graphConf->gets("class");
+		boundingModel = graphObjectFactory(graphClass);
+		if (boundingModel != NULL)
+		{
+			bool ok = boundingModel->InitFromConfig(*graphConf);
+			if (!ok)
+			{
+				delete boundingModel;
+				boundingModel = NULL; 
+			}
+		}
+	}
+
 	return true;
 }
+
+bool isPointInObject(IN v3 point, IN const GraphObject& object, const ObjectPosition position)
+{
+    size_t crossCount = 0;
+    
+    Line lineSegment(point, v3(0.0, 0.0, 1.0));
+
+    const Faces&        faces    = *object.getAllFaces();
+    const VertexVector* vertexes = object.getVertexes();
+
+	for EACH_CONST(TriangleVector, faces.triangles, it)
+	{
+		Plane triangle;
+		triangle.base = position * vertexes->at(it->a[0]);
+		triangle.a = position * vertexes->at(it->a[1]) - triangle.base;
+		triangle.b = position * vertexes->at(it->a[2]) - triangle.base;
+		float k;
+		if (isCrossTrgLine(triangle, lineSegment, k))
+		{
+			if (k > 0.0)
+			{
+				crossCount++;
+			}
+		}
+	}
+	return crossCount%2 == 1;
+}
+
+
+class ParticleVisitor : public Visitor
+{
+public:
+    ParticleVisitor(GraphObject* graphObject) : graphObject(graphObject) {}
+        
+    void clear()
+    {
+        cnt = 0;
+    }
+
+    void postvisit(IN OUT Particle* particle)
+    {
+        if (isPointInObject(particle->position, *graphObject, ObjectPosition::getIdentity()))
+        {
+            cnt++;
+        }
+    }
+
+    int cnt;
+    GraphObject* graphObject;
+};
 
 void GamePS::process()
 {
@@ -48,6 +119,16 @@ void GamePS::process()
         physicEngine->setSpeedup(speedup);
 		physicEngine->process(timeInfo);
 	}
+
+    if (boundingModel != NULL)
+    {
+        ParticleVisitor visitor(boundingModel);
+
+        visitor.clear();
+        world->traverse(visitor);
+
+        crosses = visitor.cnt;
+    }
 }
 
 void GamePS::handleEventKeyDown(const std::string& key)
@@ -67,4 +148,9 @@ void GamePS::handleEventKeyDown(const std::string& key)
     {
         GameFreeScene::handleEventKeyDown(key);
     }
+}
+
+std::string GamePS::getWindowCaption()
+{
+    return caption + " Crosses: " + IntToStr(crosses);
 }

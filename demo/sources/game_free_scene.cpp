@@ -221,13 +221,12 @@ void GameFreeScene::process()
 	if (!firstframe && infoTimer.lap() >= 0.5)
 	{
 		infoTimer.nextlap();
-		graphEngine->setCaption(
-			std::string("Steel engine")
+		caption = \
+            std::string("Steel engine")
 			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
 			+ " Faces: " + IntToStr(graphEngine->total.triangleCount)
 			+ " Lights: " + IntToStr(graphEngine->total.lightCount)
-			+ " FPS " + graphTimer.getfps_s()
-		);
+			+ " FPS " + graphTimer.getfps_s();
 		speed = 1.0f/graphTimer.getfps();
 		if (speed > 0.1) speed = 0.1f;
 	}
@@ -388,3 +387,7 @@ void GameFreeScene::unpause()
 	}
 }
 
+std::string GameFreeScene::getWindowCaption()
+{
+    return caption;
+}

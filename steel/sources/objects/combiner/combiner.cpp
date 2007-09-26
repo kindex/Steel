@@ -23,8 +23,6 @@
 #include "audio_object.h"
 #include "../transformation/transformation.h"
 
-using namespace std;
-
 Combiner::Combiner(): 
 	graph(NULL), 
 	audio(NULL),
@@ -47,7 +45,7 @@ bool Combiner::InitFromConfig(Config& conf)
 	Config* graphConf = conf.find("graph");
 	if (graphConf != NULL)
 	{
-		string graphClass = graphConf->gets("class");
+        std::string graphClass = graphConf->gets("class");
 		graph = graphObjectFactory(graphClass);
 		if (graph != NULL)
 		{
@@ -63,7 +61,7 @@ bool Combiner::InitFromConfig(Config& conf)
 	Config* audioConf = conf.find("audio");
 	if(audioConf != NULL)
 	{
-		string audioClass = audioConf->gets("class");
+        std::string audioClass = audioConf->gets("class");
 		audio = audioObjectFactory(audioClass);
 		if(audio != NULL)
 		{
@@ -79,7 +77,7 @@ bool Combiner::InitFromConfig(Config& conf)
 	Config* transformationConf = conf.find("transformation");
 	if (transformationConf != NULL)
 	{
-		string transformationClass = transformationConf->gets("class");
+        std::string transformationClass = transformationConf->gets("class");
 		transformation = transformationFactory(transformationClass);
 		if (transformation != NULL)
 		{
@@ -222,4 +220,13 @@ void Combiner::process(IN const ProcessInfo& info)
 	{
 		(*it)->process(info);
 	}
+}
+
+void Combiner::traverse(Visitor& visitor)
+{
+	for EACH(pvector<GameObject*>, objects, it)
+	{
+        (*it)->traverse(visitor);
+	}
+    visitor.postvisit(this);
 }
