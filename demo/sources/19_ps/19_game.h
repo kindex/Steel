@@ -33,6 +33,7 @@ private:
     float         speed;
     GraphObject*  boundingModel;
     size_t        crosses;
+	v3			gravityBackup;
 };
 
 #endif

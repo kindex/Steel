@@ -34,13 +34,17 @@ enum EmitterType
     EMITTER_UNIFORM_CUBE,
     EMITTER_UNIFORM_SPHERE,
     EMITTER_REGULAR,
+    EMITTER_SERIAL,
 };
 
 private:
     float       emitter_size;
     float       particle_size;
     float       emitter_type;
+	float		born_interval;
+	float		last_born_time;
     int         init_size;
+	size_t		limit_count;
     EmitterType type;
 };
 

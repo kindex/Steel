@@ -28,6 +28,7 @@
 
 #include "../res/test_res/test_res.h"
 #include "../common/test_common/test_svector.h"
+#include "../math/test_math/test_math.h"
 
 std::string commandLine;
 
@@ -50,8 +51,9 @@ int main(int argc, char *argv[])
 		DetectWindowsVersion();
 	#endif
 
-	TEST(Res);
-	TEST(svector);
+	TEST(Math);
+	//TEST(Res);
+	//TEST(svector);
 
 	testInfo.report();
 

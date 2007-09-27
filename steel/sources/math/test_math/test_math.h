@@ -1,30 +1,35 @@
 /*id*********************************************************
-	File: common/test_common/test_svector.cpp
-	Unit: Common
+	File: math/test_math/test_math.h
+	Unit: math
 	Part of: Steel engine
-	(C) DiVision, 2006
+	(C) DiVision, 2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz at gmail]
 	License:
 		Steel Engine License
 	Description:
-		Steel Vector Selftest
+		math Selftest
  ************************************************************/
 
+#ifndef MATH_TEST_H
+#define MATH_TEST_H
+
 #include "../../steel.h"
+
 #if TESTING == 1
 
-#include "test_svector.h"
-#include "../../common/types.h"
+#include "../../test/tester.h"
 
-void svectorTest::Test(void)
+class MathTest: public Tester
 {
-	TestMemory();
-}
-
-void svectorTest::TestMemory(void)
-{
-	IntVector a(10000000);
-}
+public:
+	void Test(void)
+	{
+		TestPlanes();
+	}
+	void TestPlanes();
+};
 
 #endif
+#endif
+

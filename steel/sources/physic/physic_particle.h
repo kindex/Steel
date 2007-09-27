@@ -48,6 +48,9 @@ class PhysicEngine:
 		float lj_power2;
         float global_gravity_k;
 
+        float force_limit;
+        float max_dist;
+
 		ParticleShadow(Engine* aEngine): Shadow(aEngine), enabled(false) {}
 	};
     typedef svector<ParticleShadow*> ParticleShadowVector;
@@ -100,6 +103,8 @@ public:
 	bool remove(GameObject* object);
 	bool process(IN const TimeInfo& info);
     void setSpeedup(float speedup);
+	void setGravity(const v3 gravity) {globalGravity = gravity;}
+	v3   getGravity() const { return globalGravity;}
 
 
 protected:
@@ -112,9 +117,8 @@ protected:
 	bool remove(GameObject* object, const InterfaceId id);
 
 // ***************************** PARTICLE *************************
-    v3 calculateForceForParticle(ParticleShadow* shadow1, ParticleShadow* shadow2);
-	v3 PhysicEngine::calculateForceForParticle(ParticleShadow* shadow);
-	bool processParticle(ParticleShadow* shadow);
+    v3 calculateForceForParticle(ParticleShadow& shadow1, ParticleShadow& shadow2);
+	v3 calculateForceForParticle(ParticleShadow& shadow);
 
     ParticleShadowVector    particles;
     PolyhedraShadowVector   polyhedras;
@@ -128,5 +132,10 @@ protected:
     v3                      globalGravity;
 };
 
+v3 calcLennardJones(const v3& pos1, 
+                    const v3& pos2, 
+                    float lj_power1,
+                    float lj_power2,
+                    float distance_k);
 
 #endif

@@ -5,62 +5,73 @@ objects =
 (
 
 
-[ps.scene#] { emitter = {	origin = (0 0 1.7) } }
+
+
+[ps.scene#] { emitter = {	origin = (0 0 1) } }
+//[ps.scene#] { emitter = {	origin = (0 0 4.3) } }
+//[ps.scene#] { emitter = {	origin = (0.0 -0.0 5.5) } }
+
+//[ps.scene#] { emitter = {	origin = (0.4 -0.5 3.7) } }
+//[ps.scene#] { emitter = {	origin = (0.4 -0.5 3.9) } }
+//[ps.scene#] { emitter = {	origin = (0.4 -0.5 4.1) } }
+
 
 
 {
 class = 'combiner'
-origin = (1 0 -0.49)
+enabled=1
 polyhedraPhysicSameAsGraph = 1
-
-transformation = 
-{
-	class = 'rotation'
-	speed = 0
-	bias = 0.2
-	rotationAxis = (1 0 0)
-}
+origin = (0 0.5 0)
 
 graph = 
 {
-	class = 'box'
-	size = (2.4 2.4 0.4)
+class = 'model'
+file = 'Def_box_7'
 
 	material = 
 	{
 		class = 'std'
 		blend = 0
-		dropShadows = 1
+		dropShadows = 0
 		diffuse_map =
 		{ 
-			image = '../17_intro/GALVPLAT'
+			image = 'none'
 			texCoordsRotation = 0.0
 			texCoordsScale = (1 1 1)
 			texCoordsTranslation = (0 0 0)
 			k = 10
 		}
 	}
+
 }
 }
 
 {
 class = 'combiner'
-origin = (0 0 0)
+enabled=0
 
 graph = 
 {
 	class = 'box'
 	size = (1 1 1)
+
 	material = 
 	{
 		class = 'std'
-		blend = 0.5
+		blend = 1
 		dropShadows = 0
-		color = (1 0 1)
+		diffuse_map =
+		{ 
+			image = 'none'
+			texCoordsRotation = 0.0
+			texCoordsScale = (1 1 1)
+			texCoordsTranslation = (0 0 0)
+			k = 10
+		}
 	}
-}
-}
 
+}
+}
 
 
 ) // objects

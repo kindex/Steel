@@ -22,6 +22,18 @@
 #include "../common/logger.h"
 #include <string>
 #include <iostream>
+#include <sstream>
+
+template <typename To, typename From>
+inline To cast(IN const From from)
+{
+    std::stringstream ss;
+    To to;
+    ss << from;
+    ss >> to;
+    return to;
+}
+
 
 #define TEST(C) \
 {	\
@@ -45,7 +57,7 @@
 
 #define CHECK_NOT_NULL(value, message) \
 { \
-	if((value) == NULL)	\
+	if ((value) == NULL)	\
 	{	\
 		Error(std::string(#value) + " is NULL. " + (message));\
 	}	\
@@ -53,9 +65,21 @@
 
 #define CHECK_TRUE(expr, message) \
 { \
-	if(!(expr))  \
+	testInfo.testCount++;\
+	if (!(expr))  \
 	{	\
-		Error(std::string("Failed ") + #expr + ". " +  (message));\
+		Error(std::string("Failed ") + #expr + ". " + (message));\
+	}	\
+}
+
+#define CHECK_EQUAL(expr1, expr2, message) \
+{ \
+	testInfo.testCount++;\
+	if ((expr1) != (expr2))  \
+	{	\
+    Error(std::string("Failed ") + #expr1 + " == " + #expr2 + ". " + (message)  \
+        + ". Expected " + cast<std::string>(expr2) \
+        + ". Real " + cast<std::string>(expr1)); \
 	}	\
 }
 

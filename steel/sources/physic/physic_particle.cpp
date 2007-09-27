@@ -162,6 +162,9 @@ void PhysicEngine::setConfig(Config& _config)
 	currentParticleShadow->lj_power1		= currentParticleShadow->config->getf("lj_power1", -2);
 	currentParticleShadow->lj_power2		= currentParticleShadow->config->getf("lj_power2", -3);
 	currentParticleShadow->global_gravity_k = currentParticleShadow->config->getf("global_gravity_k", 1.0f);
+	currentParticleShadow->force_limit      = currentParticleShadow->config->getf("force_limit", INF);
+	currentParticleShadow->max_dist         = currentParticleShadow->config->getf("max_dist", INF);
+
 	currentParticleShadow->enabled			= true;
 }
 
@@ -391,7 +394,46 @@ bool PhysicEngine::process(IN const TimeInfo& info)
 	{
 		if ((*it)->enabled)
 		{
-			processParticle(*it);
+            ParticleShadow& shadow = **it;
+
+        	shadow.force += calculateForceForParticle(shadow);
+
+            for EACH_CONST(PolyhedraShadowVector, polyhedras, polyhedra)
+            {
+                float mindist = INF;
+                v3 minvec;
+                for EACH_CONST(PlaneVector, (*polyhedra)->triangles, triangleIt)
+                {
+                    const Plane& triangle = *triangleIt;
+
+                    v3 dist;
+                    dist = getPointTrgVector(shadow.position, triangle);
+                    float curdist = dist.getLength();
+                    if (mindist > curdist)
+                    {
+                        mindist = curdist;
+                        minvec = dist;
+                    }
+                    //float k;
+                    //if (isCrossTrgLine(triangle, Line(shadow->position, shift), k) && k >= 0 && k <= mink && k <= 1 + EPSILON)
+                    //{
+                    //    mink = k;
+                    //    collisionTriangle = triangle;
+                    //    wasCollision = true;
+                    //}
+                }
+
+                if (mindist < shadow.max_dist)
+                {
+                    v3 wallforce = calcLennardJones(v3(0,0,0),
+                                                    minvec,
+                                                    shadow.lj_power1,
+                                                    shadow.lj_power2,
+                                                    shadow.distance_k);
+
+                    shadow.force += wallforce;
+                }
+            }
 		}
 	}
 
@@ -399,63 +441,69 @@ bool PhysicEngine::process(IN const TimeInfo& info)
 	{
 	    if ((*it)->enabled)
 	    {
-		    ParticleShadow* shadow = *it;
+		    ParticleShadow& shadow = **it;
 
-		    shadow->velocity += timeInfo.frameLength*shadow->force/shadow->mass;
-		    shadow->force += shadow->velocity.getNormalized() * shadow->velocity.getNormalized();
+            float forceScalar = shadow.force.getLength();
+            if (forceScalar > shadow.force_limit)
+            {
+                shadow.force *= shadow.force_limit/forceScalar;
+            }
+
+		    shadow.velocity += timeInfo.frameLength*shadow.force/shadow.mass;
+//		    shadow->force += shadow->velocity.getNormalized() * shadow->velocity.getNormalized();
 
 		    v3 frictionForce = 
-			    -shadow->velocity.getNormalized() * pow(shadow->velocity.getLength(), shadow->friction_power)*shadow->friction_k;
+			    -shadow.velocity.getNormalized() * pow(shadow.velocity.getLength(), shadow.friction_power)*shadow.friction_k;
 
-		    v3 newVelocity = shadow->velocity + timeInfo.frameLength*frictionForce/shadow->mass;
+		    v3 newVelocity = shadow.velocity + timeInfo.frameLength*frictionForce/shadow.mass;
 
-		    if ((newVelocity & shadow->velocity) >0)
+		    if ((newVelocity & shadow.velocity) > 0)
 		    {
-			    shadow->velocity = newVelocity;
+			    shadow.velocity = newVelocity;
 		    }
 		    else
 		    {
-			    shadow->velocity.loadZero();
+			    shadow.velocity.loadZero();
 		    }
 
-            v3 shift = shadow->velocity*timeInfo.frameLength;
-            float mink = 10;
-            Plane collisionTriangle;
-            bool wasCollision = false;
+            v3 shift = shadow.velocity*timeInfo.frameLength;
 
-            for EACH_CONST(PolyhedraShadowVector, polyhedras, polyhedra)
-            {
-                for EACH_CONST(PlaneVector, (*polyhedra)->triangles, triangleIt)
-                {
-                    const Plane& triangle = *triangleIt;
-
-                    float k;
-                    if (isCrossTrgLine(triangle, Line(shadow->position, shift), k) && k >= 0 && k <= mink && k <= 1 + EPSILON)
-                    {
-                        mink = k;
-                        collisionTriangle = triangle;
-                        wasCollision = true;
-                    }
-                }
-            }
-
-            if (wasCollision)
-            {
-
-//                if (shift.getSquaredLength() > EPSILON2)
-                {
-        		    shadow->position += shift*mink;
-                }
-
-                shadow->velocity = collisionTriangle.reflect(shadow->velocity);
-                shadow->velocity *= 0.9f; // TODO: physic
-                shadow->position += collisionTriangle.a.crossProduct(collisionTriangle.b).getNormalized() * 10 * EPSILON;
-
-            }
-            else
-            {
-    		    shadow->position += shift;
-            }
+//            float mink = 10;
+//            Plane collisionTriangle;
+//            bool wasCollision = false;
+//
+//            for EACH_CONST(PolyhedraShadowVector, polyhedras, polyhedra)
+//            {
+//                for EACH_CONST(PlaneVector, (*polyhedra)->triangles, triangleIt)
+//                {
+//                    const Plane& triangle = *triangleIt;
+//
+//                    float k;
+//                    if (isCrossTrgLine(triangle, Line(shadow->position, shift), k) && k >= 0 && k <= mink && k <= 1 + EPSILON)
+//                    {
+//                        mink = k;
+//                        collisionTriangle = triangle;
+//                        wasCollision = true;
+//                    }
+//                }
+//            }
+//
+//            if (wasCollision)
+//            {
+////                if (shift.getSquaredLength() > EPSILON2)
+//                {
+//        		    shadow->position += shift*mink;
+//                }
+//
+//                shadow->velocity = collisionTriangle.reflect(shadow->velocity);
+//                shadow->velocity.loadZero(); // TODO: physic
+//                shadow->position += collisionTriangle.a.crossProduct(collisionTriangle.b).getNormalized() * 10 * EPSILON;
+//
+//            }
+//            else
+//            {
+    		    shadow.position += shift;
+//            }
 	    }
 	}
 

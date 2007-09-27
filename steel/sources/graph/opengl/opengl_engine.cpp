@@ -234,7 +234,10 @@ void OpenGL_Engine::renderTransparent()
 				faces.quads.push_back(Quad(it->vertex[0], it->vertex[1], it->vertex[2], it->vertex[3]));
 			}
 		}
-		(this->*DrawFill_MaterialStd)(*prev->shadow, faces, *static_cast<MaterialStd*>(prev->material));
+		if (prev != NULL)
+		{
+			(this->*DrawFill_MaterialStd)(*prev->shadow, faces, *static_cast<MaterialStd*>(prev->material));
+		}
 
 		glPopAttrib();
 	}

@@ -236,7 +236,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../sdk/libs/openal32.lib ../../sdk/libs/eaxguid.lib ../../sdk/libs/eax.lib ../../sdk/libs/ogg.lib ../../sdk/libs/vorbisfile.lib opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
+				AdditionalDependencies="../../../steel.res/sdk/libs/openal32.lib ../../../steel.res/sdk/libs/eaxguid.lib ../../../steel.res/sdk/libs/eax.lib ../../../steel.res/sdk/libs/ogg.lib ../../../steel.res/sdk/libs/vorbisfile.lib opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
+				GenerateDebugInformation="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -351,6 +352,50 @@
 					RelativePath="..\sources\math\vector3d.h"
 					>
 				</File>
+				<Filter
+					Name="test_math"
+					>
+					<File
+						RelativePath="..\sources\math\test_math\test_math.cpp"
+						>
+						<FileConfiguration
+							Name="lib_debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="lib_release|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath="..\sources\math\test_math\test_math.h"
+						>
+						<FileConfiguration
+							Name="lib_debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCustomBuildTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="lib_release|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCustomBuildTool"
+							/>
+						</FileConfiguration>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="res"

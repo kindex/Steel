@@ -12,6 +12,7 @@
 ************************************************************/
 
 #include "plane.h"
+#include <xutility>
 
 /*
 Находится ли точка между лучами (base + a*t) и (base + b*s)
@@ -22,10 +23,10 @@ bool isBetween(v3 point, const v3 base, const v3 a, const v3 b)
 	v3 ab = a.crossProduct(b);
 	float k1 =(ab)&(a*point);
 	float k2 =(ab)&(point*b);
-	return k1>-EPSILON2 && k2>-EPSILON2;
+	return k1 >- EPSILON2 && k2 >- EPSILON2;
 }
 
-bool isCross(const Plane a, const Line b, float &k)
+bool isCross(const Plane& a, const Line b, float &k)
 {
 // a.base + a.a*s + a.b*t = b.base + b.a * k
 
@@ -39,7 +40,7 @@ bool isCross(const Plane a, const Line b, float &k)
 	}
 	v3 baxaaxabxaa =  (b.a * a.a) * abxaa;
 	double len2 = baxaaxabxaa.getSquaredLengthd();
-	if (len2<EPSILON2)
+	if (len2 < EPSILON2)
 	{
 		return false;
 	}
@@ -114,4 +115,57 @@ v3 Plane::reflect(const v3 vector) const
     v3 mid = an*vector.dotProduct(an) + bn*vector.dotProduct(bn);
     v3 result =  2*mid - vector;
     return result;
+}
+
+float getPointTrgDist(const v3& point, const Plane& triangle)
+{
+    float k;
+    if (isCrossTrgLine(triangle, Line(point, triangle.getNormal().getNormalized()), k))
+    {
+        return abs(k);
+    }
+    else
+    {
+        float l1 = getPointLinesegmentDist(point, Line(triangle.base, triangle.a));
+        float l2 = getPointLinesegmentDist(point, Line(triangle.base, triangle.b));
+        float l3 = getPointLinesegmentDist(point, Line(triangle.base + triangle.b, triangle.a));
+        return std::min(l1, std::min(l2, l3));
+    }
+}
+
+float getPointPlaneDist(const v3& point, const Plane& plane)
+{
+    float k;
+    isCross(plane, Line(point, plane.getNormal().getNormalized()), k);
+    return abs(k);
+}
+
+v3 getPointTrgVector(const v3& point, const Plane& triangle)
+{
+    float k;
+    if (isCrossTrgLine(triangle, Line(point, triangle.getNormal().getNormalized()), k))
+    {
+        return triangle.getNormal().getNormalized()*k;
+    }
+    else
+    {
+        v3 l1 = getPointLinesegmentVector(point, Line(triangle.base, triangle.a));
+        v3 l2 = getPointLinesegmentVector(point, Line(triangle.base, triangle.b));
+        v3 l3 = getPointLinesegmentVector(point, Line(triangle.base + triangle.b, triangle.a));
+        float d1 = l1.getSquaredLength();
+        float d2 = l2.getSquaredLength();
+        float d3 = l3.getSquaredLength();
+        if (d1 < d2 && d1 < d3)
+        {
+            return l1;
+        }
+        else if (d2 < d3)
+        {
+            return l2;
+        }
+        else
+        {
+            return l3;
+        }
+    }
 }

@@ -36,7 +36,14 @@ GameObject* GameObjectFactory::createGameObject(IN const std::string& className)
 
 GameObject* createGameObject(Config* conf)
 {
-	if(conf == NULL) return NULL;
+	if (conf == NULL)
+    {
+        return NULL;
+    }
+    if (!conf->getb("enabled", true))
+    {
+        return NULL;
+    }
 
 	GameObject* obj = gameObjectFactory->createGameObject(conf->gets("class"));
 	if (obj == NULL) 
@@ -53,7 +60,8 @@ GameObject* createGameObject(Config* conf)
 	bool result = obj->InitFromConfig(*conf);
 	if (!result)
 	{
-		delete obj; obj = NULL;
+		delete obj;
+        obj = NULL;
 	}
 
 	return obj;

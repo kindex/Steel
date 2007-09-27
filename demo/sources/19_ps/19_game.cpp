@@ -15,11 +15,13 @@
 #include <engine/visitor.h>
 #include <res/res_main.h>
 #include <objects/ps/particle_system.h>
+#include <objects/combiner/combiner.h>
 
 GamePS::GamePS():
 	physicEngine(NULL),
     boundingModel(NULL),
-    crosses(0)
+    crosses(0),
+	gravityBackup(v3(0,0,0))
 {}
 
 bool GamePS::init(Config& _conf, Input& _input)
@@ -41,21 +43,7 @@ bool GamePS::init(Config& _conf, Input& _input)
 
     speedup = _conf.getf("speed", 1.0f);
 
-	Config* graphConf = _conf.find("boundingModel");
-	if (graphConf != NULL)
-	{
-        std::string graphClass = graphConf->gets("class");
-		boundingModel = graphObjectFactory(graphClass);
-		if (boundingModel != NULL)
-		{
-			bool ok = boundingModel->InitFromConfig(*graphConf);
-			if (!ok)
-			{
-				delete boundingModel;
-				boundingModel = NULL; 
-			}
-		}
-	}
+    boundingModel = loadGraphObject(_conf, "boundingModel");
 
 	return true;
 }
@@ -144,6 +132,12 @@ void GamePS::handleEventKeyDown(const std::string& key)
 	else if (key == "9") speedup = 50;
 	else if (key == "-") speedup /= 2;
 	else if (key == "+") speedup *= 2;
+	else if (key == "g")
+	{
+		v3 current = physicEngine->getGravity();
+		physicEngine->setGravity(gravityBackup);
+		gravityBackup = current;
+	}
     else
     {
         GameFreeScene::handleEventKeyDown(key);

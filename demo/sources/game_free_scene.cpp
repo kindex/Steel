@@ -128,11 +128,11 @@ void GameFreeScene::handleEventKeyDown(const std::string& key)
 		graphEngine->conf->toggle("use_debug_shader");
 		executeCommand(graphEngine->conf, "debug_shader_mode = 1");
 	}
-	if (key == "f12")
-	{
-		graphEngine->conf->toggle("use_debug_shader");
-		executeCommand(graphEngine->conf, "debug_shader_mode = 0");
-	}
+	//if (key == "f12")
+	//{
+	//	graphEngine->conf->toggle("use_debug_shader");
+	//	executeCommand(graphEngine->conf, "debug_shader_mode = 0");
+	//}
 
 	if (key == "f6") 
 	{

@@ -36,6 +36,19 @@ bool isCross(const Line a, const Line b, float &t, float &s);
 // мы уверены, что прямые пересекаются. 
 bool isCrossFast(const Line a, const Line b, float &s);
 
-inline bool isCross(const Line a, const Line b);
+inline bool isCross(const Line a, const Line b)
+{
+	float t;
+	float s;
+	return isCross(a, b, t, s);
+}
+
+// distance from line to point
+v3 getPointLineVector(const v3& point, const Line& line);
+float getPointLineDist(const v3& point, const Line& line);
+
+// distance from line segment to point
+v3 getPointLinesegmentVector(const v3& point, const Line& line);
+float getPointLinesegmentDist(const v3& point, const Line& line);
 
 #endif

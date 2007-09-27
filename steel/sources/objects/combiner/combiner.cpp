@@ -30,19 +30,10 @@ Combiner::Combiner():
     polyhedraPhysicSameAsGraph(false)
 {}
 
-
-bool Combiner::InitFromConfig(Config& conf)
+GraphObject* loadGraphObject(Config& conf, const std::string& configVariable)
 {
-	origin.loadIdentity();
-	origin.setScale(conf.getv3("scale", v3(1,1,1)));
-	origin.setTranslation(conf.getv3("origin"));
-
-	position.loadIdentity();
-	positionKind = conf.gets("position_kind", "local") == "local" ? POSITION_LOCAL : POSITION_GLOBAL;
-
-    polyhedraPhysicSameAsGraph = conf.getb("polyhedraPhysicSameAsGraph");
-
-	Config* graphConf = conf.find("graph");
+    GraphObject* graph = NULL;
+	Config* graphConf = conf.find(configVariable);
 	if (graphConf != NULL)
 	{
         std::string graphClass = graphConf->gets("class");
@@ -57,9 +48,14 @@ bool Combiner::InitFromConfig(Config& conf)
 			}
 		}
 	}
+    return graph;
+}
 
-	Config* audioConf = conf.find("audio");
-	if(audioConf != NULL)
+AudioObject* loadAudioObject(Config& conf, const std::string& configVariable)
+{
+    AudioObject* audio = NULL;
+    Config* audioConf = conf.find(configVariable);
+	if (audioConf != NULL)
 	{
         std::string audioClass = audioConf->gets("class");
 		audio = audioObjectFactory(audioClass);
@@ -73,8 +69,13 @@ bool Combiner::InitFromConfig(Config& conf)
 			}
 		}
 	}
+    return audio;
+}
 
-	Config* transformationConf = conf.find("transformation");
+Transformation* loadTransformation(Config& conf, const std::string& configVariable)
+{
+    Transformation* transformation = NULL;
+    Config* transformationConf = conf.find(configVariable);
 	if (transformationConf != NULL)
 	{
         std::string transformationClass = transformationConf->gets("class");
@@ -91,10 +92,30 @@ bool Combiner::InitFromConfig(Config& conf)
 			{
 				TimeInfo info(0.0f, 0.0f);
 				transformation->process(info);
-				position = transformation->getPosition();
 			}
 		}
 	}
+    return transformation;
+}
+
+bool Combiner::InitFromConfig(Config& conf)
+{
+	origin.loadIdentity();
+	origin.setScale(conf.getv3("scale", v3(1,1,1)));
+	origin.setTranslation(conf.getv3("origin"));
+
+	position.loadIdentity();
+	positionKind = conf.gets("position_kind", "local") == "local" ? POSITION_LOCAL : POSITION_GLOBAL;
+
+    polyhedraPhysicSameAsGraph = conf.getb("polyhedraPhysicSameAsGraph");
+
+    graph = loadGraphObject(conf, "graph");
+    audio = loadAudioObject(conf, "audio");
+    transformation = loadTransformation(conf, "transformation");
+    if (transformation != NULL)
+    {
+	    position = transformation->getPosition();
+    }
 
 	ConfigArray* objectsConfig = conf.getArray("objects");
 	if (objectsConfig != NULL)

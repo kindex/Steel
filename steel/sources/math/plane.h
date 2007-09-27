@@ -14,13 +14,15 @@
 #ifndef __MATH_PLANE_H
 #define __MATH_PLANE_H
 
+#include "../steel.h"
+
 #include "vector3d.h"
 #include "line.h"
 
 struct Plane;
 
 // пересекает ли плоскость прямую
-bool isCross(const Plane a, const Line b, float &k);
+bool isCross(const Plane& plne, const Line line, float &k);
 
 // пересекает ли треугольник прямую
 bool isCrossTrgLine(const Plane a, const Line b, float &k);
@@ -49,11 +51,16 @@ bool byRightSide(const v3 point, const Plane a);
 */
 struct Plane 
 {
-	v3 base, a, b;
+	v3 base;
+    v3 a;
+    v3 b;
 
 	Plane() {}
 	Plane(v3 _base, v3 _a, v3 _b): base(_base), a(_a), b(_b) {}
-	v3 point(const float s, const float t) const { return base + a*s + b*t; }
+	v3 point(const float s, const float t) const
+    {
+        return base + a*s + b*t;
+    }
 
 	bool isInTrg(v3 point) const;
 	inline bool crossLine(const Line b, float &k) const 
@@ -61,6 +68,17 @@ struct Plane
 		return isCrossTrgLine(*this, b, k); 
 	}
     v3 reflect(const v3 vector) const;
+    v3 getNormal() const
+    { 
+        return a.crossProduct(b); 
+    }
 };
+
+// distance from point to triangle
+v3 getPointTrgVector(const v3& point, const Plane& triangle);
+float getPointTrgDist(const v3& point, const Plane& triangle);
+
+float getPointPlaneDist(const v3& point, const Plane& plane);
+
 
 #endif

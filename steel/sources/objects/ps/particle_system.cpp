@@ -122,7 +122,7 @@ bool ParticleEmitter::initParticles()
 {
 	int initSize = (int)ceil(conf->geti("init_size") * set->countScale);
 	set->particles.resize(initSize);
-	for(int i=0; i<initSize; i++)
+	for (int i=0; i<initSize; i++)
 	{
 		set->particles[i] = new Particle;
 		born(*set->particles[i], i);

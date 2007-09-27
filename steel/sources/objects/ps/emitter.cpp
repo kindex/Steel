@@ -15,6 +15,7 @@
 #include "../../common/utils.h"
 #include "../../res/config/config.h"
 #include "../../common/logger.h"
+#include "../../engine/engine_types.h"
 
 
 void SimpleEmitter::born(Particle& particle, int index)
@@ -24,6 +25,7 @@ void SimpleEmitter::born(Particle& particle, int index)
     switch (type)
     {
         case EMITTER_RANDOM_CUBE:
+        case EMITTER_SERIAL:
         {
             particle.position = this->position + v3(prand(), prand(), prand())*emitter_size;
             break;
@@ -98,7 +100,7 @@ void SimpleEmitter::process(IN const ProcessInfo& info)
 		set->particles.pop_back();
 	}
 
-	if (frand() < 0.0f)  // born particle
+	if (type == EMITTER_SERIAL && last_born_time + born_interval < info.timeInfo.currentTime && set->particles.size() < limit_count)
 	{
 		int bornId = set->particles.size();
 		set->particles.resize(bornId + 1);
@@ -106,6 +108,8 @@ void SimpleEmitter::process(IN const ProcessInfo& info)
 		set->particles[bornId] = new Particle;
 
 		born(*set->particles[bornId], bornId);
+
+		last_born_time = info.timeInfo.currentTime;
 	}
 }
 
@@ -115,6 +119,11 @@ bool SimpleEmitter::InitFromConfig(Config& _conf)
 	position = conf->getv3("origin");
     emitter_size = conf->getf("emitter_size", 1.0f);
     particle_size = conf->getf("particle_size", 1.0f);
+    born_interval = conf->getf("born_interval", 1.0f);
+    limit_count = conf->geti("limit_count", 1000);
+	
+	last_born_time = 0;
+
     std::string stype = conf->gets("emitter_type");
     init_size = (int)ceil(conf->geti("init_size") * set->countScale);
 
@@ -122,6 +131,7 @@ bool SimpleEmitter::InitFromConfig(Config& _conf)
     else if (stype == "random_sphere") type = EMITTER_RANDOM_SPHERE;
     else if (stype == "random_filled_sphere") type = EMITTER_RANDOM_FILLED_SPHERE;
     else if (stype == "uniform_cube") type = EMITTER_UNIFORM_CUBE;
+    else if (stype == "serial")			type = EMITTER_SERIAL;
     else type = EMITTER_RANDOM_CUBE;
 
 	return true;

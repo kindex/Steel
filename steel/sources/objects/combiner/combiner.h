@@ -46,4 +46,8 @@ protected:
 	pvector<GameObject*> objects;
 };
 
+GraphObject* loadGraphObject(Config& conf, const std::string& configVariable);
+AudioObject* loadAudioObject(Config& conf, const std::string& configVariable);
+Transformation* loadTransformation(Config& conf, const std::string& configVariable);
+
 #endif

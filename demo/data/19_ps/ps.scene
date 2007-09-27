@@ -4,10 +4,12 @@ class = 'ps'
 emitter = 
 {
 	class = 'simple'
-	particle_size = 0.04
-	init_size = 64
-	emitter_size = 1
-	emitter_type = 'uniform_cube'
+	particle_size = 0.02
+	init_size = 0
+	emitter_size = 0.4
+	emitter_type = 'serial'
+	born_interval = 0.1
+	limit_count = 300
 }
 renderer = 
 	{
@@ -18,7 +20,7 @@ renderer =
 			blend = 1
 			diffuse_map =
 			{ 
-				image = 'wsmoke'
+				image = '/circle'
 				k = 1
 			}
 		}
@@ -29,20 +31,23 @@ animator =
 	particle = 
 	{
 		mass=1
-		distance_k = 0.3
+		distance_k = 1
 
 		spring_k=0
 		spring_r0=0.0
 
-		gravity_k=0.000
+		gravity_k=0.0
 		gravity_power=-2
 		gravity_min_dist=0.1
 
-		friction_k=2
-		friction_power=3
+		friction_k=5
+		friction_power=1.5
 
 		lj_power1 = -3
 		lj_power2 = -6
+		
+		force_limit = 30
+		max_dist = 0.05
 	}
 	} 
 }

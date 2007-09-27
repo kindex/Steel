@@ -3,5 +3,6 @@ steel::GameObject
 Игровой объект. Единица игрового мира.
 Параметры
 
-class	string	подкласс
-origin	v3	смещение относительно предка
+class   string  подкласс
+origin  v3  смещение относительно предка
+enabled bool    [true]
