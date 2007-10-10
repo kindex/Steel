@@ -20,7 +20,7 @@ renderer =
 			blend = 1
 			diffuse_map =
 			{ 
-				image = '/circle'
+				image = 'circle'
 				k = 1
 			}
 		}

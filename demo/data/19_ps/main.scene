@@ -35,7 +35,7 @@ file = 'Def_box_7'
 		dropShadows = 0
 		diffuse_map =
 		{ 
-			image = 'none'
+			image = '/none'
 			texCoordsRotation = 0.0
 			texCoordsScale = (1 1 1)
 			texCoordsTranslation = (0 0 0)
@@ -62,7 +62,7 @@ graph =
 		dropShadows = 0
 		diffuse_map =
 		{ 
-			image = 'none'
+			image = '/none'
 			texCoordsRotation = 0.0
 			texCoordsScale = (1 1 1)
 			texCoordsTranslation = (0 0 0)
