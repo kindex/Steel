@@ -23,6 +23,8 @@
 
 #include "../../steel.h"
 #include "model.h"
+#include "../../common/logger.h"
+#include "../../common/utils.h"
 
 /*void Model:: updateMaterial()
 {
@@ -209,3 +211,48 @@ float Model::getVolume() // вычислить объём
 		return volume;
     }
 }
+
+bool Model::checkModel() const
+{
+    if (faceMaterials.empty())
+    {
+        log_msg("warning res model", std::string("Model ") + name + ": faceMaterials is empty");
+    }
+
+    if (vertexes.empty())
+    {
+        log_msg("error res model", std::string("Model ") + name + ": vertexes is empty");
+        return false;
+    }
+
+    if (!texCoords.empty() && texCoords.size() != vertexes.size())
+    {
+        log_msg("error res model", std::string("Model ") + name + ": texCoords.size() != vertexes.size()");
+        return false;
+    }
+
+	for (FaceMaterialVector::const_iterator it = faceMaterials.begin(); it != faceMaterials.end(); it++)
+	{
+		Faces* faces = it->faces;
+
+        if (it->material == NULL)
+        {
+            log_msg("warning res model", std::string("Model ") + name + ": material is NULL");
+        }
+		
+		for (size_t a=0; a < faces->triangles.size(); a++)
+		{
+            for (int i = 0; i < 3; i++)
+            {
+			    unsigned int index = faces->triangles[a].a[0];
+                if (index >= vertexes.size())
+                {
+                    log_msg("error res model", std::string("Model ") + name + ": vertex index is out of range (" + IntToStr(index) + "/" + IntToStr(vertexes.size()) + ")");
+                    return false;
+                }
+            }
+	    }
+	}
+    return true;
+}
+

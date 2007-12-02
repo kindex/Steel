@@ -382,6 +382,10 @@ bool OpenALEngine::soundUnPause(Sound* sound)
 bool OpenALEngine::soundUpdate(Sound* sound)
 {
 	AudioShadowMap::iterator it = shadows.find(sound->id);
+	if (it == shadows.end())
+	{
+		return false;
+	}
 	alSourcefv(it->second->source.source, AL_POSITION, sound->position);
 	alSourcei(it->second->source.source, AL_LOOPING, sound->isLoop);
 	alSourcef(it->second->source.source, AL_GAIN, sound->gain);

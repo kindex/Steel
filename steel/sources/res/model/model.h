@@ -34,6 +34,8 @@ public:
 	const TexCoords*          getTexCoords(int mapNumber) const;
     const Faces*              getAllFaces() const { return &allFaces; }
 
+    bool checkModel() const;
+
 	friend class GraphObjectModel; // TEMP:
 
 protected:

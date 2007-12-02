@@ -270,7 +270,7 @@ void OpenGL_Engine::renderCatchShadows()
 			pushPosition(e);
 			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 			{
-				if (faces->material->blend == 0 && faces->material->catchShadows)
+				if (faces->material != NULL && faces->material->blend == 0 && faces->material->catchShadows)
 				{
 					(this->*DrawFill_MaterialStd)(e, *faces->faces, *faces->material);
 				}
@@ -315,7 +315,7 @@ void OpenGL_Engine::renderNoShadows()
 			pushPosition(e);
 			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 			{
-				if (faces->material->blend == 0 && (!faces->material->catchShadows || !flags.shadows))
+				if (faces->material != NULL && faces->material->blend == 0 && (!faces->material->catchShadows || !flags.shadows))
 				{
 					(this->*DrawFill_MaterialStd)(e, *faces->faces, *faces->material);
 				}
@@ -537,7 +537,10 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 			}
 		}
 	}
-	program->unbind();
+	if (program != NULL)
+	{
+		program->unbind();
+	}
 	glPopAttrib();
 
 	flags.current.simpleLighting = false;
@@ -761,12 +764,8 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	OpenGL_ExtensionsInit();
 	OpenGL_ExtensionsPrintfInfo();
 
-	int version = conf->geti("OpenGL_Version", 0);
-	
-	if(version == 0)// if version is not set in config, then autodetect it
-	{
-		version = openglVersioni;
-	}
+	// if version is not set in config, then autodetect it
+	int version = std::min(conf->geti("OpenGL_Version", 20), openglVersioni);
 
 	log_msg("graph opengl opengl_info", "Using OpenGL renderer version: " + IntToStr(version));
 

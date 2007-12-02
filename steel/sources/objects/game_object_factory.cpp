@@ -22,7 +22,6 @@
 #include "../common/logger.h"
 #include "../common/utils.h"
 
-
 GameObjectFactory* gameObjectFactory = NULL;
 
 GameObject* GameObjectFactory::createGameObject(IN const std::string& className) const

@@ -255,15 +255,15 @@ void OpenGL_Engine::getTangentSpace(const VertexVector *vertex, const TexCoords 
 
 	memset(&S[0], 0, size * sizeof(v3));
     
-	for(FaceMaterialVector::const_iterator it = faceMaterials->begin(); it != faceMaterials->end(); it++)
+	for (FaceMaterialVector::const_iterator it = faceMaterials->begin(); it != faceMaterials->end(); it++)
 	{
 		Faces* faces = it->faces;
 		
 		for (size_t a=0; a < faces->triangles.size(); a++)
 		{
-			long i1 = faces->triangles[a].a[0];
-			long i2 = faces->triangles[a].a[1];
-			long i3 = faces->triangles[a].a[2];
+			unsigned int i1 = faces->triangles[a].a[0];
+			unsigned int i2 = faces->triangles[a].a[1];
+			unsigned int i3 = faces->triangles[a].a[2];
         
 			const v3& vertex1 = vertex->at(i1);
 			const v3& vertex2 = vertex->at(i2);

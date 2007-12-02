@@ -209,13 +209,15 @@ int chain_vertexes(Model_3DS &m, rstream &f, int size)
 {
 	unsigned short count;
 
-	f.read(&count, 2);	
-	if(count*12 +2!= size)
-			throw;
+	f.read(&count, 2);
+	if (count*12 + 2 != size)
+    {
+	    throw;
+    }
 	m.vertexes.resize(count);
 	f.read(&m.vertexes[0], count*4*3); // count*3*float (x, y, z)
 
-	return 2+count*3*4;
+	return 2 + count*3*4;
 }
 
 int chain_map_coords(Model_3DS &m, rstream &f, int size)
@@ -223,21 +225,17 @@ int chain_map_coords(Model_3DS &m, rstream &f, int size)
 	unsigned short count;
 
 	f.read(&count, 2);	
-
 	m.texCoords.resize(count);
-
 	f.read(&m.texCoords[0], count*4*2); // float+float (u, v)
 
 	return 2+count*3*4;
 }
-
 
 int chain_mesh(Model_3DS &m, rstream &f, int size)
 {
 	pvector<chainProcessor> t;
 	t.push_back(chainProcessor(0x4110, chain_vertexes)); // coordinates
 	t.push_back(chainProcessor(0x4120, chain_triangles)); // indexes
-
 	t.push_back(chainProcessor(0x4140, chain_map_coords)); // indexes
 
 	return parsechain(m, f, t, size);
@@ -261,8 +259,6 @@ int chain_3d3d(Model_3DS &m, rstream &f, int size)
 
 	return parsechain(m, f, t, size);
 }
-
-
 
 int chain_4d4d(Model_3DS &m, rstream &f, int size)
 {
@@ -300,9 +296,9 @@ bool Model_3DS::init(const std::string& name, const std::string dir)
 		it->faces->triangles.setId(objectIdGenerator.genUid());
 
 		string mat = it->name;
-		
+
 		it->material = createMaterial(resConfig.add(mat + ".mat"));
 	}
 
-	return true;
+	return checkModel();
 }
