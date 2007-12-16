@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="demo"
 	ProjectGUID="{A18FE575-A5E4-47C1-9612-DFE7DBD9B84C}"
 	RootNamespace="demo"
@@ -295,6 +295,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="23_ageia_tech"
+				>
+				<File
+					RelativePath="..\sources\23_ageia_tech\23_ageia_tech.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\23_ageia_tech\23_ageia_tech.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="conf"
@@ -428,6 +440,14 @@
 				>
 				<File
 					RelativePath="..\data\20_labyrinth\main.scene"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="23_ageia_tech"
+				>
+				<File
+					RelativePath="..\data\23_ageia_tech\main.scene"
 					>
 				</File>
 			</Filter>

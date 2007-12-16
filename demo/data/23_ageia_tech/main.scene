@@ -1,0 +1,111 @@
+# Main scene 
+{
+class = 'combiner'
+objects = 
+(
+
+[/light.conf#] {
+	origin = (0 1 1)
+	castShadows = 1
+}
+
+{
+class = 'combiner'
+origin = (0 0 0)
+transformation = 
+	{
+		class = 'rotation'
+		rotationAxis = (0 0 1)
+		speed = 1
+	}
+objects =	(
+				[/light.conf#]{origin = (0 1 1)}
+			)
+}
+
+{
+class = 'combiner'
+origin = (0 0 0)
+transformation = 
+	{
+		class = 'rotation'
+		rotationAxis = (0 0 1)
+		speed = 1
+	}
+objects =	(
+				[/light.conf#]{origin = (0.7 0 1.5)}
+			)
+}
+
+[/room/room.scene#] {}
+
+{
+class = 'combiner'
+origin = (1 0.5 1.2)
+
+	transformation = 
+	{
+		class = 'transformation_list'
+		transformations =
+		(
+		{
+			class = 'rotation'
+			rotationAxis = (0 0 1)
+			speed = 0.3
+		}
+		{
+			class = 'scaler'
+			scale = (0.1 0.1 0.1)
+		}
+		)
+	}
+
+graph = 
+{
+class = 'model'
+file = '/09_demo/teapot'
+material = 
+{
+class = 'std'
+blend = 0
+diffuse_map =
+{ 
+	image = '../17_intro/GALVPLAT'
+	texCoordsRotation = 0.0
+	texCoordsScale = (1 1 1)
+	texCoordsTranslation = (0 0 0)
+	k = 10
+}
+}
+}
+}
+
+
+{
+class = 'combiner'
+origin = (0 0 1)
+graph = 
+{
+	class = 'box'
+	size = (0.4 0.4 0.4)
+	material = 
+	{
+		class = 'std'
+		blend = 0
+		dropShadows = 1
+		diffuse_map =
+		{ 
+			image = '../17_intro/GALVPLAT'
+			texCoordsRotation = 0.0
+			texCoordsScale = (1 1 1)
+			texCoordsTranslation = (0 0 0)
+			k = 10
+		}
+	}
+}
+}
+
+
+
+) // objects
+} // scene

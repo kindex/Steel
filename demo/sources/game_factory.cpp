@@ -15,12 +15,15 @@
 #include "game_free_scene.h"
 #include "19_ps/19_game.h"
 #include "20_labyrinth/20_labyrinth.h"
+#include "23_ageia_tech/23_ageia_tech.h"
+
 
 Game* GameFactory::createGame(IN const std::string& className) const
 {
 	if (className == "free_scene")	return new GameFreeScene;
 	if (className == "ps")			return new GamePS;
 	if (className == "labyrinth")	return new GameLabyrinth;
+	if (className == "Ageiatech")	return new GameAgeiatech;
 
 	return NULL;
 }
