@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="demo"
 	ProjectGUID="{A18FE575-A5E4-47C1-9612-DFE7DBD9B84C}"
 	RootNamespace="demo"
@@ -292,6 +292,14 @@
 				</File>
 				<File
 					RelativePath="..\sources\20_labyrinth\20_labyrinth.h"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\20_labyrinth\labyrinth_generator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\20_labyrinth\labyrinth_generator.h"
 					>
 				</File>
 			</Filter>

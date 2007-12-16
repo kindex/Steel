@@ -4,7 +4,7 @@
 	Part of: Steel engine
 	(C) DiVision, 2006
 	Authors:
-		* KindeX [Andrey Ivanov, kindexz@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
 	License:
 		Steel Engine License
 	Description:

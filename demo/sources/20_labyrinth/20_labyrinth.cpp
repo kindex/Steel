@@ -1,14 +1,15 @@
 /*id*********************************************************
-	Unit: Demo 19
+	Unit: Labyrinth Game
 	Part of: DiVision intro
-	(C) DiVision, 2004-2007
+	(C) DiVision, 2006-2007
 	Authors:
-		* KindeX [Andrey Ivanov, kindexz@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
 	License:
 		Steel Engine License
 	Description:
-		Pasticle system testtype
+		Labyrinth Game main unit
  ************************************************************/
+
 
 #include "20_labyrinth.h"
 #include <common/logger.h>
@@ -17,8 +18,7 @@
 #include <objects/ps/particle_system.h>
 #include <objects/combiner/combiner.h>
 
-GameLabyrinth::GameLabyrinth():
-	physicEngine(NULL)
+GameLabyrinth::GameLabyrinth()
 {}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
@@ -27,16 +27,6 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
-	physicEngine = new PhysicEngine;
-
-    Config* physicConfig = _conf.find("physic");
-    if (physicConfig == NULL)
-    {
-        abort_init("game physic", "Cannot find physic config");
-    }
-	physicEngine->init(*physicConfig);
-
-	physicEngine->inject(world);
 
 	return true;
 }
@@ -44,12 +34,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 void GameLabyrinth::process()
 {
 	GameFreeScene::process();
-	
-	if (timeInfo.frameLength > EPSILON)
-	{
-        physicEngine->setSpeedup(1.0);
-		physicEngine->process(timeInfo);
-	}
+
 }
 
 void GameLabyrinth::handleEventKeyDown(const std::string& key)

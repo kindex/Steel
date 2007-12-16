@@ -1,13 +1,13 @@
 /*id*********************************************************
-	Unit: Demo 19
+	Unit: Labyrinth Game
 	Part of: DiVision intro
-	(C) DiVision, 2004-2007
+	(C) DiVision, 2006-2007
 	Authors:
-		* KindeX [Andrey Ivanov, kindexz@kindex.lv, http://kindex.lv]
+		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
 	License:
 		Steel Engine License
 	Description:
-		Pasticle system testtype
+		Labyrinth Game main unit
  ************************************************************/
 
 #ifndef _20_LABYRINTH_H_
@@ -15,7 +15,6 @@
 
 #include "../game_free_scene.h"
 
-#include <physic/physic_particle.h>
 #include <objects/combiner/graph_object.h>
 
 class GameLabyrinth: public GameFreeScene
@@ -26,9 +25,6 @@ public:
 	bool init(Config& _conf, Input& _input);
 	void process();
     std::string getWindowCaption();
-
-private:
-	PhysicEngine* physicEngine;
 };
 
 #endif
