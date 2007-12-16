@@ -35,6 +35,8 @@ private:
 	GraphObjectVector walls;
 	Config* rightWall;
 	Config* downWall;
+	float rightWallLength;
+	float downWallLength;
 };
 
 #endif

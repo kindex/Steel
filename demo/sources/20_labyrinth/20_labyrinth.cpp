@@ -27,6 +27,8 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
+	rightWallLength = _conf.getf("rightWallLength", 1.0f);
+	downWallLength = _conf.getf("downWallLength", 1.0f);
 	rightWall = _conf.find("rightWall");
 	downWall = _conf.find("downWall");
 	if (rightWall == NULL)
@@ -40,7 +42,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 		return false;
 	}
 
-	labyrinth = generateLabyrinth(16, 16);
+	labyrinth = generateLabyrinth(10, 10);
 
 	for (int i = -1; i <= labyrinth.getMaxX(); i++)
 	{
@@ -50,8 +52,8 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 
 			if (right && i < labyrinth.getMaxX())
 			{
-				rightWall->setValued("origin[0]", i + 0.5f);
-				rightWall->setValued("origin[1]", j);
+				rightWall->setValued("origin[0]", (i + 0.5f)*rightWallLength);
+				rightWall->setValued("origin[1]", j*downWallLength);
 				GameObject* wall = createGameObject(rightWall);
 				world->addObject(wall);
 			}
@@ -59,8 +61,8 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 			bool down = labyrinth.isDownBorder(i, j);
 			if (down && j < labyrinth.getMaxY())
 			{
-				downWall->setValued("origin[0]", i);
-				downWall->setValued("origin[1]", j + 0.5f);
+				downWall->setValued("origin[0]", i*rightWallLength);
+				downWall->setValued("origin[1]", (j + 0.5f)*downWallLength);
 				GameObject* wall = createGameObject(downWall);
 				world->addObject(wall);
 			}

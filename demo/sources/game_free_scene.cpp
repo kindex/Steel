@@ -396,3 +396,8 @@ std::string GameFreeScene::getWindowCaption()
 {
     return caption;
 }
+
+bool GameFreeScene::cameraCanFly(const v3& oldPos, const v3& newPos)
+{
+	return true;
+}

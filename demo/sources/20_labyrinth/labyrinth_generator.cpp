@@ -43,10 +43,16 @@ private:
 
 bool LabyrinthGenerator::deep(int x, int y, int level)
 {
-	if(a[y][x].was) return false;
+	if (a[y][x].was)
+	{
+		return false;
+	}
 	a[y][x].dist = level;
 	a[y][x].was = true;
-	if(x == X-1 && y == Y-1) return true;
+	if (x == X-1 && y == Y-1)
+	{
+		return true;
+	}
 
 	bool used_directions[4] = {false, false, false, false};
 	int total = 0;
@@ -65,10 +71,30 @@ bool LabyrinthGenerator::deep(int x, int y, int level)
 
 		switch(d)
 		{
-			case 0: if(x > 0) deep(x - 1, y, level + 1); break;
-			case 1: if(y > 0) deep(x, y - 1, level + 1); break;
-			case 2:	if(x < X-1) deep(x + 1, y, level + 1); break;
-			case 3:	if(y < Y-1) deep(x, y + 1, level + 1); break;
+			case 0: 
+				if(x > 0)
+				{
+					deep(x - 1, y, level + 1);
+				}
+				break;
+			case 1:
+				if (y > 0)
+				{
+					deep(x, y - 1, level + 1); 
+				}
+				break;
+			case 2:
+				if(x < X-1)
+				{
+					deep(x + 1, y, level + 1);
+				}
+				break;
+			case 3:
+				if(y < Y-1)
+				{
+					deep(x, y + 1, level + 1); 
+				}
+				break;
 		}
 	}
 	return false;

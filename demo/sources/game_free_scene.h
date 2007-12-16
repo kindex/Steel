@@ -48,6 +48,8 @@ public:
 	void processKeyboard();
 
 protected:
+	virtual bool cameraCanFly(const v3& oldPos, const v3& newPos);
+
 	Config*			conf;
 	Input*			input;
 	Spectator		spectator;
