@@ -33,7 +33,7 @@ GameObject* GameObjectFactory::createGameObject(IN const std::string& className)
 	return NULL;
 }
 
-GameObject* createGameObject(Config* conf)
+GameObject* createGameObject(Config* conf, OUT std::string* _class)
 {
 	if (conf == NULL)
     {
@@ -44,10 +44,15 @@ GameObject* createGameObject(Config* conf)
         return NULL;
     }
 
-	GameObject* obj = gameObjectFactory->createGameObject(conf->gets("class"));
+	std::string conf_class = conf->gets("class");
+	if (_class != NULL)
+	{
+		*_class = conf_class;
+	}
+	GameObject* obj = gameObjectFactory->createGameObject(conf_class);
 	if (obj == NULL) 
 	{
-		error("objects", std::string("GameObject class '") + conf->gets("class") + "' not found");
+		error("objects", std::string("GameObject class '") + conf_class + "' not found");
 		return NULL;
 	}
 

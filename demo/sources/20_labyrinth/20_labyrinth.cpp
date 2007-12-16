@@ -27,6 +27,45 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
+	rightWall = _conf.find("rightWall");
+	downWall = _conf.find("downWall");
+	if (rightWall == NULL)
+	{
+        abort_init("error game res", "Cannot find right wall config");
+		return false;
+	}
+	if (downWall == NULL)
+	{
+        abort_init("error game res", "Cannot find down wall config");
+		return false;
+	}
+
+	labyrinth = generateLabyrinth(16, 16);
+
+	for (int i = -1; i <= labyrinth.getMaxX(); i++)
+	{
+		for (int j = -1; j <= labyrinth.getMaxY(); j++)
+		{
+			bool right = labyrinth.isRightBorder(i, j);
+
+			if (right && i < labyrinth.getMaxX())
+			{
+				rightWall->setValued("origin[0]", i + 0.5f);
+				rightWall->setValued("origin[1]", j);
+				GameObject* wall = createGameObject(rightWall);
+				world->addObject(wall);
+			}
+
+			bool down = labyrinth.isDownBorder(i, j);
+			if (down && j < labyrinth.getMaxY())
+			{
+				downWall->setValued("origin[0]", i);
+				downWall->setValued("origin[1]", j + 0.5f);
+				GameObject* wall = createGameObject(downWall);
+				world->addObject(wall);
+			}
+		}
+	}
 
 	return true;
 }
@@ -34,7 +73,6 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 void GameLabyrinth::process()
 {
 	GameFreeScene::process();
-
 }
 
 void GameLabyrinth::handleEventKeyDown(const std::string& key)
@@ -44,5 +82,14 @@ void GameLabyrinth::handleEventKeyDown(const std::string& key)
 
 std::string GameLabyrinth::getWindowCaption()
 {
-    return  "Labyrinth FPS " + graphTimer.getfps_s();
+    return  "Labyrinth FPS " + graphTimer.getfps_s()
+			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
+			+ " Faces: " + IntToStr(graphEngine->total.triangleCount);
+}
+
+void GameLabyrinth::draw(GraphEngine& graph)
+{
+	
+
+	GameFreeScene::draw(graph);
 }

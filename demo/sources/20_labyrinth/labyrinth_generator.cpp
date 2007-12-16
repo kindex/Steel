@@ -137,18 +137,40 @@ Labyrinth LabyrinthGenerator::getLabyrinth() const
 }
 
 
-bool Labyrinth::rightborder(size_t x, size_t y)
+bool Labyrinth::isRightBorder(int x, int y) const
 {
-	return y + 1 > a.size()
-		|| x + 1 >= a[y].size()
-		|| a[y][x].rightborder;
+	if (x < 0 || y < 0)
+	{
+		return true;
+	}
+	size_t sx = x;
+	size_t sy = y;
+	return sy + 1 > a.size()
+		|| sx + 1 >= a[sy].size()
+		|| a[sy][sx].rightborder;
 }
 
-bool Labyrinth::downborder(size_t x, size_t y)
+bool Labyrinth::isDownBorder(int x, int y) const
 {
-	return y + 1 >= a.size()
-		|| x + 1 > a[y].size()
-		|| a[y][x].downborder;
+	if (x < 0 || y < 0)
+	{
+		return true;
+	}
+	size_t sx = x;
+	size_t sy = y;
+	return sy + 1 > a.size()
+		|| sx + 1 >= a[sy].size()
+		|| a[sy][sx].downborder;
+}
+
+int Labyrinth::getMaxX() const
+{
+	return a[0].size();
+}
+
+int Labyrinth::getMaxY() const
+{
+	return a.size();
 }
 
 Labyrinth generateLabyrinth(size_t x, size_t y)

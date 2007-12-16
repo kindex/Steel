@@ -33,6 +33,7 @@ public:
 	bool InitFromConfig(IN Config&);
 	GameObject* getObject(size_t index) { return objects[index]; }
     void traverse(Visitor&);
+	void addObject(GameObject*);
 
 protected:
 	GraphObject*    graph;

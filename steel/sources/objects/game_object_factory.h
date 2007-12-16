@@ -27,7 +27,7 @@ public:
 
 extern GameObjectFactory* gameObjectFactory;
 
-GameObject* createGameObject(Config* conf);
+GameObject* createGameObject(Config* conf, OUT std::string* _class = NULL);
 
 
 #endif

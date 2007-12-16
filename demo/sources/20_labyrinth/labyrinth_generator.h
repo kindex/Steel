@@ -19,8 +19,10 @@
 class Labyrinth
 {
 public:
-	bool rightborder(size_t x, size_t y);
-	bool downborder(size_t x, size_t y);
+	bool isRightBorder(int x, int y) const;
+	bool isDownBorder(int x, int y) const;
+	int getMaxX() const;
+	int getMaxY() const;
 
 	friend class LabyrinthGenerator;
 

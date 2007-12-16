@@ -14,8 +14,11 @@
 #define _20_LABYRINTH_H_
 
 #include "../game_free_scene.h"
+#include "labyrinth_generator.h"
 
 #include <objects/combiner/graph_object.h>
+
+typedef std::vector<GraphObject*> GraphObjectVector;
 
 class GameLabyrinth: public GameFreeScene
 {
@@ -25,6 +28,13 @@ public:
 	bool init(Config& _conf, Input& _input);
 	void process();
     std::string getWindowCaption();
+	void draw(GraphEngine&);
+
+private:
+	Labyrinth labyrinth;
+	GraphObjectVector walls;
+	Config* rightWall;
+	Config* downWall;
 };
 
 #endif

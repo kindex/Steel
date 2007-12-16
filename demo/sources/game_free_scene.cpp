@@ -50,12 +50,19 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 		return false;
 	}
 
-	world = createGameObject(scene);
-	if (world == NULL)
+	std::string world_class;
+	GameObject* world_loaded = createGameObject(scene, &world_class);
+	if (world_loaded == NULL)
 	{
 		error("game", "Cannot init scene");
 		return false;
 	}
+	if (world_class != "combiner")
+	{
+		error("game", "Scene can only be of combiner class");
+		return false;
+	}
+	world = static_cast<Combiner*>(world_loaded);
 	
 	Config* flashlightConf = resConfig.add("flashlight.conf");
 	if (flashlightConf != NULL)
@@ -305,7 +312,6 @@ void GameFreeScene::draw(GraphEngine& graph)
 
 	info.timeInfo.currentTime = graphTimer.total();
 	info.timeInfo.frameLength = graphTimer.lap(); graphTimer.nextlap();
-
 
 	if (!paused)
 	{

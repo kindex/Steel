@@ -126,12 +126,17 @@ bool Combiner::InitFromConfig(Config& conf)
 			GameObject* newObject = createGameObject(*it);
 			if (newObject != NULL)
 			{
-				objects.push_back(newObject);
+				addObject(newObject);
 			}
 		}
 	}
 
 	return true;
+}
+
+void Combiner::addObject(GameObject* newObject)
+{
+	objects.push_back(newObject);
 }
 
 bool Combiner::supportsInterface(Engine& engine, IN const InterfaceId id) 

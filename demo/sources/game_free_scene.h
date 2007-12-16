@@ -16,6 +16,7 @@
 
 #include "game.h"
 #include <objects/light.h>
+#include <objects/combiner/combiner.h>
 #include <common/timer.h>
 
 class GameFreeScene : public Game
@@ -53,7 +54,7 @@ protected:
 	Spectator		flashlightPosition;
 	GraphEngine*	graphEngine;
 	AudioEngine*	audioEngine;
- 	GameObject*		world;
+ 	Combiner*		world;
  	GameLight*		flashlight;
 	ProcessInfo		info;
 	Timer			graphTimer;
