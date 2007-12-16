@@ -59,6 +59,7 @@ class Engine : public BaseInterface
 public:
 	Config* conf;
 
+	Engine() : conf(NULL) {}
 	virtual ~Engine() {}
 //	virtual bool init(std::string _conf) = 0; // initialization
 

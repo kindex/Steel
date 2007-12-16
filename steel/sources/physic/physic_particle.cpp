@@ -528,6 +528,7 @@ bool PhysicEngine::clear()
 
 bool PhysicEngine::init(Config& conf)
 {
+	this->conf = &conf;
     globalGravity = conf.getv3("global_gravity");
 
     return true;

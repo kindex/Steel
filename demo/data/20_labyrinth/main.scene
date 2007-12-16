@@ -1,0 +1,31 @@
+# Main scene 
+{
+class = 'combiner'
+objects = 
+(
+
+{
+class = 'combiner'
+enabled=1
+origin = (0 0.5 0)
+
+graph = 
+{
+class = 'model'
+file = 'Def_box_7'
+
+	material = 
+	{
+		class = 'std'
+		blend = 0
+		dropShadows = 0
+		diffuse_map =
+		{ 
+			image = '/none'
+		}
+	}
+
+} // graph
+} // combiner
+) // objects
+} // scene

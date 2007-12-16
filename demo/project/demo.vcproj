@@ -283,6 +283,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="20_labyrinth"
+				>
+				<File
+					RelativePath="..\sources\20_labyrinth\20_labyrinth.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\sources\20_labyrinth\20_labyrinth.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="conf"
@@ -408,6 +420,14 @@
 				>
 				<File
 					RelativePath="..\data\21_shadows\main.scene"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="20_labyrinth"
+				>
+				<File
+					RelativePath="..\data\20_labyrinth\main.scene"
 					>
 				</File>
 			</Filter>

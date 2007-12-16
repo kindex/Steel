@@ -221,8 +221,7 @@ void GameFreeScene::process()
 	if (!firstframe && infoTimer.lap() >= 0.5)
 	{
 		infoTimer.nextlap();
-		caption = \
-            std::string("Steel engine")
+		caption = std::string("Steel engine")
 			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
 			+ " Faces: " + IntToStr(graphEngine->total.triangleCount)
 			+ " Lights: " + IntToStr(graphEngine->total.lightCount)

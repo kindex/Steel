@@ -168,7 +168,7 @@ void Combiner::bindEngine(Engine& engine, IN const InterfaceId id)
 //		dynamic_cast<AudioInterface*>(engine)->setPosition(position);
 		audio->bindEngine(engine, id);
 	}
-    else if (id == INTERFACE_POPYHEDRA_PHYSIC && polyhedraPhysicSameAsGraph)
+    else if (graph != NULL && id == INTERFACE_POPYHEDRA_PHYSIC && polyhedraPhysicSameAsGraph)
 	{
 //        dynamic_cast<PhysicInterface*>(&engine)->setVertexes(graph->
         graph->bindEngine(engine, id);
