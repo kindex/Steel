@@ -17,6 +17,7 @@ size = (0.2 2 2)
 		{ 
 			image = 'laby_wall1_specular'
 		}
+		texCoordsScale = (4 4 4)
 	}
 
 } // graph
