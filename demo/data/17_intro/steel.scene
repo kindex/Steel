@@ -9,8 +9,8 @@
 		(
 			{
 				class = 'movement'
-				direction = (1 0 0)
-				speed = 0.1
+				direction = (100 0 0)
+				speed = 1.1
 				type = 'sin'
 			}
 			{
