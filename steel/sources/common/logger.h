@@ -122,9 +122,6 @@ public:
 	int getLevel() { return level;}
 };
 
-
-#include <math.h> // для избежания конфликта имён с math.h::log()
-
 // глобальный экземпляр класса steel::log, через который следует выводить все сообщения
 namespace steel
 {

@@ -23,11 +23,12 @@
 #include "../engine/interface.h"
 
 class GameObject;
+struct Line;
+struct Plane;
 
 class GraphEngine : public GraphInterface
 {
 public:
-
 	struct GraphTotalInfo
 	{
 		size_t vertexCount;
@@ -47,7 +48,11 @@ public:
 	// Draw colelcted information. May be called few times without recollection information
 	virtual bool isVisible(AABB box) abstract;
 	// Clear collected information
-	bool clear();
+	virtual bool clear();
+	virtual bool findCollision(const Line& lineSegment,
+								OUT GameObject*& crossingObject,
+								OUT v3& crossingPosition,
+								OUT Plane& triangle) const abstract;
 
 protected:
 	pvector<GameObject*>	objects;

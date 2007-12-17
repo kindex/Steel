@@ -15,7 +15,7 @@
 #define __MATH_MATH_H
 
 #define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
 
 //VC++ math.h (and others) do not define M_PI
 #ifndef M_PI

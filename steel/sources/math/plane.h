@@ -70,7 +70,7 @@ struct Plane
     v3 reflect(const v3 vector) const;
     v3 getNormal() const
     { 
-        return a.crossProduct(b); 
+		return a.crossProduct(b).getNormalized(); 
     }
 };
 

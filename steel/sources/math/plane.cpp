@@ -136,16 +136,16 @@ float getPointTrgDist(const v3& point, const Plane& triangle)
 float getPointPlaneDist(const v3& point, const Plane& plane)
 {
     float k;
-    isCross(plane, Line(point, plane.getNormal().getNormalized()), k);
+    isCross(plane, Line(point, plane.getNormal()), k);
     return abs(k);
 }
 
 v3 getPointTrgVector(const v3& point, const Plane& triangle)
 {
     float k;
-    if (isCrossTrgLine(triangle, Line(point, triangle.getNormal().getNormalized()), k))
+    if (isCrossTrgLine(triangle, Line(point, triangle.getNormal()), k))
     {
-        return triangle.getNormal().getNormalized()*k;
+        return triangle.getNormal()*k;
     }
     else
     {

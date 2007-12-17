@@ -22,15 +22,6 @@
 #include <string>
 #include <set>
 
-#if STEEL_OS == OS_LINUX
-#include <GL/gl.h>			// Header File For The OpenGL32 Library
-#include <GL/glu.h>			// Header File For The GLu32 Library
-//#include <GL/glaux.h>		// Header File For The Glaux Library
-#elif STEEL_OS == OS_WIN32
-#include <windows.h>		// Header File For Windows
-#include "../../libs/opengl/libext.h"
-#endif
-
 #include "../graph_engine.h"
 #include "opengl_private.h"
 
@@ -198,6 +189,7 @@ public:
 	bool init(Config* _conf, Input* input);
 	bool process(IN const ProcessInfo&);
 	bool deinit();
+	bool findCollision(const Line& lineSegment, OUT GameObject*&, OUT v3& position, OUT Plane& triangle) const;
 	
 	GraphShadow* getShadow(GameObject* object) { return (GraphShadow*)Engine::getShadow(object, INTERFACE_GRAPH); }
 	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id, INTERFACE_GRAPH); }

@@ -31,12 +31,21 @@ public:
 	void draw(GraphEngine&);
 
 private:
+	virtual v3 calulateCameraCollision(const v3& oldPos, const v3& newPos);
+
 	Labyrinth labyrinth;
 	GraphObjectVector walls;
 	Config* rightWall;
 	Config* downWall;
 	float rightWallLength;
 	float downWallLength;
+
+	enum
+	{
+		C_FREE,
+		C_FIRST_PERSON,
+	}
+	cameraMode;
 };
 
 #endif

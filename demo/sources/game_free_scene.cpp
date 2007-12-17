@@ -161,13 +161,13 @@ void GameFreeScene::processKeyboard()
 {
 	if (input->isMouseCaptured())
 	{
-		v3 dir(0,0,0);
-		if (input->isPressed("w")) 	dir += v3(1,0,0);
-		if (input->isPressed("s")) 	dir += v3(-1,0,0);
-		if (input->isPressed("a")) 	dir += v3(0, +1, 0);
-		if (input->isPressed("d")) 	dir += v3(0, -1, 0);
-		if (input->isPressed("q")) 	dir += v3(0, 0, +1);
-		if (input->isPressed("z")) 	dir += v3(0, 0, -1);
+		v3 dir(0, 0, 0);
+		if (input->isPressed("w")) 	dir += v3( 1,  0,  0);
+		if (input->isPressed("s")) 	dir += v3(-1,  0,  0);
+		if (input->isPressed("a")) 	dir += v3( 0, +1,  0);
+		if (input->isPressed("d")) 	dir += v3( 0, -1,  0);
+		if (input->isPressed("q")) 	dir += v3( 0,  0, +1);
+		if (input->isPressed("z")) 	dir += v3( 0,  0, -1);
 
 		if (dir.getLength() > EPSILON)
 		{
@@ -184,7 +184,10 @@ void GameFreeScene::processKeyboard()
 			float d = brakeSpeed*(float)speed;
 			float len = spectator.velocity.getLength();
 			len -= d;
-			if(len < 0) len = 0;
+			if (len < 0)
+			{
+				len = 0;
+			}
 			spectator.velocity.normalize();
 			spectator.velocity *= len; 
 		}
@@ -213,7 +216,10 @@ void GameFreeScene::process()
 					+ spectator.velocity.y*v3(-direction.y, direction.x, 0).getNormalized()
 					+ spectator.velocity.z*v3(0, 0, 1);
 
-	spectator.camera.setPosition(spectator.camera.getPosition() + cameraSpeed*(float)speed);
+	v3 oldPosition = spectator.camera.getPosition();
+	v3 proposedPosition = oldPosition + cameraSpeed*(float)speed;
+	v3 newPosition = calulateCameraCollision(oldPosition, proposedPosition);
+	spectator.camera.setPosition(newPosition);
 
 	updatePhysicTime();
 	info.timeInfo = timeInfo;
@@ -397,7 +403,7 @@ std::string GameFreeScene::getWindowCaption()
     return caption;
 }
 
-bool GameFreeScene::cameraCanFly(const v3& oldPos, const v3& newPos)
+v3 GameFreeScene::calulateCameraCollision(const v3& oldPos, const v3& newPos)
 {
-	return true;
+	return newPos;
 }

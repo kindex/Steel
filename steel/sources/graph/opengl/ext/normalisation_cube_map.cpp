@@ -15,9 +15,17 @@
 #include "normalisation_cube_map.h"
 #include "../../../math/vector3d.h"
 
-GLuint generateNormalisationCubeMap()
+#ifdef  _WIN32
+	#include    <windows.h>
+#else
+	#define GLX_GLXEXT_LEGACY
+#endif
+
+#include "../../../libs/opengl/libext.h"
+
+unsigned int generateNormalisationCubeMap()
 {
-	if(!GL_EXTENSION_TEXTURE_CUBE_MAP) return 0;
+	if (!GL_EXTENSION_TEXTURE_CUBE_MAP) return 0;
 
 	GLuint t;
 

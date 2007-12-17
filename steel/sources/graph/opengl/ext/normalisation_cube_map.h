@@ -15,14 +15,6 @@
 
 #include "../../../steel.h"
 
-#ifdef  _WIN32
-	#include    <windows.h>
-#else
-	#define GLX_GLXEXT_LEGACY
-#endif
-
-#include "../../../libs/opengl/libext.h"
-
-GLuint generateNormalisationCubeMap();
+unsigned int generateNormalisationCubeMap();
 
 #endif

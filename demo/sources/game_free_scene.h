@@ -48,7 +48,7 @@ public:
 	void processKeyboard();
 
 protected:
-	virtual bool cameraCanFly(const v3& oldPos, const v3& newPos);
+	virtual v3 calulateCameraCollision(const v3& oldPos, const v3& newPos);
 
 	Config*			conf;
 	Input*			input;
