@@ -123,6 +123,11 @@ void GameFreeScene::handleEventKeyDown(const std::string& key)
 	if (key == "f3") graphEngine->conf->toggle("drawWire");
 	if (key == "f4") graphEngine->conf->toggle("blend");
 	if (key == "f5") graphEngine->conf->toggle("drawVertexes");
+	if (key == "f6")
+	{
+		graphEngine->conf->toggle("clearColor");
+		graphEngine->conf->toggle("clearDepth");
+	}
 	if (key == "f7") graphEngine->conf->toggle("drawNormals");
 	if (key == "f8") graphEngine->conf->toggle("drawAABB");
 	if (key == "f9")
@@ -140,12 +145,6 @@ void GameFreeScene::handleEventKeyDown(const std::string& key)
 	//	graphEngine->conf->toggle("use_debug_shader");
 	//	executeCommand(graphEngine->conf, "debug_shader_mode = 0");
 	//}
-
-	if (key == "f6") 
-	{
-		graphEngine->conf->toggle("clearColor");
-		graphEngine->conf->toggle("clearDepth");
-	}
 
 	if (key == "f")
 	{

@@ -42,6 +42,12 @@ float prand()
 	return (float) rand() / (float) RAND_MAX - 0.5f;
 }
 
+// random float number in interval [-0.5..+0.5)
+size_t irand(size_t count)
+{
+	return rand() % count;
+}
+
 v3 prand_v3()
 {
     return v3(prand(), prand(), prand());

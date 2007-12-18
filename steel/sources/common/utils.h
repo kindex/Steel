@@ -25,6 +25,8 @@
 float frand();
 // random float number in interval [-0.5..+0.5)
 float prand();
+// random int number in interval [0..count-1]
+size_t irand(size_t count);
 v3 prand_v3();
 v3 frand_v3();
 

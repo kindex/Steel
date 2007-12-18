@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="windows-1251"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="demo"
 	ProjectGUID="{A18FE575-A5E4-47C1-9612-DFE7DBD9B84C}"
 	RootNamespace="demo"
@@ -339,6 +339,10 @@
 				RelativePath="..\conf\opengl.conf"
 				>
 			</File>
+			<File
+				RelativePath="..\conf\ps.conf"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="data"
@@ -451,7 +455,23 @@
 				Name="20_labyrinth"
 				>
 				<File
+					RelativePath="..\data\20_labyrinth\down.scene"
+					>
+				</File>
+				<File
 					RelativePath="..\data\20_labyrinth\main.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\right.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\sun.conf"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\sun_ambient.conf"
 					>
 				</File>
 			</Filter>

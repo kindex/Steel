@@ -17,7 +17,7 @@
 #include "config.h"
 
 void setup(PConfig& conf, const std::string& path, Config* newValue);
-bool executeScript(Config* conf, std::string script);
-bool executeCommand(Config* conf, std::string command);
+bool executeScript(Config* conf, const std::string& script);
+bool executeCommand(Config* conf, const std::string& command);
 
 #endif

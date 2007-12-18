@@ -10,7 +10,6 @@
 		Labyrinth Game main unit
  ************************************************************/
 
-
 #include "20_labyrinth.h"
 #include <common/logger.h>
 #include <engine/visitor.h>
@@ -29,43 +28,53 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 		return false;
 	}
 	cameraMode = C_FIRST_PERSON;
-	rightWallLength = _conf.getf("rightWallLength", 1.0f);
-	downWallLength = _conf.getf("downWallLength", 1.0f);
-	rightWall = _conf.find("rightWall");
-	downWall = _conf.find("downWall");
-	if (rightWall == NULL)
+	std::string dirs[] = {"x", "y"};
+
+	for (int i = 0; i < 2; i++)
 	{
-        abort_init("error game res", "Cannot find right wall config");
-		return false;
-	}
-	if (downWall == NULL)
-	{
-        abort_init("error game res", "Cannot find down wall config");
-		return false;
+		const std::string& dir = dirs[i];
+		length[i] = _conf.getf("labyrinth.length_" + dir, 1.0f);
+		count[i] = _conf.geti("labyrinth.count_" + dir, 8);
+		Config* loadedWallConfig = _conf.find("labyrinth.scene_" + dir);
+		if (loadedWallConfig == NULL)
+		{
+			abort_init("error game res", "Cannot find scene_" + dir + " config");
+			return false;
+		}
+		if (loadedWallConfig->getType() != CONFIG_VALUE_ARRAY)
+		{
+			abort_init("error game res", "scene_" + dir + " is not array");
+		}
+
+		scene[i] = static_cast<ConfigArray*>(loadedWallConfig);
 	}
 
-	labyrinth = generateLabyrinth(10, 10);
+	labyrinth = generateLabyrinth(count[0], count[1]);
 
-	for (int i = -1; i <= labyrinth.getMaxX(); i++)
+	for (int i = -1; i < labyrinth.getMaxX(); i++)
 	{
-		for (int j = -1; j <= labyrinth.getMaxY(); j++)
+		for (int j = -1; j < labyrinth.getMaxY(); j++)
 		{
 			bool right = labyrinth.isRightBorder(i, j);
 
-			if (right && i < labyrinth.getMaxX())
+			if (right && i < labyrinth.getMaxX() && j >= 0)
 			{
-				rightWall->setValued("origin[0]", (i + 0.5f)*downWallLength);
-				rightWall->setValued("origin[1]", j*rightWallLength);
-				GameObject* wall = createGameObject(rightWall);
+				Config* currentWallConfig = scene[0]->getArrayElement(irand(scene[0]->size()));
+
+				currentWallConfig->setValued("origin[0]", (i + 0.5f)*length[0]);
+				currentWallConfig->setValued("origin[1]", j*length[1]);
+				GameObject* wall = createGameObject(currentWallConfig);
 				world->addObject(wall);
 			}
 
 			bool down = labyrinth.isDownBorder(i, j);
-			if (down && j < labyrinth.getMaxY())
+			if (down && j < labyrinth.getMaxY() && i >= 0)
 			{
-				downWall->setValued("origin[0]", i*downWallLength);
-				downWall->setValued("origin[1]", (j + 0.5f)*rightWallLength);
-				GameObject* wall = createGameObject(downWall);
+				Config* currentWallConfig = scene[1]->getArrayElement(irand(scene[1]->size()));
+
+				currentWallConfig->setValued("origin[0]", i*length[0]);
+				currentWallConfig->setValued("origin[1]", (j + 0.5f)*length[1]);
+				GameObject* wall = createGameObject(currentWallConfig);
 				world->addObject(wall);
 			}
 		}

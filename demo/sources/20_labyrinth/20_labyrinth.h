@@ -35,10 +35,9 @@ private:
 
 	Labyrinth labyrinth;
 	GraphObjectVector walls;
-	Config* rightWall;
-	Config* downWall;
-	float rightWallLength;
-	float downWallLength;
+	ConfigArray* scene[2];
+	float length[2];
+	int count[2];
 
 	enum
 	{

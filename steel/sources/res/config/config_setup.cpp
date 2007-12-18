@@ -19,7 +19,7 @@
 
 using namespace std;
 
-bool executeCommand(Config* conf, std::string command)
+bool executeCommand(Config* conf, const std::string& command)
 {
 	if(command.empty()) return true;
 	log_msg("console", "ExecCommand: '" + command + "'");
@@ -46,15 +46,15 @@ bool executeCommand(Config* conf, std::string command)
 }
 
 
-bool executeScript(Config* conf, std::string script)
+bool executeScript(Config* conf, const std::string& script)
 {
 	log_msg("console", "ExecScript: '" + script + "'");
 
 	svector<string> lines;
 	explode(';', script, lines);
-	for(svector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
+	for (svector<string>::const_iterator it = lines.begin(); it != lines.end(); it++)
 	{
-		if(!executeCommand(conf, *it))
+		if (!executeCommand(conf, *it))
 		{
 			return false;
 		}
