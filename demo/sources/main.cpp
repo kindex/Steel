@@ -23,7 +23,7 @@
 #include <res/res_main.h>
 #include <graph/opengl/opengl_engine.h>
 #include <audio/openal_engine.h>
-#include <res/config/config_setup.h>
+#include <res/config/config_parser.h>
 
 #include "main.h"
 #include "game_factory.h"
@@ -63,15 +63,20 @@ int main(int argc, char *argv[])
 		return 99;
 	}
 
+
 	float speed = 0.01f; // 100 FPS
 
-	Config* steelConfig = resConfig.add("../conf/demo.conf");
+	if (commandLine.empty())
+	{
+		commandLine = "[../conf/labyrinth.conf#] {}";
+	}
+	Config* steelConfig = parseConfig(commandLine);
+
 	if (steelConfig == NULL)
 	{
-		error("demo.conf", "Fatal error: conf/steel.conf was not found");
+		error("demo.conf", "Cannot parse config : " + commandLine);
 		return 1;
 	}
-	executeScript(steelConfig, commandLine);
 
 // ******************* INPUT ************************
 	Input* input = new Input;

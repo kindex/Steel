@@ -32,7 +32,7 @@ bool executeCommand(Config* conf, std::string command)
 
 	token[0] = trim(token[0]);
 	token[1] = trim(token[1]);
-	Config* newValue = parse(token[1]);
+	Config* newValue = parseConfig(token[1]);
 	if (newValue == NULL)
 	{
 		log_msg("script", "cannot parse '" + token[1] + "'");

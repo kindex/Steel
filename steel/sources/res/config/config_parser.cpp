@@ -21,11 +21,11 @@
 
 using namespace std;
 
-Config* parse(std::string str)
+Config* parseConfig(const std::string& text)
 {
 	Config *obj = NULL;
 	TextString file;
-	file.Setup(str);
+	file.Setup(text);
 	
 	ConfigParser* parser = new ConfigParser();
 	obj = parser->Parse(&file);
@@ -34,9 +34,12 @@ Config* parse(std::string str)
 	return obj;
 }
 
-Config*	ConfigParser::Parse(Text *_file)
+Config*	ConfigParser::Parse(Text* _file)
 {
-	if(_file == NULL) return NULL;
+	if (_file == NULL)
+	{
+		return NULL;
+	}
 	file = _file;
 	position = 0;
 	line = 1;
@@ -44,7 +47,7 @@ Config*	ConfigParser::Parse(Text *_file)
 	errors.clear();
 	Config *res = ParseConfig();
 
-	if(res != NULL)
+	if (res != NULL)
 	{
 		SkipSpaces();
 		char c = seec();
@@ -52,7 +55,7 @@ Config*	ConfigParser::Parse(Text *_file)
 		if(c != '\0') 
 			LOG_PARSE_ERROR(string("Unxpected symbol '") + c + "'. Expecting EOF");
 	}
-	for (svector<ParseError>::iterator it = errors.begin(); it != errors.end(); it++)
+	for EACH(svector<ParseError>, errors, it)
 	{
 		log_msg("error parser", it->message + 
 			" (" +  IntToStr(it->line) + ":" + IntToStr(it->charNumber) + ") [" +
