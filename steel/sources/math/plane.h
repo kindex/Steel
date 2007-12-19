@@ -28,7 +28,7 @@ bool isCross(const Plane& plne, const Line line, float &k);
 bool isCrossTrgLine(const Plane a, const Line b, float &k);
 
 // Находится ли точка между лучами (base + a*t) и (base + b*t)
-bool isBetween(const v3 point, const v3 base, const v3 a, const v3 b);
+bool isBetween(const v3& point, const v3& base, const v3& a, const v3& b);
 
 // находится ли внутри призмы с основанием a и высотой d
 // точка p

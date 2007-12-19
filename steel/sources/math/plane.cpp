@@ -12,17 +12,17 @@
 ************************************************************/
 
 #include "plane.h"
-#include <xutility>
+#include <algorithm>
 
 /*
 Находится ли точка между лучами (base + a*t) и (base + b*s)
 */
-bool isBetween(v3 point, const v3 base, const v3 a, const v3 b)
+bool isBetween(const v3& point, const v3& base, const v3& a, const v3& b)
 {
-	point -= base;
+	v3 _point = point - base;
 	v3 ab = a.crossProduct(b);
-	float k1 =(ab)&(a*point);
-	float k2 =(ab)&(point*b);
+	float k1 =(ab)&(a*_point);
+	float k2 =(ab)&(_point*b);
 	return k1 >- EPSILON2 && k2 >- EPSILON2;
 }
 
