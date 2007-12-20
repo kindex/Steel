@@ -20,6 +20,7 @@
 #include "timer.h"
 
 #if STEEL_OS == OS_WIN32
+#define NOMINMAX
 #include <windows.h>
 #endif
 

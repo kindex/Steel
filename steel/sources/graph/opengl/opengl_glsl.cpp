@@ -14,6 +14,7 @@
 #include "../../steel.h"
 #include "opengl_glsl.h"
 #include "../../res/res_main.h"
+#include "ext/libext.h"
 #include <gl/glu.h>
 #include "opengl_engine.h"
 

@@ -21,6 +21,7 @@
 #include "../common/containers/string_dict.h"
 #include "../res/audio/audio.h"
 #include "sound.h"
+#define NOMINMAX
 #include <windows.h>
 
 #include "openal/al.h"

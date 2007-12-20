@@ -50,6 +50,7 @@
 				UseUnicodeResponseFiles="false"
 				AdditionalOptions=" /wd4996"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\..\libs"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;STEEL_COMPILER_VERSION=80;LIB_STEEL;LIB_OPENAL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -130,6 +131,7 @@
 				Optimization="4"
 				InlineFunctionExpansion="2"
 				FavorSizeOrSpeed="1"
+				AdditionalIncludeDirectories="..\..\libs"
 				PreprocessorDefinitions="WIN32;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;LIB_OPENAL;LIB_STEEL"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
@@ -211,6 +213,7 @@
 				UseUnicodeResponseFiles="false"
 				AdditionalOptions=" /wd4996"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\..\libs"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;STEEL_COMPILER_VERSION=80;LIB_STEEL;LIB_OPENAL;TESTING=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -1028,6 +1031,14 @@
 						Name="ext"
 						>
 						<File
+							RelativePath="..\sources\graph\opengl\ext\libext.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\sources\graph\opengl\ext\libext.h"
+							>
+						</File>
+						<File
 							RelativePath="..\sources\graph\opengl\ext\normalisation_cube_map.cpp"
 							>
 						</File>
@@ -1234,34 +1245,6 @@
 					RelativePath="..\sources\engine\visitor.h"
 					>
 				</File>
-			</Filter>
-			<Filter
-				Name="libs"
-				>
-				<Filter
-					Name="opengl"
-					>
-					<File
-						RelativePath="..\sources\libs\opengl\glext.h"
-						>
-					</File>
-					<File
-						RelativePath="..\sources\libs\opengl\glxext.h"
-						>
-					</File>
-					<File
-						RelativePath="..\sources\libs\opengl\libext.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\sources\libs\opengl\libext.h"
-						>
-					</File>
-					<File
-						RelativePath="..\sources\libs\opengl\wglext.h"
-						>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="test"

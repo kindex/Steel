@@ -21,6 +21,7 @@
 
 
 #if STEEL_OS == OS_WIN32
+	#define NOMINMAX
 	#include <windows.h>
 #endif
 
@@ -71,6 +72,7 @@ public:
 	void CaptureMouse_WinAPI();
 	void FreeMouse_WinAPI();
 	void Process_WinAPI();
+
 	LRESULT CALLBACK ProcessMessage_WinAPI(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	std::string DecodeKey_WinAPI(MSG p);
 #endif

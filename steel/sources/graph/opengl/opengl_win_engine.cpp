@@ -25,6 +25,7 @@
 #include "../../common/logger.h"
 #include "../../common/utils.h"
 #include <sstream>
+#include "ext/libext.h"
 
 
 extern HINSTANCE hInstance;

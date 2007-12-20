@@ -16,12 +16,13 @@
 #include "../../../math/vector3d.h"
 
 #ifdef  _WIN32
+	#define NOMINMAX
 	#include    <windows.h>
 #else
 	#define GLX_GLXEXT_LEGACY
 #endif
 
-#include "../../../libs/opengl/libext.h"
+#include "libext.h"
 
 unsigned int generateNormalisationCubeMap()
 {

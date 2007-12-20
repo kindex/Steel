@@ -12,15 +12,16 @@
 		Simple library to load basic extensions
  ************************************************************/
 
-#include "../../steel.h"
+#include "../../../steel.h"
 
 #if STEEL_OS == OS_WIN32
-#include <windows.h>
-#include <GL/gl.h>
-#include "glext.h"
+	#define NOMINMAX
+	#include <windows.h>
+	#include <GL/gl.h>
+	#include <opengl/glext.h>
 #elif STEEL_OS == OS_LINUX
-#include <GL/gl.h>
-#include <GL/glext.h>
+	#include <GL/gl.h>
+	#include <GL/glext.h>
 #endif
 
 #include "libext.h"
@@ -30,8 +31,8 @@
 #include <stdlib.h>
 #include <malloc.h>
 
-#include "../../common/logger.h"
-#include "../../common/utils.h"
+#include "../../../common/logger.h"
+#include "../../../common/utils.h"
 
 bool GL_EXTENSION_MULTITEXTURE = false;
 int  GL_EXTENSION_MULTITEXTURE_TEXTURE_UNITS = 0;

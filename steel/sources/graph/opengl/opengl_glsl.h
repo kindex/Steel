@@ -16,9 +16,11 @@
 
 #include "../../steel.h"
 #include "../graph_engine.h"
-#include "../../libs/opengl/libext.h"
 #include "../../common/containers/string_dict.h"
 class Text;
+
+typedef unsigned int GLuint;
+typedef int GLint;
 
 namespace opengl
 {

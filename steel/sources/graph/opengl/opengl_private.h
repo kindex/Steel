@@ -14,7 +14,6 @@
 #ifndef GRAPH_OPENGL_PRIVATE_H
 #define GRAPH_OPENGL_PRIVATE_H
 
-#include "../../libs/opengl/libext.h"
 #include "../graph_engine.h"
 #include "../../common/containers/string_dict.h"
 #include <map>
@@ -37,7 +36,7 @@ struct OpenGL_Buffer
 	};
 
 	int		size;
-	GLuint	glid;
+	unsigned int	glid;
 	int		usedCnt, loadCnt;
 	steel::time lastUsedTime;
 	bool	loaded;

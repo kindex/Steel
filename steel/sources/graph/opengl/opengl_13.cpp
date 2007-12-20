@@ -18,7 +18,7 @@
 
 #include "../../steel.h"
 #include "opengl_engine.h"
-#include "../../libs/opengl/libext.h"
+#include "ext/libext.h"
 #include "../../common/logger.h"
 #include "../material.h"
 

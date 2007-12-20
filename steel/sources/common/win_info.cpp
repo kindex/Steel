@@ -13,6 +13,7 @@
 #include "../steel.h"
 
 #if STEEL_OS == OS_WIN32
+	#define NOMINMAX
 	#include <windows.h>
 	#include <winbase.h>
 	#include <winnt.h>
