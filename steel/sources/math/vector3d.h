@@ -58,8 +58,6 @@ struct v3
 	inline v3()	{} // не инициализирует ничего (для повышения производительности)
 	inline v3(float X, float Y, float Z)	{ x = X; y = Y; z = Z; }
 
-    friend v3 operator* (float scaleFactor, const v3 & a);
-
 	inline void set(float X, float Y, float Z) {	x = X;	y = Y;	z = Z;	}
 	inline void set(const v3 _v) {	x=_v.x;	y=_v.y; z=_v.z;	}
 	
@@ -147,6 +145,9 @@ struct v3
 	inline v3 operator/(const float a) const
 	{	return (a==0.0f) ? get(0.0f, 0.0f, 0.0f) : get(x / a, y / a, z / a);	}
 
+	//multiply by a float, eg 3*v
+	inline friend v3 operator*(float scaleFactor, const v3 & a)	{	return a*scaleFactor;	}
+
 	//Add, subtract etc, saving the construction of a temporary
 	inline void add(const v3 & v2, v3 & result)
 	{
@@ -233,11 +234,6 @@ inline void v3simple::operator/=(const float a)
         y/=a;
         z/=a;
     }
-}
-//multiply by a float, eg 3*v
-inline v3 operator*(float scaleFactor, const v3 & a)
-{	
-    return a*scaleFactor;
 }
 
 #endif	// __MATH_VECTOR3D_H
