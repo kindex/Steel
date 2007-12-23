@@ -7,7 +7,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Pasticle system testtype
+		Ageia test
  ************************************************************/
 
 #include "23_ageia_tech.h"
@@ -20,25 +20,15 @@
 #include <NxPhysics.h>
 #include "error_stream.h"
 
+NxScene* gScene = NULL;
 
-// Physics
-static NxPhysicsSDK*	gPhysicsSDK = NULL;
-static NxScene*			gScene = NULL;
-
-// Rendering
-static NxVec3	gEye(50.0f, 50.0f, 50.0f);
-static NxVec3	gDir(-0.6f,-0.2f,-0.7f);
-static NxVec3	gViewY;
-static int		gMouseX = 0;
-static int		gMouseY = 0;
-
-static bool InitNx()
+bool GameAgeiatech::initAgeia()
 {
 	// Initialize PhysicsSDK
 	NxPhysicsSDKDesc desc;
 	NxSDKCreateError errorCode = NXCE_NO_ERROR;
-	gPhysicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, NULL, new ErrorStream(), desc, &errorCode);
-	if (gPhysicsSDK == NULL) 
+	physicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, NULL, new ErrorStream(), desc, &errorCode);
+	if (physicsSDK == NULL) 
 	{
 		error("ageia", std::string("SDK create error (") + IntToStr(errorCode) + " - " + getNxSDKCreateError(errorCode) + ").");
 		return false;
@@ -49,50 +39,61 @@ static bool InitNx()
 		gPhysicsSDK->getFoundationSDK().getRemoteDebugger()->connect(SAMPLES_VRD_HOST, SAMPLES_VRD_PORT, SAMPLES_VRD_EVENTMASK);
 #endif
 
-	gPhysicsSDK->setParameter(NX_SKIN_WIDTH, 0.05f);
+	physicsSDK->setParameter(NX_SKIN_WIDTH, 0.05f);
 
 	// Create a scene
 	NxSceneDesc sceneDesc;
-	sceneDesc.gravity				= NxVec3(0.0f, -9.81f, 0.0f);
-	gScene = gPhysicsSDK->createScene(sceneDesc);
-	if (gScene == NULL) 
+	sceneDesc.gravity				= NxVec3(0.0f, 0.0f, -9.81f);
+	gScene = scene = physicsSDK->createScene(sceneDesc);
+	if (scene == NULL) 
 	{
 		error("ageia", "Unable to create a PhysX scene");
 		return false;
 	}
 
 	// Set default material
-	NxMaterial* defaultMaterial = gScene->getMaterialFromIndex(0);
+	NxMaterial* defaultMaterial = scene->getMaterialFromIndex(0);
 	defaultMaterial->setRestitution(0.0f);
 	defaultMaterial->setStaticFriction(0.5f);
 	defaultMaterial->setDynamicFriction(0.5f);
 
 	// Create ground plane
 	NxPlaneShapeDesc planeDesc;
+	planeDesc.normal = NxVec3(0.0f, 0.0f, 1.0f);
 	NxActorDesc actorDesc;
 	actorDesc.shapes.pushBack(&planeDesc);
-	gScene->createActor(actorDesc);
+	scene->createActor(actorDesc);
+
 	log_msg("ageia", "Ageia connected");
 
 	return true;
 }
 
-static void ExitNx()
+GameAgeiatech::~GameAgeiatech()
 {
-	if (gPhysicsSDK != NULL)
+	exitAgeia();
+}
+
+void GameAgeiatech::exitAgeia()
+{
+	if (physicsSDK != NULL)
 	{
-		if (gScene != NULL)
+		if (scene != NULL)
 		{
-			gPhysicsSDK->releaseScene(*gScene);
+			physicsSDK->releaseScene(*gScene);
 		}
-		gScene = NULL;
-		NxReleasePhysicsSDK(gPhysicsSDK);
-		gPhysicsSDK = NULL;
+		gScene = scene = NULL;
+		NxReleasePhysicsSDK(physicsSDK);
+		physicsSDK = NULL;
+
+		log_msg("ageia", "Ageia exited");
 	}
 }
 
 
-GameAgeiatech::GameAgeiatech()
+GameAgeiatech::GameAgeiatech() :
+	physicsSDK(NULL),
+	scene(NULL)
 {}
 
 bool GameAgeiatech::init(Config& _conf, Input& _input)
@@ -101,7 +102,7 @@ bool GameAgeiatech::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
-	if (!InitNx())
+	if (!initAgeia())
 	{
 		abort_init("ageia", "Cannot init Ageia");
 		return false;

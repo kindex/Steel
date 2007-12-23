@@ -14,6 +14,7 @@
 #include "game_object_factory.h"
 #include "objects/sphere.h"
 #include "18_weapon/kar98k.h"
+#include "23_ageia_tech/ageia_ps.h"
 
 GameObject* DemoGameObjectFactory::createGameObject(IN const std::string& className) const
 {
@@ -21,5 +22,12 @@ GameObject* DemoGameObjectFactory::createGameObject(IN const std::string& classN
 	if (className == "kar98k")	return new Kar98k;
 
 	return GameObjectFactory::createGameObject(className);
+}
+
+ParticleAnimator* DemoGameObjectFactory::createParticleAnimator(IN const std::string& className) const
+{
+	if (className == "AgeiaPsAnimator")	return new AgeiaPsAnimator;
+
+	return GameObjectFactory::createParticleAnimator(className);
 }
 

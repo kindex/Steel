@@ -4,12 +4,12 @@ class = 'ps'
 emitter = 
 {
 	class = 'simple'
-	particle_size = 0.02
+	particle_size = 0.05
 	init_size = 0
 	emitter_size = 0.4
 	emitter_type = 'serial'
 	born_interval = 0.1
-	limit_count = 300
+	limit_count = 200
 }
 renderer = 
 	{
@@ -27,7 +27,7 @@ renderer =
 	} 
 animator = 
 	{
-	class = 'UniPSanimator'
+	class = 'AgeiaPsAnimator'
 	particle = 
 	{
 		mass=1

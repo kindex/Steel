@@ -315,6 +315,18 @@
 					>
 				</File>
 				<File
+					RelativePath=".\23_ageia_tech\ageia_ps.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\23_ageia_tech\ageia_ps.h"
+					>
+				</File>
+				<File
+					RelativePath=".\23_ageia_tech\error_stream.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\sources\23_ageia_tech\error_stream.h"
 					>
 				</File>

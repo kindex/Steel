@@ -7,7 +7,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Pasticle system testtype
+		Ageia test
  ************************************************************/
 
 #ifndef _23_AGEIATECH_H_
@@ -17,14 +17,24 @@
 
 #include <objects/combiner/graph_object.h>
 
+class NxPhysicsSDK;
+class NxScene;
+
 class GameAgeiatech: public GameFreeScene
 {
 public:
 	GameAgeiatech();
+	~GameAgeiatech();
 	void handleEventKeyDown(const std::string& key);
 	bool init(Config& _conf, Input& _input);
 	void process();
     std::string getWindowCaption();
+	bool initAgeia();
+	void exitAgeia();
+
+private:
+	NxPhysicsSDK*	physicsSDK;
+	NxScene*		scene;
 };
 
 #endif

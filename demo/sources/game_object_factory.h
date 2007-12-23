@@ -22,6 +22,7 @@ class DemoGameObjectFactory : public GameObjectFactory
 {
 public:
 	GameObject* createGameObject(IN const std::string& className) const;
+	ParticleAnimator* createParticleAnimator(IN const std::string& className) const;
 };
 
 

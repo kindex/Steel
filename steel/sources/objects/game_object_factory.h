@@ -18,11 +18,17 @@
 #include <string>
 class GameObject;
 class Config;
+class ParticleAnimator;
+class ParticleEmitter;
+class ParticleRenderer;
 
 class GameObjectFactory
 {
 public:
 	virtual GameObject* createGameObject(IN const std::string& className) const;
+	virtual ParticleAnimator* createParticleAnimator(IN const std::string& className) const;
+	virtual ParticleEmitter* createParticleEmitter(const std::string& _class) const;
+	virtual ParticleRenderer* createParticleRenderer(const std::string& _class) const;
 };
 
 extern GameObjectFactory* gameObjectFactory;

@@ -19,10 +19,41 @@
 #include "light.h"
 #include "combiner/combiner.h"
 #include "ps/particle_system.h"
+#include "ps/animator.h"
+#include "ps/emitter.h"
+#include "ps/ps_renderer.h"
 #include "../common/logger.h"
 #include "../common/utils.h"
 
 GameObjectFactory* gameObjectFactory = NULL;
+
+ParticleAnimator* GameObjectFactory::createParticleAnimator(IN const std::string& _class) const
+{
+	if (_class == "UniPSanimator") return new UniPSanimator;
+	if (_class == "simple") return new SimpleAnimator;
+
+	error("ps", std::string("ParticleAnimator class '") + _class + "' not found");
+	return NULL;
+}
+
+ParticleEmitter* GameObjectFactory::createParticleEmitter(const std::string& _class) const
+{
+	if (_class == "simple") return new SimpleEmitter;
+
+	error("ps", std::string("ParticleEmitter class '") + _class + "' not found");
+	return NULL;
+}
+
+ParticleRenderer* GameObjectFactory::createParticleRenderer(const std::string& _class) const
+{
+	if (_class == "sprite") return new SpriteRenderer;
+	if (_class == "object") return new ObjectPSRenderer;
+	if (_class == "dummy")  return new DummyPSRenderer;
+
+	error("ps", std::string("ParticleRenderer class '") + _class + "' not found");
+	return NULL;
+}
+
 
 GameObject* GameObjectFactory::createGameObject(IN const std::string& className) const
 {

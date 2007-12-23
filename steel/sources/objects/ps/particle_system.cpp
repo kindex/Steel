@@ -16,40 +16,10 @@
 #include "../../steel.h"
 
 #include "particle_system.h"
-#include "emitter.h"
-#include "ps_renderer.h"
-#include "animator.h"
+#include "../game_object_factory.h"
 #include "../../res/res_main.h"
 
 #include <string>
-
-ParticleEmitter* findParticleEmitter(const std::string& _class)
-{
-	if(_class == "simple") return new SimpleEmitter;
-
-	error("ps", std::string("ParticleEmitter class '") + _class + "' not found");
-	return NULL;
-}
-
-ParticleAnimator* findParticleAnimator(const std::string& _class)
-{
-	if (_class == "UniPSanimator") return new UniPSanimator;
-	if (_class == "simple") return new SimpleAnimator;
-
-	error("ps", std::string("ParticleAnimator class '") + _class + "' not found");
-	return NULL;
-}
-
-ParticleRenderer* findParticleRenderer(const std::string& _class)
-{
-	if (_class == "sprite") return new SpriteRenderer;
-	if (_class == "object") return new ObjectPSRenderer;
-	if (_class == "dummy")  return new DummyPSRenderer;
-
-	error("ps", std::string("ParticleRenderer class '") + _class + "' not found");
-	return NULL;
-}
-
 
 ParticleProcessor::ParticleProcessor(): 
 	conf(NULL), 
@@ -94,7 +64,7 @@ bool ParticleSystem::InitFromConfig(Config& _conf)
 	particleSet.countScale = conf->getf("countScale", 1.0f);
 
 #define INIT_PARTICLE_PROCESSOR(processor, CLASS) \
-	processor = find##CLASS(processor##Conf->gets("class"));\
+	processor = gameObjectFactory->create##CLASS(processor##Conf->gets("class"));\
 	if(processor == NULL) return false;\
 	processor->bindParticleSystem(this);\
 	if(!processor->InitFromConfig(*processor##Conf)) \
