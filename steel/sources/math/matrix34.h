@@ -100,8 +100,13 @@ struct matrix34
 		data.matrix.data.m[rowNumber][2] = row.z;
 	}
 
-	inline void setTranslation(v3 row) 	{		setRow(3, row);	}
-	inline v3 getTranslation() const 	{	return getRow(3);	}
+	inline void setTranslation(const v3& row)
+	{	
+		data.vector.x = row.x;
+		data.vector.y = row.y;
+		data.vector.z = row.z;
+	}
+	inline v3 getTranslation() const 	{	return v3(data.vector.x, data.vector.y, data.vector.z);	}
 
 	void operator*=(const matrix34 operand);
 	inline matrix34 operator*(const matrix34 operand) const	{ matrix34 m = *this; m *= operand; return m; }
@@ -110,7 +115,7 @@ struct matrix34
 	{ 
 		return  this->data.matrix*operand + v3(data.vector);
 	}
-	matrix33 &getMatrix33() { return data.matrix; }
+	matrix33& getMatrix33() { return data.matrix; }
 	
 	v3 getVector() { return data.vector; }
 

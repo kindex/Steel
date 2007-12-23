@@ -239,7 +239,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../../steel.res/sdk/libs/openal32.lib ../../../steel.res/sdk/libs/eaxguid.lib ../../../steel.res/sdk/libs/eax.lib ../../../steel.res/sdk/libs/ogg.lib ../../../steel.res/sdk/libs/vorbisfile.lib opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
+				AdditionalDependencies="../../../steel.res/sdk/libs/openal/openal32.lib ../../../steel.res/sdk/libs/openal/eaxguid.lib ../../../steel.res/sdk/libs/openal/eax.lib ../../../steel.res/sdk/libs/ogg/ogg.lib ../../../steel.res/sdk/libs/ogg/vorbisfile.lib opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB"
 				GenerateDebugInformation="true"
 			/>
 			<Tool

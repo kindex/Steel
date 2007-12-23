@@ -23,11 +23,13 @@
 class MathTest: public Tester
 {
 public:
-	void Test(void)
+	void Test()
 	{
 		TestPlanes();
+		TestMatrix34();
 	}
 	void TestPlanes();
+	void TestMatrix34();
 };
 
 #endif
