@@ -63,12 +63,11 @@ int main(int argc, char *argv[])
 		return 99;
 	}
 
-
 	float speed = 0.01f; // 100 FPS
 
 	if (commandLine.empty())
 	{
-		commandLine = "[../conf/labyrinth.conf#] {}";
+		commandLine = "[../conf/ps.conf#] {}";
 	}
 	Config* steelConfig = parseConfig(commandLine);
 

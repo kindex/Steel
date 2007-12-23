@@ -9,41 +9,41 @@
 #include <common/logger.h>
 
 class ErrorStream : public NxUserOutputStream
-	{
-	public:
+{
+public:
 	void reportError(NxErrorCode e, const char* message, const char* file, int line)
-		{
-		printf("%s (%d) :", file, line);
+	{
+		std::string msg;
 		switch (e)
-			{
+		{
 			case NXE_INVALID_PARAMETER:
-				printf( "invalid parameter");
+				msg = "invalid parameter";
 				break;
 			case NXE_INVALID_OPERATION:
-				printf( "invalid operation");
+				msg = "invalid operation";
 				break;
 			case NXE_OUT_OF_MEMORY:
-				printf( "out of memory");
+				msg = "out of memory";
 				break;
 			case NXE_DB_INFO:
-				printf( "info");
+				msg = "info";
 				break;
 			case NXE_DB_WARNING:
-				printf( "warning");
+				msg = "warning";
 				break;
 			default:
-				printf("unknown error");
-			}
-
-		printf(" : %s\n", message);
+				msg = "unknown error";
 		}
 
+		error("ageia", msg);
+	}
+
 	NxAssertResponse reportAssertViolation(const char* message, const char* file, int line)
-		{
-		printf("access violation : %s (%s line %d)\n", message, file, line);
+	{
+		error("ageia", std::string("access violation : ") + message + " : " + file + IntToStr(line));
 #ifdef WIN32
-		switch (MessageBox(0, message, "AssertViolation, see console for details.", MB_ABORTRETRYIGNORE))
-			{
+		switch (MessageBox(0, message, "AssertViolation, see log for details.", MB_ABORTRETRYIGNORE))
+		{
 			case IDRETRY:
 				return NX_AR_CONTINUE;
 			case IDIGNORE:
@@ -51,7 +51,7 @@ class ErrorStream : public NxUserOutputStream
 			case IDABORT:
 			default:
 				return NX_AR_BREAKPOINT;
-			}
+		}
 #elif LINUX
 		assert(0);
 #elif _XBOX
@@ -59,17 +59,17 @@ class ErrorStream : public NxUserOutputStream
 #elif __CELLOS_LV2__
 		return NX_AR_BREAKPOINT;
 #endif
-		}
+	}
 
 	void print(const char* message)
-		{
-		printf(message);
-		}
-	};
+	{
+		log_msg("ageia info", message);
+	}
+};
 
 const char* getNxSDKCreateError(const NxSDKCreateError& errorCode) 
 {
-	switch(errorCode) 
+	switch (errorCode) 
 	{
 		case NXCE_NO_ERROR: return "NXCE_NO_ERROR";
 		case NXCE_PHYSX_NOT_FOUND: return "NXCE_PHYSX_NOT_FOUND";
