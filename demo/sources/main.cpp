@@ -158,6 +158,8 @@ int main(int argc, char *argv[])
 	}
 	log_msg("core", "Exit from main loop");
 // ******************* MAIN LOOP ************************
+    delete game;
+
 	(input->*input->FreeMouse)();
 
 	graph->deinit();

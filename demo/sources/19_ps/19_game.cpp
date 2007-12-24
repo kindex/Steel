@@ -11,6 +11,7 @@
  ************************************************************/
 
 #include "19_game.h"
+#include "particle_calculator.h"
 #include <common/logger.h>
 #include <engine/visitor.h>
 #include <res/res_main.h>
@@ -18,11 +19,15 @@
 #include <objects/combiner/combiner.h>
 
 GamePS::GamePS():
-	physicEngine(NULL),
     boundingModel(NULL),
     crosses(0),
 	gravityBackup(v3(0,0,0))
 {}
+
+GamePS_SteelPhysic::GamePS_SteelPhysic():
+	physicEngine(NULL)
+{}
+
 
 bool GamePS::init(Config& _conf, Input& _input)
 {
@@ -30,93 +35,59 @@ bool GamePS::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
-	physicEngine = new PhysicEngine;
 
     Config* physicConfig = _conf.find("physic");
     if (physicConfig == NULL)
     {
         abort_init("game physic", "Cannot find physic config");
     }
-	physicEngine->init(*physicConfig);
-
-	physicEngine->inject(world);
 
     speedup = _conf.getf("speed", 1.0f);
+    global_gravity = _conf.getv3("physic.global_gravity", v3(0.0f, 0.0f, -9.8f));
 
     boundingModel = loadGraphObject(_conf, "boundingModel");
 
 	return true;
 }
 
-bool isPointInObject(IN v3 point, IN const GraphObject& object, const ObjectPosition position)
+bool GamePS_SteelPhysic::init(Config& _conf, Input& _input)
 {
-    size_t crossCount = 0;
-    
-    Line lineSegment(point, v3(0.0, 0.0, 1.0));
+    if (!GamePS::init(_conf, _input))
+    {
+        return false;
+    }
+	physicEngine = new PhysicEngine;
+	physicEngine->init(*physicConfig);
+	physicEngine->inject(world);
 
-    const Faces&        faces    = *object.getAllFaces();
-    const VertexVector* vertexes = object.getVertexes();
-
-	for EACH_CONST(TriangleVector, faces.triangles, it)
-	{
-		Plane triangle;
-		triangle.base = position * vertexes->at(it->a[0]);
-		triangle.a = position * vertexes->at(it->a[1]) - triangle.base;
-		triangle.b = position * vertexes->at(it->a[2]) - triangle.base;
-		float k;
-		if (isCrossTrgLine(triangle, lineSegment, k))
-		{
-			if (k > 0.0)
-			{
-				crossCount++;
-			}
-		}
-	}
-	return crossCount%2 == 1;
+    return true;
 }
 
-
-class ParticleVisitor : public Visitor
-{
-public:
-    ParticleVisitor(GraphObject* graphObject) : graphObject(graphObject) {}
-        
-    void clear()
-    {
-        cnt = 0;
-    }
-
-    void postvisit(IN OUT Particle* particle)
-    {
-        if (isPointInObject(particle->position, *graphObject, ObjectPosition::getIdentity()))
-        {
-            cnt++;
-        }
-    }
-
-    int cnt;
-    GraphObject* graphObject;
-};
 
 void GamePS::process()
 {
 	GameFreeScene::process();
 	
-	if (timeInfo.frameLength > EPSILON)
-	{
-        physicEngine->setSpeedup(speedup);
-		physicEngine->process(timeInfo);
-	}
-
     if (boundingModel != NULL)
     {
-        ParticleVisitor visitor(boundingModel);
+        ParticleCalculator visitor(boundingModel);
 
         visitor.clear();
         world->traverse(visitor);
 
         crosses = visitor.cnt;
     }
+}
+
+void GamePS_SteelPhysic::process()
+{
+	GamePS::process();
+	
+	if (timeInfo.frameLength > EPSILON)
+	{
+        physicEngine->setSpeedup(speedup);
+		physicEngine->process(timeInfo);
+	}
 }
 
 void GamePS::handleEventKeyDown(const std::string& key)
@@ -132,7 +103,15 @@ void GamePS::handleEventKeyDown(const std::string& key)
 	else if (key == "9") speedup = 50;
 	else if (key == "-") speedup /= 2;
 	else if (key == "+") speedup *= 2;
-	else if (key == "g")
+    else
+    {
+        GameFreeScene::handleEventKeyDown(key);
+    }
+}
+
+void GamePS_SteelPhysic::handleEventKeyDown(const std::string& key)
+{
+	if (key == "g")
 	{
 		v3 current = physicEngine->getGravity();
 		physicEngine->setGravity(gravityBackup);

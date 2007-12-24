@@ -11,6 +11,7 @@
  ************************************************************/
 
 #include "ageia_ps.h"
+#include "23_ageia_tech.h"
 #include <nxscene.h>
 #include <nxactor.h>
 #include <NxSphereShapeDesc.h>
@@ -36,16 +37,9 @@ bool AgeiaPsAnimator::updateInformation(IN OUT Engine& engine, IN const Interfac
 
 void AgeiaPsAnimator::process(IN const ProcessInfo& info)
 {
-	gScene->simulate(1.0f/60.0f);
-	gScene->flushStream();
-	gScene->fetchResults(NX_RIGID_BODY_FINISHED, true);
-	
-	// Print profile results (if enabled)
-//	gPerfRenderer.render(gScene->readProfileData(true), glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-
 	// Render all actors
-	int nbActors = gScene->getNbActors();
-	NxActor** actors = gScene->getActors();
+	int nbActors = globalScene->getNbActors();
+	NxActor** actors = globalScene->getActors();
 	while (nbActors--)
 	{
 		NxActor* actor = *actors++;
@@ -84,7 +78,10 @@ void AgeiaPsAnimator::afterRemove(IN OUT Engine&, IN const InterfaceId id)
 
 void AgeiaPsAnimator::onParticleBorn(int index)
 {
-	if (gScene == NULL) return;
+	if (globalScene == NULL) 
+    {
+        return;
+    }
 
 	// Create body
 	NxBodyDesc bodyDesc;
@@ -102,7 +99,7 @@ void AgeiaPsAnimator::onParticleBorn(int index)
 	actorDesc.globalPose.t.x  = pos.x;
 	actorDesc.globalPose.t.y  = pos.y;
 	actorDesc.globalPose.t.z  = pos.z;
-	gScene->createActor(actorDesc)->userData = (void*)(index+1);
+	globalScene->createActor(actorDesc)->userData = (void*)(index+1);
 }
 
 

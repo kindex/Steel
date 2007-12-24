@@ -17,7 +17,6 @@
 #include <objects/ps/animator.h>
 
 class NxScene;
-extern NxScene* gScene;
 
 class AgeiaPsAnimator: public ParticleAnimator
 {

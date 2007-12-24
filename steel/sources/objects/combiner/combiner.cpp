@@ -254,5 +254,13 @@ void Combiner::traverse(Visitor& visitor)
 	{
         (*it)->traverse(visitor);
 	}
+    if (graph != NULL)
+    {
+        graph->traverse(visitor);
+    }
+    if (audio != NULL)
+    {
+        audio->traverse(visitor);
+    }
     visitor.postvisit(this);
 }

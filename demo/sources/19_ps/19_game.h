@@ -27,13 +27,26 @@ public:
 	void process();
     std::string getWindowCaption();
 
-private:
-	PhysicEngine* physicEngine;
+protected:
 	float         speedup;
     float         speed;
     GraphObject*  boundingModel;
-    size_t        crosses;
-	v3			gravityBackup;
+    size_t			crosses;
+	v3				global_gravity;
+	v3				gravityBackup;
+	Config*			physicConfig;
+};
+
+class GamePS_SteelPhysic: public GamePS
+{
+public:
+	GamePS_SteelPhysic();
+	bool init(Config& _conf, Input& _input);
+	void process();
+	void handleEventKeyDown(const std::string& key);
+
+private:
+	PhysicEngine* physicEngine;
 };
 
 #endif

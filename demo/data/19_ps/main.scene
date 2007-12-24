@@ -7,7 +7,7 @@ objects =
 
 
 
-[ps.scene#] { emitter = {	origin = (0 0 1) } }
+[ps.scene#] { emitter = {	origin = (0 0 5) } }
 //[ps.scene#] { emitter = {	origin = (0 0 4.3) } }
 //[ps.scene#] { emitter = {	origin = (0.0 -0.0 5.5) } }
 

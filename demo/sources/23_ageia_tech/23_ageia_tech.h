@@ -13,14 +13,18 @@
 #ifndef _23_AGEIATECH_H_
 #define _23_AGEIATECH_H_
 
-#include "../game_free_scene.h"
+#include "../19_ps/19_game.h"
 
 #include <objects/combiner/graph_object.h>
 
 class NxPhysicsSDK;
 class NxScene;
+class NxActor;
+class NxTriangleMeshDesc;
 
-class GameAgeiatech: public GameFreeScene
+extern NxScene* globalScene;
+
+class GameAgeiatech: public GamePS
 {
 public:
 	GameAgeiatech();
@@ -28,11 +32,13 @@ public:
 	void handleEventKeyDown(const std::string& key);
 	bool init(Config& _conf, Input& _input);
 	void process();
-    std::string getWindowCaption();
-	bool initAgeia();
-	void exitAgeia();
 
 private:
+	bool initAgeia();
+	void exitAgeia();
+    NxActor* createSurface(const GraphObject& object, 
+                           NxTriangleMeshDesc& tmd);
+
 	NxPhysicsSDK*	physicsSDK;
 	NxScene*		scene;
 };
