@@ -33,11 +33,12 @@ public:
 	bool init(Config& _conf, Input& _input);
 	void process();
 
+    friend class GraphObjectVisitor;
+
 private:
 	bool initAgeia();
 	void exitAgeia();
-    NxActor* createSurface(const GraphObject& object, 
-                           NxTriangleMeshDesc& tmd);
+    NxActor* createSurface(const GraphObject& object);
 
 	NxPhysicsSDK*	physicsSDK;
 	NxScene*		scene;

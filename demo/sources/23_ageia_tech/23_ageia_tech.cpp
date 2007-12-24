@@ -26,24 +26,37 @@
 NxScene* globalScene = NULL;
 
 
-//class GraphObjectVisitor : public Visitor
-//{
-//public:
-//    ParticleCalculator(GraphObject* graphObject);
-//    void clear();
-//    void postvisit(IN OUT Particle* particle);
-//
-//    int cnt;
-//    GraphObject* graphObject;
-//};
+class GraphObjectVisitor : public Visitor
+{
+public:
+    GraphObjectVisitor(GameAgeiatech& game) : game(game) {}
+
+private:
+    void postvisit(IN OUT GameObject* object)
+    {
+        
+        GraphObject* g = dynamic_cast<GraphObject*>(object);
+
+        if (g != NULL)
+        {
+            game.createSurface(*g);
+        }
+
+        //if (object->supportsInterface(engine, INTERFACE_GRAPH))
+        //{
+        //    object->updateInformation(engine, INTERFACE_GRAPH);
+        //}
+    }
+
+    GameAgeiatech& game;
+};
 
 GameAgeiatech::GameAgeiatech() :
 	physicsSDK(NULL),
 	scene(NULL)
 {}
 
-NxActor* GameAgeiatech::createSurface(const GraphObject& object, 
-                                      NxTriangleMeshDesc& tmd)
+NxActor* GameAgeiatech::createSurface(const GraphObject& object)
 {
     NxVec3* fsVerts = NULL;
     NxU32* fsFaces = NULL;
@@ -114,8 +127,8 @@ NxActor* GameAgeiatech::createSurface(const GraphObject& object,
 
         // Attach drawable mesh to shape's user data
         NxShape*const* shapes = actor->getShapes();
-        shapes[0]->isTriangleMesh()->getTriangleMesh().saveToDesc(tmd);
-        shapes[0]->userData = (void*)&tmd;
+//        shapes[0]->isTriangleMesh()->getTriangleMesh().saveToDesc(tmd);
+//        shapes[0]->userData = (void*)&tmd;
 
         return actor;
 //        gPhysicsSDK->releaseTriangleMesh(*fsShapeDesc.meshData);
@@ -145,11 +158,15 @@ bool GameAgeiatech::init(Config& _conf, Input& _input)
 
 //    GraphObjectVisitor
 
-    if (boundingModel != NULL)
-    {
-        NxTriangleMeshDesc tmd;
-        NxActor* actor = createSurface(*boundingModel, tmd);
-    }
+    //if (boundingModel != NULL)
+    //{
+    //    NxTriangleMeshDesc tmd;
+    //    NxActor* actor = createSurface(*boundingModel, tmd);
+    //}
+
+    GraphObjectVisitor visitor(*this);
+
+    world->traverse(visitor);
 
 	return true;
 }
