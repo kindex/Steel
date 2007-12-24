@@ -18,6 +18,7 @@
 #include "logger.h"
 #include "utils.h"
 #include "timer.h"
+#include <sstream>
 
 #if STEEL_OS == OS_WIN32
 #define NOMINMAX
@@ -120,31 +121,42 @@ void Logger::out(std::string str)
 
 void Logger::msg(std::string keywords, std::string str)
 {
-	if(!opened) return;
+	if (!opened)
+    {
+        return;
+    }
+
+    std::stringstream s;
 
 	steel::time total = globalTimer.total();
 	
-	f.fill('0');	f.width(2); 	f << (int)total << ".";
-	f.fill('0');	f.width(3); 	f << (int)(total*1000)%1000;
+	s.fill('0');	s.width(2); 	s << (int)total << ".";
+	s.fill('0');	s.width(3); 	s << (int)(total*1000)%1000;
  
-	f.width(0); 
+	s.width(0);
 
 	std::string levels;
-	for(int i=0; i<level; i++)
+	for(int i = 0; i < level; i++)
+    {
 		levels += "  ";
+    }
 
-	f << levels;
+	s << levels;
 
-	f << " " << str;
+	s << " " << str;
 
-	if(!keywords.empty())
+    std::string output = s.str();
+
+	if (!keywords.empty())
 	{
-		for(int i = 0; i < 6 - ((int)str.length() + 2 + level*2)/8; i++)
-			f << "\t";
+		for (size_t i = output.length()/8; i < 9; i++)
+        {
+			output += '\t';
+        }
 
-		f << "\t[ " << keywords << " ]";
+		output += "\t[ " + keywords + " ]";
 	}
-	f << endl;
+	f << output << endl;
 }
 
 namespace steel
