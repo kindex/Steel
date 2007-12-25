@@ -178,6 +178,7 @@ void GameAgeiatech::process()
 	if (timeInfo.frameLength > EPSILON)
 	{
 		scene->simulate(timeInfo.frameLength*speedup);
+
 		scene->flushStream();
 		scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
 	}
@@ -193,7 +194,7 @@ void GameAgeiatech::handleEventKeyDown(const std::string& key)
 	}
     else
     {
-        GameFreeScene::handleEventKeyDown(key);
+        GamePS::handleEventKeyDown(key);
     }
 }
 
@@ -214,7 +215,7 @@ bool GameAgeiatech::initAgeia()
 		gPhysicsSDK->getFoundationSDK().getRemoteDebugger()->connect(SAMPLES_VRD_HOST, SAMPLES_VRD_PORT, SAMPLES_VRD_EVENTMASK);
 #endif
 
-	physicsSDK->setParameter(NX_SKIN_WIDTH, 0.05f);
+	physicsSDK->setParameter(NX_SKIN_WIDTH, 0.01f);
 
 	// Create a scene
 	NxSceneDesc sceneDesc;

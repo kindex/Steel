@@ -90,7 +90,7 @@ void AgeiaPsAnimator::onParticleBorn(int index)
 	v3 pos = set->particles[index]->position;
 	float size = set->particles[index]->size;
 	NxSphereShapeDesc boxDesc;
-	boxDesc.radius = size*2;
+	boxDesc.radius = size;
 
 	NxActorDesc actorDesc;
 	actorDesc.shapes.pushBack(&boxDesc);

@@ -4,12 +4,12 @@ class = 'ps'
 emitter = 
 {
 	class = 'simple'
-	particle_size = 0.1
+	particle_size = 0.07
 	init_size = 0
 	emitter_size = 1
 	emitter_type = 'serial'
-	born_interval = 0.15
-	limit_count = 200
+	born_interval = 0.10
+	limit_count = 500
 }
 renderer = 
 	{
