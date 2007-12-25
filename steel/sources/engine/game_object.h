@@ -39,7 +39,9 @@ public:
         return object_id; 
     }
 
+    // true if object or its children han be processed by engine
 	virtual bool supportsInterface(IN OUT Engine&, IN const InterfaceId) abstract;
+    // true if object wants to be added to engine
     virtual bool beforeInject(IN OUT Engine&, IN const InterfaceId) 
     { 
         return true;
@@ -49,6 +51,7 @@ public:
     }
 	
 	virtual bool updateInformation(IN OUT Engine&, IN const InterfaceId) abstract;
+    // here object can add children to engine
 	virtual void bindEngine(IN OUT Engine&, IN const InterfaceId)
     {
     }

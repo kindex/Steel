@@ -303,6 +303,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\20_labyrinth\character.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\20_labyrinth\character.h"
+					>
+				</File>
+				<File
 					RelativePath="..\sources\20_labyrinth\labyrinth_generator.cpp"
 					>
 				</File>
@@ -488,14 +496,6 @@
 				</File>
 				<File
 					RelativePath="..\data\20_labyrinth\right.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\sun.conf"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\sun_ambient.conf"
 					>
 				</File>
 			</Filter>

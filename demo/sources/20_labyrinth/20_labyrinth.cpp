@@ -64,6 +64,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 				currentWallConfig->setValued("origin[0]", (i + 0.5f)*length[0]);
 				currentWallConfig->setValued("origin[1]", j*length[1]);
 				GameObject* wall = createGameObject(currentWallConfig);
+
 				world->addObject(wall);
 			}
 
@@ -75,7 +76,8 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 				currentWallConfig->setValued("origin[0]", i*length[0]);
 				currentWallConfig->setValued("origin[1]", (j + 0.5f)*length[1]);
 				GameObject* wall = createGameObject(currentWallConfig);
-				world->addObject(wall);
+
+                world->addObject(wall);
 			}
 		}
 	}

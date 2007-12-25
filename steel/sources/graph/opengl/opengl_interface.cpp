@@ -53,7 +53,7 @@ bool OpenGL_Engine::setCurrentObject(GameObject* object, const InterfaceId)
 		return false;
 	}
 
-	return false;
+	return true;
 }
 
 void OpenGL_Engine::setPosition(const ObjectPosition& position)
