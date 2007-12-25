@@ -15,10 +15,14 @@
 
 #include "../game_free_scene.h"
 #include "labyrinth_generator.h"
+#include "character.h"
 
 #include <objects/combiner/graph_object.h>
 
 typedef std::vector<GraphObject*> GraphObjectVector;
+
+class NxPhysicsSDK;
+class NxScene;
 
 class GameLabyrinth: public GameFreeScene
 {
@@ -31,20 +35,21 @@ public:
 	void draw(GraphEngine&);
 
 private:
-	virtual v3 calulateCameraCollision(const v3& oldPos, const v3& newPos);
-
 	Labyrinth labyrinth;
 	GraphObjectVector walls;
-	ConfigArray* scene[2];
+	ConfigArray* wscene[2];
 	float length[2];
 	int count[2];
+    Character* character;
+    v3 global_gravity;
 
-	enum
-	{
-		C_FREE,
-		C_FIRST_PERSON,
-	}
-	cameraMode;
+// Physic
+    bool initAgeia();
+    void exitAgeia();
+    NxActor* createSurface(const GraphObject& object);
+
+	NxPhysicsSDK* physicsSDK;
+	NxScene*      pScene;
 };
 
 #endif

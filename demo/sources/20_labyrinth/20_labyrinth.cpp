@@ -18,7 +18,27 @@
 #include <objects/combiner/combiner.h>
 #include <math/plane.h>
 
-GameLabyrinth::GameLabyrinth()
+#include <NxPhysics.h>
+#include <NxCooking.h>
+#include <Stream.h>
+#include "../23_ageia_tech/error_stream.h"
+
+struct CharacterCollector : public Visitor
+{
+    void postvisit(IN OUT GameObject* object)
+    {
+        if (dynamic_cast<Character*>(object) != NULL)
+        {
+            characters.push_back(dynamic_cast<Character*>(object));
+        }
+    }
+
+    std::vector<Character*> characters;
+};
+
+
+GameLabyrinth::GameLabyrinth():
+    character(NULL)
 {}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
@@ -27,7 +47,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
-	cameraMode = C_FIRST_PERSON;
+	cameraMode = C_FIXED;
 	std::string dirs[] = {"x", "y"};
 
 	for (int i = 0; i < 2; i++)
@@ -46,7 +66,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 			abort_init("error game res", "scene_" + dir + " is not array");
 		}
 
-		scene[i] = static_cast<ConfigArray*>(loadedWallConfig);
+		wscene[i] = static_cast<ConfigArray*>(loadedWallConfig);
 	}
 
 	labyrinth = generateLabyrinth(count[0], count[1]);
@@ -59,7 +79,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 
 			if (right && i < labyrinth.getMaxX() && j >= 0)
 			{
-				Config* currentWallConfig = scene[0]->getArrayElement(irand(scene[0]->size()));
+				Config* currentWallConfig = wscene[0]->getArrayElement(irand(wscene[0]->size()));
 
 				currentWallConfig->setValued("origin[0]", (i + 0.5f)*length[0]);
 				currentWallConfig->setValued("origin[1]", j*length[1]);
@@ -71,7 +91,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 			bool down = labyrinth.isDownBorder(i, j);
 			if (down && j < labyrinth.getMaxY() && i >= 0)
 			{
-				Config* currentWallConfig = scene[1]->getArrayElement(irand(scene[1]->size()));
+				Config* currentWallConfig = wscene[1]->getArrayElement(irand(wscene[1]->size()));
 
 				currentWallConfig->setValued("origin[0]", i*length[0]);
 				currentWallConfig->setValued("origin[1]", (j + 0.5f)*length[1]);
@@ -80,6 +100,24 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
                 world->addObject(wall);
 			}
 		}
+	}
+
+    CharacterCollector characterCollector;
+    world->traverse(characterCollector);
+
+    if (characterCollector.characters.empty())
+    {
+        abort_init("labyrinth", "No character was found");
+    }
+    character = characterCollector.characters[0];
+
+// Physic
+    global_gravity = _conf.getv3("physic.global_gravity", v3(0.0f, 0.0f, -9.8f));
+
+	if (!initAgeia())
+	{
+		abort_init("ageia", "Cannot init Ageia");
+		return false;
 	}
 
 	return true;
@@ -94,15 +132,20 @@ void GameLabyrinth::handleEventKeyDown(const std::string& key)
 {
 	if (key == "return")
 	{
-		if (cameraMode == C_FIRST_PERSON)
+		if (cameraMode == C_FIXED)
 		{
 			cameraMode = C_FREE;
 		}
 		else
 		{
-			cameraMode = C_FIRST_PERSON;
+			cameraMode = C_FIXED;
 		}
 	}
+    if (cameraMode == C_FIXED && (key == "w" || key == "s" || key == "a" || key == "d"))
+    {
+        character->handleEventKeyDown(key);
+        return;
+    }
     GameFreeScene::handleEventKeyDown(key);
 }
 
@@ -115,47 +158,150 @@ std::string GameLabyrinth::getWindowCaption()
 
 void GameLabyrinth::draw(GraphEngine& graph)
 {
+    if (cameraMode == C_FIXED)
+    {
+        v3 dir = v3(2, 0, -1);
+        spectator.camera.setUpVector(v3(0,0,1));
+        spectator.camera.setDirection(dir);
+        spectator.camera.setPosition(character->getPosition() - dir);
+        info.camera = spectator.camera;
+    }
+    
 	GameFreeScene::draw(graph);
 }
 
-v3 GameLabyrinth::calulateCameraCollision(const v3& oldPos, const v3& newPos)
+bool GameLabyrinth::initAgeia()
 {
-	v3 result = newPos;
-
-	if (cameraMode == C_FIRST_PERSON)
+	// Initialize PhysicsSDK
+	NxPhysicsSDKDesc desc;
+	NxSDKCreateError errorCode = NXCE_NO_ERROR;
+	physicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, NULL, new ErrorStream(), desc, &errorCode);
+	if (physicsSDK == NULL) 
 	{
-//		result.z = oldPos.z;
+		error("ageia", std::string("SDK create error (") + IntToStr(errorCode) + " - " + getNxSDKCreateError(errorCode) + ").");
+		return false;
+	}
+#if SAMPLES_USE_VRD
+	// The settings for the VRD host and port are found in SampleCommonCode/SamplesVRDSettings.h
+	if (gPhysicsSDK->getFoundationSDK().getRemoteDebugger())
+		gPhysicsSDK->getFoundationSDK().getRemoteDebugger()->connect(SAMPLES_VRD_HOST, SAMPLES_VRD_PORT, SAMPLES_VRD_EVENTMASK);
+#endif
 
-		for (int i = 0; i < 3; i++)
-		{
-			GameObject* crossingObject = NULL;
-			v3 crossingPosition;
-			Plane crossingTriangle;
-			Line ray(oldPos, result - oldPos);
-			bool isCollision = graphEngine->findCollision(ray, 
-															crossingObject, 
-															crossingPosition,
-															crossingTriangle);
-			if (isCollision)
-			{
-				if (i < 2)
-				{
-					v3 normal = crossingTriangle.getNormal();
-					float inWallDist = normal.dotProduct(crossingPosition-result);
-					result = result + normal*(inWallDist + EPSILON);
-				}
-				else
-				{
-					result = crossingPosition;
-				}
-			}
-			else
-			{
-				break;
-			}
-		}
+	physicsSDK->setParameter(NX_SKIN_WIDTH, 0.01f);
+
+	// Create a scene
+	NxSceneDesc sceneDesc;
+	sceneDesc.gravity = NxVec3(global_gravity.x, global_gravity.y, global_gravity.z);
+	pScene = physicsSDK->createScene(sceneDesc);
+	if (pScene == NULL) 
+	{
+		error("ageia", "Unable to create a PhysX scene");
+		return false;
 	}
 
-	return result;
+	// Set default material
+	NxMaterial* defaultMaterial = pScene->getMaterialFromIndex(0);
+	defaultMaterial->setRestitution(0.0f);
+	defaultMaterial->setStaticFriction(0.5f);
+	defaultMaterial->setDynamicFriction(0.5f);
+
+	log_msg("ageia", "Ageia connected");
+
+	return true;
+}
+void GameLabyrinth::exitAgeia()
+{
+	if (physicsSDK != NULL)
+	{
+		if (pScene != NULL)
+		{
+			physicsSDK->releaseScene(*pScene);
+		}
+		pScene = NULL;
+		NxReleasePhysicsSDK(physicsSDK);
+		physicsSDK = NULL;
+
+		log_msg("ageia", "Ageia exited");
+	}
 }
 
+NxActor* GameLabyrinth::createSurface(const GraphObject& object)
+{
+    NxVec3* fsVerts = NULL;
+    NxU32* fsFaces = NULL;
+//    NxVec3* fsNormals = NULL;
+
+    // Initialize flat surface verts
+    const VertexVector& vertexes = *object.getVertexes();
+    size_t nbVerts = vertexes.size();
+    fsVerts = new NxVec3[vertexes.size()];
+
+    // Build flat surface
+    for (size_t i = 0; i < vertexes.size(); i++)
+    {
+        fsVerts[i] = NxVec3(vertexes[i].x, vertexes[i].y, vertexes[i].z); 
+    }
+
+    const TriangleVector& triangles = object.getAllFaces()->triangles;
+
+    // Initialize flat surface faces
+    size_t nbFaces = triangles.size();
+    fsFaces = new NxU32[nbFaces*3];
+
+    size_t k = 0;
+    for (size_t i = 0; i < nbFaces; i++)
+    {
+        // Create first triangle
+        fsFaces[k] = triangles[i].a[0];
+        fsFaces[k+1] = triangles[i].a[1];
+        fsFaces[k+2] = triangles[i].a[2];
+        k+=3;
+    }
+
+    // allocate flat surface materials -- one for each face
+//    fsMaterials = new NxMaterialIndex[nbFaces];
+
+    // Build vertex normals
+//    fsNormals = new NxVec3[nbFaces];
+//    NxBuildSmoothNormals(nbFaces, nbVerts, fsVerts, fsFaces, NULL, fsNormals, true);
+
+    NxTriangleMeshDesc fsDesc;
+    fsDesc.numVertices = nbVerts;
+    fsDesc.numTriangles = nbFaces;
+    fsDesc.pointStrideBytes = sizeof(NxVec3);
+    fsDesc.triangleStrideBytes = 3*sizeof(NxU32);
+    fsDesc.points = fsVerts;
+    fsDesc.triangles = fsFaces;       
+    fsDesc.flags = 0;
+
+    // Add the mesh material data
+//    fsDesc.materialIndexStride = sizeof(NxMaterialIndex);
+//    fsDesc.materialIndices = fsMaterials;
+
+    NxTriangleMeshShapeDesc fsShapeDesc;
+
+    NxInitCooking();
+
+    // Cooking from memory
+    MemoryWriteBuffer buf;
+    bool status = NxCookTriangleMesh(fsDesc, buf);
+    fsShapeDesc.meshData = physicsSDK->createTriangleMesh(MemoryReadBuffer(buf.data));
+
+    if (fsShapeDesc.meshData)
+    {
+        NxActorDesc actorDesc;
+        actorDesc.shapes.pushBack(&fsShapeDesc);
+        actorDesc.globalPose.t = NxVec3(0,0,0);
+        NxActor* actor = pScene->createActor(actorDesc);
+
+        // Attach drawable mesh to shape's user data
+        NxShape*const* shapes = actor->getShapes();
+//        shapes[0]->isTriangleMesh()->getTriangleMesh().saveToDesc(tmd);
+//        shapes[0]->userData = (void*)&tmd;
+
+        return actor;
+//        gPhysicsSDK->releaseTriangleMesh(*fsShapeDesc.meshData);
+    }
+
+    return NULL;
+}

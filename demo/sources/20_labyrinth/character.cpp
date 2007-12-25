@@ -20,7 +20,6 @@ Character::Character():
     position(matrix34::getIdentity())
 {}
 
-
 bool Character::supportsInterface(IN OUT Engine&, IN const InterfaceId id)
 {
     return id == INTERFACE_GRAPH;
@@ -38,13 +37,14 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
 
 void Character::process(const ProcessInfo& info)
 {
-    position.setTranslation(position.getTranslation() + v3(1, 1, 0)*info.timeInfo.frameLength);
+    
 }
 
 bool Character::InitFromConfig(Config& conf)
 {
     graph_object = createGameObject(conf.find("graph"));
     health = conf.getf("health", 100);
+
     return graph_object != NULL;
 }
 
@@ -54,4 +54,20 @@ void Character::bindEngine(IN OUT Engine& engine, IN const InterfaceId id)
     {
         dynamic_cast<ChildrenInterface*>(&engine)->addChild(graph_object);
     }
+}
+
+void Character::handleEventKeyDown(const std::string& key)
+{
+    v3 dir = zero;
+    if (key == "w") dir += v3(+1,  0, 0);
+    if (key == "s") dir += v3(-1,  0, 0);
+    if (key == "a") dir += v3( 0, +1, 0);
+    if (key == "d") dir += v3( 0, -1, 0);
+
+    position.setTranslation(position.getTranslation() + dir);
+}
+
+v3 Character::getPosition() const
+{
+    return position.getTranslation();
 }

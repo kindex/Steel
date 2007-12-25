@@ -92,11 +92,8 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 	//static_cast<GameLight*>(static_cast<Combiner*>(world)->getObject(0))->toggleEnable();
 //	static_cast<GameLight*>(static_cast<Combiner*>(world)->getObject(0))->toggleEnable();
 
-
 	return true;
 }
-
-
 
 void GameFreeScene::handleEventKeyDown(const std::string& key)
 {
@@ -155,70 +152,78 @@ void GameFreeScene::handleEventKeyDown(const std::string& key)
 	}
 }
 
-
 void GameFreeScene::processKeyboard()
 {
-	if (input->isMouseCaptured())
-	{
-		v3 dir(0, 0, 0);
-		if (input->isPressed("w")) 	dir += v3( 1,  0,  0);
-		if (input->isPressed("s")) 	dir += v3(-1,  0,  0);
-		if (input->isPressed("a")) 	dir += v3( 0, +1,  0);
-		if (input->isPressed("d")) 	dir += v3( 0, -1,  0);
-		if (input->isPressed("q")) 	dir += v3( 0,  0, +1);
-		if (input->isPressed("z")) 	dir += v3( 0,  0, -1);
+    if (cameraMode == C_FREE)
+    {
+	    if (input->isMouseCaptured())
+	    {
+		    v3 dir(0, 0, 0);
+		    if (input->isPressed("w")) 	dir += v3( 1,  0,  0);
+		    if (input->isPressed("s")) 	dir += v3(-1,  0,  0);
+		    if (input->isPressed("a")) 	dir += v3( 0, +1,  0);
+		    if (input->isPressed("d")) 	dir += v3( 0, -1,  0);
+		    if (input->isPressed("q")) 	dir += v3( 0,  0, +1);
+		    if (input->isPressed("z")) 	dir += v3( 0,  0, -1);
 
-		if (dir.getLength() > EPSILON)
-		{
-			spectator.velocity += dir*accSpeed*(float)speed;
-			float len = spectator.velocity.getLength();
-			float maxspeed = conf->getf("camera.max_speed", 10);
-			if (len > maxspeed) 
-			{
-				spectator.velocity  = spectator.velocity.getNormalized()*maxspeed;
-			}
-		}
-		else
-		{
-			float d = brakeSpeed*(float)speed;
-			float len = spectator.velocity.getLength();
-			len -= d;
-			if (len < 0)
-			{
-				len = 0;
-			}
-			spectator.velocity.normalize();
-			spectator.velocity *= len; 
-		}
-	}
+		    if (dir.getLength() > EPSILON)
+		    {
+			    spectator.velocity += dir*accSpeed*(float)speed;
+			    float len = spectator.velocity.getLength();
+			    float maxspeed = conf->getf("camera.max_speed", 10);
+			    if (len > maxspeed) 
+			    {
+				    spectator.velocity  = spectator.velocity.getNormalized()*maxspeed;
+			    }
+		    }
+		    else
+		    {
+			    float d = brakeSpeed*(float)speed;
+			    float len = spectator.velocity.getLength();
+			    len -= d;
+			    if (len < 0)
+			    {
+				    len = 0;
+			    }
+			    spectator.velocity.normalize();
+			    spectator.velocity *= len; 
+		    }
+	    }
+    }
 }
 
 void GameFreeScene::handleMouse(double dx, double dy)
 {
-	v3 dir = spectator.camera.getDirection();
-	dir.rotateZ((float)dx);
+    if (cameraMode == C_FREE)
+    {
+	    v3 dir = spectator.camera.getDirection();
+	    dir.rotateZ((float)dx);
 
-	if (dy<0 && dir.dotProduct(v3(0,0, 1))<0.99 || 
-		dy>0 && dir.dotProduct(v3(0,0, -1))<0.99)
-	{
-		dir.rotateAxis((float)dy, v3(-dir.y, dir.x, 0));
-	}
-	spectator.camera.set(spectator.camera.getPosition(), dir, v3(0.0f, 0.0f, 1.0f));
+	    if (dy<0 && dir.dotProduct(v3(0,0, 1))<0.99 || 
+		    dy>0 && dir.dotProduct(v3(0,0, -1))<0.99)
+	    {
+		    dir.rotateAxis((float)dy, v3(-dir.y, dir.x, 0));
+	    }
+	    spectator.camera.set(spectator.camera.getPosition(), dir, v3(0.0f, 0.0f, 1.0f));
+    }
 }
 
 void GameFreeScene::process()
 {
 	processKeyboard();
 
-	v3 direction = spectator.camera.getDirection();
-	v3 cameraSpeed = spectator.velocity.x*direction
-					+ spectator.velocity.y*v3(-direction.y, direction.x, 0).getNormalized()
-					+ spectator.velocity.z*v3(0, 0, 1);
+    if (cameraMode == C_FREE)
+    {
+	    v3 direction = spectator.camera.getDirection();
+	    v3 cameraSpeed = spectator.velocity.x*direction
+					    + spectator.velocity.y*v3(-direction.y, direction.x, 0).getNormalized()
+					    + spectator.velocity.z*v3(0, 0, 1);
 
-	v3 oldPosition = spectator.camera.getPosition();
-	v3 proposedPosition = oldPosition + cameraSpeed*(float)speed;
-	v3 newPosition = calulateCameraCollision(oldPosition, proposedPosition);
-	spectator.camera.setPosition(newPosition);
+	    v3 oldPosition = spectator.camera.getPosition();
+	    v3 proposedPosition = oldPosition + cameraSpeed*(float)speed;
+	    v3 newPosition = calulateCameraCollision(oldPosition, proposedPosition);
+	    spectator.camera.setPosition(newPosition);
+    }
 
 	updatePhysicTime();
 	info.timeInfo = timeInfo;
@@ -367,7 +372,8 @@ GameFreeScene::GameFreeScene():
 	audioEngine(NULL),
  	world(NULL),
  	flashlight(NULL),
-	speed(0.01f) // TODO: autoSpeed
+	speed(0.01f), // TODO: autoSpeed
+    cameraMode(C_FREE)
 {}
 	
 void GameFreeScene::start()

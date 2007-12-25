@@ -74,6 +74,12 @@ protected:
     bool firstframe;
 	int framesToPass;
     std::string caption;
+
+    enum
+	{
+		C_FREE,
+		C_FIXED,
+	} cameraMode;
 };
 
 #endif

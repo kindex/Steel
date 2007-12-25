@@ -143,19 +143,22 @@ void Input::Process_WinAPI()
 		case WM_KEYDOWN:
 			key = DecodeKey_WinAPI(msg);
 
-			if(key != "" && !keyPressed[key])
+			if (key != "" && !keyPressed[key])
 			{
 				game->handleEventKeyDown(key);
-				if(key == "space")
+				if (key == "space")
 				{
-					if(mouseCaptured) 
+					if (mouseCaptured)
+                    {
 						FreeMouse_WinAPI();
+                    }
 					else
+                    {
 						CaptureMouse_WinAPI();
+                    }
 				}
 				keyPressed[key] = true;
 			}
-
 			break;
 
 		case WM_LBUTTONUP:
@@ -164,7 +167,9 @@ void Input::Process_WinAPI()
 		case WM_KEYUP:
 			key = DecodeKey_WinAPI(msg);
 			if(key != "")
+            {
 				game->handleEventKeyUp(key);
+            }
 			keyPressed[key] = false;
 			break;
 

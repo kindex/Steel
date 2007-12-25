@@ -236,4 +236,6 @@ inline void v3simple::operator/=(const float a)
     }
 }
 
+static const v3 zero = v3(0.0f, 0.0f, 0.0f);
+
 #endif	// __MATH_VECTOR3D_H

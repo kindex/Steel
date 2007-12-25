@@ -16,6 +16,8 @@
 
 #include <objects/combiner/graph_object.h>
 
+class NxActor;
+
 class Character : public GameObject
 {
 public:
@@ -26,13 +28,17 @@ public:
 	void process(const ProcessInfo&);
 	bool InitFromConfig(Config&);
 
+	void handleEventKeyDown(const std::string& key);
+
     float getHealth() const { return health; }
     bool isAlive() const {return alive;}
+    v3 getPosition() const;
 
 private:
     float health;
     bool alive;
     GameObject* graph_object;
+    NxActor* physic_object;
     ObjectPosition position;
 };
 

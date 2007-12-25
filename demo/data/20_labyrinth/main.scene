@@ -10,7 +10,6 @@ objects =
 	graph = {
 		class = 'combiner'
 		enabled=1
-		origin = (0 0.5 0)
 
 		graph = 
 		{
