@@ -414,7 +414,7 @@ void OpenALEngine::addChild(GameObject* child)
 
 void OpenALEngine::addChild(AudioShadow& shadow, GameObject* child)
 {
-	uid childUid = child->getId();
+	uid childUid = child->getObjectId();
 	pvector<uid>::const_iterator it = find(shadow.children, childUid);
 	if (it != currentShadow->children.end())
     {
@@ -436,7 +436,7 @@ void OpenALEngine::addChild(AudioShadow& shadow, GameObject* child)
 
 bool OpenALEngine::setCurrentObject(GameObject* object, const InterfaceId)
 {
-	uid id = object->getId();
+	uid id = object->getObjectId();
     currentShadow = static_cast<AudioShadow*>(getShadow(id, INTERFACE_AUDIO));
 	if (currentShadow == NULL)
 	{

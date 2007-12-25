@@ -178,7 +178,6 @@ void GameAgeiatech::process()
 	if (timeInfo.frameLength > EPSILON)
 	{
 		scene->simulate(timeInfo.frameLength*speedup);
-
 		scene->flushStream();
 		scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
 	}

@@ -76,10 +76,9 @@ void GameLight::afterRemove(Engine&, IN const InterfaceId)
 	engine = NULL;
 }
 
-
-bool GameLight::updateInformation(Engine& engine, IN const InterfaceId)
+bool GameLight::updateInformation(Engine& engine, IN const InterfaceId interface_id)
 {
-	if (id == INTERFACE_GRAPH)
+	if (interface_id == INTERFACE_GRAPH)
 	{
 		dynamic_cast<GraphInterface*>(&engine)->setPosition(position);
 		return true;

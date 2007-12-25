@@ -29,14 +29,14 @@ public:
 	// дефолтовый конструктор присваюивает уникальный идентификатор.
 	GameObject()
     {
-        id = objectIdGenerator.genUid();
+        object_id = objectIdGenerator.genUid();
     }
 	virtual ~GameObject() {}
 
 	// Object unique identifier
-	virtual uid	 getId()				
+	virtual uid	 getObjectId()				
     {
-        return id; 
+        return object_id; 
     }
 
 	virtual bool supportsInterface(IN OUT Engine&, IN const InterfaceId) abstract;
@@ -61,8 +61,8 @@ public:
         visitor.postvisit(this);
     }
 
-protected:
-	uid id;
+private:
+	uid object_id;
 };
 
 #endif

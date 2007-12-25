@@ -46,7 +46,7 @@ void OpenGL_Engine::updateLight(uid id, Light* light)
 
 bool OpenGL_Engine::setCurrentObject(GameObject* object, const InterfaceId)
 {
-	uid id = object->getId();
+	uid id = object->getObjectId();
 	currentShadow = getShadow(id);
 	if (currentShadow == NULL)
 	{
@@ -74,7 +74,7 @@ void OpenGL_Engine::addChild(GameObject* child)
 
 void OpenGL_Engine::addChild(GraphShadow &shadow, GameObject *child)
 {
-	uid childUid = child->getId();
+	uid childUid = child->getObjectId();
 	uidVector::const_iterator it = find(shadow.children, childUid);
 	if (it != currentShadow->children.end())
     {

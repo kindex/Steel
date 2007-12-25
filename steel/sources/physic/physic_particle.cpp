@@ -17,7 +17,7 @@
 
 bool PhysicEngine::setCurrentObject(GameObject* object, const InterfaceId id)
 {
-	uid objectId = object->getId();
+	uid objectId = object->getObjectId();
 	
     switch (id)
     {
@@ -83,7 +83,7 @@ void PhysicEngine::addChild(GameObject* child)
 
 void PhysicEngine::addChild(Shadow& shadow, GameObject* child)
 {
-	uid childUid = child->getId();
+	uid childUid = child->getObjectId();
 	uidVector::const_iterator it = find(shadow.children, childUid);
 	if (it != currentShadow->children.end())
     {
@@ -280,12 +280,12 @@ int PhysicEngine::addShadow(Shadow* newStorage, const InterfaceId id)
 bool PhysicEngine::remove(GameObject* object)
 {
     bool result;
-    int id = findSid(object->getId(), INTERFACE_PARTICLE_PHYSIC);
+    int id = findSid(object->getObjectId(), INTERFACE_PARTICLE_PHYSIC);
     if (id >= 0)
     {
         result = remove(object, INTERFACE_PARTICLE_PHYSIC);
     }
-    id = findSid(object->getId(), INTERFACE_POPYHEDRA_PHYSIC);
+    id = findSid(object->getObjectId(), INTERFACE_POPYHEDRA_PHYSIC);
     if (id >= 0)
     {
         result = result || remove(object, INTERFACE_POPYHEDRA_PHYSIC);
@@ -295,8 +295,8 @@ bool PhysicEngine::remove(GameObject* object)
 
 bool PhysicEngine::remove(GameObject* object, const InterfaceId id)
 {
-	deleteShadowForChildren(findSid(object->getId(), id), id);
-	deleteShadowForObject(findSid(object->getId(), id), id);
+	deleteShadowForChildren(findSid(object->getObjectId(), id), id);
+	deleteShadowForObject(findSid(object->getObjectId(), id), id);
 	
 	for EACH(pvector<GameObject*>, objects, it)
     {
@@ -339,7 +339,7 @@ void PhysicEngine::updateRealPosition(IN OUT PolyhedraShadow* object)
 	}
 	else
 	{
-        PolyhedraShadow* parent = getPolyhedraShadow(object->parent->getId());
+        PolyhedraShadow* parent = getPolyhedraShadow(object->parent->getObjectId());
 		updateRealPosition(parent);
 		object->realPosition = object->position * parent->realPosition;
 		object->realPositionCalculated = true;

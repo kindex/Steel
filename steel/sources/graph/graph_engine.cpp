@@ -59,8 +59,8 @@ bool GraphEngine::clear()
 
 bool GraphEngine::remove(GameObject *object)
 {
-    deleteShadowForChildren(findSid(object->getId(), INTERFACE_GRAPH), INTERFACE_GRAPH);
-	deleteShadowForObject(findSid(object->getId(), INTERFACE_GRAPH), INTERFACE_GRAPH);
+    deleteShadowForChildren(findSid(object->getObjectId(), INTERFACE_GRAPH), INTERFACE_GRAPH);
+	deleteShadowForObject(findSid(object->getObjectId(), INTERFACE_GRAPH), INTERFACE_GRAPH);
 	
 	for EACH(pvector<GameObject*>, objects, it)
     {

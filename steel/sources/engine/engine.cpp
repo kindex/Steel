@@ -25,14 +25,14 @@
 void Shadow::fill(GameObject* object)
 {
 	this->object = object;
-	objectId = object->getId();
+	objectId = object->getObjectId();
 //	modificationTime = childrenModificationTime = -1;
 }
 
 
 bool Engine::makeShadowForObject(GameObject* object, const InterfaceId id)
 {
-	uid objectId = object->getId();
+	uid objectId = object->getObjectId();
 	if (idHash[id].find(objectId) != idHash[id].end())
 	{
 		log_msg("error engine", "Duplicate object " + IntToStr(objectId) + " in shadow");
@@ -90,7 +90,7 @@ void Engine::deleteShadowForChildren(int sid, const InterfaceId id)
 
 Shadow* Engine::getShadow(GameObject* object, const InterfaceId iid)
 {
-	uid id = object->getId();
+	uid id = object->getObjectId();
     int sid = findSid(id, iid);
 
 	if (sid >= 0)
