@@ -32,10 +32,12 @@ public:
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
 	GameObject* getObject(size_t index) { return objects[index]; }
-    void traverse(Visitor&);
+    void traverse(Visitor&, const ObjectPosition& base_position);
 	void addObject(GameObject*);
 
 protected:
+    const ObjectPosition& getLocalPosition();
+
 	GraphObject*    graph;
 	AudioObject*    audio;
 	Transformation* transformation;

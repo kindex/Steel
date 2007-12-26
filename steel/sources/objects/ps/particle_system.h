@@ -65,6 +65,7 @@ public:
 	bool initParticles();
 	virtual void born(Particle &particle, int index) abstract; // создать частицу
 	virtual void kill(int i); // убить частицу с номером i
+    v3 getPosition() const { return position; }
 
 protected:
 	v3 position;
@@ -103,7 +104,7 @@ public:
 	void bindEngine(IN OUT Engine&, IN const InterfaceId);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
-    void traverse(Visitor&);
+    void traverse(Visitor&, const ObjectPosition& base_position);
 
 	void particleBorn(int index);
 	void particleDie(int index);

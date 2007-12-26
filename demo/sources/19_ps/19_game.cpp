@@ -73,7 +73,7 @@ void GamePS::process()
         ParticleCalculator visitor(boundingModel);
 
         visitor.clear();
-        world->traverse(visitor);
+        world->traverse(visitor, ObjectPosition::getIdentity());
 
         crosses = visitor.cnt;
     }

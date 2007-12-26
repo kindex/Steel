@@ -25,17 +25,58 @@
 
 struct CharacterCollector : public Visitor
 {
-    void postvisit(IN OUT GameObject* object)
+    bool visit(IN OUT GameObject* object)
     {
         if (dynamic_cast<Character*>(object) != NULL)
         {
             characters.push_back(dynamic_cast<Character*>(object));
         }
+        return true;
     }
 
     std::vector<Character*> characters;
 };
 
+class AgeiaInjector : public Visitor
+{
+public:
+    AgeiaInjector(GameLabyrinth& game) : 
+        game(game),
+        inChar(0)
+    {}
+
+private:
+    bool visit(IN OUT GameObject* object)
+    {
+        bool is_char = dynamic_cast<Character*>(object) != NULL;
+        if (is_char || inChar > 0)
+        {
+            inChar++;
+        }
+
+        return true;
+    }
+
+    void postvisit(IN OUT GameObject* object, const ObjectPosition& base_position)
+    {
+        if (dynamic_cast<GraphObject*>(object) != NULL)
+        {
+            NxActor* actor = game.createSurface(*dynamic_cast<GraphObject*>(object), base_position, inChar == 0);
+            if (inChar != 0)
+            {
+                actor->userData = (void*)(1);
+                game.character->physic_object = actor;
+            }
+        }
+        if (inChar > 0)
+        {
+            inChar--;
+        }
+    }
+
+    GameLabyrinth& game;
+    int inChar;
+};
 
 GameLabyrinth::GameLabyrinth():
     character(NULL)
@@ -103,13 +144,14 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 	}
 
     CharacterCollector characterCollector;
-    world->traverse(characterCollector);
+    world->traverse(characterCollector, ObjectPosition::getIdentity());
 
     if (characterCollector.characters.empty())
     {
         abort_init("labyrinth", "No character was found");
     }
     character = characterCollector.characters[0];
+    character->input = input;
 
 // Physic
     global_gravity = _conf.getv3("physic.global_gravity", v3(0.0f, 0.0f, -9.8f));
@@ -120,12 +162,31 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 		return false;
 	}
 
+    AgeiaInjector visitor(*this);
+    world->traverse(visitor, ObjectPosition::getIdentity());
+
+    // Ground Plane
+    {
+	    NxPlaneShapeDesc planeDesc;
+	    planeDesc.normal = NxVec3(0.0f, 0.0f, 1.0f);
+	    NxActorDesc actorDesc;
+	    actorDesc.shapes.pushBack(&planeDesc);
+	    pScene->createActor(actorDesc);
+    }
+
 	return true;
 }
 
 void GameLabyrinth::process()
 {
 	GameFreeScene::process();
+
+	if (timeInfo.frameLength > EPSILON)
+	{
+		pScene->simulate(timeInfo.frameLength);
+		pScene->flushStream();
+		pScene->fetchResults(NX_RIGID_BODY_FINISHED, true);
+	}
 }
 
 void GameLabyrinth::handleEventKeyDown(const std::string& key)
@@ -141,11 +202,6 @@ void GameLabyrinth::handleEventKeyDown(const std::string& key)
 			cameraMode = C_FIXED;
 		}
 	}
-    if (cameraMode == C_FIXED && (key == "w" || key == "s" || key == "a" || key == "d"))
-    {
-        character->handleEventKeyDown(key);
-        return;
-    }
     GameFreeScene::handleEventKeyDown(key);
 }
 
@@ -158,12 +214,39 @@ std::string GameLabyrinth::getWindowCaption()
 
 void GameLabyrinth::draw(GraphEngine& graph)
 {
+	// Render all actors
+	int nbActors = pScene->getNbActors();
+	NxActor** actors = pScene->getActors();
+	while (nbActors--)
+	{
+		NxActor* actor = *actors++;
+		if (!actor->userData)
+		{
+			continue;
+		}
+
+		float glMat[16];
+		actor->getGlobalPose().getColumnMajor44(glMat);
+		v3 zero;
+		zero.loadZero();
+		matrix34 m;
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				m.data.matrix.data.a[i * 3 + j] = glMat[i * 4 + j];
+			}
+		}
+
+        character->position.setTranslation(v3(glMat[3 * 4 + 0], glMat[3 * 4 + 1], glMat[3 * 4 + 2]));
+	}
+
     if (cameraMode == C_FIXED)
     {
         v3 dir = v3(2, 0, -1);
         spectator.camera.setUpVector(v3(0,0,1));
         spectator.camera.setDirection(dir);
-        spectator.camera.setPosition(character->getPosition() - dir);
+        spectator.camera.setPosition(character->getPosition().getTranslation() - dir);
         info.camera = spectator.camera;
     }
     
@@ -225,7 +308,7 @@ void GameLabyrinth::exitAgeia()
 	}
 }
 
-NxActor* GameLabyrinth::createSurface(const GraphObject& object)
+NxActor* GameLabyrinth::createSurface(const GraphObject& object, const ObjectPosition& position, bool _static)
 {
     NxVec3* fsVerts = NULL;
     NxU32* fsFaces = NULL;
@@ -282,26 +365,48 @@ NxActor* GameLabyrinth::createSurface(const GraphObject& object)
 
     NxInitCooking();
 
-    // Cooking from memory
     MemoryWriteBuffer buf;
     bool status = NxCookTriangleMesh(fsDesc, buf);
     fsShapeDesc.meshData = physicsSDK->createTriangleMesh(MemoryReadBuffer(buf.data));
 
     if (fsShapeDesc.meshData)
     {
+	    NxBodyDesc bodyDesc;
+	    bodyDesc.angularDamping	= 0.5f;
+
         NxActorDesc actorDesc;
         actorDesc.shapes.pushBack(&fsShapeDesc);
-        actorDesc.globalPose.t = NxVec3(0,0,0);
+        if (!_static)
+        {
+            actorDesc.body			= &bodyDesc;
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            v3 row = position.getRow(i);
+            actorDesc.globalPose.M.setRow(i, NxVec3(row.x, row.y, row.z));
+        }
+        v3 pos = position.getTranslation();
+        actorDesc.globalPose.t  = NxVec3(pos.x, pos.y, pos.z);
+
+    	actorDesc.density		= 10.0f;
+
         NxActor* actor = pScene->createActor(actorDesc);
-
-        // Attach drawable mesh to shape's user data
-        NxShape*const* shapes = actor->getShapes();
-//        shapes[0]->isTriangleMesh()->getTriangleMesh().saveToDesc(tmd);
-//        shapes[0]->userData = (void*)&tmd;
-
         return actor;
-//        gPhysicsSDK->releaseTriangleMesh(*fsShapeDesc.meshData);
     }
 
     return NULL;
+}
+
+void Character::traverse(Visitor& visitor, const ObjectPosition& base_position)
+{
+    if (visitor.visit(this))
+    {
+        ObjectPosition new_position = position*base_position;
+
+        if (graph_object != NULL)
+        {
+            graph_object->traverse(visitor, new_position);
+        }
+        visitor.postvisit(this, new_position);
+    }
 }

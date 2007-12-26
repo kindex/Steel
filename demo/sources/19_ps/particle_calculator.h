@@ -21,7 +21,7 @@ class ParticleCalculator : public Visitor
 public:
     ParticleCalculator(GraphObject* graphObject);
     void clear();
-    void postvisit(IN OUT Particle* particle);
+    bool visit(IN OUT Particle* particle);
 
     int cnt;
     GraphObject* graphObject;

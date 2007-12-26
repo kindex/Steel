@@ -180,11 +180,14 @@ void ParticleSystem::particleDie(int index)
 	renderer->onParticleDie(index);
 }
 
-void ParticleSystem::traverse(Visitor& visitor)
+void ParticleSystem::traverse(Visitor& visitor, const ObjectPosition& base_position)
 {
-    for EACH(ParticleVector, particleSet.particles, it)
+    if (visitor.visit(this))
     {
-        visitor.postvisit(*it);
+        for EACH(ParticleVector, particleSet.particles, it)
+        {
+            visitor.postvisit(*it);
+        }
+        visitor.postvisit(this, base_position);
     }
-    visitor.postvisit(this);
 }

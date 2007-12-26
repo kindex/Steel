@@ -17,11 +17,15 @@
 
 class GameObject;
 struct Particle;
+struct matrix34;
+typedef matrix34 ObjectPosition;
 
 class Visitor
 {
 public:
-    virtual void postvisit(IN OUT GameObject*) {}
+    virtual bool visit(IN OUT GameObject*) { return true; }
+    virtual void postvisit(IN OUT GameObject*, const ObjectPosition& base_position) {}
+    virtual bool visit(IN OUT Particle*)  { return true; }
     virtual void postvisit(IN OUT Particle*) {}
 };
 

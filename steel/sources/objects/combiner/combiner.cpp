@@ -191,6 +191,11 @@ void Combiner::bindEngine(Engine& engine, IN const InterfaceId id)
 	}
 }
 
+const ObjectPosition& Combiner::getLocalPosition()
+{
+    return position;
+}
+
 bool Combiner::updateInformation(Engine& engine, IN const InterfaceId id)
 {
 	switch (id)
@@ -248,19 +253,28 @@ void Combiner::process(IN const ProcessInfo& info)
 	}
 }
 
-void Combiner::traverse(Visitor& visitor)
+void Combiner::traverse(Visitor& visitor, const ObjectPosition& base_position)
 {
-	for EACH(pvector<GameObject*>, objects, it)
-	{
-        (*it)->traverse(visitor);
-	}
-    if (graph != NULL)
+    if (visitor.visit(this))
     {
-        graph->traverse(visitor);
+        if (transformation != NULL)
+        {
+		    position = transformation->getPosition();
+        }
+
+        ObjectPosition new_position = base_position * position * origin;
+	    for EACH(pvector<GameObject*>, objects, it)
+	    {
+            (*it)->traverse(visitor, new_position);
+	    }
+        if (graph != NULL)
+        {
+            graph->traverse(visitor, new_position);
+        }
+        if (audio != NULL)
+        {
+            audio->traverse(visitor, new_position);
+        }
+        visitor.postvisit(this, new_position);
     }
-    if (audio != NULL)
-    {
-        audio->traverse(visitor);
-    }
-    visitor.postvisit(this);
 }

@@ -32,20 +32,15 @@ public:
     GraphObjectVisitor(GameAgeiatech& game) : game(game) {}
 
 private:
-    void postvisit(IN OUT GameObject* object)
+    bool visit(IN OUT GameObject* object)
     {
-        
         GraphObject* g = dynamic_cast<GraphObject*>(object);
 
         if (g != NULL)
         {
             game.createSurface(*g);
         }
-
-        //if (object->supportsInterface(engine, INTERFACE_GRAPH))
-        //{
-        //    object->updateInformation(engine, INTERFACE_GRAPH);
-        //}
+        return true;
     }
 
     GameAgeiatech& game;
@@ -156,17 +151,9 @@ bool GameAgeiatech::init(Config& _conf, Input& _input)
 	//actorDesc.shapes.pushBack(&planeDesc);
 	//scene->createActor(actorDesc);
 
-//    GraphObjectVisitor
-
-    //if (boundingModel != NULL)
-    //{
-    //    NxTriangleMeshDesc tmd;
-    //    NxActor* actor = createSurface(*boundingModel, tmd);
-    //}
-
     GraphObjectVisitor visitor(*this);
 
-    world->traverse(visitor);
+    world->traverse(visitor, ObjectPosition::getIdentity());
 
 	return true;
 }

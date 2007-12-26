@@ -17,6 +17,7 @@
 #include <objects/combiner/graph_object.h>
 
 class NxActor;
+class Input;
 
 class Character : public GameObject
 {
@@ -27,12 +28,14 @@ public:
     void bindEngine(IN OUT Engine&, IN const InterfaceId);
 	void process(const ProcessInfo&);
 	bool InitFromConfig(Config&);
-
-	void handleEventKeyDown(const std::string& key);
+    void traverse(Visitor&, const ObjectPosition& base_position);
 
     float getHealth() const { return health; }
     bool isAlive() const {return alive;}
-    v3 getPosition() const;
+    const ObjectPosition& getPosition() const;
+
+    friend class GameLabyrinth;
+    friend class AgeiaInjector;
 
 private:
     float health;
@@ -40,6 +43,7 @@ private:
     GameObject* graph_object;
     NxActor* physic_object;
     ObjectPosition position;
+	Input*			input;
 };
 
 #endif

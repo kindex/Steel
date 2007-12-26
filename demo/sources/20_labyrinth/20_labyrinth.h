@@ -34,6 +34,8 @@ public:
     std::string getWindowCaption();
 	void draw(GraphEngine&);
 
+    friend class AgeiaInjector;
+
 private:
 	Labyrinth labyrinth;
 	GraphObjectVector walls;
@@ -46,7 +48,7 @@ private:
 // Physic
     bool initAgeia();
     void exitAgeia();
-    NxActor* createSurface(const GraphObject& object);
+    NxActor* createSurface(const GraphObject& object, const ObjectPosition&, bool _static);
 
 	NxPhysicsSDK* physicsSDK;
 	NxScene*      pScene;

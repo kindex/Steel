@@ -14,6 +14,8 @@
 #include <engine/engine.h>
 #include <objects/game_object_factory.h>
 #include <graph/graph_interface.h>
+#include <input/input.h>
+#include <NxPhysics.h>
 
 Character::Character():
     graph_object(NULL),
@@ -35,9 +37,47 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
     return false;
 }
 
+NxVec3 ApplyForceToActor(NxActor* actor, const NxVec3& forceDir, const NxReal forceStrength, bool forceMode)
+{
+	NxVec3 forceVec = forceStrength*forceDir;
+
+	if (forceMode)
+    {
+		actor->addForce(forceVec);
+    }
+	else
+    {
+		actor->addTorque(forceVec);
+    }
+
+	return forceVec;
+}
+
 void Character::process(const ProcessInfo& info)
 {
-    
+    v3 dir = zero;
+    if (input->isPressed("w")) dir += v3(+1,  0, 0);
+    if (input->isPressed("s")) dir += v3(-1,  0, 0);
+    if (input->isPressed("a")) dir += v3( 0, +1, 0);
+    if (input->isPressed("d")) dir += v3( 0, -1, 0);
+
+    //position.setTranslation(position.getTranslation() + dir);
+
+    NxReal gForceStrength = 50*info.timeInfo.frameLength;
+    bool bForceMode = true;
+
+    NxVec3 gForceVec = ApplyForceToActor(physic_object, NxVec3(dir.x,dir.y, dir.z), gForceStrength, bForceMode);
+
+
+    NxMat34 mat = physic_object->getGlobalPose();
+
+    for (int i = 0; i < 3; i++)
+    {
+        NxVec3 row = mat.M.getRow(i);
+        position.setRow(i, v3(row.x, row.y, row.z));
+    }
+    position.setTranslation(v3(mat.t.x, mat.t.y, mat.t.z));
+       
 }
 
 bool Character::InitFromConfig(Config& conf)
@@ -56,18 +96,7 @@ void Character::bindEngine(IN OUT Engine& engine, IN const InterfaceId id)
     }
 }
 
-void Character::handleEventKeyDown(const std::string& key)
+const ObjectPosition& Character::getPosition() const
 {
-    v3 dir = zero;
-    if (key == "w") dir += v3(+1,  0, 0);
-    if (key == "s") dir += v3(-1,  0, 0);
-    if (key == "a") dir += v3( 0, +1, 0);
-    if (key == "d") dir += v3( 0, -1, 0);
-
-    position.setTranslation(position.getTranslation() + dir);
-}
-
-v3 Character::getPosition() const
-{
-    return position.getTranslation();
+    return position;
 }

@@ -59,9 +59,12 @@ public:
 
 	virtual bool InitFromConfig(Config&) abstract;
 
-    virtual void traverse(Visitor& visitor)
+    virtual void traverse(Visitor& visitor, const ObjectPosition& base_position)
     {
-        visitor.postvisit(this);
+        if (visitor.visit(this))
+        {
+            visitor.postvisit(this, base_position);
+        }
     }
 
 private:
