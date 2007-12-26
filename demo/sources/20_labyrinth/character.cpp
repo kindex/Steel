@@ -57,18 +57,29 @@ NxVec3 ApplyForceToActor(NxActor* actor, const NxVec3& forceDir, const NxReal fo
 
 void Character::process(const ProcessInfo& info)
 {
-    v3 dir = zero;
-    if (input->isPressed("w")) dir += v3(+1,  0, 0);
-    if (input->isPressed("s")) dir += v3(-1,  0, 0);
-    if (input->isPressed("a")) dir += v3( 0, +1, 0);
-    if (input->isPressed("d")) dir += v3( 0, -1, 0);
+    if (input != NULL)
+    {
+        v3 dir = zero;
+        if (input->isPressed("w")) dir += v3(+1,  0, 0);
+        if (input->isPressed("s")) dir += v3(-1,  0, 0);
+        if (input->isPressed("a")) dir += v3( 0, +1, 0);
+        if (input->isPressed("d")) dir += v3( 0, -1, 0);
 
-    //position.setTranslation(position.getTranslation() + dir);
+        v3 direction2 = direction;
+        direction2.z = 0;
+        direction2.getNormalized();
+	    v3 force = dir.x*direction2
+			    + dir.y*v3(-direction2.y, direction2.x, 0).getNormalized()
+			    + dir.z*v3(0, 0, 1);
 
-    NxReal gForceStrength = 50*info.timeInfo.frameLength;
-    bool bForceMode = true;
 
-    NxVec3 gForceVec = ApplyForceToActor(physic_object, NxVec3(dir.x,dir.y, dir.z), gForceStrength, bForceMode);
+        //position.setTranslation(position.getTranslation() + dir);
+
+        NxReal gForceStrength = 50*info.timeInfo.frameLength;
+        bool bForceMode = true;
+
+        NxVec3 gForceVec = ApplyForceToActor(physic_object, NxVec3(force.x, force.y, force.z), gForceStrength, bForceMode);
+    }
 }
 
 bool Character::InitFromConfig(Config& conf)
@@ -93,9 +104,20 @@ const ObjectPosition& Character::getPosition() const
     return position;
 }
 
-void Character::setPosition(ObjectPosition& new_position)
+void Character::setPosition(const ObjectPosition& new_position)
 {
     position = new_position;
+}
+
+void Character::setDirection(const v3& dir)
+{
+    direction = dir;
+}
+
+
+void Character::setInput(Input* _input)
+{
+    input = _input;
 }
 
 void Character::traverse(Visitor& visitor, const ObjectPosition& base_position)

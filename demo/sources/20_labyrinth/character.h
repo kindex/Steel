@@ -33,7 +33,9 @@ public:
     float getHealth() const { return health; }
     bool isAlive() const {return alive;}
     const ObjectPosition& getPosition() const;
-    void setPosition(ObjectPosition&);
+    void setPosition(const ObjectPosition&);
+    void setDirection(const v3&);
+    void setInput(Input*);
 
     friend class GameLabyrinth;
     friend class AgeiaInjector;
@@ -45,6 +47,7 @@ private:
     NxActor*       physic_object;
     ObjectPosition position;
     ObjectPosition origin;
+    v3             direction;
 	Input*         input;
 };
 

@@ -204,14 +204,35 @@ void GameLabyrinth::handleEventKeyDown(const std::string& key)
 		if (cameraMode == C_FIXED)
 		{
 			cameraMode = C_FREE;
+            character->setInput(NULL);
 		}
 		else
 		{
 			cameraMode = C_FIXED;
+            character->setInput(input);
 		}
 	}
-    GameFreeScene::handleEventKeyDown(key);
+    else
+    {
+        GameFreeScene::handleEventKeyDown(key);
+    }
 }
+
+void GameLabyrinth::handleMouse(double dx, double dy)
+{
+    if (cameraMode == C_FIXED)
+    {
+        v3 dir = spectator.camera.getDirection();
+        dir.rotateZ(dx*0.1);
+        dir.rotateAxis(-dy*0.1, dir.crossProduct(v3(0,0,1).getNormalized()));
+        spectator.camera.setDirection(dir);
+    }
+    else
+    {
+        GameFreeScene::handleMouse(dx, dy);
+    }
+}
+
 
 std::string GameLabyrinth::getWindowCaption()
 {
@@ -244,14 +265,15 @@ void GameLabyrinth::draw(GraphEngine& graph)
         m.setTranslation(v3(nxm.t.x, nxm.t.y, nxm.t.z));
 
         character->setPosition(m);
+        character->setDirection(spectator.camera.getDirection());
 	}
 
     if (cameraMode == C_FIXED)
     {
-        v3 dir = v3(2, 0, -1);
+        float len = 2;
+        v3 dir = spectator.camera.getDirection();
         spectator.camera.setUpVector(v3(0,0,1));
-        spectator.camera.setDirection(dir);
-        spectator.camera.setPosition(character->getPosition().getTranslation() - dir);
+        spectator.camera.setPosition(character->getPosition().getTranslation() - dir*len);
         info.camera = spectator.camera;
     }
     

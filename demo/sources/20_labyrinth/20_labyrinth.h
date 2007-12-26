@@ -29,6 +29,7 @@ class GameLabyrinth: public GameFreeScene
 public:
 	GameLabyrinth();
 	void handleEventKeyDown(const std::string& key);
+	void handleMouse(double dx, double dy);
 	bool init(Config& _conf, Input& _input);
 	void process();
     std::string getWindowCaption();
