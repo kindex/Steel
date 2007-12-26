@@ -87,7 +87,8 @@ private:
 };
 
 GameLabyrinth::GameLabyrinth():
-    character(NULL)
+    character(NULL),
+    gameState(GAME_PLAYING)
 {}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
@@ -161,6 +162,8 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     character = characterCollector.characters[0];
     character->input = input;
 
+    spectator.camera.setDirection(v3(1,1,-0.3f));
+
 // Physic
     global_gravity = _conf.getv3("physic.global_gravity", v3(0.0f, 0.0f, -9.8f));
 
@@ -188,6 +191,15 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 void GameLabyrinth::process()
 {
 	GameFreeScene::process();
+
+    if (gameState != GAME_WIN)
+    {
+        v3 char_pos = character->getPosition().getTranslation();
+        if ((char_pos - v3(length[0]*(count[0]-1), length[1]*(count[1]-1), 0)).getSquaredLength() < sqr(length[0]/3) + sqr(length[1]/3))
+        {
+            gameState = GAME_WIN;
+        }
+    }
 
 	if (timeInfo.frameLength > EPSILON)
 	{
@@ -236,9 +248,16 @@ void GameLabyrinth::handleMouse(double dx, double dy)
 
 std::string GameLabyrinth::getWindowCaption()
 {
-    return  "Labyrinth FPS " + graphTimer.getfps_s()
+    std::string str = "Labyrinth FPS " + graphTimer.getfps_s()
 			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
 			+ " Faces: " + IntToStr(graphEngine->total.triangleCount);
+
+    if (gameState == GAME_WIN)
+    {
+        str += " *** YOU ARE WINNER *** ";
+    }
+
+    return str;
 }
 
 void GameLabyrinth::draw(GraphEngine& graph)
@@ -272,8 +291,19 @@ void GameLabyrinth::draw(GraphEngine& graph)
     {
         float len = 2;
         v3 dir = spectator.camera.getDirection();
+        v3 crossingPosition;
+        Plane triangle;
+
+        GameObject* crossingObject;
+        if (graphEngine->findCollision(Line(character->getPosition().getTranslation(), -dir*len), crossingObject, crossingPosition, triangle))
+        {
+            spectator.camera.setPosition(character->getPosition().getTranslation()*0.1f + crossingPosition*0.9f);
+        }
+        else
+        {
+            spectator.camera.setPosition(character->getPosition().getTranslation() - dir*len);
+        }
         spectator.camera.setUpVector(v3(0,0,1));
-        spectator.camera.setPosition(character->getPosition().getTranslation() - dir*len);
         info.camera = spectator.camera;
     }
     

@@ -54,6 +54,12 @@ private:
 
 	NxPhysicsSDK* physicsSDK;
 	NxScene*      pScene;
+
+    enum GameState {
+        GAME_PLAYING,
+        GAME_WIN,
+    } gameState;
+
 };
 
 #endif

@@ -7,7 +7,7 @@ origin = (0 0.5 0.5)
 graph = 
 {
 	class = 'box'
-	size = (2 0.2 1)
+	size = (2.5 0.2 1)
 	material = 
 	{
 		class = 'std'
