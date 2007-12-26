@@ -61,7 +61,15 @@ private:
     {
         if (dynamic_cast<GraphObject*>(object) != NULL)
         {
-            NxActor* actor = game.createSurface(*dynamic_cast<GraphObject*>(object), base_position, inChar == 0);
+            NxActor* actor = NULL;
+            if (dynamic_cast<GraphObjectBox*>(object) != NULL)
+            {
+                actor = game.createBox(*dynamic_cast<GraphObjectBox*>(object), base_position, inChar == 0);
+            }
+            else
+            {
+                actor = game.createSurface(*dynamic_cast<GraphObject*>(object), base_position, inChar == 0);
+            }
             if (inChar != 0)
             {
                 actor->userData = (void*)(1);
@@ -166,13 +174,13 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     world->traverse(visitor, ObjectPosition::getIdentity());
 
     // Ground Plane
-    {
-	    NxPlaneShapeDesc planeDesc;
-	    planeDesc.normal = NxVec3(0.0f, 0.0f, 1.0f);
-	    NxActorDesc actorDesc;
-	    actorDesc.shapes.pushBack(&planeDesc);
-	    pScene->createActor(actorDesc);
-    }
+    //{
+	   // NxPlaneShapeDesc planeDesc;
+	   // planeDesc.normal = NxVec3(0.0f, 0.0f, 1.0f);
+	   // NxActorDesc actorDesc;
+	   // actorDesc.shapes.pushBack(&planeDesc);
+	   // pScene->createActor(actorDesc);
+    //}
 
 	return true;
 }
@@ -225,20 +233,17 @@ void GameLabyrinth::draw(GraphEngine& graph)
 			continue;
 		}
 
-		float glMat[16];
-		actor->getGlobalPose().getColumnMajor44(glMat);
-		v3 zero;
-		zero.loadZero();
+		NxMat34 nxm;
+		nxm = actor->getGlobalPose();
 		matrix34 m;
 		for (int i = 0; i < 3; i++)
 		{
-			for (int j = 0; j < 3; j++)
-			{
-				m.data.matrix.data.a[i * 3 + j] = glMat[i * 4 + j];
-			}
+            NxVec3 vec = nxm.M.getRow(i);
+		    m.setRow(i, v3(vec.x, vec.y, vec.z));
 		}
+        m.setTranslation(v3(nxm.t.x, nxm.t.y, nxm.t.z));
 
-        character->position.setTranslation(v3(glMat[3 * 4 + 0], glMat[3 * 4 + 1], glMat[3 * 4 + 2]));
+        character->setPosition(m);
 	}
 
     if (cameraMode == C_FIXED)
@@ -397,16 +402,29 @@ NxActor* GameLabyrinth::createSurface(const GraphObject& object, const ObjectPos
     return NULL;
 }
 
-void Character::traverse(Visitor& visitor, const ObjectPosition& base_position)
+NxActor* GameLabyrinth::createBox(const GraphObjectBox& box, const ObjectPosition& position, bool _static)
 {
-    if (visitor.visit(this))
-    {
-        ObjectPosition new_position = position*base_position;
+	// Add a single-shape actor to the scene
+	NxActorDesc actorDesc;
+	NxBodyDesc bodyDesc;
 
-        if (graph_object != NULL)
-        {
-            graph_object->traverse(visitor, new_position);
-        }
-        visitor.postvisit(this, new_position);
+	// The actor has one shape, a box, 1m on a side
+	NxBoxShapeDesc boxDesc;
+    v3 size = box.getSize();
+	boxDesc.dimensions.set(size.x/2, size.y/2, size.z/2);
+	actorDesc.shapes.pushBack(&boxDesc);
+
+    if (!_static)
+    {
+    	actorDesc.body = &bodyDesc;
     }
+	actorDesc.density = 10;
+    for (int i = 0; i < 3; i++)
+    {
+        v3 row = position.getRow(i);
+        actorDesc.globalPose.M.setRow(i, NxVec3(row.x, row.y, row.z));
+    }
+    v3 pos = position.getTranslation();
+    actorDesc.globalPose.t  = NxVec3(pos.x, pos.y, pos.z);
+	return pScene->createActor(actorDesc);	
 }

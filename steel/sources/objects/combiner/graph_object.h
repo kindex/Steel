@@ -86,6 +86,10 @@ class GraphObjectBox: public GraphObjectCustom
 {
 public:
 	bool InitFromConfig(Config& conf);
+    v3 getSize() const;
+
+private:
+    v3 size;
 };
 
 

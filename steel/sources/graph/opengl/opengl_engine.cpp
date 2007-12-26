@@ -927,8 +927,10 @@ void OpenGL_Engine::onResize(int width, int height)
 {
 	conf->setValued("window.width", width);
 	conf->setValued("window.height", height);
-	if(RepairOpenGL_Window)
+	if (RepairOpenGL_Window)
+    {
 		(this->*RepairOpenGL_Window)();
+    }
 }
 
 GraphShadow::GraphShadow(Engine *engine): 

@@ -49,6 +49,7 @@ private:
     bool initAgeia();
     void exitAgeia();
     NxActor* createSurface(const GraphObject& object, const ObjectPosition&, bool _static);
+    NxActor* createBox(const GraphObjectBox& box, const ObjectPosition&, bool _static);
 
 	NxPhysicsSDK* physicsSDK;
 	NxScene*      pScene;

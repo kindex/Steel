@@ -118,7 +118,7 @@ bool GraphObjectMesh::InitFromConfig(Config& conf)
 bool GraphObjectBox::InitFromConfig(Config& conf)
 {
 	Config* materialConfig = conf.find("material");
-	v3 size = conf.getv3("size", v3(1.0f, 1.0f, 1.0f));
+	size = conf.getv3("size", v3(1.0f, 1.0f, 1.0f));
 
 	MaterialStd* m = NULL;
 	if (materialConfig != NULL)
@@ -179,6 +179,11 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 	}
 
 	return true;
+}
+
+v3 GraphObjectBox::getSize() const
+{
+    return size;
 }
 
 GraphObjectModel::GraphObjectModel(): 

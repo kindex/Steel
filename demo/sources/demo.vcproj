@@ -318,6 +318,26 @@
 					RelativePath="..\sources\20_labyrinth\labyrinth_generator.h"
 					>
 				</File>
+				<Filter
+					Name="data"
+					>
+					<File
+						RelativePath="..\data\20_labyrinth\down.scene"
+						>
+					</File>
+					<File
+						RelativePath="..\data\20_labyrinth\floor.scene"
+						>
+					</File>
+					<File
+						RelativePath="..\data\20_labyrinth\main.scene"
+						>
+					</File>
+					<File
+						RelativePath="..\data\20_labyrinth\right.scene"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="23_ageia_tech"
@@ -480,22 +500,6 @@
 				>
 				<File
 					RelativePath="..\data\21_shadows\main.scene"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="20_labyrinth"
-				>
-				<File
-					RelativePath="..\data\20_labyrinth\down.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\main.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\right.scene"
 					>
 				</File>
 			</Filter>

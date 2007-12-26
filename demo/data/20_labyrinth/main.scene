@@ -3,33 +3,34 @@
 class = 'combiner'
 objects = 
 (
-
-{
-	class = 'character'
-	health = 100
-	graph = {
+	{
 		class = 'combiner'
-		enabled = 1
-		origin = (0 0 0)
-
-		graph = 
-		{
-			class = 'box'
-			size = (0.3 0.3 1.8)
-			material = 
+		origin = (0 0 1)
+		objects = (
 			{
-				class = 'std'
-				blend = 0
-				dropShadows = 0
-				diffuse_map =
-				{ 
-					image = '/none'
-				}
-			}
-
-		} // graph
+				class = 'character'
+				health = 100
+				graph = {
+					class = 'combiner'
+					graph = {
+						class = 'box'
+						size = (0.3 0.3 0.25)
+						material = 
+						{
+							class = 'std'
+							blend = 0
+							dropShadows = 0
+							diffuse_map =
+							{ 
+								image = '/none'
+							}
+						}
+					}
+				} // graph
+			} // character
+		)
 	} // combiner
-}
+	}
 
 [/sun.conf#] {	origin = (-95 -42 31)}
 [/sun_ambient.conf#] {	origin = (90 90 90)}

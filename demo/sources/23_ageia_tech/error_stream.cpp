@@ -32,7 +32,7 @@ void ErrorStream::reportError(NxErrorCode e, const char* message, const char* fi
 			msg = "unknown error";
 	}
 
-	error("ageia", msg);
+    error("ageia", msg + ": " + message + " (file: " + file + "(" + IntToStr(line) + ")");
 }
 
 NxAssertResponse ErrorStream::reportAssertViolation(const char* message, const char* file, int line)

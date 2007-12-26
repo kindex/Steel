@@ -19,7 +19,8 @@
 
 Character::Character():
     graph_object(NULL),
-    position(matrix34::getIdentity())
+    position(matrix34::getIdentity()),
+    origin(matrix34::getIdentity())
 {}
 
 bool Character::supportsInterface(IN OUT Engine&, IN const InterfaceId id)
@@ -31,6 +32,7 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
 {
     if (id == INTERFACE_GRAPH)
     {
+        dynamic_cast<GraphInterface*>(&engine)->setPositionKind(POSITION_GLOBAL);
         dynamic_cast<GraphInterface*>(&engine)->setPosition(position);
         return true;
     }
@@ -67,23 +69,13 @@ void Character::process(const ProcessInfo& info)
     bool bForceMode = true;
 
     NxVec3 gForceVec = ApplyForceToActor(physic_object, NxVec3(dir.x,dir.y, dir.z), gForceStrength, bForceMode);
-
-
-    NxMat34 mat = physic_object->getGlobalPose();
-
-    for (int i = 0; i < 3; i++)
-    {
-        NxVec3 row = mat.M.getRow(i);
-        position.setRow(i, v3(row.x, row.y, row.z));
-    }
-    position.setTranslation(v3(mat.t.x, mat.t.y, mat.t.z));
-       
 }
 
 bool Character::InitFromConfig(Config& conf)
 {
     graph_object = createGameObject(conf.find("graph"));
     health = conf.getf("health", 100);
+    origin.setTranslation(conf.getv3("origin"));
 
     return graph_object != NULL;
 }
@@ -99,4 +91,23 @@ void Character::bindEngine(IN OUT Engine& engine, IN const InterfaceId id)
 const ObjectPosition& Character::getPosition() const
 {
     return position;
+}
+
+void Character::setPosition(ObjectPosition& new_position)
+{
+    position = new_position;
+}
+
+void Character::traverse(Visitor& visitor, const ObjectPosition& base_position)
+{
+    if (visitor.visit(this))
+    {
+        ObjectPosition new_position = origin*position*base_position;
+
+        if (graph_object != NULL)
+        {
+            graph_object->traverse(visitor, new_position);
+        }
+        visitor.postvisit(this, new_position);
+    }
 }
