@@ -52,11 +52,10 @@ static bool _isPointInObject(IN v3 point, IN const GraphObject& object, const Ob
 }
 
 
-bool ParticleCalculator::visit(IN OUT Particle* particle)
+void ParticleCalculator::postvisit(IN OUT Particle* particle)
 {
     if (_isPointInObject(particle->position, *graphObject, ObjectPosition::getIdentity()))
     {
         cnt++;
     }
-    return true;
 }
