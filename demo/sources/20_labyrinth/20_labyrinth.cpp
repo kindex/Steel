@@ -327,7 +327,7 @@ bool GameLabyrinth::initAgeia()
 		gPhysicsSDK->getFoundationSDK().getRemoteDebugger()->connect(SAMPLES_VRD_HOST, SAMPLES_VRD_PORT, SAMPLES_VRD_EVENTMASK);
 #endif
 
-	physicsSDK->setParameter(NX_SKIN_WIDTH, 0.01f);
+	physicsSDK->setParameter(NX_SKIN_WIDTH, conf->getf("physic.skin_width", 0.01f));
 
 	// Create a scene
 	NxSceneDesc sceneDesc;
@@ -341,9 +341,9 @@ bool GameLabyrinth::initAgeia()
 
 	// Set default material
 	NxMaterial* defaultMaterial = pScene->getMaterialFromIndex(0);
-	defaultMaterial->setRestitution(0.0f);
-	defaultMaterial->setStaticFriction(0.5f);
-	defaultMaterial->setDynamicFriction(0.5f);
+	defaultMaterial->setRestitution(conf->getf("physic.restitution", 0.0f));
+	defaultMaterial->setStaticFriction(conf->getf("physic.static_friction", 0.5f));
+	defaultMaterial->setDynamicFriction(conf->getf("physic.dynamic_friction", 0.5f));
 
 	log_msg("ageia", "Ageia connected");
 

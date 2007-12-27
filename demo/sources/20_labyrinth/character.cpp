@@ -39,20 +39,14 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
     return false;
 }
 
-NxVec3 ApplyForceToActor(NxActor* actor, const NxVec3& forceDir, const NxReal forceStrength, bool forceMode)
+void ApplyForceToActor(NxActor* actor, const NxVec3& forceDir, const NxReal forceStrength)
 {
 	NxVec3 forceVec = forceStrength*forceDir;
 
-	if (forceMode)
-    {
-		actor->addForce(forceVec);
-    }
-	else
-    {
-		actor->addTorque(forceVec);
-    }
+    NxVec3 old_vec = actor->getLinearVelocity();
+    actor->setLinearVelocity(old_vec + forceVec);
 
-	return forceVec;
+//		actor->addForce(forceVec);
 }
 
 void Character::process(const ProcessInfo& info)
@@ -68,17 +62,16 @@ void Character::process(const ProcessInfo& info)
         v3 direction2 = direction;
         direction2.z = 0;
         direction2.getNormalized();
-	    v3 force = dir.x*direction2
+	    v3 forceDirection = dir.x*direction2
 			    + dir.y*v3(-direction2.y, direction2.x, 0).getNormalized()
 			    + dir.z*v3(0, 0, 1);
 
 
         //position.setTranslation(position.getTranslation() + dir);
 
-        NxReal gForceStrength = 50*info.timeInfo.frameLength;
-        bool bForceMode = true;
+        NxReal gForceStrength = force*info.timeInfo.frameLength;
 
-        NxVec3 gForceVec = ApplyForceToActor(physic_object, NxVec3(force.x, force.y, force.z), gForceStrength, bForceMode);
+        ApplyForceToActor(physic_object, NxVec3(forceDirection.x, forceDirection.y, forceDirection.z), gForceStrength);
     }
 }
 
@@ -87,6 +80,7 @@ bool Character::InitFromConfig(Config& conf)
     graph_object = createGameObject(conf.find("graph"));
     health = conf.getf("health", 100);
     origin.setTranslation(conf.getv3("origin"));
+    force = conf.getf("force", 10);
 
     return graph_object != NULL;
 }

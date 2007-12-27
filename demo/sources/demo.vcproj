@@ -290,6 +290,18 @@
 					RelativePath=".\19_ps\particle_calculator.h"
 					>
 				</File>
+				<Filter
+					Name="data"
+					>
+					<File
+						RelativePath="..\data\19_ps\main.scene"
+						>
+					</File>
+					<File
+						RelativePath="..\data\19_ps\ps.scene"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="20_labyrinth"
@@ -366,6 +378,58 @@
 					RelativePath="..\sources\23_ageia_tech\error_stream.h"
 					>
 				</File>
+				<Filter
+					Name="data"
+					>
+					<File
+						RelativePath="..\data\23_ageia_tech\main.scene"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="21_shadows"
+				>
+				<File
+					RelativePath="..\data\21_shadows\main.scene"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="09_demo"
+				>
+				<File
+					RelativePath="..\data\09_demo\main.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\09_demo\room.scene"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="17_intro"
+				>
+				<File
+					RelativePath="..\data\17_intro\1.mat"
+					>
+				</File>
+				<File
+					RelativePath="..\data\17_intro\division.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\17_intro\light.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\17_intro\main.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\17_intro\steel.scene"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -408,30 +472,6 @@
 				>
 			</File>
 			<Filter
-				Name="17_intro"
-				>
-				<File
-					RelativePath="..\data\17_intro\1.mat"
-					>
-				</File>
-				<File
-					RelativePath="..\data\17_intro\division.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\17_intro\light.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\17_intro\main.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\17_intro\steel.scene"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="material"
 				>
 				<File
@@ -460,18 +500,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="19_ps"
-				>
-				<File
-					RelativePath="..\data\19_ps\main.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\19_ps\ps.scene"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="room"
 				>
 				<File
@@ -480,34 +508,6 @@
 				</File>
 				<File
 					RelativePath="..\data\room\wall.scene"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="09_demo"
-				>
-				<File
-					RelativePath="..\data\09_demo\main.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\09_demo\room.scene"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="21_shadows"
-				>
-				<File
-					RelativePath="..\data\21_shadows\main.scene"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="23_ageia_tech"
-				>
-				<File
-					RelativePath="..\data\23_ageia_tech\main.scene"
 					>
 				</File>
 			</Filter>

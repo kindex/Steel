@@ -993,6 +993,38 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="openal"
+			>
+			<File
+				RelativePath=".\openal\al.h"
+				>
+			</File>
+			<File
+				RelativePath=".\openal\alc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\openal\eax.h"
+				>
+			</File>
+			<File
+				RelativePath=".\openal\efx-creative.h"
+				>
+			</File>
+			<File
+				RelativePath=".\openal\EFX-Util.h"
+				>
+			</File>
+			<File
+				RelativePath=".\openal\efx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\openal\xram.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

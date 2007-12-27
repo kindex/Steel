@@ -10,11 +10,12 @@ objects =
 			{
 				class = 'character'
 				health = 100
+				force = 10
 				graph = {
 					class = 'combiner'
 					graph = {
 						class = 'box'
-						size = (0.3 0.3 0.25)
+						size = (0.25 0.25 0.25)
 						material = 
 						{
 							class = 'std'
@@ -30,7 +31,7 @@ objects =
 			} // character
 		)
 	} // combiner
-	}
+	
 
 [/sun.conf#] {	origin = (-95 -42 31)}
 [/sun_ambient.conf#] {	origin = (90 90 90)}

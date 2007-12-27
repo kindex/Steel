@@ -14,8 +14,8 @@
 #ifndef __OPENAL_TYPES_H
 #define __OPENAL_TYPES_H
 
-#include "al.h"
-#include "alc.h"
+#include <openal/al.h>
+#include <openal/alc.h>
 
 class Buffer
 {

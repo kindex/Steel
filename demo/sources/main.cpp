@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 	audio = new OpenALEngine();
 #endif
 	Config* audioConfig = steelConfig->find("audio");
-	if (audio != NULL && audioConfig != NULL && !audio->init(*audioConfig))
+	if (audio == NULL || audioConfig == NULL || !audio->init(*audioConfig))
 	{
 		error("demo.conf", "Warning: cannot find audio config");
 		delete audio;

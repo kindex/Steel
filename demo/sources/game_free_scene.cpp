@@ -15,7 +15,7 @@
 #include <audio/openal_engine.h>
 #include <res/config/config_setup.h>
 #include <objects/combiner/combiner.h>
-#include <audio/openal/eax.h>
+#include <openal/eax.h>
 #include <common/logger.h>
 #include <common/utils.h>
 #include <res/res_main.h>

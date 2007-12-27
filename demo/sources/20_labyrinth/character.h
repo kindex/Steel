@@ -42,6 +42,7 @@ public:
 
 private:
     float health;
+    float force;
     bool alive;
     GameObject*    graph_object;
     NxActor*       physic_object;
