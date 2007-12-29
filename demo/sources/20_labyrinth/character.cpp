@@ -16,6 +16,7 @@
 #include <graph/graph_interface.h>
 #include <input/input.h>
 #include <NxPhysics.h>
+#include "steel_nx.h"
 
 Character::Character():
     graph_object(NULL),
@@ -37,16 +38,6 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
         return true;
     }
     return false;
-}
-
-void ApplyForceToActor(NxActor* actor, const NxVec3& forceDir, const NxReal forceStrength)
-{
-	NxVec3 forceVec = forceStrength*forceDir;
-
-    NxVec3 old_vec = actor->getLinearVelocity();
-    actor->setLinearVelocity(old_vec + forceVec);
-
-//		actor->addForce(forceVec);
 }
 
 void Character::process(const ProcessInfo& info)
@@ -71,7 +62,8 @@ void Character::process(const ProcessInfo& info)
 
         NxReal gForceStrength = force*info.timeInfo.frameLength;
 
-        ApplyForceToActor(physic_object, NxVec3(forceDirection.x, forceDirection.y, forceDirection.z), gForceStrength);
+        NxVec3 old_vec = physic_object->getLinearVelocity();
+        physic_object->setLinearVelocity(old_vec + gForceStrength*tonx(forceDirection));
     }
 }
 

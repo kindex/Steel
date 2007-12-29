@@ -330,6 +330,10 @@
 					RelativePath="..\sources\20_labyrinth\labyrinth_generator.h"
 					>
 				</File>
+				<File
+					RelativePath=".\20_labyrinth\steel_nx.h"
+					>
+				</File>
 				<Filter
 					Name="data"
 					>

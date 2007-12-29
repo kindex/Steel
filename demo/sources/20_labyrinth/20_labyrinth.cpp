@@ -22,6 +22,7 @@
 #include <NxCooking.h>
 #include <Stream.h>
 #include "../23_ageia_tech/error_stream.h"
+#include "steel_nx.h"
 
 struct CharacterCollector : public Visitor
 {
@@ -176,15 +177,6 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     AgeiaInjector visitor(*this);
     world->traverse(visitor, ObjectPosition::getIdentity());
 
-    // Ground Plane
-    //{
-	   // NxPlaneShapeDesc planeDesc;
-	   // planeDesc.normal = NxVec3(0.0f, 0.0f, 1.0f);
-	   // NxActorDesc actorDesc;
-	   // actorDesc.shapes.pushBack(&planeDesc);
-	   // pScene->createActor(actorDesc);
-    //}
-
 	return true;
 }
 
@@ -272,18 +264,7 @@ void GameLabyrinth::draw(GraphEngine& graph)
 		{
 			continue;
 		}
-
-		NxMat34 nxm;
-		nxm = actor->getGlobalPose();
-		matrix34 m;
-		for (int i = 0; i < 3; i++)
-		{
-            NxVec3 vec = nxm.M.getRow(i);
-		    m.setRow(i, v3(vec.x, vec.y, vec.z));
-		}
-        m.setTranslation(v3(nxm.t.x, nxm.t.y, nxm.t.z));
-
-        character->setPosition(m);
+        character->setPosition(to_matrix34(actor->getGlobalPose()));
         character->setDirection(spectator.camera.getDirection());
 	}
 
@@ -379,7 +360,7 @@ NxActor* GameLabyrinth::createSurface(const GraphObject& object, const ObjectPos
     // Build flat surface
     for (size_t i = 0; i < vertexes.size(); i++)
     {
-        fsVerts[i] = NxVec3(vertexes[i].x, vertexes[i].y, vertexes[i].z); 
+        fsVerts[i] = tonx(vertexes[i]);
     }
 
     const TriangleVector& triangles = object.getAllFaces()->triangles;
@@ -470,13 +451,8 @@ NxActor* GameLabyrinth::createBox(const GraphObjectBox& box, const ObjectPositio
     {
     	actorDesc.body = &bodyDesc;
     }
+
 	actorDesc.density = 10;
-    for (int i = 0; i < 3; i++)
-    {
-        v3 row = position.getRow(i);
-        actorDesc.globalPose.M.setRow(i, NxVec3(row.x, row.y, row.z));
-    }
-    v3 pos = position.getTranslation();
-    actorDesc.globalPose.t  = NxVec3(pos.x, pos.y, pos.z);
+    actorDesc.globalPose = tonx(position);
 	return pScene->createActor(actorDesc);	
 }
