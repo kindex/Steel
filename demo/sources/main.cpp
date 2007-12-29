@@ -14,7 +14,6 @@
 #include <direct.h>
 
 #include <steel.h>
-#include <input/input.h>
 #include <common/logger.h>
 #include <common/timer.h>
 #include <common/system_info.h>
@@ -24,9 +23,9 @@
 #include <graph/opengl/opengl_engine.h>
 #include <audio/openal_engine.h>
 #include <res/config/config_parser.h>
-
 #include "main.h"
 #include "game_factory.h"
+#include <input/input_win.h>
 
 using namespace std;
 
@@ -78,7 +77,7 @@ int main(int argc, char *argv[])
 	}
 
 // ******************* INPUT ************************
-	Input* input = new Input;
+	InputWin* input = new InputWin;
 	if (!input->init(steelConfig->find("input")))
 	{
 		error("demo.conf", "Fatal error: cannot find input config");
@@ -136,7 +135,7 @@ int main(int argc, char *argv[])
 
 	while (input->isAlive() && game->isAlive())
 	{
-		(input->*(input->Process))();
+        input->Process_WinAPI();
 		double dx = 0, dy = 0;
 		input->getMouseDelta(dx, dy);
 		
@@ -160,7 +159,7 @@ int main(int argc, char *argv[])
 // ******************* MAIN LOOP ************************
     delete game;
 
-	(input->*input->FreeMouse)();
+	input->FreeMouse_WinAPI();
 
 	graph->deinit();
 	delete graph;

@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: Labyrinth Game
 	Part of: DiVision intro
-	(C) DiVision, 2006-2007
+	(C) DiVision, 2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
 	License:
@@ -10,6 +10,7 @@
 		Labyrinth Game main unit
  ************************************************************/
 
+#include <enet/enet.h>
 #include "20_labyrinth.h"
 #include <common/logger.h>
 #include <engine/visitor.h>
@@ -89,7 +90,10 @@ private:
 
 GameLabyrinth::GameLabyrinth():
     character(NULL),
-    gameState(GAME_PLAYING)
+    gameState(GAME_PLAYING),
+    host(NULL),
+    peer(NULL),
+    net_role(NET_SINGLE)
 {}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
@@ -98,15 +102,138 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
+
 	cameraMode = C_FIXED;
-	std::string dirs[] = {"x", "y"};
+
+// network
+    std::string net_role_str = conf->gets("net.role", "single");
+    if (net_role_str == "single")
+    {
+        net_role = NET_SINGLE;
+        if (!createWorld())
+        {
+            return false;
+        }
+
+        character = characters[0];
+    }
+    else if (net_role_str == "server")
+    {
+        net_role = NET_SERVER;
+        if (enet_initialize() != 0)
+        {
+            abort_init("net", "An error occurred while initializing ENet");
+        }
+
+        ENetAddress address;
+        address.host = ENET_HOST_ANY;
+        address.port = conf->geti("net.port", 2007);
+
+        host = enet_host_create(&address, 32, 0, 0);
+        if (host == NULL)
+        {
+            abort_init("net", "An error occurred while trying to create an ENet server host");
+        }
+        log_msg("net", "Listening server at port " + IntToStr(address.port));
+
+        if (!createWorld())
+        {
+            return false;
+        }
+
+        character = characters[0];
+    }
+    else if (net_role_str == "client")
+    {
+        net_role = NET_CLIENT;
+        if (enet_initialize() != 0)
+        {
+            abort_init("net", "An error occurred while initializing ENet");
+        }
+
+        host = enet_host_create(NULL, 1, 0, 0);
+        if (host == NULL)
+        {
+            abort_init("net", "An error occurred while trying to create an ENet client host");
+        }
+
+        ENetAddress address;
+        ENetEvent event;
+
+        /* Connect to some.server.net:1234. */
+        std::string remote_addr = conf->gets("net.remote_addr", "localhost");
+        int timeout = conf->geti("net.timeout", 1000);
+        enet_address_set_host(&address, remote_addr.c_str());
+        address.port = conf->geti("net.port", 2007);
+
+        /* Initiate the connection, allocating the two channels 0 and 1. */
+        peer = enet_host_connect(host, &address, 2);
+        
+        if (peer == NULL)
+        {
+           abort_init("net", "No available peers for initiating an ENet connection");
+        }
+        
+        if (enet_host_service (host, &event, timeout) > 0 &&
+            event.type == ENET_EVENT_TYPE_CONNECT)
+        {
+            log_msg("net", "Connection to " + remote_addr + ":" + IntToStr(address.port)+ " succeeded");
+        }
+        else
+        {
+            enet_peer_reset(peer);
+            abort_init("net", "Connection to " + remote_addr + ":" + IntToStr(address.port)+ " failed.");
+        }
+
+        if (!createWorld())
+        {
+            return false;
+        }
+
+        character = characters[0];
+    }
+    else
+    {
+		abort_init("net", "Unknown net role '" + net_role_str + "'");
+    }
+    netTimer.start();
+
+    character->input = input;
+    spectator.camera.setDirection(v3(1,1,-0.3f));
+
+	if (!initAgeia())
+	{
+		abort_init("ageia", "Cannot init Ageia");
+		return false;
+	}
+
+    return true;
+}
+
+GameLabyrinth::~GameLabyrinth()
+{
+    if (host != NULL)
+    {
+        if (peer != NULL)
+        {
+            enet_peer_disconnect(peer, 0);
+        }
+
+        enet_host_destroy(host);
+        enet_deinitialize();
+    }
+}
+
+bool GameLabyrinth::createWorld()
+{
+    std::string dirs[] = {"x", "y"};
 
 	for (int i = 0; i < 2; i++)
 	{
 		const std::string& dir = dirs[i];
-		length[i] = _conf.getf("labyrinth.length_" + dir, 1.0f);
-		count[i] = _conf.geti("labyrinth.count_" + dir, 8);
-		Config* loadedWallConfig = _conf.find("labyrinth.scene_" + dir);
+		length[i] = conf->getf("labyrinth.length_" + dir, 1.0f);
+		count[i] = conf->geti("labyrinth.count_" + dir, 8);
+		Config* loadedWallConfig = conf->find("labyrinth.scene_" + dir);
 		if (loadedWallConfig == NULL)
 		{
 			abort_init("error game res", "Cannot find scene_" + dir + " config");
@@ -160,24 +287,10 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     {
         abort_init("labyrinth", "No character was found");
     }
-    character = characterCollector.characters[0];
-    character->input = input;
 
-    spectator.camera.setDirection(v3(1,1,-0.3f));
+    characters = characterCollector.characters;
 
-// Physic
-    global_gravity = _conf.getv3("physic.global_gravity", v3(0.0f, 0.0f, -9.8f));
-
-	if (!initAgeia())
-	{
-		abort_init("ageia", "Cannot init Ageia");
-		return false;
-	}
-
-    AgeiaInjector visitor(*this);
-    world->traverse(visitor, ObjectPosition::getIdentity());
-
-	return true;
+    return true;
 }
 
 void GameLabyrinth::process()
@@ -199,6 +312,86 @@ void GameLabyrinth::process()
 		pScene->flushStream();
 		pScene->fetchResults(NX_RIGID_BODY_FINISHED, true);
 	}
+
+    if (net_role != NET_SINGLE)
+    {
+        ENetEvent event;
+        
+        while (enet_host_service(host, &event, 0) > 0)
+        {
+            switch (event.type)
+            {
+            case ENET_EVENT_TYPE_CONNECT:
+                log_msg("net", "A new client connected from " 
+                    + IntToStr(event.peer->address.host)
+                    + ":" + IntToStr(event.peer->address.port));
+                if (peer == NULL)
+                {
+                    peer = event.peer;
+
+                    event.peer->data = "accepted";
+                }
+                else // second connection - dropping
+                {
+                    event.peer->data = "dropped";
+                    enet_peer_disconnect(peer, 0);
+                }
+
+                break;
+
+            case ENET_EVENT_TYPE_RECEIVE:
+            {
+                if (event.packet->dataLength == sizeof(NetworkPacket))
+                {
+                    log_msg("net", "packet received");
+                    NetworkPacket packet = *(NetworkPacket*)(event.packet->data);
+                    character->setPosition(packet.position);
+                    character->setVelocity(packet.linear_velocity);
+                    character->setMomentum(packet.linear_momentum);
+
+                    netTimer.incframe();
+                    
+                //printf("A packet of length %u containing %s was received from %s on channel %u.\n",
+                //        event.packet->dataLength,
+                //        event.packet->data,
+                //        event.peer->data,
+                //        event.channelID);
+
+                    /* Clean up the packet now that we're done using it. */
+                }
+                enet_packet_destroy(event.packet);
+                
+                break;
+            }
+               
+            case ENET_EVENT_TYPE_DISCONNECT:
+                if (std::string(static_cast<char*>(event.peer->data)) == "accepted")
+                {
+                    log_msg("net", "Client disconected");
+                }
+                else
+                {
+                    log_msg("net", "Client dropped");
+                }
+                event.peer->data = NULL;
+            }
+        }
+        if (net_role == NET_SERVER && peer != NULL)
+        {
+            NetworkPacket packet;
+            packet.position = character->getPosition();
+            packet.linear_velocity = character->getVelocity();
+            packet.linear_momentum = character->getMomentum();
+
+            ENetPacket* enet_packet = enet_packet_create (&packet, 
+                                                     sizeof(packet), 
+                                                     0);
+
+            enet_peer_send(peer, 0, enet_packet);
+            enet_host_flush(host);
+            log_msg("net", "packet sent");
+        }
+    }
 }
 
 void GameLabyrinth::handleEventKeyDown(const std::string& key)
@@ -243,6 +436,11 @@ std::string GameLabyrinth::getWindowCaption()
     std::string str = "Labyrinth FPS " + graphTimer.getfps_s()
 			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
 			+ " Faces: " + IntToStr(graphEngine->total.triangleCount);
+
+    if (peer != NULL && net_role == NET_CLIENT)
+    {
+        str += " packets/s: " + netTimer.getfps_s();
+    }
 
     if (gameState == GAME_WIN)
     {
@@ -312,7 +510,8 @@ bool GameLabyrinth::initAgeia()
 
 	// Create a scene
 	NxSceneDesc sceneDesc;
-	sceneDesc.gravity = NxVec3(global_gravity.x, global_gravity.y, global_gravity.z);
+    global_gravity = conf->getv3("physic.global_gravity", v3(0.0f, 0.0f, -9.8f));
+	sceneDesc.gravity = tonx(global_gravity);
 	pScene = physicsSDK->createScene(sceneDesc);
 	if (pScene == NULL) 
 	{
@@ -325,6 +524,9 @@ bool GameLabyrinth::initAgeia()
 	defaultMaterial->setRestitution(conf->getf("physic.restitution", 0.0f));
 	defaultMaterial->setStaticFriction(conf->getf("physic.static_friction", 0.5f));
 	defaultMaterial->setDynamicFriction(conf->getf("physic.dynamic_friction", 0.5f));
+
+    AgeiaInjector visitor(*this);
+    world->traverse(visitor, ObjectPosition::getIdentity());
 
 	log_msg("ageia", "Ageia connected");
 

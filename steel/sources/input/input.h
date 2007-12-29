@@ -19,12 +19,6 @@
 */
 #include "../steel.h"
 
-
-#if STEEL_OS == OS_WIN32
-	#define NOMINMAX
-	#include <windows.h>
-#endif
-
 #include "game_input.h"
 
 #include <string>
@@ -46,10 +40,7 @@ protected:
 public:
 	Input():
 		game(NULL),
-		conf(NULL),
-		CaptureMouse(NULL),
-		FreeMouse(NULL),
-		Process(NULL)
+		conf(NULL)
 		{}
 
 	bool init(Config* _conf);
@@ -60,22 +51,6 @@ public:
 	void getMouseDelta(double &dx, double &dy);
 	void setMouseCenter(int _cx, int _cy) { cx = _cx; cy = _cy; }
 	bool isMouseCaptured() { return mouseCaptured; }
-    void start();
-
-	void (Input::*CaptureMouse)();
-	void (Input::*FreeMouse)();
-	void (Input::*Process)();
-
-#if STEEL_OS == OS_WIN32
-	void UseWinAPI();
-
-	void CaptureMouse_WinAPI();
-	void FreeMouse_WinAPI();
-	void Process_WinAPI();
-
-	LRESULT CALLBACK ProcessMessage_WinAPI(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-	std::string DecodeKey_WinAPI(MSG p);
-#endif
 
 #ifdef LIB_SDL
 	void UseSDL();

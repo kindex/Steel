@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: Labyrinth Game
 	Part of: DiVision intro
-	(C) DiVision, 2006-2007
+	(C) DiVision, 2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
 	License:
@@ -90,16 +90,36 @@ const ObjectPosition& Character::getPosition() const
     return position;
 }
 
+v3 Character::getVelocity() const
+{
+    return tov3(physic_object->getLinearVelocity());
+}
+
+v3 Character::getMomentum() const
+{
+    return tov3(physic_object->getLinearMomentum());
+}
+
 void Character::setPosition(const ObjectPosition& new_position)
 {
     position = new_position;
+    physic_object->setGlobalPose(tonx(new_position));
+}
+
+void Character::setVelocity(const v3& v)
+{
+    physic_object->setLinearVelocity(tonx(v));
+}
+
+void Character::setMomentum(const v3& v)
+{
+    physic_object->setLinearMomentum(tonx(v));
 }
 
 void Character::setDirection(const v3& dir)
 {
     direction = dir;
 }
-
 
 void Character::setInput(Input* _input)
 {

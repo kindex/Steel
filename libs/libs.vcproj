@@ -81,8 +81,8 @@
 		</Configuration>
 		<Configuration
 			Name="lib_release|Win32"
-			OutputDirectory="..\..\..\steel.res\sdk\libs"
-			IntermediateDirectory="..\..\temp\$(SolutionName).VS8.$(ConfigurationName)"
+			OutputDirectory="..\..\steel.res\sdk\libs"
+			IntermediateDirectory="..\temp\$(SolutionName).VS8.$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -1033,11 +1033,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\enet\callbacks.h"
+				>
+			</File>
+			<File
+				RelativePath=".\enet\enet.h"
+				>
+			</File>
+			<File
 				RelativePath=".\enet\host.c"
 				>
 			</File>
 			<File
 				RelativePath=".\enet\list.c"
+				>
+			</File>
+			<File
+				RelativePath=".\enet\list.h"
 				>
 			</File>
 			<File
@@ -1053,11 +1065,35 @@
 				>
 			</File>
 			<File
+				RelativePath=".\enet\protocol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\enet\time.h"
+				>
+			</File>
+			<File
+				RelativePath=".\enet\types.h"
+				>
+			</File>
+			<File
 				RelativePath=".\enet\unix.c"
 				>
 			</File>
 			<File
+				RelativePath=".\enet\unix.h"
+				>
+			</File>
+			<File
+				RelativePath=".\enet\utility.h"
+				>
+			</File>
+			<File
 				RelativePath=".\enet\win32.c"
+				>
+			</File>
+			<File
+				RelativePath=".\enet\win32.h"
 				>
 			</File>
 		</Filter>

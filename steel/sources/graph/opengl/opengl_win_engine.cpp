@@ -21,7 +21,7 @@
 #if STEEL_OS == OS_WIN32
 
 #include "opengl_engine.h"
-#include "../../input/input.h"
+#include "../../input/input_win.h"
 #include "../../common/logger.h"
 #include "../../common/utils.h"
 #include <sstream>
@@ -43,7 +43,7 @@ struct WindowInformationWinAPI: public OpenGL_Engine::WindowInformation
 	HDC		DC;    // Window Handle, Device Context
 	HGLRC	RC; // Rendering Context - for OpenGL
 	DWORD	dwStyle;
-	Input*	input;
+	InputWin* input;
 
 	WindowInformationWinAPI(): input(NULL) {}
 };
@@ -355,7 +355,7 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input* input)
 	engines.push_back(this);
 
 	((WindowInformationWinAPI*)windowInformation)->focused	= false;
-	((WindowInformationWinAPI*)windowInformation)->input	= input;
+	((WindowInformationWinAPI*)windowInformation)->input	= static_cast<InputWin*>(input);
 	input->setMouseCenter(conf->geti("window.width")/2, conf->geti("window.height")/2);
 
 	ShowWindow(((WindowInformationWinAPI*)windowInformation)->handle, SW_SHOWNORMAL);					// Show the window
@@ -428,7 +428,7 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input* input)
 
 	((WindowInformationWinAPI*)windowInformation)->return_pressed = false;
 
-    input->start();
+    static_cast<InputWin*>(input)->start();
 
 	return true;
 }

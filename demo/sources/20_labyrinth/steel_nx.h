@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: Labyrinth Game
 	Part of: DiVision intro
-	(C) DiVision, 2006-2007
+	(C) DiVision, 2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
 	License:

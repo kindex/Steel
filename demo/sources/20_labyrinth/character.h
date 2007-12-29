@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: Labyrinth Game
 	Part of: DiVision intro
-	(C) DiVision, 2006-2007
+	(C) DiVision, 2007
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
 	License:
@@ -33,7 +33,11 @@ public:
     float getHealth() const { return health; }
     bool isAlive() const {return alive;}
     const ObjectPosition& getPosition() const;
+    v3 getVelocity() const;
+    v3 getMomentum() const;
     void setPosition(const ObjectPosition&);
+    void setVelocity(const v3&);
+    void setMomentum(const v3&);
     void setDirection(const v3&);
     void setInput(Input*);
 

@@ -9,7 +9,6 @@
 	Description:
 		Ageia test
  ************************************************************/
-
 #include "23_ageia_tech.h"
 #include "../19_ps/particle_calculator.h"
 #include <common/logger.h>

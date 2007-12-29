@@ -596,6 +596,10 @@
 				RelativePath="..\sources\input\input_win.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\input\input_win.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="math"

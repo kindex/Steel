@@ -15,8 +15,9 @@
 
 #if STEEL_OS == OS_WIN32
 
-#include "input.h"
+#include "input_win.h"
 #include "../common/utils.h"
+#include "../res/config/config.h"
 
 #include <windows.h>		// Header File For Windows
 #include <winbase.h>
@@ -25,7 +26,7 @@ using namespace std;
 
 typedef POINT Point;									// This is a window structure that holds an X and Y
 
-void Input::CaptureMouse_WinAPI()
+void InputWin::CaptureMouse_WinAPI()
 {
 	mouseCaptured = true;
 
@@ -36,13 +37,7 @@ void Input::CaptureMouse_WinAPI()
 	ShowCursor(false);										// Hide Mouse Pointer
 }
 
-void Input::FreeMouse_WinAPI()
-{
-	ShowCursor(true);			// show Mouse Pointer
-	mouseCaptured = false;
-}
-
-string Input::DecodeKey_WinAPI(MSG p)
+string InputWin::DecodeKey_WinAPI(MSG p)
 {
 	string key;
 	switch(p.message)
@@ -101,7 +96,7 @@ string Input::DecodeKey_WinAPI(MSG p)
 }
 
 
-LRESULT CALLBACK Input::ProcessMessage_WinAPI(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK InputWin::ProcessMessage_WinAPI(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{
@@ -124,7 +119,7 @@ LRESULT CALLBACK Input::ProcessMessage_WinAPI(HWND hWnd, UINT uMsg, WPARAM wPara
 	return 0;
 }
 
-void Input::Process_WinAPI()
+void InputWin::Process_WinAPI()
 {
 	MSG msg;
 	BOOL wasmsg;
@@ -191,5 +186,18 @@ void Input::Process_WinAPI()
 	}
 }
 
+void InputWin::FreeMouse_WinAPI()
+{
+	ShowCursor(true);			// show Mouse Pointer
+	mouseCaptured = false;
+}
+
+void InputWin::start()
+{
+	if (conf->geti("mouse.capture", 0))
+    {
+		CaptureMouse_WinAPI();
+    }
+}
 
 #endif
