@@ -93,10 +93,11 @@ GameLabyrinth::GameLabyrinth():
     character(NULL),
     gameState(GAME_PLAYING),
     host(NULL),
-    peer(NULL),
     net_role(NET_SINGLE),
     pScene(NULL),
-    physicsSDK(NULL)
+    physicsSDK(NULL),
+    server(NULL),
+    client_status(CLIENT_DISCONNECTED)
 {}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
@@ -190,9 +191,9 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
         address.port = conf->geti("net.port", 2007);
 
         /* Initiate the connection, allocating the two channels 0 and 1. */
-        peer = enet_host_connect(host, &address, 2);
+        server = enet_host_connect(host, &address, 2);
         
-        if (peer == NULL)
+        if (server == NULL)
         {
            abort_init("net", "No available peers for initiating an ENet connection");
         }
@@ -201,10 +202,12 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
             event.type == ENET_EVENT_TYPE_CONNECT)
         {
             log_msg("net", "Connection to " + remote_addr + ":" + IntToStr(address.port)+ " succeeded");
+            client_status = CLIENT_LOADING_WORLD;
         }
         else
         {
-            enet_peer_reset(peer);
+            enet_peer_reset(server);
+            server = NULL; // TODO: delete server
             abort_init("net", "Connection to " + remote_addr + ":" + IntToStr(address.port)+ " failed.");
         }
 
@@ -227,15 +230,33 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     return true;
 }
 
+void GameLabyrinth::Client::disconenct()
+{
+    if (peer != NULL)
+    {
+        log_msg("net", "Disconnecting client " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port));
+        enet_peer_disconnect_now(peer, 0);
+        status = DISCONNECTED;
+        peer->data = NULL;
+        peer = NULL;
+    }
+}
+
 GameLabyrinth::~GameLabyrinth()
 {
     if (host != NULL)
     {
-        if (peer != NULL)
+        for EACH(ClientVector, clients, client)
         {
-            log_msg("net", "Disconnecting client " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port));
-            enet_peer_disconnect_now(peer, 0);
-            peer = NULL;
+            (*client)->disconenct();
+            delete *client;
+        }
+        clients.clear();
+        if (server != NULL)
+        {
+            log_msg("net", "Disconnecting from server " + IntToStr(server->address.host) + ":" + IntToStr(server->address.port));
+            enet_peer_disconnect_now(server, 0);
+            server = NULL;
         }
 
         enet_host_destroy(host);
@@ -247,6 +268,7 @@ GameLabyrinth::~GameLabyrinth()
     {
         delete world;
     }
+    log_msg("labyrinth", "Exiting from game");
 }
 
 bool GameLabyrinth::createWorld()
@@ -357,101 +379,120 @@ void GameLabyrinth::processNetwork()
     {
         switch (event.type)
         {
-        case ENET_EVENT_TYPE_CONNECT:
-            log_msg("net", "A new client connected from " 
-                + IntToStr(event.peer->address.host)
-                + ":" + IntToStr(event.peer->address.port));
-            if (peer == NULL)
+            case ENET_EVENT_TYPE_CONNECT:
             {
-                peer = event.peer;
-
-                event.peer->data = "accepted";
-
-                Config* worldConfig = world->getConfig();
-                std::string world_config_serialized = worldConfig->Dump();
-
-                NetworkPacket packet;
-                packet.kind = NetworkPacket::P_WORLD;
-
-                size_t first_part_size = sizeof(NetworkPacket::PacketKind);
-                ENetPacket* enet_packet = enet_packet_create(&packet,
-                                                             first_part_size,
-                                                             ENET_PACKET_FLAG_RELIABLE);
-
-                size_t packet_size = world_config_serialized.size() + 1 + first_part_size;
-                enet_packet_resize(enet_packet, packet_size);
-
-                strcpy((char*)&enet_packet->data[first_part_size], world_config_serialized.c_str());
-
-                enet_peer_send(peer, 0, enet_packet);
-                enet_host_flush(host);
-                log_msg("net", "sending world to " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port));
-            }
-            else // second connection - dropping
-            {
-                event.peer->data = "dropped";
-                enet_peer_disconnect(peer, 0);
-                log_msg("net", "ignoring " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port));
-            }
-
-            break;
-
-        case ENET_EVENT_TYPE_RECEIVE:
-        {
-            NetworkPacket packet = *(NetworkPacket*)(event.packet->data);
-            switch (packet.kind)
-            {
-                case NetworkPacket::P_CHARACTER_UPDATE:
-                    if (character != NULL)
-                    {
-                        character->setPosition(packet.data.character_update.position);
-                        character->setVelocity(packet.data.character_update.linear_velocity);
-                        character->setMomentum(packet.data.character_update.linear_momentum);
-                        netTimer.incframe();
-                    }
-                    break;
-
-                case NetworkPacket::P_WORLD:
+                if (net_role == NET_SERVER)
                 {
-                    log_msg("net", "received world from " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port));
+                    log_msg("net", "A new client connecting from " 
+                        + IntToStr(event.peer->address.host)
+                        + ":" + IntToStr(event.peer->address.port));
+
+                    Client* new_client = new Client(event.peer);
+                    new_client->peer = event.peer;
+                    new_client->peer->data = new_client;
+
+                    Config* worldConfig = world->getConfig();
+                    std::string world_config_serialized = worldConfig->Dump();
+
+                    NetworkPacket packet;
+                    packet.kind = NetworkPacket::P_WORLD;
 
                     size_t first_part_size = sizeof(NetworkPacket::PacketKind);
-                    char* str = (char*)malloc(event.packet->dataLength - first_part_size);
-                    memcpy(str, (char*)(event.packet->data) + first_part_size, event.packet->dataLength - first_part_size);
-                    Config* new_world = parseConfig(str);
-                    free(str);
-                    world = static_cast<Combiner*>(createGameObject(new_world));
-                    createCharacter();
-                    if (graphEngine != NULL)
+                    ENetPacket* enet_packet = enet_packet_create(&packet,
+                                                                 first_part_size,
+                                                                 ENET_PACKET_FLAG_RELIABLE);
+
+                    size_t packet_size = world_config_serialized.size() + 1 + first_part_size;
+                    enet_packet_resize(enet_packet, packet_size);
+
+                    strcpy((char*)&enet_packet->data[first_part_size], world_config_serialized.c_str());
+
+                    enet_peer_send(event.peer, 0, enet_packet);
+                    enet_host_flush(host);
+                    new_client->status = Client::LOADING_WORLD;
+                    log_msg("net", "sending world to " + IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port));
+                    clients.push_back(new_client);
+                }
+                break;
+            }
+
+            case ENET_EVENT_TYPE_RECEIVE:
+            {
+                NetworkPacket packet = *(NetworkPacket*)(event.packet->data);
+                switch (packet.kind)
+                {
+                    case NetworkPacket::P_CHARACTER_UPDATE:
+                        if (character != NULL)
+                        {
+                            character->setPosition(packet.data.character_update.position);
+                            character->setVelocity(packet.data.character_update.linear_velocity);
+                            character->setMomentum(packet.data.character_update.linear_momentum);
+                            netTimer.incframe();
+                        }
+                        break;
+
+                    case NetworkPacket::P_WORLD:
                     {
-                        graphEngine->clear();
-                        graphEngine->inject(world);
+                        log_msg("net", "received world from " + IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port));
+                        if (net_role == NET_CLIENT)
+                        {
+                            size_t first_part_size = sizeof(NetworkPacket::PacketKind);
+                            char* str = (char*)malloc(event.packet->dataLength - first_part_size);
+                            memcpy(str, (char*)(event.packet->data) + first_part_size, event.packet->dataLength - first_part_size);
+                            Config* new_world = parseConfig(str);
+                            free(str);
+                            world = static_cast<Combiner*>(createGameObject(new_world));
+                            createCharacter();
+                            if (graphEngine != NULL)
+                            {
+                                graphEngine->clear();
+                                graphEngine->inject(world);
+                            }
+                            createPhysicWorld();
+                            netTimer.start();
+                            log_msg("net", "World from " + IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port) + " created");
+                            client_status = CLIENT_PLAYING;
+                        }
+                        else
+                        {
+                            log_msg("net", "Ignoring world from " + IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port) + " because we are not a client");
+                        }
+                        break;
                     }
-                    createPhysicWorld();
-                    netTimer.start();
-                    log_msg("net", "World from " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port) + " created");
-                    break;
+                }
+                enet_packet_destroy(event.packet);
+                
+                break;
+            }
+               
+            case ENET_EVENT_TYPE_DISCONNECT:
+            {
+                if (event.peer == server && net_role == NET_CLIENT)
+                {
+                    log_msg("net", "Server " + IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port) + " disconnecting");
+                    enet_peer_reset(server);
+                    server = NULL;
+                    client_status = CLIENT_DISCONNECTED;
+                }
+                else if (net_role == NET_SERVER)
+                {
+                    log_msg("net", "Client " + IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port) + " disconnecting");
+                    for EACH(ClientVector, clients, client)
+                    {
+                        if ((*client)->peer == event.peer)
+                        {
+                            (*client)->disconenct();
+                            delete *client;
+                            *client = clients.back();
+                            clients.pop_back();
+                            break;
+                        }
+                    }
                 }
             }
-            enet_packet_destroy(event.packet);
-            
-            break;
-        }
-           
-        case ENET_EVENT_TYPE_DISCONNECT:
-            if (event.peer->data != NULL && std::string(static_cast<char*>(event.peer->data)) == "accepted")
-            {
-                log_msg("net", "Client " + IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port) + " disconnecting");
-                peer = NULL;
-            }
-            else
-            {
-                log_msg("net", "Client " + IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port) + " dropped");
-            }
-            event.peer->data = NULL;
         }
     }
-    if (net_role == NET_SERVER && peer != NULL)
+    if (net_role == NET_SERVER)
     {
         sendInformationToClients();
     }
@@ -459,23 +500,26 @@ void GameLabyrinth::processNetwork()
 
 void GameLabyrinth::sendInformationToClients()
 {
-    if (netTimer.lap() > 1.0/30.0) // max 30 fps
+    if (netTimer.lap() > 1.0/30.0 && !clients.empty()) // max 30 fps
     {
-        NetworkPacket packet;
-        packet.kind = NetworkPacket::P_CHARACTER_UPDATE;
-        packet.data.character_update.position =  character->getPosition();
-        packet.data.character_update.linear_velocity = to_simple(character->getVelocity());
-        packet.data.character_update.linear_momentum = to_simple(character->getMomentum());
+        for EACH(ClientVector, clients, client)
+        {
+            NetworkPacket packet;
+            packet.kind = NetworkPacket::P_CHARACTER_UPDATE;
+            packet.data.character_update.position =  character->getPosition();
+            packet.data.character_update.linear_velocity = to_simple(character->getVelocity());
+            packet.data.character_update.linear_momentum = to_simple(character->getMomentum());
 
-        ENetPacket* enet_packet = 
-            enet_packet_create(&packet, 
-                               sizeof(packet.data.character_update) + sizeof(packet.kind),
-                               0);
+            ENetPacket* enet_packet = 
+                enet_packet_create(&packet, 
+                                   sizeof(packet.data.character_update) + sizeof(packet.kind),
+                                   0);
 
-        enet_peer_send(peer, 0, enet_packet);
+            enet_peer_send((*client)->peer, 0, enet_packet);
+        }
         enet_host_flush(host);
 
-        netTimer.nextlap();
+        netTimer.incframe();
     }
 }
 
@@ -522,9 +566,29 @@ std::string GameLabyrinth::getWindowCaption()
 			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
 			+ " Faces: " + IntToStr(graphEngine->total.triangleCount);
 
-    if (peer != NULL && net_role == NET_CLIENT)
+    switch (net_role)
     {
-        str += " packets/s: " + netTimer.getfps_s();
+    case NET_CLIENT:
+        if (server == NULL)
+        {
+            str += " disconnected";
+        }
+        else
+        {
+            str += " sync/s: " + netTimer.getfps_s();
+        }
+        switch (client_status)
+        {
+            case CLIENT_LOADING_WORLD: str += " Loading world"; break;
+            case CLIENT_PLAYING:       str += " Playing";       break;
+            case CLIENT_DISCONNECTED:  str += " Disconencted";  break;
+        }
+        break;
+
+    case NET_SERVER:
+        str += " clients: " + IntToStr(clients.size());
+        str += " sync/s: " + netTimer.getfps_s();
+        break;
     }
 
     if (gameState == GAME_WIN)

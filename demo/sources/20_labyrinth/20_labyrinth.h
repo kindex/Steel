@@ -73,7 +73,29 @@ private:
 // --------------------- Net -----------------------
 	Timer         netTimer;
     ENetHost*     host;
-    ENetPeer*     peer;
+    ENetPeer*     server;
+    struct Client
+    {
+        Client(ENetPeer* peer) : peer(peer), character(NULL), status(DISCONNECTED) {}
+        enum ClientStatus
+        {
+            DISCONNECTED,
+            LOADING_WORLD,
+            PLAYING,
+        } status;
+        ENetPeer*  peer;
+        Character* character;
+        void disconenct();
+    };
+    enum ClientStatus
+    {
+        CLIENT_CONNECTING,
+        CLIENT_LOADING_WORLD,
+        CLIENT_PLAYING,
+        CLIENT_DISCONNECTED
+    } client_status;
+    typedef std::vector<Client*> ClientVector;
+    ClientVector clients;
 
     enum NetRole
     {
@@ -94,13 +116,14 @@ private:
         {
             struct CharacterUpdate
             {
+                uid            characterId;
                 ObjectPosition position;
                 v3simple       linear_velocity;
                 v3simple       linear_momentum;
-            } character_update;
+            } character_update; // P_CHARACTER_UPDATE
 #pragma warning (push)
 #pragma warning (disable : 4200)
-            char world[];
+            char world[]; // P_WORLD
 #pragma warning (pop)
         } data;
     };

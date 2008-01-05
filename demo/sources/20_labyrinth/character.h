@@ -55,6 +55,7 @@ private:
     ObjectPosition origin;
     v3             direction;
 	Input*         input;
+    uid            characterId; // synchronized on all clients
 };
 
 #endif
