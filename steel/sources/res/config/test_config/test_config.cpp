@@ -163,7 +163,7 @@ void ConfigParserTest::TestParser(void)
 	#undef TEST_PARSER
 }
 
-void ConfigTest::TestFind(void)
+void ConfigTest::TestFind()
 {
 /*
 
@@ -214,4 +214,17 @@ void ConfigTest::TestFind(void)
 
 	CHECK_TRUE(_struct->getd("arr[2]", -1.0) == 3.0, "Find: struct->array->number");
 }
+
+void ConfigTest::TestSerialization()
+{
+    { // v3
+        v3 v(1, 2, 3);
+        Config* config = createV3config(v);
+        std::string str = config->Dump();
+        Config* newConfig = parseConfig(str);
+        v3 new_v = newConfig->getv3("");
+        CHECK_EQUAL(new_v, v, "Serialize v3");
+    }
+}
+
 #endif

@@ -11,20 +11,16 @@
 		Интерфейс game-input
  ************************************************************/
 
-#ifndef GAME_H
-#define GAME_H
+#ifndef _GAME_INPUT_H_
+#define _GAME_INPUT_H_
 
 #include "../steel.h"
-
 #include <string>
-
-/*
-Класс, задающий правила игры
-*/
 
 class GameInput
 {
 public:
+    virtual ~GameInput() {}
 	// виртуальные обработчики клавиатуры и мышки
 	virtual void handleEventKeyDown(const std::string& key) abstract;
 	virtual void handleEventKeyUp(const std::string& key) abstract;

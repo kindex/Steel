@@ -29,6 +29,7 @@ public:
 	void bindEngine(IN OUT Engine&, IN const InterfaceId id);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+    Config* getConfig() const;
     bool supportsInterface(Engine& engine, IN const InterfaceId id)
 	{
 		return id == INTERFACE_GRAPH;

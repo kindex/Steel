@@ -24,6 +24,7 @@ public:
 	void bindEngine(IN OUT Engine&, IN const InterfaceId id);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+    Config* getConfig() const;
 
 	//v3 getPosition() { return position; }
 	//void setPosition(v3 newPosition) { position = newPosition; }

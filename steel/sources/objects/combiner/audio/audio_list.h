@@ -27,6 +27,7 @@ public:
 	void bindEngine(IN OUT Engine&, IN const InterfaceId id);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+    Config* getConfig() const;
 	bool audioPlay(const std::string& sndId);
 
 

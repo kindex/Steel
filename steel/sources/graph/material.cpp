@@ -73,20 +73,49 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 	return true; 
 }
 
+Config* MaterialStd::getConfig() const
+{
+    ConfigStruct* result = new ConfigStruct;
+
+	result->setValue("class", new ConfigString("std"));
+	result->setValue("diffuse_map", diffuse_map.getConfig());
+
+	result->setValue("texCoordsScale", createV3config(textureMatrix.texCoordsScale));
+	result->setValue("texCoordsRotation", new ConfigNumber(textureMatrix.texCoordsRotation));
+	result->setValue("texCoordsTranslation", createV3config(textureMatrix.texCoordsTranslation));
+
+    return result;
+}
+
 bool TextureStd::InitFromConfig(Config* config)
 {
-	if (config == NULL) return false;
+	if (config == NULL) 
+    {
+        return false;
+    }
 	string name = config->getPath("image");
-	if (!name.empty()) image = resImage.add("/" + name);
+	if (!name.empty())
+    {
+        image = resImage.add("/" + name);
+    }
 	
 	if (image == NULL)
 	{
 		return false;
 	}
-	k = config->getf ("k", 1.0f);
-	texCoordsUnit = config->geti ("texCoordsUnit", 0);
+	k = config->getf("k", 1.0f);
+	texCoordsUnit = config->geti("texCoordsUnit", 0);
 
 	return image != NULL;
+}
+
+Config* TextureStd::getConfig() const
+{
+    ConfigStruct* result = new ConfigStruct;
+
+	result->setValue("image", new ConfigString(image->getPath()));
+
+    return result;
 }
 
 bool MaterialStd::TextureEnv::InitFromConfig(Config *config)

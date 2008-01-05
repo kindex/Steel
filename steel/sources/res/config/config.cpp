@@ -665,3 +665,12 @@ void ConfigStruct::setFilePath(const std::string& _file)
 	}
 }
 
+ConfigArray* createV3config(const v3& v)
+{
+    ConfigArray* result = new ConfigArray;
+    result->push(new ConfigNumber(v.x));
+    result->push(new ConfigNumber(v.y));
+    result->push(new ConfigNumber(v.z));
+
+    return result;
+}

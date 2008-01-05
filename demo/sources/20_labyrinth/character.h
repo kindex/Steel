@@ -28,6 +28,7 @@ public:
     void bindEngine(IN OUT Engine&, IN const InterfaceId);
 	void process(const ProcessInfo&);
 	bool InitFromConfig(Config&);
+    Config* getConfig() const;
     void traverse(Visitor&, const ObjectPosition& base_position);
 
     float getHealth() const { return health; }

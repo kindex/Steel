@@ -58,6 +58,7 @@ public:
 	virtual void process(const ProcessInfo&) abstract;
 
 	virtual bool InitFromConfig(Config&) abstract;
+    virtual Config* getConfig() const abstract;
 
     virtual void traverse(Visitor& visitor, const ObjectPosition& base_position)
     {

@@ -25,6 +25,11 @@ bool Scaler::InitFromConfig(IN Config& conf)
 	return true;
 }
 
+Config* Scaler::getConfig() const
+{
+    return NULL; // TODO:
+}
+
 void Scaler::process(IN const TimeInfo& info)
 {
 	currentPosition.setScale(scale);

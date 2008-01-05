@@ -40,6 +40,7 @@ class GraphObjectModel: public GraphObject
 public:
 	GraphObjectModel();
 	bool InitFromConfig(Config& conf);
+    Config* getConfig() const;
 	void bindEngine(Engine&, IN const InterfaceId id);
 	bool updateInformation(IN OUT Engine&, IN const InterfaceId id){return false;}
 	void process(IN const ProcessInfo&) {}
@@ -80,16 +81,20 @@ class GraphObjectMesh: public GraphObjectCustom
 {
 public:
 	bool InitFromConfig(Config& conf);
+    Config* getConfig() const;
 };
 
 class GraphObjectBox: public GraphObjectCustom
 {
 public:
+    GraphObjectBox();
 	bool InitFromConfig(Config& conf);
+    Config* getConfig() const;
     v3 getSize() const;
 
 private:
     v3 size;
+    MaterialStd* material;
 };
 
 

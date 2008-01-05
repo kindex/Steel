@@ -83,6 +83,11 @@ bool ParticleSystem::InitFromConfig(Config& _conf)
 	return true;
 }
 
+Config* ParticleSystem::getConfig() const
+{
+    return NULL; // TODO:
+}
+
 void ParticleEmitter::kill(int i) // убить частицу с номером i
 {
 

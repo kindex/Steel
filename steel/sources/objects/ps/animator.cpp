@@ -109,6 +109,11 @@ bool UniParticle::InitFromConfig(Config&)
 	return true;
 }
 
+Config* UniParticle::getConfig() const
+{
+    return NULL; // TODO:
+}
+
 bool UniParticle::updateInformation(IN OUT Engine&, IN const InterfaceId)
 {
 	return false;

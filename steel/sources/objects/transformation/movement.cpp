@@ -46,8 +46,12 @@ bool Movement::InitFromConfig(IN Config& conf)
 		type = MOVEMENT_FORWARD;
 	}
 
-
 	return true;
+}
+
+Config* Movement::getConfig() const
+{
+    return NULL; // TODO:
 }
 
 void Movement::process(IN const TimeInfo& info)

@@ -134,6 +134,38 @@ bool Combiner::InitFromConfig(Config& conf)
 	return true;
 }
 
+Config* Combiner::getConfig() const
+{
+    ConfigStruct* result = new ConfigStruct;
+    result->setValue("class", new ConfigString("combiner"));
+    result->setValue("origin", createV3config(origin.getTranslation()));
+    if (graph != NULL)
+    {
+        result->setValue("graph", graph->getConfig());
+    }
+    if (audio != NULL)
+    {
+        result->setValue("audio", audio->getConfig());
+    }
+    if (transformation != NULL)
+    {
+        result->setValue("transformation", transformation->getConfig());
+    }
+
+    if (!objects.empty())
+    {
+        ConfigArray* objects_config = new ConfigArray;
+        for EACH_CONST(pvector<GameObject*>, objects, it)
+        {
+            objects_config->push((*it)->getConfig());
+        }
+        result->setValue("objects", objects_config);
+    }
+
+    return result;
+}
+
+
 void Combiner::addObject(GameObject* newObject)
 {
 	objects.push_back(newObject);

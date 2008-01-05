@@ -17,7 +17,6 @@
 #include "../rstream.h"
 #include <string> 
 
-
 Image* createTGA(const std::string& filename) 
 {
 	TGA *o = new TGA;
@@ -36,6 +35,7 @@ Image* createTGA(const std::string& filename)
 bool TGA::init(const std::string& name)
 {  
 	rstream f;
+    path = name;
 
 	if (!f.open(name, "tga"))
 	{
@@ -49,7 +49,9 @@ bool TGA::init(const std::string& name)
 	f.read(TGAcompare, sizeof(TGAcompare));
 		
 	if (memcmp(TGAheader, TGAcompare, sizeof(TGAheader))!=0)
+    {
 		return false;	// Does The Header Match What We Want?
+    }
 
 	f.read(header, 6);// If So Read Next 6 Header Bytes
 

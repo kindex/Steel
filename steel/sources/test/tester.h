@@ -72,14 +72,14 @@ inline To cast(IN const From from)
 	}	\
 }
 
-#define CHECK_EQUAL(expr1, expr2, message) \
+#define CHECK_EQUAL(real_expr, expected_expr, message) \
 { \
 	testInfo.testCount++;\
-	if ((expr1) != (expr2))  \
+	if ((real_expr) != (expected_expr))  \
 	{	\
-    Error(std::string("Failed ") + #expr1 + " == " + #expr2 + ". " + (message)  \
-        + ". Expected " + cast<std::string>(expr2) \
-        + ". Real " + cast<std::string>(expr1)); \
+    Error(std::string("Failed ") + #real_expr + " == " + #expected_expr + ". " + (message)  \
+        + ". Expected " + cast<std::string>(expected_expr) \
+        + ". Real " + cast<std::string>(real_expr)); \
 	}	\
 }
 

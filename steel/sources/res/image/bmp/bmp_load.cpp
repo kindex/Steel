@@ -60,7 +60,7 @@ typedef struct { // 14 bytes
 
 
 bool BMP::init(const std::string& name)
-{  
+{
 	// TODO: load through CLASS (WADfile, disk,...)
 	bmpBITMAPFILEHEADER fh; // file header
 	bmpBITMAPINFOHEADER ih;
@@ -71,13 +71,17 @@ bool BMP::init(const std::string& name)
 	std::string file = name;
 	rstream f;
 
-	if(!f.open(file, "bmp")) 
+    path = name;
+	if (!f.open(file, "bmp")) 
 	{
 // 		steel::log.out("Res/Image/BMP: cannot open file %s", file.c_str());
 		return false;
 	}
 
-	if(!f.good()) return false;
+	if (!f.good())
+    {
+        return false;
+    }
 
 	f.read(&fh.bfType[0], 2);
     f.read(&fh.bfSize, 4);

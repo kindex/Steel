@@ -26,6 +26,7 @@ public:
 	Transformation();
 	virtual ~Transformation() {}
 	virtual bool InitFromConfig(IN Config&);
+	virtual Config* getConfig() const abstract;
 	virtual void process(IN const TimeInfo&) abstract;
 	virtual ObjectPosition getPosition();
 

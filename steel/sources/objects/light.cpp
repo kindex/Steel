@@ -57,6 +57,11 @@ bool GameLight::InitFromConfig(Config& conf)
 	return true;
 }
 
+Config* GameLight::getConfig() const
+{
+    return NULL; // TODO:
+}
+
 
 void GameLight::bindEngine(Engine& engine, IN const InterfaceId id)
 {

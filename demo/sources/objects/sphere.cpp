@@ -183,3 +183,8 @@ bool Sphere::InitFromConfig(Config& _conf)
 
 	return true;
 }
+
+Config* Sphere::getConfig() const
+{
+    return NULL; // TODO:
+}

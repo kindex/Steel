@@ -17,7 +17,6 @@
 #include "../../../res/res_main.h"
 #include "../../../audio/sound.h"
 
-
 bool AudioList::InitFromConfig(IN Config& conf)
 {
 	//AudioObject::InitFromConfig(conf);
@@ -44,6 +43,11 @@ bool AudioList::InitFromConfig(IN Config& conf)
 	}
 
 	return true;
+}
+
+Config* AudioList::getConfig() const
+{
+    return NULL; // TODO:
 }
 
 

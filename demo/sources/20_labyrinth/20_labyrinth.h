@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: Labyrinth Game
 	Part of: DiVision intro
-	(C) DiVision, 2007
+	(C) DiVision, 2007-2008
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
 	License:
@@ -34,20 +34,24 @@ public:
 	void handleMouse(double dx, double dy);
 	bool init(Config& _conf, Input& _input);
 	void process();
+	void processNetwork();
+	void sendInformationToClients();
     std::string getWindowCaption();
 	void draw(GraphEngine&);
     bool createWorld();
+    bool createCharacter();
+    bool createPhysicWorld();
 
     friend class AgeiaInjector;
 
 private:
-// Labyrinth
+// ------------------ Labyrinth -----------------
 	Labyrinth labyrinth;
 	GraphObjectVector walls;
 	ConfigArray* wscene[2];
 	float length[2];
 	int count[2];
-// Game
+// -------------------- Game --------------------
     Character* character;
     std::vector<Character*> characters;
 
@@ -56,7 +60,7 @@ private:
         GAME_WIN,
     } gameState;
 
-// Physic
+// ------------------- Physic ---------------------
     bool initAgeia();
     void exitAgeia();
     NxActor* createSurface(const GraphObject& object, const ObjectPosition&, bool _static);
@@ -65,7 +69,8 @@ private:
 	NxPhysicsSDK* physicsSDK;
 	NxScene*      pScene;
     v3            global_gravity;
-// Net
+
+// --------------------- Net -----------------------
 	Timer         netTimer;
     ENetHost*     host;
     ENetPeer*     peer;
@@ -79,9 +84,25 @@ private:
 
     struct NetworkPacket
     {
-        ObjectPosition position;
-        v3             linear_velocity;
-        v3             linear_momentum;
+        enum PacketKind
+        {
+            P_CHARACTER_UPDATE,
+            P_WORLD,
+        } kind;
+
+        union
+        {
+            struct CharacterUpdate
+            {
+                ObjectPosition position;
+                v3simple       linear_velocity;
+                v3simple       linear_momentum;
+            } character_update;
+#pragma warning (push)
+#pragma warning (disable : 4200)
+            char world[];
+#pragma warning (pop)
+        } data;
     };
 };
 

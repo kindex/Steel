@@ -42,6 +42,11 @@ bool TransformationList::InitFromConfig(IN Config& conf)
 	return true;
 }
 
+Config* TransformationList::getConfig() const
+{
+    return NULL; // TODO:
+}
+
 void TransformationList::process(IN const TimeInfo& info)
 {
 	TimeInfo newInfo = info;

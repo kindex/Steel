@@ -49,7 +49,7 @@ bool GraphEngine::inject(GameObject* object)
 
 bool GraphEngine::clear()
 {
-	while(!objects.empty())
+	while (!objects.empty())
 	{
 		remove(objects.back());
 	}
@@ -64,7 +64,7 @@ bool GraphEngine::remove(GameObject *object)
 	
 	for EACH(pvector<GameObject*>, objects, it)
     {
-		if(*it == object)
+		if (*it == object)
 		{
 			objects.erase(it);
 			break;

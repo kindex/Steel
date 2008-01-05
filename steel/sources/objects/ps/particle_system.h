@@ -104,6 +104,7 @@ public:
 	void bindEngine(IN OUT Engine&, IN const InterfaceId);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+    Config* getConfig() const;
     void traverse(Visitor&, const ObjectPosition& base_position);
 
 	void particleBorn(int index);

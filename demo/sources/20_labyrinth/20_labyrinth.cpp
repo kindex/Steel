@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: Labyrinth Game
 	Part of: DiVision intro
-	(C) DiVision, 2007
+	(C) DiVision, 2007-2008
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
 	License:
@@ -15,6 +15,7 @@
 #include <common/logger.h>
 #include <engine/visitor.h>
 #include <res/res_main.h>
+#include <res/config/config_parser.h>
 #include <objects/ps/particle_system.h>
 #include <objects/combiner/combiner.h>
 #include <math/plane.h>
@@ -72,7 +73,7 @@ private:
             {
                 actor = game.createSurface(*dynamic_cast<GraphObject*>(object), base_position, inChar == 0);
             }
-            if (inChar != 0)
+            if (inChar != 0 && game.character != NULL)
             {
                 actor->userData = (void*)(1);
                 game.character->physic_object = actor;
@@ -93,7 +94,9 @@ GameLabyrinth::GameLabyrinth():
     gameState(GAME_PLAYING),
     host(NULL),
     peer(NULL),
-    net_role(NET_SINGLE)
+    net_role(NET_SINGLE),
+    pScene(NULL),
+    physicsSDK(NULL)
 {}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
@@ -105,6 +108,12 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 
 	cameraMode = C_FIXED;
 
+	if (!initAgeia())
+	{
+		abort_init("ageia", "Cannot init Ageia");
+		return false;
+	}
+
 // network
     std::string net_role_str = conf->gets("net.role", "single");
     if (net_role_str == "single")
@@ -114,8 +123,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
         {
             return false;
         }
-
-        character = characters[0];
+        createCharacter();
     }
     else if (net_role_str == "server")
     {
@@ -140,8 +148,23 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
         {
             return false;
         }
+        createCharacter();
+        netTimer.start();
 
-        character = characters[0];
+// ------------------------------- TEST CLIENT-SERVER WORLD INIT
+                    //character = NULL;
+                    //Config* worldConfig = world->getConfig();
+                    //std::string world_config_serialized = worldConfig->Dump();
+
+                    //    Config* new_world = parseConfig(world_config_serialized);
+                    //    world = static_cast<Combiner*>(createGameObject(new_world));
+                    //    createCharacter();
+                    //    if (graphEngine != NULL)
+                    //    {
+                    //        graphEngine->clear();
+                    //        graphEngine->inject(world);
+                    //    }
+// ------------------------------- TEST CLIENT-SERVER WORLD INIT
     }
     else if (net_role_str == "client")
     {
@@ -185,12 +208,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
             abort_init("net", "Connection to " + remote_addr + ":" + IntToStr(address.port)+ " failed.");
         }
 
-        if (!createWorld())
-        {
-            return false;
-        }
-
-        character = characters[0];
+        character = NULL;
     }
     else
     {
@@ -198,14 +216,13 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     }
     netTimer.start();
 
-    character->input = input;
+    if (character != NULL)
+    {
+        character->input = input;
+    }
     spectator.camera.setDirection(v3(1,1,-0.3f));
 
-	if (!initAgeia())
-	{
-		abort_init("ageia", "Cannot init Ageia");
-		return false;
-	}
+    createPhysicWorld();
 
     return true;
 }
@@ -216,11 +233,19 @@ GameLabyrinth::~GameLabyrinth()
     {
         if (peer != NULL)
         {
-            enet_peer_disconnect(peer, 0);
+            log_msg("net", "Disconnecting client " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port));
+            enet_peer_disconnect_now(peer, 0);
+            peer = NULL;
         }
 
         enet_host_destroy(host);
         enet_deinitialize();
+        log_msg("net", "Network deinitialized");
+    }
+    exitAgeia();
+    if (world != NULL)
+    {
+        delete world;
     }
 }
 
@@ -280,6 +305,11 @@ bool GameLabyrinth::createWorld()
 		}
 	}
 
+    return true;
+}
+
+bool GameLabyrinth::createCharacter()
+{
     CharacterCollector characterCollector;
     world->traverse(characterCollector, ObjectPosition::getIdentity());
 
@@ -289,7 +319,7 @@ bool GameLabyrinth::createWorld()
     }
 
     characters = characterCollector.characters;
-
+    character = characters[0];
     return true;
 }
 
@@ -297,7 +327,7 @@ void GameLabyrinth::process()
 {
 	GameFreeScene::process();
 
-    if (gameState != GAME_WIN)
+    if (gameState != GAME_WIN && character != NULL)
     {
         v3 char_pos = character->getPosition().getTranslation();
         if ((char_pos - v3(length[0]*(count[0]-1), length[1]*(count[1]-1), 0)).getSquaredLength() < sqr(length[0]/3) + sqr(length[1]/3))
@@ -315,88 +345,143 @@ void GameLabyrinth::process()
 
     if (net_role != NET_SINGLE)
     {
-        ENetEvent event;
-        
-        while (enet_host_service(host, &event, 0) > 0)
+        processNetwork();
+    }
+}
+
+void GameLabyrinth::processNetwork()
+{
+    ENetEvent event;
+    
+    while (enet_host_service(host, &event, 0) > 0)
+    {
+        switch (event.type)
         {
-            switch (event.type)
+        case ENET_EVENT_TYPE_CONNECT:
+            log_msg("net", "A new client connected from " 
+                + IntToStr(event.peer->address.host)
+                + ":" + IntToStr(event.peer->address.port));
+            if (peer == NULL)
             {
-            case ENET_EVENT_TYPE_CONNECT:
-                log_msg("net", "A new client connected from " 
-                    + IntToStr(event.peer->address.host)
-                    + ":" + IntToStr(event.peer->address.port));
-                if (peer == NULL)
-                {
-                    peer = event.peer;
+                peer = event.peer;
 
-                    event.peer->data = "accepted";
-                }
-                else // second connection - dropping
-                {
-                    event.peer->data = "dropped";
-                    enet_peer_disconnect(peer, 0);
-                }
+                event.peer->data = "accepted";
 
-                break;
+                Config* worldConfig = world->getConfig();
+                std::string world_config_serialized = worldConfig->Dump();
 
-            case ENET_EVENT_TYPE_RECEIVE:
+                NetworkPacket packet;
+                packet.kind = NetworkPacket::P_WORLD;
+
+                size_t first_part_size = sizeof(NetworkPacket::PacketKind);
+                ENetPacket* enet_packet = enet_packet_create(&packet,
+                                                             first_part_size,
+                                                             ENET_PACKET_FLAG_RELIABLE);
+
+                size_t packet_size = world_config_serialized.size() + 1 + first_part_size;
+                enet_packet_resize(enet_packet, packet_size);
+
+                strcpy((char*)&enet_packet->data[first_part_size], world_config_serialized.c_str());
+
+                enet_peer_send(peer, 0, enet_packet);
+                enet_host_flush(host);
+                log_msg("net", "sending world to " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port));
+            }
+            else // second connection - dropping
             {
-                if (event.packet->dataLength == sizeof(NetworkPacket))
-                {
-                    log_msg("net", "packet received");
-                    NetworkPacket packet = *(NetworkPacket*)(event.packet->data);
-                    character->setPosition(packet.position);
-                    character->setVelocity(packet.linear_velocity);
-                    character->setMomentum(packet.linear_momentum);
-
-                    netTimer.incframe();
-                    
-                //printf("A packet of length %u containing %s was received from %s on channel %u.\n",
-                //        event.packet->dataLength,
-                //        event.packet->data,
-                //        event.peer->data,
-                //        event.channelID);
-
-                    /* Clean up the packet now that we're done using it. */
-                }
-                enet_packet_destroy(event.packet);
-                
-                break;
+                event.peer->data = "dropped";
+                enet_peer_disconnect(peer, 0);
+                log_msg("net", "ignoring " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port));
             }
-               
-            case ENET_EVENT_TYPE_DISCONNECT:
-                if (std::string(static_cast<char*>(event.peer->data)) == "accepted")
-                {
-                    log_msg("net", "Client disconected");
-                }
-                else
-                {
-                    log_msg("net", "Client dropped");
-                }
-                event.peer->data = NULL;
-            }
-        }
-        if (net_role == NET_SERVER && peer != NULL)
+
+            break;
+
+        case ENET_EVENT_TYPE_RECEIVE:
         {
-            NetworkPacket packet;
-            packet.position = character->getPosition();
-            packet.linear_velocity = character->getVelocity();
-            packet.linear_momentum = character->getMomentum();
+            NetworkPacket packet = *(NetworkPacket*)(event.packet->data);
+            switch (packet.kind)
+            {
+                case NetworkPacket::P_CHARACTER_UPDATE:
+                    if (character != NULL)
+                    {
+                        character->setPosition(packet.data.character_update.position);
+                        character->setVelocity(packet.data.character_update.linear_velocity);
+                        character->setMomentum(packet.data.character_update.linear_momentum);
+                        netTimer.incframe();
+                    }
+                    break;
 
-            ENetPacket* enet_packet = enet_packet_create (&packet, 
-                                                     sizeof(packet), 
-                                                     0);
+                case NetworkPacket::P_WORLD:
+                {
+                    log_msg("net", "received world from " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port));
 
-            enet_peer_send(peer, 0, enet_packet);
-            enet_host_flush(host);
-            log_msg("net", "packet sent");
+                    size_t first_part_size = sizeof(NetworkPacket::PacketKind);
+                    char* str = (char*)malloc(event.packet->dataLength - first_part_size);
+                    memcpy(str, (char*)(event.packet->data) + first_part_size, event.packet->dataLength - first_part_size);
+                    Config* new_world = parseConfig(str);
+                    free(str);
+                    world = static_cast<Combiner*>(createGameObject(new_world));
+                    createCharacter();
+                    if (graphEngine != NULL)
+                    {
+                        graphEngine->clear();
+                        graphEngine->inject(world);
+                    }
+                    createPhysicWorld();
+                    netTimer.start();
+                    log_msg("net", "World from " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port) + " created");
+                    break;
+                }
+            }
+            enet_packet_destroy(event.packet);
+            
+            break;
         }
+           
+        case ENET_EVENT_TYPE_DISCONNECT:
+            if (event.peer->data != NULL && std::string(static_cast<char*>(event.peer->data)) == "accepted")
+            {
+                log_msg("net", "Client " + IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port) + " disconnecting");
+                peer = NULL;
+            }
+            else
+            {
+                log_msg("net", "Client " + IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port) + " dropped");
+            }
+            event.peer->data = NULL;
+        }
+    }
+    if (net_role == NET_SERVER && peer != NULL)
+    {
+        sendInformationToClients();
+    }
+}
+
+void GameLabyrinth::sendInformationToClients()
+{
+    if (netTimer.lap() > 1.0/30.0) // max 30 fps
+    {
+        NetworkPacket packet;
+        packet.kind = NetworkPacket::P_CHARACTER_UPDATE;
+        packet.data.character_update.position =  character->getPosition();
+        packet.data.character_update.linear_velocity = to_simple(character->getVelocity());
+        packet.data.character_update.linear_momentum = to_simple(character->getMomentum());
+
+        ENetPacket* enet_packet = 
+            enet_packet_create(&packet, 
+                               sizeof(packet.data.character_update) + sizeof(packet.kind),
+                               0);
+
+        enet_peer_send(peer, 0, enet_packet);
+        enet_host_flush(host);
+
+        netTimer.nextlap();
     }
 }
 
 void GameLabyrinth::handleEventKeyDown(const std::string& key)
 {
-	if (key == "return")
+	if (key == "return" && character != NULL)
 	{
 		if (cameraMode == C_FIXED)
 		{
@@ -466,7 +551,7 @@ void GameLabyrinth::draw(GraphEngine& graph)
         character->setDirection(spectator.camera.getDirection());
 	}
 
-    if (cameraMode == C_FIXED)
+    if (cameraMode == C_FIXED && character != NULL)
     {
         float len = 2;
         v3 dir = spectator.camera.getDirection();
@@ -506,9 +591,20 @@ bool GameLabyrinth::initAgeia()
 		gPhysicsSDK->getFoundationSDK().getRemoteDebugger()->connect(SAMPLES_VRD_HOST, SAMPLES_VRD_PORT, SAMPLES_VRD_EVENTMASK);
 #endif
 
-	physicsSDK->setParameter(NX_SKIN_WIDTH, conf->getf("physic.skin_width", 0.01f));
+	physicsSDK->setParameter(NX_SKIN_WIDTH, conf->getf("physic.skin_width", 0.00f));
 
-	// Create a scene
+	log_msg("ageia", "Ageia connected");
+	return true;
+}
+
+bool GameLabyrinth::createPhysicWorld()
+{
+    if (pScene != NULL)
+    {
+        physicsSDK->releaseScene(*pScene);
+        pScene = NULL;
+    }
+    	// Create a scene
 	NxSceneDesc sceneDesc;
     global_gravity = conf->getv3("physic.global_gravity", v3(0.0f, 0.0f, -9.8f));
 	sceneDesc.gravity = tonx(global_gravity);
@@ -528,10 +624,9 @@ bool GameLabyrinth::initAgeia()
     AgeiaInjector visitor(*this);
     world->traverse(visitor, ObjectPosition::getIdentity());
 
-	log_msg("ageia", "Ageia connected");
-
 	return true;
 }
+
 void GameLabyrinth::exitAgeia()
 {
 	if (physicsSDK != NULL)

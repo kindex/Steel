@@ -23,6 +23,7 @@ class TransformationList : public Transformation
 public:
 	~TransformationList();
 	bool InitFromConfig(IN Config&);
+	Config* getConfig() const;
 	void process(IN const TimeInfo&);
 
 private:

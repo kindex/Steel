@@ -344,7 +344,10 @@ void OpenGL_Engine::render()
 			}
 		}
 	}
-	renderNoShadows();
+    if (flags.drawFace)
+    {
+	    renderNoShadows();
+    }
     if (program != NULL)
     {
 	    program->unbind();

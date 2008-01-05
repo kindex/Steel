@@ -22,6 +22,7 @@ class Rotation : public Transformation
 public:
 	bool InitFromConfig(IN Config&);
 	void process(IN const TimeInfo&);
+	Config* getConfig() const;
 
 private:
 	v3 rotationAxis;

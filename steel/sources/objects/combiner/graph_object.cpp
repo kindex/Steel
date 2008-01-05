@@ -114,16 +114,24 @@ bool GraphObjectMesh::InitFromConfig(Config& conf)
 	return true;
 }
 
+Config* GraphObjectMesh::getConfig() const
+{
+    return NULL; // TODO:
+}
+
 // ***************** Box *****************
+GraphObjectBox::GraphObjectBox():
+    material(NULL)
+{}
+
 bool GraphObjectBox::InitFromConfig(Config& conf)
 {
 	Config* materialConfig = conf.find("material");
 	size = conf.getv3("size", v3(1.0f, 1.0f, 1.0f));
 
-	MaterialStd* m = NULL;
 	if (materialConfig != NULL)
 	{
-		m = createMaterial(materialConfig);
+		material = createMaterial(materialConfig);
 	}
 
 	int vert = 6*4;
@@ -154,7 +162,7 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 	t(+1, -1, -1, 0, 0);	t(-1, +1, -1, 1, 1);	t(+1, +1, -1, 0, 1);
 
 	faces = new FaceMaterialVector(1);
-	faces->at(0).material = m;
+	faces->at(0).material = material;
 	faces->at(0).faces = allFaces = new Faces;
 	faces->at(0).faces->triangles.changed = false;
 	faces->at(0).faces->triangles.resize(trg);
@@ -181,6 +189,17 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 	return true;
 }
 
+Config* GraphObjectBox::getConfig() const
+{
+    ConfigStruct* result = new ConfigStruct;
+
+	result->setValue("class", new ConfigString("box"));
+	result->setValue("size", createV3config(size));
+	result->setValue("material", material->getConfig());
+
+    return result;
+}
+
 v3 GraphObjectBox::getSize() const
 {
     return size;
@@ -201,6 +220,11 @@ bool GraphObjectModel::InitFromConfig(Config& conf)
 	}
 
 	return model != NULL;
+}
+
+Config* GraphObjectModel::getConfig() const
+{
+    return NULL; // TODO:
 }
 
 void GraphObjectModel::bindEngine(Engine& engine, IN const InterfaceId id)

@@ -36,6 +36,11 @@ bool SimpleSound::InitFromConfig(Config& conf)
 	return true;
 }
 
+Config* SimpleSound::getConfig() const
+{
+    return NULL; // TODO:
+}
+
 void SimpleSound::bindEngine(Engine& aEngine, IN const InterfaceId id)
 {
 	if (id == INTERFACE_AUDIO)

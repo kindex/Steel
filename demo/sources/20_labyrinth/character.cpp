@@ -21,7 +21,8 @@
 Character::Character():
     graph_object(NULL),
     position(matrix34::getIdentity()),
-    origin(matrix34::getIdentity())
+    origin(matrix34::getIdentity()),
+    input(NULL)
 {}
 
 bool Character::supportsInterface(IN OUT Engine&, IN const InterfaceId id)
@@ -76,6 +77,19 @@ bool Character::InitFromConfig(Config& conf)
 
     return graph_object != NULL;
 }
+
+Config* Character::getConfig() const
+{
+    ConfigStruct* result = new ConfigStruct;
+
+	result->setValue("class", new ConfigString("character"));
+    result->setValue("origin", createV3config(origin.getTranslation()));
+    result->setValue("force", new ConfigNumber(force));
+    result->setValue("graph", graph_object->getConfig());
+
+    return result;
+}
+
 
 void Character::bindEngine(IN OUT Engine& engine, IN const InterfaceId id)
 {

@@ -237,7 +237,6 @@ protected:
 	pvector<Config*> set;
 };
 
-
-
+ConfigArray* createV3config(const v3&);
 
 #endif

@@ -339,3 +339,8 @@ Image::~Image()
 {
 	unload(); 
 }
+
+std::string Image::getPath() const
+{
+    return path;
+}

@@ -21,6 +21,7 @@ class Movement : public Transformation
 {
 public:
 	bool InitFromConfig(IN Config&);
+	Config* getConfig() const;
 	void process(IN const TimeInfo&);
 
 private:

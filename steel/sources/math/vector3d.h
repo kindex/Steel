@@ -236,6 +236,15 @@ inline void v3simple::operator/=(const float a)
     }
 }
 
+static inline v3simple to_simple(const v3& v)
+{
+    v3simple r;
+    r.x = v.x;
+    r.y = v.y;
+    r.z = v.z;
+    return r;
+}
+
 static const v3 zero = v3(0.0f, 0.0f, 0.0f);
 
 #endif	// __MATH_VECTOR3D_H

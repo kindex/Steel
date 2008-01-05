@@ -34,10 +34,15 @@ class Res
 public:
 	uid	getId() { return resId; }
 	void setId(uid id) { resId = id; }
+    virtual std::string getPath() const
+    {
+        return "";
+    }
 	virtual ~Res() {}
 
 protected:
 	uid resId; // уникальный идентификатор
+    std::string path;
 };
 
 void addDataSearchDirectories(const std::string& newDataDir); // in rstream.cpp

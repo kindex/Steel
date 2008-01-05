@@ -25,17 +25,19 @@
 class ConfigTest: public Tester
 {
 public:
-	void Test(void)
+	void Test()
 	{
 		TestFind();
+        TestSerialization();
 	}
 	void TestFind();
+	void TestSerialization();
 };
 
 class ConfigParserTest: public Tester
 {
 public:
-	void Test(void)
+	void Test()
 	{
 		TestParser();
 	}

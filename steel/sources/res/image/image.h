@@ -38,6 +38,7 @@ class Image: public Res
 public:
 	Image();
     ~Image();
+    std::string getPath() const;
 
     void unload();
     bool createImage(int WIDTH, int HEIGHT, int BPP);
@@ -78,6 +79,7 @@ protected:
 
 	ImageDimension	dimension;
 	ImageFormat		format;
+    std::string     path;
 };
 
 #endif

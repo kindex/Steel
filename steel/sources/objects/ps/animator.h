@@ -25,6 +25,7 @@ public:
 	void setParticle(Particle *_particle) { particle = _particle; }
 
 	bool InitFromConfig(Config&);
+    Config* getConfig() const;
 	bool updateInformation(IN OUT Engine&, IN const InterfaceId);
 	void process(IN const ProcessInfo& info);
 	bool supportsInterface(IN OUT Engine&, IN const InterfaceId);

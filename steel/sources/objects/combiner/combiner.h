@@ -31,6 +31,7 @@ public:
 	void bindEngine(IN OUT Engine&, IN const InterfaceId);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
+    Config* getConfig() const;
 	GameObject* getObject(size_t index) { return objects[index]; }
     void traverse(Visitor&, const ObjectPosition& base_position);
 	void addObject(GameObject*);

@@ -32,6 +32,7 @@ public:
 	void bindEngine(IN OUT Engine&, IN const InterfaceId);
 	void process(IN const ProcessInfo&){}
 	bool InitFromConfig(IN Config&);
+    Config* getConfig() const;
 
 	void setPosition(const v3& _position) { position.setTranslation(_position); }
 	void setPosition(const v3& position, 

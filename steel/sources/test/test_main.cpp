@@ -52,8 +52,8 @@ int main(int argc, char *argv[])
 	#endif
 
 	TEST(Math);
-	//TEST(Res);
-	//TEST(svector);
+	TEST(Res);
+	TEST(svector);
 
 	testInfo.report();
 

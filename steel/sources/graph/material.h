@@ -89,6 +89,7 @@ struct TextureStd
 
 	TextureStd(): image(NULL), texCoordsUnit(0), k(0.0) {}
 	bool InitFromConfig(Config* config);
+    Config* getConfig() const;
 };
 
 
@@ -97,6 +98,7 @@ class MaterialStd: public Material
 public:
 	MaterialStd();
 	bool InitFromConfig(Config* config);
+    Config* getConfig() const;
 
 	struct TextureEnv
 	{
