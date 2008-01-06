@@ -19,6 +19,7 @@
 
 #include <objects/combiner/graph_object.h>
 #include <enet/enet.h>
+#include <common/containers/string_vector.h>
 
 typedef std::vector<GraphObject*> GraphObjectVector;
 
@@ -34,13 +35,8 @@ public:
 	void handleMouse(double dx, double dy);
 	bool init(Config& _conf, Input& _input);
 	void process();
-	void processNetwork();
-	void sendInformationToClients();
     std::string getWindowCaption();
 	void draw(GraphEngine&);
-    bool createWorld();
-    bool createCharacter();
-    bool createPhysicWorld();
 
     friend class AgeiaInjector;
 
@@ -59,6 +55,9 @@ private:
         GAME_PLAYING,
         GAME_WIN,
     } gameState;
+    bool createWorld();
+    bool createCharacter();
+    bool createPhysicWorld();
 
 // ------------------- Physic ---------------------
     bool initAgeia();
@@ -76,26 +75,21 @@ private:
     ENetPeer*     server;
     struct Client
     {
-        Client(ENetPeer* peer) : peer(peer), character(NULL), status(DISCONNECTED) {}
-        enum ClientStatus
+        Client(ENetPeer* peer) : peer(peer), character(NULL), state(DISCONNECTED) {}
+        enum ClientState
         {
             DISCONNECTED,
+            CONNECTING,
             LOADING_WORLD,
             PLAYING,
-        } status;
+        } state;
         ENetPeer*  peer;
         Character* character;
         void disconenct();
     };
-    enum ClientStatus
-    {
-        CLIENT_CONNECTING,
-        CLIENT_LOADING_WORLD,
-        CLIENT_PLAYING,
-        CLIENT_DISCONNECTED
-    } client_status;
     typedef std::vector<Client*> ClientVector;
     ClientVector clients;
+    Client::ClientState client_state;
 
     enum NetRole
     {
@@ -106,27 +100,39 @@ private:
 
     struct NetworkPacket
     {
+        static const unsigned int PROTOCOL_VERSION = 1; // increment this variable, if protocol was changed
         enum PacketKind
         {
-            P_CHARACTER_UPDATE,
-            P_WORLD,
+            S_CHARACTER_UPDATE = 0x1000,
+            S_WORLD,
+            S_INIT,
+            SC_PING,
+            SC_PONG,
         } kind;
 
-        union
+        StringVector extractStrings(size_t offset, size_t total_size) const;
+        union Format
         {
-            struct CharacterUpdate
+            struct S_CharacterUpdate
             {
                 uid            characterId;
                 ObjectPosition position;
                 v3simple       linear_velocity;
                 v3simple       linear_momentum;
             } character_update; // P_CHARACTER_UPDATE
-#pragma warning (push)
-#pragma warning (disable : 4200)
-            char world[]; // P_WORLD
-#pragma warning (pop)
+            struct S_Init
+            {
+                unsigned int protocol_version;
+            } init;
         } data;
     };
+    size_t setupNetworkPacketStrings(NetworkPacket*& packet, const size_t size, const StringVector& strings) const;
+	void processServer();
+    void serverSendWorld(Client* client);
+    void serverSendInit(Client* client);
+	void processClient();
+	void sendInformationToClients();
+	void disconnectFromServer();
 };
 
 #endif

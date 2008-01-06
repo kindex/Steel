@@ -54,7 +54,7 @@ extern GlobalErrors globalErrors;
 	с ошибкой «cannot allocate an array of constant size 0»
 */
 #ifdef _DEBUG
-	#define cassert(expression)	{	int __[(expression)?1:0];	}
+    #define cassert(expression)	{	int __[(expression)?1:0] = {0};	}
 #else
 	#define cassert(expression)	{}
 #endif
