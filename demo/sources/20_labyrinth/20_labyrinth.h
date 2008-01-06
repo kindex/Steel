@@ -84,12 +84,19 @@ private:
 // for client
     struct Server
     {
-        Server(): peer(NULL), client_state(DISCONNECTED), ping(-1.0f), lastPingRequest(-1.0f) {} 
+        Server(): 
+            peer(NULL), 
+            client_state(DISCONNECTED),
+            ping(-1.0f),
+            lastPingRequest(-1.0f),
+            lastConnectTry(-1.0f)
+        {} 
         std::string getNetwornName() const;
 
         ENetPeer*   peer;
         steel::time ping;
         steel::time lastPingRequest;
+        steel::time lastConnectTry;
         ClientState client_state;
     } server;
 
@@ -166,6 +173,7 @@ private:
     size_t setupNetworkPacketString(NetworkPacket*& packet, const size_t size, const std::string& string) const;
     
     // Server side
+    bool serverInit();
 	void serverProcess();
     void serverDisconnectClient(Client* client);
 
@@ -179,6 +187,8 @@ private:
     void serverReceive_PING(Client* client, NetworkPacket* packet, size_t dataLength);
 
     // Client side
+    bool clientInit();
+    bool clientConnectToServer();
 	void clientProcess();
 	void clientDisconnectFromServer();
 

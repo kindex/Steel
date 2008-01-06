@@ -92,6 +92,35 @@ void GameLabyrinth::serverProcess()
     serverSendInformationToClients();
 }
 
+bool GameLabyrinth::serverInit()
+{
+    net_role = NET_SERVER;
+    if (enet_initialize() != 0)
+    {
+        abort_init("net", "An error occurred while initializing ENet");
+    }
+
+    ENetAddress address;
+    address.host = ENET_HOST_ANY;
+    address.port = conf->geti("net.port", 2007);
+
+    host = enet_host_create(&address, 32, 0, 0);
+    if (host == NULL)
+    {
+        abort_init("net", "An error occurred while trying to create an ENet server host");
+    }
+    log_msg("net", "Listening server at port " + IntToStr(address.port));
+
+    if (!createWorld())
+    {
+        return false;
+    }
+    createCharacter();
+    netTimer.start();
+
+    return true;
+}
+
 void GameLabyrinth::serverSendWorld(Client* client)
 {
     log_msg("net", "sending world to " + IntToStr(client->peer->address.host) + ":" + IntToStr(client->peer->address.port));

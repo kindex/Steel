@@ -127,90 +127,17 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     }
     else if (net_role_str == "server")
     {
-        net_role = NET_SERVER;
-        if (enet_initialize() != 0)
-        {
-            abort_init("net", "An error occurred while initializing ENet");
-        }
-
-        ENetAddress address;
-        address.host = ENET_HOST_ANY;
-        address.port = conf->geti("net.port", 2007);
-
-        host = enet_host_create(&address, 32, 0, 0);
-        if (host == NULL)
-        {
-            abort_init("net", "An error occurred while trying to create an ENet server host");
-        }
-        log_msg("net", "Listening server at port " + IntToStr(address.port));
-
-        if (!createWorld())
+        if (!serverInit())
         {
             return false;
         }
-        createCharacter();
-        netTimer.start();
-
-// ------------------------------- TEST CLIENT-SERVER WORLD INIT
-        //character = NULL;
-        //Config* worldConfig = world->getConfig();
-        //std::string world_config_serialized = worldConfig->Dump();
-
-        //Config* new_world = parseConfig(world_config_serialized);
-        //world = static_cast<Combiner*>(createGameObject(new_world));
-        //createCharacter();
-        //if (graphEngine != NULL)
-        //{
-        //    graphEngine->clear();
-        //    graphEngine->inject(world);
-        //}
-// ------------------------------- TEST CLIENT-SERVER WORLD INIT
     }
     else if (net_role_str == "client")
     {
-        net_role = NET_CLIENT;
-        if (enet_initialize() != 0)
+        if (!clientInit())
         {
-            abort_init("net", "An error occurred while initializing ENet");
+            return false;
         }
-
-        host = enet_host_create(NULL, 1, 0, 0);
-        if (host == NULL)
-        {
-            abort_init("net", "An error occurred while trying to create an ENet client host");
-        }
-
-        ENetAddress address;
-        ENetEvent event;
-
-        /* Connect to some.server.net:1234. */
-        std::string remote_addr = conf->gets("net.remote_addr", "localhost");
-        int timeout = conf->geti("net.timeout", 1000);
-        enet_address_set_host(&address, remote_addr.c_str());
-        address.port = conf->geti("net.port", 2007);
-
-        /* Initiate the connection, allocating the two channels 0 and 1. */
-        server.peer = enet_host_connect(host, &address, 2);
-        
-        if (server.peer == NULL)
-        {
-           abort_init("net", "No available peers for initiating an ENet connection");
-        }
-        
-        if (enet_host_service(host, &event, timeout) > 0 &&
-            event.type == ENET_EVENT_TYPE_CONNECT)
-        {
-            log_msg("net", "Connection to " + server.getNetwornName() + " succeeded");
-            server.client_state = CONNECTING;
-        }
-        else
-        {
-            enet_peer_reset(server.peer);
-            server.peer = NULL; // TODO: delete server
-            abort_init("net", "Connection to " + remote_addr + ":" + IntToStr(address.port)+ " failed.");
-        }
-
-        character = NULL;
     }
     else
     {
@@ -424,7 +351,7 @@ std::string GameLabyrinth::getWindowCaption()
     case NET_CLIENT:
         if (server.peer == NULL)
         {
-            str += " disconnected";
+            str += " no server";
         }
         else
         {
@@ -434,10 +361,11 @@ std::string GameLabyrinth::getWindowCaption()
         {
             case LOADING_WORLD: str += " Loading world"; break;
             case CONNECTING:    str += " Connecting";    break;
-            case PLAYING:       str += " Playing";       break;
+            case PLAYING:       str += " Playing";       
+                                str += " ping: " + FloatToStr(server.ping*1000);
+                                break;
             case DISCONNECTED:  str += " Disconencted";  break;
         }
-        str += " ping: " + FloatToStr(server.ping*1000);
         break;
 
     case NET_SERVER:

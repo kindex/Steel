@@ -87,9 +87,72 @@ void GameLabyrinth::clientProcess()
             }
         }
     }
-    if (server.lastPingRequest < 0 || server.lastPingRequest + 1.0f < netTimer.total())
+    if (server.peer != NULL && (server.lastPingRequest < 0 || server.lastPingRequest + conf->getf("net.ping_interval", 1.0f) <= netTimer.total()))
     {
         clientSend_PING();
+    }
+    if (server.peer == NULL && (server.lastConnectTry < 0 || server.lastConnectTry + conf->getf("net.reconnect_interval", 10.0f) <= netTimer.total()))
+    {
+        clientConnectToServer();
+    }
+ }
+
+bool GameLabyrinth::clientInit()
+{
+    net_role = NET_CLIENT;
+    if (enet_initialize() != 0)
+    {
+        abort_init("net", "An error occurred while initializing ENet");
+    }
+
+    host = enet_host_create(NULL, 1, 0, 0);
+    if (host == NULL)
+    {
+        abort_init("net", "An error occurred while trying to create an ENet client host");
+    }
+    netTimer.start();
+
+    clientConnectToServer();
+
+    character = NULL;
+    return true;
+}
+
+bool GameLabyrinth::clientConnectToServer()
+{
+    if (server.peer != NULL)
+    {
+        clientDisconnectFromServer();
+    }
+    server.lastConnectTry = netTimer.total();
+
+    ENetAddress address;
+    ENetEvent event;
+
+    std::string remote_addr = conf->gets("net.remote_addr", "localhost");
+    int connect_timeout = int(conf->getf("net.connect_timeout", 1)*1000);
+    enet_address_set_host(&address, remote_addr.c_str());
+    address.port = conf->geti("net.port", 2007);
+
+    server.peer = enet_host_connect(host, &address, 2);
+    
+    if (server.peer == NULL)
+    {
+       abort_init("net", "No available peers for initiating an ENet connection");
+    }
+    
+    if (enet_host_service(host, &event, connect_timeout) > 0 &&
+        event.type == ENET_EVENT_TYPE_CONNECT)
+    {
+        log_msg("net", "Connection to " + server.getNetwornName() + " succeeded");
+        server.client_state = CONNECTING;
+        return true;
+    }
+    else
+    {
+        enet_peer_reset(server.peer);
+        server.peer = NULL; // TODO: delete server
+        abort_init("net", "Connection to " + remote_addr + ":" + IntToStr(address.port)+ " failed");
     }
 }
 
@@ -127,9 +190,7 @@ void GameLabyrinth::clientSendC_INIT()
     packet->kind = NetworkPacket::C_INIT;
     packet->data.c_init.protocol_version = NetworkPacket::PROTOCOL_VERSION;
 
-    StringVector strings;
-    strings.push_back("Nick");
-    size_t new_packet_size = setupNetworkPacketStrings(packet, packet_size, strings);
+    size_t new_packet_size = setupNetworkPacketString(packet, packet_size, conf->gets("net.name", "noname01"));
 
     ENetPacket* enet_packet = enet_packet_create(packet,
                                                  new_packet_size,
@@ -155,7 +216,6 @@ void GameLabyrinth::clientReceiveS_WORLD(NetworkPacket* packet, size_t dataLengt
         graphEngine->inject(world);
     }
     createPhysicWorld();
-    netTimer.start();
     log_msg("net", "World created");
     server.client_state = PLAYING;
     clientSendC_WORLD_LOADED();
