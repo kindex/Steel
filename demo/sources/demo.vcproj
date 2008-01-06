@@ -349,6 +349,18 @@
 					>
 				</File>
 				<File
+					RelativePath=".\20_labyrinth\network.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\20_labyrinth\network_client.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\20_labyrinth\network_server.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\20_labyrinth\steel_nx.h"
 					>
 				</File>

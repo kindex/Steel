@@ -130,12 +130,19 @@ private:
         } data;
     };
     size_t setupNetworkPacketStrings(NetworkPacket*& packet, const size_t size, const StringVector& strings) const;
-	void processServer();
+    
+    // Server side
+	void serverProcess();
     void serverSendWorld(Client* client);
     void serverSendInit(Client* client);
-	void processClient();
-	void sendInformationToClients();
-	void disconnectFromServer();
+	void serverSendInformationToClients();
+
+    // Client side
+	void clientProcess();
+    void clientReceiveS_INIT(NetworkPacket* packet, size_t dataLength);
+    void clientReceiveS_WORLD(NetworkPacket* packet, size_t dataLength);
+    void clientReceiveS_CHARACTER_UPDATE(NetworkPacket* packet, size_t dataLength);
+	void clientDisconnectFromServer();
 };
 
 #endif
