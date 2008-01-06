@@ -71,6 +71,10 @@ void GameLabyrinth::serverProcess()
                         serverReceive_PING(client, packet, event.packet->dataLength);
                         break;
 
+                    case NetworkPacket::CHAR_UPDATE:
+                        serverReceive_CHAR_UPDATE(client, packet, event.packet->dataLength);
+                        break;
+
                     default:
                         log_msg("net", "Ignoring packet with kind " + IntToStr(packet->kind) + "  from " + peer_name);
                         break;
@@ -177,26 +181,42 @@ void GameLabyrinth::serverSendS_BIND_CHAR(Client* client, size_t characterIndex)
 
 void GameLabyrinth::serverSendInformationToClients()
 {
-    if (netTimer.lap() > 1.0/30.0 && !clients.empty()) // max 30 fps
+    if (netTimer.lap() > 1.0/100.0 && !clients.empty()) // max 100 fps
     {
         for EACH(ClientVector, clients, client)
         {
             if ((*client)->state == PLAYING)
             {
-                size_t packet_size = sizeof(NetworkPacket::PacketKind) + 
-                                     sizeof(size_t) + 
-                                     characters.size()*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition);
-                NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
-                packet->kind = NetworkPacket::CHAR_UPDATE;
-                packet->data.character_update.character_count = characters.size();
+                size_t total = characters.size();
                 for (size_t i = 0; i < characters.size(); i++)
                 {
-                    NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = packet->data.character_update.character_position[i];
+                    if ((*client)->character == characters[i])
+                    {
+                        total--;
+                        break;
+                    }
+                }
 
-                    pos.characterId = i;
-                    pos.position = characters[i]->getPosition();
-                    pos.linear_velocity = to_simple(characters[i]->getVelocity());
-                    pos.linear_momentum = to_simple(characters[i]->getMomentum());
+                size_t packet_size = sizeof(NetworkPacket::PacketKind) + 
+                                     sizeof(size_t) + 
+                                     total*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition);
+
+                NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
+                packet->kind = NetworkPacket::CHAR_UPDATE;
+                packet->data.character_update.character_count = total;
+                size_t j = 0;
+                for (size_t i = 0; i < characters.size(); i++)
+                {
+                    if ((*client)->character != characters[i])
+                    {
+                        NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = packet->data.character_update.character_position[j];
+
+                        pos.characterId = i;
+                        pos.position = characters[i]->getPosition();
+                        pos.linear_velocity = to_simple(characters[i]->getVelocity());
+                        pos.linear_momentum = to_simple(characters[i]->getMomentum());
+                        j++;
+                    }
                 }
                 ENetPacket* enet_packet = 
                     enet_packet_create(packet, 
@@ -243,6 +263,7 @@ void GameLabyrinth::serverReceiveC_WORLD_LOADED(Client* client, NetworkPacket* p
         {
             characters[i]->owner = Character::CLIENT;
             characters[i]->clientId = client->clientId;
+            client->character = characters[i];
 
             serverSendS_BIND_CHAR(client, i);
             break;
@@ -281,11 +302,34 @@ void GameLabyrinth::serverDisconnectClient(Client* client)
         if (*it == client)
         {
             log_msg("net", "Client " + client->getNetworkName() + " dropped");
+            if (client->character != NULL)
+            {
+                client->character->owner = Character::FREE;
+            }
             client->disconenct();
             delete client;
             *it = clients.back();
             clients.pop_back();
             break;
         }
+    }
+}
+
+void GameLabyrinth::serverReceive_CHAR_UPDATE(Client* client, NetworkPacket* packet, size_t dataLength)
+{
+    NetworkPacket::Format::S_CharacterUpdate& info = packet->data.character_update;
+    net_assert(dataLength == 
+                sizeof(NetworkPacket::PacketKind) + 
+                sizeof(size_t) + 
+                info.character_count*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition));
+    net_assert(client->state == PLAYING);
+
+    for (size_t i = 0; i < info.character_count; i++)
+    {
+        NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = info.character_position[i];
+        size_t index = info.character_position[i].characterId;
+        characters[index]->setPosition(pos.position);
+        characters[index]->setVelocity(pos.linear_velocity);
+        characters[index]->setMomentum(pos.linear_momentum);
     }
 }

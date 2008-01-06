@@ -144,6 +144,7 @@ private:
     void serverReceiveC_INIT(Client* client, NetworkPacket* packet, size_t dataLength);
     void serverReceiveC_WORLD_LOADED(Client* client, NetworkPacket* packet, size_t dataLength);
     void serverReceive_PING(Client* client, NetworkPacket* packet, size_t dataLength);
+    void serverReceive_CHAR_UPDATE(Client* client, NetworkPacket* packet, size_t dataLength);
 
     // Client side
     bool clientInit();
@@ -151,6 +152,7 @@ private:
 	void clientProcess();
 	void clientDisconnectFromServer();
 
+    void clientSendInformationToServer();
     void clientSendC_INIT();
     void clientSendC_WORLD_LOADED();
     void clientSend_PING();

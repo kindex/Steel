@@ -26,7 +26,6 @@
 #include "../main.h"
 #include "steel_nx.h"
 
-
 void GameLabyrinth::clientProcess()
 {
     ENetEvent event;
@@ -91,6 +90,7 @@ void GameLabyrinth::clientProcess()
             }
         }
     }
+    clientSendInformationToServer();
     if (server.peer != NULL && (server.lastPingRequest < 0 || server.lastPingRequest + conf->getf("net.ping_interval", 1.0f) <= netTimer.total()))
     {
         clientSend_PING();
@@ -254,6 +254,7 @@ void GameLabyrinth::clientReceive_CHAR_UPDATE(NetworkPacket* packet, size_t data
     {
         NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = info.character_position[i];
         size_t index = info.character_position[i].characterId;
+        net_assert(index < characters.size());
         characters[index]->setPosition(pos.position);
         characters[index]->setVelocity(pos.linear_velocity);
         characters[index]->setMomentum(pos.linear_momentum);
@@ -266,7 +267,9 @@ void GameLabyrinth::clientReceiveS_BIND_CHAR(NetworkPacket* packet, size_t dataL
     log_msg("net", "received S_BIND_CHAR to " + server.getNetwornName());
     net_assert(dataLength ==  sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_BindCharacter));
     size_t character_index = packet->data.s_bind_character.character_index;
+    net_assert(character_index < characters.size());
     character = characters[character_index];
+    character->input = input;
 }
 
 void GameLabyrinth::clientSend_PING()
@@ -289,4 +292,38 @@ void GameLabyrinth::clientReceive_PONG(NetworkPacket* packet, size_t dataLength)
 {
     net_assert(dataLength == sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::Pong));
     server.ping = netTimer.total() - packet->data.pong.timestamp;
+}
+
+void GameLabyrinth::clientSendInformationToServer()
+{
+    if (character != NULL && server.peer != NULL)
+    {
+        size_t packet_size = sizeof(NetworkPacket::PacketKind) + 
+                             sizeof(size_t) + 
+                             sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition);
+
+        NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
+        packet->kind = NetworkPacket::CHAR_UPDATE;
+        packet->data.character_update.character_count = 1;
+        for (size_t i = 0; i < characters.size(); i++)
+        {
+            if (characters[i] == character)
+            {
+                NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = packet->data.character_update.character_position[0];
+
+                pos.characterId = i;
+                pos.position = characters[i]->getPosition();
+                pos.linear_velocity = to_simple(characters[i]->getVelocity());
+                pos.linear_momentum = to_simple(characters[i]->getMomentum());
+            }
+        }
+        ENetPacket* enet_packet = 
+            enet_packet_create(packet, 
+                               packet_size,
+                               0);
+
+        enet_peer_send(server.peer, 0, enet_packet);
+        free(packet);
+        enet_host_flush(host);
+    }
 }

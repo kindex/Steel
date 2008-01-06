@@ -159,10 +159,6 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     }
     netTimer.start();
 
-    if (character != NULL)
-    {
-        character->input = input;
-    }
     spectator.camera.setDirection(v3(1,1,-0.3f));
 
     createPhysicWorld();
@@ -288,6 +284,8 @@ bool GameLabyrinth::createCharacter()
             {
                 characters[i]->owner = Character::SERVER;
                 character = characters[i];
+                character->input = input;
+
                 break;
             }
         }

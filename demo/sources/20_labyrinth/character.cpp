@@ -62,9 +62,6 @@ void Character::process(const ProcessInfo& info)
 			        + dir.y*v3(-direction2.y, direction2.x, 0).getNormalized()
 			        + dir.z*v3(0, 0, 1);
 
-
-            //position.setTranslation(position.getTranslation() + dir);
-
             NxReal gForceStrength = force*info.timeInfo.frameLength;
 
             NxVec3 old_vec = physic_object->getLinearVelocity();
