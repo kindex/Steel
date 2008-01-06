@@ -96,9 +96,7 @@ GameLabyrinth::GameLabyrinth():
     host(NULL),
     net_role(NET_SINGLE),
     pScene(NULL),
-    physicsSDK(NULL),
-    server(NULL),
-    client_state(Client::DISCONNECTED)
+    physicsSDK(NULL)
 {}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
@@ -192,23 +190,23 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
         address.port = conf->geti("net.port", 2007);
 
         /* Initiate the connection, allocating the two channels 0 and 1. */
-        server = enet_host_connect(host, &address, 2);
+        server.peer = enet_host_connect(host, &address, 2);
         
-        if (server == NULL)
+        if (server.peer == NULL)
         {
            abort_init("net", "No available peers for initiating an ENet connection");
         }
         
-        if (enet_host_service (host, &event, timeout) > 0 &&
+        if (enet_host_service(host, &event, timeout) > 0 &&
             event.type == ENET_EVENT_TYPE_CONNECT)
         {
-            log_msg("net", "Connection to " + remote_addr + ":" + IntToStr(address.port)+ " succeeded");
-            client_state = Client::CONNECTING;
+            log_msg("net", "Connection to " + server.getNetwornName() + " succeeded");
+            server.client_state = CONNECTING;
         }
         else
         {
-            enet_peer_reset(server);
-            server = NULL; // TODO: delete server
+            enet_peer_reset(server.peer);
+            server.peer = NULL; // TODO: delete server
             abort_init("net", "Connection to " + remote_addr + ":" + IntToStr(address.port)+ " failed.");
         }
 
@@ -235,7 +233,7 @@ void GameLabyrinth::Client::disconenct()
 {
     if (peer != NULL)
     {
-        log_msg("net", "Disconnecting client " + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port));
+        log_msg("net", "Disconnecting client " + getNetworkName());
         enet_peer_disconnect_now(peer, 0);
         state = DISCONNECTED;
         peer->data = NULL;
@@ -253,7 +251,7 @@ GameLabyrinth::~GameLabyrinth()
             delete *client;
         }
         clients.clear();
-        if (server != NULL)
+        if (server.peer != NULL)
         {
             clientDisconnectFromServer();
         }
@@ -424,7 +422,7 @@ std::string GameLabyrinth::getWindowCaption()
     switch (net_role)
     {
     case NET_CLIENT:
-        if (server == NULL)
+        if (server.peer == NULL)
         {
             str += " disconnected";
         }
@@ -432,13 +430,14 @@ std::string GameLabyrinth::getWindowCaption()
         {
             str += " sync/s: " + netTimer.getfps_s();
         }
-        switch (client_state)
+        switch (server.client_state)
         {
-            case Client::LOADING_WORLD: str += " Loading world"; break;
-            case Client::CONNECTING:    str += " Connecting";    break;
-            case Client::PLAYING:       str += " Playing";       break;
-            case Client::DISCONNECTED:  str += " Disconencted";  break;
+            case LOADING_WORLD: str += " Loading world"; break;
+            case CONNECTING:    str += " Connecting";    break;
+            case PLAYING:       str += " Playing";       break;
+            case DISCONNECTED:  str += " Disconencted";  break;
         }
+        str += " ping: " + FloatToStr(server.ping*1000);
         break;
 
     case NET_SERVER:
@@ -699,6 +698,13 @@ size_t GameLabyrinth::setupNetworkPacketStrings(NetworkPacket*& packet, const si
     return size + strings_size;
 }
 
+size_t GameLabyrinth::setupNetworkPacketString(NetworkPacket*& packet, const size_t size, const std::string& string) const
+{
+    StringVector strings;
+    strings.push_back(string);
+    return setupNetworkPacketStrings(packet, size, strings);
+}
+
 StringVector GameLabyrinth::NetworkPacket::extractStrings(size_t offset, size_t total_size) const
 {
     unsigned int string_count = *(unsigned int*)((char*)(this) + offset);
@@ -720,4 +726,21 @@ StringVector GameLabyrinth::NetworkPacket::extractStrings(size_t offset, size_t 
     }
 
     return result;
+}
+
+std::string GameLabyrinth::NetworkPacket::extractString(size_t offset, size_t total_size) const
+{
+    StringVector strings = NetworkPacket::extractStrings(offset, total_size);
+    assert(strings.size() == 1);
+    return strings[0];
+}
+
+std::string GameLabyrinth::Client::getNetworkName() const
+{
+    return name + "@" + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port);
+}
+
+std::string GameLabyrinth::Server::getNetwornName() const
+{
+    return IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port);
 }

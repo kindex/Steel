@@ -73,25 +73,41 @@ private:
 // --------------------- Net -----------------------
 	Timer         netTimer;
     ENetHost*     host;
-    ENetPeer*     server;
+
+    enum ClientState
+    {
+        DISCONNECTED,
+        CONNECTING,
+        LOADING_WORLD,
+        PLAYING,
+    };
+// for client
+    struct Server
+    {
+        Server(): peer(NULL), client_state(DISCONNECTED), ping(-1.0f), lastPingRequest(-1.0f) {} 
+        std::string getNetwornName() const;
+
+        ENetPeer*   peer;
+        steel::time ping;
+        steel::time lastPingRequest;
+        ClientState client_state;
+    } server;
+
+// for server
     struct Client
     {
         Client(ENetPeer* peer) : peer(peer), character(NULL), state(DISCONNECTED) {}
-        enum ClientState
-        {
-            DISCONNECTED,
-            CONNECTING,
-            LOADING_WORLD,
-            PLAYING,
-        } state;
-        ENetPeer*  peer;
-        Character* character;
         void disconenct();
+        std::string getNetworkName() const;
+
+        ClientState state;
+        ENetPeer*   peer;
+        Character*  character;
+        std::string name;
     };
     typedef std::vector<Client*> ClientVector;
     ClientVector clients;
-    Client::ClientState client_state;
-
+// common
     enum NetRole
     {
         NET_SINGLE,
@@ -101,7 +117,8 @@ private:
 
     struct NetworkPacket
     {
-        static const unsigned int PROTOCOL_VERSION = SVN_REVISION;
+        typedef unsigned int ProtocolVersion;
+        static const ProtocolVersion PROTOCOL_VERSION = SVN_REVISION;
         enum PacketKind
         {
             S_CHARACTER_UPDATE = 0x1000,
@@ -109,11 +126,12 @@ private:
             C_INIT,
             S_WORLD,
             C_WORLD_LOADED,
-            SC_PING,
-            SC_PONG,
+            PING,
+            PONG,
         } kind;
 
         StringVector extractStrings(size_t offset, size_t total_size) const;
+        std::string extractString(size_t offset, size_t total_size) const;
         union Format
         {
             struct S_CharacterUpdate
@@ -125,24 +143,55 @@ private:
             } character_update; // P_CHARACTER_UPDATE
             struct S_Init
             {
-                unsigned int protocol_version;
-            } init;
+                ProtocolVersion protocol_version;
+            } s_init;
+            struct C_Init
+            {
+                ProtocolVersion protocol_version;
+            } c_init;
+            struct C_WorldLoaded
+            {
+            } c_worldLoaded;
+            struct Ping
+            {
+                steel::time timestamp;
+            } ping;
+            struct Pong
+            {
+                steel::time timestamp;
+            } pong;
         } data;
-    };
+    }; // struct NetworkPacket
     size_t setupNetworkPacketStrings(NetworkPacket*& packet, const size_t size, const StringVector& strings) const;
+    size_t setupNetworkPacketString(NetworkPacket*& packet, const size_t size, const std::string& string) const;
     
     // Server side
 	void serverProcess();
+    void serverDisconnectClient(Client* client);
+
+	void serverSendInformationToClients();
     void serverSendWorld(Client* client);
     void serverSendInit(Client* client);
-	void serverSendInformationToClients();
+    void serverSend_PONG(Client* client, const NetworkPacket::Format::Ping& pingRequest);
+
+    void serverReceiveC_INIT(Client* client, NetworkPacket* packet, size_t dataLength);
+    void serverReceiveC_WORLD_LOADED(Client* client, NetworkPacket* packet, size_t dataLength);
+    void serverReceive_PING(Client* client, NetworkPacket* packet, size_t dataLength);
 
     // Client side
 	void clientProcess();
+	void clientDisconnectFromServer();
+
+    void clientSendC_INIT();
+    void clientSendC_WORLD_LOADED();
+    void clientSend_PING();
+
     void clientReceiveS_INIT(NetworkPacket* packet, size_t dataLength);
     void clientReceiveS_WORLD(NetworkPacket* packet, size_t dataLength);
     void clientReceiveS_CHARACTER_UPDATE(NetworkPacket* packet, size_t dataLength);
-	void clientDisconnectFromServer();
+    void clientReceive_PONG(NetworkPacket* packet, size_t dataLength);
 };
+
+#define net_assert(expr) { if (!(expr)) { error("net", "illegal packet"); return; } }
 
 #endif
