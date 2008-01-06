@@ -3,62 +3,34 @@
 class = 'combiner'
 objects = 
 (
-	{
+	[character.scene#] { origin = (0 1 1) }
+	[character.scene#] { origin = (0 0 1) }
+
+	[/sun.conf#] {	origin = (-95 -42 31)}
+	[/sun_ambient.conf#] {	origin = (90 90 90)}
+	[floor.scene#] {}
+
+	{ // skybox
 		class = 'combiner'
-		origin = (0 0 1)
-		objects = (
+		scale = (200 200 200)
+		graph = 
+		{
+			class = 'model'
+			file = 'skybox'
+			material = 
 			{
-				class = 'character'
-				health = 100
-				force = 10
-				graph = {
-					class = 'combiner'
-					graph = {
-						class = 'box'
-						size = (0.25 0.25 0.25)
-						material = 
-						{
-							class = 'std'
-							blend = 0
-							dropShadows = 0
-							diffuse_map =
-							{ 
-								image = '/none'
-							}
-						}
-					}
-				} // graph
-			} // character
-		)
+				class = 'std'
+				blend = 0
+				catchShadows = 0
+				dropShadows = 0
+				ambient_k = 0
+				env_map =
+				{ 
+					image = '/image/env/network'
+					type = 'sky'
+				}
+			} // graph
+		}
 	} // combiner
-	
-
-[/sun.conf#] {	origin = (-95 -42 31)}
-[/sun_ambient.conf#] {	origin = (90 90 90)}
-
-[floor.scene#] {}
-
-{
-class = 'combiner'
-scale = (200 200 200)
-graph = 
-{
-class = 'model'
-file = 'skybox'
-material = 
-{
-class = 'std'
-blend = 0
-catchShadows = 0
-dropShadows = 0
-ambient_k = 0
-env_map =
-{ 
-	image = '/image/env/network'
-	type = 'sky'
-}
-}
-}
-}
 ) // objects
 } // scene

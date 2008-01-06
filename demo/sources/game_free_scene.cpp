@@ -44,26 +44,29 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 
 	spectator.velocity.loadZero();
 
-	Config* scene = conf->find("scene");
-	if (scene == NULL)
-	{
-		error("game res", "Cannot find scene config");
-		return false;
-	}
+    if (conf->gets("net.role") != "client")
+    {
+	    Config* scene = conf->find("scene");
+	    if (scene == NULL)
+	    {
+		    error("game res", "Cannot find scene config");
+		    return false;
+	    }
 
-	std::string world_class;
-	GameObject* world_loaded = createGameObject(scene, &world_class);
-	if (world_loaded == NULL)
-	{
-		error("game", "Cannot init scene");
-		return false;
-	}
-	if (world_class != "combiner")
-	{
-		error("game", "Scene can only be of combiner class");
-		return false;
-	}
-	world = static_cast<Combiner*>(world_loaded);
+	    std::string world_class;
+	    GameObject* world_loaded = createGameObject(scene, &world_class);
+	    if (world_loaded == NULL)
+	    {
+		    error("game", "Cannot init scene");
+		    return false;
+	    }
+	    if (world_class != "combiner")
+	    {
+		    error("game", "Scene can only be of combiner class");
+		    return false;
+	    }
+	    world = static_cast<Combiner*>(world_loaded);
+    }
 	
 	Config* flashlightConf = resConfig.add("flashlight.conf");
 	if (flashlightConf != NULL)
@@ -89,9 +92,6 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 	physicTimer.start(); physicTimer.pause();
 	infoTimer.start(); infoTimer.pause();
 	graphTimer.start(); graphTimer.pause();
-
-	//static_cast<GameLight*>(static_cast<Combiner*>(world)->getObject(0))->toggleEnable();
-//	static_cast<GameLight*>(static_cast<Combiner*>(world)->getObject(0))->toggleEnable();
 
 	return true;
 }
@@ -232,7 +232,10 @@ void GameFreeScene::process()
 
 	if (timeInfo.frameLength > EPSILON)
 	{
-		world->process(info);
+        if (world != NULL)
+        {
+		    world->process(info);
+        }
 		physicTimer.incframe();
 	}
 

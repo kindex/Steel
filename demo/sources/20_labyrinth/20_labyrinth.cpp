@@ -46,14 +46,22 @@ class AgeiaInjector : public Visitor
 public:
     AgeiaInjector(GameLabyrinth& game) : 
         game(game),
-        inChar(0)
+        inChar(0),
+        current_char(NULL)
     {}
 
 private:
     bool visit(IN OUT GameObject* object)
     {
-        bool is_char = dynamic_cast<Character*>(object) != NULL;
-        if (is_char || inChar > 0)
+        if (inChar == 0)
+        {
+            current_char = dynamic_cast<Character*>(object);
+            if (current_char != NULL)
+            {
+                inChar++;
+            }
+        }
+        else
         {
             inChar++;
         }
@@ -74,19 +82,25 @@ private:
             {
                 actor = game.createSurface(*dynamic_cast<GraphObject*>(object), base_position, inChar == 0);
             }
-            if (inChar != 0 && game.character != NULL)
+            if (current_char != NULL)
             {
-                actor->userData = (void*)(1);
-                game.character->physic_object = actor;
+                actor->userData = current_char;
+                current_char->physic_object = actor;
             }
         }
         if (inChar > 0)
         {
             inChar--;
         }
+        if (inChar == 0)
+        {
+            current_char = NULL;
+        }
+        
     }
 
     GameLabyrinth& game;
+    Character*     current_char;
     int inChar;
 };
 
@@ -261,11 +275,24 @@ bool GameLabyrinth::createCharacter()
 
     if (characterCollector.characters.empty())
     {
-        abort_init("labyrinth", "No character was found");
+        abort_init("labyrinth", "No characters was found");
     }
 
     characters = characterCollector.characters;
-    character = characters[0];
+
+    if (net_role == NET_SERVER)
+    {
+        for (size_t i = 0; i < characters.size(); i++)
+        {
+            if (characters[i]->owner == Character::FREE)
+            {
+                characters[i]->owner = Character::SERVER;
+                character = characters[i];
+                break;
+            }
+        }
+    }
+
     return true;
 }
 
@@ -331,6 +358,10 @@ void GameLabyrinth::handleMouse(double dx, double dy)
         dir.rotateZ(dx*0.1);
         dir.rotateAxis(-dy*0.1, dir.crossProduct(v3(0,0,1).getNormalized()));
         spectator.camera.setDirection(dir);
+        if (character != NULL)
+        {
+            character->setDirection(dir);
+        }
     }
     else
     {
@@ -384,20 +415,6 @@ std::string GameLabyrinth::getWindowCaption()
 
 void GameLabyrinth::draw(GraphEngine& graph)
 {
-	// Render all actors
-	int nbActors = pScene->getNbActors();
-	NxActor** actors = pScene->getActors();
-	while (nbActors--)
-	{
-		NxActor* actor = *actors++;
-		if (!actor->userData)
-		{
-			continue;
-		}
-        character->setPosition(to_matrix34(actor->getGlobalPose()));
-        character->setDirection(spectator.camera.getDirection());
-	}
-
     if (cameraMode == C_FIXED && character != NULL)
     {
         float len = 2;
@@ -468,8 +485,11 @@ bool GameLabyrinth::createPhysicWorld()
 	defaultMaterial->setStaticFriction(conf->getf("physic.static_friction", 0.5f));
 	defaultMaterial->setDynamicFriction(conf->getf("physic.dynamic_friction", 0.5f));
 
-    AgeiaInjector visitor(*this);
-    world->traverse(visitor, ObjectPosition::getIdentity());
+    if (world != NULL)
+    {
+        AgeiaInjector visitor(*this);
+        world->traverse(visitor, ObjectPosition::getIdentity());
+    }
 
 	return true;
 }
@@ -631,36 +651,6 @@ size_t GameLabyrinth::setupNetworkPacketString(NetworkPacket*& packet, const siz
     StringVector strings;
     strings.push_back(string);
     return setupNetworkPacketStrings(packet, size, strings);
-}
-
-StringVector GameLabyrinth::NetworkPacket::extractStrings(size_t offset, size_t total_size) const
-{
-    unsigned int string_count = *(unsigned int*)((char*)(this) + offset);
-    cassert(sizeof(string_count) == 4);
-    offset += sizeof(string_count);
-    StringVector result;
-    for (unsigned int i = 0; i < string_count; i++)
-    {
-        unsigned int string_length = *(unsigned int*)((char*)(this) + offset);
-        offset += sizeof(string_length);
-        char* string_ptr = ((char*)(this) + offset);
-        if (offset + string_length > total_size)
-        {
-            error("net", "Illegal packet");
-            return result;
-        }
-        std::string str(string_ptr, string_length);
-        result.push_back(str);
-    }
-
-    return result;
-}
-
-std::string GameLabyrinth::NetworkPacket::extractString(size_t offset, size_t total_size) const
-{
-    StringVector strings = NetworkPacket::extractStrings(offset, total_size);
-    assert(strings.size() == 1);
-    return strings[0];
 }
 
 std::string GameLabyrinth::Client::getNetworkName() const

@@ -58,12 +58,16 @@ void GameLabyrinth::clientProcess()
                         break;
                     }
 
-                    case NetworkPacket::S_CHARACTER_UPDATE:
-                        clientReceiveS_CHARACTER_UPDATE(packet, event.packet->dataLength);
+                    case NetworkPacket::CHAR_UPDATE:
+                        clientReceive_CHAR_UPDATE(packet, event.packet->dataLength);
                         break;
 
                     case NetworkPacket::PONG:
                         clientReceive_PONG(packet, event.packet->dataLength);
+                        break;
+
+                    case NetworkPacket::S_BIND_CHAR:
+                        clientReceiveS_BIND_CHAR(packet, event.packet->dataLength);
                         break;
 
                     default:
@@ -111,10 +115,10 @@ bool GameLabyrinth::clientInit()
         abort_init("net", "An error occurred while trying to create an ENet client host");
     }
     netTimer.start();
+    character = NULL;
 
     clientConnectToServer();
 
-    character = NULL;
     return true;
 }
 
@@ -237,17 +241,32 @@ void GameLabyrinth::clientSendC_WORLD_LOADED()
     free(packet);
 }
 
-void GameLabyrinth::clientReceiveS_CHARACTER_UPDATE(NetworkPacket* packet, size_t dataLength)
+void GameLabyrinth::clientReceive_CHAR_UPDATE(NetworkPacket* packet, size_t dataLength)
 {
-    net_assert(dataLength == sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_CharacterUpdate));
+    NetworkPacket::Format::S_CharacterUpdate& info = packet->data.character_update;
+    net_assert(dataLength == 
+                sizeof(NetworkPacket::PacketKind) + 
+                sizeof(size_t) + 
+                info.character_count*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition));
     net_assert(server.client_state == PLAYING);
-    if (character != NULL)
+
+    for (size_t i = 0; i < info.character_count; i++)
     {
-        character->setPosition(packet->data.character_update.position);
-        character->setVelocity(packet->data.character_update.linear_velocity);
-        character->setMomentum(packet->data.character_update.linear_momentum);
-        netTimer.incframe();
+        NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = info.character_position[i];
+        size_t index = info.character_position[i].characterId;
+        characters[index]->setPosition(pos.position);
+        characters[index]->setVelocity(pos.linear_velocity);
+        characters[index]->setMomentum(pos.linear_momentum);
     }
+    netTimer.incframe();
+}
+
+void GameLabyrinth::clientReceiveS_BIND_CHAR(NetworkPacket* packet, size_t dataLength)
+{
+    log_msg("net", "received S_BIND_CHAR to " + server.getNetwornName());
+    net_assert(dataLength ==  sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_BindCharacter));
+    size_t character_index = packet->data.s_bind_character.character_index;
+    character = characters[character_index];
 }
 
 void GameLabyrinth::clientSend_PING()

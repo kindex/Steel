@@ -33,7 +33,7 @@ public:
 
     float getHealth() const { return health; }
     bool isAlive() const {return alive;}
-    const ObjectPosition& getPosition() const;
+    ObjectPosition getPosition() const;
     v3 getVelocity() const;
     v3 getMomentum() const;
     void setPosition(const ObjectPosition&);
@@ -41,6 +41,13 @@ public:
     void setMomentum(const v3&);
     void setDirection(const v3&);
     void setInput(Input*);
+
+    enum Owner
+    {
+        FREE,
+        SERVER,
+        CLIENT
+    };
 
     friend class GameLabyrinth;
     friend class AgeiaInjector;
@@ -51,11 +58,14 @@ private:
     bool alive;
     GameObject*    graph_object;
     NxActor*       physic_object;
-    ObjectPosition position;
     ObjectPosition origin;
     v3             direction;
 	Input*         input;
     uid            characterId; // synchronized on all clients
+    Owner          owner;
+    uid            clientId;
 };
+
+typedef std::vector<Character*> CharacterVector;
 
 #endif

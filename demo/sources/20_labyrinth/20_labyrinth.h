@@ -16,11 +16,10 @@
 #include "../game_free_scene.h"
 #include "labyrinth_generator.h"
 #include "character.h"
+#include "network_protocol.h"
 
 #include <objects/combiner/graph_object.h>
 #include <enet/enet.h>
-#include <common/containers/string_vector.h>
-#include "../svn.inc"
 
 typedef std::vector<GraphObject*> GraphObjectVector;
 
@@ -50,7 +49,7 @@ private:
 	int count[2];
 // -------------------- Game --------------------
     Character* character;
-    std::vector<Character*> characters;
+    CharacterVector characters;
 
     enum GameState {
         GAME_PLAYING,
@@ -103,7 +102,12 @@ private:
 // for server
     struct Client
     {
-        Client(ENetPeer* peer) : peer(peer), character(NULL), state(DISCONNECTED) {}
+        Client(ENetPeer* peer) : 
+            peer(peer),
+            character(NULL),
+            state(DISCONNECTED),
+            clientId(objectIdGenerator.genUid())
+        {}
         void disconenct();
         std::string getNetworkName() const;
 
@@ -111,6 +115,7 @@ private:
         ENetPeer*   peer;
         Character*  character;
         std::string name;
+        uid         clientId;
     };
     typedef std::vector<Client*> ClientVector;
     ClientVector clients;
@@ -122,53 +127,6 @@ private:
         NET_CLIENT,
     } net_role;
 
-    struct NetworkPacket
-    {
-        typedef unsigned int ProtocolVersion;
-        static const ProtocolVersion PROTOCOL_VERSION = SVN_REVISION;
-        enum PacketKind
-        {
-            S_CHARACTER_UPDATE = 0x1000,
-            S_INIT,
-            C_INIT,
-            S_WORLD,
-            C_WORLD_LOADED,
-            PING,
-            PONG,
-        } kind;
-
-        StringVector extractStrings(size_t offset, size_t total_size) const;
-        std::string extractString(size_t offset, size_t total_size) const;
-        union Format
-        {
-            struct S_CharacterUpdate
-            {
-                uid            characterId;
-                ObjectPosition position;
-                v3simple       linear_velocity;
-                v3simple       linear_momentum;
-            } character_update; // P_CHARACTER_UPDATE
-            struct S_Init
-            {
-                ProtocolVersion protocol_version;
-            } s_init;
-            struct C_Init
-            {
-                ProtocolVersion protocol_version;
-            } c_init;
-            struct C_WorldLoaded
-            {
-            } c_worldLoaded;
-            struct Ping
-            {
-                steel::time timestamp;
-            } ping;
-            struct Pong
-            {
-                steel::time timestamp;
-            } pong;
-        } data;
-    }; // struct NetworkPacket
     size_t setupNetworkPacketStrings(NetworkPacket*& packet, const size_t size, const StringVector& strings) const;
     size_t setupNetworkPacketString(NetworkPacket*& packet, const size_t size, const std::string& string) const;
     
@@ -179,7 +137,8 @@ private:
 
 	void serverSendInformationToClients();
     void serverSendWorld(Client* client);
-    void serverSendInit(Client* client);
+    void serverSendS_INIT(Client* client);
+    void serverSendS_BIND_CHAR(Client* client, size_t characterIndex);
     void serverSend_PONG(Client* client, const NetworkPacket::Format::Ping& pingRequest);
 
     void serverReceiveC_INIT(Client* client, NetworkPacket* packet, size_t dataLength);
@@ -198,7 +157,8 @@ private:
 
     void clientReceiveS_INIT(NetworkPacket* packet, size_t dataLength);
     void clientReceiveS_WORLD(NetworkPacket* packet, size_t dataLength);
-    void clientReceiveS_CHARACTER_UPDATE(NetworkPacket* packet, size_t dataLength);
+    void clientReceive_CHAR_UPDATE(NetworkPacket* packet, size_t dataLength);
+    void clientReceiveS_BIND_CHAR(NetworkPacket* packet, size_t dataLength);
     void clientReceive_PONG(NetworkPacket* packet, size_t dataLength);
 };
 

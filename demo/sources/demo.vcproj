@@ -263,7 +263,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="svn.py"
+						CommandLine="svn.py&#x0D;&#x0A;"
 						AdditionalDependencies="../../.svn/entries"
 						Outputs="svn.inc"
 					/>
@@ -357,6 +357,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\20_labyrinth\network_protocol.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\20_labyrinth\network_protocol.h"
+					>
+				</File>
+				<File
 					RelativePath=".\20_labyrinth\network_server.cpp"
 					>
 				</File>
@@ -367,6 +375,10 @@
 				<Filter
 					Name="data"
 					>
+					<File
+						RelativePath="..\data\20_labyrinth\character.scene"
+						>
+					</File>
 					<File
 						RelativePath="..\data\20_labyrinth\down.scene"
 						>

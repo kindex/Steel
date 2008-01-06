@@ -1,0 +1,29 @@
+# Character
+{
+	class = 'combiner'
+	origin = (0 0 1)
+	objects = (
+		{
+			class = 'character'
+			health = 100
+			force = 10
+			graph = {
+				class = 'combiner'
+				graph = {
+					class = 'box'
+					size = (0.25 0.25 0.25)
+					material = 
+					{
+						class = 'std'
+						blend = 0
+						dropShadows = 0
+						diffuse_map =
+						{ 
+							image = '/none'
+						}
+					}
+				}
+			} // graph
+		} // character
+	)
+} // combiner - character

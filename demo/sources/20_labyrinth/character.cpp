@@ -20,9 +20,12 @@
 
 Character::Character():
     graph_object(NULL),
-    position(matrix34::getIdentity()),
     origin(matrix34::getIdentity()),
-    input(NULL)
+    input(NULL),
+    physic_object(NULL),
+    direction(v3(1, 0, 0)),
+    owner(FREE),
+    clientId(0)
 {}
 
 bool Character::supportsInterface(IN OUT Engine&, IN const InterfaceId id)
@@ -35,7 +38,7 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
     if (id == INTERFACE_GRAPH)
     {
         dynamic_cast<GraphInterface*>(&engine)->setPositionKind(POSITION_GLOBAL);
-        dynamic_cast<GraphInterface*>(&engine)->setPosition(position);
+        dynamic_cast<GraphInterface*>(&engine)->setPosition(getPosition());
         return true;
     }
     return false;
@@ -50,21 +53,23 @@ void Character::process(const ProcessInfo& info)
         if (input->isPressed("s")) dir += v3(-1,  0, 0);
         if (input->isPressed("a")) dir += v3( 0, +1, 0);
         if (input->isPressed("d")) dir += v3( 0, -1, 0);
+        if (dir.getSquaredLength() != 0)
+        {
+            v3 direction2 = direction;
+            direction2.z = 0;
+            direction2.getNormalized();
+	        v3 forceDirection = dir.x*direction2
+			        + dir.y*v3(-direction2.y, direction2.x, 0).getNormalized()
+			        + dir.z*v3(0, 0, 1);
 
-        v3 direction2 = direction;
-        direction2.z = 0;
-        direction2.getNormalized();
-	    v3 forceDirection = dir.x*direction2
-			    + dir.y*v3(-direction2.y, direction2.x, 0).getNormalized()
-			    + dir.z*v3(0, 0, 1);
 
+            //position.setTranslation(position.getTranslation() + dir);
 
-        //position.setTranslation(position.getTranslation() + dir);
+            NxReal gForceStrength = force*info.timeInfo.frameLength;
 
-        NxReal gForceStrength = force*info.timeInfo.frameLength;
-
-        NxVec3 old_vec = physic_object->getLinearVelocity();
-        physic_object->setLinearVelocity(old_vec + gForceStrength*tonx(forceDirection));
+            NxVec3 old_vec = physic_object->getLinearVelocity();
+            physic_object->setLinearVelocity(old_vec + gForceStrength*tonx(forceDirection));
+        }
     }
 }
 
@@ -99,9 +104,16 @@ void Character::bindEngine(IN OUT Engine& engine, IN const InterfaceId id)
     }
 }
 
-const ObjectPosition& Character::getPosition() const
+ObjectPosition Character::getPosition() const
 {
-    return position;
+    if (physic_object != NULL)
+    {
+        return to_matrix34(physic_object->getGlobalPose());
+    }
+    else
+    {
+        return origin;
+    }
 }
 
 v3 Character::getVelocity() const
@@ -116,7 +128,6 @@ v3 Character::getMomentum() const
 
 void Character::setPosition(const ObjectPosition& new_position)
 {
-    position = new_position;
     physic_object->setGlobalPose(tonx(new_position));
 }
 
@@ -144,7 +155,7 @@ void Character::traverse(Visitor& visitor, const ObjectPosition& base_position)
 {
     if (visitor.visit(this))
     {
-        ObjectPosition new_position = origin*position*base_position;
+        ObjectPosition new_position = origin*base_position;
 
         if (graph_object != NULL)
         {
