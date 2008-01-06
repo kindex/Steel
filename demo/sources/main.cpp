@@ -26,6 +26,7 @@
 #include "main.h"
 #include "game_factory.h"
 #include <input/input_win.h>
+#include "svn.inc"
 
 using namespace std;
 
@@ -45,6 +46,7 @@ int main(int argc, char *argv[])
 	logFilter.set("+opengl_info +system_info +windows_info");
 	steel::log.open("../steel.log");
 	log_msg("core", "Command Line: '" + commandLine + "'");
+	log_msg("core", "Steel Engine revision: " + IntToStr(SVN_REVISION) + " " + SVN_DATE);
 	CollectSystemInfo();
 
 	#if STEEL_OS == OS_WIN32
