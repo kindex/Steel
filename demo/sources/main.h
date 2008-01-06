@@ -12,8 +12,8 @@
 		плагины, содержит главный цикл игры.
  ************************************************************/
 
-#ifndef __INTRO__MAIN_H
-#define __INTRO__MAIN_H
+#ifndef _DEMO_MAIN_H_
+#define _DEMO_MAIN_H_
 
 #include <steel.h>
 #include <string>

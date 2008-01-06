@@ -256,6 +256,24 @@
 				>
 			</File>
 			<File
+				RelativePath=".\svn.inc"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="svn.py"
+						AdditionalDependencies="../../.svn/entries"
+						Outputs="svn.inc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\svn.py"
+				>
+			</File>
+			<File
 				RelativePath="..\sources\test.cpp"
 				>
 			</File>

@@ -24,6 +24,7 @@
 #include <NxCooking.h>
 #include <Stream.h>
 #include "../23_ageia_tech/error_stream.h"
+#include "../main.h"
 #include "steel_nx.h"
 
 struct CharacterCollector : public Visitor
@@ -636,9 +637,10 @@ void GameLabyrinth::handleMouse(double dx, double dy)
 
 std::string GameLabyrinth::getWindowCaption()
 {
-    std::string str = "Labyrinth FPS " + graphTimer.getfps_s()
-			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
-			+ " Faces: " + IntToStr(graphEngine->total.triangleCount);
+    std::string str = "Labyrinth v" + IntToStr(SVN_REVISION)
+        + " FPS: " + graphTimer.getfps_s()
+		+ " Batches: " + IntToStr(graphEngine->total.batchCount)
+		+ " Faces: " + IntToStr(graphEngine->total.triangleCount);
 
     switch (net_role)
     {
@@ -940,4 +942,3 @@ StringVector GameLabyrinth::NetworkPacket::extractStrings(size_t offset, size_t 
 
     return result;
 }
-

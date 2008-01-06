@@ -20,6 +20,7 @@
 #include <objects/combiner/graph_object.h>
 #include <enet/enet.h>
 #include <common/containers/string_vector.h>
+#include "../svn.inc"
 
 typedef std::vector<GraphObject*> GraphObjectVector;
 
@@ -100,12 +101,14 @@ private:
 
     struct NetworkPacket
     {
-        static const unsigned int PROTOCOL_VERSION = 1; // increment this variable, if protocol was changed
+        static const unsigned int PROTOCOL_VERSION = SVN_REVISION;
         enum PacketKind
         {
             S_CHARACTER_UPDATE = 0x1000,
-            S_WORLD,
             S_INIT,
+            C_INIT,
+            S_WORLD,
+            C_WORLD_LOADED,
             SC_PING,
             SC_PONG,
         } kind;
