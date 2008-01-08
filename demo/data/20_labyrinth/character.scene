@@ -6,12 +6,12 @@
 		{
 			class = 'character'
 			health = 100
-			force = 10
+			force = 2
 			graph = {
 				class = 'combiner'
 				graph = {
 					class = 'box'
-					size = (0.25 0.25 0.25)
+					size = (0.45 0.45 0.95)
 					material = 
 					{
 						class = 'std'

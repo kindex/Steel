@@ -106,11 +106,12 @@ private:
 
 GameLabyrinth::GameLabyrinth():
     character(NULL),
-    gameState(GAME_PLAYING),
+    game_state(GAME_LOADING),
     host(NULL),
     net_role(NET_SINGLE),
     pScene(NULL),
-    physicsSDK(NULL)
+    physicsSDK(NULL),
+    winner(NULL)
 {}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
@@ -119,6 +120,11 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
+
+    if (conf->getb("labyrinth.randomize", false))
+    {
+        srand((unsigned int)(globalTimer.timestamp()*1000));
+    }
 
 	cameraMode = C_FIXED;
 
@@ -145,6 +151,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
         {
             return false;
         }
+        game_state = GAME_PLAYING;
     }
     else if (net_role_str == "client")
     {
@@ -294,16 +301,46 @@ bool GameLabyrinth::createCharacter()
     return true;
 }
 
+bool GameLabyrinth::isWinner(Character* characher)
+{
+    v3 char_pos = characher->getPosition().getTranslation();
+    return ((char_pos - v3(length[0]*(count[0]-1), length[1]*(count[1]-1), 0)).getSquaredLength() < sqr(length[0]/3) + sqr(length[1]/3));
+}
+
 void GameLabyrinth::process()
 {
 	GameFreeScene::process();
 
-    if (gameState != GAME_WIN && character != NULL)
+    if (net_role == NET_SERVER && game_state == GAME_PLAYING)
     {
-        v3 char_pos = character->getPosition().getTranslation();
-        if ((char_pos - v3(length[0]*(count[0]-1), length[1]*(count[1]-1), 0)).getSquaredLength() < sqr(length[0]/3) + sqr(length[1]/3))
+        if (isWinner(character))
         {
-            gameState = GAME_WIN;
+            game_state = GAME_END;
+            winner = NULL; // NULL means server
+
+            for EACH(ClientVector, clients, client)
+            {
+                serverSendS_GAME_INFO(*client);
+            }
+        }
+
+        if (game_state == GAME_PLAYING)
+        {
+            for EACH(ClientVector, clients, it)
+            {
+                if ((*it)->character != NULL && isWinner((*it)->character))
+                {
+                    game_state = GAME_END;
+                    winner = *it;
+
+                    for EACH(ClientVector, clients, client)
+                    {
+                        serverSendS_GAME_INFO(*client);
+                    }
+
+                    break;
+                }
+            }
         }
     }
 
@@ -325,7 +362,6 @@ void GameLabyrinth::process()
             break;
     }
 }
-
 
 void GameLabyrinth::handleEventKeyDown(const std::string& key)
 {
@@ -395,17 +431,37 @@ std::string GameLabyrinth::getWindowCaption()
                                 break;
             case DISCONNECTED:  str += " Disconencted";  break;
         }
+        if (game_state == GAME_END)
+        {
+            if (client_winner.empty())
+            {
+                str += " *** YOU ARE THE WINNER *** ";
+            }
+            else
+            {
+                str += " *** THE WINNER IS " + client_winner + " *** ";
+            }
+        }
+
         break;
 
     case NET_SERVER:
         str += " clients: " + IntToStr(clients.size());
         str += " sync/s: " + netTimer.getfps_s();
-        break;
-    }
 
-    if (gameState == GAME_WIN)
-    {
-        str += " *** YOU ARE WINNER *** ";
+        if (game_state == GAME_END)
+        {
+            if (winner == NULL)
+            {
+                str += " *** YOU ARE THE WINNER *** ";
+            }
+            else
+            {
+                str += " *** THE WINNER IS " + winner->getNetworkName() + " *** ";
+            }
+        }
+
+        break;
     }
 
     return str;

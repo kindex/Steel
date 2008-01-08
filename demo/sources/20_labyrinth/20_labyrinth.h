@@ -48,16 +48,17 @@ private:
 	float length[2];
 	int count[2];
 // -------------------- Game --------------------
-    Character* character;
+    Character*      character;
+    struct Client;
+    Client*         winner; // used when game_state == GAME_END, NULL means server
     CharacterVector characters;
-
-    enum GameState {
-        GAME_PLAYING,
-        GAME_WIN,
-    } gameState;
+    GameState       game_state;
+    std::string     client_winner;
+    
     bool createWorld();
     bool createCharacter();
     bool createPhysicWorld();
+    bool isWinner(Character*);
 
 // ------------------- Physic ---------------------
     bool initAgeia();
@@ -108,6 +109,7 @@ private:
             state(DISCONNECTED),
             clientId(objectIdGenerator.genUid())
         {}
+
         void disconenct();
         std::string getNetworkName() const;
 
@@ -140,6 +142,7 @@ private:
     void serverSendS_INIT(Client* client);
     void serverSendS_BIND_CHAR(Client* client, size_t characterIndex);
     void serverSend_PONG(Client* client, const NetworkPacket::Format::Ping& pingRequest);
+    void serverSendS_GAME_INFO(Client* client);
 
     void serverReceiveC_INIT(Client* client, NetworkPacket* packet, size_t dataLength);
     void serverReceiveC_WORLD_LOADED(Client* client, NetworkPacket* packet, size_t dataLength);
@@ -162,6 +165,7 @@ private:
     void clientReceive_CHAR_UPDATE(NetworkPacket* packet, size_t dataLength);
     void clientReceiveS_BIND_CHAR(NetworkPacket* packet, size_t dataLength);
     void clientReceive_PONG(NetworkPacket* packet, size_t dataLength);
+    void clientReceiveS_GAME_INFO(NetworkPacket* packet, size_t dataLength);
 };
 
 #define net_assert(expr) { if (!(expr)) { error("net", "illegal packet"); return; } }

@@ -269,6 +269,7 @@ void GameLabyrinth::serverReceiveC_WORLD_LOADED(Client* client, NetworkPacket* p
             break;
         }
     }
+    serverSendS_GAME_INFO(client);
 }
 
 void GameLabyrinth::serverReceive_PING(Client* client, NetworkPacket* packet, size_t dataLength)
@@ -297,6 +298,12 @@ void GameLabyrinth::serverSend_PONG(Client* client, const NetworkPacket::Format:
 
 void GameLabyrinth::serverDisconnectClient(Client* client)
 {
+    if (client == winner)
+    {
+        winner = NULL;
+        game_state = GAME_PLAYING;
+    }
+
     for EACH(ClientVector, clients, it)
     {
         if (*it == client)
@@ -332,4 +339,35 @@ void GameLabyrinth::serverReceive_CHAR_UPDATE(Client* client, NetworkPacket* pac
         characters[index]->setVelocity(pos.linear_velocity);
         characters[index]->setMomentum(pos.linear_momentum);
     }
+}
+
+void GameLabyrinth::serverSendS_GAME_INFO(Client* client)
+{
+    size_t packet_size = sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_GameInfo);
+    NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
+    packet->kind = NetworkPacket::S_GAME_INFO;
+    packet->data.s_game_info.game_state = game_state;
+    packet->data.s_game_info.i_am_winner = client == winner;
+
+    if (game_state == GAME_END)
+    {
+        std::string winner_name;
+        if (winner == NULL)
+        {
+            winner_name = "server";
+        }
+        else
+        {
+            winner_name = winner->getNetworkName();
+        }
+        packet_size = setupNetworkPacketString(packet, packet_size, winner_name);
+    }
+
+    ENetPacket* enet_packet = enet_packet_create(packet,
+                                                 packet_size,
+                                                 0);
+
+    enet_peer_send(client->peer, 0, enet_packet);
+    enet_host_flush(host);
+    free(packet);
 }

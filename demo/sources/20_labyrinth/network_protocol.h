@@ -20,10 +20,18 @@
 #include <engine/visitor.h>
 #include <common/types.h>
 
+enum GameState
+{
+    GAME_LOADING,
+    GAME_PLAYING,
+    GAME_END,
+};
+
 struct NetworkPacket
 {
     typedef unsigned int ProtocolVersion;
     static const ProtocolVersion PROTOCOL_VERSION = SVN_REVISION;
+
     enum PacketKind
     {
         S_INIT = 0x1000,
@@ -34,10 +42,8 @@ struct NetworkPacket
         PONG,
         CHAR_UPDATE,
         S_BIND_CHAR,
+        S_GAME_INFO,
     } kind;
-
-    StringVector extractStrings(size_t offset, size_t total_size) const;
-    std::string extractString(size_t offset, size_t total_size) const;
     union Format
     {
         struct S_CharacterUpdate
@@ -77,7 +83,15 @@ struct NetworkPacket
         {
             size_t character_index;
         } s_bind_character;
+        struct S_GameInfo
+        {
+            GameState game_state;
+            bool i_am_winner;
+        } s_game_info;
     } data;
+
+    StringVector extractStrings(size_t offset, size_t total_size) const;
+    std::string extractString(size_t offset, size_t total_size) const;
 }; // struct NetworkPacket
 
 #endif

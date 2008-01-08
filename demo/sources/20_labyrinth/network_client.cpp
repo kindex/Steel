@@ -69,6 +69,10 @@ void GameLabyrinth::clientProcess()
                         clientReceiveS_BIND_CHAR(packet, event.packet->dataLength);
                         break;
 
+                    case NetworkPacket::S_GAME_INFO:
+                        clientReceiveS_GAME_INFO(packet, event.packet->dataLength);
+                        break;
+
                     default:
                     {
                         error("net", "Ingoring packet from " + peer_name + " with kind " + IntToStr(packet->kind));
@@ -296,7 +300,7 @@ void GameLabyrinth::clientReceive_PONG(NetworkPacket* packet, size_t dataLength)
 
 void GameLabyrinth::clientSendInformationToServer()
 {
-    if (character != NULL && server.peer != NULL)
+    if (character != NULL && server.peer != NULL && server.client_state == PLAYING)
     {
         size_t packet_size = sizeof(NetworkPacket::PacketKind) + 
                              sizeof(size_t) + 
@@ -325,5 +329,22 @@ void GameLabyrinth::clientSendInformationToServer()
         enet_peer_send(server.peer, 0, enet_packet);
         free(packet);
         enet_host_flush(host);
+    }
+}
+
+void GameLabyrinth::clientReceiveS_GAME_INFO(NetworkPacket* packet, size_t dataLength)
+{
+    net_assert(dataLength >= sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_GameInfo));
+    game_state = packet->data.s_game_info.game_state;
+    if (game_state == GAME_END)
+    {
+        if (packet->data.s_game_info.i_am_winner)
+        {
+            client_winner = "";
+        }
+        else
+        {
+            client_winner = packet->extractString(sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_GameInfo), dataLength);
+        }
     }
 }
