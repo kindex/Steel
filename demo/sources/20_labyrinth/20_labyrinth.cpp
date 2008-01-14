@@ -121,12 +121,24 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 		return false;
 	}
 
-    if (conf->getb("labyrinth.randomize", false))
+    else if (conf->getb("labyrinth.randomize", false))
     {
         srand((unsigned int)(globalTimer.timestamp()*1000));
     }
+    else
+    {
+        srand((unsigned int)(conf->geti("labyrinth.rand_seed", 0)));
+    }
 
-	cameraMode = C_FIXED;
+    if (conf->gets("camera.mode", "fixed") == "fixed")
+    {
+	    cameraMode = C_FIXED;
+        spectator.camera.setDirection(v3(1, 1, -0.3f));
+    }
+    else
+    {
+	    cameraMode = C_FREE;
+    }
 
 	if (!initAgeia())
 	{
@@ -165,8 +177,6 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 		abort_init("net", "Unknown net role '" + net_role_str + "'");
     }
     netTimer.start();
-
-    spectator.camera.setDirection(v3(1,1,-0.3f));
 
     createPhysicWorld();
 
@@ -235,7 +245,7 @@ bool GameLabyrinth::createWorld()
 		wscene[i] = static_cast<ConfigArray*>(loadedWallConfig);
 	}
 
-	labyrinth = generateLabyrinth(count[0], count[1]);
+	labyrinth = generateLabyrinth(count[0], count[1], conf->getf("labyrinth.crazy_const", 0.02f));
 
 	for (int i = -1; i < labyrinth.getMaxX(); i++)
 	{
@@ -291,7 +301,10 @@ bool GameLabyrinth::createCharacter()
             {
                 characters[i]->owner = Character::SERVER;
                 character = characters[i];
-                character->input = input;
+                if (cameraMode == C_FIXED)
+                {
+                    character->setInput(input);
+                }
 
                 break;
             }

@@ -13,13 +13,13 @@
 
 #include "labyrinth_generator.h"
 #include <vector>
-
+#include <common/logger.h>
 
 class LabyrinthGenerator
 {
 public:
 	LabyrinthGenerator(int x, int y);
-	void buid();
+	void buid(float k);
 	Labyrinth getLabyrinth() const;
 
 private:
@@ -43,12 +43,13 @@ private:
 
 bool LabyrinthGenerator::deep(int x, int y, int level)
 {
-	if (a[y][x].was)
+    node& current = a[y][x];
+	if (current.was)
 	{
 		return false;
 	}
-	a[y][x].dist = level;
-	a[y][x].was = true;
+	current.dist = level;
+	current.was = true;
 	if (x == X-1 && y == Y-1)
 	{
 		return true;
@@ -72,7 +73,7 @@ bool LabyrinthGenerator::deep(int x, int y, int level)
 		switch(d)
 		{
 			case 0: 
-				if(x > 0)
+				if (x > 0)
 				{
 					deep(x - 1, y, level + 1);
 				}
@@ -84,13 +85,13 @@ bool LabyrinthGenerator::deep(int x, int y, int level)
 				}
 				break;
 			case 2:
-				if(x < X-1)
+				if (x < X-1)
 				{
 					deep(x + 1, y, level + 1);
 				}
 				break;
 			case 3:
-				if(y < Y-1)
+				if (y < Y-1)
 				{
 					deep(x, y + 1, level + 1); 
 				}
@@ -121,18 +122,31 @@ LabyrinthGenerator::LabyrinthGenerator(int x, int y) : X(x), Y(y)
 	a[0][0].dist = 0;
 }
 
-void LabyrinthGenerator::buid()
+void LabyrinthGenerator::buid(float k)
 {
 	deep(0, 0, 0);
 	//findpath(X-1, Y-1);
 	//findpath(X-1, 0);
 	//findpath(0, Y-1);
 
+    std::string d("\n");
+
+	for(int i = 0; i < Y; i++)
+	{
+        d += "|";
+		for(int j = 0; j < X; j++)
+		{
+            d += "\t" + IntToStr(a[i][j].dist);
+        }
+        d += "|\n";
+    }
+    log_msg("labyrinth", d);
+
 	for(int i = 0; i < Y; i++)
 	{
 		for(int j = 0; j < X-1; j++)
 		{
-			a[i][j].rightborder = abs(a[i][j].dist - a[i][j+1].dist) != 1;
+			a[i][j].rightborder = frand() > k && abs(a[i][j].dist - a[i][j+1].dist) != 1;
 //			a[i][j].rightborder = !(a[i][j].path && a[i][j+1].path);
 		}
 	}
@@ -140,7 +154,7 @@ void LabyrinthGenerator::buid()
 	{
 		for(int j = 0; j < X; j++)
 		{
-			a[i][j].downborder = abs(a[i][j].dist - a[i+1][j].dist) != 1;
+			a[i][j].downborder = frand() > k && abs(a[i][j].dist - a[i+1][j].dist) != 1;
 //			a[i][j].downborder = !(a[i][j].path && a[i+1][j].path);
 		}
 	}
@@ -172,7 +186,7 @@ bool Labyrinth::isRightBorder(int x, int y) const
 	size_t sx = x;
 	size_t sy = y;
 	return sy + 1 > a.size()
-		|| sx + 1 >= a[sy].size()
+		|| sx     >= a[sy].size()
 		|| a[sy][sx].rightborder;
 }
 
@@ -185,7 +199,7 @@ bool Labyrinth::isDownBorder(int x, int y) const
 	size_t sx = x;
 	size_t sy = y;
 	return sy + 1 > a.size()
-		|| sx + 1 >= a[sy].size()
+		|| sx  >= a[sy].size()
 		|| a[sy][sx].downborder;
 }
 
@@ -199,10 +213,10 @@ int Labyrinth::getMaxY() const
 	return a.size();
 }
 
-Labyrinth generateLabyrinth(size_t x, size_t y)
+Labyrinth generateLabyrinth(size_t x, size_t y, float k)
 {
 	LabyrinthGenerator lab(x, y);
-	lab.buid();
+	lab.buid(k);
 	return lab.getLabyrinth();
 }
 

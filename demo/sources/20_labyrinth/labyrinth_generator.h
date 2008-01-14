@@ -35,6 +35,6 @@ private:
 	std::vector<std::vector<node> > a;
 };
 
-Labyrinth generateLabyrinth(const size_t x, const size_t y);
+Labyrinth generateLabyrinth(const size_t x, const size_t y, float k);
 
 #endif

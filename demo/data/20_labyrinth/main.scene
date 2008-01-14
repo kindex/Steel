@@ -5,6 +5,8 @@ objects =
 (
 	[character.scene#] { origin = (0 1 1) }
 	[character.scene#] { origin = (0 0 1) }
+	[character.scene#] { origin = (1 0 1) }
+	[character.scene#] { origin = (1 1 1) }
 
 	[/sun.conf#] {	origin = (-95 -42 31)}
 	[/sun_ambient.conf#] {	origin = (90 90 90)}

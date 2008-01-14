@@ -2,12 +2,12 @@
 {
 	class = 'combiner'
 	enabled=1
-	origin = (0 0 -10)
+	origin = (8 10 -0.1)
 
 	graph = 
 	{
 		class = 'box'
-		size = (40 40 20)
+		size = (20 24 0.2)
 		material = 
 		{
 			class = 'std'
