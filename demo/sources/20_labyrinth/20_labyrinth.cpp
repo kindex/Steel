@@ -111,7 +111,8 @@ GameLabyrinth::GameLabyrinth():
     net_role(NET_SINGLE),
     pScene(NULL),
     physicsSDK(NULL),
-    winner(NULL)
+    winner(NULL),
+    cameraPenalty(1.0f)
 {}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
@@ -484,20 +485,36 @@ void GameLabyrinth::draw(GraphEngine& graph)
 {
     if (cameraMode == C_FIXED && character != NULL)
     {
+        cameraPenalty += info.timeInfo.frameLength;
+        if (cameraPenalty > 1)
+        {
+            cameraPenalty = 1;
+        }
+
+
         float len = 2;
         v3 dir = spectator.camera.getDirection();
         v3 crossingPosition;
         Plane triangle;
 
         GameObject* crossingObject;
-        if (graphEngine->findCollision(Line(character->getPosition().getTranslation(), -dir*len), crossingObject, crossingPosition, triangle))
+        float newCameraPenalty;
+        v3 origin = character->getPosition().getTranslation();
+        if (graphEngine->findCollision(Line(origin, -dir*len), crossingObject, crossingPosition, triangle))
         {
-            spectator.camera.setPosition(character->getPosition().getTranslation()*0.1f + crossingPosition*0.9f);
+            newCameraPenalty = (origin-crossingPosition).getLength()/len*0.95f;
         }
         else
         {
+            newCameraPenalty = 1.0f;
             spectator.camera.setPosition(character->getPosition().getTranslation() - dir*len);
         }
+        if (newCameraPenalty <= cameraPenalty)
+        {
+            cameraPenalty = newCameraPenalty;
+        }
+        spectator.camera.setPosition(character->getPosition().getTranslation() - dir*len*cameraPenalty);
+
         spectator.camera.setUpVector(v3(0,0,1));
         info.camera = spectator.camera;
     }

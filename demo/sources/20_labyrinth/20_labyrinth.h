@@ -49,6 +49,7 @@ private:
 	int count[2];
 // -------------------- Game --------------------
     Character*      character;
+    float           cameraPenalty;
     struct Client;
     Client*         winner; // used when game_state == GAME_END, NULL means server
     CharacterVector characters;
