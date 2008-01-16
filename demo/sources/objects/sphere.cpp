@@ -25,8 +25,6 @@ Sphere::Sphere():
 	graphEngine(NULL)
 {}
 
-
-
 void Sphere::bindEngine(Engine& engine, IN const InterfaceId id)
 {
 	GraphEngine& gengine = *static_cast<GraphEngine*>(&engine);
@@ -48,7 +46,6 @@ bool Sphere::updateInformation(Engine& engine, IN const InterfaceId id)
 	gengine.setTexCoords(1, texCoords1);
 	return true;
 }
-
 
 void Sphere::createSphere()
 {
@@ -109,6 +106,7 @@ void Sphere::createSphere()
 	m.faces->triangles.setChanged(true);
 	
 	for (int i=0; i < height; i++)
+    {
  		for (int j=0; j < radius; j++)
 		{
 			m.faces->triangles[(i*radius+j)*2 + 0].set(
@@ -122,6 +120,7 @@ void Sphere::createSphere()
 				(i+1)*radius + j);
 
 		}
+    }
 }
 
 Sphere::~Sphere()

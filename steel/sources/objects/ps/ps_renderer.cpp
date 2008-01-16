@@ -14,6 +14,10 @@
 #include "ps_renderer.h"
 #include "../../res/res_main.h"
 #include "../../math/sprite.h"
+#include "../game_object_factory.h"
+#include "../combiner/combiner.h"
+
+
 void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 {
 	initSprites(vertexes.size()/4, set->particles.size());
@@ -70,7 +74,10 @@ void SpriteRenderer::initSprites()
 
 void SpriteRenderer::initSprites(int begin, int end)
 {
-	if (begin == end) return ;
+	if (begin == end)
+    {
+        return;
+    }
 
 	vertexes.resize(end*4);
 	normals.resize(end*4);
@@ -105,13 +112,25 @@ bool SpriteRenderer::InitFromConfig(IN Config& _conf)
 	material = createMaterial(materailConfig);
 
 	std::string salign = conf->gets("align", "screen"); // align;
-	if(salign == "screen")	align = SPRITE_ALIGN_SCREEN; else
-	if(salign == "z")		align = SPRITE_ALIGN_Z; else
-	if(salign == "camera")	align = SPRITE_ALIGN_CAMERA;
+	if (salign == "screen")
+    {
+        align = SPRITE_ALIGN_SCREEN; 
+    }
+    else if (salign == "z")
+    {
+        align = SPRITE_ALIGN_Z;
+    }
+    else if (salign == "camera")
+    {
+        align = SPRITE_ALIGN_CAMERA;
+    }
 	else 
 	{
 		customAlign = conf->getv3("align", v3(1,0,0));
-		if(customAlign.getSquaredLengthd()<EPSILON2)	return false;
+		if (customAlign.getSquaredLengthd() < EPSILON2)
+        {
+            return false;
+        }
 		align = SPRITE_ALIGN_CUSTOM;
 	}
 
@@ -124,8 +143,6 @@ bool SpriteRenderer::initParticles()
 	initSprites(0, set->particles.size());
 	return true;
 }
-
-
 
 bool SpriteRenderer::updateInformation(Engine& engine, IN const InterfaceId id)
 {
@@ -149,6 +166,57 @@ bool ObjectPSRenderer::initParticles()
 {
 
 	return true;
+}
+
+bool ObjectPSRenderer::InitFromConfig(Config& _conf)
+{
+    conf = &_conf;
+    Config* c = conf->find("object");
+    if (c == NULL)
+    {
+        return false;
+    }
+    particle_config = dynamic_cast<ConfigStruct*>(c);
+
+    return particle_config != NULL;
+}
+
+bool ObjectPSRenderer::updateInformation(IN OUT Engine& engine, IN const InterfaceId interfaceId)
+{
+    if (interfaceId && INTERFACE_GRAPH == INTERFACE_GRAPH)
+    {
+        GraphInterface* gengine = dynamic_cast<GraphInterface*>(&engine);
+        size_t index = 0;
+        for EACH(std::vector<Object>, objects, it)
+        {
+            if (!it->inserted)
+            {
+                it->inserted = true;
+                gengine->addChild(it->object);
+            }
+            gengine->setCurrentObject(it->object, interfaceId);
+            gengine->setPositionKind(POSITION_GLOBAL);
+            ObjectPosition pos = ObjectPosition::getIdentity();
+            pos.setTranslation(set->particles[index]->position);
+            gengine->setPosition(pos);
+
+            index++;
+        }
+        return true;
+    }
+
+    return false;
+}
+
+void ObjectPSRenderer::onParticleBorn(int index)
+{
+    particle_config->setValue("origin", createV3config(set->particles[index]->position));
+    GraphObject* new_object = loadGraphObject(*particle_config, "");
+    if (new_object == NULL)
+    {
+        return;
+    }
+    objects.push_back(Object(false, new_object));
 }
 
 /*void ObjectPSRenderer::ProcessGraph(const GraphEngineInfo &info)

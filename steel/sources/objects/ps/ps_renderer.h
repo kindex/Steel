@@ -18,6 +18,7 @@
 #include "../../graph/material.h"
 #include "../../graph/graph_interface.h"
 #include "../../math/sprite.h"
+#include "../combiner/graph_object.h"
 
 // система - модель из множества полигонов - спрайтов
 class SpriteRenderer: public ParticleRenderer
@@ -38,14 +39,14 @@ public:
 	AABB getFrame();
 
 private:
-	MaterialStd*	material;
-	VertexVector		vertexes;
-	TexCoords		texCoords;
-	Normals			normals;
-	v3				cameraPosition;
-	SpriteAlign		align;
-	v3				customAlign;
-	FaceMaterialVector	face;
+	MaterialStd*	   material;
+	VertexVector	   vertexes;
+	TexCoords		   texCoords;
+	Normals			   normals;
+	v3				   cameraPosition;
+	SpriteAlign		   align;
+	v3				   customAlign;
+	FaceMaterialVector face;
 };
 
 // каждая частица - отдельная модель (объект)
@@ -53,14 +54,25 @@ class ObjectPSRenderer: public ParticleRenderer
 {
 public:
 	bool initParticles();
-	bool InitFromConfig(Config&) { return true;}
-	bool updateInformation(IN OUT Engine&, IN const InterfaceId id) { return false; }
+	bool InitFromConfig(Config&);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id);
 	void process(IN const ProcessInfo& info){}
-	void onParticleBorn(int index) {}
+	void onParticleBorn(int index);
 	void onParticleDie(int index) {}
 
 protected:
-	pvector<GameObject*> children;
+    ConfigStruct* particle_config;
+    struct Object
+    {
+        Object(bool inserted, GraphObject* object) : 
+            inserted(inserted),
+            object(object)
+        {}
+
+        bool         inserted;
+        GraphObject* object;
+    };
+    std::vector<Object> objects;
 };
 
 // ничего не рисует

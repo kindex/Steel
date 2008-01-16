@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 
 	if (commandLine.empty())
 	{
-		commandLine = "[../conf/labyrinth.conf#] {}";
+		commandLine = "[../conf/ps.conf#] {}";
 	}
 	Config* steelConfig = parseConfig(commandLine);
 
