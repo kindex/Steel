@@ -196,6 +196,11 @@ void GameAgeiatech::handleEventKeyDown(const std::string& key)
             }
         }
 	}
+	if (key == ";")
+	{
+		//this is a trigger to drop particle coords into file 
+		//see at particle_calculator.cpp; // void ParticleCalculator::postvisit(IN OUT Particle* particle)
+	}
     else
     {
         GamePS::handleEventKeyDown(key);
@@ -219,7 +224,7 @@ bool GameAgeiatech::initAgeia()
 		gPhysicsSDK->getFoundationSDK().getRemoteDebugger()->connect(SAMPLES_VRD_HOST, SAMPLES_VRD_PORT, SAMPLES_VRD_EVENTMASK);
 #endif
 
-	physicsSDK->setParameter(NX_SKIN_WIDTH, 0.01f);
+	physicsSDK->setParameter(NX_SKIN_WIDTH, 0.001f);
 
 	// Create a scene
 	NxSceneDesc sceneDesc;

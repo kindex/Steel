@@ -64,6 +64,9 @@ void ParticleCalculator::postvisit(IN OUT Particle* particle)
                   ",\t" << particle->position.y << 
                   ") R " << particle->size/2 << 
                   "\n";
-        volume += float(M_PI*particle->size*particle->size/4.0);
+		float particleHalfSize = particle->size/2;
+		float suffix = 4.0f / 3.0f; 
+		float particleVol = particleHalfSize*particleHalfSize*particleHalfSize*suffix;
+        volume += float(M_PI*particleVol);
     }
 }
