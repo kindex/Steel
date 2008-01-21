@@ -6,9 +6,9 @@
 		class = 'simple'
 		particle_size = 0.07
 		init_size = 0
-		emitter_size = 1
+		emitter_size = 0.9
 		emitter_type = 'serial'
-		born_interval = 0.10
+		born_interval = 0.05
 		limit_count = 500
 	}
 /*	renderer =  {

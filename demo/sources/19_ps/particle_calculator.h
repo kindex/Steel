@@ -15,16 +15,19 @@
 
 #include <engine/visitor.h>
 #include <objects/combiner/graph_object.h>
+#include <fstream>
 
 class ParticleCalculator : public Visitor
 {
 public:
-    ParticleCalculator(GraphObject* graphObject);
+    ParticleCalculator(GraphObject& graphObject, std::ofstream& output);
     void clear();
     void postvisit(IN OUT Particle* particle);
 
     int cnt;
-    GraphObject* graphObject;
+    float volume;
+    GraphObject&   graphObject;
+    std::ofstream& output;
 };
 
 #endif

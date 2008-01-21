@@ -173,9 +173,28 @@ void GameAgeiatech::handleEventKeyDown(const std::string& key)
 {
 	if (key == "g")
 	{
-		//v3 current = physicEngine->getGravity();
-		//physicEngine->setGravity(gravityBackup);
-		//gravityBackup = current;
+        if (boundingModel != NULL)
+        {
+            std::ofstream output("../particles.log");
+
+            ParticleCalculator visitor(*boundingModel, output);
+
+            visitor.clear();
+            world->traverse(visitor, ObjectPosition::getIdentity());
+
+            crosses = visitor.cnt;
+
+            output << "Total particle count: " << visitor.cnt << std::endl;
+            output << "Total particle volume as sphere: " << visitor.volume << std::endl;
+            if (dynamic_cast<GraphObjectBox*>(boundingModel) != NULL)
+            {
+                GraphObjectBox* box = dynamic_cast<GraphObjectBox*>(boundingModel);
+                v3 box_size = box->getSize();
+                float box_volume = box_size.x*box_size.y*box_size.z;
+                output << "Bounding box volume: " << box_volume << std::endl;
+                output << "Free space: " << box_volume - visitor.volume << std::endl;
+            }
+        }
 	}
     else
     {

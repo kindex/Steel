@@ -67,16 +67,6 @@ bool GamePS_SteelPhysic::init(Config& _conf, Input& _input)
 void GamePS::process()
 {
 	GameFreeScene::process();
-	
-    if (boundingModel != NULL)
-    {
-        ParticleCalculator visitor(boundingModel);
-
-        visitor.clear();
-        world->traverse(visitor, ObjectPosition::getIdentity());
-
-        crosses = visitor.cnt;
-    }
 }
 
 void GamePS_SteelPhysic::process()

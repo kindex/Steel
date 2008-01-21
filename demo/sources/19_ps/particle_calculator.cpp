@@ -15,13 +15,15 @@
 #include <math/plane.h>
 #include <objects/ps/particle_system.h>
 
-ParticleCalculator::ParticleCalculator(GraphObject* graphObject) : 
-	graphObject(graphObject) 
+ParticleCalculator::ParticleCalculator(GraphObject& graphObject, std::ofstream& output) : 
+	graphObject(graphObject),
+    output(output)
 {}
         
 void ParticleCalculator::clear()
 {
     cnt = 0;
+    volume = 0;
 }
 
 static bool _isPointInObject(IN v3 point, IN const GraphObject& object, const ObjectPosition position)
@@ -54,8 +56,14 @@ static bool _isPointInObject(IN v3 point, IN const GraphObject& object, const Ob
 
 void ParticleCalculator::postvisit(IN OUT Particle* particle)
 {
-    if (_isPointInObject(particle->position, *graphObject, ObjectPosition::getIdentity()))
+    if (_isPointInObject(particle->position, graphObject, ObjectPosition::getIdentity()))
     {
         cnt++;
+        output << "(\t" << particle->position.x << 
+                  ",\t" << particle->position.y << 
+                  ",\t" << particle->position.y << 
+                  ") R " << particle->size/2 << 
+                  "\n";
+        volume += float(M_PI*particle->size*particle->size/4.0);
     }
 }
