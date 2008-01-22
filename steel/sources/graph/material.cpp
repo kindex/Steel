@@ -124,20 +124,34 @@ bool TextureStd::InitFromConfig(Config* config)
 
 Config* TextureStd::getConfig() const
 {
-    ConfigStruct* result = new ConfigStruct;
+    if (image != NULL)
+    {
+        ConfigStruct* result = new ConfigStruct;
 
-	result->setValue("image", new ConfigString(image->getPath()));
+	    result->setValue("image", new ConfigString(image->getPath()));
 
-    return result;
+        return result;
+    }
+    else
+    {
+        return NULL;
+    }
 }
 
 bool MaterialStd::TextureEnv::InitFromConfig(Config *config)
 {
-	if (config == NULL) return false;
-	string name = "/" + config->getPath("image"); 
-	if (!name.empty()) cubeMap = resImage.add(name);
+	if (config == NULL)
+    {
+        return false;
+    }
 
-	k = config->getf ("k", 1.0f);
+	string name = config->getPath("image"); 
+	if (!name.empty())
+    {
+        cubeMap = resImage.add(name);
+    }
+
+	k = config->getf("k", 1.0f);
 
 	string m = config->gets("type", "mirror");
 	if (m == "custom")
@@ -154,7 +168,7 @@ bool MaterialStd::TextureEnv::InitFromConfig(Config *config)
 	}
 	else
 	{
-		type = TEXTURE_REFLECT_MIRROR;
+		type = TEXTURE_REFLECT_NONE;
 	}
 
 	return cubeMap != NULL;
@@ -162,16 +176,19 @@ bool MaterialStd::TextureEnv::InitFromConfig(Config *config)
 
 Config* MaterialStd::TextureEnv::getConfig() const
 {
-	if (cubeMap != NULL)
+	if (type != TEXTURE_REFLECT_NONE)
 	{
 		ConfigStruct* result = new ConfigStruct;
 
-		result->setValue("image", new ConfigString(cubeMap->getPath()));
+        if (cubeMap != NULL)
+        {
+		    result->setValue("image", new ConfigString(cubeMap->getPath()));
+        }
 		std::string m;
 		switch (type)
 		{
 			case TEXTURE_REFLECT_CUSTOM: m = "custom"; break;
-			case TEXTURE_REFLECT_SKY: m = "sky"; break;
+			case TEXTURE_REFLECT_SKY:    m = "sky";    break;
 			case TEXTURE_REFLECT_MIRROR: m = "mirror"; break;
 		}
 		result->setValue("type", new ConfigString(m));
@@ -203,12 +220,19 @@ Material::~Material()
 
 MaterialStd* createMaterial(Config* conf)
 {
-	if (conf == NULL) return NULL;
+	if (conf == NULL)
+    {
+        return NULL;
+    }
 
 	MaterialStd* material = getMaterialClass(conf->gets("class"));
-	if (material == NULL) return NULL;
+	if (material == NULL)
+    {
+        return NULL;
+    }
 
 	material->InitFromConfig(conf);
+
 	return material;
 }
 

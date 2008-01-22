@@ -68,7 +68,7 @@ Image* createImageFormat(const std::string& filename)
 
 Image* createImage(const std::string& filename, const std::string& base)
 {
-	std::string file = base + "/" +  filename;
+	std::string file = "/" + base + "/" + filename;
 	Image* r;
 	// try to load image2d
 	if ((r = createImageFormat(file)) != NULL)
@@ -78,6 +78,7 @@ Image* createImage(const std::string& filename, const std::string& base)
 	// try to load cubemap (6 images in one file)
 	if ((r = createImageFormat(file + ".cube")) != NULL)
 	{
+        r->setPath(file);
 		r->setDimension(IMAGE_CUBE);
 		return r;
 	}
@@ -94,6 +95,7 @@ Image* createImage(const std::string& filename, const std::string& base)
 		r2 = createImageFormat(file + ".down");	if (r2 != NULL) { r2->rotate90();	r->append(r2); delete r2; }
 
 		r->setDimension(IMAGE_CUBE);
+        r->setPath(file);
 		return r;
 	}
 

@@ -20,9 +20,9 @@
 
 Character::Character():
     graph_object(NULL),
+    physic_object(NULL),
     origin(matrix34::getIdentity()),
     input(NULL),
-    physic_object(NULL),
     direction(v3(1, 0, 0)),
     owner(FREE),
     clientId(0)

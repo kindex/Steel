@@ -39,6 +39,7 @@ public:
 	Image();
     ~Image();
     std::string getPath() const;
+    void setPath(const std::string& path);
 
     void unload();
     bool createImage(int WIDTH, int HEIGHT, int BPP);

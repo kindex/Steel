@@ -27,6 +27,7 @@ class Model: public Res
 public:
 	float calculateVolume(); // вычислить объём
 	float getVolume(); // вычислить объём
+    std::string getPath();
 
 	const VertexVector*       getVertexes() const { return &vertexes; }
 	const Normals*            getNormals() const { return &normals; }
@@ -39,26 +40,24 @@ public:
 	friend class GraphObjectModel; // TEMP:
 
 protected:
-	AABB				frame;
-    VertexVector		vertexes;    // VertexVector
-
-    Faces				allFaces;        // Faces
-
-    TexCoords			texCoords; // Texture coordinates
-    Normals				normals;    // Vertex normals
-	FaceMaterialVector	faceMaterials;
-	
-	std::string			name;
-	float				volume;
-
     Model(): name(), volume(-1) { }
 	void updateAABB();
     void updatetangentSpaceLight();
     void updateReflectCoords();
     void updateSphereMap(v3 &center);
     int  duplicateVertex(int src, v3 newnormal);
-
 	void generateNormals();
+
+	AABB				frame;
+    VertexVector		vertexes;    // VertexVector
+    Faces				allFaces;        // Faces
+    TexCoords			texCoords; // Texture coordinates
+    Normals				normals;    // Vertex normals
+	FaceMaterialVector	faceMaterials;
+	
+	std::string			name;
+    std::string         path;
+	float				volume;
 };
 
 #endif

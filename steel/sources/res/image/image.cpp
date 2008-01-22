@@ -344,3 +344,8 @@ std::string Image::getPath() const
 {
     return path;
 }
+
+void Image::setPath(const std::string& path)
+{
+    this->path = path;
+}

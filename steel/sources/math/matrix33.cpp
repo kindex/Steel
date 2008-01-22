@@ -127,6 +127,11 @@ void matrix33::setScale(const v3 scale)
 	data.m[2][0] = 0;		data.m[2][1] = 0;		data.m[2][2] = scale.z;
 }
 
+v3 matrix33::getScale() const
+{
+    return v3(data.m[0][0], data.m[1][1], data.m[2][2]); // TODO:
+}
+
 void operator*=(v3 &operand1, const matrix33 operand2)
 {
 	v3 copy = operand1;

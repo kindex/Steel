@@ -325,7 +325,7 @@ void GameLabyrinth::process()
 {
 	GameFreeScene::process();
 
-    if (net_role == NET_SERVER && game_state == GAME_PLAYING)
+    if (net_role == NET_SERVER && game_state == GAME_PLAYING && character != NULL)
     {
         if (isWinner(character))
         {

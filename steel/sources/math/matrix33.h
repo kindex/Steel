@@ -73,6 +73,7 @@ struct matrix33
 
 	// setScale – делает матрицу масштабирования
 	void setScale(const v3 scale);
+	v3 getScale() const;
 
 	// возвращает обратнрую матрицу
 	matrix33 getInverse() const

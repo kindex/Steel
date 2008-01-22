@@ -256,3 +256,7 @@ bool Model::checkModel() const
     return true;
 }
 
+std::string Model::getPath()
+{
+    return path;
+}

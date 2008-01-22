@@ -224,7 +224,20 @@ bool GraphObjectModel::InitFromConfig(Config& conf)
 
 Config* GraphObjectModel::getConfig() const
 {
-    return NULL; // TODO:
+    ConfigStruct* result = new ConfigStruct;
+
+	result->setValue("class", new ConfigString("model"));
+    if (model != NULL)
+    {
+	    result->setValue("file", new ConfigString(model->getPath()));
+
+        if (!model->faceMaterials.empty() && model->faceMaterials[0].material != NULL)
+        {
+    	    result->setValue("material", model->faceMaterials[0].material->getConfig());
+        }
+    }
+
+    return result;
 }
 
 void GraphObjectModel::bindEngine(Engine& engine, IN const InterfaceId id)

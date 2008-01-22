@@ -24,8 +24,8 @@ public:
     void clear();
     void postvisit(IN OUT Particle* particle);
 
-    int cnt;
-    float volume;
+    int            cnt;
+    float          volume;
     GraphObject&   graphObject;
     std::ofstream& output;
 };

@@ -84,6 +84,8 @@ struct matrix34
 	inline void setRotationZ(const float sin, const float cos) { data.matrix.setRotationZ(sin, cos);  data.vector.loadZero();}
 	inline void setScale(const v3 scale) {data.matrix.setScale(scale);  data.vector.loadZero();}
 
+	inline v3 getScale() const { return data.matrix.getScale(); }
+
 	v3 getRow(const int rowNumber) const
 	{
 		v3 temp;

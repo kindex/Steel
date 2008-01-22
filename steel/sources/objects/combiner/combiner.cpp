@@ -139,6 +139,8 @@ Config* Combiner::getConfig() const
     ConfigStruct* result = new ConfigStruct;
     result->setValue("class", new ConfigString("combiner"));
     result->setValue("origin", createV3config(origin.getTranslation()));
+    result->setValue("scale", createV3config(origin.getScale()));
+
     if (graph != NULL)
     {
         result->setValue("graph", graph->getConfig());

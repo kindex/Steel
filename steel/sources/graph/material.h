@@ -102,13 +102,13 @@ public:
 
 	struct TextureEnv
 	{
-		Image* cubeMap;
-		TextureEnvType type;
-		float k;
-
-		TextureEnv(): cubeMap(NULL) {}
+		TextureEnv(): cubeMap(NULL), type(TEXTURE_REFLECT_NONE) {}
 		bool InitFromConfig(Config* config);
 	    Config* getConfig() const;
+
+		Image*         cubeMap;
+		TextureEnvType type;
+		float          k;
 	};
 
 //private:

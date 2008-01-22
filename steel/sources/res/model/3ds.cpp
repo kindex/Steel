@@ -270,8 +270,9 @@ int chain_4d4d(Model_3DS &m, rstream &f, int size)
 bool Model_3DS::init(const std::string& name, const std::string dir)
 {
 	rstream f;
+	path = "/" + dir + "/" + name;
 	
-	if (!f.open(dir + "/" + name, "3ds") || !f.good())
+	if (!f.open(path, "3ds") || !f.good())
 	{
 		return false;
 	}
