@@ -65,7 +65,7 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 
 	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f))); // TODO:
 
-	specularPower = conf->getf("specular_map.power", 16.0);
+	specularPower = conf->getf("specular_map_power", 16.0);
 	ambient_k = conf->getf("ambient_k", 0.1f);
 	dropShadows = conf->getb("dropShadows", true);
 	catchShadows = conf->getb("catchShadows", true);
@@ -78,11 +78,24 @@ Config* MaterialStd::getConfig() const
     ConfigStruct* result = new ConfigStruct;
 
 	result->setValue("class", new ConfigString("std"));
+
 	result->setValue("diffuse_map", diffuse_map.getConfig());
+	result->setValue("diffuse2_map", diffuse2_map.getConfig());
+	result->setValue("normal_map", normal_map.getConfig());
+	result->setValue("specular_map", specular_map.getConfig());
+	result->setValue("emission_map", emission_map.getConfig());
+	result->setValue("env_map", env_map.getConfig());
 
 	result->setValue("texCoordsScale", createV3config(textureMatrix.texCoordsScale));
 	result->setValue("texCoordsRotation", new ConfigNumber(textureMatrix.texCoordsRotation));
 	result->setValue("texCoordsTranslation", createV3config(textureMatrix.texCoordsTranslation));
+
+	result->setValue("color", createV3config(color.get()));
+
+	result->setValue("specular_map_power", new ConfigNumber(specularPower));
+	result->setValue("ambient_k", new ConfigNumber(ambient_k));
+	result->setValue("dropShadows", new ConfigNumber(dropShadows));
+	result->setValue("catchShadows", new ConfigNumber(catchShadows));
 
     return result;
 }
@@ -127,12 +140,49 @@ bool MaterialStd::TextureEnv::InitFromConfig(Config *config)
 	k = config->getf ("k", 1.0f);
 
 	string m = config->gets("type", "mirror");
-	if (m == "custom") type = TEXTURE_REFLECT_CUSTOM;
-	else if (m == "sky") type = TEXTURE_REFLECT_SKY;
-	else if (m == "mirror") type = TEXTURE_REFLECT_MIRROR;
-	else type = TEXTURE_REFLECT_MIRROR;
+	if (m == "custom")
+	{
+		type = TEXTURE_REFLECT_CUSTOM;
+	}
+	else if (m == "sky")
+	{
+		type = TEXTURE_REFLECT_SKY;
+	}
+	else if (m == "mirror")
+	{
+		type = TEXTURE_REFLECT_MIRROR;
+	}
+	else
+	{
+		type = TEXTURE_REFLECT_MIRROR;
+	}
 
 	return cubeMap != NULL;
+}
+
+Config* MaterialStd::TextureEnv::getConfig() const
+{
+	if (cubeMap != NULL)
+	{
+		ConfigStruct* result = new ConfigStruct;
+
+		result->setValue("image", new ConfigString(cubeMap->getPath()));
+		std::string m;
+		switch (type)
+		{
+			case TEXTURE_REFLECT_CUSTOM: m = "custom"; break;
+			case TEXTURE_REFLECT_SKY: m = "sky"; break;
+			case TEXTURE_REFLECT_MIRROR: m = "mirror"; break;
+		}
+		result->setValue("type", new ConfigString(m));
+		result->setValue("k", new ConfigNumber(k));
+
+		return result;
+	}
+	else
+	{
+		return NULL;
+	}
 }
 
 

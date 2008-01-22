@@ -108,6 +108,7 @@ public:
 
 		TextureEnv(): cubeMap(NULL) {}
 		bool InitFromConfig(Config* config);
+	    Config* getConfig() const;
 	};
 
 //private:

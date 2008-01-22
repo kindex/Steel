@@ -26,7 +26,10 @@
 
 struct color4f
 {
-	float r,g,b,a;
+	float r;
+	float g;
+	float b;
+	float a;
 
 	void set(float R, float G, float B, float A) {r = R; g = G; b = B; a = A;}
 	void set(const v3 rgb) {r = rgb.x; g = rgb.y; b = rgb.z; a = 1.0f;}
@@ -35,6 +38,7 @@ struct color4f
 	color4f(float R, float G, float B, float A): r(R), g(G), b(B), a(A) {}
 
 	const float *getfv() const { return &r; }
+	const v3 get() const { return v3(r, g, b); }
 };
 
 enum LightType

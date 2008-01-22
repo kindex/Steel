@@ -33,7 +33,7 @@ bool GameLight::InitFromConfig(Config& conf)
 	light->maxDistance = conf.getf("maxDistance", 10.0f);
 	light->k = conf.getf("k", 1.0f);
 	light->diffuse_k = conf.getf("diffuse_k", 1.0f);
-	light->specular_k = conf.getf("specular)k", 1.0f);
+	light->specular_k = conf.getf("specular_k", 1.0f);
 
 	light->up = conf.getv3("up", v3(0.0f, 0.0f, 1.0f));
 	light->direction = conf.getv3("direction", v3(1.0f, 0.0f, 0.0f));
@@ -59,7 +59,40 @@ bool GameLight::InitFromConfig(Config& conf)
 
 Config* GameLight::getConfig() const
 {
-    return NULL; // TODO:
+    ConfigStruct* result = new ConfigStruct;
+
+	result->setValue("class", new ConfigString("light"));
+	result->setValue("origin", createV3config(position.getTranslation()));
+	result->setValue("enabled", new ConfigNumber(enabled));
+
+	if (light != NULL)
+	{
+		result->setValue("constantAttenuation", new ConfigNumber(light->constantAttenuation));
+		result->setValue("linearAttenuation", new ConfigNumber(light->linearAttenuation));
+		result->setValue("quadraticAttenuation", new ConfigNumber(light->quadraticAttenuation));
+
+		result->setValue("color", createV3config(light->color));
+		result->setValue("minDistance", new ConfigNumber(light->minDistance));
+		result->setValue("maxDistance", new ConfigNumber(light->maxDistance));
+		result->setValue("k", new ConfigNumber(light->k));
+		result->setValue("diffuse_k", new ConfigNumber(light->diffuse_k));
+		result->setValue("specular_k", new ConfigNumber(light->specular_k));
+		result->setValue("up", createV3config(light->up));
+		result->setValue("direction", createV3config(light->direction));
+
+		result->setValue("castShadows", new ConfigNumber(light->castShadows));
+		if (light->cubeMap != NULL)
+		{
+			result->setValue("cube_map", new ConfigString(light->cubeMap->getPath()));
+		}
+		if (light->flare != NULL)
+		{
+			result->setValue("flare", new ConfigString(light->flare->getPath()));
+		}
+		result->setValue("flareSize", new ConfigNumber(light->flareSize));
+	}
+
+    return result;
 }
 
 
