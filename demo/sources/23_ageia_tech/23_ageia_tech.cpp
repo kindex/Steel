@@ -224,7 +224,7 @@ bool GameAgeiatech::initAgeia()
 		gPhysicsSDK->getFoundationSDK().getRemoteDebugger()->connect(SAMPLES_VRD_HOST, SAMPLES_VRD_PORT, SAMPLES_VRD_EVENTMASK);
 #endif
 
-	physicsSDK->setParameter(NX_SKIN_WIDTH, 0.001f);
+	physicsSDK->setParameter(NX_SKIN_WIDTH, 0.00001f);
 
 	// Create a scene
 	NxSceneDesc sceneDesc;

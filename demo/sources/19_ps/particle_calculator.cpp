@@ -57,14 +57,16 @@ static bool _isPointInObject(IN v3 point, IN const GraphObject& object, const Ob
 void ParticleCalculator::postvisit(IN OUT Particle* particle)
 {
     if (_isPointInObject(particle->position, graphObject, ObjectPosition::getIdentity()))
-    {
+//	if (particle->position.x > -0.5 && < )  
+	{
         cnt++;
-        output << "(\t" << particle->position.x << 
-                  ",\t" << particle->position.y << 
-                  ",\t" << particle->position.y << 
-                  ") R " << particle->size/2 << 
+		output << "volume create radius " << particle->size << " sphere \n";
+		output << "volume move \"volume." << cnt << "\" offset " << particle->position.x << 
+                  " " << particle->position.y << 
+                  " " << particle->position.y << 
                   "\n";
-		float particleHalfSize = particle->size/2;
+
+		float particleHalfSize = particle->size;
 		float suffix = 4.0f / 3.0f; 
 		float particleVol = particleHalfSize*particleHalfSize*particleHalfSize*suffix;
         volume += float(M_PI*particleVol);

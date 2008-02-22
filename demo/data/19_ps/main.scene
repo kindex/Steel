@@ -48,7 +48,7 @@ enabled=0
 graph = 
 {
 	class = 'box'
-	size = (0 0 0)
+	size = (1 1 1)
 
 	material = 
 	{
