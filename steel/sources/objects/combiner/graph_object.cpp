@@ -15,7 +15,6 @@
 #include "../../graph/graph_engine.h"
 #include "../../res/res_main.h"
 #include "../../graph/material.h"
-#include "../../physic/physic_interface.h"
 
 using namespace std;
 
@@ -58,13 +57,6 @@ void GraphObjectCustom::bindEngine(Engine& engine, IN const InterfaceId id)
 	        gengine.setFaceMaterials(faces);
 	        gengine.setTexCoordsCount(1);
 	        gengine.setTexCoords(0, texCoords);
-            break;
-        }
-        case INTERFACE_POPYHEDRA_PHYSIC:
-        {
-	        PhysicPolyhedraInterface& pengine = *dynamic_cast<PhysicPolyhedraInterface*>(&engine);
-            pengine.setVertexes(vertexes);
-            pengine.setFaces(allFaces);
             break;
         }
     }
@@ -256,12 +248,6 @@ void GraphObjectModel::bindEngine(Engine& engine, IN const InterfaceId id)
 			gengine.setTexCoords(i, model->getTexCoords(i));
 		}
 	}
-    else if (id == INTERFACE_POPYHEDRA_PHYSIC)
-    {
-		PhysicInterface& pengine = *dynamic_cast<PhysicInterface*>(&engine);
-		pengine.setVertexes(model->getVertexes());
-		pengine.setFaces(&model->allFaces);
-    }
 }
 
 const VertexVector*       GraphObjectModel::getVertexes() const { return model->getVertexes(); }

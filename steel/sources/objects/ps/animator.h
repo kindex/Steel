@@ -16,46 +16,6 @@
 #include "../../steel.h"
 
 #include "particle_system.h"
-#include "../../physic/physic_particle.h"
-
-class UniParticle: public GameObject
-{
-public:
-	UniParticle(Particle*, Config*);
-	void setParticle(Particle *_particle) { particle = _particle; }
-
-	bool InitFromConfig(Config&);
-    Config* getConfig() const;
-	bool updateInformation(IN OUT Engine&, IN const InterfaceId);
-	void process(IN const ProcessInfo& info);
-	bool supportsInterface(IN OUT Engine&, IN const InterfaceId);
-	void bindEngine(IN OUT Engine&, IN const InterfaceId);
-
-private:
-	Config*			conf;
-	Particle*		particle;
-	PhysicEngine*	engine;
-};
-
-class UniPSanimator: public ParticleAnimator
-{
-public:
-	UniPSanimator();
-	bool initParticles();
-	bool InitFromConfig(Config&);
-	bool updateInformation(IN OUT Engine&, IN const InterfaceId id);
-	void process(IN const ProcessInfo& info);
-	bool beforeInject(IN OUT Engine&, IN const InterfaceId id);
-	void afterRemove(IN OUT Engine&, IN const InterfaceId id);
-	void onParticleBorn(int index);
-	void onParticleDie(int index) {}
-
-private:
-	pvector<UniParticle*>	children;
-	PhysicEngine*			engine;
-	Config*					particleConf;
-};
-
 
 class SimpleAnimator: public ParticleAnimator
 {

@@ -27,7 +27,7 @@ Sphere::Sphere():
 
 void Sphere::bindEngine(Engine& engine, IN const InterfaceId id)
 {
-	GraphEngine& gengine = *static_cast<GraphEngine*>(&engine);
+	GraphInterface& gengine = *dynamic_cast<GraphEngine*>(&engine);
 
 	gengine.setPositionKind(POSITION_GLOBAL);
 	gengine.setPosition(ObjectPosition::getIdentity());
@@ -144,7 +144,6 @@ void Sphere::process(IN const ProcessInfo&)
 	for (size_t i=0; i < vertexes->size(); i++)
 	{
 		vertexes->at(i) += v3(prand()*0.001f, prand()*0.001f, prand()*0.001f);
-
 		vertexes->at(i) += vertexes->at(i)*v3(0,0,1)*0.001f*frand();
 	}
 

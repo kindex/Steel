@@ -35,7 +35,6 @@ public:
 		return id == INTERFACE_GRAPH;
 	}
 
-
 private:
 	void DeleteTriangle(int n);
 	void createSphere();

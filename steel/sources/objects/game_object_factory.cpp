@@ -29,7 +29,6 @@ GameObjectFactory* gameObjectFactory = NULL;
 
 ParticleAnimator* GameObjectFactory::createParticleAnimator(IN const std::string& _class) const
 {
-	if (_class == "UniPSanimator") return new UniPSanimator;
 	if (_class == "simple") return new SimpleAnimator;
 
 	error("ps", std::string("ParticleAnimator class '") + _class + "' not found");

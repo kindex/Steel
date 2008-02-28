@@ -47,7 +47,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions=" /wd4996"
+				AdditionalOptions=" /wd4996 /MP"
 				Optimization="4"
 				InlineFunctionExpansion="2"
 				FavorSizeOrSpeed="1"

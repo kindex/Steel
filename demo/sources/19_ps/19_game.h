@@ -15,7 +15,6 @@
 
 #include "../game_free_scene.h"
 
-#include <physic/physic_particle.h>
 #include <objects/combiner/graph_object.h>
 
 class GamePS: public GameFreeScene
@@ -37,16 +36,5 @@ protected:
 	Config*			physicConfig;
 };
 
-class GamePS_SteelPhysic: public GamePS
-{
-public:
-	GamePS_SteelPhysic();
-	bool init(Config& _conf, Input& _input);
-	void process();
-	void handleEventKeyDown(const std::string& key);
-
-private:
-	PhysicEngine* physicEngine;
-};
 
 #endif

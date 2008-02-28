@@ -107,8 +107,7 @@ bool ParticleEmitter::initParticles()
 
 bool ParticleSystem::supportsInterface(Engine& engine, IN const InterfaceId id)
 {
-	return id == INTERFACE_GRAPH
-        || id == INTERFACE_PARTICLE_PHYSIC;
+	return id == INTERFACE_GRAPH;
 }
 
 bool ParticleSystem::updateInformation(Engine& engine, IN const InterfaceId id)
@@ -118,10 +117,6 @@ bool ParticleSystem::updateInformation(Engine& engine, IN const InterfaceId id)
 //		emitter->updateInformation(engine);
 		renderer->updateInformation(engine, id);
 		return true;
-	}
-    else if (id == INTERFACE_PARTICLE_PHYSIC)
-	{
-		animator->updateInformation(engine, id);
 	}
 
 	return false;
@@ -133,10 +128,7 @@ bool ParticleSystem::beforeInject(Engine& engine, IN const InterfaceId id)
 	{
 		return renderer->beforeInject(engine, id);
 	}
-	else if (id == INTERFACE_PARTICLE_PHYSIC)
-	{
-		return animator->beforeInject(engine, id);
-	}
+
 	return false;
 }
 
@@ -146,10 +138,6 @@ void ParticleSystem::afterRemove(Engine& engine, IN const InterfaceId id)
 	{
 		return renderer->afterRemove(engine, id);
 	}
-	else if (id == INTERFACE_PARTICLE_PHYSIC)
-	{
-		return animator->afterRemove(engine, id);
-	}
 }
 
 void ParticleSystem::bindEngine(Engine& engine, IN const InterfaceId id)
@@ -157,10 +145,6 @@ void ParticleSystem::bindEngine(Engine& engine, IN const InterfaceId id)
 	if (id == INTERFACE_GRAPH)
 	{
 		return renderer->afterRemove(engine, id);
-	}
-	else if (id == INTERFACE_PARTICLE_PHYSIC)
-	{
-		return animator->afterRemove(engine, id);
 	}
 }
 

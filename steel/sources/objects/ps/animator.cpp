@@ -12,6 +12,7 @@
 		Обрабатывает движение частиц в системе.
 ************************************************************/
 #include "animator.h"
+#include "../../res/config/config.h"
 
 /*
 void UniPSanimator::ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime _modificationTime)
@@ -49,106 +50,3 @@ bool SimpleAnimator::initParticles()
 {
 	return true;
 }
-
-bool UniPSanimator::initParticles()
-{ 
-	return true;
-}
-
-bool UniPSanimator::InitFromConfig(Config& _conf)
-{
-	conf = &_conf;
-
-	particleConf = conf->find("particle");
-
-	return particleConf != NULL;
-}
-
-bool UniPSanimator::updateInformation(IN OUT Engine& engine, IN const InterfaceId id)
-{
-    return false;
-}
-
-void UniPSanimator::process(IN const ProcessInfo& info)
-{
-	for EACH(pvector<UniParticle*>, children, it)
-	{
-		(*it)->process(info);
-	}
-}
-
-bool UniPSanimator::beforeInject(IN OUT Engine& _engine, IN const InterfaceId id)
-{
-	engine = static_cast<PhysicEngine*>(&_engine);
-
-	for EACH(pvector<UniParticle*>, children, it)
-	{
-		engine->addChild(*it);
-	}
-
-	return true;
-}
-
-void UniPSanimator::afterRemove(IN OUT Engine&, IN const InterfaceId id) 
-{
-}
-
-void UniPSanimator::onParticleBorn(int index)
-{
-	UniParticle* newParticle = new UniParticle(set->particles[index], particleConf);
-	children.push_back(newParticle);
-
-	if (engine != NULL)
-	{
-		engine->addChild(newParticle);
-	}
-}
-
-bool UniParticle::InitFromConfig(Config&)
-{
-	return true;
-}
-
-Config* UniParticle::getConfig() const
-{
-    return NULL; // TODO:
-}
-
-bool UniParticle::updateInformation(IN OUT Engine&, IN const InterfaceId)
-{
-	return false;
-}
-
-void UniParticle::process(IN const ProcessInfo& info)
-{
-	if (engine != NULL)
-	{
-        engine->setCurrentObject(this, INTERFACE_PARTICLE_PHYSIC);
-		particle->position = engine->getPosition();
-		particle->velocity = engine->getVelocity();
-	}
-}
-
-bool UniParticle::supportsInterface(IN OUT Engine& engine, IN const InterfaceId id)
-{
-	return id == INTERFACE_PARTICLE_PHYSIC;
-}
-
-void UniParticle::bindEngine(IN OUT Engine& _engine, IN const InterfaceId id)
-{
-	engine = static_cast<PhysicEngine*>(&_engine);
-	engine->setPosition(particle->position);
-	engine->setVelocity(particle->velocity);
-	engine->setConfig(*conf);
-}
-
-UniPSanimator::UniPSanimator():
-	engine(NULL),
-	particleConf(NULL)
-{}
-
-UniParticle::UniParticle(Particle *_particle, Config *_conf):
-	particle(_particle),
-	conf(_conf),
-	engine(NULL)
-{}

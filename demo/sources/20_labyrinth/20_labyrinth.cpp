@@ -531,6 +531,10 @@ bool GameLabyrinth::initAgeia()
 	if (physicsSDK == NULL) 
 	{
 		error("ageia", std::string("SDK create error (") + IntToStr(errorCode) + " - " + getNxSDKCreateError(errorCode) + ").");
+		if (errorCode == NXCE_PHYSX_NOT_FOUND)
+		{
+			MessageBox(NULL, "Ageia PhysX drivers was not found. Download it from http://ageia.com/", "Fatal Error", 0);
+		}
 		return false;
 	}
 #if SAMPLES_USE_VRD

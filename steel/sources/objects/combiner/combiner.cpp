@@ -18,7 +18,6 @@
 #include "../game_object_factory.h"
 #include "../../audio/audio_interface.h"
 #include "../../graph/graph_interface.h"
-#include "../../physic/physic_interface.h"
 #include "graph_object.h"
 #include "audio_object.h"
 #include "../transformation/transformation.h"
@@ -176,8 +175,7 @@ void Combiner::addObject(GameObject* newObject)
 bool Combiner::supportsInterface(Engine& engine, IN const InterfaceId id) 
 { 
 	if (graph != NULL && id == INTERFACE_GRAPH 
-     || audio != NULL && id == INTERFACE_AUDIO
-     || polyhedraPhysicSameAsGraph && id == INTERFACE_POPYHEDRA_PHYSIC)
+     || audio != NULL && id == INTERFACE_AUDIO)
 	{
 		return true;
 	}
@@ -206,11 +204,6 @@ void Combiner::bindEngine(Engine& engine, IN const InterfaceId id)
 //		dynamic_cast<AudioInterface*>(engine)->setPositionKind(positionKind);
 //		dynamic_cast<AudioInterface*>(engine)->setPosition(position);
 		audio->bindEngine(engine, id);
-	}
-    else if (graph != NULL && id == INTERFACE_POPYHEDRA_PHYSIC && polyhedraPhysicSameAsGraph)
-	{
-//        dynamic_cast<PhysicInterface*>(&engine)->setVertexes(graph->
-        graph->bindEngine(engine, id);
 	}
 
 	ChildrenInterface &cEngine = *dynamic_cast<ChildrenInterface*>(&engine);
@@ -248,17 +241,6 @@ bool Combiner::updateInformation(Engine& engine, IN const InterfaceId id)
 		    {
 			    return audio->updateInformation(engine, id);
 		    }
-            break;
-
-        case INTERFACE_POPYHEDRA_PHYSIC:
-            if (polyhedraPhysicSameAsGraph)
-            {
-		        dynamic_cast<PhysicPolyhedraInterface*>(&engine)->setPosition(position*origin);
-		        if (graph != NULL)
-		        {
-			        return graph->updateInformation(engine, id);
-		        }
-            }
             break;
 	}
 

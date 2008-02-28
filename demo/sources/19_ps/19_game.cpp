@@ -24,10 +24,6 @@ GamePS::GamePS():
 	gravityBackup(v3(0,0,0))
 {}
 
-GamePS_SteelPhysic::GamePS_SteelPhysic():
-	physicEngine(NULL)
-{}
-
 
 bool GamePS::init(Config& _conf, Input& _input)
 {
@@ -50,34 +46,9 @@ bool GamePS::init(Config& _conf, Input& _input)
 	return true;
 }
 
-bool GamePS_SteelPhysic::init(Config& _conf, Input& _input)
-{
-    if (!GamePS::init(_conf, _input))
-    {
-        return false;
-    }
-	physicEngine = new PhysicEngine;
-	physicEngine->init(*physicConfig);
-	physicEngine->inject(world);
-
-    return true;
-}
-
-
 void GamePS::process()
 {
 	GameFreeScene::process();
-}
-
-void GamePS_SteelPhysic::process()
-{
-	GamePS::process();
-	
-	if (timeInfo.frameLength > EPSILON)
-	{
-        physicEngine->setSpeedup(speedup);
-		physicEngine->process(timeInfo);
-	}
 }
 
 void GamePS::handleEventKeyDown(const std::string& key)
@@ -93,20 +64,6 @@ void GamePS::handleEventKeyDown(const std::string& key)
 	else if (key == "9") speedup = 50;
 	else if (key == "-") speedup /= 2;
 	else if (key == "+") speedup *= 2;
-    else
-    {
-        GameFreeScene::handleEventKeyDown(key);
-    }
-}
-
-void GamePS_SteelPhysic::handleEventKeyDown(const std::string& key)
-{
-	if (key == "g")
-	{
-		v3 current = physicEngine->getGravity();
-		physicEngine->setGravity(gravityBackup);
-		gravityBackup = current;
-	}
     else
     {
         GameFreeScene::handleEventKeyDown(key);

@@ -1,10 +1,9 @@
 /*id*********************************************************
 	Unit: core
 	Part of: DiVision intro
-	(C) DiVision, 2004-2007
+	(C) DiVision, 2004-2008
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
-		* Kane [J. Anton, kane@mail.berlios.de]
 	License:
 		Steel Engine License
 	Description:
@@ -68,7 +67,7 @@ int main(int argc, char *argv[])
 
 	if (commandLine.empty())
 	{
-		commandLine = "[../conf/ps.conf#] {}";
+		commandLine = "[../conf/labyrinth.conf#] {}";
 	}
 	Config* steelConfig = parseConfig(commandLine);
 
@@ -125,7 +124,6 @@ int main(int argc, char *argv[])
 		game->bind(*audio);
 		game->insonify(*audio); // TODO: ?
 	}
-		
 
 // ******************* MAIN LOOP ************************
 	steel::time captionUdateTime = -1;

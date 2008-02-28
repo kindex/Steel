@@ -127,7 +127,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				UseUnicodeResponseFiles="false"
-				AdditionalOptions=" /wd4996"
+				AdditionalOptions=" /wd4996 /MP"
 				Optimization="4"
 				InlineFunctionExpansion="2"
 				FavorSizeOrSpeed="1"
@@ -877,30 +877,6 @@
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="physic"
-			>
-			<File
-				RelativePath="..\sources\physic\physic_engine.h"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\physic\physic_engine_particle.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\physic\physic_interface.h"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\physic\physic_particle.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\physic\physic_particle.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="res"
