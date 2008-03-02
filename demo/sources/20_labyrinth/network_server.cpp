@@ -335,9 +335,12 @@ void GameLabyrinth::serverReceive_CHAR_UPDATE(Client* client, NetworkPacket* pac
     {
         NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = info.character_position[i];
         size_t index = info.character_position[i].characterId;
-        characters[index]->setPosition(pos.position);
-        characters[index]->setVelocity(pos.linear_velocity);
-        characters[index]->setMomentum(pos.linear_momentum);
+		if (index < characters.size())
+		{
+			characters[index]->setPosition(pos.position);
+			characters[index]->setVelocity(pos.linear_velocity);
+			characters[index]->setMomentum(pos.linear_momentum);
+		}
     }
 }
 

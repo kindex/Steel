@@ -12,12 +12,14 @@
 		{
 			class = 'std'
 			blend = 0
-			dropShadows = 0
 			diffuse_map =
 			{ 
-				image = 'laby_floor1'
+				image = 'tr_ceiling_2_d'
 			}
 			texCoordsScale = (100 100 1)
+			catchShadows = 1
+			dropShadows = 1
+			ambient_k = 0.5
 		}
 	} // graph
 } // combiner

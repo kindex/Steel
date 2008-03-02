@@ -44,7 +44,7 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 
 	spectator.velocity.loadZero();
 
-    if (conf->gets("net.role") != "client")
+    if (conf->gets("net.role") == "server")
     {
 	    Config* scene = conf->find("scene");
 	    if (scene == NULL)

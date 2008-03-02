@@ -11,28 +11,8 @@ objects =
 	[/sun.conf#] {	origin = (-95 -42 31)}
 	[/sun_ambient.conf#] {	origin = (90 90 90)}
 	[floor.scene#] {}
+	[/22_sky/sky.scene#] {}
+	[/22_sky/music.scene#] {}
 
-	{ // skybox
-		class = 'combiner'
-		scale = (200 200 200)
-		graph = 
-		{
-			class = 'model'
-			file = 'skybox'
-			material = 
-			{
-				class = 'std'
-				blend = 0
-				catchShadows = 0
-				dropShadows = 0
-				ambient_k = 0
-				env_map =
-				{ 
-					image = '/image/env/network'
-					type = 'sky'
-				}
-			} // graph
-		}
-	} // combiner
 ) // objects
 } // scene

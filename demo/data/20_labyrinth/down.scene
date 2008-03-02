@@ -7,17 +7,19 @@ origin = (0 0.5 0.5)
 graph = 
 {
 	class = 'box'
-	size = (0.2 2.4 1)
+	size = (0.2 2.49 1)
 	material = 
 	{
 		class = 'std'
 		blend = 0
-		dropShadows = 0
 		diffuse_map =
 		{ 
-			image = 'laby_wall1_specular'
+			image = 'box1_side_no_handle_d' // 'crate1_top_d'
 		}
 		texCoordsScale = (4 4 4)
+		catchShadows = 1
+		dropShadows = 1
+		ambient_k = 0.5
 	}
 
 } // graph

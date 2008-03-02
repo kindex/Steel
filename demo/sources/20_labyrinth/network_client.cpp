@@ -90,6 +90,7 @@ void GameLabyrinth::clientProcess()
                     enet_peer_reset(server.peer);
                     server.peer = NULL;
                     server.client_state = DISCONNECTED;
+					character = NULL;
                 }
             }
         }

@@ -2,22 +2,24 @@
 {
 class = 'combiner'
 enabled=1
-origin = (0 0.5 0.5)
+	origin = (0 0.5 0.5)
 
 graph = 
 {
 	class = 'box'
-	size = (2.5 0.2 1)
+	size = (1.99 0.2 1.3)
 	material = 
 	{
 		class = 'std'
 		blend = 0
-		dropShadows = 0
 		diffuse_map =
 		{ 
-			image = 'laby_wall1'
+			image = 'box4_side_no_handle_d'
 		}
 		texCoordsScale = (4 4 4)
+		catchShadows = 1
+		dropShadows = 1
+		ambient_k = 0.5
 	}
 
 } // graph

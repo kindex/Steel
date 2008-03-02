@@ -11,15 +11,18 @@
 				class = 'combiner'
 				graph = {
 					class = 'box'
-					size = (0.45 0.45 0.95)
+					size = (0.45 0.45 0.45)
 					material = 
 					{
 						class = 'std'
 						blend = 0
-						dropShadows = 0
+						catchShadows = 1
+						dropShadows = 1
+						ambient_k = 0.5
+
 						diffuse_map =
 						{ 
-							image = '/none'
+							image = 'box5_side_no_handle_d'
 						}
 					}
 				}

@@ -60,6 +60,7 @@ private:
     bool createCharacter();
     bool createPhysicWorld();
     bool isWinner(Character*);
+	void checkForWinner();
 
 // ------------------- Physic ---------------------
     bool initAgeia();

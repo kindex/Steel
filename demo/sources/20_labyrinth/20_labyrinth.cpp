@@ -149,16 +149,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 
 // network
     std::string net_role_str = conf->gets("net.role", "single");
-    if (net_role_str == "single")
-    {
-        net_role = NET_SINGLE;
-        if (!createWorld())
-        {
-            return false;
-        }
-        createCharacter();
-    }
-    else if (net_role_str == "server")
+	if (net_role_str == "server")
     {
         if (!serverInit())
         {
@@ -227,7 +218,7 @@ bool GameLabyrinth::createWorld()
 {
     std::string dirs[] = {"x", "y"};
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 2; i++) // loading walls from config
 	{
 		const std::string& dir = dirs[i];
 		length[i] = conf->getf("labyrinth.length_" + dir, 1.0f);
@@ -248,7 +239,7 @@ bool GameLabyrinth::createWorld()
 
 	labyrinth = generateLabyrinth(count[0], count[1], conf->getf("labyrinth.crazy_const", 0.02f));
 
-	for (int i = -1; i < labyrinth.getMaxX(); i++)
+	for (int i = -1; i < labyrinth.getMaxX(); i++) // build walls
 	{
 		for (int j = -1; j < labyrinth.getMaxY(); j++)
 		{
@@ -278,6 +269,10 @@ bool GameLabyrinth::createWorld()
 			}
 		}
 	}
+
+	// TODO: create floor
+	Combiner* floor = new Combiner();
+
 
     return true;
 }
@@ -321,10 +316,8 @@ bool GameLabyrinth::isWinner(Character* characher)
     return ((char_pos - v3(length[0]*(count[0]-1), length[1]*(count[1]-1), 0)).getSquaredLength() < sqr(length[0]/3) + sqr(length[1]/3));
 }
 
-void GameLabyrinth::process()
+void GameLabyrinth::checkForWinner()
 {
-	GameFreeScene::process();
-
     if (net_role == NET_SERVER && game_state == GAME_PLAYING && character != NULL)
     {
         if (isWinner(character))
@@ -357,6 +350,13 @@ void GameLabyrinth::process()
             }
         }
     }
+}
+
+void GameLabyrinth::process()
+{
+	GameFreeScene::process();
+
+	checkForWinner();
 
 	if (timeInfo.frameLength > EPSILON)
 	{
@@ -490,7 +490,6 @@ void GameLabyrinth::draw(GraphEngine& graph)
         {
             cameraPenalty = 1;
         }
-
 
         float len = 2;
         v3 dir = spectator.camera.getDirection();
