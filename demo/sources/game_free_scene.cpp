@@ -21,6 +21,31 @@
 #include <windows.h>
 #include <openal/eax.h>
 
+bool GameFreeScene::loadScene(Config* scene)
+{
+    if (scene == NULL)
+    {
+	    error("game res", "Cannot find scene config");
+	    return false;
+    }
+
+    std::string world_class;
+    GameObject* world_loaded = createGameObject(scene, &world_class);
+    if (world_loaded == NULL)
+    {
+	    error("game", "Cannot init scene");
+	    return false;
+    }
+    if (world_class != "combiner")
+    {
+	    error("game", "Scene can only be of combiner class");
+	    return false;
+    }
+    world = static_cast<Combiner*>(world_loaded);
+
+    return true;
+}
+
 bool GameFreeScene::init(Config& _conf, Input& _input)
 {
 	conf = &_conf;
@@ -44,41 +69,6 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 
 	spectator.velocity.loadZero();
 
-    if (conf->gets("net.role") == "server")
-    {
-	    Config* scene = conf->find("scene");
-	    if (scene == NULL)
-	    {
-		    error("game res", "Cannot find scene config");
-		    return false;
-	    }
-
-	    std::string world_class;
-	    GameObject* world_loaded = createGameObject(scene, &world_class);
-	    if (world_loaded == NULL)
-	    {
-		    error("game", "Cannot init scene");
-		    return false;
-	    }
-	    if (world_class != "combiner")
-	    {
-		    error("game", "Scene can only be of combiner class");
-		    return false;
-	    }
-	    world = static_cast<Combiner*>(world_loaded);
-    }
-	
-	Config* flashlightConf = resConfig.add("flashlight.conf");
-	if (flashlightConf != NULL)
-	{
-		flashlight = new GameLight();
-		flashlight->InitFromConfig(*flashlightConf);
-		flashlight->enable();
-		flashlightPosition = spectator;
-		flashlight->setPosition(flashlightPosition.camera.getPosition());
-	}
-
-
 // ******************* PHYSIC **************************
 
 	_alive = true;
@@ -95,6 +85,31 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 
 	return true;
 }
+
+bool GameDemo::init(Config& _conf, Input& _input)
+{
+    if (!GameFreeScene::init(_conf, _input))
+    {
+        return false;
+    }
+    if (!loadScene(conf->find("scene")))
+    {
+        return false;
+    }
+	
+	Config* flashlightConf = resConfig.add("flashlight.conf");
+	if (flashlightConf != NULL)
+	{
+		flashlight = new GameLight();
+		flashlight->InitFromConfig(*flashlightConf);
+		flashlight->enable();
+		flashlightPosition = spectator;
+		flashlight->setPosition(flashlightPosition.camera.getPosition());
+	}
+
+    return true;
+}
+
 
 void GameFreeScene::handleEventKeyDown(const std::string& key)
 {

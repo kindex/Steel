@@ -49,6 +49,7 @@ public:
 
 protected:
 	virtual v3 calulateCameraCollision(const v3& oldPos, const v3& newPos);
+    bool loadScene(Config* conf);
 
 	Config*			conf;
 	Input*			input;
@@ -80,6 +81,12 @@ protected:
 		C_FREE,
 		C_FIXED,
 	} cameraMode;
+};
+
+class GameDemo : public GameFreeScene
+{
+public:
+    bool init(Config& _conf, Input& _input);
 };
 
 #endif

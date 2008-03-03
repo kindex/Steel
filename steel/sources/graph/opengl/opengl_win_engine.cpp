@@ -59,7 +59,7 @@ bool OpenGL_Engine::RepairOpenGL_Window_WinAPI() // repair window on resize
 
 bool OpenGL_Engine::FlushOpenGL_Window_WinAPI()
 {
-    if(((WindowInformationWinAPI*)windowInformation)->DC)
+    if (((WindowInformationWinAPI*)windowInformation)->DC)
 	{
 		glFlush();
 		SwapBuffers(((WindowInformationWinAPI*)windowInformation)->DC);

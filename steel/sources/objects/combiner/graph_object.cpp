@@ -12,7 +12,7 @@
  ************************************************************/
 
 #include "graph_object.h"
-#include "../../graph/graph_engine.h"
+#include "../../graph/graph_interface.h"
 #include "../../res/res_main.h"
 #include "../../graph/material.h"
 
@@ -23,6 +23,7 @@ GraphObject* graphObjectFactory(const string &_class)
 	if (_class == "mesh")	return new GraphObjectMesh;
 	if (_class == "box")	return new GraphObjectBox;
 	if (_class == "model")	return new GraphObjectModel;
+	if (_class == "text")	return new GraphObjectText;
 
 	error("objects", string("GraphObject class '") + _class + "' not found");
 	return NULL;
@@ -51,7 +52,7 @@ void GraphObjectCustom::bindEngine(Engine& engine, IN const InterfaceId id)
     {
         case INTERFACE_GRAPH:
         {
-	        GraphEngine& gengine = *static_cast<GraphEngine*>(&engine);
+	        GraphInterface& gengine = *dynamic_cast<GraphInterface*>(&engine);
 	        gengine.setVertexes(vertexes);
 	        gengine.setNormals(normals);
 	        gengine.setFaceMaterials(faces);
@@ -71,7 +72,7 @@ bool GraphObjectMesh::InitFromConfig(Config& conf)
 	Config* materialConfig = conf.find("material");
 
 	MaterialStd* m = NULL;
-	if(materialConfig != NULL)
+	if (materialConfig != NULL)
 	{
 		m = createMaterial(materialConfig);
 	}
@@ -236,7 +237,7 @@ void GraphObjectModel::bindEngine(Engine& engine, IN const InterfaceId id)
 {
 	if (id == INTERFACE_GRAPH)
 	{
-		GraphEngine& gengine = *static_cast<GraphEngine*>(&engine);
+		GraphInterface& gengine = *dynamic_cast<GraphInterface*>(&engine);
 		gengine.setVertexes(model->getVertexes());
 		gengine.setNormals(model->getNormals());
 		gengine.setFaceMaterials(model->getFaceMaterials());
@@ -255,3 +256,31 @@ const Normals*            GraphObjectModel::getNormals() const { return model->g
 const FaceMaterialVector* GraphObjectModel::getFaces() const { return model->getFaceMaterials(); }
 const Faces*              GraphObjectModel::getAllFaces() const { return model->getAllFaces(); }
 const TexCoords*          GraphObjectModel::getTexCoords(int mapNumber) const { return model->getTexCoords(mapNumber); }
+
+bool GraphObjectText::InitFromConfig(Config& conf)
+{
+    std::string str = conf.gets("text");
+    text.push_back(GraphText(str, ObjectPosition::getIdentity(), POSITION_LOCAL));
+
+   // TODO: load other parameters, like position kind, font
+
+    return !str.empty();
+}
+
+Config* GraphObjectText::getConfig() const
+{
+    return NULL; // TOOD:
+}
+
+void GraphObjectText::bindEngine(Engine& engine, IN const InterfaceId id)
+{
+    switch (id)
+    {
+        case INTERFACE_GRAPH:
+        {
+		    GraphInterface& gengine = *dynamic_cast<GraphInterface*>(&engine);
+	        gengine.setGraphText(text);
+            break;
+        }
+    }
+}

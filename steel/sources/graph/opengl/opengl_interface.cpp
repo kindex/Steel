@@ -144,6 +144,11 @@ void OpenGL_Engine::setAABB(const AABB &aabb)
 	GS(currentShadow)->aabbCalculated = true;
 }
 
+void OpenGL_Engine::setGraphText(const GraphTextVector& text)
+{
+	GS(currentShadow)->text = text;
+}
+
 const ProcessInfo& OpenGL_Engine::getProcessInfo()
 {
 	return info;

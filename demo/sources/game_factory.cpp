@@ -20,7 +20,7 @@
 
 Game* GameFactory::createGame(IN const std::string& className) const
 {
-	if (className == "free_scene")	return new GameFreeScene;
+	if (className == "demo")	    return new GameDemo;
 	if (className == "ps")			return new GamePS;
 	if (className == "labyrinth")	return new GameLabyrinth;
 	if (className == "ageia")		return new GameAgeiatech;

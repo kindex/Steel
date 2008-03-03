@@ -40,7 +40,7 @@ void OpenGL_Engine::collectInformationFromObjects()
 {
 	int size = objects.size();
 
-	for(int i=0; i < size; i++)
+	for(int i = 0; i < size; i++)
 	{
 		prepare(*getShadow(objects[i])); /* Update vertexes, faces, lights */
 	}
@@ -103,6 +103,11 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	setupVariables();
 
 // ------------- Clear Screen ------------
+	if (conf->geti("swapBuffers", 1))
+	{
+		(this->*FlushOpenGL_Window)(); // TODO: flush in thread
+	}
+
 	GLbitfield clear = 0;
 	if (conf->getb("clearColor", true))	clear |= GL_COLOR_BUFFER_BIT;
 	if (conf->getb("clearDepth", true))	clear |= GL_DEPTH_BUFFER_BIT;
@@ -119,11 +124,6 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
 // ------------- Post draw ---------------
 
-	if (conf->geti("swapBuffers", 1))
-	{
-//		glFlush(); // TODO: flush in thread
-		(this->*FlushOpenGL_Window)();
-	}
 	GLenum errorCode = glGetError();
 	if (errorCode != 0)
 	{
@@ -134,15 +134,70 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	return true;
 }
 
+void OpenGL_Engine::renderText()
+{
+    if (font == NULL)
+    {
+        return;
+    }
+    for EACH(ShadowPVector, shadows, shadow)
+	{
+		GraphShadow& e = *GS(*shadow);
+        if (!e.text.empty())
+        {
+            for EACH(GraphTextVector, e.text, text)
+            {
+                pushPosition(e.realPosition*text->position, text->position_kind);
+
+			    (this->*BindTexture)(*font, true);
+                
+                glBegin(GL_QUADS);
+
+                v2 points[] = {
+                    v2(0, 0), 
+                    v2(1, 0),
+                    v2(1, 1),
+                    v2(0, 1)
+                };
+
+                v2 tex_points[] = {
+                    v2(0, 0), 
+                    v2(0.5, 0),
+                    v2(0.5f, 0.9f),
+                    v2(0, 0.9f)
+                };
+
+                float dy = 0.1f;
+                float dx = dy*font->getHeight()/(font->getWidth()/256.0f)*0.5f;
+                // TODO: calculate each letter width
+
+                for (size_t i = 0; i < text->text.length(); i++)
+                {
+                    char letter = text->text[i];
+
+                    for (int j = 0; j < 4; j++)
+                    {
+                        glTexCoord2f((letter + tex_points[j].x)/256.0f, tex_points[j].y);
+                        glVertex2f((points[j].x + i)*dx, points[j].y*dy);
+                    }
+                }
+                glEnd();
+
+                popPosition(text->position_kind);
+		    }
+        }
+	}
+}
+
 void OpenGL_Engine::renderTransparent()
 {
+// К этому моменту все непрозрачные объекты уже выведены
 	if (!flags.blending || flags.current.transparent)
 	{
 		return;
 	}
 	flags.current.transparent = true;
 	pvector<BlendingFaces> blendingFaces;
-// В начале выводим только непрозрачные объекты
 
 	for EACH(ShadowPVector, shadows, it)
 	{
@@ -158,7 +213,7 @@ void OpenGL_Engine::renderTransparent()
 			}
 		}
 	}
-// Потом прозрачные в порядке удалённости от камеры: вначале самые дальние
+// выводим прозрачные в порядке удалённости от камеры: вначале самые дальние
 
 	if (flags.blending && flags.current.transparent && !blendingFaces.empty())
 	{
@@ -268,7 +323,7 @@ void OpenGL_Engine::renderCatchShadows()
 		GraphShadow& e = *GS(*it);
 		if (e.faceMaterials != NULL)
 		{
-			pushPosition(e);
+            pushPosition(e.realPosition, e.positionKind);
 			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 			{
 				if (faces->material != NULL && faces->material->blend == 0 && faces->material->catchShadows)
@@ -276,7 +331,7 @@ void OpenGL_Engine::renderCatchShadows()
 					(this->*DrawFill_MaterialStd)(e, *faces->faces, *faces->material);
 				}
 			}
-			popPosition(e);
+            popPosition(e.positionKind);
 		}
 	}
 }
@@ -313,7 +368,7 @@ void OpenGL_Engine::renderNoShadows()
 		GraphShadow& e = *GS(*it);
 		if (e.faceMaterials != NULL)
 		{
-			pushPosition(e);
+            pushPosition(e.realPosition, e.positionKind);
 			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 			{
 				if (faces->material != NULL && faces->material->blend == 0 && (!faces->material->catchShadows || !flags.shadows))
@@ -321,7 +376,7 @@ void OpenGL_Engine::renderNoShadows()
 					(this->*DrawFill_MaterialStd)(e, *faces->faces, *faces->material);
 				}
 			}
-			popPosition(e);
+            popPosition(e.positionKind);
 		}
 	}
 }
@@ -353,6 +408,7 @@ void OpenGL_Engine::render()
 	    program->unbind();
     }
 	glPopAttrib();
+    renderText();
 
 	renderTransparent();
 	renderFlares();
@@ -447,7 +503,7 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 			{
 				if (flags.glsl)
 				{
-					pushPosition(e);
+                    pushPosition(e.realPosition, e.positionKind);
 				}
 				int faceNumber = 0;
 				for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
@@ -536,7 +592,7 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 				}
 				if (flags.glsl)
 				{
-					popPosition(e);
+					popPosition(e.positionKind);
 				}
 			}
 		}
@@ -566,7 +622,7 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 	for EACH(ShadowPVector, shadows, it)
 	{
 		GraphShadow& e = *GS(*it);
-		pushPosition(e);
+        pushPosition(e.realPosition, e.positionKind);
 		if (flags.drawFace && e.faceMaterials != NULL)
 		{
 			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
@@ -577,7 +633,7 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 				}
 			}
 		}
-		popPosition(e);
+		popPosition(e.positionKind);
 	}
 	glPopAttrib();
 }
@@ -590,7 +646,7 @@ void OpenGL_Engine::castShadow(const LightShadow& light)
 
 void OpenGL_Engine::drawObject(GraphShadow& e, OUT FaceMaterialVector& skippedFaces)
 {
-	pushPosition(e);
+	pushPosition(e.realPosition, e.positionKind);
 	if (flags.drawFace && e.faceMaterials != NULL)
 	{
 		for EACH_CONST(FaceMaterialVector, *e.faceMaterials, it)
@@ -608,7 +664,7 @@ void OpenGL_Engine::drawObject(GraphShadow& e, OUT FaceMaterialVector& skippedFa
 			}
 		}
 	}
-	popPosition(e);
+	popPosition(e.positionKind);
 }
 
 void OpenGL_Engine::renderDebug()
@@ -619,12 +675,12 @@ void OpenGL_Engine::renderDebug()
 		{
 			if (GS(*e)->faceMaterials != NULL)
 			{
-				pushPosition(*GS(*e));
+                pushPosition(GS(*e)->realPosition, GS(*e)->positionKind);
 				for EACH_CONST(FaceMaterialVector, *GS(*e)->faceMaterials, it)
 				{
 					(this->*DrawWire)(*GS(*e), *it->faces);
 				}
-				popPosition(*GS(*e));
+                popPosition(GS(*e)->positionKind);
 			}
 		}
 	}
@@ -635,9 +691,9 @@ void OpenGL_Engine::renderDebug()
 		{ \
 			if (GS(*e)->faceMaterials != NULL) \
 			{ \
-				pushPosition(*GS(*e)); \
+				pushPosition(GS(*e)->realPosition, GS(*e)->positionKind); \
 				(function)(*GS(*e)); \
-				popPosition(*GS(*e)); \
+				popPosition(GS(*e)->positionKind); \
 			} \
 		} \
 	}
@@ -864,9 +920,15 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	white = resImage.add("white");
 	black = resImage.add("black");
 	none = resImage.add("none");
-	if(!zeroNormal)
+	font = resImage.add("font");
+	if (zeroNormal == NULL)
 	{
-		log_msg("error graph res", "Zero normal map not found");
+		log_msg("error graph res", "Zero normal map was not found");
+		return false;
+	}
+	if (font == NULL)
+	{
+		log_msg("error graph res", "Font texture was not found");
 		return false;
 	}
 
@@ -916,8 +978,7 @@ void OpenGL_Engine::prepare(GraphShadow& shadow, matrix34 matrix, GameObject* pa
 
 	for EACH(uidVector, shadow.children, it)
 	{
-		prepare(*getShadow(*it), matrix,  // TODO
-					shadow.object);
+		prepare(*getShadow(*it), matrix, shadow.object);
 	}
 
 	if (!shadow.aabbCalculated)
@@ -981,13 +1042,19 @@ OpenGL_Engine::OpenGL_Engine():
 	setCaptionOpenGL_Window(NULL),
 	FlushOpenGL_Window(NULL),
 	currentShadow(NULL),
-	program(NULL)
+	program(NULL),
+
+	zeroNormal(NULL),
+	black(NULL),
+	white(NULL),
+	none(NULL),
+	font(NULL)
 {}
 
 
-void OpenGL_Engine::pushPosition(GraphShadow& e)
+void OpenGL_Engine::pushPosition(const ObjectPosition& position, PositionKind positionKind)
 {
-	if (e.positionKind == POSITION_SCREEN)
+	if (positionKind == POSITION_SCREEN)
 	{
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -998,10 +1065,10 @@ void OpenGL_Engine::pushPosition(GraphShadow& e)
 	glPushMatrix();
 
 	float m[16]; // TODO
-	m[0] = e.realPosition.data.matrix.data.m[0][0];	m[1] = e.realPosition.data.matrix.data.m[1][0];	m[2] = e.realPosition.data.matrix.data.m[2][0];	m[3]  = 0;
-	m[4] = e.realPosition.data.matrix.data.m[0][1];	m[5] = e.realPosition.data.matrix.data.m[1][1];	m[6] = e.realPosition.data.matrix.data.m[2][1];	m[7]  = 0;
-	m[8] = e.realPosition.data.matrix.data.m[0][2];	m[9] = e.realPosition.data.matrix.data.m[1][2];	m[10]= e.realPosition.data.matrix.data.m[2][2];	m[11] = 0;
-	m[12]= e.realPosition.data.vector.x;			m[13]= e.realPosition.data.vector.y;			m[14]= e.realPosition.data.vector.z;			m[15] = 1;
+	m[0] = position.data.matrix.data.m[0][0];	m[1] = position.data.matrix.data.m[1][0];	m[2] = position.data.matrix.data.m[2][0];	m[3]  = 0;
+	m[4] = position.data.matrix.data.m[0][1];	m[5] = position.data.matrix.data.m[1][1];	m[6] = position.data.matrix.data.m[2][1];	m[7]  = 0;
+	m[8] = position.data.matrix.data.m[0][2];	m[9] = position.data.matrix.data.m[1][2];	m[10]= position.data.matrix.data.m[2][2];	m[11] = 0;
+	m[12]= position.data.vector.x;			    m[13]= position.data.vector.y;			    m[14]= position.data.vector.z;			    m[15] = 1;
 	glLoadMatrixf(m);
 /*
 		     (m[0]   m[4]   m[8]    m[12]	)	 ( v[0]	)
@@ -1016,10 +1083,10 @@ void OpenGL_Engine::pushPosition(GraphShadow& e)
 */
 }
 
-void OpenGL_Engine::popPosition(GraphShadow& e)
+void OpenGL_Engine::popPosition(PositionKind positionKind)
 {
 	glPopMatrix();
-	if (e.positionKind == POSITION_SCREEN)
+	if (positionKind == POSITION_SCREEN)
 	{
 		glPopMatrix();
 	}
@@ -1040,7 +1107,10 @@ bool OpenGL_Engine::isVisible(AABB aabb)
 
 void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
 {
-	if (object->realPositionCalculated) return;
+	if (object->realPositionCalculated)
+    {
+        return;
+    }
 
 	if (object->positionKind == POSITION_GLOBAL || object->positionKind == POSITION_SCREEN || object->parent == NULL)
 	{

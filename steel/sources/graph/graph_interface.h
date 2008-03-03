@@ -48,28 +48,18 @@ class GraphInterface :
     public Engine
 {
 public:
+	virtual void setVertexes(const VertexVector*) abstract; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
+	virtual void setNormals(const Normals*) abstract; // список нормалей в вершинам
 
-// *** Configuration ***
-
-/*Каркас - прямоугольник, в котором содержится объект. Может быть больше, но не меньше пространства, занимаемым обхектом. Должен вычисляться быстро*/
-//	virtual aabb getFrame() { return = 0; // AABB of object
-
-	// Интерфейс заточен под 3DS и OpenGL
-	// Следующие функции возврящяют ссылки на массивы данных (NULL if none), и должны 
-	// отвечать за хранние этих данных до следующего вызова этой функции
-	// или вызова cleanup
-	virtual void	setVertexes(const VertexVector*) abstract; // список вершин (координаты отночительно матрицы getMatrix() и всех матриц предков)
-	virtual void	setNormals(const Normals*) abstract; // список нормалей в вершинам
-
-	virtual void	setLines(const GLines*) abstract; // индексы вершин для линий и цвета линий (for debug)
+	virtual void setLines(const GLines*) abstract; // индексы вершин для линий и цвета линий (for debug)
 
 	// массив индексов вершин, которые образуют треугольники (грани) + материалы
-	virtual void	setFaceMaterials(const FaceMaterialVector*) abstract;
-	virtual void	setTexCoordsCount(unsigned int) abstract;
-	virtual void	setTexCoords(unsigned int texNumber, const TexCoords*) abstract;
-	virtual void	setAABB(const AABB&) abstract;
+	virtual void setFaceMaterials(const FaceMaterialVector*) abstract;
+	virtual void setTexCoordsCount(unsigned int) abstract;
+	virtual void setTexCoords(unsigned int texNumber, const TexCoords*) abstract;
+	virtual void setAABB(const AABB&) abstract;
+	virtual void setGraphText(const GraphTextVector&) abstract;
 	virtual const ProcessInfo& getProcessInfo() abstract;
 };
 
 #endif
-

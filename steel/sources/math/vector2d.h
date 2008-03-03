@@ -32,6 +32,7 @@ public:
 
 	float getX() const {return x;}	//public accessor functions
 	float getY() const {return y;}	//inline, const
+	inline float* getfv() const {return (float*)this;}
 
 	void loadZero() { x=0.0; y=0.0; }
 	void loadOne();					//fill with (1, 1)

@@ -107,7 +107,28 @@ struct FaceMaterial
 	std::string		name;
 };
 
-typedef svector<FaceMaterial>	FaceMaterialVector;
+typedef svector<FaceMaterial> FaceMaterialVector;
 
+struct GraphText
+{
+    GraphText(IN const std::string&    text,
+              IN const ObjectPosition& position,
+              IN const PositionKind    position_kind) :
+        text(text),
+        position(position),
+        position_kind(position_kind)
+    {}
+
+    GraphText() : 
+        position_kind(POSITION_LOCAL),
+        position(matrix34::getIdentity())
+    {}
+
+    std::string    text;
+    ObjectPosition position;
+    PositionKind   position_kind;
+};
+
+typedef svector<GraphText> GraphTextVector;
 
 #endif

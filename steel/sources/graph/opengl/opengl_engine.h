@@ -61,19 +61,18 @@ public:
 	void setFaceMaterials(const FaceMaterialVector*);// массив индексов вершин, которые образуют треугольники (грани) + материалы
 	void setTexCoordsCount(unsigned int);
 	void setTexCoords(unsigned int texNumber, const TexCoords*);
-	void setAABB(const AABB &box);
+	void setAABB(const AABB& box);
+    void setGraphText(const GraphTextVector&);
 	const ProcessInfo& getProcessInfo();
 
 	void addLight(Light*);
 	void removeLight(uid);
 	void updateLight(uid, Light*);
 
-
 // ******************* CHILDREN INTERFACE *************************
 	void addChild(GameObject* child);
 	void deleteChild(GameObject* child);
 	void clearChildren();
-
 
 // ********************* SHADOWS *************************
 private:
@@ -88,13 +87,14 @@ private:
 	Image* black;
 	Image* white;
 	Image* none;
+	Image* font;
 
 	GraphShadow* currentShadow;
 
 	void addChild(GraphShadow&, GameObject*);
 
 // ******************* SERVICES *******************
-	bool (OpenGL_Engine::*BindTexture)(Image& image, bool enable);
+	bool (OpenGL_Engine::*BindTexture)(Image& image, bool enableGlTexture);
 	bool (OpenGL_Engine::*DrawFill_MaterialStd)(GraphShadow&, const Faces&, MaterialStd&);
 	void (OpenGL_Engine::*DrawTriangles)(GraphShadow&, const Faces&, const TexCoords*);
 	void (OpenGL_Engine::*CleanupDrawTriangles)();
@@ -108,7 +108,7 @@ private:
 	void (OpenGL_Engine::*DrawAABB)(GraphShadow&);
 
 // ******************* OpenGL 1.0 *******************
-	bool BindTexture_OpenGL10(Image&, bool enable);
+	bool BindTexture_OpenGL10(Image&, bool enableGlTexture);
 	bool DrawFill_MaterialStd_OpenGL10(GraphShadow&, const Faces&, MaterialStd&);
 	void DrawTriangles_OpenGL10(GraphShadow&, const Faces&, const TexCoords*);
 	void DrawWire_OpenGL10(GraphShadow&, const Faces&);
@@ -118,7 +118,7 @@ private:
 	void DrawAABB_OpenGL10(GraphShadow&);
 
 // ******************* OpenGL 1.1 *******************
-	bool BindTexture_OpenGL11(Image& image, bool enable);
+	bool BindTexture_OpenGL11(Image& image, bool enableGlTexture);
 	void DrawTriangles_OpenGL11(GraphShadow&, const Faces&, const TexCoords*);
 	void DrawWire_OpenGL11(GraphShadow&, const Faces&);
 	void DrawLines_OpenGL11(GraphShadow&);
@@ -163,6 +163,7 @@ private:
 	void collectInformationFromObjects();
 	void render();
 	void renderTransparent();
+	void renderText();
 	void renderNoShadows();
 	void renderFlares();
 	void renderCatchShadows();
@@ -174,8 +175,8 @@ private:
 	void drawObject(GraphShadow&, OUT FaceMaterialVector& skippedFaces);
 	void updateRealPosition(IN OUT GraphShadow* object);
 	bool isVisible(AABB box);
-	void pushPosition(GraphShadow&);
-	void popPosition(GraphShadow&);
+	void pushPosition(const ObjectPosition&, PositionKind);
+	void popPosition(PositionKind);
 	size_t rayTrace(const Line& lineSegment, bool shadowed);
 
 	bool		focused;
@@ -193,8 +194,7 @@ public:
 	
 	GraphShadow* getShadow(GameObject* object) { return (GraphShadow*)Engine::getShadow(object, INTERFACE_GRAPH); }
 	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id, INTERFACE_GRAPH); }
-	 
-    Shadow*		shadowClassFactory(GameObject* object, const InterfaceId) { return new GraphShadow(this); }
+    Shadow*		 shadowClassFactory(GameObject* object, const InterfaceId) { return new GraphShadow(this); }
 
 
 // ****************** WINDOW FUNCTION **********************

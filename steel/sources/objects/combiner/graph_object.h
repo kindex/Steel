@@ -28,11 +28,25 @@ class GraphObject: public GameObject
 public:
 	bool supportsInterface(IN OUT Engine&, IN const InterfaceId id);
 
-	virtual const VertexVector*       getVertexes() const abstract;
-	virtual const Normals*            getNormals() const abstract;
-	virtual const FaceMaterialVector* getFaces() const abstract;
-	virtual const Faces*              getAllFaces() const abstract;
-	virtual const TexCoords*          getTexCoords(int mapNumber) const abstract;
+    virtual const VertexVector*       getVertexes() const { return NULL; }
+	virtual const Normals*            getNormals() const { return NULL; }
+	virtual const FaceMaterialVector* getFaces() const { return NULL; }
+	virtual const Faces*              getAllFaces() const { return NULL; }
+	virtual const TexCoords*          getTexCoords(int mapNumber) const { return NULL; }
+	virtual const GraphTextVector*    getGraphText() const { return NULL; }
+};
+
+class GraphObjectText: public GraphObject
+{
+public:
+	bool InitFromConfig(Config& conf);
+    Config* getConfig() const;
+	void bindEngine(Engine&, IN const InterfaceId id);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id){return false;}
+	void process(IN const ProcessInfo&) {}
+
+protected:
+    GraphTextVector text;
 };
 
 class GraphObjectModel: public GraphObject

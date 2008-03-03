@@ -77,25 +77,24 @@ struct GraphShadow : public Shadow // множество треугольник�
 	PositionKind	positionKind;
 	ObjectPosition	position; // global or screen
 	ObjectPosition	realPosition; // global, calculated from position and parent
-	bool 			realPositionCalculated;
+	bool            realPositionCalculated;
 
 	// *** Polyhedra ****
-	const FaceMaterialVector*	faceMaterials;
-	EdgeVectorVector			edges;
-	const VertexVector*				vertexes;
-	const Normals*				normals;
-	unsigned int				textureCount;
-	pvector<const TexCoords*>	texCoords;
+	const FaceMaterialVector* faceMaterials;
+	EdgeVectorVector          edges;
+	const VertexVector*       vertexes;
+	const Normals*            normals;
+	unsigned int              textureCount;
+	pvector<const TexCoords*> texCoords;
+	const GLines*             lines;
+	LightShadowPVector        lights; // lights to this onject
+    GraphTextVector           text;
 
-	const GLines*				lines;
+	AABB  aabb;
+	bool  aabbCalculated;
+	bool  visible;
+	float distance; // расстояние до камеры
 
-	AABB		aabb;
-	bool		aabbCalculated;
-	bool		visible;
-	float		distance; // расстояние до камеры
-
-	LightShadowPVector lights; // lights to this onject
-	
 	GraphShadow(Engine* engine);
 	void calculateAABB();
 	bool isCrossingLight(const LightShadow*);

@@ -79,9 +79,9 @@ void OpenGL_Engine::DrawTriangles_OpenGL10(GraphShadow& e, const Faces& faces, c
 			glBegin(GL_TRIANGLES);
 			for EACH_CONST(TriangleVector, faces.triangles, it)
 			{
-				if (coords != NULL) glTexCoord2fv(&coords->at( it->a[0] ).x);	glVertex3fv(&e.vertexes->at(it->a[0] ).x);
-				if (coords != NULL) glTexCoord2fv(&coords->at( it->a[1] ).x);	glVertex3fv(&e.vertexes->at(it->a[1] ).x);
-				if (coords != NULL) glTexCoord2fv(&coords->at( it->a[2] ).x);	glVertex3fv(&e.vertexes->at(it->a[2] ).x);
+				if (coords != NULL) glTexCoord2fv(coords->at(it->a[0]).getfv());	glVertex3fv(e.vertexes->at(it->a[0]).getfv());
+				if (coords != NULL) glTexCoord2fv(coords->at(it->a[1]).getfv());	glVertex3fv(e.vertexes->at(it->a[1]).getfv());
+				if (coords != NULL) glTexCoord2fv(coords->at(it->a[2]).getfv());	glVertex3fv(e.vertexes->at(it->a[2]).getfv());
 			}
 			glEnd();
 		}
@@ -92,21 +92,23 @@ void OpenGL_Engine::DrawTriangles_OpenGL10(GraphShadow& e, const Faces& faces, c
 			glBegin(GL_QUADS);
 			for EACH_CONST(QuadVector, faces.quads, it)
 			{
-				if (coords != NULL) glTexCoord2fv(&coords->at( it->a[0] ).x);	glVertex3fv(&e.vertexes->at(it->a[0] ).x);
-				if (coords != NULL) glTexCoord2fv(&coords->at( it->a[1] ).x);	glVertex3fv(&e.vertexes->at(it->a[1] ).x);
-				if (coords != NULL) glTexCoord2fv(&coords->at( it->a[2] ).x);	glVertex3fv(&e.vertexes->at(it->a[2] ).x);
-				if (coords != NULL) glTexCoord2fv(&coords->at( it->a[3] ).x);	glVertex3fv(&e.vertexes->at(it->a[3] ).x);
+				if (coords != NULL) glTexCoord2fv(coords->at(it->a[0]).getfv());	glVertex3fv(e.vertexes->at(it->a[0]).getfv());
+				if (coords != NULL) glTexCoord2fv(coords->at(it->a[1]).getfv());	glVertex3fv(e.vertexes->at(it->a[1]).getfv());
+				if (coords != NULL) glTexCoord2fv(coords->at(it->a[2]).getfv());	glVertex3fv(e.vertexes->at(it->a[2]).getfv());
+				if (coords != NULL) glTexCoord2fv(coords->at(it->a[3]).getfv());	glVertex3fv(e.vertexes->at(it->a[3]).getfv());
 			}
 			glEnd();
 		}
-
 	}
 }
 
 // установить текущуу текстуру
 bool OpenGL_Engine::BindTexture_OpenGL10(Image& image, bool enable)
 {
-	if(enable) glEnable(GL_TEXTURE_2D);
+	if (enable)
+    {
+        glEnable(GL_TEXTURE_2D);
+    }
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -158,19 +160,19 @@ void OpenGL_Engine::DrawWire_OpenGL10(GraphShadow& e, const Faces& faces)
         {
 			total.batchCount++;
 	        glBegin(GL_LINE_LOOP);
-			glVertex3fv(e.vertexes->at( it->a[0] ).getfv());
-            glVertex3fv(e.vertexes->at( it->a[1] ).getfv());
-            glVertex3fv(e.vertexes->at( it->a[2] ).getfv());
+			    glVertex3fv(e.vertexes->at( it->a[0] ).getfv());
+                glVertex3fv(e.vertexes->at( it->a[1] ).getfv());
+                glVertex3fv(e.vertexes->at( it->a[2] ).getfv());
 		    glEnd();
         }
         for EACH_CONST(QuadVector, faces.quads, it)
         {
 			total.batchCount++;
 	        glBegin(GL_LINE_LOOP);
-			glVertex3fv(e.vertexes->at( it->a[0] ).getfv());
-            glVertex3fv(e.vertexes->at( it->a[1] ).getfv());
-            glVertex3fv(e.vertexes->at( it->a[2] ).getfv());
-            glVertex3fv(e.vertexes->at( it->a[3] ).getfv());
+			    glVertex3fv(e.vertexes->at( it->a[0] ).getfv());
+                glVertex3fv(e.vertexes->at( it->a[1] ).getfv());
+                glVertex3fv(e.vertexes->at( it->a[2] ).getfv());
+                glVertex3fv(e.vertexes->at( it->a[3] ).getfv());
 		    glEnd();
         }
     }
@@ -252,23 +254,22 @@ void OpenGL_Engine::DrawAABB_OpenGL10(GraphShadow &e)
 	glPushMatrix();
 	glLoadIdentity();
 	glBegin(GL_LINES);
+	    glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.min.z);
+	    glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.min.z);
+	    glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.min.y, c.max.z);
 
-	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.min.z);
-	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.min.z);
-	glVertex3f(c.min.x, c.min.y, c.min.z);	glVertex3f(c.min.x, c.min.y, c.max.z);
+	    glVertex3f(c.min.x, c.max.y, c.max.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
+	    glVertex3f(c.max.x, c.min.y, c.max.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
+	    glVertex3f(c.max.x, c.max.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
 
-	glVertex3f(c.min.x, c.max.y, c.max.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
-	glVertex3f(c.max.x, c.min.y, c.max.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
-	glVertex3f(c.max.x, c.max.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.max.z);
+	    glVertex3f(c.min.x, c.min.y, c.max.z);	glVertex3f(c.max.x, c.min.y, c.max.z);
+	    glVertex3f(c.min.x, c.max.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.min.z);
 
-	glVertex3f(c.min.x, c.min.y, c.max.z);	glVertex3f(c.max.x, c.min.y, c.max.z);
-	glVertex3f(c.min.x, c.max.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.min.z);
+	    glVertex3f(c.min.x, c.min.y, c.max.z);	glVertex3f(c.min.x, c.max.y, c.max.z);
+	    glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.min.z);
 
-	glVertex3f(c.min.x, c.min.y, c.max.z);	glVertex3f(c.min.x, c.max.y, c.max.z);
-	glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.max.y, c.min.z);
-
-	glVertex3f(c.min.x, c.max.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.max.z);	
-	glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.max.z);	
+	    glVertex3f(c.min.x, c.max.y, c.min.z);	glVertex3f(c.min.x, c.max.y, c.max.z);	
+	    glVertex3f(c.max.x, c.min.y, c.min.z);	glVertex3f(c.max.x, c.min.y, c.max.z);	
 
 	glEnd();
 

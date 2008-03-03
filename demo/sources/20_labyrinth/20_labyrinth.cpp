@@ -151,6 +151,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     std::string net_role_str = conf->gets("net.role", "single");
 	if (net_role_str == "server")
     {
+        loadScene(conf->find("scene"));
         if (!serverInit())
         {
             return false;
@@ -604,7 +605,12 @@ NxActor* GameLabyrinth::createSurface(const GraphObject& object, const ObjectPos
 //    NxVec3* fsNormals = NULL;
 
     // Initialize flat surface verts
-    const VertexVector& vertexes = *object.getVertexes();
+    const VertexVector* vertexesp = object.getVertexes();
+    if (vertexesp == NULL)
+    {
+        return NULL;
+    }
+    const VertexVector& vertexes = *vertexesp;
     size_t nbVerts = vertexes.size();
     fsVerts = new NxVec3[vertexes.size()];
 

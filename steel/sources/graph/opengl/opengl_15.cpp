@@ -131,7 +131,7 @@ bool OpenGL_Engine::BindVBO(Class* v, int mode, int mode2, int elCnt)
 	if (GL_EXTENSION_VBO) // Vertex Buffer Object supportd
 	{
 		uid	id = v->getId();
-		if (id == 0) 
+		if (id == 0)
 		{
 			if (mode != 0) 
 			{
