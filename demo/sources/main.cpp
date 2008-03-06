@@ -25,6 +25,14 @@
 #include "main.h"
 #include "game_factory.h"
 #include <input/input_win.h>
+
+/*
+If you cannot find file svn.inc, just install python from http://python.org/
+svn.inc generates automatically from SVN revision number and date.
+It contains two constants like:
+static const unsigned int SVN_REVISION = XXX;
+static const char SVN_DATE[] = "DATE";
+*/
 #include "svn.inc"
 
 using namespace std;
