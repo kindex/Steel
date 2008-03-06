@@ -63,7 +63,7 @@ void ParticleCalculator::postvisit(IN OUT Particle* particle)
 		output << "volume create radius " << particle->size << " sphere \n";
 		output << "volume move \"volume." << cnt << "\" offset " << particle->position.x << 
                   " " << particle->position.y << 
-                  " " << particle->position.y << 
+                  " " << particle->position.z << 
                   "\n";
 
 		float particleHalfSize = particle->size;
