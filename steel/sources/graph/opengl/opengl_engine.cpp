@@ -149,10 +149,6 @@ void OpenGL_Engine::renderText()
             {
                 pushPosition(e.realPosition*text->position, text->position_kind);
 
-			    (this->*BindTexture)(*font, true);
-                
-                glBegin(GL_QUADS);
-
                 v2 points[] = {
                     v2(0, 0), 
                     v2(1, 0),
@@ -171,6 +167,9 @@ void OpenGL_Engine::renderText()
                 float dx = dy*font->getHeight()/(font->getWidth()/256.0f)*0.5f;
                 // TODO: calculate each letter width
 
+        	    glPushAttrib(GL_ALL_ATTRIB_BITS);
+    	        (this->*BindTexture)(*font, true);
+                glBegin(GL_QUADS);
                 for (size_t i = 0; i < text->text.length(); i++)
                 {
                     char letter = text->text[i];
@@ -182,6 +181,7 @@ void OpenGL_Engine::renderText()
                     }
                 }
                 glEnd();
+                glPopAttrib();
 
                 popPosition(text->position_kind);
 		    }

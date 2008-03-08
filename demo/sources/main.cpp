@@ -10,8 +10,6 @@
 		main() создайт игровые классы, коллеццию ресурсов, загружет 
 		плагины, содержит главный цикл игры.
  ************************************************************/
-#include <direct.h>
-
 #include <steel.h>
 #include <common/logger.h>
 #include <common/timer.h>
@@ -25,6 +23,7 @@
 #include "main.h"
 #include "game_factory.h"
 #include <input/input_win.h>
+#include <direct.h>
 
 /*
 If you cannot find file svn.inc, just install python from http://python.org/
