@@ -58,6 +58,10 @@ private:
             current_char = dynamic_cast<Character*>(object);
             if (current_char != NULL)
             {
+                NxActor* actor = game.createCharacter(*dynamic_cast<Character*>(object));
+
+                return false;
+
                 inChar++;
             }
         }
@@ -96,7 +100,6 @@ private:
         {
             current_char = NULL;
         }
-        
     }
 
     GameLabyrinth& game;
@@ -112,7 +115,8 @@ GameLabyrinth::GameLabyrinth():
     pScene(NULL),
     physicsSDK(NULL),
     winner(NULL),
-    cameraPenalty(1.0f)
+    cameraPenalty(1.0f),
+    character_model(NULL)
 {}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
@@ -121,8 +125,10 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
+// resources
+    character_model = loadGraphObject(_conf, "character.model");
 
-    else if (conf->getb("labyrinth.randomize", false))
+    if (conf->getb("labyrinth.randomize", false))
     {
         srand((unsigned int)(globalTimer.timestamp()*1000));
     }
@@ -148,7 +154,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 	}
 
 // network
-    std::string net_role_str = conf->gets("net.role", "single");
+    std::string net_role_str = conf->gets("net.role", "server");
 	if (net_role_str == "server")
     {
         loadScene(conf->find("scene"));
@@ -289,6 +295,13 @@ bool GameLabyrinth::createCharacter()
     }
 
     characters = characterCollector.characters;
+    for (size_t i = 0; i < characters.size(); i++)
+    {
+        Character& character = *characters[i];
+        Config* graph_config = character_model->getConfig();
+        character.graph_object = loadGraphObject(*graph_config, "");
+        character.force = conf->getf("character.physic.force", 1.0f);
+    }
 
     if (net_role == NET_SERVER)
     {
@@ -712,6 +725,32 @@ NxActor* GameLabyrinth::createBox(const GraphObjectBox& box, const ObjectPositio
 	actorDesc.density = 10;
     actorDesc.globalPose = tonx(position);
 	return pScene->createActor(actorDesc);	
+}
+
+NxActor* GameLabyrinth::createCharacter(IN OUT Character& character)
+{
+	// Add a single-shape actor to the scene
+	NxActorDesc actorDesc;
+	NxBodyDesc bodyDesc;
+
+	// The actor has one shape, a box, 1m on a side
+	NxBoxShapeDesc boxDesc;
+    v3 size = conf->getv3("character.physic.box_size", v3(1, 1, 1));
+
+	boxDesc.dimensions.set(size.x/2, size.y/2, size.z/2);
+	actorDesc.shapes.pushBack(&boxDesc);
+
+	actorDesc.body = &bodyDesc;
+    actorDesc.flags = NX_BF_KINEMATIC;
+
+	actorDesc.density = 10;
+    actorDesc.globalPose = tonx(character.origin);
+
+    NxActor* actor = pScene->createActor(actorDesc);
+    actor->userData = (void*)&character;
+    character.physic_object = actor;
+
+	return actor;
 }
 
 size_t GameLabyrinth::setupNetworkPacketStrings(NetworkPacket*& packet, const size_t size, const StringVector& strings) const

@@ -31,7 +31,6 @@ public:
     Config* getConfig() const;
     void traverse(Visitor&, const ObjectPosition& base_position);
 
-    float getHealth() const { return health; }
     bool isAlive() const {return alive;}
     ObjectPosition getPosition() const;
     v3 getVelocity() const;
@@ -53,11 +52,11 @@ public:
     friend class AgeiaInjector;
 
 private:
-    float health;
     float force;
     bool alive;
-    GameObject*    graph_object;
+    GraphObject*   graph_object;
     NxActor*       physic_object;
+
     ObjectPosition origin;
     v3             direction;
 	Input*         input;

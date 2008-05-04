@@ -119,12 +119,18 @@ LabyrinthGenerator::LabyrinthGenerator(int x, int y) : X(x), Y(y)
 	{
 		a[i].resize(X);
 	}
-	a[0][0].dist = 0;
+    if (!a.empty() && !a[0].empty())
+    {
+	    a[0][0].dist = 0;
+    }
 }
 
 void LabyrinthGenerator::buid(float k)
 {
-	deep(0, 0, 0);
+    if (!a.empty() && !a[0].empty())
+    {
+	    deep(0, 0, 0);
+    }
 	//findpath(X-1, Y-1);
 	//findpath(X-1, 0);
 	//findpath(0, Y-1);
@@ -205,7 +211,14 @@ bool Labyrinth::isDownBorder(int x, int y) const
 
 int Labyrinth::getMaxX() const
 {
-	return a[0].size();
+    if (a.empty())
+    {
+        return 0;
+    }
+    else
+    {
+	    return a[0].size();
+    }
 }
 
 int Labyrinth::getMaxY() const

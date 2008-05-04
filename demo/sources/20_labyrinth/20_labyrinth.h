@@ -47,6 +47,7 @@ private:
 	ConfigArray* wscene[2];
 	float length[2];
 	int count[2];
+    GraphObject*    character_model;
 // -------------------- Game --------------------
     Character*      character;
     float           cameraPenalty;
@@ -67,6 +68,7 @@ private:
     void exitAgeia();
     NxActor* createSurface(const GraphObject& object, const ObjectPosition&, bool _static);
     NxActor* createBox(const GraphObjectBox& box, const ObjectPosition&, bool _static);
+    NxActor* createCharacter(IN OUT Character& character);
 
 	NxPhysicsSDK* physicsSDK;
 	NxScene*      pScene;

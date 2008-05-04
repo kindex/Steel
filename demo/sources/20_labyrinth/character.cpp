@@ -13,6 +13,7 @@
 #include "character.h"
 #include <engine/engine.h>
 #include <objects/game_object_factory.h>
+#include <objects/combiner/graph_object.h>
 #include <graph/graph_interface.h>
 #include <input/input.h>
 #include <NxPhysics.h>
@@ -42,7 +43,7 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
 
         GraphText text("Player", ObjectPosition::CreateTranslationMatrix(v3(0, 0, 0.35f)), POSITION_LOCAL, v2(0.05f, 0.03f), SPRITE_ALIGN_SCREEN);
         GraphTextVector tv;
-        tv.push_back(text); // TODO: align, player name
+        tv.push_back(text);
 
         dynamic_cast<GraphInterface*>(&engine)->setGraphText(tv);
 
@@ -60,7 +61,7 @@ void Character::process(const ProcessInfo& info)
         if (input->isPressed("s")) dir += v3(-1,  0, 0);
         if (input->isPressed("a")) dir += v3( 0, +1, 0);
         if (input->isPressed("d")) dir += v3( 0, -1, 0);
-        if (dir.getSquaredLength() != 0)
+        if (dir.getSquaredLength() != 0 && physic_object != NULL)
         {
             v3 direction2 = direction;
             direction2.z = 0;
@@ -79,12 +80,9 @@ void Character::process(const ProcessInfo& info)
 
 bool Character::InitFromConfig(Config& conf)
 {
-    graph_object = createGameObject(conf.find("graph"));
-    health = conf.getf("health", 100);
     origin.setTranslation(conf.getv3("origin"));
-    force = conf.getf("force", 10);
 
-    return graph_object != NULL;
+    return true;
 }
 
 Config* Character::getConfig() const
@@ -93,8 +91,6 @@ Config* Character::getConfig() const
 
 	result->setValue("class", new ConfigString("character"));
     result->setValue("origin", createV3config(origin.getTranslation()));
-    result->setValue("force", new ConfigNumber(force));
-    result->setValue("graph", graph_object->getConfig());
 
     return result;
 }
