@@ -40,7 +40,7 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
         dynamic_cast<GraphInterface*>(&engine)->setPositionKind(POSITION_GLOBAL);
         dynamic_cast<GraphInterface*>(&engine)->setPosition(getPosition());
 
-        GraphText text("Player", ObjectPosition::CreateTranslationMatrix(v3(0, 0, 0.25)), POSITION_LOCAL);
+        GraphText text("Player", ObjectPosition::CreateTranslationMatrix(v3(0, 0, 0.35f)), POSITION_LOCAL, v2(0.05f, 0.03f), SPRITE_ALIGN_SCREEN);
         GraphTextVector tv;
         tv.push_back(text); // TODO: align, player name
 

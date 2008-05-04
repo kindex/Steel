@@ -71,7 +71,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL10(GraphShadow& e, const Faces& faces, c
 	if (e.vertexes && !(faces.triangles.empty() && faces.quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		total.vertexCount += e.vertexes->size();
-		total.triangleCount += faces.triangles.size() + faces.quads.size();
+		total.faceCount += faces.triangles.size() + faces.quads.size();
 
 		if (!faces.triangles.empty())
 		{
@@ -154,7 +154,7 @@ void OpenGL_Engine::DrawWire_OpenGL10(GraphShadow& e, const Faces& faces)
 	if (e.vertexes != NULL && !(faces.triangles.empty()&& faces.quads.empty()) && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		total.vertexCount += e.vertexes->size();
-		total.triangleCount += faces.triangles.size();
+		total.faceCount += faces.triangles.size();
          
         for EACH_CONST(TriangleVector, faces.triangles, it)
         {
@@ -185,7 +185,7 @@ void OpenGL_Engine::DrawLines_OpenGL10(GraphShadow &e)
 	{
 		total.batchCount++;
 		total.vertexCount += e.vertexes->size();
-		total.triangleCount += e.lines->index.size();
+		total.faceCount += e.lines->index.size();
 		
 		glBegin(GL_LINES);
         for(unsigned int i=0; i < e.lines->index.size(); i++)
@@ -275,6 +275,82 @@ void OpenGL_Engine::DrawAABB_OpenGL10(GraphShadow &e)
 
 	glPopMatrix();
 	glColor3f(1.0f, 1.0f, 1.0f);
+}
+
+void OpenGL_Engine::DrawText_OpenGL10(ObjectPosition& parent_position, const GraphTextVector& e)
+{
+    for EACH_CONST(GraphTextVector, e, text_it)
+    {
+        const GraphText& text = *text_it;
+//        pushPosition(parent_position*text->position, text->position_kind);
+
+        v2 points[] = {
+            v2(0, 0),
+            v2(1, 0),
+            v2(1, 1),
+            v2(0, 1),
+        };
+
+        v2 tex_points[] = {
+            v2(0, 0), 
+            v2(0.5, 0),
+            v2(0.5f, 0.9f),
+            v2(0, 0.9f)
+        };
+
+        //float dy = 0.1f;
+        //float dx = dy*font->getHeight()/(font->getWidth()/256.0f)*0.5f;
+        // TODO: calculate each letter width
+
+        v3 real_point[4];
+        v3 normal;
+        v2 text_size(
+            text.string.length()*text.size.y,
+            text.size.x);
+        v3 dx;
+        v3 dy;
+        calculateSprite(info.camera,
+                        (parent_position*text.position).getTranslation(),
+                        text_size,
+                        text.align,
+                        zero,
+                        real_point[0],
+                        real_point[1],
+                        real_point[2],
+                        real_point[3],
+                        normal,
+                        dx,
+                        dy);
+
+        real_point[0] -= dx*0.5;
+        real_point[0] -= dy*0.5;
+
+	    glPushAttrib(GL_ALL_ATTRIB_BITS);
+        (this->*BindTexture)(*font, true);
+        glBegin(GL_QUADS);
+        for (size_t i = 0; i < text.string.length(); i++)
+        {
+            char letter = text.string[i];
+
+            for (int j = 0; j < 4; j++)
+            {
+                glTexCoord2f((letter + tex_points[j].x)/256.0f, tex_points[j].y);
+
+                v3 p = real_point[0]
+                        + dx*(points[j].x + i)/float(text.string.length())
+                        + dy*(points[j].y);
+
+                glVertex3fv(p.getfv());
+            }
+        }
+        glEnd();
+        glPopAttrib();
+		total.batchCount++;
+		total.vertexCount += text.string.length()*4;
+		total.faceCount += text.string.length();
+
+//        popPosition(text->position_kind);
+    }
 }
 
 } // namespace opengl

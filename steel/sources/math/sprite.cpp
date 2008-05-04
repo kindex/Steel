@@ -15,16 +15,18 @@
 #include "../common/types.h"
 #include "../engine/engine_types.h"
 
-void calculateSprite(const Camera& camera,
-					const v3 spritePosition,
-					const float spriteSize,
-					const SpriteAlign align,
-					const v3 customAlign,
-					OUT v3& vertex1,
-					OUT v3& vertex2,
-					OUT v3& vertex3,
-					OUT v3& vertex4,
-					OUT v3& normal)
+void calculateSprite(const Camera&     camera,
+				     const v3          spritePosition,
+					 const v2          spriteSize,
+					 const SpriteAlign align,
+					 const v3          customAlign,
+					 OUT   v3&         vertex1,
+					 OUT   v3&         vertex2,
+					 OUT   v3&         vertex3,
+					 OUT   v3&         vertex4,
+					 OUT   v3&         normal,
+					 OUT   v3&         direction1,
+					 OUT   v3&         direction2)
 {
 	v3 dir;
 //¬ зависимости от типа выравнивани€ рассчитываем перпендикул€р к плоскости спрайта (dir).
@@ -44,8 +46,11 @@ void calculateSprite(const Camera& camera,
 	v3 per1(-dir.y, dir.x, 0); // перендикул€р к dir
 	per1.normalize();
 	v3 per2 = dir.crossProduct(per1); // перпендикул€р к dir и per1
-	per1 *= spriteSize; // умножаем на размер спарйта
-	per2 *= spriteSize;
+	per1 *= spriteSize.x; // умножаем на размер спарйта
+	per2 *= spriteSize.y;
+
+    direction1 = per1;
+    direction2 = per2;
 
 	// углы спарйта
 	vertex1  = spritePosition + per1 - per2;

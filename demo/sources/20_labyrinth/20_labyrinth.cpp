@@ -424,7 +424,7 @@ std::string GameLabyrinth::getWindowCaption()
     std::string str = "Labyrinth v" + IntToStr(SVN_REVISION)
         + " FPS: " + graphTimer.getfps_s()
 		+ " Batches: " + IntToStr(graphEngine->total.batchCount)
-		+ " Faces: " + IntToStr(graphEngine->total.triangleCount);
+		+ " Faces: " + IntToStr(graphEngine->total.faceCount);
 
     switch (net_role)
     {

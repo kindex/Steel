@@ -259,7 +259,7 @@ void GameFreeScene::process()
 		infoTimer.nextlap();
 		caption = std::string("Steel engine")
 			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
-			+ " Faces: " + IntToStr(graphEngine->total.triangleCount)
+			+ " Faces: " + IntToStr(graphEngine->total.faceCount)
 			+ " Lights: " + IntToStr(graphEngine->total.lightCount)
 			+ " FPS " + graphTimer.getfps_s();
 		speed = 1.0f/graphTimer.getfps();

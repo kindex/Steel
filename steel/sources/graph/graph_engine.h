@@ -32,7 +32,7 @@ public:
 	struct GraphTotalInfo
 	{
 		size_t vertexCount;
-		size_t triangleCount;
+		size_t faceCount;
 		size_t batchCount;
 		size_t globalObjectCount;
 		size_t lightCount;

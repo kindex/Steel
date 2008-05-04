@@ -20,8 +20,8 @@ class v2
 public:
 	//constructors
 	v2()	:	x(0.0f), y(0.0f){}
-	v2(float newX, float newY):	x(newX), y(newY)	{}
-	v2(const v2 & operand)	:	x(operand.x), y(operand.y)	{}
+	v2(float x, float y):	x(x), y(y)	{}
+	v2(const v2& operand)	:	x(operand.x), y(operand.y)	{}
 	~v2() {}	//empty
 
 	void set(float newX, float newY){	x=newX;	y=newY;	}
@@ -73,15 +73,20 @@ public:
 	bool operator!=(const v2 & operand) const	{	return !((*this)==operand);	}
 
 	//self-add etc
-	void operator+=(const v2 & operand)	{	x+=operand.x;	y+=operand.y;}
-	void operator-=(const v2 & operand)	{	x-=operand.x;	y-=operand.y;}
-	void operator*=(const float operand)     	{	x*=operand;	y*=operand;	}
-	void operator/=(const float operand)
+	inline void operator+=(const v2 & operand)	{	x+=operand.x;	y+=operand.y;}
+	inline void operator-=(const v2 & operand)	{	x-=operand.x;	y-=operand.y;}
+	inline void operator*=(const float operand)     	{	x*=operand;	y*=operand;	}
+	inline void operator/=(const float operand)
     {
-        if(operand==0.0f)
+        if (operand==0.0f)
+        {
 			return;
+        }
 		else
-		{	x/=operand; y/=operand;	}
+		{
+            x/=operand;
+            y/=operand;
+        }
 	}
 
 	//unary operators
@@ -103,7 +108,8 @@ public:
     v2 rot_90() { return v2(y, -x);}
 
 	//member variables
-	float x, y;
+	float x;
+    float y;
 };
 
 #endif	//v2_H

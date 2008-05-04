@@ -28,16 +28,20 @@ void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 	for(int i=0; i < cnt; i++)
 	{
 		int i4 = i*4;
+        v3 dx;
+        v3 dy;
 		calculateSprite(info.camera,
 						set->particles[i]->position,
-						set->particles[i]->size,
+						v2(set->particles[i]->size, set->particles[i]->size),
 						align,
 						customAlign,
 						vertexes[i4 + 0],
 						vertexes[i4 + 1],
 						vertexes[i4 + 2],
 						vertexes[i4 + 3],
-						normals[i4 + 0]);
+						normals[i4 + 0],
+                        dx,
+                        dy);
 
 		normals[i4 + 1] = normals[i4 + 2] = normals[i4 + 3] = normals[i4 + 0];
 	}

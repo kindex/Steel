@@ -260,7 +260,7 @@ const TexCoords*          GraphObjectModel::getTexCoords(int mapNumber) const { 
 bool GraphObjectText::InitFromConfig(Config& conf)
 {
     std::string str = conf.gets("text");
-    text.push_back(GraphText(str, ObjectPosition::getIdentity(), POSITION_LOCAL));
+    text.push_back(GraphText(str, ObjectPosition::getIdentity(), POSITION_LOCAL,v2(1, 1)));
 
    // TODO: load other parameters, like position kind, font
 

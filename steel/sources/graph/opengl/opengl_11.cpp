@@ -31,7 +31,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL11(GraphShadow& e, const Faces& faces, c
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
 		total.vertexCount += e.vertexes->size();
-		total.triangleCount += faces.triangles.size();
+		total.faceCount += faces.triangles.size();
 			
 		if (coords)	
 		{ 
@@ -236,7 +236,7 @@ void OpenGL_Engine::DrawWire_OpenGL11(GraphShadow& e, const Faces& faces)
 	if (e.vertexes != NULL && !faces.triangles.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		total.vertexCount += e.vertexes->size();
-		total.triangleCount += faces.triangles.size();
+		total.faceCount += faces.triangles.size();
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
@@ -253,7 +253,7 @@ void OpenGL_Engine::DrawWire_OpenGL11(GraphShadow& e, const Faces& faces)
 	if (e.vertexes != NULL && !faces.quads.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		total.vertexCount += e.vertexes->size();
-		total.triangleCount += faces.quads.size();
+		total.faceCount += faces.quads.size();
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
@@ -273,7 +273,7 @@ void OpenGL_Engine::DrawLines_OpenGL11(GraphShadow &e)
 	if (e.vertexes != NULL && e.lines != NULL && !e.lines->index.empty() && !e.vertexes->empty())// если есть полигоны и вершины
 	{
 		total.vertexCount += e.vertexes->size();
-		total.triangleCount += e.lines->index.size();
+		total.faceCount += e.lines->index.size();
 		
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);

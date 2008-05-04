@@ -24,6 +24,7 @@
 
 #include "../graph_engine.h"
 #include "opengl_private.h"
+#undef DrawText
 
 class Input;
 struct TextureMatrix;
@@ -106,6 +107,7 @@ private:
 	void (OpenGL_Engine::*DrawNormals)(GraphShadow&);
 	void (OpenGL_Engine::*DrawVertexes)(GraphShadow&);
 	void (OpenGL_Engine::*DrawAABB)(GraphShadow&);
+	void (OpenGL_Engine::*DrawText)(ObjectPosition& parent_position, const GraphTextVector&);
 
 // ******************* OpenGL 1.0 *******************
 	bool BindTexture_OpenGL10(Image&, bool enableGlTexture);
@@ -116,6 +118,7 @@ private:
 	void DrawNormals_OpenGL10(GraphShadow&);
 	void DrawVertexes_OpenGL10(GraphShadow&);
 	void DrawAABB_OpenGL10(GraphShadow&);
+	void DrawText_OpenGL10(ObjectPosition& parent_position, const GraphTextVector&);
 
 // ******************* OpenGL 1.1 *******************
 	bool BindTexture_OpenGL11(Image& image, bool enableGlTexture);

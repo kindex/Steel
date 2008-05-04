@@ -29,6 +29,7 @@
 #include "../material.h"
 #include <gl/glu.h>
 #undef min
+#undef DrawText
 #include <algorithm>
 
 namespace opengl
@@ -136,55 +137,17 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
 void OpenGL_Engine::renderText()
 {
-    if (font == NULL)
+    if (font == NULL || DrawText == NULL)
     {
         return;
     }
+
     for EACH(ShadowPVector, shadows, shadow)
 	{
 		GraphShadow& e = *GS(*shadow);
         if (!e.text.empty())
         {
-            for EACH(GraphTextVector, e.text, text)
-            {
-                pushPosition(e.realPosition*text->position, text->position_kind);
-
-                v2 points[] = {
-                    v2(0, 0), 
-                    v2(1, 0),
-                    v2(1, 1),
-                    v2(0, 1)
-                };
-
-                v2 tex_points[] = {
-                    v2(0, 0), 
-                    v2(0.5, 0),
-                    v2(0.5f, 0.9f),
-                    v2(0, 0.9f)
-                };
-
-                float dy = 0.1f;
-                float dx = dy*font->getHeight()/(font->getWidth()/256.0f)*0.5f;
-                // TODO: calculate each letter width
-
-        	    glPushAttrib(GL_ALL_ATTRIB_BITS);
-    	        (this->*BindTexture)(*font, true);
-                glBegin(GL_QUADS);
-                for (size_t i = 0; i < text->text.length(); i++)
-                {
-                    char letter = text->text[i];
-
-                    for (int j = 0; j < 4; j++)
-                    {
-                        glTexCoord2f((letter + tex_points[j].x)/256.0f, tex_points[j].y);
-                        glVertex2f((points[j].x + i)*dx, points[j].y*dy);
-                    }
-                }
-                glEnd();
-                glPopAttrib();
-
-                popPosition(text->position_kind);
-		    }
+            (this->*DrawText)(e.realPosition, e.text);
         }
 	}
 }
@@ -437,16 +400,20 @@ void OpenGL_Engine::renderFlares()
 			v3 vertex3;
 			v3 vertex4;
 			v3 normal;
+            v3 dx;
+            v3 dy;
 			calculateSprite(info.camera,
 						lightIt->second->position,
-						light.flareSize,
+						v2(light.flareSize, light.flareSize),
 						SPRITE_ALIGN_SCREEN,
 						v3(),
 						vertex1,
 						vertex2,
 						vertex3,
 						vertex4,
-						normal);
+						normal,
+                        dx,
+                        dy);
 
 			(this->*BindTexture)(*light.flare, true);
 			glBegin(GL_QUADS);
@@ -837,6 +804,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	DrawNormals = &OpenGL_Engine::DrawNormals_OpenGL10;
 	DrawVertexes = &OpenGL_Engine::DrawVertexes_OpenGL10;
 	DrawAABB = &OpenGL_Engine::DrawAABB_OpenGL10;
+	DrawText = &OpenGL_Engine::DrawText_OpenGL10;
 
 	if (version >= 11)
 	{
@@ -866,6 +834,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 			BindTexCoords3f = &OpenGL_Engine::BindTexCoords3f_OpenGL15;
 		}
 	}
+
 	setupVariables();
 	if (version >= 20 && GL_EXTENSION_GLSL && conf->getb("use_glsl", true))
 	{
@@ -1033,6 +1002,7 @@ OpenGL_Engine::OpenGL_Engine():
 	DrawNormals(NULL),
 	DrawVertexes(NULL),
 	DrawAABB(NULL),
+    DrawText(NULL),
 	
 	windowInformation(NULL),
 
@@ -1129,7 +1099,7 @@ void OpenGL_Engine::updateRealPosition(IN OUT GraphShadow* object)
 void OpenGL_Engine::setupVariables()
 {
 	total.vertexCount = 0;
-	total.triangleCount = 0;
+	total.faceCount = 0;
 	total.batchCount = 0;
 	total.lightCount = 0;
 

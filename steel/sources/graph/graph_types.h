@@ -22,7 +22,7 @@
 #include "../math/vector2d.h"
 #include "../res/image/image.h"
 #include "../common/svector.h"
-
+#include "../math/sprite.h"
 
 struct color4f
 {
@@ -111,22 +111,29 @@ typedef svector<FaceMaterial> FaceMaterialVector;
 
 struct GraphText
 {
-    GraphText(IN const std::string&    text,
-              IN const ObjectPosition& position,
-              IN const PositionKind    position_kind) :
-        text(text),
+    GraphText(const std::string&     string,
+              const ObjectPosition&  position,
+              const PositionKind     position_kind,
+              const v2               size,
+              const SpriteAlign      align = SPRITE_ALIGN_CUSTOM) :
+        string(string),
         position(position),
-        position_kind(position_kind)
+        position_kind(position_kind),
+        align(align),
+        size(size)
     {}
 
     GraphText() : 
         position_kind(POSITION_LOCAL),
-        position(matrix34::getIdentity())
+        position(matrix34::getIdentity()),
+        size(1, 1)
     {}
 
-    std::string    text;
-    ObjectPosition position;
-    PositionKind   position_kind;
+    std::string      string;
+    ObjectPosition   position;
+    PositionKind     position_kind;
+    SpriteAlign      align;
+    v2               size;
 };
 
 typedef svector<GraphText> GraphTextVector;

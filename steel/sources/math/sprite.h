@@ -16,6 +16,7 @@
 
 #include "../steel.h"
 #include "vector3d.h"
+#include "vector2d.h"
 
 enum SpriteAlign
 {
@@ -27,15 +28,17 @@ enum SpriteAlign
 
 class Camera;
 
-void calculateSprite(const Camera& camera,
-					const v3 spritePosition,
-					const float spriteSize,
-					const SpriteAlign align,
-					const v3 customAlign,
-					OUT v3& vertex1,
-					OUT v3& vertex2,
-					OUT v3& vertex3,
-					OUT v3& vertex4,
-					OUT v3& normal);
+void calculateSprite(const Camera&     camera,
+					 const v3          spritePosition,
+					 const v2          spriteSize,
+					 const SpriteAlign align,
+					 const v3          customAlign,
+					 OUT   v3&         vertex1,
+					 OUT   v3&         vertex2,
+					 OUT   v3&         vertex3,
+					 OUT   v3&         vertex4,
+					 OUT   v3&         normal,
+                     OUT   v3&         direction1,
+					 OUT   v3&         direction2);
 
 #endif

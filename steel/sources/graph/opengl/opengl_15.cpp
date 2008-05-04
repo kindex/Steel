@@ -36,7 +36,7 @@ void OpenGL_Engine::DrawTriangles_OpenGL15(GraphShadow& e, const Faces& faces, c
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
 		total.vertexCount += e.vertexes->size();
-		total.triangleCount += faces.triangles.size();
+		total.faceCount += faces.triangles.size();
 			
 //		if(coords)	{ glTexCoordPointer(2, GL_FLOAT, 0, &coords->data.front());	glEnableClientState(GL_TEXTURE_COORD_ARRAY); }
 

@@ -100,15 +100,24 @@ struct v3
 	v3 getNormalized() const;
 	
 	inline float getLength() const
-	{	return (float)sqrt(((double)x*(double)x)+((double)y*(double)y)+((double)z*(double)z));	}
+	{
+        return (float)sqrt(((double)x*(double)x)+((double)y*(double)y)+((double)z*(double)z));
+    }
+
 	inline double getLengthd() const
-	{	return sqrt((double)x*(double)x + (double)y*(double)y + (double)z*(double)z);	}
+	{
+        return sqrt((double)x*(double)x + (double)y*(double)y + (double)z*(double)z);
+    }
 	
 	inline float getSquaredLength() const
-	{	return (x*x)+(y*y)+(z*z);	}
+	{
+        return (x*x)+(y*y)+(z*z);
+    }
 
 	inline double getSquaredLengthd() const
-	{	return ((double)x*(double)x)+((double)y*(double)y)+((double)z*(double)z);	}
+	{
+        return ((double)x*(double)x)+((double)y*(double)y)+((double)z*(double)z);
+    }
 
 	//rotations
 	void rotateX(double angle);
