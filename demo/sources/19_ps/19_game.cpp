@@ -31,6 +31,10 @@ bool GamePS::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
+    if (!loadScene(conf->find("scene")))
+    {
+        return false;
+    }
 
     Config* physicConfig = _conf.find("physic");
     if (physicConfig == NULL)

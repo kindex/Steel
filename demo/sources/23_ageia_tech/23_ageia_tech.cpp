@@ -143,13 +143,6 @@ bool GameAgeiatech::init(Config& _conf, Input& _input)
 		return false;
 	}
 
-	// Create ground plane
-	//NxPlaneShapeDesc planeDesc;
-	//planeDesc.normal = NxVec3(0.0f, 0.0f, 1.0f);
-	//NxActorDesc actorDesc;
-	//actorDesc.shapes.pushBack(&planeDesc);
-	//scene->createActor(actorDesc);
-
     GraphObjectVisitor visitor(*this);
 
     world->traverse(visitor, ObjectPosition::getIdentity());
