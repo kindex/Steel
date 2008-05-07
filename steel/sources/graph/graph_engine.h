@@ -21,6 +21,7 @@
 #include "../steel.h"
 #include "graph_interface.h"
 #include "../engine/interface.h"
+#include <set>
 
 class GameObject;
 struct Line;
@@ -49,10 +50,11 @@ public:
 	virtual bool isVisible(AABB box) abstract;
 	// Clear collected information
 	virtual bool clear();
-	virtual bool findCollision(const Line& lineSegment,
-								OUT GameObject*& crossingObject,
-								OUT v3& crossingPosition,
-								OUT Plane& triangle) const abstract;
+	virtual bool findCollision(const Line&                        lineSegment,
+                               const std::set<const GameObject*>& exclude_objects,
+                               OUT GameObject*&                   crossing_object,
+                               OUT v3&                            crossing_position,
+                               OUT Plane&                         crossing_triangle) const abstract;
 
 protected:
 	pvector<GameObject*>	objects;

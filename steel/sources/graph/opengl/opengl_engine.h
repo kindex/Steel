@@ -193,7 +193,11 @@ public:
 	bool init(Config* _conf, Input* input);
 	bool process(IN const ProcessInfo&);
 	bool deinit();
-	bool findCollision(const Line& lineSegment, OUT GameObject*&, OUT v3& position, OUT Plane& triangle) const;
+	bool findCollision(const Line&                        lineSegment,
+                       const std::set<const GameObject*>& exclude_objects,
+                       OUT GameObject*&                   crossing_object,
+                       OUT v3&                            crossing_position,
+                       OUT Plane&                         crossing_triangle) const;
 	
 	GraphShadow* getShadow(GameObject* object) { return (GraphShadow*)Engine::getShadow(object, INTERFACE_GRAPH); }
 	GraphShadow* getShadow(uid id) { return (GraphShadow*)Engine::getShadow(id, INTERFACE_GRAPH); }

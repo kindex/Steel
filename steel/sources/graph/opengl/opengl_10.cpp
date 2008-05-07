@@ -322,8 +322,9 @@ void OpenGL_Engine::DrawText_OpenGL10(ObjectPosition& parent_position, const Gra
                         dx,
                         dy);
 
-        real_point[0] -= dx*0.5;
-        real_point[0] -= dy*0.5;
+        v3 origin = (real_point[0] + real_point[1] + real_point[2] + real_point[3])/4;
+        origin -= dx*0.5;
+        origin -= dy*0.5;
 
 	    glPushAttrib(GL_ALL_ATTRIB_BITS);
         (this->*BindTexture)(*font, true);
@@ -336,7 +337,7 @@ void OpenGL_Engine::DrawText_OpenGL10(ObjectPosition& parent_position, const Gra
             {
                 glTexCoord2f((letter + tex_points[j].x)/256.0f, tex_points[j].y);
 
-                v3 p = real_point[0]
+                v3 p = origin
                         + dx*(points[j].x + i)/float(text.string.length())
                         + dy*(points[j].y);
 

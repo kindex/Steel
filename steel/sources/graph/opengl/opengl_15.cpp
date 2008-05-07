@@ -92,7 +92,9 @@ void OpenGL_Engine::BindTexCoords_OpenGL15(const TexCoords* coords, const Textur
 
 			if (textureMatrix != NULL && textureMatrixLevel == 0)
 			{
-				glMatrixMode(GL_TEXTURE);	glLoadIdentity();
+				glMatrixMode(GL_TEXTURE);
+                glPushMatrix();
+                glLoadIdentity();
 				glScalef(		textureMatrix->texCoordsScale.x,		textureMatrix->texCoordsScale.y,		textureMatrix->texCoordsScale.z); 
 				glTranslatef(	textureMatrix->texCoordsTranslation.x,	textureMatrix->texCoordsTranslation.y,	textureMatrix->texCoordsTranslation.z); 
 				glRotatef(		textureMatrix->texCoordsRotation/(float)(M_PI)*180.0f, 0.0f, 0.0f, 1.0f); 

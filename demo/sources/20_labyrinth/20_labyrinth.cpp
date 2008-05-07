@@ -513,7 +513,11 @@ void GameLabyrinth::draw(GraphEngine& graph)
         GameObject* crossingObject;
         float newCameraPenalty;
         v3 origin = character->getPosition().getTranslation();
-        if (graphEngine->findCollision(Line(origin, -dir*len), crossingObject, crossingPosition, triangle))
+
+        std::set<const GameObject*> exclude_objects;
+        exclude_objects.insert(character->graph_object); // TODO: add all children
+
+        if (graphEngine->findCollision(Line(origin, -dir*len), exclude_objects, crossingObject, crossingPosition, triangle))
         {
             newCameraPenalty = (origin-crossingPosition).getLength()/len*0.95f;
         }

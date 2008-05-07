@@ -981,8 +981,9 @@ void OpenGL_Engine::unbindTexCoords()
 {
 	if (textureMatrixLevel > 0)
 	{
-		glMatrixMode(GL_TEXTURE);	glLoadIdentity();
-		textureMatrixLevel = 0;
+		glMatrixMode(GL_TEXTURE);
+        glPopMatrix();
+		textureMatrixLevel--;
 	}
 }
 
@@ -1163,40 +1164,42 @@ size_t OpenGL_Engine::rayTrace(const Line& lineSegment, bool shadowed)
 	return result;
 }
 
-bool OpenGL_Engine::findCollision(const Line& lineSegment,
-									OUT GameObject*& crossingObject,
-									OUT v3& crossingPosition,
-									OUT Plane& crossingTriangle) const
+bool OpenGL_Engine::findCollision(const Line&                        line_segment,
+                                  const std::set<const GameObject*>& exclude_objects,
+                                  OUT GameObject*&                   crossing_object,
+                                  OUT v3&                            crossing_position,
+                                  OUT Plane&                         crossing_triangle) const
 {
 	float min_k = INF;
 
 	for EACH_CONST(ShadowPVector, shadows, it)
 	{
 		GraphShadow& e = *GS(*it);
-		if (e.faceMaterials != NULL)
+
+        if (e.faceMaterials != NULL &&  exclude_objects.find(e.object) == exclude_objects.end())
 		{
 			for EACH_CONST(FaceMaterialVector, *e.faceMaterials, faces)
 			{
 				for EACH(TriangleVector, faces->faces->triangles, it)
 				{
 					Plane triangle;
-					triangle.base = e.position * e.vertexes->at(it->a[0]);
-					triangle.a = e.position * e.vertexes->at(it->a[1]) - triangle.base;
-					triangle.b = e.position * e.vertexes->at(it->a[2]) - triangle.base;
-					if ((triangle.a.crossProduct(triangle.b)).dotProduct(lineSegment.a)>0)
+					triangle.base = e.realPosition * e.vertexes->at(it->a[0]);
+					triangle.a = e.realPosition * e.vertexes->at(it->a[1]) - triangle.base;
+					triangle.b = e.realPosition * e.vertexes->at(it->a[2]) - triangle.base;
+					if ((triangle.a.crossProduct(triangle.b)).dotProduct(line_segment.a)>0)
 					{
 						continue;
 					}
 
 					float k;
-					if (isCrossTrgLine(triangle, lineSegment, k))
+					if (isCrossTrgLine(triangle, line_segment, k))
 					{
 						if (k > 0.0 && min_k > k && k <= 1.0f)
 						{
 							min_k = k;
-							crossingObject = e.object;
-							crossingPosition = lineSegment.point(k);
-							crossingTriangle = triangle;
+							crossing_object = e.object;
+							crossing_position = line_segment.point(k);
+							crossing_triangle = triangle;
 						}
 					}
 				}
