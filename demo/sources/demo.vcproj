@@ -565,6 +565,14 @@
 				RelativePath="..\sources\objects\sphere.h"
 				>
 			</File>
+			<File
+				RelativePath=".\objects\tag.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\objects\tag.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

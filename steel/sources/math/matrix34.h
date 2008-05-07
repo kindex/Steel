@@ -46,7 +46,7 @@ struct matrix34
 		return t;
 	}
 
-	inline static const matrix34	getIdentity()
+	inline static matrix34 getIdentity()
 	{ 
 		return get(1,0,0, 0,1,0, 0,0,1, 0,0,0); 
 	}

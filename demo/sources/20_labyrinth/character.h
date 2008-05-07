@@ -54,6 +54,7 @@ public:
 private:
     float force;
     bool alive;
+    bool position_is_set;
     GraphObject*   graph_object;
     NxActor*       physic_object;
 

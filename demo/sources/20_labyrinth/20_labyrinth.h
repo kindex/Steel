@@ -17,6 +17,7 @@
 #include "labyrinth_generator.h"
 #include "character.h"
 #include "network_protocol.h"
+#include "../objects/tag.h"
 
 #include <objects/combiner/graph_object.h>
 #include <enet/enet.h>
@@ -35,8 +36,10 @@ public:
 	void handleMouse(double dx, double dy);
 	bool init(Config& _conf, Input& _input);
 	void process();
+	void processPhysic();
     std::string getWindowCaption();
 	void draw(GraphEngine&);
+	void bind(GraphEngine&);
 
     friend class AgeiaInjector;
 
@@ -49,16 +52,21 @@ private:
 	int count[2];
     GraphObject*    character_model;
 // -------------------- Game --------------------
-    Character*      character;
+    Character*      active_character;
     float           cameraPenalty;
     struct Client;
     Client*         winner; // used when game_state == GAME_END, NULL means server
     CharacterVector characters;
     GameState       game_state;
     std::string     client_winner;
+    TagVector       character_starts;
     
+    void addCharacter(Character* new_character);
+    void deleteCharacter(Character* character);
     bool createWorld();
-    bool createCharacter();
+    bool createCharacters();
+    Character* createCharacterStart();
+    Character* createCharacter();
     bool createPhysicWorld();
     bool isWinner(Character*);
 	void checkForWinner();
@@ -66,12 +74,14 @@ private:
 // ------------------- Physic ---------------------
     bool initAgeia();
     void exitAgeia();
-    NxActor* createSurface(const GraphObject& object, const ObjectPosition&, bool _static);
-    NxActor* createBox(const GraphObjectBox& box, const ObjectPosition&, bool _static);
-    NxActor* createCharacter(IN OUT Character& character);
+    NxActor* ageiaCreateSurface(const GraphObject& object, const ObjectPosition&, bool _static);
+    NxActor* ageiaCreateBox(const GraphObjectBox& box, const ObjectPosition&, bool _static);
+    NxActor* ageiaCreateCharacter(IN OUT Character& character);
+    void ageiaDeleteCharacter(Character& character);
+    void ageiaInject(GameObject* object, const ObjectPosition& base_position);
 
 	NxPhysicsSDK* physicsSDK;
-	NxScene*      pScene;
+	NxScene*      ageia_scene;
     v3            global_gravity;
 
 // --------------------- Net -----------------------
@@ -142,16 +152,18 @@ private:
     void serverDisconnectClient(Client* client);
 
 	void serverSendInformationToClients();
+	void serverSendS_CHARACTER_UPDATE(Client* client);
     void serverSendWorld(Client* client);
     void serverSendS_INIT(Client* client);
     void serverSendS_BIND_CHAR(Client* client, size_t characterIndex);
-    void serverSend_PONG(Client* client, const NetworkPacket::Format::Ping& pingRequest);
     void serverSendS_GAME_INFO(Client* client);
+
+    void serverSend_PONG(Client* client, const NetworkPacket::Format::Ping& pingRequest);
+    void serverReceive_PING(Client* client, NetworkPacket* packet, size_t dataLength);
+    void serverReceive_CHAR_UPDATE(Client* client, NetworkPacket* packet, size_t dataLength);
 
     void serverReceiveC_INIT(Client* client, NetworkPacket* packet, size_t dataLength);
     void serverReceiveC_WORLD_LOADED(Client* client, NetworkPacket* packet, size_t dataLength);
-    void serverReceive_PING(Client* client, NetworkPacket* packet, size_t dataLength);
-    void serverReceive_CHAR_UPDATE(Client* client, NetworkPacket* packet, size_t dataLength);
 
     // Client side
     bool clientInit();

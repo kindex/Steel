@@ -224,6 +224,18 @@ void GameFreeScene::handleMouse(double dx, double dy)
     }
 }
 
+void GameFreeScene::processPhysic()
+{
+	if (timeInfo.frameLength > EPSILON)
+	{
+        if (world != NULL)
+        {
+		    world->process(info);
+        }
+		physicTimer.incframe();
+	}
+}
+
 void GameFreeScene::process()
 {
 	processKeyboard();
@@ -245,14 +257,7 @@ void GameFreeScene::process()
 	info.timeInfo = timeInfo;
 	info.camera = spectator.camera;
 
-	if (timeInfo.frameLength > EPSILON)
-	{
-        if (world != NULL)
-        {
-		    world->process(info);
-        }
-		physicTimer.incframe();
-	}
+    processPhysic();
 
 	if (!firstframe && infoTimer.lap() >= 0.5)
 	{

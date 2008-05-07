@@ -27,97 +27,48 @@
 #include "../main.h"
 #include "steel_nx.h"
 
-struct CharacterCollector : public Visitor
-{
-    bool visit(IN OUT GameObject* object)
-    {
-        if (dynamic_cast<Character*>(object) != NULL)
-        {
-            characters.push_back(dynamic_cast<Character*>(object));
-        }
-        return true;
-    }
-
-    std::vector<Character*> characters;
-};
-
 class AgeiaInjector : public Visitor
 {
 public:
     AgeiaInjector(GameLabyrinth& game) : 
-        game(game),
-        inChar(0),
-        current_char(NULL)
+        game(game)
     {}
 
 private:
-    bool visit(IN OUT GameObject* object)
-    {
-        if (inChar == 0)
-        {
-            current_char = dynamic_cast<Character*>(object);
-            if (current_char != NULL)
-            {
-                NxActor* actor = game.createCharacter(*dynamic_cast<Character*>(object));
-
-                return false;
-
-                inChar++;
-            }
-        }
-        else
-        {
-            inChar++;
-        }
-
-        return true;
-    }
-
     void postvisit(IN OUT GameObject* object, const ObjectPosition& base_position)
     {
-        if (dynamic_cast<GraphObject*>(object) != NULL)
-        {
-            NxActor* actor = NULL;
-            if (dynamic_cast<GraphObjectBox*>(object) != NULL)
-            {
-                actor = game.createBox(*dynamic_cast<GraphObjectBox*>(object), base_position, inChar == 0);
-            }
-            else
-            {
-                actor = game.createSurface(*dynamic_cast<GraphObject*>(object), base_position, inChar == 0);
-            }
-            if (current_char != NULL)
-            {
-                actor->userData = current_char;
-                current_char->physic_object = actor;
-            }
-        }
-        if (inChar > 0)
-        {
-            inChar--;
-        }
-        if (inChar == 0)
-        {
-            current_char = NULL;
-        }
+        game.ageiaInject(object, base_position);
     }
 
     GameLabyrinth& game;
-    Character*     current_char;
-    int inChar;
 };
 
 GameLabyrinth::GameLabyrinth():
-    character(NULL),
+    active_character(NULL),
     game_state(GAME_LOADING),
     host(NULL),
     net_role(NET_SINGLE),
-    pScene(NULL),
+    ageia_scene(NULL),
     physicsSDK(NULL),
     winner(NULL),
     cameraPenalty(1.0f),
     character_model(NULL)
 {}
+
+void GameLabyrinth::ageiaInject(GameObject* object, const ObjectPosition& base_position)
+{
+    if (dynamic_cast<GraphObject*>(object) != NULL)
+    {
+        if (dynamic_cast<GraphObjectBox*>(object) != NULL)
+        {
+            ageiaCreateBox(*dynamic_cast<GraphObjectBox*>(object), base_position, true);
+        }
+        else
+        {
+            ageiaCreateSurface(*dynamic_cast<GraphObject*>(object), base_position, true);
+        }
+    }
+}
 
 bool GameLabyrinth::init(Config& _conf, Input& _input)
 {
@@ -218,6 +169,12 @@ GameLabyrinth::~GameLabyrinth()
     {
         delete world;
     }
+
+    while (!characters.empty())
+    {
+        deleteCharacter(characters.back());
+    }
+
     log_msg("labyrinth", "Exiting from game");
 }
 
@@ -278,45 +235,104 @@ bool GameLabyrinth::createWorld()
 	}
 
 	// TODO: create floor
-	Combiner* floor = new Combiner();
-
+//	Combiner* floor = new Combiner();
 
     return true;
 }
 
-bool GameLabyrinth::createCharacter()
+void GameLabyrinth::addCharacter(Character* new_character)
 {
-    CharacterCollector characterCollector;
-    world->traverse(characterCollector, ObjectPosition::getIdentity());
-
-    if (characterCollector.characters.empty())
+    characters.push_back(new_character);
+    if (graphEngine != NULL)
     {
-        abort_init("labyrinth", "No characters was found");
+        graphEngine->inject(new_character);
     }
 
-    characters = characterCollector.characters;
-    for (size_t i = 0; i < characters.size(); i++)
+    if (ageia_scene != NULL)
     {
-        Character& character = *characters[i];
-        Config* graph_config = character_model->getConfig();
-        character.graph_object = loadGraphObject(*graph_config, "");
-        character.force = conf->getf("character.physic.force", 1.0f);
+        ageiaCreateCharacter(*new_character);
+    }
+}
+
+void GameLabyrinth::deleteCharacter(Character* character)
+{
+    if (character == active_character)
+    {
+        active_character = NULL;
+    }
+
+    for EACH(CharacterVector, characters, it)
+    {
+        if (*it == character)
+        {
+            characters.erase(it, it+1);
+            break;
+        }
+    }
+
+    if (graphEngine != NULL)
+    {
+        graphEngine->remove(character);
+    }
+
+    if (ageia_scene != NULL)
+    {
+        ageiaDeleteCharacter(*character);
+    }
+
+    delete character;
+}
+
+Character* GameLabyrinth::createCharacter()
+{
+    Character* character = new Character();
+
+    Config* graph_config = character_model->getConfig();
+    character->graph_object = loadGraphObject(*graph_config, "");
+    character->force = conf->getf("character.physic.force", 1.0f);
+
+    return character;
+}
+
+Character* GameLabyrinth::createCharacterStart()
+{
+    for EACH(TagVector, character_starts, tag)
+    {
+        if ((*tag)->user_info == NULL)
+        {
+            Character* character = createCharacter();
+
+            ObjectPosition pos = ObjectPosition::getIdentity();
+            pos.setTranslation((*tag)->origin);
+            character->setPosition(pos);
+
+            addCharacter(character);
+
+            return character;
+        }
+    }
+
+    return NULL;
+}
+
+bool GameLabyrinth::createCharacters()
+{
+    character_starts = findTags(world, "character_start");
+
+    if (character_starts.empty())
+    {
+        abort_init("labyrinth", "There is no tag 'character_start'");
     }
 
     if (net_role == NET_SERVER)
     {
-        for (size_t i = 0; i < characters.size(); i++)
+        active_character = createCharacterStart();
+        if (active_character != NULL)
         {
-            if (characters[i]->owner == Character::FREE)
+            active_character->owner = Character::SERVER;
+            if (cameraMode == C_FIXED)
             {
-                characters[i]->owner = Character::SERVER;
-                character = characters[i];
-                if (cameraMode == C_FIXED)
-                {
-                    character->setInput(input);
-                }
-
-                break;
+                active_character->setInput(input);
             }
         }
     }
@@ -332,9 +348,9 @@ bool GameLabyrinth::isWinner(Character* characher)
 
 void GameLabyrinth::checkForWinner()
 {
-    if (net_role == NET_SERVER && game_state == GAME_PLAYING && character != NULL)
+    if (net_role == NET_SERVER && game_state == GAME_PLAYING && active_character != NULL)
     {
-        if (isWinner(character))
+        if (isWinner(active_character))
         {
             game_state = GAME_END;
             winner = NULL; // NULL means server
@@ -366,6 +382,25 @@ void GameLabyrinth::checkForWinner()
     }
 }
 
+void GameLabyrinth::processPhysic()
+{
+	if (timeInfo.frameLength > EPSILON)
+	{
+        if (world != NULL)
+        {
+		    world->process(info);
+        }
+        
+        for EACH(CharacterVector, characters, it)
+        {
+            (*it)->process(info);
+        }
+
+		physicTimer.incframe();
+	}
+}
+
+
 void GameLabyrinth::process()
 {
 	GameFreeScene::process();
@@ -374,9 +409,9 @@ void GameLabyrinth::process()
 
 	if (timeInfo.frameLength > EPSILON)
 	{
-		pScene->simulate(timeInfo.frameLength);
-		pScene->flushStream();
-		pScene->fetchResults(NX_RIGID_BODY_FINISHED, true);
+		ageia_scene->simulate(timeInfo.frameLength);
+		ageia_scene->flushStream();
+		ageia_scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
 	}
 
     switch (net_role)
@@ -393,17 +428,17 @@ void GameLabyrinth::process()
 
 void GameLabyrinth::handleEventKeyDown(const std::string& key)
 {
-	if (key == "return" && character != NULL)
+	if (key == "return" && active_character != NULL)
 	{
 		if (cameraMode == C_FIXED)
 		{
 			cameraMode = C_FREE;
-            character->setInput(NULL);
+            active_character->setInput(NULL);
 		}
 		else
 		{
 			cameraMode = C_FIXED;
-            character->setInput(input);
+            active_character->setInput(input);
 		}
 	}
     else
@@ -420,9 +455,9 @@ void GameLabyrinth::handleMouse(double dx, double dy)
         dir.rotateZ(dx*0.1);
         dir.rotateAxis(-dy*0.1, dir.crossProduct(v3(0,0,1).getNormalized()));
         spectator.camera.setDirection(dir);
-        if (character != NULL)
+        if (active_character != NULL)
         {
-            character->setDirection(dir);
+            active_character->setDirection(dir);
         }
     }
     else
@@ -497,7 +532,7 @@ std::string GameLabyrinth::getWindowCaption()
 
 void GameLabyrinth::draw(GraphEngine& graph)
 {
-    if (cameraMode == C_FIXED && character != NULL)
+    if (cameraMode == C_FIXED && active_character != NULL)
     {
         cameraPenalty += info.timeInfo.frameLength;
         if (cameraPenalty > 1)
@@ -512,10 +547,10 @@ void GameLabyrinth::draw(GraphEngine& graph)
 
         GameObject* crossingObject;
         float newCameraPenalty;
-        v3 origin = character->getPosition().getTranslation();
+        v3 origin = active_character->getPosition().getTranslation();
 
         std::set<const GameObject*> exclude_objects;
-        exclude_objects.insert(character->graph_object); // TODO: add all children
+        exclude_objects.insert(active_character->graph_object); // TODO: add all children
 
         if (graphEngine->findCollision(Line(origin, -dir*len), exclude_objects, crossingObject, crossingPosition, triangle))
         {
@@ -524,13 +559,13 @@ void GameLabyrinth::draw(GraphEngine& graph)
         else
         {
             newCameraPenalty = 1.0f;
-            spectator.camera.setPosition(character->getPosition().getTranslation() - dir*len);
+            spectator.camera.setPosition(active_character->getPosition().getTranslation() - dir*len);
         }
         if (newCameraPenalty <= cameraPenalty)
         {
             cameraPenalty = newCameraPenalty;
         }
-        spectator.camera.setPosition(character->getPosition().getTranslation() - dir*len*cameraPenalty);
+        spectator.camera.setPosition(active_character->getPosition().getTranslation() - dir*len*cameraPenalty);
 
         spectator.camera.setUpVector(v3(0,0,1));
         info.camera = spectator.camera;
@@ -568,24 +603,24 @@ bool GameLabyrinth::initAgeia()
 
 bool GameLabyrinth::createPhysicWorld()
 {
-    if (pScene != NULL)
+    if (ageia_scene != NULL)
     {
-        physicsSDK->releaseScene(*pScene);
-        pScene = NULL;
+        physicsSDK->releaseScene(*ageia_scene);
+        ageia_scene = NULL;
     }
     	// Create a scene
 	NxSceneDesc sceneDesc;
     global_gravity = conf->getv3("physic.global_gravity", v3(0.0f, 0.0f, -9.8f));
 	sceneDesc.gravity = tonx(global_gravity);
-	pScene = physicsSDK->createScene(sceneDesc);
-	if (pScene == NULL) 
+	ageia_scene = physicsSDK->createScene(sceneDesc);
+	if (ageia_scene == NULL) 
 	{
 		error("ageia", "Unable to create a PhysX scene");
 		return false;
 	}
 
 	// Set default material
-	NxMaterial* defaultMaterial = pScene->getMaterialFromIndex(0);
+	NxMaterial* defaultMaterial = ageia_scene->getMaterialFromIndex(0);
 	defaultMaterial->setRestitution(conf->getf("physic.restitution", 0.0f));
 	defaultMaterial->setStaticFriction(conf->getf("physic.static_friction", 0.5f));
 	defaultMaterial->setDynamicFriction(conf->getf("physic.dynamic_friction", 0.5f));
@@ -596,6 +631,11 @@ bool GameLabyrinth::createPhysicWorld()
         world->traverse(visitor, ObjectPosition::getIdentity());
     }
 
+    for EACH(CharacterVector, characters, it)
+    {
+        ageiaCreateCharacter(**it);
+    }
+
 	return true;
 }
 
@@ -603,11 +643,11 @@ void GameLabyrinth::exitAgeia()
 {
 	if (physicsSDK != NULL)
 	{
-		if (pScene != NULL)
+		if (ageia_scene != NULL)
 		{
-			physicsSDK->releaseScene(*pScene);
+			physicsSDK->releaseScene(*ageia_scene);
 		}
-		pScene = NULL;
+		ageia_scene = NULL;
 		NxReleasePhysicsSDK(physicsSDK);
 		physicsSDK = NULL;
 
@@ -615,7 +655,7 @@ void GameLabyrinth::exitAgeia()
 	}
 }
 
-NxActor* GameLabyrinth::createSurface(const GraphObject& object, const ObjectPosition& position, bool _static)
+NxActor* GameLabyrinth::ageiaCreateSurface(const GraphObject& object, const ObjectPosition& position, bool _static)
 {
     NxVec3* fsVerts = NULL;
     NxU32* fsFaces = NULL;
@@ -702,14 +742,14 @@ NxActor* GameLabyrinth::createSurface(const GraphObject& object, const ObjectPos
 
     	actorDesc.density		= 10.0f;
 
-        NxActor* actor = pScene->createActor(actorDesc);
+        NxActor* actor = ageia_scene->createActor(actorDesc);
         return actor;
     }
 
     return NULL;
 }
 
-NxActor* GameLabyrinth::createBox(const GraphObjectBox& box, const ObjectPosition& position, bool _static)
+NxActor* GameLabyrinth::ageiaCreateBox(const GraphObjectBox& box, const ObjectPosition& position, bool _static)
 {
 	// Add a single-shape actor to the scene
 	NxActorDesc actorDesc;
@@ -728,10 +768,15 @@ NxActor* GameLabyrinth::createBox(const GraphObjectBox& box, const ObjectPositio
 
 	actorDesc.density = 10;
     actorDesc.globalPose = tonx(position);
-	return pScene->createActor(actorDesc);	
+	return ageia_scene->createActor(actorDesc);	
 }
 
-NxActor* GameLabyrinth::createCharacter(IN OUT Character& character)
+void GameLabyrinth::ageiaDeleteCharacter(Character& character)
+{
+    ageia_scene->releaseActor(*character.physic_object);
+}
+
+NxActor* GameLabyrinth::ageiaCreateCharacter(IN OUT Character& character)
 {
 	// Add a single-shape actor to the scene
 	NxActorDesc actorDesc;
@@ -750,7 +795,7 @@ NxActor* GameLabyrinth::createCharacter(IN OUT Character& character)
 	actorDesc.density = 10;
     actorDesc.globalPose = tonx(character.origin);
 
-    NxActor* actor = pScene->createActor(actorDesc);
+    NxActor* actor = ageia_scene->createActor(actorDesc);
     actor->userData = (void*)&character;
     character.physic_object = actor;
 
@@ -797,4 +842,14 @@ std::string GameLabyrinth::Client::getNetworkName() const
 std::string GameLabyrinth::Server::getNetwornName() const
 {
     return IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port);
+}
+
+void GameLabyrinth::bind(GraphEngine& engine)
+{
+    GameFreeScene::bind(engine);
+    
+    for EACH(CharacterVector, characters, it)
+    {
+        engine.inject(*it);
+    }
 }

@@ -26,7 +26,8 @@ Character::Character():
     input(NULL),
     direction(v3(1, 0, 0)),
     owner(FREE),
-    clientId(0)
+    clientId(0),
+    position_is_set(false)
 {}
 
 bool Character::supportsInterface(IN OUT Engine&, IN const InterfaceId id)
@@ -80,9 +81,9 @@ void Character::process(const ProcessInfo& info)
 
 bool Character::InitFromConfig(Config& conf)
 {
-    origin.setTranslation(conf.getv3("origin"));
+    assert(false);
 
-    return true;
+    return false;
 }
 
 Config* Character::getConfig() const
@@ -128,7 +129,15 @@ v3 Character::getMomentum() const
 
 void Character::setPosition(const ObjectPosition& new_position)
 {
-    physic_object->setGlobalPose(tonx(new_position));
+    position_is_set = true;
+    if (physic_object != NULL)
+    {
+        physic_object->setGlobalPose(tonx(new_position));
+    }
+    else
+    {
+        origin = new_position;
+    }
 }
 
 void Character::setVelocity(const v3& v)

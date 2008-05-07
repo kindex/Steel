@@ -4,13 +4,15 @@ class = 'combiner'
 objects = 
 (
 	{
-		origin = (0 1 1)
-		class = 'character'
+		class = 'tag'
+		origin = (0 0 1)
+		name = 'character_start'
 	}
 
 	{
+		class = 'tag'
 		origin = (0 1 2)
-		class = 'character'
+		name = 'character_start'
 	}
 
 	[/sun.conf#] {	origin = (-95 -42 31)}

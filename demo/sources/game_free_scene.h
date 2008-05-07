@@ -29,6 +29,7 @@ public:
 	void unpause();
 	void deinit();
 	void process();
+	virtual void processPhysic();
 
 	GameObjectFactory* createGameObjectFactory() const;
 
