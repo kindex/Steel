@@ -74,6 +74,7 @@ private:
     bool createPhysicWorld();
     bool isWinner(Character*);
 	void checkForWinner();
+    void restart();
 
 // ------------------- Physic ---------------------
     bool initAgeia();
@@ -91,6 +92,7 @@ private:
 // --------------------- Net -----------------------
 	Timer         netTimer;
     ENetHost*     host;
+    bool          refresh_needed;
 
     enum ClientState
     {

@@ -127,6 +127,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 		abort_init("net", "Unknown net role '" + net_role_str + "'");
     }
     netTimer.start();
+    refresh_needed = true;
 
     createPhysicWorld();
 
@@ -282,6 +283,13 @@ void GameLabyrinth::deleteCharacter(Character* character)
         ageiaDeleteCharacter(*character);
     }
 
+    for EACH(TagVector, character_starts, tag)
+    {
+        if ((*tag)->user_info == character)
+        {
+            (*tag)->user_info = NULL;
+        }
+    }
     character_index.erase(character_index.find(character->character_id));
     delete character;
 }
@@ -312,6 +320,8 @@ Character* GameLabyrinth::createCharacterStart()
 
             character->character_id = character_id_generator.genUid();
             addCharacter(character);
+
+            (*tag)->user_info = (void*)character;
 
             return character;
         }
@@ -434,7 +444,11 @@ void GameLabyrinth::process()
 
 void GameLabyrinth::handleEventKeyDown(const std::string& key)
 {
-	if (key == "return" && active_character != NULL)
+	if (key == "r" && net_role == NET_SERVER)
+    {
+        restart();
+    }
+    else if (key == "return" && active_character != NULL)
 	{
 		if (cameraMode == C_FIXED)
 		{
@@ -839,4 +853,34 @@ Character* GameLabyrinth::findCharacter(uid character_id)
     {
         return it->second;
     }
+}
+
+void GameLabyrinth::restart()
+{
+    for EACH(TagVector, character_starts, tag)
+    {
+        (*tag)->user_info = NULL;
+    }
+
+    CharacterVector::iterator it = characters.begin();
+    for EACH(TagVector, character_starts, tag)
+    {
+        if (it != characters.end())
+        {
+            ObjectPosition pos = ObjectPosition::getIdentity();
+            pos.setTranslation((*tag)->origin);
+            (*it)->setPosition(pos);
+            (*it)->setVelocity(zero);
+            (*it)->setMomentum(zero);
+
+            (*tag)->user_info = (void*)*it;
+            it++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    
+    refresh_needed = true;
 }

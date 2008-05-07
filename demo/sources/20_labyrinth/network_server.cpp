@@ -183,12 +183,13 @@ void GameLabyrinth::serverSendS_CHARACTER_UPDATE(Client* client)
 {
     size_t total = characters.size();
     size_t packet_size = sizeof(NetworkPacket::PacketKind) + 
-                         sizeof(size_t) + 
+                         sizeof(NetworkPacket::Format::S_CharacterUpdate::Common) + 
                          total*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition);
 
     NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
     packet->kind = NetworkPacket::CHAR_UPDATE;
-    packet->data.character_update.character_count = total;
+    packet->data.character_update.common.character_count = total;
+    packet->data.character_update.common.refresh = refresh_needed;
     for (size_t i = 0; i < characters.size(); i++)
     {
         NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = packet->data.character_update.character_position[i];
@@ -209,7 +210,7 @@ void GameLabyrinth::serverSendS_CHARACTER_UPDATE(Client* client)
 
 void GameLabyrinth::serverSendInformationToClients()
 {
-    if (netTimer.lap() > 1.0/100.0 && !clients.empty()) // max 100 fps
+    if (refresh_needed || netTimer.lap() > 1.0/100.0 && !clients.empty()) // max 100 fps
     {
         for EACH(ClientVector, clients, client)
         {
@@ -221,6 +222,7 @@ void GameLabyrinth::serverSendInformationToClients()
         enet_host_flush(host);
 
         netTimer.incframe();
+        refresh_needed = false;
     }
 }
 
@@ -315,33 +317,38 @@ void GameLabyrinth::serverDisconnectClient(Client* client)
 
     for EACH(ClientVector, clients, client)
     {
-        serverSendS_CHARACTER_UPDATE(*client);
-//        serverSendS_BIND_CHAR(*client, (*client)->characterId);
-        serverSendS_GAME_INFO(*client);
+        if ((*client)->state == PLAYING)
+        {
+            serverSendS_BIND_CHAR(*client, (*client)->character->character_id);
+            serverSendS_GAME_INFO(*client);
+        }
     }
 }
 
 void GameLabyrinth::serverReceive_CHAR_UPDATE(Client* client, NetworkPacket* packet, size_t dataLength)
 {
-    NetworkPacket::Format::S_CharacterUpdate& info = packet->data.character_update;
-    net_assert(dataLength == 
-                sizeof(NetworkPacket::PacketKind) + 
-                sizeof(size_t) + 
-                info.character_count*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition));
-    net_assert(client->state == PLAYING);
-
-    for (size_t i = 0; i < info.character_count; i++)
+    if (!refresh_needed)
     {
-        NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = info.character_position[i];
-        size_t index = info.character_position[i].characterId;
-        Character* current = findCharacter(index);
-		if (current != NULL)
-		{
-            if (current->trustPosition(pos.pos))
-            {
-			    current->setCharacterPosition(pos.pos);
-            }
-		}
+        NetworkPacket::Format::S_CharacterUpdate& info = packet->data.character_update;
+        net_assert(dataLength == 
+                    sizeof(NetworkPacket::PacketKind) + 
+                    sizeof(NetworkPacket::Format::S_CharacterUpdate::Common) + 
+                    info.common.character_count*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition));
+        net_assert(client->state == PLAYING);
+
+        for (size_t i = 0; i < info.common.character_count; i++)
+        {
+            NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = info.character_position[i];
+            size_t index = info.character_position[i].characterId;
+            Character* current = findCharacter(index);
+		    if (current != NULL)
+		    {
+                if (current->trustPosition(pos.pos))
+                {
+			        current->setCharacterPosition(pos.pos);
+                }
+		    }
+        }
     }
 }
 

@@ -50,7 +50,11 @@ struct NetworkPacket
     {
         struct S_CharacterUpdate
         {
-            size_t character_count;
+            struct Common
+            {
+                bool refresh;
+                size_t character_count;
+            } common;
             struct CharacterPosition
             {
                 size_t                       characterId;

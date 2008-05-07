@@ -254,13 +254,13 @@ void GameLabyrinth::clientReceive_CHAR_UPDATE(NetworkPacket* packet, size_t data
     NetworkPacket::Format::S_CharacterUpdate& info = packet->data.character_update;
     net_assert(dataLength == 
                 sizeof(NetworkPacket::PacketKind) + 
-                sizeof(size_t) + 
-                info.character_count*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition));
+                sizeof(NetworkPacket::Format::S_CharacterUpdate::Common) + 
+                info.common.character_count*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition));
     net_assert(server.client_state == PLAYING);
 
     std::set<int> filled;
 
-    for (size_t i = 0; i < info.character_count; i++)
+    for (size_t i = 0; i < info.common.character_count; i++)
     {
         NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = info.character_position[i];
         size_t index = info.character_position[i].characterId;
@@ -270,6 +270,7 @@ void GameLabyrinth::clientReceive_CHAR_UPDATE(NetworkPacket* packet, size_t data
         if (current != NULL)
         {
             if (current != active_character
+             || info.common.refresh
              || !current->position_is_set
              || !current->trustPosition(pos.pos))
             {
@@ -286,7 +287,7 @@ void GameLabyrinth::clientReceive_CHAR_UPDATE(NetworkPacket* packet, size_t data
         filled.insert(index);
     }
 
-    for (size_t i = 0; i < info.character_count;)
+    for (size_t i = 0; i < info.common.character_count;)
     {
         if (filled.find(characters[i]->character_id) == filled.end())
         {
@@ -340,12 +341,12 @@ void GameLabyrinth::clientSendInformationToServer()
     if (active_character != NULL && server.peer != NULL && server.client_state == PLAYING)
     {
         size_t packet_size = sizeof(NetworkPacket::PacketKind) + 
-                             sizeof(size_t) + 
-                             sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition);
+                             sizeof(NetworkPacket::Format::S_CharacterUpdate::Common) + 
+                             1*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition);
 
         NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
         packet->kind = NetworkPacket::CHAR_UPDATE;
-        packet->data.character_update.character_count = 1;
+        packet->data.character_update.common.character_count = 1;
         for (size_t i = 0; i < characters.size(); i++)
         {
             if (characters[i] == active_character)
@@ -356,6 +357,8 @@ void GameLabyrinth::clientSendInformationToServer()
                 pos.pos.position = characters[i]->getPosition();
                 pos.pos.linear_velocity = to_simple(characters[i]->getVelocity());
                 pos.pos.linear_momentum = to_simple(characters[i]->getMomentum());
+
+                break;
             }
         }
         ENetPacket* enet_packet = 
