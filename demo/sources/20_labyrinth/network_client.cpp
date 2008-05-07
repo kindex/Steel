@@ -32,7 +32,7 @@ void GameLabyrinth::clientProcess()
 
     while (enet_host_service(host, &event, 0) > 0)
     {
-        std::string peer_name = IntToStr(event.peer->address.host) + ":" + IntToStr(event.peer->address.port);
+        std::string peer_name = to_string(event.peer->address);
         switch (event.type)
         {
             case ENET_EVENT_TYPE_CONNECT:
@@ -161,7 +161,7 @@ bool GameLabyrinth::clientConnectToServer()
     {
         enet_peer_reset(server.peer);
         server.peer = NULL; // TODO: delete server
-        abort_init("net", "Connection to " + remote_addr + ":" + IntToStr(address.port)+ " failed");
+        abort_init("net", "Connection to " + remote_addr + " (" + to_string(address) + ") failed");
     }
 }
 
@@ -199,7 +199,7 @@ void GameLabyrinth::clientSendC_INIT()
     packet->kind = NetworkPacket::C_INIT;
     packet->data.c_init.protocol_version = NetworkPacket::PROTOCOL_VERSION;
 
-    size_t new_packet_size = setupNetworkPacketString(packet, packet_size, conf->gets("net.name", "noname01"));
+    size_t new_packet_size = NetworkPacket::setupNetworkPacketString(packet, packet_size, conf->gets("net.name", "noname01"));
 
     ENetPacket* enet_packet = enet_packet_create(packet,
                                                  new_packet_size,
@@ -258,30 +258,46 @@ void GameLabyrinth::clientReceive_CHAR_UPDATE(NetworkPacket* packet, size_t data
                 info.character_count*sizeof(NetworkPacket::Format::S_CharacterUpdate::CharacterPosition));
     net_assert(server.client_state == PLAYING);
 
-    for (size_t i = characters.size(); i < info.character_count; i++)
-    {
-        Character* character = createCharacter();
-        character->characterId = i;
-        addCharacter(character);
-    }
-
-    while (characters.size() > info.character_count)
-    {
-        deleteCharacter(characters.back());
-    }
+    std::set<int> filled;
 
     for (size_t i = 0; i < info.character_count; i++)
     {
         NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = info.character_position[i];
         size_t index = info.character_position[i].characterId;
 
-        if (characters[index] != active_character || !characters[index]->position_is_set)
+        Character* current = findCharacter(index);
+
+        if (current != NULL)
         {
-            characters[index]->setPosition(pos.position);
-            characters[index]->setVelocity(pos.linear_velocity);
-            characters[index]->setMomentum(pos.linear_momentum);
+            if (current != active_character
+             || !current->position_is_set
+             || !current->trustPosition(pos.pos))
+            {
+                current->setCharacterPosition(pos.pos);
+            }
+        }
+        else
+        {
+            Character* character = createCharacter();
+            character->character_id = index;
+            addCharacter(character);
+            character->setCharacterPosition(pos.pos);
+        }
+        filled.insert(index);
+    }
+
+    for (size_t i = 0; i < info.character_count;)
+    {
+        if (filled.find(characters[i]->character_id) == filled.end())
+        {
+            deleteCharacter(characters[i]);
+        }
+        else
+        {
+            i++;
         }
     }
+
     netTimer.incframe();
 }
 
@@ -290,9 +306,11 @@ void GameLabyrinth::clientReceiveS_BIND_CHAR(NetworkPacket* packet, size_t dataL
     log_msg("net", "received S_BIND_CHAR to " + server.getNetwornName());
     net_assert(dataLength ==  sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_BindCharacter));
     size_t character_index = packet->data.s_bind_character.character_index;
-    net_assert(character_index < characters.size());
-    active_character = characters[character_index];
-    active_character->input = input;
+    active_character = findCharacter(character_index);
+    if (active_character != NULL)
+    {
+        active_character->input = input;
+    }
 }
 
 void GameLabyrinth::clientSend_PING()
@@ -334,10 +352,10 @@ void GameLabyrinth::clientSendInformationToServer()
             {
                 NetworkPacket::Format::S_CharacterUpdate::CharacterPosition& pos = packet->data.character_update.character_position[0];
 
-                pos.characterId = i;
-                pos.position = characters[i]->getPosition();
-                pos.linear_velocity = to_simple(characters[i]->getVelocity());
-                pos.linear_momentum = to_simple(characters[i]->getMomentum());
+                pos.characterId = active_character->character_id;
+                pos.pos.position = characters[i]->getPosition();
+                pos.pos.linear_velocity = to_simple(characters[i]->getVelocity());
+                pos.pos.linear_momentum = to_simple(characters[i]->getMomentum());
             }
         }
         ENetPacket* enet_packet = 
@@ -355,15 +373,24 @@ void GameLabyrinth::clientReceiveS_GAME_INFO(NetworkPacket* packet, size_t dataL
 {
     net_assert(dataLength >= sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_GameInfo));
     game_state = packet->data.s_game_info.game_state;
+
+    StringVector player_names = packet->extractStrings(sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_GameInfo), dataLength);
+    StringVector::iterator name = player_names.begin();
+    for EACH(CharacterVector, characters, it)
+    {
+        if (name != player_names.end())
+        {
+            (*it)->name = *name;
+            name++;
+        }
+    }
+
     if (game_state == GAME_END)
     {
-        if (packet->data.s_game_info.i_am_winner)
+        Character* winner = findCharacter(packet->data.s_game_info.winner_character_id);
+        if (winner != NULL)
         {
-            client_winner = "";
-        }
-        else
-        {
-            client_winner = packet->extractString(sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_GameInfo), dataLength);
+            client_winner = winner->name;
         }
     }
 }

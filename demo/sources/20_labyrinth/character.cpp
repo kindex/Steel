@@ -42,7 +42,7 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
         dynamic_cast<GraphInterface*>(&engine)->setPositionKind(POSITION_GLOBAL);
         dynamic_cast<GraphInterface*>(&engine)->setPosition(getPosition());
 
-        GraphText text("Player", ObjectPosition::CreateTranslationMatrix(v3(0, 0, 0.35f)), POSITION_LOCAL, v2(0.05f, 0.03f), SPRITE_ALIGN_SCREEN);
+        GraphText text(name, ObjectPosition::CreateTranslationMatrix(v3(0, 0, 0.35f)), POSITION_LOCAL, v2(0.05f, 0.03f), SPRITE_ALIGN_SCREEN);
         GraphTextVector tv;
         tv.push_back(text);
 
@@ -127,9 +127,21 @@ v3 Character::getMomentum() const
     return tov3(physic_object->getLinearMomentum());
 }
 
-void Character::setPosition(const ObjectPosition& new_position)
+bool Character::trustPosition(const CharacterPosition& pos) const
+{
+    return (pos.position.getTranslation() - getPosition().getTranslation()).getLength() < trust_distance;
+}
+
+void Character::setCharacterPosition(const CharacterPosition& pos)
 {
     position_is_set = true;
+    setPosition(pos.position);
+    setVelocity(pos.linear_velocity);
+    setMomentum(pos.linear_momentum);
+}
+
+void Character::setPosition(const ObjectPosition& new_position)
+{
     if (physic_object != NULL)
     {
         physic_object->setGlobalPose(tonx(new_position));

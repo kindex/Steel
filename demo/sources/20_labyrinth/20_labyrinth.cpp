@@ -243,6 +243,8 @@ bool GameLabyrinth::createWorld()
 void GameLabyrinth::addCharacter(Character* new_character)
 {
     characters.push_back(new_character);
+
+    character_index[new_character->character_id] = new_character;
     if (graphEngine != NULL)
     {
         graphEngine->inject(new_character);
@@ -280,6 +282,7 @@ void GameLabyrinth::deleteCharacter(Character* character)
         ageiaDeleteCharacter(*character);
     }
 
+    character_index.erase(character_index.find(character->character_id));
     delete character;
 }
 
@@ -290,6 +293,7 @@ Character* GameLabyrinth::createCharacter()
     Config* graph_config = character_model->getConfig();
     character->graph_object = loadGraphObject(*graph_config, "");
     character->force = conf->getf("character.physic.force", 1.0f);
+    character->trust_distance = conf->getf("character.physic.trust_distance", 100.0f);
 
     return character;
 }
@@ -306,6 +310,7 @@ Character* GameLabyrinth::createCharacterStart()
             pos.setTranslation((*tag)->origin);
             character->setPosition(pos);
 
+            character->character_id = character_id_generator.genUid();
             addCharacter(character);
 
             return character;
@@ -330,6 +335,7 @@ bool GameLabyrinth::createCharacters()
         if (active_character != NULL)
         {
             active_character->owner = Character::SERVER;
+            active_character->name = conf->gets("net.name", "Server");
             if (cameraMode == C_FIXED)
             {
                 active_character->setInput(input);
@@ -802,46 +808,14 @@ NxActor* GameLabyrinth::ageiaCreateCharacter(IN OUT Character& character)
 	return actor;
 }
 
-size_t GameLabyrinth::setupNetworkPacketStrings(NetworkPacket*& packet, const size_t size, const StringVector& strings) const
-{
-    size_t strings_size = sizeof(unsigned int);
-    for EACH_CONST(StringVector, strings, str)
-    {
-        strings_size += sizeof(unsigned int) + str->size();
-    }
-    packet = (NetworkPacket*)realloc(packet, size + strings_size);
-    char* offset = (char*)packet + size;
-    *(unsigned int*)offset = strings.size();
-    offset += sizeof(unsigned int);
-    for EACH_CONST(StringVector, strings, str)
-    {
-        *(unsigned int*)offset = str->size();
-        offset += sizeof(unsigned int);
-        for (size_t i = 0; i < str->size(); i++)
-        {
-            *offset = str->at(i);
-            offset += sizeof(char);
-        }
-    }
-
-    return size + strings_size;
-}
-
-size_t GameLabyrinth::setupNetworkPacketString(NetworkPacket*& packet, const size_t size, const std::string& string) const
-{
-    StringVector strings;
-    strings.push_back(string);
-    return setupNetworkPacketStrings(packet, size, strings);
-}
-
 std::string GameLabyrinth::Client::getNetworkName() const
 {
-    return name + "@" + IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port);
+    return name + "@" + to_string(peer->address);
 }
 
 std::string GameLabyrinth::Server::getNetwornName() const
 {
-    return IntToStr(peer->address.host) + ":" + IntToStr(peer->address.port);
+    return to_string(peer->address);
 }
 
 void GameLabyrinth::bind(GraphEngine& engine)
@@ -851,5 +825,18 @@ void GameLabyrinth::bind(GraphEngine& engine)
     for EACH(CharacterVector, characters, it)
     {
         engine.inject(*it);
+    }
+}
+
+Character* GameLabyrinth::findCharacter(uid character_id)
+{
+    std::map<uid, Character*>::iterator it = character_index.find(character_id);
+    if (it == character_index.end())
+    {
+        return NULL;
+    }
+    else
+    {
+        return it->second;
     }
 }

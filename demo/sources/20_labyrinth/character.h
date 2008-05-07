@@ -22,6 +22,13 @@ class Input;
 class Character : public GameObject
 {
 public:
+    struct CharacterPosition
+    {
+        ObjectPosition position;
+        v3simple       linear_velocity;
+        v3simple       linear_momentum;
+    };
+
     Character();
 	bool supportsInterface(IN OUT Engine&, IN const InterfaceId);
 	bool updateInformation(IN OUT Engine&, IN const InterfaceId);
@@ -35,6 +42,8 @@ public:
     ObjectPosition getPosition() const;
     v3 getVelocity() const;
     v3 getMomentum() const;
+    bool trustPosition(const CharacterPosition&) const;
+    void setCharacterPosition(const CharacterPosition&);
     void setPosition(const ObjectPosition&);
     void setVelocity(const v3&);
     void setMomentum(const v3&);
@@ -53,6 +62,7 @@ public:
 
 private:
     float force;
+    float trust_distance;
     bool alive;
     bool position_is_set;
     GraphObject*   graph_object;
@@ -61,9 +71,10 @@ private:
     ObjectPosition origin;
     v3             direction;
 	Input*         input;
-    uid            characterId; // synchronized on all clients
+    uid            character_id; // synchronized on all clients
     Owner          owner;
     uid            clientId;
+    std::string    name;
 };
 
 typedef std::vector<Character*> CharacterVector;

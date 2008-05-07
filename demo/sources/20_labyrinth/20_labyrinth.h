@@ -60,6 +60,10 @@ private:
     GameState       game_state;
     std::string     client_winner;
     TagVector       character_starts;
+
+    std::map<uid, Character*> character_index;
+    Character* findCharacter(uid character_id);
+    IdGenerator character_id_generator;
     
     void addCharacter(Character* new_character);
     void deleteCharacter(Character* character);
@@ -142,9 +146,6 @@ private:
         NET_SERVER,
         NET_CLIENT,
     } net_role;
-
-    size_t setupNetworkPacketStrings(NetworkPacket*& packet, const size_t size, const StringVector& strings) const;
-    size_t setupNetworkPacketString(NetworkPacket*& packet, const size_t size, const std::string& string) const;
     
     // Server side
     bool serverInit();

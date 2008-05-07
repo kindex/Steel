@@ -14,11 +14,13 @@
 #define _NETWORK_PROTOCOL_H_
 
 #include "../svn.inc"
+#include "character.h"
 #include <common/containers/string_vector.h>
 #include <engine/id_generator.h>
 #include <math/matrix34.h>
 #include <engine/visitor.h>
 #include <common/types.h>
+#include <enet/enet.h>
 
 enum GameState
 {
@@ -51,10 +53,8 @@ struct NetworkPacket
             size_t character_count;
             struct CharacterPosition
             {
-                size_t         characterId;
-                ObjectPosition position;
-                v3simple       linear_velocity;
-                v3simple       linear_momentum;
+                size_t                       characterId;
+                Character::CharacterPosition pos;
 #pragma warning (push)
 #pragma warning (disable : 4200)
             } character_position[];
@@ -86,12 +86,18 @@ struct NetworkPacket
         struct S_GameInfo
         {
             GameState game_state;
+            size_t winner_character_id;
             bool i_am_winner;
         } s_game_info;
     } data;
 
+    static size_t setupNetworkPacketStrings(NetworkPacket*& packet, const size_t size, const StringVector& strings);
+    static size_t setupNetworkPacketString(NetworkPacket*& packet, const size_t size, const std::string& string);
+
     StringVector extractStrings(size_t offset, size_t total_size) const;
     std::string extractString(size_t offset, size_t total_size) const;
 }; // struct NetworkPacket
+
+std::string to_string(const ENetAddress&);
 
 #endif
