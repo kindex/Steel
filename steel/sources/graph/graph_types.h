@@ -111,22 +111,31 @@ typedef svector<FaceMaterial> FaceMaterialVector;
 
 struct GraphText
 {
+    enum TextAlign
+    {
+        ALIGN_CENTER,
+        ALIGN_LEFT_TOP,
+    };
+
     GraphText(const std::string&     string,
               const ObjectPosition&  position,
               const PositionKind     position_kind,
               const v2               size,
-              const SpriteAlign      align = SPRITE_ALIGN_CUSTOM) :
+              const SpriteAlign      align,
+              const TextAlign        text_align) :
         string(string),
         position(position),
         position_kind(position_kind),
         align(align),
-        size(size)
+        size(size),
+        text_align(text_align)
     {}
 
     GraphText() : 
         position_kind(POSITION_LOCAL),
         position(matrix34::getIdentity()),
-        size(1, 1)
+        size(1, 1),
+        text_align(ALIGN_CENTER)
     {}
 
     std::string      string;
@@ -134,6 +143,8 @@ struct GraphText
     PositionKind     position_kind;
     SpriteAlign      align;
     v2               size;
+    TextAlign        text_align;
+
 };
 
 typedef svector<GraphText> GraphTextVector;

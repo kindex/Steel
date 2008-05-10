@@ -17,6 +17,7 @@
 #include "../steel.h"
 #include "../math/vector3d.h"
 #include "../math/matrix34.h"
+#include "../math/sprite.h"
 
 enum InterfaceId
 {
@@ -42,17 +43,6 @@ public:
 местоположение + поворот объекта
 */
 typedef matrix34 ObjectPosition;
-
-// Тип положения объекта: local – относительно родитиля, global – в глобальной системе координат.
-enum PositionKind
-{
-	POSITION_NONE,
-	POSITION_LOCAL,
-	POSITION_GLOBAL,
-	POSITION_SCREEN
-};
-
-
 
 class Interface3D
 {

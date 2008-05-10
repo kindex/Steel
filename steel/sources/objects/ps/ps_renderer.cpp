@@ -32,6 +32,7 @@ void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
         v3 dy;
 		calculateSprite(info.camera,
 						set->particles[i]->position,
+                        POSITION_GLOBAL,
 						v2(set->particles[i]->size, set->particles[i]->size),
 						align,
 						customAlign,

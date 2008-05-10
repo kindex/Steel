@@ -104,10 +104,14 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	setupVariables();
 
 // ------------- Clear Screen ------------
-	if (conf->geti("swapBuffers", 1))
+	if (conf->getb("swapBuffers", true))
 	{
 		(this->*FlushOpenGL_Window)(); // TODO: flush in thread
 	}
+    if (conf->getb("singleBuffer", true))
+    {
+		(this->*FlushOpenGL_Window)();
+    }
 
 	GLbitfield clear = 0;
 	if (conf->getb("clearColor", true))	clear |= GL_COLOR_BUFFER_BIT;
@@ -404,6 +408,7 @@ void OpenGL_Engine::renderFlares()
             v3 dy;
 			calculateSprite(info.camera,
 						lightIt->second->position,
+                        POSITION_GLOBAL,
 						v2(light.flareSize, light.flareSize),
 						SPRITE_ALIGN_SCREEN,
 						v3(),
@@ -1028,11 +1033,10 @@ void OpenGL_Engine::pushPosition(const ObjectPosition& position, PositionKind po
 	if (positionKind == POSITION_SCREEN)
 	{
 		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
 		glPushMatrix();
+		glLoadIdentity();
 	}
 	glMatrixMode(GL_MODELVIEW);
-
 	glPushMatrix();
 
 	float m[16]; // TODO
@@ -1056,9 +1060,11 @@ void OpenGL_Engine::pushPosition(const ObjectPosition& position, PositionKind po
 
 void OpenGL_Engine::popPosition(PositionKind positionKind)
 {
+	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 	if (positionKind == POSITION_SCREEN)
 	{
+		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();
 	}
 }

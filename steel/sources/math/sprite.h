@@ -26,19 +26,29 @@ enum SpriteAlign
 	SPRITE_ALIGN_CUSTOM
 };
 
+// “ип положени€ объекта: local Ц относительно родитил€, global Ц в глобальной системе координат.
+enum PositionKind
+{
+	POSITION_NONE,
+	POSITION_LOCAL,
+	POSITION_GLOBAL,
+	POSITION_SCREEN
+};
+
 class Camera;
 
-void calculateSprite(const Camera&     camera,
-					 const v3          spritePosition,
-					 const v2          spriteSize,
-					 const SpriteAlign align,
-					 const v3          customAlign,
-					 OUT   v3&         vertex1,
-					 OUT   v3&         vertex2,
-					 OUT   v3&         vertex3,
-					 OUT   v3&         vertex4,
-					 OUT   v3&         normal,
-                     OUT   v3&         direction1,
-					 OUT   v3&         direction2);
+void calculateSprite(const Camera&      camera,
+					 const v3           spritePosition,
+					 const PositionKind position_kind,
+					 const v2           spriteSize,
+					 const SpriteAlign  align,
+					 const v3           customAlign,
+					 OUT   v3&          vertex1,
+					 OUT   v3&          vertex2,
+					 OUT   v3&          vertex3,
+					 OUT   v3&          vertex4,
+					 OUT   v3&          normal,
+                     OUT   v3&          direction1,
+					 OUT   v3&          direction2);
 
 #endif

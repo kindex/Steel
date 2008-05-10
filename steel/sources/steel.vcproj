@@ -725,6 +725,14 @@
 			Name="objects"
 			>
 			<File
+				RelativePath=".\objects\console.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\objects\console.h"
+				>
+			</File>
+			<File
 				RelativePath="..\sources\objects\game_object_factory.cpp"
 				>
 			</File>
