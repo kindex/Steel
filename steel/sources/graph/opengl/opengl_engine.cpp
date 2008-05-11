@@ -764,7 +764,15 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	glEnable(GL_DEPTH_TEST);
 	glDepthRange(0.01, 1.0e+6);
 
-	glDepthFunc(GL_LESS); 
+    if (conf->getb("clearDepth"))
+    {
+	    glDepthFunc(GL_LESS);
+    }
+    else
+    {
+        glDepthFunc(GL_ALWAYS);
+    }
+
 	glCullFace(GL_BACK);
 
 //    glFrontFace(GL_CCW);

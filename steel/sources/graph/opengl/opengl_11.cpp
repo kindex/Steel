@@ -240,6 +240,11 @@ void OpenGL_Engine::DrawWire_OpenGL11(GraphShadow& e, const Faces& faces)
 
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
+
+        int color = int(e.object);
+        
+        glColor3f((color&255)/500.0f+0.5f, ((color>>8)&255)/500.0f+0.5f, ((color>>16)&255)/500.0f + 0.5f);
+
 		glPolygonMode (GL_FRONT, GL_LINE);
 		glVertexPointer(3, GL_FLOAT, 0, &e.vertexes->front());	glEnableClientState(GL_VERTEX_ARRAY);
 
