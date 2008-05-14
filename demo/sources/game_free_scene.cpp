@@ -63,6 +63,7 @@ bool GameFreeScene::init(Config& _conf, Input& _input)
 	// Init world
 	spectator.camera.setPosition(conf->getv3("camera.eye", v3(0.0f, 0.0f, 1.7f)));
 	spectator.camera.setDirection(conf->getv3("camera.direction", v3(1.0f, 0.0f, 0.0f)));
+    info.camera = spectator.camera;
 	
 	accSpeed = conf->getf("camera.acc", 50);
 	brakeSpeed = conf->getf("camera.brakes", 200);

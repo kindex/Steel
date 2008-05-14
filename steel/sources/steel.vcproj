@@ -316,6 +316,10 @@
 			Name="common"
 			>
 			<File
+				RelativePath=".\common\containers.h"
+				>
+			</File>
+			<File
 				RelativePath="..\sources\common\logger.cpp"
 				>
 			</File>

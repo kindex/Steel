@@ -27,9 +27,16 @@ private:
 	{
 		int dist;
 		bool path;
-		bool rightborder, downborder, was;
+		bool rightborder;
+        bool downborder;
+        bool was;
 
-		node(void): dist(MAX), path(false), was(false), rightborder(true), downborder(true) {}
+		node(void):
+            dist(MAX),
+            path(false),
+            was(false),
+            rightborder(false),
+            downborder(false) {}
 	};
 
 	std::vector<std::vector<node> > a;
@@ -153,7 +160,6 @@ void LabyrinthGenerator::buid(float k)
 		for(int j = 0; j < X-1; j++)
 		{
 			a[i][j].rightborder = frand() > k && abs(a[i][j].dist - a[i][j+1].dist) != 1;
-//			a[i][j].rightborder = !(a[i][j].path && a[i][j+1].path);
 		}
 	}
 	for(int i = 0; i < Y-1; i++)
@@ -161,7 +167,6 @@ void LabyrinthGenerator::buid(float k)
 		for(int j = 0; j < X; j++)
 		{
 			a[i][j].downborder = frand() > k && abs(a[i][j].dist - a[i+1][j].dist) != 1;
-//			a[i][j].downborder = !(a[i][j].path && a[i+1][j].path);
 		}
 	}
 }
@@ -185,7 +190,11 @@ Labyrinth LabyrinthGenerator::getLabyrinth() const
 
 bool Labyrinth::isRightBorder(int x, int y) const
 {
-	if (x < 0 || y < 0)
+    if (!(x < getMaxX() && y >= 0))
+    {
+        return false;
+    }
+	if ((x < 0 || y < 0))
 	{
 		return true;
 	}
@@ -198,6 +207,10 @@ bool Labyrinth::isRightBorder(int x, int y) const
 
 bool Labyrinth::isDownBorder(int x, int y) const
 {
+    if (!(y < getMaxY() && x >= 0))
+    {
+        return false;
+    }
 	if (x < 0 || y < 0)
 	{
 		return true;

@@ -217,9 +217,7 @@ bool GameLabyrinth::createLabyrinth()
 	{
 		for (int j = -1; j < labyrinth.getMaxY(); j++)
 		{
-			bool right = labyrinth.isRightBorder(i, j);
-
-			if (right && i < labyrinth.getMaxX() && j >= 0)
+			if (labyrinth.isRightBorder(i, j))
 			{
 				Config* currentWallConfig = wscene[0]->getArrayElement(irand(wscene[0]->size()));
 
@@ -241,8 +239,7 @@ bool GameLabyrinth::createLabyrinth()
                 objects_cell_map[std::make_pair(i+1, j)].insert(wall);
 			}
 
-			bool down = labyrinth.isDownBorder(i, j);
-			if (down && j < labyrinth.getMaxY() && i >= 0)
+			if (labyrinth.isDownBorder(i, j))
 			{
 				Config* currentWallConfig = wscene[1]->getArrayElement(irand(wscene[1]->size()));
 
@@ -951,17 +948,47 @@ void GameLabyrinth::restart()
 
 void GameLabyrinth::updateVisibleObjects(GraphEngine& engine)
 {
-    current_sell_set = calculateCellVisibilitySet(labyrinth,
-//                                                  info.camera,
-characters[0]->getPosition().getTranslation(),
-                                                  cell_size);
+    bool visibility_check = conf->getb("labyrinth.visibility_check", true);
 
-    GameObjectSet now_injected_objects;
-    for EACH(CellVisibilitySet, current_sell_set, cell)
+    if (visibility_check)
     {
-        for EACH(GameObjectSet, objects_cell_map[*cell], object)
+        current_sell_set = calculateCellVisibilitySet(labyrinth,
+                                                      info.camera.getPosition(),
+    //                                                  characters[0]->getPosition().getTranslation(),
+                                                      cell_size);
+
+        GameObjectSet now_injected_objects;
+        for EACH(CellVisibilitySet, current_sell_set, cell)
         {
-            now_injected_objects.insert(*object);
+            for EACH(GameObjectSet, objects_cell_map[*cell], object)
+            {
+                now_injected_objects.insert(*object);
+                if (injected_objects.find(*object) == injected_objects.end())
+                {
+                    injected_objects.insert(*object);
+                    graphEngine->inject(*object);
+                }
+            }
+        }
+
+        std::vector<GameObject*> a;
+
+        std::set_difference(injected_objects.begin(),
+                            injected_objects.end(),
+                            now_injected_objects.begin(),
+                            now_injected_objects.end(),
+                            std::back_inserter(a));
+
+        for EACH(std::vector<GameObject*>, a, it)
+        {
+            graphEngine->remove(*it);
+            injected_objects.erase(injected_objects.find(*it));
+        }
+    }
+    else if (all_objects.size() != injected_objects.size())
+    {
+        for EACH(std::set<GameObject*>, all_objects, object)
+        {
             if (injected_objects.find(*object) == injected_objects.end())
             {
                 injected_objects.insert(*object);
@@ -969,28 +996,4 @@ characters[0]->getPosition().getTranslation(),
             }
         }
     }
-
-    std::vector<GameObject*> a;
-
-    std::set_difference(injected_objects.begin(),
-                        injected_objects.end(),
-                        now_injected_objects.begin(),
-                        now_injected_objects.end(),
-                        std::back_inserter(a));
-
-    for EACH(std::vector<GameObject*>, a, it)
-    {
-        graphEngine->remove(*it);
-        injected_objects.erase(injected_objects.find(*it));
-    }
-
-    //for EACH(std::set<GameObject*>, all_objects, object)
-    //{
-    //    if (injected_objects.find(*object) == injected_objects.end())
-    //    {
-    //        injected_objects.insert(*object);
-    //        graphEngine->inject(*object);
-    //    }
-    //}
-
 }

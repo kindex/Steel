@@ -29,7 +29,8 @@ public:
 private:
 	struct node
 	{
-		bool rightborder, downborder;
+		bool rightborder;
+        bool downborder;
 	};
 
 	std::vector<std::vector<node> > a;
