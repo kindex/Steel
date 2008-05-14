@@ -63,6 +63,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(GraphShadow& e, const Faces& t
 
 	glPopClientAttrib();
    	glPopAttrib();
+
 	return true;
 }
 
@@ -282,6 +283,10 @@ void OpenGL_Engine::DrawAABB_OpenGL10(GraphShadow &e)
 
 void OpenGL_Engine::DrawText_OpenGL10(ObjectPosition& parent_position, const GraphTextVector& e)
 {
+	glMatrixMode(GL_TEXTURE);// TEMP:
+    glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
+
     for EACH_CONST(GraphTextVector, e, text_it)
     {
         const GraphText& text = *text_it;

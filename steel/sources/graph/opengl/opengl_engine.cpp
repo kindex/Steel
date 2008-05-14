@@ -996,6 +996,7 @@ void OpenGL_Engine::unbindTexCoords()
 	{
 		glMatrixMode(GL_TEXTURE);
         glLoadIdentity();
+        glMatrixMode(GL_MODELVIEW);
 
         //glPopMatrix(); // OpenGL error
 		textureMatrixLevel--;
@@ -1071,7 +1072,6 @@ void OpenGL_Engine::pushPosition(const ObjectPosition& position, PositionKind po
 void OpenGL_Engine::popPosition(PositionKind positionKind)
 {
 	glMatrixMode(GL_MODELVIEW);
-    debugi(GL_MODELVIEW);
 	glPopMatrix();
 	if (positionKind == POSITION_SCREEN)
 	{
