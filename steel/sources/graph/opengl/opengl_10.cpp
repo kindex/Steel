@@ -45,7 +45,8 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(GraphShadow& e, const Faces& t
 
 	if (texCoords != NULL)
 	{
-		glMatrixMode(GL_TEXTURE);	glLoadIdentity();
+		glMatrixMode(GL_TEXTURE);
+        glLoadIdentity();
 		glScalef(		material.textureMatrix.texCoordsScale.x,		material.textureMatrix.texCoordsScale.y,		material.textureMatrix.texCoordsScale.z); 
 		glTranslatef(	material.textureMatrix.texCoordsTranslation.x,	material.textureMatrix.texCoordsTranslation.y,	material.textureMatrix.texCoordsTranslation.z); 
 		glRotatef(		material.textureMatrix.texCoordsRotation/(float)(M_PI)*180.0f, 0.0f, 0.0f, 1.0f); 
@@ -56,7 +57,8 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL10(GraphShadow& e, const Faces& t
 
 	if (texCoords != NULL)
 	{
-		glMatrixMode(GL_TEXTURE);	glLoadIdentity();
+		glMatrixMode(GL_TEXTURE);
+        glLoadIdentity();
 	}
 
 	glPopClientAttrib();
@@ -251,6 +253,7 @@ void OpenGL_Engine::DrawAABB_OpenGL10(GraphShadow &e)
 
 	glColor3f(1.0f, 0.8f, 0.8f);
 
+    glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
 	glBegin(GL_LINES);

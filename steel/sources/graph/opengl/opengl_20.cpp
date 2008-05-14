@@ -178,6 +178,7 @@ void OpenGL_Engine::SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, 
 			shader.setUniformFloat("env_k", material.env_map.k);
 		}
 
+        glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
 	}
 

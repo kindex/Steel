@@ -24,7 +24,6 @@ GamePS::GamePS():
 	gravityBackup(v3(0,0,0))
 {}
 
-
 bool GamePS::init(Config& _conf, Input& _input)
 {
 	if (!GameFreeScene::init(_conf, _input))

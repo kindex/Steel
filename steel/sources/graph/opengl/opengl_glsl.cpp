@@ -34,7 +34,15 @@ Shader::Shader(OpenGL_Engine& engine):
 
 bool Shader::init(Text*	_vertexShader, Text* _fragmentShader, const StringDict& _parameters)
 {
-	if (!GL_EXTENSION_GLSL) return false;
+	if (!GL_EXTENSION_GLSL)
+    {
+        return false;
+    }
+
+	if (isError())
+    {
+        error("opengl", "Real error before GLSL. Flushing");
+    }
 
 	vertexShader = _vertexShader;
 	fragmentShader = _fragmentShader;
@@ -43,7 +51,10 @@ bool Shader::init(Text*	_vertexShader, Text* _fragmentShader, const StringDict& 
 	log_msg("opengl glsl", "Compiling " + getShaderDecription());
 
 	programId = glCreateProgramObjectARB();
-	if (isError()) return false;
+	if (isError())
+    {
+        return false;
+    }
 
     vertexShaderId = glCreateShaderObjectARB (GL_VERTEX_SHADER_ARB);
    	if (!loadShader(vertexShaderId, vertexShader, parameters))
@@ -132,7 +143,7 @@ bool Shader::isError()
     	return false;
 	}
 
-    error("opengl glsl", (const char*)gluErrorString(glErr));
+    error("opengl glsl", std::string("GLSL error: ") + (const char*)gluErrorString(glErr));
     return true;
 }
 

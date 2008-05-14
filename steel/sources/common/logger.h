@@ -64,7 +64,9 @@ extern GlobalErrors globalErrors;
 #define debug(message)	log_msg("debug", (message))
 #define debugi(message)	log_msg("debug", IntToStr(message))
 #define debug_into(func, code) {  debug(" -> in  " + func);  code debug(" <- out " + func); }
-#define debug_gl(code) {  debug(" -> in  " + IntToStr(glGetError())  + " (" + string(#code) + ")");  {code;} debug(" <- out " + IntToStr(glGetError())); }
+#define debug_gl(code) {  debug(std::string(" -> in ") + (const char*)gluErrorString(glGetError()) + " (" + std::string(#code) + ")" + "; " + getFileName(__FILE__) + ":" + IntToStr(__LINE__) + "(" + __FUNCTION__ + "))"); \
+            {code;}\
+            debug(std::string(" <- out ") + (const char*)gluErrorString(glGetError())); }
 
 void _log_msg(std::string keywords, std::string message);
 

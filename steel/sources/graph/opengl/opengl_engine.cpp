@@ -132,7 +132,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	GLenum errorCode = glGetError();
 	if (errorCode != 0)
 	{
-		log_msg("error opengl", string("OpenGL error #") + IntToStr(errorCode));
+        log_msg("error opengl", string("OpenGL error #") + IntToStr(errorCode) + ": " + (const char*)gluErrorString(errorCode));
 	}
 // -----------------------------------
 
@@ -995,7 +995,9 @@ void OpenGL_Engine::unbindTexCoords()
 	if (textureMatrixLevel > 0)
 	{
 		glMatrixMode(GL_TEXTURE);
-        glPopMatrix();
+        glLoadIdentity();
+
+        //glPopMatrix(); // OpenGL error
 		textureMatrixLevel--;
 	}
 }
@@ -1045,7 +1047,7 @@ void OpenGL_Engine::pushPosition(const ObjectPosition& position, PositionKind po
 		glLoadIdentity();
 	}
 	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
+    glPushMatrix();
 
 	float m[16]; // TODO
 	m[0] = position.data.matrix.data.m[0][0];	m[1] = position.data.matrix.data.m[1][0];	m[2] = position.data.matrix.data.m[2][0];	m[3]  = 0;
@@ -1069,6 +1071,7 @@ void OpenGL_Engine::pushPosition(const ObjectPosition& position, PositionKind po
 void OpenGL_Engine::popPosition(PositionKind positionKind)
 {
 	glMatrixMode(GL_MODELVIEW);
+    debugi(GL_MODELVIEW);
 	glPopMatrix();
 	if (positionKind == POSITION_SCREEN)
 	{
