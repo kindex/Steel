@@ -115,7 +115,7 @@ bool GameLabyrinth::serverInit()
     }
     log_msg("net", "Listening server at " + to_string(address));
 
-    if (!createWorld())
+    if (!createLabyrinth())
     {
         return false;
     }

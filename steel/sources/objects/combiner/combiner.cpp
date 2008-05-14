@@ -99,9 +99,12 @@ Transformation* loadTransformation(Config& conf, const std::string& configVariab
 
 bool Combiner::InitFromConfig(Config& conf)
 {
-	origin.loadIdentity();
-	origin.setScale(conf.getv3("scale", v3(1,1,1)));
-	origin.setTranslation(conf.getv3("origin"));
+    ObjectPosition corigin;
+	corigin.loadIdentity();
+	corigin.setScale(conf.getv3("scale", v3(1,1,1)));
+	corigin.setTranslation(conf.getv3("origin"));
+
+    setOrigin(corigin);
 
 	position.loadIdentity();
 	positionKind = conf.gets("position_kind", "local") == "local" ? POSITION_LOCAL : POSITION_GLOBAL;
@@ -131,6 +134,11 @@ bool Combiner::InitFromConfig(Config& conf)
 	}
 
 	return true;
+}
+
+void Combiner::setOrigin(const ObjectPosition& _origin)
+{
+    origin = _origin;
 }
 
 Config* Combiner::getConfig() const

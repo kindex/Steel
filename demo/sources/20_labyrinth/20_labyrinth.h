@@ -17,6 +17,7 @@
 #include "labyrinth_generator.h"
 #include "character.h"
 #include "network_protocol.h"
+#include "visibility_check.h"
 #include "../objects/tag.h"
 
 #include <objects/combiner/graph_object.h>
@@ -26,6 +27,7 @@ typedef std::vector<GraphObject*> GraphObjectVector;
 
 class NxPhysicsSDK;
 class NxScene;
+typedef std::set<GameObject*> GameObjectSet;
 
 class GameLabyrinth: public GameFreeScene
 {
@@ -45,12 +47,20 @@ public:
 
 private:
 // ------------------ Labyrinth -----------------
-	Labyrinth labyrinth;
+	Labyrinth         labyrinth;
+    CellVisibilitySet cell_visibility_set;
 	GraphObjectVector walls;
-	ConfigArray* wscene[2];
-	float length[2];
-	int count[2];
-    GraphObject*    character_model;
+	ConfigArray*      wscene[2];
+	float             length[2];
+	int               count[2];
+    v2                cell_size;
+    GraphObject*      character_model;
+    GameObjectSet     injected_objects;
+    GameObjectSet     all_objects;
+    std::map<Cell, GameObjectSet> objects_cell_map;
+    CellVisibilitySet current_sell_set;
+    bool              createLabyrinth();
+    void              updateVisibleObjects(GraphEngine&);
 // -------------------- Game --------------------
     Character*      active_character;
     float           cameraPenalty;
@@ -67,7 +77,6 @@ private:
     
     void addCharacter(Character* new_character);
     void deleteCharacter(Character* character);
-    bool createWorld();
     bool createCharacters();
     Character* createCharacterStart();
     Character* createCharacter();

@@ -5,13 +5,13 @@ objects =
 (
 	{
 		class = 'tag'
-		origin = (0 0 1)
+		origin = (1 1 1)
 		name = 'character_start'
 	}
 
 	{
 		class = 'tag'
-		origin = (0 0.5 0)
+		origin = (1 1 2)
 		name = 'character_start'
 	}
 
@@ -29,7 +29,6 @@ objects =
 
 	[/sun.conf#] {	origin = (-95 -42 31)}
 	[/sun_ambient.conf#] {	origin = (90 90 90)}
-	[floor.scene#] {}
 	[/22_sky/sky.scene#] {}
 	[/22_sky/music.scene#] {}
 

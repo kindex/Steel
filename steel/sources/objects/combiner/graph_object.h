@@ -105,6 +105,7 @@ public:
 	bool InitFromConfig(Config& conf);
     Config* getConfig() const;
     v3 getSize() const;
+    void setSize(const v3 new_size);
 
 private:
     v3 size;

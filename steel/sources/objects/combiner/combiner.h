@@ -35,6 +35,10 @@ public:
 	GameObject* getObject(size_t index) { return objects[index]; }
     void traverse(Visitor&, const ObjectPosition& base_position);
 	void addObject(GameObject*);
+    void setOrigin(const ObjectPosition& origin);
+    GraphObject*    getGraphObject() {return graph; }
+    AudioObject*    getAudioObject() { return audio;}
+    Transformation* getTransformation() { return transformation; }
 
 protected:
     const ObjectPosition& getLocalPosition();

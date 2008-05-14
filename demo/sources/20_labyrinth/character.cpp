@@ -47,7 +47,7 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
         if (!name.empty())
         {
             float text_size = 0.05f;
-            GraphText text(name, ObjectPosition::CreateTranslationMatrix(v3(0, 0, 0.35f)), POSITION_LOCAL, v2(text_size, text_size*0.75f), SPRITE_ALIGN_SCREEN, GraphText::ALIGN_CENTER);
+            GraphText text(name, ObjectPosition::createTranslationMatrix(v3(0, 0, 0.35f)), POSITION_LOCAL, v2(text_size, text_size*0.75f), SPRITE_ALIGN_SCREEN, GraphText::ALIGN_CENTER);
             GraphTextVector tv;
             tv.push_back(text);
             gengine.setGraphText(tv);

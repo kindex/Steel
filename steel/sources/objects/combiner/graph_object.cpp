@@ -120,19 +120,27 @@ GraphObjectBox::GraphObjectBox():
 bool GraphObjectBox::InitFromConfig(Config& conf)
 {
 	Config* materialConfig = conf.find("material");
-	size = conf.getv3("size", v3(1.0f, 1.0f, 1.0f));
 
 	if (materialConfig != NULL)
 	{
 		material = createMaterial(materialConfig);
 	}
 
+    setSize(conf.getv3("size", v3(1.0f, 1.0f, 1.0f)));
+
+	return true;
+}
+
+void GraphObjectBox::setSize(const v3 new_size)
+{
+    size = new_size;
+
 	int vert = 6*4;
 	int trg  = 12;
 
-	vertexes	= new VertexVector; vertexes->changed = false;	
-	normals		= new VertexVector; normals->changed = false;	
-	texCoords	= new TexCoords; texCoords->changed = false;
+    delete vertexes;	vertexes	= new VertexVector; vertexes->changed = false;	
+	delete normals;     normals		= new VertexVector; normals->changed = false;	
+	delete texCoords;   texCoords	= new TexCoords; texCoords->changed = false;
 
 #define t(a, b, c, d, e) vertexes->push_back(v3(a*0.5f*size.x, b*0.5f*size.y, c*0.5f*size.z)); texCoords->push_back(v2(d, e))
 
@@ -178,8 +186,6 @@ bool GraphObjectBox::InitFromConfig(Config& conf)
 		normals->at(it->a[1]) = normal;
 		normals->at(it->a[2]) = normal;
 	}
-
-	return true;
 }
 
 Config* GraphObjectBox::getConfig() const

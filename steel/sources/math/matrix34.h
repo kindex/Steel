@@ -51,11 +51,11 @@ struct matrix34
 		return get(1,0,0, 0,1,0, 0,0,1, 0,0,0); 
 	}
 
-	inline static const matrix34	CreateTranslationMatrix(const v3 translation)
+	inline static const matrix34	createTranslationMatrix(const v3 translation)
 	{ 
 		return get(1,0,0, 0,1,0, 0,0,1, translation.x, translation.y, translation.z); 
 	}
-	inline static const matrix34	CreateRotationMatrix(const float angle, const v3 rotation)
+	inline static const matrix34	createRotationMatrix(const float angle, const v3 rotation)
 	{ 
 		matrix34 matrix;
 		matrix.setRotationAxis(angle, rotation);

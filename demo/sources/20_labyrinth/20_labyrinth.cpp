@@ -27,6 +27,7 @@
 #include "../23_ageia_tech/error_stream.h"
 #include "../main.h"
 #include "steel_nx.h"
+#include <algorithm>
 
 class AgeiaInjector : public Visitor
 {
@@ -133,6 +134,8 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     netTimerSend.start();
     netTimerReceive.start();
     refresh_needed = true;
+    cell_visibility_set.clear();
+    injected_objects.clear();
 
     return true;
 }
@@ -182,7 +185,7 @@ GameLabyrinth::~GameLabyrinth()
     log_msg("labyrinth", "Exiting from game");
 }
 
-bool GameLabyrinth::createWorld()
+bool GameLabyrinth::createLabyrinth()
 {
     std::string dirs[] = {"x", "y"};
 
@@ -204,7 +207,10 @@ bool GameLabyrinth::createWorld()
 
 		wscene[i] = static_cast<ConfigArray*>(loadedWallConfig);
 	}
+    cell_size.set(length[0], length[1]);
 
+    objects_cell_map.clear();
+    all_objects.clear();
 	labyrinth = generateLabyrinth(count[0], count[1], conf->getf("labyrinth.crazy_const", 0.02f));
 
 	for (int i = -1; i < labyrinth.getMaxX(); i++) // build walls
@@ -217,11 +223,22 @@ bool GameLabyrinth::createWorld()
 			{
 				Config* currentWallConfig = wscene[0]->getArrayElement(irand(wscene[0]->size()));
 
-				currentWallConfig->setValued("origin[0]", (i + 0.5f)*length[0]);
-				currentWallConfig->setValued("origin[1]", j*length[1]);
+                v2 pos((i + 1.0f)*length[0], (j + 0.5f)*length[1]);
 				GameObject* wall = createGameObject(currentWallConfig);
+                if (dynamic_cast<Combiner*>(wall) != NULL)
+                {
+                    dynamic_cast<Combiner*>(wall)->setOrigin(ObjectPosition::createTranslationMatrix(v3(pos.x, pos.y, 0)));
+                }
+                else
+                {
+                    error("labyrinth", "wall x is not combiner");
+                    assert(false);
+                    return false;
+                }
 
-				world->addObject(wall);
+                all_objects.insert(wall);
+                objects_cell_map[std::make_pair(i, j)].insert(wall);
+                objects_cell_map[std::make_pair(i+1, j)].insert(wall);
 			}
 
 			bool down = labyrinth.isDownBorder(i, j);
@@ -229,17 +246,54 @@ bool GameLabyrinth::createWorld()
 			{
 				Config* currentWallConfig = wscene[1]->getArrayElement(irand(wscene[1]->size()));
 
-				currentWallConfig->setValued("origin[0]", i*length[0]);
-				currentWallConfig->setValued("origin[1]", (j + 0.5f)*length[1]);
+                v2 pos((i+0.5f)*length[0], (j + 1.0f)*length[1]);
 				GameObject* wall = createGameObject(currentWallConfig);
 
-                world->addObject(wall);
+                if (dynamic_cast<Combiner*>(wall) != NULL)
+                {
+                    dynamic_cast<Combiner*>(wall)->setOrigin(ObjectPosition::createTranslationMatrix(v3(pos.x, pos.y, 0)));
+                }
+                else
+                {
+                    error("labyrinth", "wall y is not combiner");
+                    assert(false);
+                    return false;
+                }
+
+                all_objects.insert(wall);
+                objects_cell_map[std::make_pair(i, j)].insert(wall);
+                objects_cell_map[std::make_pair(i, j+1)].insert(wall);
 			}
 		}
 	}
 
-	// TODO: create floor
-//	Combiner* floor = new Combiner();
+    Config* floorConfig = conf->find("labyrinth.floor");
+    GameObject* floor = createGameObject(floorConfig);
+    Combiner* floorCombiner = dynamic_cast<Combiner*>(floor);
+    if (floorCombiner != NULL)
+    {
+        v3 size = v3(cell_size.x*labyrinth.getMaxX(), cell_size.y*labyrinth.getMaxY(), 0.2f);
+        floorCombiner->setOrigin(ObjectPosition::createTranslationMatrix(v3(size.x/2, size.y/2, -size.z/2)));
+        GraphObjectBox* floorBox = dynamic_cast<GraphObjectBox*>(floorCombiner->getGraphObject());
+        if (floorBox != NULL)
+        {
+            floorBox->setSize(size);
+        }
+        else
+        {
+            error("labyrinth", "floor.graph is not GraphObjectBox");
+            assert(false);
+            return false;
+        }
+    }
+    else
+    {
+        error("labyrinth", "floor is not combiner");
+        assert(false);
+        return false;
+    }
+
+    world->addObject(floor);
 
     return true;
 }
@@ -590,7 +644,8 @@ void GameLabyrinth::draw(GraphEngine& graph)
         spectator.camera.setUpVector(v3(0,0,1));
         info.camera = spectator.camera;
     }
-    
+
+    updateVisibleObjects(graph);
 	GameFreeScene::draw(graph);
 }
 
@@ -645,10 +700,15 @@ bool GameLabyrinth::createPhysicWorld()
 	defaultMaterial->setStaticFriction(conf->getf("physic.static_friction", 0.5f));
 	defaultMaterial->setDynamicFriction(conf->getf("physic.dynamic_friction", 0.5f));
 
+    AgeiaInjector visitor(*this);
     if (world != NULL)
     {
-        AgeiaInjector visitor(*this);
         world->traverse(visitor, ObjectPosition::getIdentity());
+    }
+
+    for EACH(std::set<GameObject*>, all_objects, it)
+    {
+        (*it)->traverse(visitor, ObjectPosition::getIdentity());
     }
 
     for EACH(CharacterVector, characters, it)
@@ -842,6 +902,8 @@ void GameLabyrinth::bind(GraphEngine& engine)
     }
 
     engine.inject(&console);
+
+    updateVisibleObjects(engine);
 }
 
 Character* GameLabyrinth::findCharacter(uid character_id)
@@ -885,4 +947,50 @@ void GameLabyrinth::restart()
     }
     
     refresh_needed = true;
+}
+
+void GameLabyrinth::updateVisibleObjects(GraphEngine& engine)
+{
+    current_sell_set = calculateCellVisibilitySet(labyrinth,
+//                                                  info.camera,
+characters[0]->getPosition().getTranslation(),
+                                                  cell_size);
+
+    GameObjectSet now_injected_objects;
+    for EACH(CellVisibilitySet, current_sell_set, cell)
+    {
+        for EACH(GameObjectSet, objects_cell_map[*cell], object)
+        {
+            now_injected_objects.insert(*object);
+            if (injected_objects.find(*object) == injected_objects.end())
+            {
+                injected_objects.insert(*object);
+                graphEngine->inject(*object);
+            }
+        }
+    }
+
+    std::vector<GameObject*> a;
+
+    std::set_difference(injected_objects.begin(),
+                        injected_objects.end(),
+                        now_injected_objects.begin(),
+                        now_injected_objects.end(),
+                        std::back_inserter(a));
+
+    for EACH(std::vector<GameObject*>, a, it)
+    {
+        graphEngine->remove(*it);
+        injected_objects.erase(injected_objects.find(*it));
+    }
+
+    //for EACH(std::set<GameObject*>, all_objects, object)
+    //{
+    //    if (injected_objects.find(*object) == injected_objects.end())
+    //    {
+    //        injected_objects.insert(*object);
+    //        graphEngine->inject(*object);
+    //    }
+    //}
+
 }

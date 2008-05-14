@@ -368,6 +368,14 @@
 					RelativePath=".\20_labyrinth\steel_nx.h"
 					>
 				</File>
+				<File
+					RelativePath=".\20_labyrinth\visibility_check.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\20_labyrinth\visibility_check.h"
+					>
+				</File>
 				<Filter
 					Name="data"
 					>

@@ -26,7 +26,7 @@ bool Console::updateInformation(Engine& engine, IN const InterfaceId interface_i
         for (std::deque<std::string>::iterator it = lines.begin(); it != lines.end(); it++)
         {
             GraphText text(*it, 
-                           ObjectPosition::CreateTranslationMatrix(v3(-1, 1 - line*height, 0)),
+                           ObjectPosition::createTranslationMatrix(v3(-1, 1 - line*height, 0)),
                            POSITION_SCREEN,
                            v2(height, height*0.75f),
                            SPRITE_ALIGN_SCREEN,
