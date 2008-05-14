@@ -86,6 +86,7 @@ struct NetworkPacket
         struct S_BindCharacter
         {
             size_t character_index;
+            steel::time server_physic_time;
         } s_bind_character;
         struct S_GameInfo
         {

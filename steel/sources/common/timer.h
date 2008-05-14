@@ -24,13 +24,16 @@ class Timer
 {
 public:
 // Время в секундах от момента clear, исключая промежутки между pause и resume
-	steel::time total();
-	steel::time lap();
-	void nextlap();
+	steel::time total() const;
+	void updatetotal();
+	steel::time lap() const;
+	steel::time last() const;
+	steel::time current() const;
+	steel::time over(steel::time time) const;
 	void add(steel::time);
 
 // Абсолютное время
-	virtual double timestamp();
+	virtual double timestamp() const;
 // Обнулить таймер
 	virtual void start();
 	virtual void pause();
@@ -50,6 +53,7 @@ private:
 	double curIntervalStartTime;
 	double fps;
 	double lastlap;
+    steel::time currentTime;
 	int frameCnt;
 	int lastIntervalFrameCnt;
 	int curIntervalFrameCnt;

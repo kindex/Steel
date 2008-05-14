@@ -39,14 +39,19 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
 {
     if (id == INTERFACE_GRAPH)
     {
-        dynamic_cast<GraphInterface*>(&engine)->setPositionKind(POSITION_GLOBAL);
-        dynamic_cast<GraphInterface*>(&engine)->setPosition(getPosition());
+        GraphInterface& gengine = *dynamic_cast<GraphInterface*>(&engine);
 
-        GraphText text(name, ObjectPosition::CreateTranslationMatrix(v3(0, 0, 0.35f)), POSITION_LOCAL, v2(0.05f, 0.03f), SPRITE_ALIGN_SCREEN);
-        GraphTextVector tv;
-        tv.push_back(text);
+        gengine.setPositionKind(POSITION_GLOBAL);
+        gengine.setPosition(getPosition());
 
-        dynamic_cast<GraphInterface*>(&engine)->setGraphText(tv);
+        if (!name.empty())
+        {
+            float text_size = 0.05f;
+            GraphText text(name, ObjectPosition::CreateTranslationMatrix(v3(0, 0, 0.35f)), POSITION_LOCAL, v2(text_size, text_size*0.75f), SPRITE_ALIGN_SCREEN, GraphText::ALIGN_CENTER);
+            GraphTextVector tv;
+            tv.push_back(text);
+            gengine.setGraphText(tv);
+        }
 
         return true;
     }
@@ -122,9 +127,9 @@ v3 Character::getVelocity() const
     return tov3(physic_object->getLinearVelocity());
 }
 
-v3 Character::getMomentum() const
+v3 Character::getAngularMomentum() const
 {
-    return tov3(physic_object->getLinearMomentum());
+    return tov3(physic_object->getAngularMomentum());
 }
 
 bool Character::trustPosition(const CharacterPosition& pos) const
@@ -137,7 +142,7 @@ void Character::setCharacterPosition(const CharacterPosition& pos)
     position_is_set = true;
     setPosition(pos.position);
     setVelocity(pos.linear_velocity);
-    setMomentum(pos.linear_momentum);
+    setAngularMomentum(pos.linear_momentum);
 }
 
 void Character::setPosition(const ObjectPosition& new_position)
@@ -157,9 +162,9 @@ void Character::setVelocity(const v3& v)
     physic_object->setLinearVelocity(tonx(v));
 }
 
-void Character::setMomentum(const v3& v)
+void Character::setAngularMomentum(const v3& v)
 {
-    physic_object->setLinearMomentum(tonx(v));
+    physic_object->setAngularMomentum(tonx(v));
 }
 
 void Character::setDirection(const v3& dir)

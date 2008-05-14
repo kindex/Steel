@@ -96,11 +96,11 @@ void GameLabyrinth::clientProcess()
         }
     }
     clientSendInformationToServer();
-    if (server.peer != NULL && (server.lastPingRequest < 0 || server.lastPingRequest + conf->getf("net.ping_interval", 1.0f) <= netTimer.total()))
+    if (server.peer != NULL && (server.lastPingRequest < 0 || server.lastPingRequest + conf->getf("net.ping_interval", 1.0f) <= netTimerSend.total()))
     {
         clientSend_PING();
     }
-    if (server.peer == NULL && (server.lastConnectTry < 0 || server.lastConnectTry + conf->getf("net.reconnect_interval", 10.0f) <= netTimer.total()))
+    if (server.peer == NULL && (server.lastConnectTry < 0 || server.lastConnectTry + conf->getf("net.reconnect_interval", 10.0f) <= netTimerSend.current()))
     {
         clientConnectToServer();
     }
@@ -119,7 +119,8 @@ bool GameLabyrinth::clientInit()
     {
         abort_init("net", "An error occurred while trying to create an ENet client host");
     }
-    netTimer.start();
+    netTimerSend.start();
+    netTimerReceive.start();
     active_character = NULL;
 
     clientConnectToServer();
@@ -133,7 +134,7 @@ bool GameLabyrinth::clientConnectToServer()
     {
         clientDisconnectFromServer();
     }
-    server.lastConnectTry = netTimer.total();
+    server.lastConnectTry = netTimerSend.current();
 
     ENetAddress address;
     ENetEvent event;
@@ -299,14 +300,21 @@ void GameLabyrinth::clientReceive_CHAR_UPDATE(NetworkPacket* packet, size_t data
         }
     }
 
-    netTimer.incframe();
+    netTimerReceive.incframe();
 }
 
 void GameLabyrinth::clientReceiveS_BIND_CHAR(NetworkPacket* packet, size_t dataLength)
 {
     log_msg("net", "received S_BIND_CHAR to " + server.getNetwornName());
     net_assert(dataLength ==  sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_BindCharacter));
+
+    steel::time server_time = packet->data.s_bind_character.server_physic_time;
+    steel::time current_time = physicTimer.current();
+
+    physicTimer.add(server_time-current_time);
+
     size_t character_index = packet->data.s_bind_character.character_index;
+
     active_character = findCharacter(character_index);
     if (active_character != NULL)
     {
@@ -319,7 +327,7 @@ void GameLabyrinth::clientSend_PING()
     size_t packet_size = sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::Ping);
     NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
     packet->kind = NetworkPacket::PING;
-    server.lastPingRequest = packet->data.ping.timestamp = netTimer.total();
+    server.lastPingRequest = packet->data.ping.timestamp = netTimerSend.total();
 
     ENetPacket* enet_packet = enet_packet_create(packet,
                                                  packet_size,
@@ -333,12 +341,12 @@ void GameLabyrinth::clientSend_PING()
 void GameLabyrinth::clientReceive_PONG(NetworkPacket* packet, size_t dataLength)
 {
     net_assert(dataLength == sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::Pong));
-    server.ping = netTimer.total() - packet->data.pong.timestamp;
+    server.ping = netTimerSend.total() - packet->data.pong.timestamp;
 }
 
 void GameLabyrinth::clientSendInformationToServer()
 {
-    if (active_character != NULL && server.peer != NULL && server.client_state == PLAYING)
+    if (active_character != NULL && server.peer != NULL && server.client_state == PLAYING && netTimerSend.lap() > 1.0/1.0)
     {
         size_t packet_size = sizeof(NetworkPacket::PacketKind) + 
                              sizeof(NetworkPacket::Format::S_CharacterUpdate::Common) + 
@@ -356,7 +364,7 @@ void GameLabyrinth::clientSendInformationToServer()
                 pos.characterId = active_character->character_id;
                 pos.pos.position = characters[i]->getPosition();
                 pos.pos.linear_velocity = to_simple(characters[i]->getVelocity());
-                pos.pos.linear_momentum = to_simple(characters[i]->getMomentum());
+                pos.pos.linear_momentum = to_simple(characters[i]->getAngularMomentum());
 
                 break;
             }
@@ -369,6 +377,8 @@ void GameLabyrinth::clientSendInformationToServer()
         enet_peer_send(server.peer, 0, enet_packet);
         free(packet);
         enet_host_flush(host);
+
+        netTimerSend.incframe();
     }
 }
 

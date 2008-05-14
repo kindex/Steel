@@ -108,7 +108,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	{
 		(this->*FlushOpenGL_Window)(); // TODO: flush in thread
 	}
-    if (conf->getb("singleBuffer", true))
+    if (conf->getb("singleBuffer", false))
     {
 		(this->*FlushOpenGL_Window)();
     }

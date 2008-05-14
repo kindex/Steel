@@ -27,6 +27,8 @@ void Timer::incframe()
 {
 	frameCnt++;
 	totalFrames++;
+	lastlap = current();
+    updatetotal();
 }
 
 
@@ -53,7 +55,7 @@ std::string Timer::getfps_s()
 	return FloatToStr(getfps());
 }
 
-double Timer::timestamp()
+double Timer::timestamp() const
 {
 	#if STEEL_OS == OS_WIN32
 	struct _timeb a;
@@ -80,9 +82,10 @@ void Timer::start()
 	lastIntervalFrameCnt	= 0;
 	curIntervalFrameCnt		= 0;
 	totalFrames				= 0;
+    currentTime             = 0;
 }
 
-steel::time Timer::total()
+steel::time Timer::total() const
 {
 	if (active)
 	{
@@ -92,6 +95,11 @@ steel::time Timer::total()
 	{
 		return (steel::time)((pausedTime - startTime) - skip);
 	}
+}
+
+void Timer::updatetotal()
+{
+    currentTime = total();
 }
 
 void Timer::pause()
@@ -109,14 +117,26 @@ void Timer::resume()
 	}
 }
 
-steel::time Timer::lap()
+steel::time Timer::current() const
+{
+    return currentTime;
+}
+
+steel::time Timer::lap() const
 {
 	return (steel::time)(total() - lastlap);
 }
 
-void Timer::nextlap()
+steel::time Timer::last() const
 {
-	lastlap = total();
+	return (steel::time)(lastlap);
+}
+
+steel::time Timer::over(steel::time timestamp) const
+{
+    steel::time t = current();
+    steel::time l = last();
+	return l < timestamp && timestamp <= t;
 }
 
 void Timer::add(steel::time addedTime)

@@ -30,6 +30,7 @@ public:
     bool InitFromConfig(IN Config&) { return false; }
     Config* getConfig() const { return NULL; }
     void add(const std::string& line);
+    void clear();
 
 private:
     std::deque<std::string> lines;

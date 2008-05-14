@@ -90,7 +90,8 @@ private:
     v3            global_gravity;
 
 // --------------------- Net -----------------------
-	Timer         netTimer;
+	Timer         netTimerSend;
+	Timer         netTimerReceive;
     ENetHost*     host;
     bool          refresh_needed;
 

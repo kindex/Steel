@@ -36,6 +36,8 @@ v3	stov3(const std::string& s);
 std::string FloatToStr(double a);
 // convert integer into string
 std::string IntToStr(int a);
+// convert integer into string
+std::string to_string(const v3& a);
 
 // split string into array of strings with delimiter
 void explode(const char delimiter, const std::string& s, OUT svector<std::string>& res);

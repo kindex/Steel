@@ -253,3 +253,8 @@ std::string trim(const std::string& string)
 
 	return result;
 }
+
+std::string to_string(const v3& a)
+{
+    return FloatToStr(a.x) + "," + FloatToStr(a.y) + "," + FloatToStr(a.z);
+}

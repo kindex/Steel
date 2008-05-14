@@ -261,7 +261,7 @@ void GameFreeScene::process()
 
 	if (!firstframe && infoTimer.lap() >= 0.5)
 	{
-		infoTimer.nextlap();
+        infoTimer.incframe();
 		caption = std::string("Steel engine")
 			+ " Batches: " + IntToStr(graphEngine->total.batchCount)
 			+ " Faces: " + IntToStr(graphEngine->total.faceCount)
@@ -273,7 +273,7 @@ void GameFreeScene::process()
 	if (firstframe)
 	{
 		infoTimer.start();
-		infoTimer.nextlap();
+		infoTimer.incframe();
 		graphTimer.start();
 		if (!paused)
 		{
@@ -288,14 +288,19 @@ void GameFreeScene::updatePhysicTime()
 {
 	if (paused && framesToPass > 0)
 	{
-		physicTimer.add(0.01f);
+		physicTimer.add(0.1f);
 	}
 	
 	if (!paused || framesToPass > 0)
 	{
-		timeInfo.currentTime = physicTimer.total();
-		timeInfo.frameLength = physicTimer.lap(); physicTimer.nextlap();
-		if (info.timeInfo.frameLength > 0.1f) info.timeInfo.frameLength = 0.1f;
+        physicTimer.incframe();
+		timeInfo.currentTime = physicTimer.current();
+		timeInfo.frameLength = physicTimer.lap();
+
+		if (info.timeInfo.frameLength > 0.1f)
+        {
+            info.timeInfo.frameLength = 0.1f;
+        }
 
 		if (framesToPass>0)
 		{
@@ -344,8 +349,8 @@ void GameFreeScene::draw(GraphEngine& graph)
 {
 	graphTimer.incframe();
 
-	info.timeInfo.currentTime = graphTimer.total();
-	info.timeInfo.frameLength = graphTimer.lap(); graphTimer.nextlap();
+	info.timeInfo.currentTime = graphTimer.current();
+	info.timeInfo.frameLength = graphTimer.lap(); graphTimer.incframe();
 
 	if (!paused)
 	{

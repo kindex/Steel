@@ -120,7 +120,8 @@ bool GameLabyrinth::serverInit()
         return false;
     }
     createCharacters();
-    netTimer.start();
+    netTimerSend.start();
+    netTimerReceive.start();
 
     return true;
 }
@@ -169,6 +170,7 @@ void GameLabyrinth::serverSendS_BIND_CHAR(Client* client, size_t characterIndex)
     NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
     packet->kind = NetworkPacket::S_BIND_CHAR;
     packet->data.s_bind_character.character_index = characterIndex;
+    packet->data.s_bind_character.server_physic_time = physicTimer.current();
 
     ENetPacket* enet_packet = enet_packet_create(packet,
                                                  packet_size,
@@ -197,7 +199,7 @@ void GameLabyrinth::serverSendS_CHARACTER_UPDATE(Client* client)
         pos.characterId = characters[i]->character_id;
         pos.pos.position = characters[i]->getPosition();
         pos.pos.linear_velocity = to_simple(characters[i]->getVelocity());
-        pos.pos.linear_momentum = to_simple(characters[i]->getMomentum());
+        pos.pos.linear_momentum = to_simple(characters[i]->getAngularMomentum());
     }
     ENetPacket* enet_packet = 
         enet_packet_create(packet, 
@@ -210,19 +212,24 @@ void GameLabyrinth::serverSendS_CHARACTER_UPDATE(Client* client)
 
 void GameLabyrinth::serverSendInformationToClients()
 {
-    if (refresh_needed || netTimer.lap() > 1.0/100.0 && !clients.empty()) // max 100 fps
+    if (refresh_needed || netTimerSend.lap() > 1.0/30.0 && !clients.empty()) // max 30 fps
     {
         for EACH(ClientVector, clients, client)
         {
             if ((*client)->state == PLAYING)
             {
                 serverSendS_CHARACTER_UPDATE(*client);
+                if (refresh_needed)
+                {
+                    serverSendS_BIND_CHAR(*client, (*client)->character->character_id);
+                }
             }
         }
         enet_host_flush(host);
 
-        netTimer.incframe();
         refresh_needed = false;
+
+        netTimerSend.incframe();
     }
 }
 

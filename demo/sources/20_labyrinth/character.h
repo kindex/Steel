@@ -41,12 +41,12 @@ public:
     bool isAlive() const {return alive;}
     ObjectPosition getPosition() const;
     v3 getVelocity() const;
-    v3 getMomentum() const;
+    v3 getAngularMomentum() const;
     bool trustPosition(const CharacterPosition&) const;
     void setCharacterPosition(const CharacterPosition&);
     void setPosition(const ObjectPosition&);
     void setVelocity(const v3&);
-    void setMomentum(const v3&);
+    void setAngularMomentum(const v3&);
     void setDirection(const v3&);
     void setInput(Input*);
 

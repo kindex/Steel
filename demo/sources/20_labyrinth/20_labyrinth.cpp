@@ -18,6 +18,7 @@
 #include <res/config/config_parser.h>
 #include <objects/ps/particle_system.h>
 #include <objects/combiner/combiner.h>
+#include <objects/console.h>
 #include <math/plane.h>
 
 #include <NxPhysics.h>
@@ -126,10 +127,12 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
     {
 		abort_init("net", "Unknown net role '" + net_role_str + "'");
     }
-    netTimer.start();
-    refresh_needed = true;
 
     createPhysicWorld();
+
+    netTimerSend.start();
+    netTimerReceive.start();
+    refresh_needed = true;
 
     return true;
 }
@@ -413,6 +416,10 @@ void GameLabyrinth::processPhysic()
         }
 
 		physicTimer.incframe();
+		ageia_scene->simulate(timeInfo.frameLength);
+		ageia_scene->flushStream();
+		ageia_scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
+
 	}
 }
 
@@ -422,13 +429,6 @@ void GameLabyrinth::process()
 	GameFreeScene::process();
 
 	checkForWinner();
-
-	if (timeInfo.frameLength > EPSILON)
-	{
-		ageia_scene->simulate(timeInfo.frameLength);
-		ageia_scene->flushStream();
-		ageia_scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
-	}
 
     switch (net_role)
     {
@@ -503,7 +503,7 @@ std::string GameLabyrinth::getWindowCaption()
         }
         else
         {
-            str += " sync/s: " + netTimer.getfps_s();
+            str += " sync/s: " + netTimerReceive.getfps_s();
         }
         switch (server.client_state)
         {
@@ -530,7 +530,7 @@ std::string GameLabyrinth::getWindowCaption()
 
     case NET_SERVER:
         str += " clients: " + IntToStr(clients.size());
-        str += " sync/s: " + netTimer.getfps_s();
+        str += " sync/s: " + netTimerSend.getfps_s();
 
         if (game_state == GAME_END)
         {
@@ -760,7 +760,7 @@ NxActor* GameLabyrinth::ageiaCreateSurface(const GraphObject& object, const Obje
         v3 pos = position.getTranslation();
         actorDesc.globalPose.t  = NxVec3(pos.x, pos.y, pos.z);
 
-    	actorDesc.density		= 10.0f;
+    	actorDesc.density = 10.0f;
 
         NxActor* actor = ageia_scene->createActor(actorDesc);
         return actor;
@@ -840,6 +840,8 @@ void GameLabyrinth::bind(GraphEngine& engine)
     {
         engine.inject(*it);
     }
+
+    engine.inject(&console);
 }
 
 Character* GameLabyrinth::findCharacter(uid character_id)
@@ -871,7 +873,7 @@ void GameLabyrinth::restart()
             pos.setTranslation((*tag)->origin);
             (*it)->setPosition(pos);
             (*it)->setVelocity(zero);
-            (*it)->setMomentum(zero);
+            (*it)->setAngularMomentum(zero);
 
             (*tag)->user_info = (void*)*it;
             it++;

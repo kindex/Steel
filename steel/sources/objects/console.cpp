@@ -12,6 +12,7 @@
  ************************************************************/
 #include "../steel.h"
 #include "console.h"
+#include "../common/logger.h"
 
 bool Console::updateInformation(Engine& engine, IN const InterfaceId interface_id)
 {
@@ -21,7 +22,7 @@ bool Console::updateInformation(Engine& engine, IN const InterfaceId interface_i
 
         GraphTextVector tv;
         int line = 0;
-        float height = 0.05f;
+        float height = 0.04f;
         for (std::deque<std::string>::iterator it = lines.begin(); it != lines.end(); it++)
         {
             GraphText text(*it, 
@@ -43,6 +44,12 @@ bool Console::updateInformation(Engine& engine, IN const InterfaceId interface_i
 void Console::add(const std::string& line)
 {
     lines.push_back(line);
+    log_msg("console", line);
+}
+
+void Console::clear()
+{
+    lines.clear();
 }
 
 Console console;
