@@ -96,8 +96,7 @@ struct NetworkPacket
         struct S_GameInfo
         {
             GameState game_state;
-            size_t winner_character_id;
-            bool i_am_winner;
+            int winner_character_id;
         } s_game_info;
     } data;
 

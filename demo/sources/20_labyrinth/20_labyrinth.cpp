@@ -423,35 +423,21 @@ bool GameLabyrinth::isWinner(Character* characher)
 
 void GameLabyrinth::checkForWinner()
 {
-    if (net_role == NET_SERVER && game_state == GAME_PLAYING && active_character != NULL)
+    if (net_role == NET_SERVER && game_state == GAME_PLAYING)
     {
-        if (isWinner(active_character))
+        for EACH(CharacterVector, characters, it)
         {
-            game_state = GAME_END;
-            winner = NULL; // NULL means server
-
-            for EACH(ClientVector, clients, client)
+            if (isWinner(*it))
             {
-                serverSendS_GAME_INFO(*client);
-            }
-        }
+                game_state = GAME_END;
+                winner = *it;
 
-        if (game_state == GAME_PLAYING)
-        {
-            for EACH(ClientVector, clients, it)
-            {
-                if ((*it)->character != NULL && isWinner((*it)->character))
+                for EACH(ClientVector, clients, client)
                 {
-                    game_state = GAME_END;
-                    winner = *it;
-
-                    for EACH(ClientVector, clients, client)
-                    {
-                        serverSendS_GAME_INFO(*client);
-                    }
-
-                    break;
+                    serverSendS_GAME_INFO(*client);
                 }
+
+                break;
             }
         }
     }
@@ -590,13 +576,13 @@ std::string GameLabyrinth::getWindowCaption()
 
         if (game_state == GAME_END)
         {
-            if (winner == NULL)
+            if (winner == active_character)
             {
                 str += " *** YOU ARE THE WINNER *** ";
             }
             else
             {
-                str += " *** THE WINNER IS " + winner->getNetworkName() + " *** ";
+                str += " *** THE WINNER IS " + winner->name + " *** ";
             }
         }
 
@@ -611,7 +597,7 @@ void GameLabyrinth::draw(GraphEngine& graph)
     if (cameraMode == C_FIXED && active_character != NULL)
     {
         cameraPenalty += info.timeInfo.frameLength;
-        if (cameraPenalty > 1)
+        if (cameraPenalty > 1 || cameraPenalty < 0)
         {
             cameraPenalty = 1;
         }
@@ -958,6 +944,9 @@ void GameLabyrinth::restart()
     }
     
     refresh_needed = true;
+    winner = NULL;
+    game_state = GAME_PLAYING;
+
 }
 
 void GameLabyrinth::updateVisibleObjects(GraphEngine& engine)

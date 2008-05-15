@@ -64,8 +64,7 @@ private:
 // -------------------- Game --------------------
     Character*      active_character;
     float           cameraPenalty;
-    struct Client;
-    Client*         winner; // used when game_state == GAME_END, NULL means server
+    Character*      winner; // used when game_state == GAME_END
     CharacterVector characters;
     GameState       game_state;
     std::string     client_winner;

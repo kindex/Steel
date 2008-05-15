@@ -307,10 +307,9 @@ void GameLabyrinth::serverSend_PONG(Client* client, const NetworkPacket::Format:
 
 void GameLabyrinth::serverDisconnectClient(Client* client)
 {
-    if (client == winner)
+    if (client->character == winner)
     {
-        winner = NULL;
-        game_state = GAME_PLAYING;
+        restart();
     }
 
     for EACH(ClientVector, clients, it)
@@ -373,10 +372,13 @@ void GameLabyrinth::serverSendS_GAME_INFO(Client* client)
     NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
     packet->kind = NetworkPacket::S_GAME_INFO;
     packet->data.s_game_info.game_state = game_state;
-    packet->data.s_game_info.i_am_winner = client == winner;
     if (winner != NULL)
     {
-        packet->data.s_game_info.winner_character_id = winner->character->character_id;
+        packet->data.s_game_info.winner_character_id = winner->character_id;
+    }
+    else
+    {
+        packet->data.s_game_info.winner_character_id = -1;
     }
 
     StringVector player_names;
