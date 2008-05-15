@@ -28,7 +28,7 @@ private:
 		int dist;
 		bool path;
 		bool rightborder;
-        bool downborder;
+        bool upborder;
         bool was;
 
 		node(void):
@@ -36,7 +36,7 @@ private:
             path(false),
             was(false),
             rightborder(false),
-            downborder(false) {}
+            upborder(false) {}
 	};
 
 	std::vector<std::vector<node> > a;
@@ -166,21 +166,34 @@ void LabyrinthGenerator::buid(float k)
 	{
 		for(int j = 0; j < X; j++)
 		{
-			a[i][j].downborder = frand() > k && abs(a[i][j].dist - a[i+1][j].dist) != 1;
+			a[i][j].upborder = frand() > k && abs(a[i][j].dist - a[i+1][j].dist) != 1;
 		}
 	}
 }
 
+void Labyrinth::setSize(size_t x, size_t y)
+{
+	a.resize(y);
+	for (size_t i = 0; i < y; i++)
+	{
+		a[i].resize(x);
+	}
+}
+
+
 Labyrinth LabyrinthGenerator::getLabyrinth() const
 {
 	Labyrinth result;
-	result.a.resize(a.size());
+    if (!a.empty())
+    {
+        result.setSize(a[0].size(), a.size());
+    }
+
 	for (size_t i = 0; i < a.size(); i++)
 	{
-		result.a[i].resize(a[i].size());
 		for (size_t j = 0; j < a[i].size(); j++)
 		{
-			result.a[i][j].downborder = a[i][j].downborder;
+			result.a[i][j].upborder = a[i][j].upborder;
 			result.a[i][j].rightborder = a[i][j].rightborder;
 		}
 	}
@@ -201,11 +214,11 @@ bool Labyrinth::isRightBorder(int x, int y) const
 	size_t sx = x;
 	size_t sy = y;
 	return sy + 1 > a.size()
-		|| sx     >= a[sy].size()
+		|| sx+1     >= a[sy].size()
 		|| a[sy][sx].rightborder;
 }
 
-bool Labyrinth::isDownBorder(int x, int y) const
+bool Labyrinth::isUpBorder(int x, int y) const
 {
     if (!(y < getMaxY() && x >= 0))
     {
@@ -217,9 +230,9 @@ bool Labyrinth::isDownBorder(int x, int y) const
 	}
 	size_t sx = x;
 	size_t sy = y;
-	return sy + 1 > a.size()
+	return sy + 1 >= a.size()
 		|| sx  >= a[sy].size()
-		|| a[sy][sx].downborder;
+		|| a[sy][sx].upborder;
 }
 
 int Labyrinth::getMaxX() const
@@ -246,60 +259,36 @@ Labyrinth generateLabyrinth(size_t x, size_t y, float k)
 	return lab.getLabyrinth();
 }
 
-////////////////////////////////////////////////////////////
-//int main()
-//{
-//	int X = 8;
-//	int Y = 8;
-//	Labyrinth lab(X, Y);
-//	lab.buid();
-//
-//	for(int i = 0; i < X; i++)
-//	{
-//		cout << "+-";
-//	}
-//	cout << "+\n";
-//
-//	for(int i = 0; i < Y; i++)
-//	{
-//		cout << "|";
-//		for(int j = 0; j < X; j++)
-//		{
-//			if (lab.a[i][j].path > 0)
-//			{
-//				cout << "*";
-//			}
-//			else
-//			{
-//				cout << " ";
-//			}
-//
-//			if (lab.rightborder(j, i))
-//			{
-//				cout << "|";
-//			}
-//			else
-//			{
-//				cout << " ";
-//			}
-//		}
-//		cout << endl;
-//		cout << "+";
-//		for(int j = 0; j < X; j++)
-//		{
-//			if (lab.downborder(j, i))
-//			{
-//				cout << "-+";
-//			}
-//			else
-//			{
-//				cout << " +";
-//			}
-//		}
-//		cout << endl;
-//	}
-//
-//	return 0;
-//}
-//
-//
+std::string Labyrinth::serialize() const
+{
+    int x = getMaxX();
+    int y = getMaxY();
+    size_t memory_size = 2*x*y;
+    std::string data;
+    data.resize(memory_size);
+
+    for (int j = 0; j < y; j++)
+    {
+        for (int i = 0; i < x; i++)
+        {
+            data[(i + x*j)*2+0] = isRightBorder(i, j);
+            data[(i + x*j)*2+1] = isUpBorder(i, j);
+        }
+    }
+
+    return data;
+}
+
+void Labyrinth::unserialize(int x, int y, const std::string& data)
+{
+    setSize(x, y);
+
+    for (int j = 0; j < y; j++)
+    {
+        for (int i = 0; i < x; i++)
+        {
+            a[j][i].rightborder = data[(i + x*j)*2+0] != 0;
+            a[j][i].upborder = data[(i + x*j)*2+1] != 0;
+        }
+    }
+}

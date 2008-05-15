@@ -72,6 +72,11 @@ struct NetworkPacket
         {
             ProtocolVersion protocol_version;
         } c_init;
+        struct S_World
+        {
+            int x;
+            int y;
+        } s_world;
         struct C_WorldLoaded
         {
         } c_worldLoaded;

@@ -54,7 +54,8 @@ GameLabyrinth::GameLabyrinth():
     physicsSDK(NULL),
     winner(NULL),
     cameraPenalty(1.0f),
-    character_model(NULL)
+    character_model(NULL),
+    floor(NULL)
 {}
 
 void GameLabyrinth::ageiaInject(GameObject* object, const ObjectPosition& base_position)
@@ -108,9 +109,9 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 
 // network
     std::string net_role_str = conf->gets("net.role", "server");
+    loadScene(conf->find("scene"));
 	if (net_role_str == "server")
     {
-        loadScene(conf->find("scene"));
         if (!serverInit())
         {
             return false;
@@ -133,6 +134,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 
     netTimerSend.start();
     netTimerReceive.start();
+    netTimerReconnect.start();
     refresh_needed = true;
     cell_visibility_set.clear();
     injected_objects.clear();
@@ -192,8 +194,6 @@ bool GameLabyrinth::createLabyrinth()
 	for (int i = 0; i < 2; i++) // loading walls from config
 	{
 		const std::string& dir = dirs[i];
-		length[i] = conf->getf("labyrinth.length_" + dir, 1.0f);
-		count[i] = conf->geti("labyrinth.count_" + dir, 8);
 		Config* loadedWallConfig = conf->find("labyrinth.scene_" + dir);
 		if (loadedWallConfig == NULL)
 		{
@@ -207,11 +207,11 @@ bool GameLabyrinth::createLabyrinth()
 
 		wscene[i] = static_cast<ConfigArray*>(loadedWallConfig);
 	}
-    cell_size.set(length[0], length[1]);
+    cell_size.set(conf->getf("labyrinth.length_x", 1.0f),
+                  conf->getf("labyrinth.length_y", 1.0f));
 
     objects_cell_map.clear();
     all_objects.clear();
-	labyrinth = generateLabyrinth(count[0], count[1], conf->getf("labyrinth.crazy_const", 0.02f));
 
 	for (int i = -1; i < labyrinth.getMaxX(); i++) // build walls
 	{
@@ -221,7 +221,7 @@ bool GameLabyrinth::createLabyrinth()
 			{
 				Config* currentWallConfig = wscene[0]->getArrayElement(irand(wscene[0]->size()));
 
-                v2 pos((i + 1.0f)*length[0], (j + 0.5f)*length[1]);
+                v2 pos((i + 1.0f)*cell_size.x, (j + 0.5f)*cell_size.y);
 				GameObject* wall = createGameObject(currentWallConfig);
                 if (dynamic_cast<Combiner*>(wall) != NULL)
                 {
@@ -239,11 +239,11 @@ bool GameLabyrinth::createLabyrinth()
                 objects_cell_map[std::make_pair(i+1, j)].insert(wall);
 			}
 
-			if (labyrinth.isDownBorder(i, j))
+			if (labyrinth.isUpBorder(i, j))
 			{
 				Config* currentWallConfig = wscene[1]->getArrayElement(irand(wscene[1]->size()));
 
-                v2 pos((i+0.5f)*length[0], (j + 1.0f)*length[1]);
+                v2 pos((i+0.5f)*cell_size.x, (j + 1.0f)*cell_size.y);
 				GameObject* wall = createGameObject(currentWallConfig);
 
                 if (dynamic_cast<Combiner*>(wall) != NULL)
@@ -265,7 +265,7 @@ bool GameLabyrinth::createLabyrinth()
 	}
 
     Config* floorConfig = conf->find("labyrinth.floor");
-    GameObject* floor = createGameObject(floorConfig);
+    floor = createGameObject(floorConfig);
     Combiner* floorCombiner = dynamic_cast<Combiner*>(floor);
     if (floorCombiner != NULL)
     {
@@ -290,7 +290,10 @@ bool GameLabyrinth::createLabyrinth()
         return false;
     }
 
-    world->addObject(floor);
+    if (graphEngine != NULL && floor != NULL)
+    {
+        graphEngine->inject(floor);
+    }
 
     return true;
 }
@@ -413,7 +416,9 @@ bool GameLabyrinth::createCharacters()
 bool GameLabyrinth::isWinner(Character* characher)
 {
     v3 char_pos = characher->getPosition().getTranslation();
-    return ((char_pos - v3(length[0]*(count[0]-1), length[1]*(count[1]-1), 0)).getSquaredLength() < sqr(length[0]/3) + sqr(length[1]/3));
+    float sx = float(labyrinth.getMaxX());
+    float sy = float(labyrinth.getMaxY());
+    return ((char_pos - v3(sx*(sx-1), sy*(sy-1), 0)).getSquaredLengthd() < sqr(float(cell_size.x)/3.0f) + sqr(float(cell_size.y)/3.0f));
 }
 
 void GameLabyrinth::checkForWinner()
@@ -702,6 +707,10 @@ bool GameLabyrinth::createPhysicWorld()
     {
         world->traverse(visitor, ObjectPosition::getIdentity());
     }
+    if (floor != NULL)
+    {
+        floor->traverse(visitor, ObjectPosition::getIdentity());
+    }
 
     for EACH(std::set<GameObject*>, all_objects, it)
     {
@@ -898,6 +907,11 @@ void GameLabyrinth::bind(GraphEngine& engine)
         engine.inject(*it);
     }
 
+    if (floor != NULL)
+    {
+        engine.inject(floor);
+    }
+
     engine.inject(&console);
 
     updateVisibleObjects(engine);
@@ -954,7 +968,7 @@ void GameLabyrinth::updateVisibleObjects(GraphEngine& engine)
     {
         current_sell_set = calculateCellVisibilitySet(labyrinth,
                                                       info.camera.getPosition(),
-    //                                                  characters[0]->getPosition().getTranslation(),
+//                                                      characters[0]->getPosition().getTranslation(),
                                                       cell_size);
 
         GameObjectSet now_injected_objects;

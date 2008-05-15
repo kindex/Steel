@@ -51,16 +51,16 @@ private:
     CellVisibilitySet cell_visibility_set;
 	GraphObjectVector walls;
 	ConfigArray*      wscene[2];
-	float             length[2];
-	int               count[2];
     v2                cell_size;
     GraphObject*      character_model;
     GameObjectSet     injected_objects;
     GameObjectSet     all_objects;
+    GameObject*       floor;
     std::map<Cell, GameObjectSet> objects_cell_map;
     CellVisibilitySet current_sell_set;
     bool              createLabyrinth();
     void              updateVisibleObjects(GraphEngine&);
+
 // -------------------- Game --------------------
     Character*      active_character;
     float           cameraPenalty;
@@ -101,6 +101,7 @@ private:
 // --------------------- Net -----------------------
 	Timer         netTimerSend;
 	Timer         netTimerReceive;
+	Timer         netTimerReconnect;
     ENetHost*     host;
     bool          refresh_needed;
 

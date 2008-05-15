@@ -145,7 +145,7 @@ CellVisibilitySet calculateCellVisibilitySet(const Labyrinth& labyrinth,
                 wall_idx++;
             }
 
-			if (labyrinth.isDownBorder(i, j))
+			if (labyrinth.isUpBorder(i, j))
 			{
                 addWall(i, j+1, i+1, j+1, i, j, wall_idx, eye, points);
                 wall_idx++;

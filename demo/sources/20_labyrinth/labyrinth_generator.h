@@ -20,18 +20,23 @@ class Labyrinth
 {
 public:
 	bool isRightBorder(int x, int y) const;
-	bool isDownBorder(int x, int y) const;
+	bool isUpBorder(int x, int y) const;
 	int getMaxX() const;
 	int getMaxY() const;
+    void setSize(size_t x, size_t y);
 
 	friend class LabyrinthGenerator;
+    std::string serialize() const;
+    void unserialize(int x, int y, const std::string& data);
 
 private:
 	struct node
 	{
 		bool rightborder;
-        bool downborder;
+        bool upborder;
 	};
+
+// first index - y, second - x
 
 	std::vector<std::vector<node> > a;
 };

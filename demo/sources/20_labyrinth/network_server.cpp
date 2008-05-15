@@ -115,6 +115,11 @@ bool GameLabyrinth::serverInit()
     }
     log_msg("net", "Listening server at " + to_string(address));
 
+
+	labyrinth = generateLabyrinth(conf->geti("labyrinth.count_x", 8),
+                                  conf->geti("labyrinth.count_y", 8),
+                                  conf->getf("labyrinth.crazy_const", 0.02f));
+
     if (!createLabyrinth())
     {
         return false;
@@ -129,16 +134,19 @@ bool GameLabyrinth::serverInit()
 void GameLabyrinth::serverSendWorld(Client* client)
 {
     log_msg("net", "sending world to " + to_string(client->peer->address));
-    Config* worldConfig = world->getConfig();
-    std::string world_config_serialized = worldConfig->Dump();
-
-    size_t first_part_size = sizeof(NetworkPacket::PacketKind);
-    NetworkPacket* packet = (NetworkPacket*)malloc(first_part_size);
+    
+    size_t packet_size = sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_World);
+    NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
     packet->kind = NetworkPacket::S_WORLD;
-    size_t new_packed_size = NetworkPacket::setupNetworkPacketString(packet, first_part_size, world_config_serialized);
+    packet->data.s_world.x = labyrinth.getMaxX();
+    packet->data.s_world.y = labyrinth.getMaxY();
+
+    std::string lab = labyrinth.serialize();
+
+    packet_size = NetworkPacket::setupNetworkPacketString(packet, packet_size, lab);
 
     ENetPacket* enet_packet = enet_packet_create(packet,
-                                                 new_packed_size,
+                                                 packet_size,
                                                  ENET_PACKET_FLAG_RELIABLE);
 
     enet_peer_send(client->peer, 0, enet_packet);

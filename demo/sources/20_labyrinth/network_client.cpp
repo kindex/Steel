@@ -87,7 +87,11 @@ void GameLabyrinth::clientProcess()
                 if (server.peer != NULL)
                 {
                     log_msg("net", "Server " + peer_name + " disconnecting");
-                    enet_peer_reset(server.peer);
+                    clientDisconnectFromServer();
+                    if (server.peer != NULL)
+                    {
+                        enet_peer_reset(server.peer);
+                    }
                     server.peer = NULL;
                     server.client_state = DISCONNECTED;
 					active_character = NULL;
@@ -100,7 +104,7 @@ void GameLabyrinth::clientProcess()
     {
         clientSend_PING();
     }
-    if (server.peer == NULL && (server.lastConnectTry < 0 || server.lastConnectTry + conf->getf("net.reconnect_interval", 10.0f) <= netTimerSend.current()))
+    if (server.peer == NULL && (server.lastConnectTry < 0 || server.lastConnectTry + conf->getf("net.reconnect_interval", 10.0f) <= netTimerReconnect.total()))
     {
         clientConnectToServer();
     }
@@ -134,7 +138,7 @@ bool GameLabyrinth::clientConnectToServer()
     {
         clientDisconnectFromServer();
     }
-    server.lastConnectTry = netTimerSend.current();
+    server.lastConnectTry = netTimerReconnect.total();
 
     ENetAddress address;
     ENetEvent event;
@@ -174,6 +178,7 @@ void GameLabyrinth::clientDisconnectFromServer()
         enet_peer_disconnect_now(server.peer, 0);
         server.peer = NULL;
     }
+    server.lastConnectTry = netTimerReconnect.total();
 }
 
 void GameLabyrinth::clientReceiveS_INIT(NetworkPacket* packet, size_t dataLength)
@@ -213,21 +218,16 @@ void GameLabyrinth::clientSendC_INIT()
 
 void GameLabyrinth::clientReceiveS_WORLD(NetworkPacket* packet, size_t dataLength)
 {
+    assert(dataLength >= sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_World));
     net_assert(server.client_state == LOADING_WORLD);
-    size_t first_part_size = sizeof(packet->kind);
-    std::string world_str = packet->extractString(first_part_size, dataLength);
 
-    Config* new_world = parseConfig(world_str);
-    world = static_cast<Combiner*>(createGameObject(new_world));
-    if (graphEngine != NULL)
-    {
-        graphEngine->clear();
-        graphEngine->inject(world);
-        for EACH(CharacterVector, characters, it)
-        {
-            graphEngine->inject(*it);
-        }
-    }
+    size_t first_part_size = sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_World);
+    std::string lab_str = packet->extractString(first_part_size, dataLength);
+
+    labyrinth.unserialize(packet->data.s_world.x, packet->data.s_world.y, lab_str);
+
+    createLabyrinth();
+
     createPhysicWorld();
     log_msg("net", "World created");
     server.client_state = PLAYING;
@@ -346,7 +346,7 @@ void GameLabyrinth::clientReceive_PONG(NetworkPacket* packet, size_t dataLength)
 
 void GameLabyrinth::clientSendInformationToServer()
 {
-    if (active_character != NULL && server.peer != NULL && server.client_state == PLAYING && netTimerSend.lap() > 1.0/1.0)
+    if (active_character != NULL && server.peer != NULL && server.client_state == PLAYING && netTimerSend.lap() > 1.0/100.0)
     {
         size_t packet_size = sizeof(NetworkPacket::PacketKind) + 
                              sizeof(NetworkPacket::Format::S_CharacterUpdate::Common) + 
