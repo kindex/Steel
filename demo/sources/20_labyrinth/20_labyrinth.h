@@ -55,7 +55,7 @@ private:
     GraphObject*      character_model;
     GameObjectSet     injected_objects;
     GameObjectSet     all_objects;
-    GameObject*       floor;
+    Combiner*         floor;
     std::map<Cell, GameObjectSet> objects_cell_map;
     CellVisibilitySet current_sell_set;
     bool              createLabyrinth();

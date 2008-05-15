@@ -20,7 +20,7 @@
 #include <objects/combiner/combiner.h>
 #include <objects/console.h>
 #include <math/plane.h>
-
+#include <graph/material.h>
 #include <NxPhysics.h>
 #include <NxCooking.h>
 #include <Stream.h>
@@ -264,17 +264,56 @@ bool GameLabyrinth::createLabyrinth()
 		}
 	}
 
+    floor = new Combiner;
+
     Config* floorConfig = conf->find("labyrinth.floor");
-    floor = createGameObject(floorConfig);
-    Combiner* floorCombiner = dynamic_cast<Combiner*>(floor);
-    if (floorCombiner != NULL)
+    GameObject* floor1 = createGameObject(floorConfig);
+    GameObject* floor2 = createGameObject(floorConfig);
+    GameObject* floor3 = createGameObject(floorConfig);
+    Combiner* floorCombiner1 = dynamic_cast<Combiner*>(floor1);
+    Combiner* floorCombiner2 = dynamic_cast<Combiner*>(floor2);
+    Combiner* floorCombiner3 = dynamic_cast<Combiner*>(floor3);
+    if (floorCombiner1 != NULL && floorCombiner2 != NULL && floorCombiner3 != NULL )
     {
-        v3 size = v3(cell_size.x*labyrinth.getMaxX(), cell_size.y*labyrinth.getMaxY(), 0.2f);
-        floorCombiner->setOrigin(ObjectPosition::createTranslationMatrix(v3(size.x/2, size.y/2, -size.z/2)));
-        GraphObjectBox* floorBox = dynamic_cast<GraphObjectBox*>(floorCombiner->getGraphObject());
-        if (floorBox != NULL)
+        v3 size1 = v3(cell_size.x*(labyrinth.getMaxX()-1), cell_size.y*labyrinth.getMaxY(), 1);
+        floorCombiner1->setOrigin(ObjectPosition::createTranslationMatrix(v3(size1.x/2, size1.y/2, -size1.z/2)));
+
+        v3 size2 = v3(cell_size.x, cell_size.y*(labyrinth.getMaxY()-1), 1);
+        floorCombiner2->setOrigin(ObjectPosition::createTranslationMatrix(v3(size1.x + size2.x/2, size2.y/2, -size2.z/2)));
+
+        v3 size3 = v3(cell_size.x, cell_size.y, 0.1f);
+        floorCombiner3->setOrigin(ObjectPosition::createTranslationMatrix(v3(size1.x + size3.x/2, size2.y + size3.y/2, -size1.z - size3.z/2)));
+
+        GraphObjectBox* floorBox1 = dynamic_cast<GraphObjectBox*>(floorCombiner1->getGraphObject());
+        GraphObjectBox* floorBox2 = dynamic_cast<GraphObjectBox*>(floorCombiner2->getGraphObject());
+        GraphObjectBox* floorBox3 = dynamic_cast<GraphObjectBox*>(floorCombiner3->getGraphObject());
+        if (floorBox1 != NULL && floorBox2 != NULL && floorBox3 != NULL)
         {
-            floorBox->setSize(size);
+            floorBox1->material->textureMatrix.texCoordsScale.x *= size1.x/cell_size.x;
+            floorBox1->material->textureMatrix.texCoordsScale.y *= size1.y/cell_size.y;
+
+            floorBox2->material->textureMatrix.texCoordsScale.x *= size2.x/cell_size.x;
+            floorBox2->material->textureMatrix.texCoordsScale.y *= size2.y/cell_size.y;
+
+            floorBox1->setSize(size1);
+            floorBox2->setSize(size2);
+            floorBox3->setSize(size3);
+            floor->addObject(floor1);
+            floor->addObject(floor2);
+            floor->addObject(floor3);
+
+            GraphObjectText* exit = new GraphObjectText;
+            GraphText exit_text("EXIT",
+                              ObjectPosition::createTranslationMatrix(v3(size1.x + size3.x/2, size2.y + size3.y/2, 2)),
+                              POSITION_GLOBAL,
+                              v2(0.6f, 0.4f),
+                              SPRITE_ALIGN_SCREEN,
+                              GraphText::ALIGN_CENTER);
+            exit->text.push_back(exit_text);
+            exit_text.position.data.vector.z += 6;
+            exit_text.size *= 4;
+            exit->text.push_back(exit_text);
+            floor->addObject(exit);
         }
         else
         {
@@ -416,9 +455,7 @@ bool GameLabyrinth::createCharacters()
 bool GameLabyrinth::isWinner(Character* characher)
 {
     v3 char_pos = characher->getPosition().getTranslation();
-    float sx = float(labyrinth.getMaxX());
-    float sy = float(labyrinth.getMaxY());
-    return ((char_pos - v3(sx*(sx-1), sy*(sy-1), 0)).getSquaredLengthd() < sqr(float(cell_size.x)/3.0f) + sqr(float(cell_size.y)/3.0f));
+    return char_pos.z < 0;
 }
 
 void GameLabyrinth::checkForWinner()
@@ -486,7 +523,11 @@ void GameLabyrinth::process()
 
 void GameLabyrinth::handleEventKeyDown(const std::string& key)
 {
-	if (key == "r" && net_role == NET_SERVER)
+	if (key == "f7")
+    {
+        conf->toggle("labyrinth.visibility_check");
+    }
+    else if (key == "r" && net_role == NET_SERVER)
     {
         restart();
     }

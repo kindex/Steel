@@ -45,7 +45,6 @@ public:
 	bool updateInformation(IN OUT Engine&, IN const InterfaceId id){return false;}
 	void process(IN const ProcessInfo&) {}
 
-protected:
     GraphTextVector text;
 };
 
@@ -107,7 +106,7 @@ public:
     v3 getSize() const;
     void setSize(const v3 new_size);
 
-private:
+//private:
     v3 size;
     MaterialStd* material;
 };

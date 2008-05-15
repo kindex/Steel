@@ -143,17 +143,17 @@ void GameFreeScene::handleEventKeyDown(const std::string& key)
 		graphEngine->conf->toggle("clearDepth");
 	}
 	if (key == "f7") graphEngine->conf->toggle("drawNormals");
-	if (key == "f8") graphEngine->conf->toggle("drawAABB");
-	if (key == "f9")
-	{
-		graphEngine->conf->toggle("use_debug_shader");
-		executeCommand(graphEngine->conf, "debug_shader_mode = 2");
-	}
-	if (key == "f11")
-	{
-		graphEngine->conf->toggle("use_debug_shader");
-		executeCommand(graphEngine->conf, "debug_shader_mode = 1");
-	}
+//	if (key == "f8") graphEngine->conf->toggle("drawAABB");
+	//if (key == "f9")
+	//{
+	//	graphEngine->conf->toggle("use_debug_shader");
+	//	executeCommand(graphEngine->conf, "debug_shader_mode = 2");
+	//}
+	//if (key == "f11")
+	//{
+	//	graphEngine->conf->toggle("use_debug_shader");
+	//	executeCommand(graphEngine->conf, "debug_shader_mode = 1");
+	//}
 	//if (key == "f12")
 	//{
 	//	graphEngine->conf->toggle("use_debug_shader");

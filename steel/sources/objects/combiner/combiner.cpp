@@ -26,7 +26,10 @@ Combiner::Combiner():
 	graph(NULL), 
 	audio(NULL),
 	transformation(NULL),
-    polyhedraPhysicSameAsGraph(false)
+    polyhedraPhysicSameAsGraph(false),
+    positionKind(POSITION_LOCAL),
+    position(ObjectPosition::getIdentity()),
+    origin(ObjectPosition::getIdentity())
 {}
 
 GraphObject* loadGraphObject(Config& conf, const std::string& configVariable)
