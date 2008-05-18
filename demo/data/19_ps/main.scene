@@ -4,7 +4,7 @@ class = 'combiner'
 objects = 
 (
 
-[ps.scene#] { emitter = {	origin = (0 -0.50 2) } }
+[ps.scene#] { emitter = {	origin = (0 0 2) } }
 //[ps.scene#] { emitter = {	origin = (0 0 4.3) } }
 //[ps.scene#] { emitter = {	origin = (0.0 -0.0 5.5) } }
 
@@ -16,7 +16,7 @@ objects =
 class = 'combiner'
 enabled=1
 polyhedraPhysicSameAsGraph = 1
-origin = (0 0 0)
+origin = (0 +0.50 0)
 
 graph = 
 {

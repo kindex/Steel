@@ -64,7 +64,7 @@ NxActor* GameAgeiatech::createSurface(const GraphObject& object)
     // Build flat surface
     for (size_t i = 0; i < vertexes.size(); i++)
     {
-        fsVerts[i] = NxVec3(vertexes[i].x, vertexes[i].y, vertexes[i].z); 
+        fsVerts[i] = NxVec3(vertexes[i].x, vertexes[i].y+0.5f, vertexes[i].z); 
     }
 
     const TriangleVector& triangles = object.getAllFaces()->triangles;
