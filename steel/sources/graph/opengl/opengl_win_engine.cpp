@@ -50,11 +50,15 @@ struct WindowInformationWinAPI: public OpenGL_Engine::WindowInformation
 
 bool OpenGL_Engine::RepairOpenGL_Window_WinAPI() // repair window on resize
 {
-	glViewport( 0, 0, conf->geti("window.width"), conf->geti("window.height"));
-	((WindowInformationWinAPI*)windowInformation)->input->		
-		setMouseCenter(	conf->geti("window.width")/2, 
-						conf->geti("window.height")/2);
-	return true;
+    if (windowInformation->created)
+    {
+	    glViewport( 0, 0, conf->geti("window.width"), conf->geti("window.height"));
+	    ((WindowInformationWinAPI*)windowInformation)->input->		
+		    setMouseCenter(	conf->geti("window.width")/2, 
+						    conf->geti("window.height")/2);
+    }
+
+    return true;
 }
 
 bool OpenGL_Engine::FlushOpenGL_Window_WinAPI()
@@ -299,7 +303,7 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input* input)
 //    u nas black :)
 	wndclass.lpszClassName = "steel";			// Assign the class name
 
-	if(!RegisterClass(&wndclass)) 
+	if (!RegisterClass(&wndclass)) 
 	{
 		log_msg("error graph opengl", std::string("Cannot register class ") + wndclass.lpszClassName);
 		return false;							// Register the class
@@ -405,6 +409,7 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input* input)
 
     ((WindowInformationWinAPI*)windowInformation)->RC = wglCreateContext(((WindowInformationWinAPI*)windowInformation)->DC);
     wglMakeCurrent(((WindowInformationWinAPI*)windowInformation)->DC, ((WindowInformationWinAPI*)windowInformation)->RC);
+    windowInformation->created = true;
 
 	//if(conf->geti("fullscreen"))
 	  // 	changeToFullScpeen();							// Go to full screen

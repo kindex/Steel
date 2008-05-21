@@ -205,7 +205,12 @@ public:
 
 
 // ****************** WINDOW FUNCTION **********************
-	struct WindowInformation {};
+	struct WindowInformation
+    {
+        WindowInformation() : created(false) {}
+
+        bool created;
+    };
 	WindowInformation* windowInformation;
 
 	bool isFocusedOpenGL_Window() { return focused; }

@@ -102,6 +102,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	info = _info;
 	processCamera();
 	setupVariables();
+	collectInformationFromObjects();
 
 // ------------- Clear Screen ------------
 	if (conf->getb("swapBuffers", true))
@@ -122,7 +123,6 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	}
 
 // ------------ Draw Scene ---------------
-	collectInformationFromObjects();
 
 	render();
 	renderDebug();
@@ -435,7 +435,7 @@ void OpenGL_Engine::renderFlares()
 void OpenGL_Engine::castShadow(const LightShadow& light)
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	
+
 	Line lineSegment(info.camera.getPosition(), light.position - info.camera.getPosition());
 	size_t inShadowVolume = rayTrace(lineSegment, true);
 
@@ -730,7 +730,10 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	#endif
 
 	#if STEEL_OS == OS_WIN32
-		if (CreateOpenGL_Window == NULL)	UseWinAPI();
+		if (CreateOpenGL_Window == NULL)
+        {
+            UseWinAPI();
+        }
 	#endif
 
 	#ifdef LIB_SDL

@@ -183,10 +183,10 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enableGlTexture)
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-
 				glTexImage2D(GL_TEXTURE_2D, 0 , GL_RGBA, image.getWidth(), image.getHeight(),0,
 					format,  GL_UNSIGNED_BYTE , image.getBitmap());
-				break;
+
+                break;
 
 			case IMAGE_CUBE:
 				if (GL_EXTENSION_TEXTURE_CUBE_MAP)

@@ -347,6 +347,7 @@ void OpenGL_Engine::DrawText_OpenGL10(ObjectPosition& parent_position, const Gra
 
 	    glPushAttrib(GL_ALL_ATTRIB_BITS);
         (this->*BindTexture)(*font, true);
+        glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glBegin(GL_QUADS);
         for (size_t i = 0; i < text.string.length(); i++)
         {
