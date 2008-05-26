@@ -203,6 +203,13 @@ public:
 	const std::string DumpThis(int level) const;
 	void setFilePath(const std::string& _file);
 	std::string findKey(const Config* value) const;
+// iterators
+	typedef PConfigDict::iterator iterator;
+	typedef PConfigDict::const_iterator const_iterator;
+	const_iterator begin() const { return set.begin(); }
+	const_iterator end() const { return set.end(); }
+	iterator begin() { return set.begin(); }
+	iterator end() { return set.end(); }
 
 protected:
 	PConfigDict set;

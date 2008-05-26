@@ -21,6 +21,7 @@
 #include "../../res/res_main.h"
 #include "opengl_glsl.h"
 #include "../material.h"
+#include "../../common/containers.h"
 
 namespace opengl
 {
@@ -229,7 +230,19 @@ Shader* OpenGL_Engine::loadShader(const std::string& path, const StringDict& par
 	Shader* shader = new Shader(*this);
 	ShaderKey key(path, parameters);
 
-	if (shader->init(resText.add(path + ".vert"), resText.add(path + ".frag"), parameters))
+    std::string vert;
+    
+    if (present("std_vert_shader", parameters))
+    {
+        vert = "/shaders/std.vert";
+    }
+    else
+    {
+        vert = path + ".vert";
+    }
+    std::string frag = path + ".frag";
+
+	if (shader->init(resText.add(vert), resText.add(frag), parameters))
 	{
 		shaders.insert(std::make_pair(key, shader));
 		return shader;

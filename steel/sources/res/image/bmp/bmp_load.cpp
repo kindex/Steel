@@ -84,6 +84,11 @@ bool BMP::init(const std::string& name)
     }
 
 	f.read(&fh.bfType[0], 2);
+    if (fh.bfType[0] != 'B' || fh.bfType[1] != 'M')
+    {
+        return false;
+    }
+
     f.read(&fh.bfSize, 4);
 	f.read(&fh.bfReserved1, 2);
 	f.read(&fh.bfReserved2, 2);

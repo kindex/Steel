@@ -308,7 +308,10 @@ bool GameLabyrinth::createLabyrinth()
                               POSITION_GLOBAL,
                               v2(0.6f, 0.4f),
                               SPRITE_ALIGN_SCREEN,
-                              GraphText::ALIGN_CENTER);
+                              GraphText::ALIGN_CENTER,
+                              resFont.add("/font/arial"),
+                              color4f(0.5, 1, 0.5));
+
             exit->text.push_back(exit_text);
             exit_text.position.data.vector.z += 6;
             exit_text.size *= 4;

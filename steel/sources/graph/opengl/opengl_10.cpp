@@ -296,28 +296,28 @@ void OpenGL_Engine::DrawText_OpenGL10(ObjectPosition& parent_position, const Gra
         }
 
         v2 points[] = {
-            v2(0, 0),
-            v2(1, 0),
-            v2(1, 1),
             v2(0, 1),
+            v2(1, 1),
+            v2(1, 0),
+            v2(0, 0),
         };
 
         v2 tex_points[] = {
-            v2(0, 0), 
-            v2(0.5, 0),
-            v2(0.5f, 0.9f),
-            v2(0, 0.9f)
+            v2(0, 1), 
+            v2(1, 1),
+            v2(1, 0),
+            v2(0, 0)
         };
-
-        //float dy = 0.1f;
-        //float dx = dy*font->getHeight()/(font->getWidth()/256.0f)*0.5f;
-        // TODO: calculate each letter width
 
         v3 real_point[4];
         v3 normal;
+
+        float text_width = float(text.font->getWidth(text.string))/text.font->getSize();
+        
         v2 text_size(
-            text.string.length()*text.size.y,
+            text.size.y,
             text.size.x);
+
         v3 dx;
         v3 dy;
         calculateSprite(info.camera,
@@ -334,6 +334,8 @@ void OpenGL_Engine::DrawText_OpenGL10(ObjectPosition& parent_position, const Gra
                         dx,
                         dy);
 
+        dx *= text_width;
+
         v3 origin = (real_point[0] + real_point[1] + real_point[2] + real_point[3])/4;
         if (text.text_align == GraphText::ALIGN_CENTER)
         {
@@ -345,24 +347,43 @@ void OpenGL_Engine::DrawText_OpenGL10(ObjectPosition& parent_position, const Gra
             origin -= dy;
         }
 
+        Image& texture = text.font->getTexture();
 	    glPushAttrib(GL_ALL_ATTRIB_BITS);
-        (this->*BindTexture)(*font, true);
-        glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+        (this->*BindTexture)(texture, true);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+        glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+        color4f color = text.color;
+        color.a = 1.0f;
+        glColor4fv(color.getfv());
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         glBegin(GL_QUADS);
+        float sx = 0;
+        float sy = 0;
+        float font_size = float(text.font->getSize());
         for (size_t i = 0; i < text.string.length(); i++)
         {
-            char letter = text.string[i];
+            const Font::Char& c = text.font->getChar(text.string[i]);
 
             for (int j = 0; j < 4; j++)
             {
-                glTexCoord2f((letter + tex_points[j].x)/256.0f, tex_points[j].y);
+                glTexCoord2f(float(c.x + tex_points[j].x*c.width)/texture.getWidth(),
+                             -float(c.y + tex_points[j].y*c.height)/texture.getHeight());
 
+                float x = (points[j].x*c.width + c.xoffset)/font_size/text_width;
+                float y = 1 - (points[j].y*c.height + c.yoffset)/font_size;
                 v3 p = origin
-                        + dx*(points[j].x + i)/float(text.string.length())
-                        + dy*(points[j].y);
+                    + dx*(sx + x)
+                    + dy*(sy + y);
 
                 glVertex3fv(p.getfv());
             }
+            sx += c.xadvance/font_size/text_width;
         }
         glEnd();
         glPopAttrib();

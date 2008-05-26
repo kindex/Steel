@@ -158,6 +158,7 @@ struct Flags
 	bool blending;
 	bool bump;
 	bool glsl;
+    bool posteffect;
 
 	bool drawFace;
 	bool drawWire;

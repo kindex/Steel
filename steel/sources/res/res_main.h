@@ -23,6 +23,7 @@
 #include "model/model.h"
 #include "text/text.h"
 #include "audio/audio.h"
+#include "font/font.h"
 
 // глобальные коллекции ресурсов
 extern ResCollectionConfig		resConfig;
@@ -30,7 +31,7 @@ extern ResCollection<Image>		resImage;
 extern ResCollection<Model>		resModel;
 extern ResCollection<Text>		resText;
 extern ResCollection<Audio>		resAudio;
-
+extern ResCollection<Font>		resFont;
 
 bool registerResources();
 

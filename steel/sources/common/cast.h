@@ -1,5 +1,5 @@
 ﻿/*id*********************************************************
-	File: common/containters.h
+	File: common/cast.h
 	Unit: containters
 	Part of: Steel engine
 	(C) DiVision, 2007
@@ -10,18 +10,15 @@
 	Description:
 		StringVector
  ************************************************************/
-
 #pragma once
+#include <sstream>
 
-template<typename K, typename S>
-bool present(const K& key, const S& set)
+template <typename To, typename From>
+inline To cast(IN const From from)
 {
-    return set.find(key) != set.end();
+    std::stringstream ss;
+    To to;
+    ss << from;
+    ss >> to;
+    return to;
 }
-
-template<typename K, typename S>
-void erase(const K& key, S& set)
-{
-    set.erase(set.find(key));
-}
-

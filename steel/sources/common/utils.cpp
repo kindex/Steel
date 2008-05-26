@@ -96,10 +96,14 @@ void explode(IN const char delimiter, const std::string& s, OUT svector<std::str
 		last = start;
 		start = s.find(delimiter, start);
 
-		if(start == string::npos) 
+		if(start == string::npos)
+        {
 			start = len + 1;
-		else
-			start++;
+        }
+        else
+        {
+            start++;
+        }
 
 		res.push_back(s.substr(last, start - last - 1));
 	}
@@ -156,9 +160,17 @@ std::string getFileName(const std::string& fullpath)
 std::string createPath(const std::string& dir, const std::string& filename)
 {
 	if(!filename.empty() && filename[0] == '/')
+    {
 		return filename;
-	else if(dir.empty()) return filename;
-	else return dir + "/" + filename;
+    }
+    else if(dir.empty())
+    {
+        return filename;
+    }
+    else 
+    {
+        return dir + "/" + filename;
+    }
 }
 
 

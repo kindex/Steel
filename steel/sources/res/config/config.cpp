@@ -302,27 +302,39 @@ const std::string	Config::gets(const std::string& path, const std::string& _defa
 {
 	const Config *value = find(path);
 	if (value == NULL)
+    {
 		return _default;
+    }
 	else
+    {
 		return value->returns(_default);
+    }
 }
 
 const ConfigArray* Config::getArray(const std::string& path) const
 {
 	const Config *value = find(path);
 	if (value != NULL && value->getType() == CONFIG_VALUE_ARRAY)
+    {
 		return static_cast<const ConfigArray*>(value);
+    }
 	else
+    {
 		return NULL;
+    }
 }
 
 ConfigArray* Config::getArray(const std::string& path)
 {
 	Config *value = find(path);
 	if (value != NULL && value->getType() == CONFIG_VALUE_ARRAY)
+    {
 		return static_cast<ConfigArray*>(value);
+    }
 	else
+    {
 		return NULL;
+    }
 }
 
 std::string Config::getConfigFilePath() const
@@ -383,18 +395,26 @@ const Config* ConfigStruct::getStructElement(const std::string& key) const
 {
 	std::map<std::string, Config*>::const_iterator it = set.find(key);
 	if(it == set.end())
+    {
 		return NULL;
+    }
 	else
+    {
 		return it->second;
+    }
 }
 
 Config* ConfigStruct::getStructElement(const std::string& key)
 {
 	std::map<std::string, Config*>::iterator it = set.find(key);
 	if(it == set.end())
+    {
 		return NULL;
+    }
 	else
+    {
 		return it->second;
+    }
 }
 
 const string Config::getIndent(int level) const

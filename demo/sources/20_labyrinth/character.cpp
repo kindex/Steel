@@ -16,6 +16,7 @@
 #include <objects/combiner/graph_object.h>
 #include <graph/graph_interface.h>
 #include <input/input.h>
+#include <res/res_main.h>
 #include <NxPhysics.h>
 #include "steel_nx.h"
 
@@ -46,8 +47,15 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
 
         if (!name.empty())
         {
-            float text_size = 0.05f;
-            GraphText text(name, ObjectPosition::createTranslationMatrix(v3(0, 0, 0.35f)), POSITION_LOCAL, v2(text_size, text_size*0.75f), SPRITE_ALIGN_SCREEN, GraphText::ALIGN_CENTER);
+            float text_size = 0.15f;
+            GraphText text(name, 
+                           ObjectPosition::createTranslationMatrix(v3(0, 0, 0.35f)),
+                           POSITION_LOCAL,
+                           v2(text_size, text_size),
+                           SPRITE_ALIGN_SCREEN,
+                           GraphText::ALIGN_CENTER,
+                           resFont.add("/font/arial"),
+                           color4f(1, 1, 0.5f));
             GraphTextVector tv;
             tv.push_back(text);
             gengine.setGraphText(tv);

@@ -150,9 +150,18 @@ bool OpenGL_Engine::BindTexture_OpenGL11(Image& image, bool enableGlTexture)
 		glGenTextures(1, &buf.glid);
 
 		int format;
-		if (image.getFormat() == IMAGE_RGB) format = GL_RGB; 
-		else if (image.getFormat() == IMAGE_RGBA) format = GL_RGBA;
-		else return false;
+		if (image.getFormat() == IMAGE_RGB)
+        {
+            format = GL_RGB;
+        }
+		else if (image.getFormat() == IMAGE_RGBA)
+        {
+            format = GL_RGBA;
+        }
+		else
+        {
+            return false;
+        }
 
 		int width = image.getWidth();
 		int heigth = image.getHeight();

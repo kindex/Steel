@@ -22,6 +22,7 @@
 #include "text/text_file.h"
 #include "audio/wav.h"
 #include "audio/ogg.h"
+#include "font/font_text.h"
 
 
 ResCollectionConfig		resConfig;
@@ -29,6 +30,7 @@ ResCollection<Image>	resImage;
 ResCollection<Model>	resModel;
 ResCollection<Text>		resText;
 ResCollection<Audio>	resAudio;
+ResCollection<Font>	    resFont;
 
 template<class T, class T2>
 T2* createClass(const std::string& filename, const std::string& base)
@@ -68,6 +70,9 @@ bool registerResources()
     resAudio.setId("audio");
 	resAudio.registerResLoader(createClass<WAV, Audio>);
 	resAudio.registerResLoader(createClass<OGG, Audio>);
+
+    resFont.setId("font");
+	resFont.registerResLoader(createClass<FontText, Font>);
 
 	return true;
 }

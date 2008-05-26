@@ -10,8 +10,7 @@
 	Description:
 		Графический джижок - базовые графические типы
  ************************************************************/
-#ifndef __GRAPH__TYPES_H
-#define __GRAPH__TYPES_H
+#pragma once
 
 #include "../steel.h"
 #include "../engine/engine_types.h"
@@ -21,6 +20,7 @@
 #include "../math/vector3d.h"
 #include "../math/vector2d.h"
 #include "../res/image/image.h"
+#include "../res/font/font.h"
 #include "../common/svector.h"
 #include "../math/sprite.h"
 
@@ -36,6 +36,7 @@ struct color4f
 
 	color4f() {}
 	color4f(float R, float G, float B, float A): r(R), g(G), b(B), a(A) {}
+	color4f(float R, float G, float B): r(R), g(G), b(B), a(1.0f) {}
 
 	const float *getfv() const { return &r; }
 	const v3 get() const { return v3(r, g, b); }
@@ -117,36 +118,41 @@ struct GraphText
         ALIGN_LEFT_TOP,
     };
 
-    GraphText(const std::string&     string,
-              const ObjectPosition&  position,
-              const PositionKind     position_kind,
-              const v2               size,
-              const SpriteAlign      align,
-              const TextAlign        text_align) :
+    GraphText(const std::string&    string,
+              const ObjectPosition& position,
+              const PositionKind    position_kind,
+              const v2              size,
+              const SpriteAlign     align,
+              const TextAlign       text_align,
+                    Font*           font,
+                    color4f         color) :
         string(string),
         position(position),
         position_kind(position_kind),
         align(align),
         size(size),
-        text_align(text_align)
+        text_align(text_align),
+        font(font),
+        color(color)
     {}
 
     GraphText() : 
         position_kind(POSITION_LOCAL),
         position(matrix34::getIdentity()),
         size(1, 1),
-        text_align(ALIGN_CENTER)
+        text_align(ALIGN_CENTER),
+        font(NULL),
+        color(1, 1, 1, 1)
     {}
 
-    std::string      string;
-    ObjectPosition   position;
-    PositionKind     position_kind;
-    SpriteAlign      align;
-    v2               size;
-    TextAlign        text_align;
-
+    std::string    string;
+    ObjectPosition position;
+    PositionKind   position_kind;
+    SpriteAlign    align;
+    v2             size;
+    TextAlign      text_align;
+    Font*          font;
+    color4f        color;
 };
 
 typedef svector<GraphText> GraphTextVector;
-
-#endif

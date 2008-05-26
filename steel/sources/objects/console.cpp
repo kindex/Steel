@@ -13,6 +13,7 @@
 #include "../steel.h"
 #include "console.h"
 #include "../common/logger.h"
+#include "../res/res_main.h"
 
 bool Console::updateInformation(Engine& engine, IN const InterfaceId interface_id)
 {
@@ -30,7 +31,9 @@ bool Console::updateInformation(Engine& engine, IN const InterfaceId interface_i
                            POSITION_SCREEN,
                            v2(height, height*0.75f),
                            SPRITE_ALIGN_SCREEN,
-                           GraphText::ALIGN_LEFT_TOP);
+                           GraphText::ALIGN_LEFT_TOP,
+                           resFont.add("/font/arial"),
+                           color4f(1, 1, 1));
             tv.push_back(text);
             line++;
         }

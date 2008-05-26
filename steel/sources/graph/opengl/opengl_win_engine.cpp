@@ -53,9 +53,12 @@ bool OpenGL_Engine::RepairOpenGL_Window_WinAPI() // repair window on resize
     if (windowInformation->created)
     {
 	    glViewport( 0, 0, conf->geti("window.width"), conf->geti("window.height"));
+
 	    ((WindowInformationWinAPI*)windowInformation)->input->		
 		    setMouseCenter(	conf->geti("window.width")/2, 
 						    conf->geti("window.height")/2);
+
+        createPosteffects();
     }
 
     return true;
@@ -337,14 +340,17 @@ bool OpenGL_Engine::CreateOpenGL_Window_WinAPI(Input* input)
 	//AdjustWindowRect( &rWindow, dwStyle, false);		// Adjust Window To True Requested Size
 
 														// Create the window
+    windowInformation->width = conf->geti("window.width", 1024);
+    windowInformation->height = conf->geti("window.height", 1024);
+
 	((WindowInformationWinAPI*)windowInformation)->handle = 
         CreateWindow("steel", 
                      "Steel Engine", 
                      ((WindowInformationWinAPI*)windowInformation)->dwStyle, 
 		             conf->geti("window.left"),
                      conf->geti("window.top"),
-					 conf->geti("window.width"),
-                     conf->geti("window.height"),
+					 windowInformation->width,
+                     windowInformation->height,
 					 NULL,
                      NULL,
                      hInstance,

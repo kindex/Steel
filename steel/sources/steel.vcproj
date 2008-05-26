@@ -316,6 +316,10 @@
 			Name="common"
 			>
 			<File
+				RelativePath=".\common\cast.h"
+				>
+			</File>
+			<File
 				RelativePath=".\common\containers.h"
 				>
 			</File>
@@ -558,6 +562,14 @@
 				<Filter
 					Name="ext"
 					>
+					<File
+						RelativePath=".\graph\opengl\ext\frame_buffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\graph\opengl\ext\frame_buffer.h"
+						>
+					</File>
 					<File
 						RelativePath="..\sources\graph\opengl\ext\libext.cpp"
 						>
@@ -1198,6 +1210,26 @@
 				</File>
 				<File
 					RelativePath="..\sources\res\test_res\test_res.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="font"
+				>
+				<File
+					RelativePath=".\res\font\font.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\res\font\font.h"
+					>
+				</File>
+				<File
+					RelativePath=".\res\font\font_text.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\res\font\font_text.h"
 					>
 				</File>
 			</Filter>

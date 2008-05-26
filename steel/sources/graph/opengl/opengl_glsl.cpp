@@ -72,7 +72,6 @@ bool Shader::init(Text*	_vertexShader, Text* _fragmentShader, const StringDict& 
 	}
     glAttachObjectARB(programId, fragmentShaderId);
 
-
     GLint   linked;
     glLinkProgramARB(programId);
 
@@ -209,6 +208,11 @@ void Shader::bind()
 void Shader::unbind()
 {
 	glUseProgramObjectARB(0);
+
+	glActiveTextureARB(GL_TEXTURE0_ARB + 0);
+	glClientActiveTextureARB(GL_TEXTURE0_ARB + 0);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 
@@ -311,6 +315,33 @@ void Shader::bindTexture(const std::string& name, Image* image)
 		{
 			error("glsl error", std::string("Cannot find texture '") + name + "' in shader " + getShaderDecription());
 		}
+	}
+}
+
+void Shader::bindTextureRaw(const std::string& name, GLuint texture)
+{
+	glActiveTextureARB(GL_TEXTURE0_ARB + textureIndex);
+	glClientActiveTextureARB(GL_TEXTURE0_ARB + textureIndex);
+
+    glBindTexture(GL_TEXTURE_2D, texture);
+//		(engine.*(engine.BindTexture))(*image, false);
+
+	GLint loc = findVariable(name);
+	std::map<GLint, GLint>::iterator it = imageCache.find(loc);
+	if (it != imageCache.end() && it->second == textureIndex)
+	{
+		textureIndex++;
+		return;
+	}
+	if (loc >= 0)
+	{
+		glUniform1iARB(loc, textureIndex);
+		imageCache[loc] = textureIndex;
+		textureIndex++;
+	}
+	else
+	{
+		error("glsl error", std::string("Cannot find texture '") + name + "' in shader " + getShaderDecription());
 	}
 }
 

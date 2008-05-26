@@ -49,6 +49,7 @@ public:
 
 	void clearTextures();
 	void bindTexture(const std::string& name, Image* image);
+	void bindTextureRaw(const std::string& name, GLuint texture);
     bool setUniformFloat	(const std::string& name,	const float);
 	bool setUniformVector	(const std::string& name,	const v3&);
 	bool setUniformInt		(const std::string& name,	const int);

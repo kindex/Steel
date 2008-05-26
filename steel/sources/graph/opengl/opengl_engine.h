@@ -24,11 +24,13 @@
 
 #include "../graph_engine.h"
 #include "opengl_private.h"
+
 #undef DrawText
 
 class Input;
 struct TextureMatrix;
 struct Line;
+struct Frame;
 
 namespace opengl
 {
@@ -88,7 +90,6 @@ private:
 	Image* black;
 	Image* white;
 	Image* none;
-	Image* font;
 
 	GraphShadow* currentShadow;
 
@@ -184,6 +185,27 @@ private:
 
 	bool		focused;
 	ProcessInfo info;
+// ******************** Post Effect ***********
+    struct Posteffect
+    {
+        Posteffect();
+
+        StringDict parameters;
+        Config* conf;
+        Frame* input1;
+        Frame* input2;
+        Frame* output;
+        std::string shader;
+    };
+    typedef std::vector<Posteffect> PosteffectVector;
+    PosteffectVector posteffects;
+    typedef std::map<std::string, Frame*> FrameMap;
+    FrameMap frames;
+    Frame* scene_frame;
+
+    void initPosteffects();
+    void createPosteffects();
+    Frame* createFrameBuffer(const std::string& name);
 
 public:
 // ****************** GRAPH ENGINE ***********************
@@ -210,6 +232,8 @@ public:
         WindowInformation() : created(false) {}
 
         bool created;
+        int width;
+        int height;
     };
 	WindowInformation* windowInformation;
 

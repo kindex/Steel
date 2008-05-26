@@ -24,17 +24,6 @@
 #include <iostream>
 #include <sstream>
 
-template <typename To, typename From>
-inline To cast(IN const From from)
-{
-    std::stringstream ss;
-    To to;
-    ss << from;
-    ss >> to;
-    return to;
-}
-
-
 #define TEST(C) \
 {	\
 	std::cout << std::string(testInfo.level, '\t') << "Testing " # C << std::endl; \

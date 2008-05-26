@@ -28,6 +28,9 @@
 #include "../../engine/game_object.h"
 #include "../material.h"
 #include <gl/glu.h>
+#include "ext/frame_buffer.h"
+#include "../../common/containers.h"
+
 #undef min
 #undef DrawText
 #include <algorithm>
@@ -117,15 +120,80 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 	GLbitfield clear = 0;
 	if (conf->getb("clearColor", true))	clear |= GL_COLOR_BUFFER_BIT;
 	if (conf->getb("clearDepth", true))	clear |= GL_DEPTH_BUFFER_BIT;
-	if (clear)
-	{
-		glClear(clear);
-	}
 
 // ------------ Draw Scene ---------------
 
-	render();
-	renderDebug();
+    if (!flags.posteffect || posteffects.empty())
+    {
+	    if (clear)
+	    {
+		    glClear(clear);
+	    }
+	    render();
+	    renderDebug();
+    }
+    else
+    {
+        // Draw 3D scene.
+        glEnable(GL_DEPTH_TEST);
+     //   glDepthFunc(GL_LESS);
+
+        bindFrame(scene_frame);
+	    if (clear)
+	    {
+		    glClear(clear);
+	    }
+
+	    render();
+	    renderDebug();
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+
+        for EACH(PosteffectVector, posteffects, posteffect)
+        {
+            bindFrame(posteffect->output);
+            glDisable(GL_DEPTH_TEST);
+            
+            StringDict params = posteffect->parameters;
+            params["std_vert_shader"] = "1";
+            Shader* shader = bindShader("/shaders/" + posteffect->shader, params);
+            if (shader != NULL)
+            {
+    	        shader->clearTextures();
+                shader->bindTextureRaw("input1", posteffect->input1->texture);
+                if (posteffect->input2 != NULL)
+                {
+                    shader->bindTextureRaw("input2", posteffect->input2->texture);
+                }
+                shader->setUniformFloat("xoffset", 1.0f/posteffect->input1->width);
+                shader->setUniformFloat("yoffset", 1.0f/posteffect->input1->height);
+            }
+            else
+            {
+                glEnable(GL_TEXTURE_2D);
+                glBindTexture(GL_TEXTURE_2D, posteffect->input1->texture);
+            }
+            glBegin(GL_QUADS);
+                glTexCoord2f(0, 0); glVertex2f(-1, -1);
+                glTexCoord2f(1, 0); glVertex2f(1, -1);
+                glTexCoord2f(1, 1); glVertex2f(1, 1);
+                glTexCoord2f(0, 1); glVertex2f(-1, 1);
+            glEnd();
+
+            if (shader != NULL)
+            {
+                shader->unbind();
+            }
+            else
+            {
+                glDisable(GL_TEXTURE_2D);
+            }
+            bindFrame(NULL);
+        }
+    }
 
 // ------------- Post draw ---------------
 
@@ -141,7 +209,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
 void OpenGL_Engine::renderText()
 {
-    if (font == NULL || DrawText == NULL)
+    if (DrawText == NULL)
     {
         return;
     }
@@ -905,18 +973,15 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	white = resImage.add("white");
 	black = resImage.add("black");
 	none = resImage.add("none");
-	font = resImage.add("font");
 	if (zeroNormal == NULL)
 	{
 		log_msg("error graph res", "Zero normal map was not found");
 		return false;
 	}
-	if (font == NULL)
-	{
-		log_msg("error graph res", "Font texture was not found");
-		return false;
-	}
 
+    createPosteffects();
+
+// --- Done -----
 	log_msg("opengl graph", "OpenGL engine has been initialized!");
 
 	(this->*setCaptionOpenGL_Window)("Steel Engine");
@@ -924,6 +989,102 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	clear();
 
 	return true;
+}
+
+Frame*  OpenGL_Engine::createFrameBuffer(const std::string& name)
+{
+    if (name.empty())
+    {
+        return NULL;
+    }
+
+    if (!present(name, frames))
+    {
+        Frame* frame = new Frame;
+
+        Config* frame_conf = conf->find("frame." + name);
+        if (frame_conf == NULL)
+        {
+            error("opengl", std::string("No config for frame ") + name);
+            return NULL;
+        }
+
+        frame->width = GLsizei(windowInformation->width / frame_conf->getf("windth_scale", 1.0f));
+        frame->height = GLsizei(windowInformation->height / frame_conf->getf("height_scale", 1.0f));
+        frame->viewport.x = 0;
+        frame->viewport.y = 0;
+        frame->viewport.width = windowInformation->width;
+        frame->viewport.height = windowInformation->height;
+        if (createFrame(frame, frame_conf->getb("depth", false), false, true))
+        {
+            frames[name] = frame;
+            return frame;
+        }
+        else
+        {
+            delete frame;
+            return NULL;
+        }
+    }
+    else
+    {
+        return frames[name];
+    }
+}
+
+OpenGL_Engine::Posteffect::Posteffect() :
+    conf(NULL),
+    input1(NULL),
+    input2(NULL),
+    output(NULL)
+{}
+
+void OpenGL_Engine::initPosteffects()
+{
+    ConfigArray* effect_conf = dynamic_cast<ConfigArray*>(conf->find("posteffects"));
+    if (effect_conf == NULL)
+    {
+        error("opengl", "posteffect config not found");
+        return;
+    }
+
+    for EACH(ConfigArray, *effect_conf, effect_it)
+    {
+        Posteffect effect;
+
+        effect.conf = *effect_it;
+        effect.shader = (*effect_it)->gets("shader");
+        ConfigStruct* params = dynamic_cast<ConfigStruct*>(effect.conf->find("parameters"));
+        if (params != NULL)
+        {
+            for EACH(ConfigStruct, *params, it)
+            {
+                effect.parameters[it->first] = it->second->gets("");
+            }
+        }
+
+        posteffects.push_back(effect);
+    }
+}
+
+void OpenGL_Engine::createPosteffects()
+{
+    for EACH(FrameMap, frames, frame)
+    {
+        deleteFrame(frame->second);
+        delete frame->second;
+    }
+
+    initPosteffects();
+
+    scene_frame = createFrameBuffer("scene");
+
+    for EACH(PosteffectVector, posteffects, posteffect)
+    {
+        posteffect->input1 = createFrameBuffer(posteffect->conf->gets("input1"));
+        posteffect->input2 = createFrameBuffer(posteffect->conf->gets("input2"));
+        posteffect->output = createFrameBuffer(posteffect->conf->gets("output"));
+    }
 }
 
 bool OpenGL_Engine::deinit()
@@ -974,6 +1135,9 @@ void OpenGL_Engine::prepare(GraphShadow& shadow, matrix34 matrix, GameObject* pa
 
 void OpenGL_Engine::onResize(int width, int height)
 {
+    windowInformation->width = width;
+    windowInformation->height = height;
+
 	conf->setValued("window.width", width);
 	conf->setValued("window.height", height);
 	if (RepairOpenGL_Window)
@@ -1038,7 +1202,7 @@ OpenGL_Engine::OpenGL_Engine():
 	black(NULL),
 	white(NULL),
 	none(NULL),
-	font(NULL)
+    scene_frame(NULL)
 {}
 
 
@@ -1131,6 +1295,7 @@ void OpenGL_Engine::setupVariables()
 //	flags.transparent = conf->getb("transparent", true);
 	flags.bump = conf->getb("bump", true);
 	flags.shadows = conf->getb("shadows", true);
+	flags.posteffect = conf->getb("posteffect", true);
 
 	flags.drawWire = conf->getb("drawWire", false) && DrawWire != NULL;
 	flags.drawLines = conf->getb("drawLines", false) && DrawLines != NULL;

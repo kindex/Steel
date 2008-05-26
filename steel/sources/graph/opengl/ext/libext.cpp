@@ -52,6 +52,23 @@ int GL_EXTENSION_MAX_VARYING_FLOATS;
 int GL_EXTENSION_MAX_FRAGMENT_UNIFORM_COMPONENTS;
 int GL_EXTENSION_MAX_TEXTURE_COORDS;
 
+PFNGLBINDFRAMEBUFFEREXTPROC glBindFramebufferEXT = NULL;
+PFNGLBINDRENDERBUFFEREXTPROC glBindRenderbufferEXT = NULL;
+PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC glCheckFramebufferStatusEXT = NULL;
+PFNGLDELETEFRAMEBUFFERSEXTPROC glDeleteFramebuffersEXT = NULL;
+PFNGLDELETERENDERBUFFERSEXTPROC glDeleteRenderbuffersEXT = NULL;
+PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC glFramebufferRenderbufferEXT = NULL;
+PFNGLFRAMEBUFFERTEXTURE1DEXTPROC glFramebufferTexture1DEXT = NULL;
+PFNGLFRAMEBUFFERTEXTURE2DEXTPROC glFramebufferTexture2DEXT = NULL;
+PFNGLFRAMEBUFFERTEXTURE3DEXTPROC glFramebufferTexture3DEXT = NULL;
+PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT = NULL;
+PFNGLGENRENDERBUFFERSEXTPROC glGenRenderbuffersEXT = NULL;
+PFNGLGENERATEMIPMAPEXTPROC glGenerateMipmapEXT = NULL;
+PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVEXTPROC glGetFramebufferAttachmentParameterivEXT = NULL;
+PFNGLGETRENDERBUFFERPARAMETERIVEXTPROC glGetRenderbufferParameterivEXT = NULL;
+PFNGLISFRAMEBUFFEREXTPROC glIsFramebufferEXT = NULL;
+PFNGLISRENDERBUFFEREXTPROC glIsRenderbufferEXT = NULL;
+PFNGLRENDERBUFFERSTORAGEEXTPROC glRenderbufferStorageEXT = NULL;
 
 // multitexture functions
 #ifdef	_WIN32
@@ -580,6 +597,25 @@ void OpenGL_ExtensionsInit()
 		glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS_ARB, &GL_EXTENSION_MAX_FRAGMENT_UNIFORM_COMPONENTS);
 		glGetIntegerv(GL_MAX_TEXTURE_COORDS_ARB, &GL_EXTENSION_MAX_TEXTURE_COORDS);
 	}
+
+    glBindFramebufferEXT = (PFNGLBINDFRAMEBUFFEREXTPROC)getProcAddress("glBindFramebufferEXT");
+    glBindRenderbufferEXT = (PFNGLBINDRENDERBUFFEREXTPROC)getProcAddress("glBindRenderbufferEXT");
+    glCheckFramebufferStatusEXT = (PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC)getProcAddress("glCheckFramebufferStatusEXT");
+    glDeleteFramebuffersEXT = (PFNGLDELETEFRAMEBUFFERSEXTPROC)getProcAddress("glDeleteFramebuffersEXT");
+    glDeleteRenderbuffersEXT = (PFNGLDELETERENDERBUFFERSEXTPROC)getProcAddress("glDeleteRenderbuffersEXT");
+    glFramebufferRenderbufferEXT = (PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC)getProcAddress("glFramebufferRenderbufferEXT");
+    glFramebufferTexture1DEXT = (PFNGLFRAMEBUFFERTEXTURE1DEXTPROC)getProcAddress("glFramebufferTexture1DEXT");
+    glFramebufferTexture2DEXT = (PFNGLFRAMEBUFFERTEXTURE2DEXTPROC)getProcAddress("glFramebufferTexture2DEXT");
+    glFramebufferTexture3DEXT = (PFNGLFRAMEBUFFERTEXTURE3DEXTPROC)getProcAddress("glFramebufferTexture3DEXT");
+    glGenFramebuffersEXT = (PFNGLGENFRAMEBUFFERSEXTPROC)getProcAddress("glGenFramebuffersEXT");
+    glGenRenderbuffersEXT = (PFNGLGENRENDERBUFFERSEXTPROC)getProcAddress("glGenRenderbuffersEXT");
+    glGenerateMipmapEXT = (PFNGLGENERATEMIPMAPEXTPROC)getProcAddress("glGenerateMipmapEXT");
+    glGetFramebufferAttachmentParameterivEXT = (PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVEXTPROC)getProcAddress("glGetFramebufferAttachmentParameterivEXT");
+    glGetRenderbufferParameterivEXT = (PFNGLGETRENDERBUFFERPARAMETERIVEXTPROC)getProcAddress("glGetRenderbufferParameterivEXT");
+    glIsFramebufferEXT = (PFNGLISFRAMEBUFFEREXTPROC)getProcAddress("glIsFramebufferEXT");
+    glIsRenderbufferEXT = (PFNGLISRENDERBUFFEREXTPROC)getProcAddress("glIsRenderbufferEXT");
+    glRenderbufferStorageEXT = (PFNGLRENDERBUFFERSTORAGEEXTPROC)getProcAddress("glRenderbufferStorageEXT");
+
 
 	initialized = true;
 }
