@@ -1,4 +1,4 @@
-// Bloom fragment shader
+// Combine 2 images
 
 uniform sampler2D input1;
 uniform sampler2D input2;

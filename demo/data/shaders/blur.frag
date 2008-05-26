@@ -1,4 +1,4 @@
-// Bloom fragment shader
+// Blur
 
 uniform sampler2D input1;
 uniform float xoffset;
@@ -13,32 +13,6 @@ void main(void)
 
     int start = -iteration;
     int end = iteration;
-
-    if (dx != 0)
-    {
-		if (tc.x + xoffset*dx*start < 0.0)
-		{
-	 		start = -int(tc.x/xoffset);
-	    }
-	    
-	    if (tc.x + xoffset*iteration*dx > 1.0)
-    	{
-		    end = int((1.0 - tc.x)/xoffset);
-	    }
-	}
-    if (dy != 0)
-    {
-		if (tc.y + yoffset*dy*start < 0.0)
-		{
-	 		start = -int(tc.y/yoffset);
-	    }
-	    
-	    if (tc.y + yoffset*iteration*dy > 1.0)
-    	{
-		    end = int((1.0 - tc.y)/yoffset);
-	    }
-	}
-
 
 	float s = 0.0;
     for (int i = start; i < end; i++)

@@ -1,4 +1,4 @@
-// Bloom fragment shader
+// Clip
 
 uniform sampler2D input1;
 uniform float xoffset;

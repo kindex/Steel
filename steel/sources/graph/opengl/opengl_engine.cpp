@@ -173,6 +173,9 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
             {
     	        shader->clearTextures();
                 shader->bindTextureRaw("input1", posteffect->input1->texture);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
                 if (posteffect->input2 != NULL)
                 {
                     shader->bindTextureRaw("input2", posteffect->input2->texture);
