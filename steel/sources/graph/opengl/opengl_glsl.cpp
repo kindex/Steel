@@ -229,7 +229,7 @@ GLint Shader::findVariable(const std::string& name)
 		variableLocationCache.insert(make_pair(name, loc));
 		if (loc < 0)
 		{
-			error("opengl glsl", std::string("Cannot find variable '") + name + "' in shader " + getShaderDecription());
+			log_msg("opengl glsl", std::string("Cannot find variable '") + name + "' in shader " + getShaderDecription());
 		}
 		return loc;
 	}

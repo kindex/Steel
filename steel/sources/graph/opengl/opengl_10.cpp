@@ -290,6 +290,11 @@ void OpenGL_Engine::DrawText_OpenGL10(ObjectPosition& parent_position, const Gra
     for EACH_CONST(GraphTextVector, e, text_it)
     {
         const GraphText& text = *text_it;
+        if (text.font == NULL)
+        {
+            continue;
+        }
+
         if (text.position_kind == POSITION_SCREEN)
         {
             pushPosition(ObjectPosition::getIdentity(), text.position_kind);

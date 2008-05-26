@@ -143,6 +143,8 @@ void GameFreeScene::handleEventKeyDown(const std::string& key)
 		graphEngine->conf->toggle("clearDepth");
 	}
 	if (key == "f7") graphEngine->conf->toggle("drawNormals");
+	if (key == "f8") graphEngine->conf->toggle("posteffect");
+
 //	if (key == "f8") graphEngine->conf->toggle("drawAABB");
 	//if (key == "f9")
 	//{

@@ -55,7 +55,7 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
                            SPRITE_ALIGN_SCREEN,
                            GraphText::ALIGN_CENTER,
                            resFont.add("/font/arial"),
-                           color4f(1, 1, 0.5f));
+                           color4f(1, 0, 0.5f));
             GraphTextVector tv;
             tv.push_back(text);
             gengine.setGraphText(tv);

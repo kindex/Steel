@@ -91,20 +91,3 @@ void checkFBO()
     status -= GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT;
     error("opengl", std::string("incomplete framebuffer object due to ") + enums[status]);
 }
-
-void bindFrame(const Frame* surface)
-{
-    if (surface != NULL)
-    {
-        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, surface->fbo);
-//        glViewport(surface->viewport.x, surface->viewport.y, surface->viewport.width, surface->viewport.height);
-    }
-    else
-    {
-        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-    }
-    //glMatrixMode(GL_PROJECTION);
-    //glLoadMatrixf(surface->projection);
-    //glMatrixMode(GL_MODELVIEW);
-    //glLoadMatrixf(surface->modelview);
-}

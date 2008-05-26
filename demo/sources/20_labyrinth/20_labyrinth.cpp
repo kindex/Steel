@@ -310,7 +310,7 @@ bool GameLabyrinth::createLabyrinth()
                               SPRITE_ALIGN_SCREEN,
                               GraphText::ALIGN_CENTER,
                               resFont.add("/font/arial"),
-                              color4f(0.5, 1, 0.5));
+                              color4f(1, 1, 1));
 
             exit->text.push_back(exit_text);
             exit_text.position.data.vector.z += 6;

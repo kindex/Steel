@@ -205,7 +205,9 @@ private:
 
     void initPosteffects();
     void createPosteffects();
+    void deletePosteffects();
     Frame* createFrameBuffer(const std::string& name);
+    void bindFrame(const Frame* surface);
 
 public:
 // ****************** GRAPH ENGINE ***********************

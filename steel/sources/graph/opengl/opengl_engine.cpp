@@ -123,7 +123,16 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
 // ------------ Draw Scene ---------------
 
-    if (!flags.posteffect || posteffects.empty())
+    if (flags.posteffect && posteffects.empty())
+    {
+        createPosteffects();
+    }
+    else if (!flags.posteffect && !posteffects.empty())
+    {
+        createPosteffects();
+    }
+
+    if (!flags.posteffect || posteffects.empty() || !flags.glsl)
     {
 	    if (clear)
 	    {
@@ -192,6 +201,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
                 glDisable(GL_TEXTURE_2D);
             }
             bindFrame(NULL);
+            glEnable(GL_DEPTH_TEST);
         }
     }
 
@@ -979,8 +989,6 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 		return false;
 	}
 
-    createPosteffects();
-
 // --- Done -----
 	log_msg("opengl graph", "OpenGL engine has been initialized!");
 
@@ -991,7 +999,23 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 	return true;
 }
 
-Frame*  OpenGL_Engine::createFrameBuffer(const std::string& name)
+
+
+void OpenGL_Engine::bindFrame(const Frame* surface)
+{
+    if (surface != NULL)
+    {
+        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, surface->fbo);
+        glViewport(surface->viewport.x, surface->viewport.y, surface->viewport.width, surface->viewport.height);
+    }
+    else
+    {
+        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+        glViewport(0, 0, windowInformation->width, windowInformation->height);
+    }
+}
+
+Frame* OpenGL_Engine::createFrameBuffer(const std::string& name)
 {
     if (name.empty())
     {
@@ -1013,9 +1037,10 @@ Frame*  OpenGL_Engine::createFrameBuffer(const std::string& name)
         frame->height = GLsizei(windowInformation->height / frame_conf->getf("height_scale", 1.0f));
         frame->viewport.x = 0;
         frame->viewport.y = 0;
-        frame->viewport.width = windowInformation->width;
-        frame->viewport.height = windowInformation->height;
-        if (createFrame(frame, frame_conf->getb("depth", false), false, true))
+        frame->viewport.width = frame->width;
+        frame->viewport.height = frame->height;
+        bool depth = frame_conf->getb("depth", false);
+        if (createFrame(frame, depth, false, true))
         {
             frames[name] = frame;
             return frame;
@@ -1048,6 +1073,7 @@ void OpenGL_Engine::initPosteffects()
         return;
     }
 
+    posteffects.clear();
     for EACH(ConfigArray, *effect_conf, effect_it)
     {
         Posteffect effect;
@@ -1067,13 +1093,21 @@ void OpenGL_Engine::initPosteffects()
     }
 }
 
-void OpenGL_Engine::createPosteffects()
+void OpenGL_Engine::deletePosteffects()
 {
     for EACH(FrameMap, frames, frame)
     {
         deleteFrame(frame->second);
         delete frame->second;
     }
+    frames.clear();
+    scene_frame = NULL;
+    posteffects.clear();
+}
+
+void OpenGL_Engine::createPosteffects()
+{
+    deletePosteffects();
 
     initPosteffects();
 
