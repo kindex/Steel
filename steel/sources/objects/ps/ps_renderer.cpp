@@ -25,7 +25,7 @@ void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
 	cameraPosition = info.camera.getPosition();
 
 	int cnt = set->particles.size();
-	for(int i=0; i < cnt; i++)
+	for(int i = 0; i < cnt; i++)
 	{
 		int i4 = i*4;
         v3 dx;
@@ -45,6 +45,12 @@ void SpriteRenderer::updateSpritePositions(IN const ProcessInfo& info)
                         dy);
 
 		normals[i4 + 1] = normals[i4 + 2] = normals[i4 + 3] = normals[i4 + 0];
+
+        if (life_blend)
+        {
+            texCoords2[i*4 + 0].x = texCoords2[i*4 + 1].x = texCoords2[i*4 + 2].x = texCoords2[i*4 + 3].x = clamp(set->particles[i]->life);
+            texCoords2[i*4 + 0].y = texCoords2[i*4 + 1].y = texCoords2[i*4 + 2].y = texCoords2[i*4 + 3].y = 0.0;
+        }
 	}
 }
 
@@ -75,6 +81,9 @@ void SpriteRenderer::initSprites()
 
 	texCoords.changed = false;
 	texCoords.id = objectIdGenerator.genUid();
+
+    texCoords2.changed = true;
+	texCoords2.id = objectIdGenerator.genUid();
 }
 
 void SpriteRenderer::initSprites(int begin, int end)
@@ -97,13 +106,18 @@ void SpriteRenderer::initSprites(int begin, int end)
 	}
 
 	texCoords.resize(end*4);
-	for(int i=begin; i<end; i++)
+	for(int i = begin; i < end; i++)
 	{
 		texCoords[i*4 + 0] = v2(0, 0);
 		texCoords[i*4 + 1] = v2(0, 1);
 		texCoords[i*4 + 2] = v2(1, 1);
 		texCoords[i*4 + 3] = v2(1, 0);
 	}
+
+    if (life_blend)
+    {
+	    texCoords2.resize(end*4);
+    }
 }
 
 bool SpriteRenderer::InitFromConfig(IN Config& _conf)
@@ -139,6 +153,15 @@ bool SpriteRenderer::InitFromConfig(IN Config& _conf)
 		align = SPRITE_ALIGN_CUSTOM;
 	}
 
+    life_blend = conf->getb("life_blend", false);
+
+    if (life_blend)
+    {
+        material->blend_map.image = resImage.add("/grayscale");
+        material->blend_map.texCoordsUnit = 1;
+        material->blend_map.k = 1;
+    }
+
 	return true;
 }
 
@@ -157,11 +180,18 @@ bool SpriteRenderer::updateInformation(Engine& engine, IN const InterfaceId id)
 
 		updateSpritePositions(gengine.getProcessInfo());
 
+        gengine.setPositionKind(POSITION_GLOBAL);
 		gengine.setVertexes(&vertexes);
 		gengine.setNormals(&normals);
 		gengine.setFaceMaterials(&face);
 		gengine.setTexCoordsCount(1);
 		gengine.setTexCoords(0, &texCoords);
+        if (life_blend)
+        {
+            gengine.setTexCoordsCount(2);
+    		gengine.setTexCoords(1, &texCoords2);
+        }
+
 		return true;
 	}
 	return false;

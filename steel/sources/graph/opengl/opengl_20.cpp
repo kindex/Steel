@@ -33,6 +33,9 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 	{
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
+        glColor4i(1, 1, 1, 1);
+        glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
 		
 		if (flags.useDebugShader)
 		{
@@ -51,12 +54,23 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL20(GraphShadow& e, const Faces& f
 			vars["mirror"] = IntToStr(material.env_map.cubeMap != NULL && material.env_map.type == TEXTURE_REFLECT_MIRROR ? 1 : 0);
 			vars["sky"] = IntToStr(material.env_map.cubeMap != NULL && material.env_map.type == TEXTURE_REFLECT_SKY ? 1 : 0);
 			vars["blending"] = IntToStr(flags.blending && flags.current.transparent && material.blend);
+            vars["blend_map"] = IntToStr(material.blend_map.image != NULL);
 			program = bindShader(flags.shaderStd, vars);
 			if (program == NULL)
 			{
+        		glPopClientAttrib();
+        	   	glPopAttrib();
 				return false; // shader compile error
 			}
 			(this->*BindTexCoords)(e.getTexCoords(material.diffuse_map), &material.textureMatrix);
+            if (material.blend_map.image != NULL)
+            {
+			    glActiveTextureARB(GL_TEXTURE0_ARB + 1);
+			    glClientActiveTextureARB(GL_TEXTURE0_ARB + 1);
+			    (this->*BindTexCoords)(e.getTexCoords(material.blend_map), NULL);
+			    glActiveTextureARB(GL_TEXTURE0_ARB + 0);
+			    glClientActiveTextureARB(GL_TEXTURE0_ARB + 0);
+            }
 			SetupStdShader_OpenGL20(e, faces, material, *program);
 		}
 
@@ -164,9 +178,12 @@ void OpenGL_Engine::SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, 
 		}
 		size_t lightCount = lightIndex;
 
-		if (flags.lighting && lightCount >= 1)
+        if (flags.lighting && lightCount >= 1 || material.blend)
 		{
 			shader.bindTexture("diffuse_map",  material.diffuse_map.image  ? material.diffuse_map.image  : none);
+        }
+        if (flags.lighting && lightCount >= 1)
+		{
 			shader.bindTexture("specular_map", material.specular_map.image ? material.specular_map.image : white); // TODO: env map koef
 		}
 		if (flags.lighting && lightCount >= 1 || material.env_map.cubeMap != NULL)
@@ -195,6 +212,8 @@ void OpenGL_Engine::SetupStdShader_OpenGL20(GraphShadow& e, const Faces& faces, 
 			glClientActiveTextureARB(GL_TEXTURE0_ARB + 7);
 			
 			(this->*BindTexCoords3f)(sTangent);
+			glActiveTextureARB(GL_TEXTURE0_ARB + 0);
+			glClientActiveTextureARB(GL_TEXTURE0_ARB + 0);
 		}
 	}
 }

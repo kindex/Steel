@@ -15,6 +15,7 @@
 #define _LABYRINTH_CHARACTER_H_
 
 #include <objects/combiner/graph_object.h>
+#include <objects/ps/particle_system.h>
 
 class NxActor;
 class Input;
@@ -66,6 +67,7 @@ private:
     bool alive;
     bool position_is_set;
     GraphObject*   graph_object;
+    ParticleSystem* smoke;
     NxActor*       physic_object;
 
     ObjectPosition origin;

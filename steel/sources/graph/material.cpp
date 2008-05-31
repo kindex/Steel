@@ -61,6 +61,7 @@ bool MaterialStd::InitFromConfig(Config *_conf)
 	normal_map.InitFromConfig(conf->find("normal_map"));
 	specular_map.InitFromConfig(conf->find("specular_map"));
 	emission_map.InitFromConfig(conf->find("emission_map"));
+	blend_map.InitFromConfig(conf->find("emission_map"));
 	env_map.InitFromConfig(conf->find("env_map"));
 
 	color.set(conf->getv3("color", v3(1.0f, 0.0f, 0.0f))); // TODO:
@@ -85,6 +86,7 @@ Config* MaterialStd::getConfig() const
 	result->setValue("specular_map", specular_map.getConfig());
 	result->setValue("emission_map", emission_map.getConfig());
 	result->setValue("env_map", env_map.getConfig());
+	result->setValue("blend_map", blend_map.getConfig());
 
 	result->setValue("texCoordsScale", createV3config(textureMatrix.texCoordsScale));
 	result->setValue("texCoordsRotation", new ConfigNumber(textureMatrix.texCoordsRotation));

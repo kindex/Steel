@@ -42,11 +42,13 @@ private:
 	MaterialStd*	   material;
 	VertexVector	   vertexes;
 	TexCoords		   texCoords;
+	TexCoords		   texCoords2;
 	Normals			   normals;
 	v3				   cameraPosition;
 	SpriteAlign		   align;
 	v3				   customAlign;
 	FaceMaterialVector face;
+    bool               life_blend;
 };
 
 // каждая частица - отдельная модель (объект)

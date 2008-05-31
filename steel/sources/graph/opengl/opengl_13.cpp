@@ -38,6 +38,7 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(GraphShadow& e, const Faces& t
 		bool bump_map = material.normal_map.image != NULL && flags.bump && !e.lights.empty() && e.normals != NULL && GL_EXTENSION_DOT3 && GL_EXTENSION_TEXTURE_CUBE_MAP;
 		bool diffuse_map = material.diffuse_map.image != NULL && flags.textures;
 		bool emission_map = material.emission_map.image != NULL && flags.textures;
+        bool blend_map = material.blend_map.image != NULL;
 		int currentTextureArb = 0;
 
 		if (bump_map)
@@ -115,7 +116,35 @@ bool OpenGL_Engine::DrawFill_MaterialStd_OpenGL13(GraphShadow& e, const Faces& t
 			currentTextureArb++;
 		}
 
-		if (!diffuse_map)
+		if (blend_map)
+		{
+			glActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
+			glClientActiveTextureARB(GL_TEXTURE0_ARB + currentTextureArb);
+			glDisable(GL_TEXTURE_COORD_ARRAY);
+
+            GLint mode = GL_MODULATE;
+
+			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+
+			(this->*BindTexture)(*material.blend_map.image, true);
+
+			const TexCoords *texCoords = NULL;
+
+			if (material.blend_map.texCoordsUnit < e.texCoords.size())
+			{
+				texCoords = e.texCoords[material.blend_map.texCoordsUnit];
+			}
+			else if (!e.texCoords.empty())
+			{
+				texCoords = e.texCoords[0];
+			}
+
+			assert(texCoords->size() == e.vertexes->size(), "TexCoords.size != Vertex.size");
+			(this->*BindTexCoords)(texCoords, &material.textureMatrix);
+			currentTextureArb++;
+		}
+
+        if (!diffuse_map)
 		{
 			glColor4fv(material.color.getfv());
 		}

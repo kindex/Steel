@@ -44,8 +44,11 @@ private:
 	float		born_interval;
 	float		last_born_time;
     int         init_size;
+    float       life_time;
 	size_t		limit_count;
     EmitterType type;
+    v3          velocity;
+    v3          random_velocity;
 };
 
 #endif

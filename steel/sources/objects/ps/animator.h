@@ -21,11 +21,16 @@ class SimpleAnimator: public ParticleAnimator
 {
 public:
 	bool initParticles();
-	bool InitFromConfig(Config&) {return true;}
-	bool updateInformation(IN OUT Engine&, IN const InterfaceId id) {return false;}
-	void process(IN const ProcessInfo& info) {return;}
+	bool InitFromConfig(Config&);
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id);
+	void process(IN const ProcessInfo& info);
 	void onParticleBorn(int index) {}
 	void onParticleDie(int index) {}
+
+private:
+    v3 wind;
+    float friction_k;
+    float friction_power;
 };
 
 

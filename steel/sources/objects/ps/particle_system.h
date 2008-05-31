@@ -27,6 +27,7 @@ struct Particle
 	v3 velocity;
 	// direction - angle
 	float size;
+    float life;
 };
 
 typedef pvector<Particle*> ParticleVector;
@@ -66,6 +67,7 @@ public:
 	virtual void born(Particle &particle, int index) abstract; // создать частицу
 	virtual void kill(int i); // убить частицу с номером i
     v3 getPosition() const { return position; }
+    void setPosition(v3 new_position) { position = new_position; }
 
 protected:
 	v3 position;
@@ -110,14 +112,15 @@ public:
 	void particleBorn(int index);
 	void particleDie(int index);
 
+	ParticleEmitter		*emitter;
+	ParticleRenderer	*renderer;
+	ParticleAnimator	*animator;
+
 private:
 	Config				*conf;
 	Config				*emitterConf;
 	Config				*rendererConf;
 	Config				*animatorConf;
-	ParticleEmitter		*emitter;
-	ParticleRenderer	*renderer;
-	ParticleAnimator	*animator;
 	ParticleSet			 particleSet;
 };
 

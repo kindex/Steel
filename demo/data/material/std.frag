@@ -51,6 +51,9 @@ uniform struct
 uniform sampler2D normal_map;
 uniform sampler2D diffuse_map;
 uniform sampler2D emission_map;
+#if blend_map == 1
+//uniform sampler2D blend_map;
+#endif
 
 #if mirror == 1 || sky == 1
 	uniform samplerCube env_map;
@@ -63,6 +66,9 @@ varying vec3 lightDirGlobal;  // global
 varying vec3 viewDirGlobal;     // global
 varying vec3 pixel_normal; // global
 varying vec2 texCoord0;
+#if blend_map == 1
+varying vec2 texCoord1;
+#endif
 varying vec3 texCoord7;
 
 
@@ -204,10 +210,17 @@ void main (void)
 #if mirror == 1
 	color += textureCube(env_map, r).rgb * env_k;
 #endif
-#if blending == 0
-    gl_FragColor = vec4(color, 1.0); // no blending
+
+    gl_FragColor.rgb = color; // no blending
+
+#if blend_map == 1
+    gl_FragColor.a = texCoord1.x;
+#else
+    gl_FragColor.a = 1.0;
 #endif
 #if blending == 1
-    gl_FragColor = vec4(color, texture2D(diffuse_map, texCoord0).a + texture2D(diffuse_map, texCoord0).a); // blend factor from texture
+    gl_FragColor.a *= texture2D(diffuse_map, texCoord0).a;
+    
+    //gl_FragColor = vec4(color, texture2D(diffuse_map, texCoord0).a; // + texture2D(diffuse_map, texCoord0).a); // blend factor from texture
 #endif
 }

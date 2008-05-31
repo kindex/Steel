@@ -13,40 +13,53 @@
 ************************************************************/
 #include "animator.h"
 #include "../../res/config/config.h"
-
-/*
-void UniPSanimator::ProcessPhysic(steel::time curTime, steel::time frameLength, ModificationTime _modificationTime)
-{
-	int size = set->particles.size();
-	int oldsize = children.size();
-	if(size != oldsize)
-	{
-		if(size > oldsize)
-		{
-			children.resize(size);
-			for(int i = oldsize; i < size; i++)
-			{
-				children[i] = new UniParticle(set->particles[i], conf);
-//				debugi(children[i]->getModificationTime());
-			}
-		}
-		if(size < (int)children.size())
-		{
-			for(int i = size; i < oldsize; i++)
-				delete children[i];
-			children.resize(size);
-		}
-
-		modificationTime = _modificationTime;
-		particleSystem->setChildrenChangeTime(_modificationTime);
-	}
-
-	for(int i=0; i<size; i++)
-		children[i]->setParticle(set->particles[i]);
-}
-*/
+#include "../../engine/engine_types.h"
 
 bool SimpleAnimator::initParticles()
 {
 	return true;
+}
+
+void SimpleAnimator::process(IN const ProcessInfo& info)
+{
+    for EACH(ParticleVector, set->particles, particle)
+    {
+        v3& velocity = (*particle)->velocity;
+        v3& position = (*particle)->position;
+
+        v3 local_velocity = velocity-wind;
+
+        float force = pow(local_velocity.getLength(), friction_power)*friction_k;
+
+        if (force > EPSILON)
+        {
+            v3 penalty = local_velocity*force*info.timeInfo.frameLength;
+            if (local_velocity.getSquaredLength() < penalty.getSquaredLength())
+            {
+                velocity = wind;
+            }
+            else
+            {
+                velocity -= penalty;
+            }
+        }
+
+        position += velocity*info.timeInfo.frameLength;
+    }
+
+    return;
+}
+
+bool SimpleAnimator::InitFromConfig(Config& conf)
+{
+    wind = conf.getv3("wind");
+    friction_power = conf.getf("particle.friction_power", 2);
+    friction_k = conf.getf("particle.friction_k", 1);
+
+    return true;
+}
+
+bool SimpleAnimator::updateInformation(IN OUT Engine&, IN const InterfaceId id)
+{
+    return false;
 }

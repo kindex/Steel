@@ -54,6 +54,11 @@ v3 prand_v3()
     return v3(prand(), prand(), prand());
 }
 
+v3 prand_v3(v3 distr)
+{
+    return v3(prand()*distr.x, prand()*distr.y, prand()*distr.z);
+}
+
 v3 frand_v3()
 {
     return v3(frand(), frand(), frand());

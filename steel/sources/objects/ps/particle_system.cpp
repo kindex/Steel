@@ -54,12 +54,18 @@ bool ParticleSystem::InitFromConfig(Config& _conf)
 {
 	conf = &_conf;
 
-	if( (emitterConf = conf->find("emitter")) == NULL)
+	if ((emitterConf = conf->find("emitter")) == NULL)
+    {
 		abort_init("error res ps", "Cannot find emitter config");
-	if( (rendererConf = conf->find("renderer")) == NULL)
+    }
+	if ((rendererConf = conf->find("renderer")) == NULL)
+    {
 		abort_init("error res ps", "Cannot find renderer config");
-	if( (animatorConf = conf->find("animator")) == NULL)
+    }
+	if ((animatorConf = conf->find("animator")) == NULL)
+    {
 		abort_init("error res ps", "Cannot find animator config");
+    }
 
 	particleSet.countScale = conf->getf("countScale", 1.0f);
 

@@ -81,23 +81,35 @@ void SimpleEmitter::born(Particle& particle, int index)
 
 
 	particle.size = particle_size;
+    particle.velocity = velocity + prand_v3(random_velocity);
+    particle.life = 1.0;
 	particleSystem->particleBorn(index);
 }
 
 
 void SimpleEmitter::process(IN const ProcessInfo& info)
 {
-	if (frand() < 0.0f && set->particles.size() > 1) // delete particle
-	{
-		int dieId = rand()%set->particles.size(); // particle number
+    for (size_t i = 0; i < set->particles.size();)
+    {
+        Particle& particle = *set->particles[i];
+        particle.life -= info.timeInfo.frameLength/life_time;
 
-		delete set->particles[dieId];
-
-		if ((size_t)(dieId + 1) < set->particles.size())
+        if (particle.life <= 0)
         {
-			set->particles[dieId] = set->particles.back();
+		    int dieId = i;
+
+		    delete set->particles[dieId];
+
+		    if ((size_t)(dieId + 1) < set->particles.size())
+            {
+			    set->particles[dieId] = set->particles.back();
+            }
+		    set->particles.pop_back();
         }
-		set->particles.pop_back();
+        else
+        {
+            i++;
+        }
 	}
 
 	if (type == EMITTER_SERIAL && last_born_time + born_interval < info.timeInfo.currentTime && set->particles.size() < limit_count)
@@ -121,6 +133,9 @@ bool SimpleEmitter::InitFromConfig(Config& _conf)
     particle_size = conf->getf("particle_size", 1.0f);
     born_interval = conf->getf("born_interval", 1.0f);
     limit_count = conf->geti("limit_count", 1000);
+    velocity = conf->getv3("velocity");
+    random_velocity = conf->getv3("random_velocity");
+    life_time = conf->getf("life_time", 1.0f);
 	
 	last_born_time = 0;
 

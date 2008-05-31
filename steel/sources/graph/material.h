@@ -122,6 +122,7 @@ public:
 	TextureStd normal_map;
 	TextureStd specular_map;
 	TextureStd emission_map;
+	TextureStd blend_map;
 	TextureEnv env_map;
 
 	color4f color;

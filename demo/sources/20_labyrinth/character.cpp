@@ -14,6 +14,7 @@
 #include <engine/engine.h>
 #include <objects/game_object_factory.h>
 #include <objects/combiner/graph_object.h>
+#include <objects/ps/emitter.h>
 #include <graph/graph_interface.h>
 #include <input/input.h>
 #include <res/res_main.h>
@@ -28,7 +29,8 @@ Character::Character():
     direction(v3(1, 0, 0)),
     owner(FREE),
     clientId(0),
-    position_is_set(false)
+    position_is_set(false),
+    smoke(NULL)
 {}
 
 bool Character::supportsInterface(IN OUT Engine&, IN const InterfaceId id)
@@ -68,6 +70,11 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
 
 void Character::process(const ProcessInfo& info)
 {
+    if (smoke != NULL)
+    {
+        smoke->emitter->setPosition(getPosition().getTranslation() + v3(0, 0, 0.4f));
+        smoke->process(info);
+    }
     if (input != NULL)
     {
         v3 dir = zero;
@@ -116,6 +123,10 @@ void Character::bindEngine(IN OUT Engine& engine, IN const InterfaceId id)
     if (graph_object != NULL && id == INTERFACE_GRAPH)
     {
         dynamic_cast<ChildrenInterface*>(&engine)->addChild(graph_object);
+        if (smoke != NULL)
+        {
+            dynamic_cast<ChildrenInterface*>(&engine)->addChild(smoke);
+        }
     }
 }
 

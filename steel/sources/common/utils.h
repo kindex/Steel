@@ -28,6 +28,7 @@ float prand();
 // random int number in interval [0..count-1]
 size_t irand(size_t count);
 v3 prand_v3();
+v3 prand_v3(v3 distr);
 v3 frand_v3();
 
 // convert string to v3 (vector components are devided with ',' [X,Y,Z])

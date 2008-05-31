@@ -129,7 +129,7 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
     }
     else if (!flags.posteffect && !posteffects.empty())
     {
-        createPosteffects();
+        deletePosteffects();
     }
 
     if (!flags.posteffect || posteffects.empty() || !flags.glsl)

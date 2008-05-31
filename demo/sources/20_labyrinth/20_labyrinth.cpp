@@ -401,6 +401,8 @@ Character* GameLabyrinth::createCharacter()
     character->graph_object = loadGraphObject(*graph_config, "");
     character->force = conf->getf("character.physic.force", 1.0f);
     character->trust_distance = conf->getf("character.physic.trust_distance", 100.0f);
+    character->smoke = new ParticleSystem();
+    character->smoke->InitFromConfig(*conf->find("character.smoke"));
 
     return character;
 }
