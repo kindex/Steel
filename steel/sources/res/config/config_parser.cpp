@@ -53,7 +53,7 @@ Config*	ConfigParser::Parse(Text* _file)
 		char c = seec();
 		
 		if(c != '\0') 
-			LOG_PARSE_ERROR(string("Unxpected symbol '") + c + "'. Expecting EOF");
+			LOG_PARSE_ERROR(string("Unexpected symbol '") + c + "'. Expecting EOF");
 	}
 	for EACH(svector<ParseError>, errors, it)
 	{

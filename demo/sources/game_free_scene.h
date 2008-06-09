@@ -38,6 +38,8 @@ public:
 
 	void bind(AudioEngine&);
 	void insonify(AudioEngine&);
+	//void processAudio(AudioEngine&);
+
 	bool isAlive() {return _alive;} 
     std::string getWindowCaption();
 

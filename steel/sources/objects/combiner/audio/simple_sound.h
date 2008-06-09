@@ -32,8 +32,9 @@ public:
 	Sound*	originalSound;		// must be vector		// ???
 private:
 	
-	float	delay;
-	bool	started;
+	float delay;
+	bool started;
+	bool autoPlay;
 
 	//v3 position;
 };

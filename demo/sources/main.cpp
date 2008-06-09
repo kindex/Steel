@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 		delete audio;
 		audio = NULL;
 	}
-
+	//test(audio);
 // ******************* GAME *************************
 	GameFactory gameFactory;
 	Game* game = gameFactory.createGame(steelConfig->gets("game_class"));
@@ -152,7 +152,8 @@ int main(int argc, char *argv[])
 		game->draw(*graph);
 		if (audio != NULL)
 		{
-			game->insonify(*audio);
+			game->insonify(*audio);  // update listener coords
+			//game->processAudio(*audio);
 		}
         graph->setCaption(game->getWindowCaption());
 

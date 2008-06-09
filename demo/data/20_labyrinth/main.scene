@@ -18,7 +18,8 @@ objects =
 	[/sun.conf#] {	origin = (-95 -42 31)}
 	[/sun_ambient.conf#] {	origin = (90 90 90)}
 	[/22_sky/sky.scene#] {}
-	[/22_sky/music.scene#] {}
+	//[/22_sky/music.scene#] {}
+	[/25_audio/audio.scene#] {}
 
 
 ) // objects

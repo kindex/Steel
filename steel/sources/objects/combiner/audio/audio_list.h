@@ -23,7 +23,7 @@ class AudioList: public AudioObject
 {
 public:
 	bool supportsInterface(IN OUT Engine& engine, IN const InterfaceId id);
-	bool updateInformation(IN OUT Engine&, IN const InterfaceId id){return false;}
+	bool updateInformation(IN OUT Engine&, IN const InterfaceId id) { return false; }
 	void bindEngine(IN OUT Engine&, IN const InterfaceId id);
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);

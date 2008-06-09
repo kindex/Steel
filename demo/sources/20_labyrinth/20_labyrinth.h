@@ -21,6 +21,7 @@
 #include "../objects/tag.h"
 
 #include <objects/combiner/graph_object.h>
+#include <objects/combiner/audio/simple_sound.h>
 #include <enet/enet.h>
 
 typedef std::vector<GraphObject*> GraphObjectVector;
@@ -42,6 +43,7 @@ public:
     std::string getWindowCaption();
 	void draw(GraphEngine&);
 	void bind(GraphEngine&);
+	void processAudio();
 
     friend class AgeiaInjector;
 
@@ -60,6 +62,9 @@ private:
     CellVisibilitySet current_sell_set;
     bool              createLabyrinth();
     void              updateVisibleObjects(GraphEngine&);
+	SimpleSound* winAudioObject;
+	SimpleSound* lossAudioObject;
+
 
 // -------------------- Game --------------------
     Character*      active_character;

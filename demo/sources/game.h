@@ -47,6 +47,8 @@ public:
 
 	virtual void bind(AudioEngine&) abstract;
 	virtual void insonify(AudioEngine&) abstract;
+	//virtual void processAudio(AudioEngine&) abstract;
+
     virtual std::string getWindowCaption() abstract;
 };
 

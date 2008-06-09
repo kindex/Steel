@@ -55,7 +55,9 @@ GameLabyrinth::GameLabyrinth():
     winner(NULL),
     cameraPenalty(1.0f),
     character_model(NULL),
-    floor(NULL)
+    floor(NULL),
+	winAudioObject(NULL),
+	lossAudioObject(NULL)
 {}
 
 void GameLabyrinth::ageiaInject(GameObject* object, const ObjectPosition& base_position)
@@ -183,6 +185,20 @@ GameLabyrinth::~GameLabyrinth()
     {
         deleteCharacter(characters.back());
     }
+
+	// deleting audio stuff
+	if (winAudioObject != NULL)
+	{
+		audioEngine->soundStop(winAudioObject->originalSound);
+		delete winAudioObject;
+		winAudioObject = NULL;
+	}
+	if (lossAudioObject != NULL)
+	{
+		audioEngine->soundStop(lossAudioObject->originalSound);
+		delete lossAudioObject;
+		lossAudioObject = NULL;
+	}
 
     log_msg("labyrinth", "Exiting from game");
 }
@@ -513,6 +529,8 @@ void GameLabyrinth::process()
 	GameFreeScene::process();
 
 	checkForWinner();
+
+	processAudio();
 
     switch (net_role)
     {
@@ -993,6 +1011,19 @@ void GameLabyrinth::restart()
     winner = NULL;
     game_state = GAME_PLAYING;
 
+	// clear audio stuff
+	if (winAudioObject != NULL)
+	{
+		audioEngine->soundStop(winAudioObject->originalSound);
+		delete winAudioObject;
+		winAudioObject = NULL;
+	}
+	if (lossAudioObject != NULL)
+	{
+		audioEngine->soundStop(lossAudioObject->originalSound);
+		delete lossAudioObject;
+		lossAudioObject = NULL;
+	}
 }
 
 void GameLabyrinth::updateVisibleObjects(GraphEngine& engine)
@@ -1045,4 +1076,99 @@ void GameLabyrinth::updateVisibleObjects(GraphEngine& engine)
             }
         }
     }
+}
+
+void GameLabyrinth::processAudio()
+{
+	switch (net_role)
+	{
+		case NET_CLIENT:
+			if (game_state == GAME_END)
+			{
+				if (client_winner.empty())
+				{
+					// winner sound playing
+					if (winAudioObject == NULL)
+					{
+						AudioObject* win = loadAudioObject(*conf, "sounds.win");
+
+						winAudioObject = dynamic_cast<SimpleSound*>(win);
+						if (winAudioObject == NULL)
+						{
+							delete win;
+							error("audio", "Cannot create sounds.win");
+						}
+						else
+						{
+							audioEngine->soundPlay(winAudioObject->originalSound);
+						}
+					}
+				}
+				else
+				{
+					// looser sound playing
+					if (lossAudioObject == NULL)
+					{
+						AudioObject* loss = loadAudioObject(*conf, "sounds.loss");
+
+						lossAudioObject = dynamic_cast<SimpleSound*>(loss);
+						if (lossAudioObject == NULL)
+						{
+							delete loss;
+							error("audio", "Cannot create sounds.loss");
+						}
+						else
+						{
+							audioEngine->soundPlay(lossAudioObject->originalSound);
+						}
+					}
+				}
+			}
+			break;
+
+		case NET_SERVER:
+			if (game_state == GAME_END)
+			{
+				if (winner == active_character)
+				{
+					// winner sound playing
+					if (winAudioObject == NULL)
+					{
+						AudioObject* win = loadAudioObject(*conf, "sounds.win");
+
+						winAudioObject = dynamic_cast<SimpleSound*>(win);
+						if (winAudioObject == NULL)
+						{
+							delete win;
+							error("audio", "Cannot create sounds.win");
+						}
+						else
+						{
+							audioEngine->soundPlay(winAudioObject->originalSound);
+						}
+					}
+				}
+				else
+				{
+					// looser sound playing
+					if (lossAudioObject == NULL)
+					{
+						AudioObject* loss = loadAudioObject(*conf, "sounds.loss");
+
+						lossAudioObject = dynamic_cast<SimpleSound*>(loss);
+						if (lossAudioObject == NULL)
+						{
+							delete loss;
+							error("audio", "Cannot create sounds.loss");
+						}
+						else
+						{
+							audioEngine->soundPlay(lossAudioObject->originalSound);
+						}
+					}
+				}
+			}
+			break;
+	}
+	return;
 }

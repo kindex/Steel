@@ -23,8 +23,6 @@ class Sound
 public:
 	Sound();
 
-//	uid id;
-
 	Audio* sound;
 
 	uid id;

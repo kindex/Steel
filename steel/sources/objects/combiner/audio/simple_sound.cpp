@@ -30,6 +30,7 @@ bool SimpleSound::InitFromConfig(Config& conf)
 	originalSound->sound = resAudio.add(conf.getPath("file"));
 	sndId = conf.gets("sndId", "");
 	delay = conf.getf("delay", 0.0);
+	autoPlay = conf.getb("autoPlay", 0);
 	started = false;
 	//engine->soundPlay(originalSound);
 
@@ -57,8 +58,9 @@ void SimpleSound::bindEngine(Engine& aEngine, IN const InterfaceId id)
 void SimpleSound::process(IN const ProcessInfo& info)
 {
 	originalSound->position = position;
-	if (!started && info.timeInfo.currentTime > delay)
+	if (!started && info.timeInfo.currentTime > delay && autoPlay)
 	{
+		// sound starts to play only if autoPlay = true
 		soundPlay(originalSound);
 		started = true;
 	}
