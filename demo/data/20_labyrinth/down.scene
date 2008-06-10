@@ -12,11 +12,24 @@ graph =
 	{
 		class = 'std'
 		blend = 0
-		diffuse_map =
-		{ 
-			image = 'box1_side_no_handle_d' // 'crate1_top_d'
-		}
-		texCoordsScale = (4 4 4)
+			diffuse_map =
+			{ 
+				image = 'medflr3_d'
+			}
+
+			normal_map = 
+			{
+				image = 'medflr3_local'
+			}
+			specular_map = 
+			{
+				image = 'medflr3_med_s'
+				power = 10
+				k = 14
+			}
+
+
+		texCoordsScale = (5 5 5)
 		catchShadows = 1
 		dropShadows = 1
 		ambient_k = 0.5

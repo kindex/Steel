@@ -12,11 +12,30 @@ graph =
 	{
 		class = 'std'
 		blend = 0
-		diffuse_map =
-		{ 
-			image = 'box4_side_no_handle_d'
-		}
-		texCoordsScale = (4 4 4)
+
+			diffuse_map =
+			{ 
+				image = '/20_labyrinth/Wall_Right/sopanel25a_large'
+			}
+
+			normal_map = 
+			{
+				image = '/20_labyrinth/Wall_Right/sopanel25a_large_local'
+			}
+			specular_map = 
+			{
+				image = '/20_labyrinth/Wall_Right/sopanel25_s'
+				power = 20
+				k = 14
+			}
+			emission_map = 
+			{
+				image = '/20_labyrinth/Wall_Right/sopanel25neolight_add'
+				k = 1.2
+			}
+
+
+		texCoordsScale = (2 2 2)
 		catchShadows = 1
 		dropShadows = 1
 		ambient_k = 0.5

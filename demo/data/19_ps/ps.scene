@@ -5,11 +5,13 @@
 	{
 		class = 'simple'
 		particle_size = 0.0509
+		//particle_size = 0.0509
+
 		init_size = 0
-		emitter_size = 0.8
+		emitter_size = 0.6
 		emitter_type = 'serial'
-		born_interval = 0.09
-		limit_count = 1300
+		born_interval = 0
+		limit_count = 1400
 	}
 /*	renderer =  {
 		class = 'sprite'
