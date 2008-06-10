@@ -1144,7 +1144,10 @@ void GameLabyrinth::processAudio()
 						}
 						else
 						{
-							audioEngine->soundPlay(winAudioObject->originalSound);
+                            if (audioEngine != NULL)
+                            {
+							    audioEngine->soundPlay(winAudioObject->originalSound);
+                            }
 						}
 					}
 				}
@@ -1163,7 +1166,10 @@ void GameLabyrinth::processAudio()
 						}
 						else
 						{
-							audioEngine->soundPlay(lossAudioObject->originalSound);
+                            if (audioEngine != NULL)
+                            {
+    							audioEngine->soundPlay(lossAudioObject->originalSound);
+                            }
 						}
 					}
 				}

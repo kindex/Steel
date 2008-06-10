@@ -15,6 +15,10 @@
 #include "../common/logger.h"
 #include "../res/res_main.h"
 
+Console::Console() :
+    line_count(0)
+{}
+
 bool Console::updateInformation(Engine& engine, IN const InterfaceId interface_id)
 {
 	if (interface_id == INTERFACE_GRAPH)
@@ -44,10 +48,21 @@ bool Console::updateInformation(Engine& engine, IN const InterfaceId interface_i
 	return false;
 }
 
-void Console::add(const std::string& line)
+void Console::write_line(const std::string& line)
 {
+    while (line_count > 10)
+    {
+        shift();
+    }
     lines.push_back(line);
+    line_count++;
     log_msg("console", line);
+}
+
+void Console::shift()
+{
+    line_count--;
+    lines.pop_front();
 }
 
 void Console::clear()

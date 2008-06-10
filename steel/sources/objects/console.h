@@ -21,6 +21,7 @@
 class Console: public GameObject
 {
 public:
+    Console();
 	bool supportsInterface(Engine& engine, IN const InterfaceId id)
 	{
 		return id == INTERFACE_GRAPH;
@@ -29,11 +30,13 @@ public:
 	void process(IN const ProcessInfo&){}
     bool InitFromConfig(IN Config&) { return false; }
     Config* getConfig() const { return NULL; }
-    void add(const std::string& line);
+    void write_line(const std::string& line);
     void clear();
+    void shift();
 
 private:
     std::deque<std::string> lines;
+    size_t                  line_count;
 };
 
 extern Console console;
