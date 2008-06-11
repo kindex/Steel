@@ -15,12 +15,17 @@ objects =
 		name = 'character_start'
 	}
 
-	[/sun.conf#] {	origin = (-95 -42 31)}
-	[/sun_ambient.conf#] {	origin = (90 90 90)}
+	[sun.conf#] {	origin = (-95 -42 31)}
+	[lightEnd.conf#]{origin = (5 6.8 1.1)}
+	[lightStart.conf#]{origin = (0.5 0.5 0.5)}
+	[sun_ambient.conf#] {	origin = (90 90 90)}
+
+	[lightSimple.conf#]{origin = (4 1.5 0.5)}
+	[lightSimple.conf#]{origin = (0 3.2 0.5)}
+
 	[/22_sky/sky.scene#] {}
 	//[/22_sky/music.scene#] {}
 	[/25_audio/audio.scene#] {}
-
 
 ) // objects
 } // scene
