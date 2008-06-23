@@ -16,6 +16,7 @@
 
 #include <objects/combiner/graph_object.h>
 #include <objects/ps/particle_system.h>
+#include <objects/combiner/audio/simple_sound.h>
 
 class NxActor;
 class Input;
@@ -51,6 +52,9 @@ public:
     void setDirection(const v3&);
     void setInput(Input*);
 
+	void setIdleSound(SimpleSound*);
+	SimpleSound* getIdleSound() const;
+
     enum Owner
     {
         FREE,
@@ -77,6 +81,10 @@ private:
     Owner          owner;
     uid            clientId;
     std::string    name;
+
+	// sounds
+	AudioObject* idleSound;
+	AudioObject* startSound;
 };
 
 typedef std::vector<Character*> CharacterVector;

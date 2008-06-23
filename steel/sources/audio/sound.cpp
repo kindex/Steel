@@ -22,5 +22,6 @@ Sound::Sound()
 	rolloffFactor = 0.0f;
 	sourceRelative = 0;
 	id = objectIdGenerator.genUid();
+	isStarted = false;
 }
 

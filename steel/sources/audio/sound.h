@@ -33,6 +33,7 @@ public:
 	bool isLoop;
 	float rolloffFactor;
 	int sourceRelative;
+	bool isStarted;
 };
 
 #endif

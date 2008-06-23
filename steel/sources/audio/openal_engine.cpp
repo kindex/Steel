@@ -320,11 +320,16 @@ bool OpenALEngine::soundPlay(Sound* sound)
 	}
 	*/
 
+	if (sound->isStarted)
+	{
+		return false;
+	}
+
 	AudioShadowMap::iterator it = shadows.find(sound->id);
 	if (it != shadows.end())
 	{
 		soundUpdate(sound);
-		alSourceStop(it->second->source.source);
+		//alSourceStop(it->second->source.source);
 		alSourcePlay(it->second->source.source);
 	}
 	else
@@ -356,6 +361,7 @@ bool OpenALEngine::soundPlay(Sound* sound)
 		alSourcePlay(shadow->source.source);
 		CheckALError();
 	}
+	sound->isStarted = true;
 	return true;
 }
 
@@ -363,6 +369,7 @@ bool OpenALEngine::soundStop(Sound* sound)
 {
 	AudioShadowMap::iterator it = shadows.find(sound->id);
 	alSourceStop(it->second->source.source);
+	sound->isStarted = false;
 	return true;
 }
 

@@ -30,7 +30,9 @@ Character::Character():
     owner(FREE),
     clientId(0),
     position_is_set(false),
-    smoke(NULL)
+    smoke(NULL),
+	idleSound(NULL),
+	startSound(NULL)
 {}
 
 bool Character::supportsInterface(IN OUT Engine&, IN const InterfaceId id)
@@ -210,3 +212,17 @@ void Character::traverse(Visitor& visitor, const ObjectPosition& base_position)
         visitor.postvisit(this, new_position);
     }
 }
+
+void Character::setIdleSound(SimpleSound* ref)
+{
+	if (ref != NULL)
+	{
+		idleSound = ref;
+	}
+}
+/*
+SimpleSound* getIdleSound() const
+{
+	return idleSound;
+}
+*/

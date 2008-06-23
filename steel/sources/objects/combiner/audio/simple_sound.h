@@ -25,6 +25,8 @@ public:
 	void process(IN const ProcessInfo&);
 	bool InitFromConfig(IN Config&);
     Config* getConfig() const;
+	bool isStarted() const { return started; }
+	void start() { started = true; }
 
 	//v3 getPosition() { return position; }
 	//void setPosition(v3 newPosition) { position = newPosition; }

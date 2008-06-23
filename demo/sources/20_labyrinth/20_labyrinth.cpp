@@ -108,7 +108,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 		abort_init("ageia", "Cannot init Ageia");
 		return false;
 	}
-
+	
 // network
     std::string net_role_str = conf->gets("net.role", "server");
     loadScene(conf->find("scene"));
@@ -420,6 +420,32 @@ Character* GameLabyrinth::createCharacter()
     character->smoke = new ParticleSystem();
     character->smoke->InitFromConfig(*conf->find("character.smoke"));
 
+	if (character->startSound == NULL)
+	{
+		character->startSound = loadAudioObject(*conf, "character.sounds.start");
+		//character->startSound = dynamic_cast<SimpleSound*>(idle);
+		if (character->startSound == NULL)
+		{
+			delete character->startSound;
+			error("audio", "Cannot create character.sounds.start");
+		}
+	}
+	if (character->idleSound == NULL)
+	{
+		character->idleSound = loadAudioObject(*conf, "character.sounds.idle");
+		//character->idleSound = dynamic_cast<SimpleSound*>(idle);
+		if (character->idleSound == NULL)
+		{
+			delete character->idleSound;
+			error("audio", "Cannot create character.sounds.idle");
+		}
+	}
+/*
+	if (character->idleSound != NULL && audioEngine != NULL)
+    {
+	    audioEngine->soundPlay(character->idleSound->originalSound);
+    }
+*/
     return character;
 }
 
@@ -998,6 +1024,25 @@ void GameLabyrinth::restart()
             (*it)->setVelocity(zero);
             (*it)->setAngularMomentum(zero);
 
+			
+			if ((*it)->startSound != NULL && audioEngine != NULL)
+			{
+				//(*it)->startSound->setPosition(v3(0,0,0));
+				(*it)->startSound->setPosition(pos.getVector());
+				(*it)->startSound->process(ProcessInfo());
+				audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->startSound)->originalSound );
+				audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->startSound)->originalSound );
+			}
+
+			if ((*it)->idleSound != NULL && audioEngine != NULL)
+			{
+				//(*it)->idleSound->setPosition(v3(0,0,0));
+				(*it)->idleSound->setPosition(pos.getVector());
+				(*it)->idleSound->process(ProcessInfo());
+				audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound );
+				audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound );
+			}
+
             (*tag)->user_info = (void*)*it;
             it++;
         }
@@ -1176,5 +1221,58 @@ void GameLabyrinth::processAudio()
 			}
 			break;
 	}
+
+	// updating objects
+	 for EACH(TagVector, character_starts, tag)
+    {
+        (*tag)->user_info = NULL;
+    }
+	CharacterVector::iterator it = characters.begin();
+    for EACH(TagVector, character_starts, tag)
+	//for EACH(CharacterVector, characters, it)
+    {
+		if (it != characters.end())
+		{
+
+    		if ((*it)->startSound != NULL && audioEngine != NULL)
+			{
+				(*it)->startSound->setPosition((*it)->getPosition().getVector());
+				(*it)->startSound->process(ProcessInfo());
+				bool startd = dynamic_cast<SimpleSound*>((*it)->startSound)->isStarted();
+				if (startd)
+				{
+					audioEngine->soundUpdate( dynamic_cast<SimpleSound*>((*it)->startSound)->originalSound );
+				}
+				else
+				{
+					dynamic_cast<SimpleSound*>((*it)->startSound)->start();
+					audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->startSound)->originalSound );
+				}
+			}
+
+			if ((*it)->idleSound != NULL && audioEngine != NULL)
+			{
+				(*it)->idleSound->setPosition((*it)->getPosition().getVector());
+				(*it)->idleSound->process(ProcessInfo());
+				if (dynamic_cast<SimpleSound*>((*it)->idleSound)->isStarted())
+				{
+					audioEngine->soundUpdate(dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound);
+				}
+				else
+				{
+					dynamic_cast<SimpleSound*>((*it)->idleSound)->start();
+					audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound );
+				}
+			}
+			 (*tag)->user_info = (void*)*it;
+			it++;
+		}
+		else
+		{
+			break;
+		}
+    }
+
+
 	return;
 }
