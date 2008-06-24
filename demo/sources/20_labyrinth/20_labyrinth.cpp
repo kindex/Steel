@@ -423,7 +423,6 @@ Character* GameLabyrinth::createCharacter()
 	if (character->startSound == NULL)
 	{
 		character->startSound = loadAudioObject(*conf, "character.sounds.start");
-		//character->startSound = dynamic_cast<SimpleSound*>(idle);
 		if (character->startSound == NULL)
 		{
 			delete character->startSound;
@@ -433,19 +432,12 @@ Character* GameLabyrinth::createCharacter()
 	if (character->idleSound == NULL)
 	{
 		character->idleSound = loadAudioObject(*conf, "character.sounds.idle");
-		//character->idleSound = dynamic_cast<SimpleSound*>(idle);
 		if (character->idleSound == NULL)
 		{
 			delete character->idleSound;
 			error("audio", "Cannot create character.sounds.idle");
 		}
 	}
-/*
-	if (character->idleSound != NULL && audioEngine != NULL)
-    {
-	    audioEngine->soundPlay(character->idleSound->originalSound);
-    }
-*/
     return character;
 }
 
@@ -1027,7 +1019,6 @@ void GameLabyrinth::restart()
 			
 			if ((*it)->startSound != NULL && audioEngine != NULL)
 			{
-				//(*it)->startSound->setPosition(v3(0,0,0));
 				(*it)->startSound->setPosition(pos.getVector());
 				(*it)->startSound->process(ProcessInfo());
 				audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->startSound)->originalSound );
@@ -1036,7 +1027,6 @@ void GameLabyrinth::restart()
 
 			if ((*it)->idleSound != NULL && audioEngine != NULL)
 			{
-				//(*it)->idleSound->setPosition(v3(0,0,0));
 				(*it)->idleSound->setPosition(pos.getVector());
 				(*it)->idleSound->process(ProcessInfo());
 				audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound );
@@ -1223,13 +1213,8 @@ void GameLabyrinth::processAudio()
 	}
 
 	// updating objects
-	 for EACH(TagVector, character_starts, tag)
-    {
-        (*tag)->user_info = NULL;
-    }
 	CharacterVector::iterator it = characters.begin();
     for EACH(TagVector, character_starts, tag)
-	//for EACH(CharacterVector, characters, it)
     {
 		if (it != characters.end())
 		{
@@ -1264,7 +1249,6 @@ void GameLabyrinth::processAudio()
 					audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound );
 				}
 			}
-			 (*tag)->user_info = (void*)*it;
 			it++;
 		}
 		else

@@ -52,9 +52,6 @@ public:
     void setDirection(const v3&);
     void setInput(Input*);
 
-	void setIdleSound(SimpleSound*);
-	SimpleSound* getIdleSound() const;
-
     enum Owner
     {
         FREE,

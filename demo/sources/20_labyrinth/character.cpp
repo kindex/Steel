@@ -213,16 +213,3 @@ void Character::traverse(Visitor& visitor, const ObjectPosition& base_position)
     }
 }
 
-void Character::setIdleSound(SimpleSound* ref)
-{
-	if (ref != NULL)
-	{
-		idleSound = ref;
-	}
-}
-/*
-SimpleSound* getIdleSound() const
-{
-	return idleSound;
-}
-*/
