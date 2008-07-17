@@ -19,6 +19,8 @@
 #include "utils.h"
 #include "timer.h"
 #include <sstream>
+#include "containers.h"
+#include "../objects/console.h"
 
 #if STEEL_OS == OS_WIN32
 #define NOMINMAX
@@ -28,6 +30,7 @@
 #include <time.h>
 #include <map>
 #include <iomanip>
+#include <set>
 
 using namespace std;
 
@@ -170,9 +173,12 @@ void _log_msg(string keywords, string message)
 {
 	svector<string> keys;
 	explode(' ', keywords, keys);
+    std::set<std::string> keys_set;
+
 	for EACH(svector<string>, keys, it)
 	{
 		string key = *it;
+        keys_set.insert(key);
 		if (loggers.find(key) == loggers.end())
 		{
 			loggers[key] = new Logger;
@@ -181,9 +187,15 @@ void _log_msg(string keywords, string message)
 		loggers[key]->setLevel(steel::log.getLevel());
 		loggers[key]->msg(keywords, message);
 	}
+
 	if (logFilter.check(keywords))
     {
 		steel::log.msg(keywords, message);
+    }
+
+    if (present("error", keys_set))
+    {
+        console.write(message);
     }
 }
 

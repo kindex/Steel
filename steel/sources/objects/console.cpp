@@ -27,13 +27,13 @@ bool Console::updateInformation(Engine& engine, IN const InterfaceId interface_i
 
         GraphTextVector tv;
         int line = 0;
-        float height = 0.04f;
+        float height = 0.06f;
         for (std::deque<std::string>::iterator it = lines.begin(); it != lines.end(); it++)
         {
             GraphText text(*it, 
                            ObjectPosition::createTranslationMatrix(v3(-1, 1 - line*height, 0)),
                            POSITION_SCREEN,
-                           v2(height, height*0.75f),
+                           v2(height, height),
                            SPRITE_ALIGN_SCREEN,
                            GraphText::ALIGN_LEFT_TOP,
                            resFont.add("/font/arial"),
@@ -48,7 +48,7 @@ bool Console::updateInformation(Engine& engine, IN const InterfaceId interface_i
 	return false;
 }
 
-void Console::write_line(const std::string& line)
+void Console::write(const std::string& line)
 {
     while (line_count > 10)
     {

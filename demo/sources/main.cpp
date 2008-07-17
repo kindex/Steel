@@ -67,6 +67,7 @@ int main(int argc, char *argv[])
 	if (!test())
 	{
 		steel::log.close();
+		error("core test", "Tests failed");
 		return 99;
 	}
 
@@ -80,7 +81,7 @@ int main(int argc, char *argv[])
 
 	if (steelConfig == NULL)
 	{
-		error("core config", "Cannot parse config : " + commandLine);
+		error("core config fatal", "Cannot parse config : " + commandLine);
 		return 1;
 	}
 
@@ -88,14 +89,14 @@ int main(int argc, char *argv[])
 	InputWin* input = new InputWin;
 	if (!input->init(steelConfig->find("input")))
 	{
-		error("core config", "Fatal error: cannot find input config");
+		error("core config fatal", "Cannot initialize input engine");
 		return 2;
 	}
 // ******************* GRAPH ************************
 	opengl::OpenGL_Engine* graph = new opengl::OpenGL_Engine();
 	if (!graph->init(steelConfig->find("graph"), input))
 	{
-		error("core config", "Fatal error: cannot find graph config");
+		error("core config fatal", "Cannot initialize graph engine");
 		return 3;
 	}
 // ******************* AUDIO ************************
@@ -106,7 +107,7 @@ int main(int argc, char *argv[])
 	Config* audioConfig = steelConfig->find("audio");
 	if (audio == NULL || audioConfig == NULL || !audio->init(*audioConfig))
 	{
-		error("core config", "Warning: cannot find audio config");
+		error("core config", "Cannot initialize audio engine");
 		delete audio;
 		audio = NULL;
 	}
@@ -116,7 +117,7 @@ int main(int argc, char *argv[])
 	Game* game = gameFactory.createGame(steelConfig->gets("game_class"));
 	if (game == NULL)
 	{
-		error("core config", "Fatal error: unknown game class '" + steelConfig->gets("game_class") + "'");
+		error("core config fatal", "Unknown game class '" + steelConfig->gets("game_class") + "'");
 		return 5;
 	}
 

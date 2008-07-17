@@ -30,7 +30,7 @@ public:
 	void process(IN const ProcessInfo&){}
     bool InitFromConfig(IN Config&) { return false; }
     Config* getConfig() const { return NULL; }
-    void write_line(const std::string& line);
+    void write(const std::string& line);
     void clear();
     void shift();
 
