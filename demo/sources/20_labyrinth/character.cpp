@@ -32,7 +32,9 @@ Character::Character():
     position_is_set(false),
     smoke(NULL),
 	idleSound(NULL),
-	startSound(NULL)
+	startSound(NULL),
+    moveSound(NULL),
+    state(IDLE)
 {}
 
 bool Character::supportsInterface(IN OUT Engine&, IN const InterfaceId id)
@@ -98,6 +100,11 @@ void Character::process(const ProcessInfo& info)
 
             NxVec3 old_vec = physic_object->getLinearVelocity();
             physic_object->setLinearVelocity(old_vec + gForceStrength*tonx(forceDirection));
+            state = MOVING;
+        }
+        else
+        {
+            state = IDLE;
         }
     }
 }

@@ -27,6 +27,7 @@ public:
     Config* getConfig() const;
 	bool isStarted() const { return started; }
 	void start() { started = true; }
+    void stop() { started = false; }
 
 	//v3 getPosition() { return position; }
 	//void setPosition(v3 newPosition) { position = newPosition; }

@@ -438,6 +438,15 @@ Character* GameLabyrinth::createCharacter()
 			error("audio", "Cannot create character.sounds.idle");
 		}
 	}
+    if (character->moveSound == NULL)
+    {
+        character->moveSound = loadAudioObject(*conf, "character.sounds.move");
+        if (character->moveSound == NULL)
+        {
+            delete character->moveSound;
+            error("audio", "Cannot create character.sounds.move");
+        }
+    }
     return character;
 }
 
@@ -1021,6 +1030,7 @@ void GameLabyrinth::restart()
 			{
 				(*it)->startSound->setPosition(pos.getVector());
 				(*it)->startSound->process(ProcessInfo());
+                // should be check here, if files are not present - fatal error
 				audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->startSound)->originalSound );
 				audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->startSound)->originalSound );
 			}
@@ -1031,6 +1041,14 @@ void GameLabyrinth::restart()
 				(*it)->idleSound->process(ProcessInfo());
 				audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound );
 				audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound );
+			}
+
+            if ((*it)->moveSound != NULL && audioEngine != NULL)
+			{
+				(*it)->moveSound->setPosition(pos.getVector());
+				(*it)->moveSound->process(ProcessInfo());
+				audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->moveSound)->originalSound );
+   				//audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->moveSound)->originalSound );
 			}
 
             (*tag)->user_info = (void*)*it;
@@ -1248,6 +1266,51 @@ void GameLabyrinth::processAudio()
 					dynamic_cast<SimpleSound*>((*it)->idleSound)->start();
 					audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound );
 				}
+			
+
+                if ( (dynamic_cast<SimpleSound*>((*it)->idleSound)->isStarted()) && ( (*it)->state == MOVING ))
+			    {
+                        dynamic_cast<SimpleSound*>((*it)->idleSound)->stop();
+				        audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound );
+			    }
+                if ( (dynamic_cast<SimpleSound*>((*it)->idleSound)->isStarted() == false) && ( (*it)->state == IDLE ))
+                {
+                    dynamic_cast<SimpleSound*>((*it)->idleSound)->start();
+			        audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound );
+                }
+                if ( (dynamic_cast<SimpleSound*>((*it)->idleSound)->isStarted()) && ( (*it)->state == IDLE ))
+                {
+                    audioEngine->soundUpdate(dynamic_cast<SimpleSound*>((*it)->idleSound)->originalSound);
+                }
+		    }
+
+            if ((*it)->moveSound != NULL && audioEngine != NULL)
+			{
+                //(*it)->state
+				(*it)->moveSound->setPosition((*it)->getPosition().getVector());
+				(*it)->moveSound->process(ProcessInfo());
+				if ( (dynamic_cast<SimpleSound*>((*it)->moveSound)->isStarted()) && ( (*it)->state == MOVING ))
+				{
+					audioEngine->soundUpdate(dynamic_cast<SimpleSound*>((*it)->moveSound)->originalSound);
+				}
+                if ( (dynamic_cast<SimpleSound*>((*it)->moveSound)->isStarted() == false) && ( (*it)->state == MOVING ))
+                {
+                    dynamic_cast<SimpleSound*>((*it)->moveSound)->start();
+				    audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->moveSound)->originalSound );
+                }
+                if ( (dynamic_cast<SimpleSound*>((*it)->moveSound)->isStarted()) && ( (*it)->state == IDLE ))
+                {
+                    dynamic_cast<SimpleSound*>((*it)->moveSound)->stop();
+				    audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->moveSound)->originalSound );
+                }
+
+                /*
+				else
+				{
+					dynamic_cast<SimpleSound*>((*it)->moveSound)->start();
+					audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->moveSound)->originalSound );
+				}
+                */
 			}
 			it++;
 		}

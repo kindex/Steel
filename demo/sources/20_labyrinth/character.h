@@ -18,6 +18,8 @@
 #include <objects/ps/particle_system.h>
 #include <objects/combiner/audio/simple_sound.h>
 
+enum CharacterState { IDLE, MOVING };
+
 class NxActor;
 class Input;
 
@@ -82,6 +84,9 @@ private:
 	// sounds
 	AudioObject* idleSound;
 	AudioObject* startSound;
+    AudioObject* moveSound;
+
+    CharacterState state;
 };
 
 typedef std::vector<Character*> CharacterVector;
