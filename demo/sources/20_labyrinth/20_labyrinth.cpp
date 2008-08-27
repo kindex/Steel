@@ -1030,7 +1030,7 @@ void GameLabyrinth::restart()
 			{
 				(*it)->startSound->setPosition(pos.getVector());
 				(*it)->startSound->process(ProcessInfo());
-                // should be check here, if files are not present - fatal error
+                // TODO: should be check here, if files are not present - fatal error
 				audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->startSound)->originalSound );
 				audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->startSound)->originalSound );
 			}
