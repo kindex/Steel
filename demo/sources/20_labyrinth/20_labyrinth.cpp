@@ -187,18 +187,22 @@ GameLabyrinth::~GameLabyrinth()
     }
 
 	// deleting audio stuff
-	if (winAudioObject != NULL)
-	{
-		audioEngine->soundStop(winAudioObject->originalSound);
-		delete winAudioObject;
-		winAudioObject = NULL;
-	}
-	if (lossAudioObject != NULL)
-	{
-		audioEngine->soundStop(lossAudioObject->originalSound);
-		delete lossAudioObject;
-		lossAudioObject = NULL;
-	}
+	if (audioEngine != NULL)
+    {
+        if (winAudioObject != NULL)
+	    {
+		    audioEngine->soundStop(winAudioObject->originalSound);
+		    delete winAudioObject;
+		    winAudioObject = NULL;
+	    }
+
+	    if (lossAudioObject != NULL)
+	    {
+		    audioEngine->soundStop(lossAudioObject->originalSound);
+		    delete lossAudioObject;
+		    lossAudioObject = NULL;
+	    }
+    }
 
     log_msg("labyrinth", "Exiting from game");
 }
@@ -417,8 +421,16 @@ Character* GameLabyrinth::createCharacter()
     character->graph_object = loadGraphObject(*graph_config, "");
     character->force = conf->getf("character.physic.force", 1.0f);
     character->trust_distance = conf->getf("character.physic.trust_distance", 100.0f);
-    character->smoke = new ParticleSystem();
-    character->smoke->InitFromConfig(*conf->find("character.smoke"));
+    Config* smoke = conf->find("character.smoke");
+    if (smoke == NULL)
+    {
+        error("labyrinth", "No character smoke config");
+    }
+    else
+    {
+        character->smoke = new ParticleSystem();
+        character->smoke->InitFromConfig(*smoke);
+    }
 
 	if (character->startSound == NULL)
 	{

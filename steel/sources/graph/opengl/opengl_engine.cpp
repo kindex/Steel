@@ -30,6 +30,7 @@
 #include <gl/glu.h>
 #include "ext/frame_buffer.h"
 #include "../../common/containers.h"
+#include "../../common/cast.h"
 
 #undef min
 #undef DrawText
@@ -172,21 +173,20 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
             if (shader != NULL)
             {
     	        shader->clearTextures();
-                shader->bindTextureRaw("input1", posteffect->input1->texture);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-                if (posteffect->input2 != NULL)
+                for (size_t i = 0; i < posteffect->input.size(); i++)
                 {
-                    shader->bindTextureRaw("input2", posteffect->input2->texture);
+                    shader->bindTextureRaw("input" + cast<std::string>(i), posteffect->input[i]->texture);
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+				    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
                 }
-                shader->setUniformFloat("xoffset", 1.0f/posteffect->input1->width);
-                shader->setUniformFloat("yoffset", 1.0f/posteffect->input1->height);
+
+                shader->setUniformFloat("xoffset", 1.0f/posteffect->input[0]->width);
+                shader->setUniformFloat("yoffset", 1.0f/posteffect->input[0]->height);
             }
             else
             {
                 glEnable(GL_TEXTURE_2D);
-                glBindTexture(GL_TEXTURE_2D, posteffect->input1->texture);
+                glBindTexture(GL_TEXTURE_2D, posteffect->input[0]->texture);
             }
             glBegin(GL_QUADS);
                 glTexCoord2f(0, 0); glVertex2f(-1, -1);
@@ -1062,8 +1062,6 @@ Frame* OpenGL_Engine::createFrameBuffer(const std::string& name)
 
 OpenGL_Engine::Posteffect::Posteffect() :
     conf(NULL),
-    input1(NULL),
-    input2(NULL),
     output(NULL)
 {}
 
@@ -1118,8 +1116,21 @@ void OpenGL_Engine::createPosteffects()
 
     for EACH(PosteffectVector, posteffects, posteffect)
     {
-        posteffect->input1 = createFrameBuffer(posteffect->conf->gets("input1"));
-        posteffect->input2 = createFrameBuffer(posteffect->conf->gets("input2"));
+        Config* input_conf = posteffect->conf->find("input");
+
+        if (input_conf->getType() == CONFIG_VALUE_ARRAY)
+        {
+            ConfigArray* input_arr = static_cast<ConfigArray*>(input_conf);
+            for EACH_CONST(ConfigArray, *input_arr, it)
+            {
+                posteffect->input.push_back(createFrameBuffer((*it)->gets("")));
+            }
+        }
+        else
+        {
+            posteffect->input.push_back(createFrameBuffer(posteffect->conf->gets("input")));
+        }
+
         posteffect->output = createFrameBuffer(posteffect->conf->gets("output"));
     }
 }

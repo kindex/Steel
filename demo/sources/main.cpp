@@ -20,6 +20,7 @@
 #include <graph/opengl/opengl_engine.h>
 #include <audio/openal_engine.h>
 #include <res/config/config_parser.h>
+#include <objects/console.h>
 #include "main.h"
 #include "game_factory.h"
 #include <input/input_win.h>
@@ -101,17 +102,37 @@ int main(int argc, char *argv[])
 	}
 // ******************* AUDIO ************************
 	AudioEngine *audio = NULL;
-#ifdef LIB_OPENAL
-	audio = new OpenALEngine();
-#endif
 	Config* audioConfig = steelConfig->find("audio");
-	if (audio == NULL || audioConfig == NULL || !audio->init(*audioConfig))
-	{
-		error("core config", "Cannot initialize audio engine");
-		delete audio;
-		audio = NULL;
-	}
-
+	if (audioConfig == NULL)
+    {
+		error("core config", "Cannot find audio config");
+    }
+    else
+    {
+        if (!audioConfig->getb("enabled", true))
+        {
+            warn("core config", "Audio engine is disabled in config");
+        }
+        else
+        {
+            #ifdef LIB_OPENAL
+	            audio = new OpenALEngine();
+            #endif
+            if (audio == NULL)
+            {
+        		error("core config", "No audio support");
+            }
+            else
+            {
+                if (!audio->init(*audioConfig))
+	            {
+		            error("core config", "Cannot initialize audio engine");
+		            delete audio;
+		            audio = NULL;
+	            }
+            }
+        }
+    }
 // ******************* GAME *************************
 	GameFactory gameFactory;
 	Game* game = gameFactory.createGame(steelConfig->gets("game_class"));
@@ -149,6 +170,7 @@ int main(int argc, char *argv[])
 		
 		game->handleMouse(dx, -dy);
 		game->process();
+        console.process();
 
 		game->draw(*graph);
 		if (audio != NULL)

@@ -192,8 +192,7 @@ private:
 
         StringDict parameters;
         Config* conf;
-        Frame* input1;
-        Frame* input2;
+        std::vector<Frame*> input;
         Frame* output;
         std::string shader;
     };

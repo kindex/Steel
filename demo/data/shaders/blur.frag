@@ -1,6 +1,6 @@
 // Blur
 
-uniform sampler2D input1;
+uniform sampler2D input0;
 uniform float xoffset;
 uniform float yoffset;
 
@@ -17,7 +17,7 @@ void main(void)
 	float s = 0.0;
     for (int i = start; i < end; i++)
     {
-   		vec3 src = texture2D(input1, vec2(tc.x + xoffset*i*dx, tc.y + yoffset*i*dy));
+   		vec3 src = texture2D(input0, vec2(tc.x + xoffset*i*dx, tc.y + yoffset*i*dy));
    		float k = sqrt(iteration-abs(i));
    		s += k;
 		color += src*k;

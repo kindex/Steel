@@ -68,7 +68,7 @@ ALboolean OpenALEngine::CheckALError()
 bool OpenALEngine::init(Config& _conf)
 {
 	conf = &_conf;
-	if(conf == NULL)
+	if (conf == NULL)
 	{
 		log_msg("openal init error", "config not found");
 		return false;

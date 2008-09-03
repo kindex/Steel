@@ -173,17 +173,25 @@ const Config* Config::findInTemplate(const std::string& path) const
 		else // global
 		{
 			const Config *globalTemplate;
-			if(!templates[i].configId.empty())
+			if (!templates[i].configId.empty())
+            {
 				globalTemplate = resConfig.add(createPath(getConfigFilePath(), templates[i].configId));
-			else
-				globalTemplate = getRoot();
-			if(globalTemplate != NULL)
+            }
+            else
+            {
+                globalTemplate = getRoot();
+            }
+
+            if (globalTemplate != NULL)
 			{
 				const Config *_template = globalTemplate->find(templates[i].localPath);
 				if(_template != NULL)
 				{
 					const Config *result = _template->find(path);
-					if(result != NULL) return result;
+					if (result != NULL)
+                    {
+                        return result;
+                    }
 				}
 			}
 		}
@@ -193,35 +201,46 @@ const Config* Config::findInTemplate(const std::string& path) const
 
 Config* Config::findInTemplate(const std::string& path)
 {
-	for(int i = templates.size() - 1; i >= 0; i--)
+	for (int i = templates.size() - 1; i >= 0; i--)
 	{
-		if(templates[i].local)// local template
+		if (templates[i].local)// local template
 		{
  			Config *parent = getParent();
-			if(parent != NULL)
+			if (parent != NULL)
 			{
 				Config *_template = parent->find(templates[i].localPath);
-				if(_template != NULL)
+				if (_template != NULL)
 				{
 					Config *result = _template->find(path);
-					if(result != NULL) return result;
+					if (result != NULL)
+                    {
+                        return result;
+                    }
 				}
 			}
 		}
 		else // global
 		{
 			Config *globalTemplate;
-			if(!templates[i].configId.empty())
+			if (!templates[i].configId.empty())
+            {
 				globalTemplate = resConfig.add(createPath(getConfigFilePath(), templates[i].configId));
-			else
-				globalTemplate = getRoot();
-			if(globalTemplate != NULL)
+            }
+            else
+            {
+                globalTemplate = getRoot();
+            }
+
+			if (globalTemplate != NULL)
 			{
 				Config *_template = globalTemplate->find(templates[i].localPath);
 				if(_template != NULL)
 				{
 					Config *result = _template->find(path);
-					if(result != NULL) return result;
+					if (result != NULL)
+                    {
+                        return result;
+                    }
 				}
 			}
 		}

@@ -16,6 +16,8 @@
 #include "../steel.h"
 #include "../graph/graph_interface.h"
 #include "../engine/game_object.h"
+#include "../common/timer.h"
+
 #include <deque>
 
 class Console: public GameObject
@@ -27,16 +29,25 @@ public:
 		return id == INTERFACE_GRAPH;
 	}
 	bool updateInformation(IN OUT Engine&, IN const InterfaceId);
-	void process(IN const ProcessInfo&){}
+    void process(IN const ProcessInfo&) {}
+    void process();
     bool InitFromConfig(IN Config&) { return false; }
     Config* getConfig() const { return NULL; }
-    void write(const std::string& line);
+    void write(const std::string& message, const color4f color = color4f(1, 1, 1, 1));
     void clear();
     void shift();
 
 private:
-    std::deque<std::string> lines;
-    size_t                  line_count;
+    struct Line
+    {
+        Line(const std::string& message, const color4f color, const steel::time timestamp);
+        std::string message;
+        color4f     color;
+        steel::time timestamp;
+    };
+    std::deque<Line> lines;
+    size_t           line_count;
+    Timer            timer;
 };
 
 extern Console console;

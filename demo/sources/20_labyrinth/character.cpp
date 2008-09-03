@@ -126,7 +126,6 @@ Config* Character::getConfig() const
     return result;
 }
 
-
 void Character::bindEngine(IN OUT Engine& engine, IN const InterfaceId id)
 {
     if (graph_object != NULL && id == INTERFACE_GRAPH)

@@ -31,7 +31,6 @@ void Timer::incframe()
     updatetotal();
 }
 
-
 steel::time Timer::getfps()
 {
 	double ts = total();

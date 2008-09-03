@@ -195,7 +195,11 @@ void _log_msg(string keywords, string message)
 
     if (present("error", keys_set))
     {
-        console.write(message);
+        console.write(message, color4f(1, 0, 0));
+    }
+    else if (present("warning", keys_set))
+    {
+        console.write(message, color4f(1, 1, 0));
     }
 }
 

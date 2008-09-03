@@ -14,14 +14,14 @@
 		В поддиректориях хранятся классы для загрузки и хранения всех типов ресурсов.
 **************************************************************************************/
 
-#ifndef RES_COLLECTION_H
-#define RES_COLLECTION_H
+#pragma once
 
 #include "../steel.h"
 
 #include <map>
 #include <set>
 #include <string>
+#include <stack>
 
 #include "../common/types.h"
 #include "../common/utils.h"
@@ -89,6 +89,8 @@ public:
 	void registerResLoader(funcCreateResClass* _func)	{		classes.push_back(_func);	}
 	void setId(const std::string& _id) { id = _id; } // устанавливает идентификатор коллекии
 	void clearFailedResourcesCache() { failedResourcesCache.clear(); }
+    void pop_error_mode();
+    void push_error_mode(bool error_mode);
 
 protected:
 
@@ -105,7 +107,7 @@ protected:
 	inline bool find(const std::string& name) {return index.find(name) != index.end(); } 
 
 	virtual T* addForce(const std::string& name, bool pop = true);
-
+    bool getErrorMode() const;
 
 	std::string id; // строковой идентификатор коллекции (image, model)
 	std::map<const std::string,int> index; // отображение полных имён ресурсов на индекс в массиве data. Для увеличения скорости поиска по имени.
@@ -120,6 +122,7 @@ protected:
 	};
 	svector<ResStorage> data; // массив хранимых ресурсов и дополнительная информация к каждому ресурсу.
 	std::set<std::string> failedResourcesCache;
+    std::stack<bool> error_mode_stack;
 };
 
 
@@ -323,5 +326,28 @@ inline int ResCollection<T>::getIndex(const std::string& name)
 	}
 }  /*If exist - return*, esle 0 */
 
+template<class T>
+bool ResCollection<T>::getErrorMode() const
+{
+    if (error_mode_stack.empty())
+    {
+        return true;
+    }
+    else
+    {
+        return error_mode_stack.top();
+    }
+}
 
-#endif
+template<class T>
+void ResCollection<T>::pop_error_mode()
+{
+    error_mode_stack.pop();
+}
+
+template<class T>
+void ResCollection<T>::push_error_mode(bool error_mode)
+{
+    error_mode_stack.push(error_mode);
+}
+

@@ -43,6 +43,7 @@ Config* ResCollectionConfig::addForce(const std::string& name, bool pop)
 		delete file;
 		file = NULL;
 	}
+
 	if (file != NULL)
 	{
 		ConfigParser* parser = new ConfigParser();
@@ -55,7 +56,10 @@ Config* ResCollectionConfig::addForce(const std::string& name, bool pop)
 	}
 	else
 	{
-		log_msg("res error " + id, "Not found " + fullResName);
+        if (getErrorMode())
+        {
+		    log_msg("res error " + id, "Not found " + fullResName);
+        }
 	}
 
 	if (obj != NULL)
@@ -77,9 +81,16 @@ Config* ResCollectionConfig::addForce(const std::string& name, bool pop)
 		return obj;
 	}
 	else
-	{
-		log_msg("res error " + id, "Failed " + baseDirectory + "/" + newName);
-		if (pop) resStack.pop();
+    {
+        if (getErrorMode())
+        {
+		    log_msg("res error " + id, "Failed " + baseDirectory + "/" + newName);
+        }
+        if (pop)
+        {
+            resStack.pop();
+        }
+
 		failedResourcesCache.insert(fullResName);
 		return NULL;
 	}

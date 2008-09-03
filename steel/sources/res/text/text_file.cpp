@@ -27,7 +27,7 @@ bool TextFile::init(const std::string& name, const std::string dir)
 	rstream f(file); // no binary acces, only text
 	if (f.fail()) 
 	{
-		log_msg("res conf error", "Cannot open file " + file);
+//		log_msg("res conf error", "Cannot open file " + file);
 		return false;
 	}
 

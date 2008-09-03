@@ -31,7 +31,6 @@ Shader::Shader(OpenGL_Engine& engine):
 	id(objectIdGenerator.genUid())
 {}
 
-
 bool Shader::init(Text*	_vertexShader, Text* _fragmentShader, const StringDict& _parameters)
 {
 	if (!GL_EXTENSION_GLSL)
@@ -191,7 +190,7 @@ void Shader::loadLog(GLuint object)
 
 	if (strlen(infoLog) > 0)
 	{
-		log_msg("opengl glsl warning", "Shader " + getShaderDecription() + " compile message " + infoLog);
+		log_msg("opengl glsl", "Shader " + getShaderDecription() + " compile message " + infoLog);
 	}
 
     if (infoLog != buffer)

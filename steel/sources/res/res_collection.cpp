@@ -22,16 +22,26 @@ std::string getext(std::string name)
 {
 	std::string r;
 	for(int i=name.length()-1; i>=0; i--)
+    {
 		if(name[i]!='.')
+        {
 			r = name[i] + r;
-		else
-			break;
+        }
+        else
+        {
+            break;
+        }
+    }
+
 	return r;
 }
 
 bool ResStack::push(std::string directory)
 {
-	if(level>100) abort_init("res error", "To many recursive res::add executions (>100)");
+	if (level>100)
+    {
+        abort_init("res error", "To many recursive res::add executions (>100)");
+    }
 
 	dirs.push_back(directory);
 	level++;
@@ -94,3 +104,4 @@ std::string getFullPath(const std::string& filename, const std::string& director
 	else
 		return directory + "/" + filename;
 }
+

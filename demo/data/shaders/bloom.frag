@@ -1,6 +1,6 @@
 // Clip
 
-uniform sampler2D input1;
+uniform sampler2D input0;
 uniform float xoffset;
 uniform float yoffset;
 
@@ -9,7 +9,7 @@ void main(void)
     vec2 tc = gl_TexCoord[0].st;
     vec3 color;
 
-    color = texture2D(input1, tc);
+    color = texture2D(input0, tc);
 
     if (length(color) < limit)
     {

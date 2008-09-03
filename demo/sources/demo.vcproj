@@ -380,10 +380,6 @@
 					Name="data"
 					>
 					<File
-						RelativePath="..\data\20_labyrinth\character.scene"
-						>
-					</File>
-					<File
 						RelativePath="..\data\20_labyrinth\down.scene"
 						>
 					</File>
@@ -392,11 +388,35 @@
 						>
 					</File>
 					<File
+						RelativePath="..\data\20_labyrinth\lightEnd.conf"
+						>
+					</File>
+					<File
+						RelativePath="..\data\20_labyrinth\lightSimple.conf"
+						>
+					</File>
+					<File
+						RelativePath="..\data\20_labyrinth\lightStart.conf"
+						>
+					</File>
+					<File
 						RelativePath="..\data\20_labyrinth\main.scene"
 						>
 					</File>
 					<File
+						RelativePath="..\data\20_labyrinth\ps.scene"
+						>
+					</File>
+					<File
 						RelativePath="..\data\20_labyrinth\right.scene"
+						>
+					</File>
+					<File
+						RelativePath="..\data\20_labyrinth\sun.conf"
+						>
+					</File>
+					<File
+						RelativePath="..\data\20_labyrinth\sun_ambient.conf"
 						>
 					</File>
 				</Filter>
