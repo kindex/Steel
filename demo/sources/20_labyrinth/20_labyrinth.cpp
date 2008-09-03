@@ -585,7 +585,23 @@ void GameLabyrinth::process()
 
 void GameLabyrinth::handleEventKeyDown(const std::string& key)
 {
-	if (key == "f7")
+    if (game_chat.empty() && key == "tab")
+    {
+        active_character->setInput(NULL);
+        game_chat.append(" ");
+    }
+    else if (!game_chat.empty() && key =="tab") 
+    {
+        console.write(game_chat);
+        game_chat.erase();
+        active_character->setInput(input);
+	}
+    else if (!game_chat.empty())
+    {
+        processChatKey(key);
+    }
+
+    else if (key == "f7")
     {
         conf->toggle("labyrinth.visibility_check");
     }
@@ -1017,6 +1033,12 @@ Character* GameLabyrinth::findCharacter(uid character_id)
     {
         return it->second;
     }
+}
+
+void GameLabyrinth::processChatKey(std::string chat_key)
+{
+    if (chat_key == "space") game_chat.append(" ");
+    else if (chat_key.length() == 1) game_chat.append(chat_key);
 }
 
 void GameLabyrinth::restart()
