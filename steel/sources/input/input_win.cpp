@@ -58,6 +58,7 @@ string InputWin::DecodeKey_WinAPI(MSG p)
 				case VK_SPACE: key = "space"; break;
 				case VK_PAUSE: key = "pause"; break;
 				case VK_SNAPSHOT: key = "snapshot"; break;
+				case VK_CONTROL: key = "control"; break;
 				case VK_OEM_1: key = ";"; break;
 				case VK_OEM_2: key = "/"; break;
 				case VK_OEM_7: key = "'"; break;
