@@ -74,7 +74,7 @@ private:
     GameState       game_state;
     std::string     client_winner;
     TagVector       character_starts;
-	std::string		game_chat;
+    std::string     game_chat;
 
     std::map<uid, Character*> character_index;
     Character* findCharacter(uid character_id);
@@ -89,6 +89,7 @@ private:
     bool isWinner(Character*);
 	void checkForWinner();
     void restart();
+    void processChatKey(std::string);
 
 // ------------------- Physic ---------------------
     bool initAgeia();
