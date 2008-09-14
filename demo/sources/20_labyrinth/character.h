@@ -85,6 +85,7 @@ private:
 	AudioObject* idleSound;
 	AudioObject* startSound;
     AudioObject* moveSound;
+    // TODO: Introduce map CharacterSounds
 
     CharacterState state;
 };

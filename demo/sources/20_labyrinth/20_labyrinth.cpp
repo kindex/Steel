@@ -55,9 +55,9 @@ GameLabyrinth::GameLabyrinth():
     winner(NULL),
     cameraPenalty(1.0f),
     character_model(NULL),
-    floor(NULL),
-	winAudioObject(NULL),
-	lossAudioObject(NULL)
+    floor(NULL)
+	//winAudioObject(NULL),
+	//lossAudioObject(NULL)
 {}
 
 void GameLabyrinth::ageiaInject(GameObject* object, const ObjectPosition& base_position)
@@ -189,19 +189,16 @@ GameLabyrinth::~GameLabyrinth()
 	// deleting audio stuff
 	if (audioEngine != NULL)
     {
-        if (winAudioObject != NULL)
-	    {
-		    audioEngine->soundStop(winAudioObject->originalSound);
-		    delete winAudioObject;
-		    winAudioObject = NULL;
-	    }
-
-	    if (lossAudioObject != NULL)
-	    {
-		    audioEngine->soundStop(lossAudioObject->originalSound);
-		    delete lossAudioObject;
-		    lossAudioObject = NULL;
-	    }
+        for EACH(LabyrinthSoundMap, labyrinthSounds, it)
+        {
+            if (it != labyrinthSounds.end())
+            {
+                audioEngine->soundStop(it->second->originalSound);
+                delete it->second;
+                it->second = NULL;
+            }
+        }
+        
     }
 
     log_msg("labyrinth", "Exiting from game");
@@ -1098,19 +1095,14 @@ void GameLabyrinth::restart()
     winner = NULL;
     game_state = GAME_PLAYING;
 
-	// clear audio stuff
-	if (winAudioObject != NULL)
-	{
-		audioEngine->soundStop(winAudioObject->originalSound);
-		delete winAudioObject;
-		winAudioObject = NULL;
-	}
-	if (lossAudioObject != NULL)
-	{
-		audioEngine->soundStop(lossAudioObject->originalSound);
-		delete lossAudioObject;
-		lossAudioObject = NULL;
-	}
+	// stop audio stuff - NOT CLEAR!!!
+    for EACH(LabyrinthSoundMap, labyrinthSounds, it)
+    {
+        if (it != labyrinthSounds.end())
+        {
+            audioEngine->soundStop(it->second->originalSound);
+        }
+    }
 }
 
 void GameLabyrinth::updateVisibleObjects(GraphEngine& engine)
@@ -1167,6 +1159,29 @@ void GameLabyrinth::updateVisibleObjects(GraphEngine& engine)
 
 void GameLabyrinth::processAudio()
 {
+    // Loading all sounds
+    for (int id = WIN; id <= SoundCount; id++)
+    {
+        LabyrinthSoundMap::iterator it = labyrinthSounds.find(static_cast<LabyrinthSoundID>(id));
+        if (it == labyrinthSounds.end())
+	    {
+		    AudioObject* snd = loadAudioObject(*conf, "sounds.win");
+
+		    SimpleSound* sndAudioObject = dynamic_cast<SimpleSound*>(snd);
+		    if (sndAudioObject == NULL)
+		    {
+			    delete snd;
+			    error("audio", "Cannot create sounds." + id);
+		    }
+		    else
+		    {
+                labyrinthSounds[static_cast<LabyrinthSoundID>(id)] = sndAudioObject;
+                //delete sndAudioObject;
+                sndAudioObject = NULL;
+		    }
+	    }
+    }
+
 	switch (net_role)
 	{
 		case NET_CLIENT:
@@ -1175,39 +1190,19 @@ void GameLabyrinth::processAudio()
 				if (client_winner.empty())
 				{
 					// winner sound playing
-					if (winAudioObject == NULL)
+                    LabyrinthSoundMap::iterator it = labyrinthSounds.find(WIN);
+                    if (it != labyrinthSounds.end())
 					{
-						AudioObject* win = loadAudioObject(*conf, "sounds.win");
-
-						winAudioObject = dynamic_cast<SimpleSound*>(win);
-						if (winAudioObject == NULL)
-						{
-							delete win;
-							error("audio", "Cannot create sounds.win");
-						}
-						else
-						{
-							audioEngine->soundPlay(winAudioObject->originalSound);
-						}
+                        audioEngine->soundPlay(labyrinthSounds[WIN]->originalSound);
 					}
 				}
 				else
 				{
 					// looser sound playing
-					if (lossAudioObject == NULL)
+                    LabyrinthSoundMap::iterator it = labyrinthSounds.find(LOSS);
+					if (it != labyrinthSounds.end())
 					{
-						AudioObject* loss = loadAudioObject(*conf, "sounds.loss");
-
-						lossAudioObject = dynamic_cast<SimpleSound*>(loss);
-						if (lossAudioObject == NULL)
-						{
-							delete loss;
-							error("audio", "Cannot create sounds.loss");
-						}
-						else
-						{
-							audioEngine->soundPlay(lossAudioObject->originalSound);
-						}
+				        audioEngine->soundPlay(labyrinthSounds[LOSS]->originalSound);
 					}
 				}
 			}
@@ -1219,45 +1214,19 @@ void GameLabyrinth::processAudio()
 				if (winner == active_character)
 				{
 					// winner sound playing
-					if (winAudioObject == NULL)
+                    LabyrinthSoundMap::iterator it = labyrinthSounds.find(WIN);
+                    if (it != labyrinthSounds.end())
 					{
-						AudioObject* win = loadAudioObject(*conf, "sounds.win");
-
-						winAudioObject = dynamic_cast<SimpleSound*>(win);
-						if (winAudioObject == NULL)
-						{
-							delete win;
-							error("audio", "Cannot create sounds.win");
-						}
-						else
-						{
-                            if (audioEngine != NULL)
-                            {
-							    audioEngine->soundPlay(winAudioObject->originalSound);
-                            }
-						}
+                        audioEngine->soundPlay(labyrinthSounds[WIN]->originalSound);
 					}
 				}
 				else
 				{
 					// looser sound playing
-					if (lossAudioObject == NULL)
+					LabyrinthSoundMap::iterator it = labyrinthSounds.find(LOSS);
+					if (it != labyrinthSounds.end())
 					{
-						AudioObject* loss = loadAudioObject(*conf, "sounds.loss");
-
-						lossAudioObject = dynamic_cast<SimpleSound*>(loss);
-						if (lossAudioObject == NULL)
-						{
-							delete loss;
-							error("audio", "Cannot create sounds.loss");
-						}
-						else
-						{
-                            if (audioEngine != NULL)
-                            {
-    							audioEngine->soundPlay(lossAudioObject->originalSound);
-                            }
-						}
+				        audioEngine->soundPlay(labyrinthSounds[LOSS]->originalSound);
 					}
 				}
 			}
@@ -1337,14 +1306,6 @@ void GameLabyrinth::processAudio()
                     dynamic_cast<SimpleSound*>((*it)->moveSound)->stop();
 				    audioEngine->soundStop( dynamic_cast<SimpleSound*>((*it)->moveSound)->originalSound );
                 }
-
-                /*
-				else
-				{
-					dynamic_cast<SimpleSound*>((*it)->moveSound)->start();
-					audioEngine->soundPlay( dynamic_cast<SimpleSound*>((*it)->moveSound)->originalSound );
-				}
-                */
 			}
 			it++;
 		}
