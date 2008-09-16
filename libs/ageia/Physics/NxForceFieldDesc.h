@@ -12,8 +12,12 @@
 */
 
 #include "Nxp.h"
+#include "NxArray.h"
+#include "NxForceFieldShapeDesc.h"
 
 class NxActor;
+class NxForceFieldKernel;
+class NxForceFieldShapeGroup;
 
 /**
 \brief Type of force field coordinate space
@@ -22,23 +26,26 @@ enum NxForceFieldCoordinates { NX_FFC_CARTESIAN, NX_FFC_SPHERICAL, NX_FFC_CYLIND
 
 enum NxForceFieldType
 	{
-	NX_FF_TYPE_FORCE,				//!< interpret the force field function as specifying forces
-	NX_FF_TYPE_ACCELERATION,		//!< interpret the force field function as specifying accelerations
+	NX_FF_TYPE_DUMMY_0,				// deprecated enum placeholder
+	NX_FF_TYPE_DUMMY_1,				// deprecated enum placeholder
+	NX_FF_TYPE_GRAVITATIONAL,		//!< scales the force by the mass of the particle or body
+	NX_FF_TYPE_OTHER,				//!< does not scale the value from the force field
+	NX_FF_TYPE_NO_INTERACTION		//!< used to disable force field interaction with a specific feature
 	};
 
 enum NxForceFieldFlags 
 	{ 
-	/**
-	\warning These flags are deprecated, please use force field type specifier.
-	*/
-	NX_FFF_IGNORE_FLUID_MASS			= (1<<0),	//!< apply acceleration instead of force to fluids (deprecated)
-	NX_FFF_IGNORE_CLOTH_MASS			= (1<<1),	//!< apply acceleration instead of force to cloth (deprecated)
-	NX_FFF_IGNORE_SOFTBODY_MASS			= (1<<2),	//!< apply acceleration instead of force to soft bodies (deprecated)
-	NX_FFF_IGNORE_RIGIDBODY_MASS		= (1<<3),	//!< apply acceleration instead of force to rigid bodies (deprecated)
-	NX_FFF_LEGACY_FORCE					= (1<<4),	//!< use old (resolution-dependent) method of force application
+	NX_FFF_DUMMY_0						= (1<<0),	// deprecated flag placeholder
+	NX_FFF_DUMMY_1						= (1<<1),	// deprecated flag placeholder
+	NX_FFF_DUMMY_2						= (1<<2),	// deprecated flag placeholder
+	NX_FFF_DUMMY_3						= (1<<3),	// deprecated flag placeholder
+	NX_FFF_VOLUMETRIC_SCALING_FLUID		= (1<<5),	//!< indicates whether the force is scaled by the amount of volume represented by the feature.
+	NX_FFF_VOLUMETRIC_SCALING_CLOTH		= (1<<6),	//!< indicates whether the force is scaled by the amount of volume represented by the feature.
+	NX_FFF_VOLUMETRIC_SCALING_SOFTBODY	= (1<<7),	//!< indicates whether the force is scaled by the amount of volume represented by the feature.
+	NX_FFF_VOLUMETRIC_SCALING_RIGIDBODY	= (1<<8),	//!< indicates whether the force is scaled by the amount of volume represented by the feature.
 	};
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  \brief Descriptor class for NxForceField class.
@@ -46,7 +53,7 @@ enum NxForceFieldFlags
 
 <b>Platform:</b>
 \li PC SW: Yes
-\li PPU  : Yes
+\li PPU  : Yes [SW fallback]
 \li PS3  : Yes
 \li XB360: Yes
 
@@ -56,39 +63,189 @@ class NxForceFieldDesc
 	{
 	public:
 
-	NxMat34					pose;					//!< Global or (if actor is set) actor relative transformation of the force field.
-	NxActor*				actor;					//!< The field is attached to move with an actor. If null, the field is static.
-	NxForceFieldCoordinates	coordinates;			//!< Coordinate space of the field.
+	/**
+	\brief Global or (if actor is set) actor relative transformation of the force field. 
+	Detaching from the actor will cause the force field's pose to be relative to the world frame.
 
-	// filtering
-	NxCollisionGroup		group;					//!< Collision group used for collision filtering.
-	NxGroupsMask			groupsMask;				//!< Groups mask used for collision filtering. 
+	<b>Default:</b> Identity
 
-	//function parameters:
-	NxVec3					constant;				//!< Constant part of force field function
-	NxMat33					positionMultiplier;		//!< Coefficient of force field function position term
-	NxVec3					positionTarget;			//!< Force field position target			
-	NxMat33					velocityMultiplier;		//!< Coefficient of force field function velocity term
-	NxVec3					velocityTarget;			//!< Force field velocity target
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxMat34					pose;
 
-	NxVec3					falloffLinear;			//!< Linear term in magnitude falloff factor. Range (each component): [0, inf)
-	NxVec3					falloffQuadratic;		//!< Quadratic term in magnitude falloff factor. Range (each component): [0, inf)
+	/**
+	\brief The field's pose is relative to the actor's pose and relative to the world frame if field is null.
 
-	NxReal					torusRadius;			//!< Radius for NX_FFC_TOROIDAL type coordinates.
+	<b>Default:</b> NULL
 
-	NxVec3					noise;					//<! Noise scaling
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxActor*				actor;
+	
+	/**
+	\brief Coordinate space of the field.
 
-	NxReal					fluidScale;				//!< Force scale factor for fluids
-	NxReal					clothScale;				//!< Force scale factor for cloth
-	NxReal					softBodyScale;			//!< Force scale factor for soft bodies
-	NxReal					rigidBodyScale;			//!< Force scale factor for rigid bodies
+	<b>Default:</b> NX_FFC_CARTESIAN
 
-	NxForceFieldType		fluidType;				//!< Force field type for fluids
-	NxForceFieldType		clothType;				//!< Force field type for cloth
-	NxForceFieldType		softBodyType;			//!< Force field type for soft bodies
-	NxForceFieldType		rigidBodyType;			//!< Force field type for rigid bodies
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxForceFieldCoordinates	coordinates;
 
-	NxU32					flags;					//!< Force field flags; @see NxForceFieldFlags
+	/**
+	\brief Array of force field shapes descriptors which will be created inside the include group of this force field. This group moves with the force field and cannot be shared.
+
+	<b>Default:</b> empty
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxArray<NxForceFieldShapeDesc*> 
+							includeGroupShapes;	
+	
+	/**
+	\brief a collection of NxForceFieldShapeGroup objects. @see NxForceFieldShapeGroup
+
+	<b>Default:</b> empty
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxArray<NxForceFieldShapeGroup*> 
+							shapeGroups;
+	/**
+	\brief Collision group used for collision filtering.
+
+	<b>Default:</b> 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxCollisionGroup		group;
+	
+	/**
+	\brief Groups mask used for collision filtering.
+
+	<b>Default:</b> 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxGroupsMask			groupsMask;
+
+	/**
+	\brief kernel function of the force field.
+
+	<b>Default:</b> NULL
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxForceFieldKernel*		kernel;	
+
+	/**
+	\brief Force Field Variety Index, index != 0 has to be created.
+
+	<b>Default:</b> 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxForceFieldVariety		forceFieldVariety;
+
+	/**
+	\brief Force field type for fluids
+
+	<b>Default:</b> NX_FF_TYPE_OTHER
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxForceFieldType		fluidType;
+
+	/**
+	\brief Force field type for cloth
+
+	<b>Default:</b> NX_FF_TYPE_OTHER
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxForceFieldType		clothType;
+	
+	/**
+	\brief Force field type for soft bodies
+
+	<b>Default:</b> NX_FF_TYPE_OTHER
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxForceFieldType		softBodyType;
+
+	/**
+	\brief Force field type for rigid bodies
+
+	<b>Default:</b> NX_FF_TYPE_OTHER
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxForceFieldType		rigidBodyType;
+
+	/**
+	\brief Force field flags; @see NxForceFieldFlags
+
+	<b>Default:</b> NX_FFF_VOLUMETRIC_SCALING_FLUID | NX_FFF_VOLUMETRIC_SCALING_CLOTH | NX_FFF_VOLUMETRIC_SCALING_SOFTBODY | NX_FFF_VOLUMETRIC_SCALING_RIGIDBODY
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxU32					flags;					//!< 
 
 	/**
 	\brief Possible debug name. The string is not copied by the SDK, only the pointer is stored.
@@ -97,7 +254,7 @@ class NxForceFieldDesc
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 	*/
@@ -110,7 +267,7 @@ class NxForceFieldDesc
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -148,53 +305,55 @@ NX_INLINE void NxForceFieldDesc::setToDefault()
 	actor = NULL;
 	coordinates = NX_FFC_CARTESIAN;
 
+	includeGroupShapes	.clear();
+
 	group				= 0;
 	groupsMask.bits0	= 0;
 	groupsMask.bits1	= 0;
 	groupsMask.bits2	= 0;
 	groupsMask.bits3	= 0;
 
-	constant.zero(); 
-	positionMultiplier.zero();
-	positionTarget.zero();
-	velocityMultiplier.zero();
-	velocityTarget.zero();
-	falloffLinear.zero();
-	falloffQuadratic.zero();
-	noise.zero();
-	torusRadius = 1.0f;
+	kernel = NULL;
 
-	flags = NX_FFF_LEGACY_FORCE;
+	flags = NX_FFF_VOLUMETRIC_SCALING_FLUID | 
+			NX_FFF_VOLUMETRIC_SCALING_CLOTH |
+			NX_FFF_VOLUMETRIC_SCALING_SOFTBODY |
+			NX_FFF_VOLUMETRIC_SCALING_RIGIDBODY;
 
-	fluidScale		= 1.0f;
-	clothScale		= 1.0f;
-	softBodyScale	= 1.0f;
-	rigidBodyScale	= 1.0f;
+	forceFieldVariety	= 0;
 
-	fluidType		= NX_FF_TYPE_FORCE;
-	clothType		= NX_FF_TYPE_FORCE;
-	softBodyType	= NX_FF_TYPE_FORCE;
-	rigidBodyType	= NX_FF_TYPE_FORCE;
+	fluidType		= NX_FF_TYPE_OTHER;
+	clothType		= NX_FF_TYPE_OTHER;
+	softBodyType	= NX_FF_TYPE_OTHER;
+	rigidBodyType	= NX_FF_TYPE_OTHER;
 
-	name = NULL;
+	name		= NULL;
+	userData	= NULL;
 	}
 
 NX_INLINE bool NxForceFieldDesc::isValid() const
 	{
+	
+	for(NxU32 i = 0; i < includeGroupShapes.size(); i++)
+		{
+		if(!includeGroupShapes[i]->isValid())
+			return false;
+		}
+
 	if(group>=32)
 		return false;	// We only support 32 different groups
-	if(torusRadius<0.0f)
-		return false;
+
+	if(!kernel)
+		return false; 
+
 	return true;
 	}
-
-
 
 /** @} */
 #endif
 //AGCOPYRIGHTBEGIN
 ///////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2005 AGEIA Technologies.
+// Copyright (c) 2007 AGEIA Technologies.
 // All rights reserved. www.ageia.com
 ///////////////////////////////////////////////////////////////////////////
 //AGCOPYRIGHTEND

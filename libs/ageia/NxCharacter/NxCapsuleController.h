@@ -187,7 +187,7 @@ class NxCapsuleController : public NxController
 
 	@see NxCapsuleControllerDesc.climbingMode getClimbingMode()
 	*/
-	virtual		bool			setClimbingMode(NxCapsuleClimbingMode)	= 0;
+	virtual		bool			setClimbingMode(NxCapsuleClimbingMode mode)	= 0;
 
 	/**
 	\brief The character controller uses caching in order to speed up collision testing, this caching can not detect when static objects have changed in the scene. You need to call this method when such changes have been made.

@@ -93,21 +93,17 @@ AM: PLEASE MAKE SURE TO HAVE AN 'NX_' PREFIX ON ALL NEW DEFINES YOU ADD HERE!!!!
 #define NX_FIX_TTP_1922				1
 #define NX_SUPPORT_SWEEP_API		1
 #define NX_HAS_CCD_SKELETONS
+#define NX_ENABLE_HW_PARSER			0
 //#define SUPPORT_INTERNAL_RADIUS	// For raycast CCD only
 //#define NX_SUPPORT_MESH_SCALE		// Experimental mesh scale support
 
-#if defined(_XBOX) | defined(__CELLOS_LV2__)
-	#ifndef NX_DISABLE_FLUIDS
-		#define NX_DISABLE_FLUIDS
-	#endif
-#endif
+//#define NX_DISABLE_FLUIDS
 //#define NX_DISABLE_CLOTH
 //#define NX_DISABLE_SOFTBODY
 
 #ifdef NX_DISABLE_FLUIDS
 	#define NX_USE_FLUID_API  0
 	//#define NX_USE_SDK_FLUIDS 0
-    #define NX_USE_IMPLICIT_SCREEN_SURFACE_API 0
 #else
 	// If we are exposing the Fluid API.
 	#define NX_USE_FLUID_API 1
@@ -119,8 +115,15 @@ AM: PLEASE MAKE SURE TO HAVE AN 'NX_' PREFIX ON ALL NEW DEFINES YOU ADD HERE!!!!
 		//#define NX_USE_SDK_FLUIDS 1
 	//#endif
 
-    // enable fluid surfaces
-    #define NX_USE_IMPLICIT_SCREEN_SURFACE_API 1
+	#if (defined(__CELLOS_LV2__) || defined(_XBOX))
+		#define NX_USE_LL_SW_FLUIDS 1
+	#else
+		#define NX_USE_LL_SW_FLUIDS 0
+	#endif
+	#if NX_USE_LL_SW_FLUIDS
+		// Experimental code path which allows to put fluids in the primary scene
+		//#define NX_FLUID_IN_PRIMARY_SCENE
+	#endif
 #endif /* NX_DISABLE_FLUIDS */
 
 // Exposing of the Cloth API
@@ -143,6 +146,9 @@ typedef NxU16 NxActorGroup;
 typedef NxU16 NxDominanceGroup;		// Must be < 32, NxU16 to be symmetric with NxCollisionGroup, NxActorGroup.
 typedef NxU16 NxCollisionGroup;		// Must be < 32
 typedef NxU16 NxMaterialIndex;
+typedef NxU16 NxForceFieldVariety;
+typedef NxU16 NxForceFieldMaterial;
+
 typedef NxU32 NxTriangleID;
 
 ////// moved enums here that are used in Core so we don't have to include headers such as NxBoxShape in core!!
@@ -373,16 +379,10 @@ enum NxBodyFlag
 	*/
 	NX_BF_VISUALIZATION		= (1<<8),
 
-	/**
-	\brief Deprecated; do not use. Consider using sleep damping instead.
-
-	@see NxBodyDesc.sleepDamping
-	*/
-	NX_BF_POSE_SLEEP_TEST	= (1<<9),
+	NX_BF_DUMMY_0			= (1<<9), // deprecated flag placeholder
 
 	/**
-	\brief Filter velocities used keep body awake.  Velocities are based on pose deltas, if
-	NX_BF_POSE_SLEEP_TEST flag is raised.  The filter reduces rapid oscillations and transient spikes.
+	\brief Filter velocities used keep body awake. The filter reduces rapid oscillations and transient spikes.
 	@see NxActor.isSleeping()
 	*/
 	NX_BF_FILTER_SLEEP_VEL	= (1<<10),
@@ -485,40 +485,19 @@ enum NxShapeFlag
 	*/
 	NX_SF_DISABLE_SCENE_QUERIES			= (1<<14),
 
-	NX_SF_CLOTH_DRAIN					= (1<<15),	//!< Sets the shape to be a cloth drain. 
-
-	/** 
-	Not supported in current release.
-
-	\brief Disable collision with cloths. 
-	*/
-	NX_SF_CLOTH_DISABLE_COLLISION		= (1<<16),	
+	NX_SF_CLOTH_DRAIN					= (1<<15),	//!< Sets the shape to be a cloth drain.
+	NX_SF_CLOTH_DISABLE_COLLISION		= (1<<16),	//!< Disable collision with cloths.
 
 	/**
-	Not supported in current release.
-
 	\brief  Enables the reaction of the shapes actor on cloth collision.
 	\warning Compound objects cannot use a different value for each constituent shape.
 	*/
 	NX_SF_CLOTH_TWOWAY					= (1<<17),	
 
-	/** 
-	Not supported in current release.
-
-	\brief Sets the shape to be a soft body drain. 
-	*/
-	NX_SF_SOFTBODY_DRAIN				= (1<<18),
-
-	/** 
-	Not supported in current release.
-
-	\brief Disable collision with soft bodies. 
-	*/
-	NX_SF_SOFTBODY_DISABLE_COLLISION	= (1<<19),
+	NX_SF_SOFTBODY_DRAIN				= (1<<18),	//!< Sets the shape to be a soft body drain.
+	NX_SF_SOFTBODY_DISABLE_COLLISION	= (1<<19),	//!< Disable collision with soft bodies.
 
 	/**
-	Not supported in current release.
-
 	\brief  Enables the reaction of the shapes actor on soft body collision.
 	\warning Compound objects cannot use a different value for each constituent shape.
 	*/
@@ -594,7 +573,7 @@ struct NxConstraintDominance
 typedef NxU32 NxSubmeshIndex;
 
 /**
-\brief Enum to allow axis to internal data structures for triangle meshes and convex meshes.
+\brief Enum to access internal data structures for triangle meshes and convex meshes.
 
 @see NxTriangleMesh.getFormat() NxConvexMesh.getFormat()
 */
@@ -608,17 +587,18 @@ enum NxInternalFormat
 	};
 
 /**
-\brief Enum to allow axis to internal data structures for triangle meshes and convex meshes.
+\brief Enum to access internal data structures for triangle meshes and convex meshes.
 
 @see NxTriangleMesh.getBase() NxConvexMesh.getBase()
 */
 enum NxInternalArray
 	{
-	NX_ARRAY_TRIANGLES,		//!< Array of triangles (index buffer). One triangle = 3 vertex references in returned format.
-	NX_ARRAY_VERTICES,		//!< Array of vertices (vertex buffer). One vertex = 3 coordinates in returned format.
-	NX_ARRAY_NORMALS,		//!< Array of vertex normals. One normal = 3 coordinates in returned format.
-	NX_ARRAY_HULL_VERTICES,	//!< Array of hull vertices. One vertex = 3 coordinates in returned format.
-	NX_ARRAY_HULL_POLYGONS,	//!< Array of hull polygons
+	NX_ARRAY_TRIANGLES,			//!< Array of triangles (index buffer). One triangle = 3 vertex references in returned format.
+	NX_ARRAY_VERTICES,			//!< Array of vertices (vertex buffer). One vertex = 3 coordinates in returned format.
+	NX_ARRAY_NORMALS,			//!< Array of vertex normals. One normal = 3 coordinates in returned format.
+	NX_ARRAY_HULL_VERTICES,		//!< Array of hull vertices. One vertex = 3 coordinates in returned format.
+	NX_ARRAY_HULL_POLYGONS,		//!< Array of hull polygons
+	NX_ARRAY_TRIANGLES_REMAP,	//!< Array of triangle remap indices. One triangle index = 1 original triangle index in returned format. (NxTriangleMesh only).
 	};
 
 /**
@@ -1053,6 +1033,15 @@ enum NxSphericalJointFlag
 
 	*/
 	NX_SJF_JOINT_SPRING_ENABLED= 1 << 4,
+
+	/**
+	\brief Add additional constraints to linear movement.
+
+	Constrain movements along directions perpendicular to the distance vector defined by the two anchor points.
+
+	\note Setting this flag can increase the stability of the joint but the computation will be more expensive.
+	*/
+    NX_SJF_PERPENDICULAR_DIR_CONSTRAINTS	= 1 << 5,
 	};
 
 /**
@@ -1582,18 +1571,10 @@ enum NxParameter
 	\li XB360: Yes
 	*/
 	NX_VISUALIZE_COLLISION_SPHERES = 45,
-
 	
-	/**
-	\brief SAP structures.
-	
-	<b>Platform:</b>
-	\li PC SW: Yes
-	\li PPU  : No
-	\li PS3  : Yes
-	\li XB360: Yes
-	*/
+/* Obsolete parameter
 	NX_VISUALIZE_COLLISION_SAP = 46,
+*/
 	
 	/**
 	\brief Static pruning structures
@@ -1975,14 +1956,14 @@ enum NxParameter
 	/**
 	\brief Constant for the maximum number of packets per fluid. Used to compute the fluid packet buffer size in NxFluidPacketData.
 
-	<b>Range:</b> [924, 924]<br>
-	<b>Default:</b> 924
+	<b>Range:</b> [925, 925]<br>
+	<b>Default:</b> 925
 
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidPacketData
 	*/
@@ -1996,8 +1977,8 @@ enum NxParameter
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	NX_CONSTANT_FLUID_MAX_PARTICLES_PER_STEP = 79,
 
@@ -2008,7 +1989,7 @@ enum NxParameter
 
 	/**
 	\brief [Experimental] Disables scene locks when creating/releasing meshes.
-	
+
 	Prevents the SDK from locking all scenes when creating and releasing triangle meshes, convex meshes, height field 
 	meshes, softbody meshes and cloth meshes, which is the default behavior. Can be used to improve parallelism but beware
 	of possible side effects.
@@ -2018,10 +1999,43 @@ enum NxParameter
 	NX_ASYNCHRONOUS_MESH_CREATION = 96,
 
 	/**
+	\brief Epsilon for custom force field kernels.
+	
+	This epsilon is used in custom force field kernels (NxSwTarget). Methods like recip()
+	or recipSqrt() evaluate to zero if their input is smaller than this epsilon.
+	
+	<br>
+	*/
+	NX_FORCE_FIELD_CUSTOM_KERNEL_EPSILON = 97,
+
+	/**
+	\brief Enable/disable improved spring solver for joints and wheelshapes
+	
+	This parameter allows to enable/disable an improved version of the spring solver for joints and wheelshapes.
+
+	\warning 
+	The parameter is introduced for legacy purposes only and will be removed in future versions (such that
+	the improved spring solver will always be used).
+
+	\note 
+	Changing the parameter will only affect newly created scenes but not existing ones.
+
+	<b>Range:</b> {0: disabled, 1: enabled}<br>
+	<b>Default:</b> 1
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : No (disabled by default)
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NX_IMPROVED_SPRING_SOLVER = 98,
+
+	/**
 	\brief This is not a parameter, it just records the current number of parameters (as max(NxParameter)+1) for use in loops.
 	When a new parameter is added this number should be assigned to it and then incremented.
 	*/
-	NX_PARAMS_NUM_VALUES = 97,
+	NX_PARAMS_NUM_VALUES = 99,
 
 	NX_PARAMS_FORCE_DWORD = 0x7fffffff
 	};

@@ -31,7 +31,6 @@ a subset of these separately instead.
 #include "NxSphere.h"
 #include "NxDebugRenderable.h"
 #include "NxSimpleTriangleMesh.h"
-#include "NxFPU.h"
 #include "NxUtilities.h"
 #include "NxRemoteDebugger.h"
 

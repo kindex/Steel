@@ -29,10 +29,10 @@ sometimes they are stored in a byte.
 #define NX_VERSION_NUMBER_H
 
 #define NX_SDK_VERSION_MAJOR  2
-#define NX_SDK_VERSION_MINOR  7
-#define NX_SDK_VERSION_BUGFIX 3
+#define NX_SDK_VERSION_MINOR  8
+#define NX_SDK_VERSION_BUGFIX 1
 
-#define NX_SDK_VERSION_NUMBER 273
+#define NX_SDK_VERSION_NUMBER 281
 
 #define NX_SDK_API_REV	1	// bump this number *any* time a public interface changes in any way!!!
 #define NX_SDK_DESC_REV 0   // bump this number *any* time the serialization data ever changes in any way, this includes NxParameters!!

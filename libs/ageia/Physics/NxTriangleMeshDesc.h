@@ -67,6 +67,11 @@ class NxTriangleMeshDesc : public NxSimpleTriangleMesh
 	const void*				materialIndices;
 
 	/**
+	\brief Deprecated
+
+	\warning This member is deprecated and will no longer be supported. Use the specialized	#NxHeightField
+	class instead.
+
 	The mesh may represent either an arbitrary mesh or a height field. The advantage of a height field
 	is that it is assumed to be semi-infinite along one axis, and therefore it doesn't have the problem
 	of fast moving objects 'popping' through it due to temporal under sampling.
@@ -80,16 +85,21 @@ class NxTriangleMeshDesc : public NxSimpleTriangleMesh
 	<b>Default:</b> NX_NOT_HEIGHTFIELD
 
 	<b>Platform:</b>
-	\li PC SW: Yes
-	\li PPU  : Yes (Software fall-back)
-	\li PS3  : Yes
-	\li XB360: Yes
+	\li PC SW: Deprecated
+	\li PPU  : Deprecated
+	\li PS3  : Deprecated
+	\li XB360: Deprecated
 
 	@see NxHeightFieldAxis heightFieldVerticalExtent
 	*/
 	NxHeightFieldAxis		heightFieldVerticalAxis;
 
 	/**
+	\brief Deprecated
+
+	\warning This member is deprecated and will no longer be supported. Use the specialized	#NxHeightField
+	class instead.
+
 	If this mesh is a height field, this sets how far 'below ground' the height volume extends.
 
 	In this way even objects which are under the surface of the height field but above
@@ -106,10 +116,10 @@ class NxTriangleMeshDesc : public NxSimpleTriangleMesh
 	<b>Default:</b> 0
 
 	<b>Platform:</b>
-	\li PC SW: Yes
-	\li PPU  : Yes (Software fall-back)
-	\li PS3  : Yes
-	\li XB360: Yes
+	\li PC SW: Deprecated
+	\li PPU  : Deprecated
+	\li PS3  : Deprecated
+	\li XB360: Deprecated
 
 	@see heightFieldVerticalAxis
 	*/

@@ -25,7 +25,7 @@ class NxConvexForceFieldShape;
 
 <b>Platform:</b>
 \li PC SW: Yes
-\li PPU  : Yes
+\li PPU  : Yes [SW fallback]
 \li PS3  : Yes
 \li XB360: Yes
 
@@ -43,7 +43,7 @@ class NxForceFieldShape
 	
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -56,7 +56,7 @@ class NxForceFieldShape
 	
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -65,45 +65,30 @@ class NxForceFieldShape
 	virtual void setPose(const NxMat34 &) = 0;
 
 	/**
-	\brief Gets the force field shape flags
+	\brief Returns the owning force field if this is a shape of an include group, else NULL will be returned
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
-	\li PS3  : Yes
-	\li XB360: Yes
-
-	@see setFlags() NxForceFieldShapeFlags
-	*/	
-	virtual NxU32 getFlags() const = 0;	
-
-	/**
-	\brief Sets the force field shape flags
-
-	\param[in] flags The new flags
-
-	<b>Platform:</b>
-	\li PC SW: Yes
-	\li PPU  : Yes
-	\li PS3  : Yes
-	\li XB360: Yes
-
-	@see getFlags() NxForceFieldShapeFlags
-	*/	
-	virtual void setFlags(NxU32 flags) = 0;
-
-	/**
-	\brief Returns the owning force field.
-
-	<b>Platform:</b>
-	\li PC SW: Yes
-	\li PPU  : Yes 
+	\li PPU  : Yes [SW fallback] 
 	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxForceField
 	*/
-	virtual NxForceField & getForceField() = 0;
+	virtual NxForceField * getForceField() const = 0;
+
+	/**
+	\brief Returns the owning force field shape group.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback] 
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxForceField
+	*/
+	virtual NxForceFieldShapeGroup & getShapeGroup() const = 0;
 
 	/**
 	\brief Sets a name string for the object that can be retrieved with getName().
@@ -114,7 +99,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -129,7 +114,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -143,7 +128,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes 
+	\li PPU  : Yes [SW fallback] 
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -159,7 +144,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -175,7 +160,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -191,7 +176,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -208,7 +193,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -225,7 +210,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -242,7 +227,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -259,7 +244,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -276,7 +261,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -293,7 +278,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -310,7 +295,7 @@ class NxForceFieldShape
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 

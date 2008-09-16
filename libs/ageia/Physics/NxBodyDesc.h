@@ -299,6 +299,22 @@ class NxBodyDesc
 	NxReal		sleepDamping;
 
 	/**
+	\brief The force threshold for contact reports.
+
+	<b>Range:</b> (0,inf)<br>
+	<b>Default:</b> NX_MAX_REAL
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxActor.setContactReportThreshold() NxActor.getContactReportThreshold()
+	*/
+	NxReal		contactReportThreshold;
+
+	/**
 	\brief Constructor sets to default, mass == 0 (an immediate call to isValid() will return false). 
 	*/
 	NX_INLINE NxBodyDesc();	
@@ -338,6 +354,7 @@ NX_INLINE void NxBodyDesc::setToDefault()
 	flags					|= NX_BF_ENERGY_SLEEP_TEST;
 	sleepEnergyThreshold	= -1.0f;
 	sleepDamping			= 0.0f;
+	contactReportThreshold  = NX_MAX_REAL;
 	}
 
 NX_INLINE bool NxBodyDesc::isValid() const
@@ -355,6 +372,8 @@ NX_INLINE bool NxBodyDesc::isValid() const
 	if (solverIterationCount < 1) //must be positive
 		return false;
 	if (solverIterationCount > 255) 
+		return false;
+	if (contactReportThreshold < 0.0f) //must be nonnegative
 		return false;
 	if(!massLocalPose.isFinite())
 		return false;

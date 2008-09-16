@@ -30,9 +30,6 @@ class NxStream;
 It is represented as an indexed triangle list. There are no restrictions on the
 triangle data. 
 
-However, you may use some settings to have the data be treated as a height field.
-See NxTriangleMeshDesc for details.
-
 To avoid duplicating data when you have several instances of a particular 
 mesh positioned differently, you do not use this class to represent a 
 mesh object directly. Instead, you create an instance of this mesh via

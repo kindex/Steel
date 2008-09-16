@@ -151,6 +151,51 @@ class NxJointDesc
 	@see NxJoint.setBreakable() NxUserNotify.onJointBreak()
 	*/
 	NxReal maxTorque;
+
+	/**
+	\brief Extrapolation factor for solving joint constraints.
+
+	This parameter can be used to build stronger joints and increase the solver convergence. Higher values
+	lead to stronger joints.
+
+	\note Setting the value too high can decrease the joint stability.
+
+	\note Currently, this feature is supported for D6, Revolute and Spherical Joints only.
+	
+	<b>Range:</b> [0.5,2]<br>
+	<b>Default:</b> 1
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : No
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxJoint.setSolverExtrapolationFactor(), NxJoint.getSolverExtrapolationFactor()
+	*/
+	NxReal solverExtrapolationFactor;
+
+	/**
+	\brief Switch to acceleration based spring.
+
+	This parameter can be used to switch between acceleration and force based spring. Acceleration
+	based springs do not take the mass of the attached objects into account, i.e., the spring/damping
+	behaviour will be independent of the load.
+
+	\note Currently, this feature is supported for D6, Revolute and Spherical Joints only.
+	
+	<b>Range:</b> {0: use force spring, 1: use acceleration spring}<br>
+	<b>Default:</b> 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : No
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxJoint.setUseAccelerationSpring(), NxJoint.getUseAccelerationSpring()
+	*/
+	NxU32 useAccelerationSpring;
 	
 	/**
 	\brief Will be copied to NxJoint::userData.
@@ -271,6 +316,8 @@ NX_INLINE void NxJointDesc::setToDefault()
 
 	maxForce	= NX_MAX_REAL;
 	maxTorque	= NX_MAX_REAL;
+	solverExtrapolationFactor = 1.0f;
+	useAccelerationSpring = 0;
 	userData	= NULL;
 	name		= NULL;
 	jointFlags	= NX_JF_VISUALIZATION;
@@ -300,6 +347,10 @@ NX_INLINE bool NxJointDesc::isValid() const
 	if (maxForce <= 0)
 		return false;
 	if (maxTorque <= 0)
+		return false;
+	if ((solverExtrapolationFactor < 0.5f) || (solverExtrapolationFactor > 2.0f))
+		return false;
+	if (useAccelerationSpring > 1)
 		return false;
 
 	return true;

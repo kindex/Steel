@@ -214,6 +214,67 @@ class NxJoint
 	*/
 	virtual void getBreakable(NxReal & maxForce, NxReal & maxTorque) = 0;
 
+	/**
+	\brief Sets the solver extrapolation factor.
+
+	\param[in] solverExtrapolationFactor The solver extrapolation factor.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : No
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxJointDesc.solverExtrapolationFactor
+	*/
+
+	virtual void setSolverExtrapolationFactor(NxReal solverExtrapolationFactor) = 0;
+
+	/**
+	\brief Retrieves the solver extrapolation factor.
+
+	\return The solver extrapolation factor.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : No
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxJointDesc.solverExtrapolationFactor
+	*/
+	virtual NxReal getSolverExtrapolationFactor() const = 0;
+
+	/**
+	\brief Switch between acceleration and force based spring.
+
+	\param[in] b {true: use acceleration spring, false: use force spring}.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : No
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxJointDesc.useAccelerationSpring
+	*/
+	virtual void setUseAccelerationSpring(bool b) = 0;
+
+	/**
+	\brief Checks whether acceleration spring is used.
+
+	\return True if acceleration spring is used else false.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : No
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxJointDesc.useAccelerationSpring
+	*/
+	virtual bool getUseAccelerationSpring() const = 0;
+
 /************************************************************************************************/
 
 /** @name Limits

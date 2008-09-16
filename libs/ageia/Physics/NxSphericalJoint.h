@@ -82,7 +82,7 @@ class NxSphericalJoint: public NxJoint
 	/**
 	\brief Sets the flags to enable/disable the spring/motor/limit.
 	
-	This is a combination of the bits defined by ::NxRevoluteJointFlag.
+	This is a combination of the bits defined by ::NxSphericalJointFlag.
 
 	\param[in] flags The new value for the joint flags.
 
@@ -92,7 +92,7 @@ class NxSphericalJoint: public NxJoint
 	\li PS3  : Yes
 	\li XB360: Yes
 
-	@see NxRevoluteJointFlag getFlags()
+	@see NxSphericalJointFlag getFlags()
 	*/
 	virtual void setFlags(NxU32 flags) = 0;
 
@@ -107,7 +107,7 @@ class NxSphericalJoint: public NxJoint
 	\li PS3  : Yes
 	\li XB360: Yes
 
-	@see getFlags() NxRevoluteJointFlag
+	@see getFlags() NxSphericalJointFlag
 	*/
 	virtual NxU32 getFlags() = 0;
 

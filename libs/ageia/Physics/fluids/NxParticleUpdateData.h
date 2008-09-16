@@ -75,7 +75,7 @@ class NxParticleUpdateData
 	\brief The pointer to the user-allocated buffer for particle update flags.
 
 	Particle update flags are represented as a 32-bit unsigned integer. If set the NULL, flags are not read from.
-	Use NxParticleUpdateFlag to set the information.
+	Use NxParticleDataFlag to set the information.
 	*/
 	NxU32*					bufferFlag;
 

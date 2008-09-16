@@ -83,7 +83,7 @@ class NxParticleData
 	/**
 	\brief The pointer to the user-allocated buffer for particle IDs.
 
-	A particle id is represented as a 32-bit unsigned integer. If set the NULL, IDs are not written to.
+	A particle id is represented as a 32-bit unsigned integer. If set to NULL, IDs are not written to.
 	IDs are never read from the user, they are always defined by the SDK.
 	*/
 	NxU32*					bufferId;
@@ -91,7 +91,7 @@ class NxParticleData
 	/**
 	\brief The pointer to the user-allocated buffer for particle flags.
 
-	A particle flags are represented as a 32-bit unsigned integer. If set the NULL, flags are not written to.
+	A particle flags are represented as a 32-bit unsigned integer. If set to NULL, flags are not written to.
 	Flags are never read from the user, they are always defined by the SDK. 
 	Use NxParticleFlag to interpret this data.
 	*/

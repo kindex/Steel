@@ -20,7 +20,6 @@
 #endif
 
 #include "Nx.h"
-#include "NxFPU.h"
 
 #ifdef log2
 #undef log2
@@ -941,6 +940,8 @@ NX_INLINE bool NxMath::isFinite(NxF32 f)
 	{
 	#if defined(_MSC_VER)
 	return (0 == ((_FPCLASS_SNAN | _FPCLASS_QNAN | _FPCLASS_NINF | _FPCLASS_PINF) & _fpclass(f) ));
+	#elif defined(__CELLOS_LV2__)
+	return (!(isnan(f)||isinf(f)));
 	#else
 	return true;
 	#endif
@@ -951,6 +952,8 @@ NX_INLINE bool NxMath::isFinite(NxF64 f)
 	{
 	#if defined(_MSC_VER)
 	return (0 == ((_FPCLASS_SNAN | _FPCLASS_QNAN | _FPCLASS_NINF | _FPCLASS_PINF) & _fpclass(f) ));
+	#elif defined(__CELLOS_LV2__)
+	return (!(isnan(f)||isinf(f)));
 	#else
 	return true;
 	#endif

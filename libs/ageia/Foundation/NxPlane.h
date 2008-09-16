@@ -33,9 +33,9 @@ class NxPlane
 	/**
 	\brief Constructor from a normal and a distance
 	*/
-	NX_INLINE NxPlane(NxF32 nx, NxF32 ny, NxF32 nz, NxF32 d)
+	NX_INLINE NxPlane(NxF32 nx, NxF32 ny, NxF32 nz, NxF32 _d)
 		{
-		set(nx, ny, nz, d);
+		set(nx, ny, nz, _d);
 		}
 
 	/**

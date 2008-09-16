@@ -26,13 +26,13 @@ class NxCompartment;
 enum NxClothFlag
 {
 	/**
-	\brief Enable/disable pressure simulation.
+	\brief Enable/disable pressure simulation. 
 	Note: Pressure simulation only produces meaningful results for closed meshes.
 
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.pressure
@@ -40,26 +40,26 @@ enum NxClothFlag
 	NX_CLF_PRESSURE			  = (1<<0),
 
 	/**
-	\brief Makes the cloth static.
+	\brief Makes the cloth static. 
 
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 	*/
 	NX_CLF_STATIC			  = (1<<1),
 
 	/**
-	\brief Disable collision handling with the rigid body scene.
+	\brief Disable collision handling with the rigid body scene. 
 
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
-	@see NxClothDesc.collisionResponseCoefficient NX_CLF_COLLISION_CCD
+	@see NxClothDesc.collisionResponseCoefficient
 	*/
 	NX_CLF_DISABLE_COLLISION  = (1<<2),
 
@@ -69,8 +69,8 @@ enum NxClothFlag
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NX_CLF_TRIANGLE_COLLISION
 	*/
@@ -82,8 +82,8 @@ enum NxClothFlag
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	NX_CLF_VISUALIZATION	  = (1<<4),
 
@@ -94,7 +94,7 @@ enum NxClothFlag
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 	*/
 	NX_CLF_GRAVITY            = (1<<5),
@@ -106,7 +106,7 @@ enum NxClothFlag
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.bendingStiffness NX_CLF_BENDING_ORTHO
@@ -123,7 +123,7 @@ enum NxClothFlag
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.bendingStiffness NX_CLF_BENDING
@@ -137,7 +137,7 @@ enum NxClothFlag
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.dampingCoefficient
@@ -163,7 +163,7 @@ enum NxClothFlag
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.collisionResponseCoefficient
@@ -188,7 +188,7 @@ enum NxClothFlag
 	\brief Defines whether the cloth is tearable. 
 	
 	Note: Make sure meshData.maxVertices and the corresponding buffers
-	in meshData are substantially larger (e.g. 2x) than the number 
+	in meshData are substantially larger (e.g. 2x) then the number 
 	of original vertices since tearing will generate new vertices.
 	When the buffer cannot hold the new vertices anymore, tearing stops.
 
@@ -198,7 +198,7 @@ enum NxClothFlag
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.tearFactor NxClothDesc.meshData NxClothMeshDesc.flags
@@ -225,7 +225,7 @@ enum NxClothFlag
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.dampingCoefficient
@@ -239,7 +239,7 @@ enum NxClothFlag
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.validBounds
@@ -256,15 +256,49 @@ enum NxClothFlag
 	and the particle radius of the fluid so tuning these parameters might improve
 	the performance significantly.
 
+	Note: The current implementation does not obey the NxScene::setGroupCollisionFlag
+	settings. If NX_CLF_FLUID_COLLISION is set, collisions will take place even if
+	collisions between the groups that the corresponding cloth and fluid belong to are
+	disabled.
+
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : No
-	\li PS3  : No
-	\li XB360: No
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxClothDesc.toFluidResponseCoefficient NxClothDesc.fromFluidResponseCoefficient
 	*/
 	NX_CLF_FLUID_COLLISION    = (1<<16),
+
+	/**
+	\brief Disable continuous collision detection with dynamic actors. 
+	Dynamic actors are handled as static ones.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NX_CLF_DISABLE_DYNAMIC_CCD  = (1<<17),
+
+	/**
+	\brief Moves cloth partially in the frame of the attached actor. 
+
+	This feature is useful when the cloth is attached to a fast moving character.
+	In that case the cloth adheres to the shape it is attached to while only 
+	velocities below the parameter minAdhereVelocity are used for secondary effects.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxClothDesc.minAdhereVelocity
+	*/
+	NX_CLF_ADHERE  = (1<<18),
 };
 
 /*----------------------------------------------------------------------------*/
@@ -282,7 +316,7 @@ enum NxClothAttachmentFlag
 
 	With this flag set, cloth->object interaction is turned on as well.
 	*/
-	NX_CLOTH_ATTACHMENT_TWOWAY			= (1<<0),
+	NX_CLOTH_ATTACHMENT_TWOWAY			  = (1<<0),
 
 	/**
 	\brief When this flag is set, the attachment is tearable.
@@ -292,7 +326,7 @@ enum NxClothAttachmentFlag
 	To prevent this, only attach one row of cloth vertices to the shape.
 	@see NxClothDesc.attachmentTearFactor
 	*/
-	NX_CLOTH_ATTACHMENT_TEARABLE		= (1<<1),
+	NX_CLOTH_ATTACHMENT_TEARABLE		  = (1<<1),
 };
 
 /*----------------------------------------------------------------------------*/
@@ -437,7 +471,7 @@ public:
 
 	Must be larger than 1.
 	Make sure meshData.maxVertices and the corresponding buffers
-	in meshData are substantially larger (e.g. 2x) then the number 
+	in meshData are substantially larger (e.g. 2x) than the number 
 	of original vertices since tearing will generate new vertices.
 	
 	When the buffer cannot hold the new vertices anymore, tearing stops.
@@ -464,10 +498,10 @@ public:
 	/**
 	\brief Defines a factor for the impulse transfer from cloth to attached rigid bodies.
 
-	Only has an effect if the mode of the attachment is set to NX_CLF_COLLISION_TWOWAY.
+	Only has an effect if the mode of the attachment is set to NX_CLOTH_ATTACHMENT_TWOWAY.
 
 	<b>Default:</b> 0.2 <br>
-	<b>Range:</b> [0,inf)
+	<b>Range:</b> [0,1]
 	
 	@see NxCloth.attachToShape NxCloth.attachToCollidingShapes NxCloth.attachVertexToShape NxCloth.setAttachmentResponseCoefficient()
 	*/
@@ -494,6 +528,8 @@ public:
 
 	<b>Default:</b> 1.0 <br>
 	<b>Range:</b> [0,inf)
+
+	Note: Large values can cause instabilities
 	
 	@see NxClothDesc.flags NxClothDesc.fromFluidResponseCoefficient
 	*/
@@ -507,9 +543,27 @@ public:
 	<b>Default:</b> 1.0 <br>
 	<b>Range:</b> [0,inf)
 	
+	Note: Large values can cause instabilities
+
 	@see NxClothDesc.flags NxClothDesc.toFluidResponseCoefficient
 	*/
 	NxReal fromFluidResponseCoefficient;
+
+	/**
+	\brief If the NX_CLF_ADHERE flag is set the cloth moves partially in the frame 
+	of the attached actor. 
+
+	This feature is useful when the cloth is attached to a fast moving character.
+	In that case the cloth adheres to the shape it is attached to while only 
+	velocities below the parameter minAdhereVelocity are used for secondary effects.
+
+	<b>Default:</b> 1.0
+	<b>Range:</b> [0,inf)
+
+	@see NX_CLF_ADHERE
+	*/ 
+
+	NxReal minAdhereVelocity;
 
 	/**
 	\brief Number of solver iterations. 
@@ -521,6 +575,7 @@ public:
 
 	@see NxCloth.setSolverIterations()
 	*/ 
+
 	NxU32  solverIterations;
 
 	/**
@@ -595,6 +650,13 @@ public:
 	NxGroupsMask groupsMask;
 
 	/**
+	\brief Force Field Material Index, index != 0 has to be created.
+
+	<b>Default:</b> 0
+	*/
+	NxU16 forceFieldMaterial;
+
+	/**
 	\brief If the flag NX_CLF_VALIDBOUNDS is set, this variable defines the volume
 	outside of which cloth particle are automatically removed from the simulation. 
 
@@ -656,7 +718,6 @@ public:
 	*/
 	NxCompartment *	compartment;
 
-
 	/**
 	\brief Constructor sets to default.
 	*/
@@ -699,11 +760,13 @@ NX_INLINE void NxClothDesc::setToDefault()
 	collisionResponseCoefficient = 0.2f;
 	toFluidResponseCoefficient = 1.0f;
 	fromFluidResponseCoefficient = 1.0f;
+	minAdhereVelocity = 1.0f;
 	flags = NX_CLF_GRAVITY;
     solverIterations = 5;
 	wakeUpCounter = NX_SLEEP_INTERVAL;
 	sleepLinearVelocity = -1.0f;
 	collisionGroup = 0;
+	forceFieldMaterial = 0;
 	externalAcceleration.set(0.0f, 0.0f, 0.0f);
 	windAcceleration.set(0.0f, 0.0f, 0.0f);
 	groupsMask.bits0 = 0;
@@ -739,12 +802,12 @@ NX_INLINE bool NxClothDesc::isValid() const
 	if(dampingCoefficient < 0.0f || dampingCoefficient > 1.0f) return false;
     if(collisionResponseCoefficient < 0.0f) return false;
 	if(wakeUpCounter < 0.0f) return false;
-	if(attachmentResponseCoefficient < 0.0f) return false;
+	if(attachmentResponseCoefficient < 0.0f || attachmentResponseCoefficient > 1.0f) return false;
 	if(toFluidResponseCoefficient < 0.0f) return false;
 	if(fromFluidResponseCoefficient < 0.0f) return false;
+	if(minAdhereVelocity < 0.0f) return false;
 	if(relativeGridSpacing < 0.01f) return false;
 	if(collisionGroup >= 32) return false; // We only support 32 different collision groups
-	if(compartment && (!(flags & NX_CLF_HARDWARE))) return false; //only hw cloth can go in compartments
 	return true;
 }
 

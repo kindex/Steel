@@ -26,7 +26,7 @@ struct NxFluidPacket
 	NxBounds3	aabb; 
 
 	/**
-	\brief Index of first particle for a given packet. This index corresponds directly to the fields stored in NxParticleData.
+	\brief Index of first particle for a given packet.  This index can be used to index into each of the buffers in NxParticleData.
 
 	@see NxParticleData
 	*/

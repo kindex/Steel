@@ -594,6 +594,36 @@ public:
 	virtual NxMeshData getMeshData() = 0;
 
 	/**
+	\brief Sets the user buffer wrapper for the soft body split pairs.
+
+	\param[in,out] splitPairData User buffer wrapper.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxSoftBodySplitPairData NxSoftBodyDesc.splitPairData
+	*/
+	virtual	void setSplitPairData(NxSoftBodySplitPairData& splitPairData) = 0;
+
+	/**
+	\brief Returns a copy of the user buffer wrapper for the soft body split pairs.
+
+	\return User buffer wrapper.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxSoftBodySplitPairData setSplitPairData() NxSoftBodyDesc.splitPairData
+	*/
+	virtual	NxSoftBodySplitPairData	getSplitPairData() = 0;
+
+	/**
 	Note: Valid bounds do not have an effect on soft bodies in the current version.
 
 	\brief Sets the valid bounds of the soft body in world space.
@@ -945,7 +975,7 @@ public:
 	\li PC SW: Yes
 	\li PPU  : Yes
 	\li PS3  : Yes
-	\li XB360: No
+	\li XB360: Yes
 
 	@see NxSoftBodyDesc.fromFluidResponseCoefficient getFromFluidResponseCoefficient()
 	*/
@@ -960,7 +990,7 @@ public:
 	\li PC SW: Yes
 	\li PPU  : Yes
 	\li PS3  : Yes
-	\li XB360: No
+	\li XB360: Yes
 
 	@see NxSoftBodyDesc.fromFluidResponseCoefficient setFromFluidResponseCoefficient()
 	*/
@@ -975,7 +1005,7 @@ public:
 	\li PC SW: Yes
 	\li PPU  : Yes
 	\li PS3  : Yes
-	\li XB360: No
+	\li XB360: Yes
 
 	@see NxSoftBodyDesc.toFluidResponseCoefficient getToFluidResponseCoefficient()
 	*/
@@ -990,7 +1020,7 @@ public:
 	\li PC SW: Yes
 	\li PPU  : Yes
 	\li PS3  : Yes
-	\li XB360: No
+	\li XB360: Yes
 
 	@see NxSoftBodyDesc.toFluidResponseCoefficient setToFluidResponseCoefficient()
 	*/
@@ -1025,6 +1055,46 @@ public:
 	@see NxSoftBodyDesc.externalAcceleration setExternalAcceleration()
 	*/
 	virtual NxVec3 getExternalAcceleration() const = 0;
+
+	/**
+	\brief If the NX_SBF_ADHERE flag is set the soft body moves partially in the frame 
+	of the attached actor. 
+
+	This feature is useful when the soft body is attached to a fast moving shape.
+	In that case the soft body adheres to the shape it is attached to while only 
+	velocities below the parameter minAdhereVelocity are used for secondary effects.
+
+	\param[in] velocity The minimal velocity for the soft body to adhere (unit length / s)
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxSoftBodyDesc.minAdhereVelocity getMinAdhereVelocity()
+	*/
+	virtual void setMinAdhereVelocity(NxReal velocity) = 0;
+
+	/**
+	\brief If the NX_SBF_ADHERE flag is set the soft body moves partially in the frame 
+	of the attached actor. 
+
+	This feature is useful when the soft body is attached to a fast moving shape.
+	In that case the soft body adheres to the shape it is attached to while only 
+	velocities below the parameter minAdhereVelocity are used for secondary effects.
+
+	\return Returns the minimal velocity for the soft body to adhere (unit length / s)
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxSoftBodyDesc.minAdhereVelocity setMinAdhereVelocity()
+	*/
+	virtual NxReal getMinAdhereVelocity() const = 0;
 
 	/**
 	\brief Returns true if this soft body is sleeping.
@@ -1204,7 +1274,7 @@ public:
 	\param[in] position Position to apply force at.
 	\param[in] magnitude Magnitude of the force/impulse to apply.
 	\param[in] radius The sphere radius in which particles will be affected. <b>Range:</b> position vector
-	\param[in] mode The mode to use when applying the force/impulse
+	\param[in] mode The mode to use when applying the force/impulse 
 	(see #NxForceMode, supported modes are NX_FORCE, NX_IMPULSE, NX_ACCELERATION, NX_VELOCITY_CHANGE).
 
 	<b>Platform:</b>
@@ -1284,6 +1354,28 @@ public:
 	@see NxCompartment
 	*/
 	virtual NxCompartment *			getCompartment() const = 0;
+
+	/**
+	\brief Retrieves the actor's force field material index, default index is 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxForceFieldMaterial	getForceFieldMaterial() const = 0;
+
+	/**
+	\brief Sets the actor's force field material index, default index is 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual void					setForceFieldMaterial(NxForceFieldMaterial)  = 0;
 
 	//public variables:
 public:

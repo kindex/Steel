@@ -276,6 +276,7 @@ class NxArray// : public Allocateable
 																		NX_ASSERT(position<size());
 																		if (position!=size()-1)
 																			{
+																			(*this)[position].~ElemType();
 																			ElemType& elem = back();
 																			(*this)[position] = elem;
 																			}
@@ -302,6 +303,7 @@ class NxArray// : public Allocateable
 																			}
 																		return false;	// Element not found in the array
 																		}
+
 	/**
 	Returns a constant reference to an element in the sequence.
 	*/
@@ -381,7 +383,7 @@ class NxArray// : public Allocateable
 	*/
 	NX_INLINE void insert(Iterator where, unsigned n, const ElemType & x)
 																		{	
-																		ElemType tmp = x;
+																		// ElemType tmp = x;
 
 																		if (n == 0) return;
 																		if (capacity() < size() + n) 

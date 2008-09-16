@@ -60,10 +60,10 @@ class NxFluidEmitter
 	\return The fluid this emitter is associated with.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		NxFluid &	getFluid() const = 0;
 
@@ -73,10 +73,10 @@ class NxFluidEmitter
 	\param[in] mat New pose of the emitter in world space.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		void		setGlobalPose(const NxMat34& mat)					= 0;
 
@@ -86,10 +86,10 @@ class NxFluidEmitter
 	\param[in] vec New positon in world space.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		void		setGlobalPosition(const NxVec3& vec)				= 0;
 
@@ -99,10 +99,10 @@ class NxFluidEmitter
 	\param[in] mat New orientation in world space.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		void		setGlobalOrientation(const NxMat33& mat)			= 0;
 
@@ -114,10 +114,10 @@ class NxFluidEmitter
 	desired values instead of copying them to destination variables.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		NxMat34		getGlobalPoseVal()						const	= 0;
 	virtual		NxVec3		getGlobalPositionVal()					const	= 0;
@@ -130,10 +130,10 @@ class NxFluidEmitter
 	\return The global pose.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	NX_INLINE	NxMat34		getGlobalPose()							const	{ return getGlobalPoseVal();		}
 
@@ -143,10 +143,10 @@ class NxFluidEmitter
 	\return The world space position.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	NX_INLINE	NxVec3		getGlobalPosition()						const	{ return getGlobalPositionVal();	}
 
@@ -156,10 +156,10 @@ class NxFluidEmitter
 	\return The world space orientation.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	NX_INLINE	NxMat33		getGlobalOrientation()					const	{ return getGlobalOrientationVal();	}
 
@@ -173,10 +173,10 @@ class NxFluidEmitter
 	\param[in] mat The new local pose of the emitter.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.relPose
 	*/
@@ -192,10 +192,10 @@ class NxFluidEmitter
 	\param[in] vec The new local position of the emitter.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.relPose
 	*/
@@ -211,10 +211,10 @@ class NxFluidEmitter
 	\param[in] mat The new local orientation of the emitter.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.relPose
 	*/
@@ -228,10 +228,10 @@ class NxFluidEmitter
 	desired values instead of copying them to the destination variables.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		NxMat34		getLocalPoseVal()						const	= 0;
 	virtual		NxVec3		getLocalPositionVal()					const	= 0;
@@ -249,10 +249,10 @@ class NxFluidEmitter
 	\return The local pose of the emitter.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.relPose
 	*/
@@ -268,10 +268,10 @@ class NxFluidEmitter
 	\return The local position of the emitter.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.relPose
 	*/
@@ -288,10 +288,10 @@ class NxFluidEmitter
 	\return The local orientation of the emitter.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.relPose
 	*/
@@ -303,10 +303,10 @@ class NxFluidEmitter
 	\param[in] shape The frame shape.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.frameShape
 	*/
@@ -318,10 +318,10 @@ class NxFluidEmitter
 	\return The frame shape.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.frameShape
 	*/
@@ -333,10 +333,10 @@ class NxFluidEmitter
 	\return Radius of emitter along the X axis.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.dimensionX
 	*/
@@ -348,10 +348,10 @@ class NxFluidEmitter
 	\return Radius of emitter along the Y axis.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.dimensionY
 	*/
@@ -363,10 +363,10 @@ class NxFluidEmitter
 	\param[in] disp The maximal random displacment of particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.randomPos
 	*/
@@ -378,10 +378,10 @@ class NxFluidEmitter
 	\return The maximal random displacment of particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.randomPos
 	*/
@@ -395,10 +395,10 @@ class NxFluidEmitter
 	\param[in] angle Maximum random angle for emitted particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.randomAngle
 	*/
@@ -412,10 +412,10 @@ class NxFluidEmitter
 	\return Maximum random angle for emitted particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.randomAngle
 	*/
@@ -427,10 +427,10 @@ class NxFluidEmitter
 	\param[in] vel New velocity magnitude of emitted particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.fluidVelocityMagnitude
 	*/
@@ -442,10 +442,10 @@ class NxFluidEmitter
 	\return Velocity magnitude of emitted particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.fluidVelocityMagnitude
 	*/
@@ -459,10 +459,10 @@ class NxFluidEmitter
 	\param[in] rate New emission rate.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.rate
 	*/
@@ -474,10 +474,10 @@ class NxFluidEmitter
 	\return Emission rate.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.rate
 	*/
@@ -489,10 +489,10 @@ class NxFluidEmitter
 	\param[in] life Lifetime of emitted particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.particleLifetime
 	*/
@@ -504,10 +504,10 @@ class NxFluidEmitter
 	\return Lifetime of emitted particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.particleLifetime
 	*/
@@ -519,10 +519,10 @@ class NxFluidEmitter
 	\param[in] coefficient The repulsion coefficient in the range from 0 to inf.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.repulsionCoefficient getRepulsionCoefficient()
 	*/
@@ -534,10 +534,10 @@ class NxFluidEmitter
 	\return The repulsion coefficient.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.repulsionCoefficient setRepulsionCoefficient()
 	*/
@@ -549,10 +549,10 @@ class NxFluidEmitter
 	\param[in] new maxParticles value.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.maxParticles
 	*/
@@ -564,10 +564,10 @@ class NxFluidEmitter
 	\return max particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.maxParticles
 	*/
@@ -579,10 +579,10 @@ class NxFluidEmitter
 	\return number of particles already emitted.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		NxU32				getNbParticlesEmitted()			const	= 0;
 
@@ -593,10 +593,10 @@ class NxFluidEmitter
 	\param[in] val New flag value.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterFlag
 	*/
@@ -609,10 +609,10 @@ class NxFluidEmitter
 	\return The current flag value.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterFlag
 	*/
@@ -625,10 +625,10 @@ class NxFluidEmitter
 	\return True if it is of type shape.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc.shape
 	*/
@@ -641,10 +641,10 @@ class NxFluidEmitter
 	\return True if it is of type type.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxEmitterType
 	*/
@@ -663,10 +663,10 @@ class NxFluidEmitter
 	\return True on success.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc
 	*/
@@ -679,10 +679,10 @@ class NxFluidEmitter
 	\return True on success.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitterDesc
 	*/
@@ -701,10 +701,10 @@ class NxFluidEmitter
 	\param[in] name The new name.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		void			setName(const char* name)		= 0;
 
@@ -714,10 +714,10 @@ class NxFluidEmitter
 	\return The current name.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		const char*		getName()			const	= 0;
 

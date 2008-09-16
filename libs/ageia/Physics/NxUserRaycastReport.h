@@ -57,7 +57,7 @@ All members of the NxRaycastHit structure are not always available. For example 
 the faceID member is not computed. Also, when raycasting against bounds (AABBs) instead of actual shapes,
 some members are not available either. 
 
-Some members like barycentric coordinates are currently only computed for triangle meshes, but next versions
+Some members like barycentric coordinates are currently only computed for triangle meshes and convexes, but next versions
 might provide them in other cases. The client code should check #flags to make sure returned values are
 relevant.
 

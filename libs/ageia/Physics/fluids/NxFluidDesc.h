@@ -21,6 +21,7 @@
 #include "NxSceneDesc.h"
 
 #include "NxArray.h"
+#include "NxPlane.h"
 
 class NxCompartment;
 
@@ -62,6 +63,11 @@ enum NxFluidSimulationMethod
 
 The NxFluid instance can be selected for collision with both static and dynamic shapes.
 
+<b>Platform:</b>
+\li PC SW: Yes
+\li PPU  : Yes
+\li PS3  : No
+\li XB360: No
 */
 enum NxFluidCollisionMethod
 	{
@@ -92,10 +98,10 @@ enum NxFluidFlag
 	control the strength of the feedback force on rigid bodies.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluieDesc.collisionResponseCoefficient
 	*/
@@ -106,10 +112,10 @@ enum NxFluidFlag
 	\brief Enable/disable execution of fluid simulation.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	NX_FF_ENABLED								= (1<<3),
 
@@ -121,11 +127,35 @@ enum NxFluidFlag
 	/**
 	\brief Enable/disable particle priority mode. 
 	If enabled, the oldest particles are deleted to keep a certain budget for 
-	new particles. 
+	new particles. Note that particles which have equal lifetime can get deleted 
+	at the same time. In order to avoid this, the particle lifetimes 
+	can be varied randomly.
 
 	@see NxFluidDesc.numReserveParticles
 	*/
 	NX_FF_PRIORITY_MODE							= (1<<5),
+
+	/**
+	\brief Defines whether the particles of this fluid should be projected to a plane.
+	This can be used to build 2D fluid applications, for instance. The projection
+	plane is defined by the parameter NxFluidDesc.projectionPlane.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxFluidDesc.projectionPlane
+	*/
+	NX_FF_PROJECT_TO_PLANE						= (1<<6),
+
+	/**
+	\brief Forces fluid static mesh cooking format to parameters given by the fluid descriptor.
+
+	Currently not implemented!
+	*/
+	NX_FF_FORCE_STRICT_COOKING_FORMAT			= (1<<7),
 
 	};
 
@@ -161,7 +191,9 @@ class NxFluidDescBase
 	there are no more than (maxParticles - numReserveParticles) particles left. This removal
 	is carried out for each simulation step, on particles which have a finite life time 
 	(i.e. > 0.0). The deletion guarantees a reserve of numReserveParticles particles which 
-	can be added for each simulaiton step.
+	can be added for each simulaiton step. Note that particles which have equal lifetime can 
+	get deleted at the same time. In order to avoid this, the particle lifetimes 
+	can be varied randomly.
 
 	This parameter must be smaller than NxFluidDesc.maxParticles.
 	*/
@@ -275,6 +307,15 @@ class NxFluidDescBase
 	NxReal						viscosity;
 
 	/**
+	\brief 	The surfaceTension of the fluid defines an attractive force between particles
+	
+	Higher values will result in smoother surfaces.
+	Must be nonnegative.
+
+	*/
+	NxReal						surfaceTension;
+
+	/**
 	\brief Velocity damping constant, which is globally applied to each particle.
 	
 	It generally reduces the velocity of the particles. Setting the damping to 0 will leave the 
@@ -309,6 +350,16 @@ class NxFluidDescBase
 	NxVec3						externalAcceleration;
 
 	/**
+	\brief Defines the plane the fluid particles are projected to. This parameter is only used if
+	NX_FF_PROJECT_TO_PLANE is set.
+
+	<b>Default:</b> XY plane
+
+	@see NX_FF_PROJECT_TO_PLANE NxFluid.getProjectionPlane() NxFluid.setProjectionPlane()
+	*/
+	NxPlane						projectionPlane;
+
+	/**
 	\brief Defines the restitution coefficient used for collisions of the fluid particles with static shapes.
 
 	Must be between 0 and 1.
@@ -322,10 +373,10 @@ class NxFluidDescBase
 	(Caution: values near 1 may have a negative impact on stability)
 
 	*/
-	NxReal						staticCollisionRestitution;
+	NxReal						restitutionForStaticShapes;
 	
 	/**
-	\brief Defines the "friction" of the fluid regarding the surface of a static shape.
+	\brief Defines the dynamic friction of the fluid regarding the surface of a static shape.
 
 	Must be between 0 and 1.
 	
@@ -337,18 +388,23 @@ class NxFluidDescBase
 	direction; i.e. it will slide without resistance on the surface.
 
 	*/
-	NxReal						staticCollisionAdhesion;
+	NxReal						dynamicFrictionForStaticShapes;
 	
+	/**
+	\brief Defines the static friction of the fluid regarding the surface of a static shape.
+
+	This feature is currently unimplemented! 
+
+	*/
+	NxReal						staticFrictionForStaticShapes;
+
 	/**
 	\brief Defines the strength of attraction between the particles and static rigid bodies on collision. 
 
-	This feature is experimental. 
-
-	<b>Default:</b> 0.0 <br>
-	<b>Range:</b> [0,inf)
+	This feature is currently unimplemented! 
 
 	*/
-	NxReal						staticCollisionAttraction;
+	NxReal						attractionForStaticShapes;
 
 	/**
 	\brief Defines the restitution coefficient used for collisions of the fluid particles with dynamic shapes.
@@ -357,30 +413,34 @@ class NxFluidDescBase
 
 	(Caution: values near 1 may have a negative impact on stability)
 
-	@see staticCollisionRestitution
+	@see restitutionForStaticShapes
 	*/
-	NxReal						dynamicCollisionRestitution;
+	NxReal						restitutionForDynamicShapes;
 	
 	/**
-	\brief Defines the "friction" of the fluid regarding the surface of a dynamic shape.
+	\brief Defines the dynamic friction of the fluid regarding the surface of a dynamic shape.
 
 	Must be between 0 and 1.
 
-	@see staticCollisionAdhesion
+	@see dynamicFrictionForStaticShapes
 	*/
-	NxReal						dynamicCollisionAdhesion;
+	NxReal						dynamicFrictionForDynamicShapes;
+
+	/**
+	\brief Defines the static friction of the fluid regarding the surface of a dynamic shape.
+
+	This feature is currently unimplemented! 
+
+	*/
+	NxReal						staticFrictionForDynamicShapes;
 
 	/**
 	\brief Defines the strength of attraction between the particles and the dynamic rigid bodies on collision. 
 
-	This feature is experimental. 
+	This feature is currently unimplemented! 
 
-	<b>Default:</b> 0.0 <br>
-	<b>Range:</b> [0,inf)
-
-	@see staticCollisionAttraction
 	*/
-	NxReal						dynamicCollisionAttraction;
+	NxReal						attractionForDynamicShapes;
 
 	/**
 	\brief Defines a factor for the impulse transfer from fluid to colliding rigid bodies.
@@ -429,6 +489,12 @@ class NxFluidDescBase
 	*/
 	NxGroupsMask groupsMask;
 
+	/**
+	\brief Force Field Material Index, index != 0 has to be created.
+
+	<b>Default:</b> 0
+	*/
+	NxForceFieldMaterial		forceFieldMaterial;
 
 	/**
 	\brief Defines the user data buffers which are used to store particle data, which can be used for rendering.
@@ -610,20 +676,25 @@ NX_INLINE void NxFluidDescBase::setToDefault()
 	packetSizeMultiplier		= 16;
 	stiffness					= 20.0f;
 	viscosity					= 6.0f;
+	surfaceTension				= 0.0f;
 	damping						= 0.0f;
 	fadeInTime					= 0.0f;
 	externalAcceleration.zero();
-	staticCollisionRestitution	= 0.5f;
-	staticCollisionAdhesion		= 0.05f;
-	staticCollisionAttraction	= 0.0f;
-	dynamicCollisionRestitution	= 0.5f;
-	dynamicCollisionAdhesion	= 0.5f;
-	dynamicCollisionAttraction	= 0.0f;
+	projectionPlane.set(NxVec3(0.0f, 0.0f, 1.0f), 0.0f);
+	restitutionForStaticShapes	= 0.5f;
+	dynamicFrictionForStaticShapes = 0.05f;
+	staticFrictionForStaticShapes = 0.05f;
+	attractionForStaticShapes	= 0.0f;
+	restitutionForDynamicShapes	= 0.5f;
+	dynamicFrictionForDynamicShapes = 0.5f;
+	staticFrictionForDynamicShapes = 0.5f;
+	attractionForDynamicShapes	= 0.0f;
 	collisionResponseCoefficient = 0.2f;
 
 	simulationMethod			= NX_F_SPH;
 	collisionMethod				= NX_F_STATIC|NX_F_DYNAMIC;
 	collisionGroup				= 0;	
+	forceFieldMaterial			= 0;
 	groupsMask.bits0 = 0;
 	groupsMask.bits1 = 0;
 	groupsMask.bits2 = 0;
@@ -658,6 +729,7 @@ NX_INLINE bool NxFluidDescBase::isValid() const
 
 	if (stiffness <= 0.0f) return false;
 	if (viscosity <= 0.0f) return false;
+	if (surfaceTension < 0.0f) return false;
 
 	bool isNoInteraction = (simulationMethod & NX_F_NO_PARTICLE_INTERACTION) > 0;
 	bool isSPH = (simulationMethod & NX_F_SPH) > 0;
@@ -670,12 +742,16 @@ NX_INLINE bool NxFluidDescBase::isValid() const
 	if (damping < 0.0f) return false;
 	if (fadeInTime < 0.0f) return false;
 
-	if (dynamicCollisionAdhesion < 0.0f || dynamicCollisionAdhesion > 1.0f) return false;
-	if (dynamicCollisionRestitution < 0.0f || dynamicCollisionRestitution > 1.0f) return false;
-	if (dynamicCollisionAttraction < 0.0f) return false;
-	if (staticCollisionAdhesion < 0.0f || staticCollisionAdhesion > 1.0f) return false;
-	if (staticCollisionRestitution < 0.0f || staticCollisionRestitution > 1.0f) return false;
-	if (staticCollisionAttraction < 0.0f) return false;
+	if (projectionPlane.normal.isZero()) return false;
+
+	if (dynamicFrictionForDynamicShapes < 0.0f || dynamicFrictionForDynamicShapes > 1.0f) return false;
+	if (staticFrictionForDynamicShapes < 0.0f || staticFrictionForDynamicShapes > 1.0f) return false;
+	if (restitutionForDynamicShapes < 0.0f || restitutionForDynamicShapes > 1.0f) return false;
+	if (attractionForDynamicShapes < 0.0f) return false;
+	if (dynamicFrictionForStaticShapes < 0.0f || dynamicFrictionForStaticShapes > 1.0f) return false;
+	if (staticFrictionForStaticShapes < 0.0f || staticFrictionForStaticShapes > 1.0f) return false;
+	if (restitutionForStaticShapes < 0.0f || restitutionForStaticShapes > 1.0f) return false;
+	if (attractionForStaticShapes < 0.0f) return false;
 	if (collisionResponseCoefficient < 0.0f) return false;
 	
 	if (!initialParticleData.isValid()) return false;

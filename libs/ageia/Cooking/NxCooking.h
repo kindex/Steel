@@ -54,8 +54,7 @@ class NxTriangle;
 		/**
 		\brief Skin width for convexes
 
-		Specifies the amount to inflate the convex mesh by when the new convex hull generator is used
-		(the skinWidth is ignored when using the legacy convex hull generator, enable with NX_CF_USE_LEGACY_COOKER).
+		Specifies the amount to inflate the convex mesh by when the new convex hull generator is used.
 
 		Inflating the mesh allows the user to hide interpenetration errors by increasing the size of the
 		collision mesh with respect to the size of the rendered geometry.
@@ -152,9 +151,6 @@ class NxTriangle;
 	NxCookTriangleMesh() and NxCookConvexMesh() allow a mesh description to be cooked into a binary stream
 	suitable for loading and performing collision detection at runtime.
 
-	NxCookConvex requires the input mesh to form a closed convex volume. This allows more efficient and robust
-	collision detection.
-
 	\note #NxInitCooking() must be called before attempting to cook a mesh. NxCloseCooking() should be called
 	when the application has finished using the cooking library.
 
@@ -180,6 +176,9 @@ class NxTriangle;
 
 	NxCookTriangleMesh() and NxCookConvexMesh() allow a mesh description to be cooked into a binary stream
 	suitable for loading and performing collision detection at runtime.
+
+	NxCookConvex requires the input mesh to form a closed convex volume. This allows more efficient and robust
+	collision detection. The input mesh is not validated to make sure that the mesh is convex.
 
 	\note #NxInitCooking() must be called before attempting to cook a mesh. NxCloseCooking() should be called
 	when the application has finished using the cooking library.

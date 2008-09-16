@@ -1,5 +1,5 @@
-#ifndef NX_PHYSICS_NXCONVEXHULL
-#define NX_PHYSICS_NXCONVEXHULL
+#ifndef NX_PHYSICS_NXSOFTBODYUSERNOTIFY
+#define NX_PHYSICS_NXSOFTBODYUSERNOTIFY
 /*----------------------------------------------------------------------------*\
 |
 |						Public Interface to Ageia PhysX Technology
@@ -8,18 +8,28 @@
 |
 \*----------------------------------------------------------------------------*/
 /** \addtogroup physics
-  @{
+@{
 */
+
 
 #include "Nxp.h"
 
-#include "NxArray.h"
-class NxPlane;
+class NxSoftBody;
 
-	/**
-	Computes
-	*/
-//	NX_C_EXPORT NXP_DLL_EXPORT bool NxCreateHullFromPlanes(NxArraySDK<NxVec3>& vertices, NxU32 nbPlanes, const NxPlane* planes);
+/**
+\brief An interface class that the user can implement in order to receive simulation events.
+
+<b>Threading:</b> It is not necessary to make this class thread safe as it will only be called in the context of the
+user thread.
+
+See the NxSoftBodyNotify documentation for an example of how to use notifications.
+
+@see NxScene.setSoftBodyUserNotify() NxScene.getSoftBodyUserNotify() NxUserNotify
+*/
+class NxSoftBodyUserNotify
+{
+	virtual ~NxSoftBodyUserNotify(){};
+};
 
 /** @} */
 #endif

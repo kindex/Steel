@@ -92,7 +92,6 @@ NX_INLINE void NxCapsuleForceFieldShapeDesc::setToDefault()
 	NxForceFieldShapeDesc::setToDefault();
 	radius = 1.0f;
 	height = 1.0f;
-	flags  = 0;
 	}
 
 NX_INLINE bool NxCapsuleForceFieldShapeDesc::isValid() const

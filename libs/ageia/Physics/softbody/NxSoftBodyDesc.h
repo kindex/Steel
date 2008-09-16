@@ -61,7 +61,7 @@ enum NxSoftBodyFlag
 	\li PC SW: Yes
 	\li PPU  : Yes
 	\li PS3  : Yes
-	\li XB360: No
+	\li XB360: Yes
 	*/
 	NX_SBF_SELFCOLLISION	  = (1<<3),
 
@@ -72,7 +72,7 @@ enum NxSoftBodyFlag
 	\li PC SW: Yes
 	\li PPU  : Yes
 	\li PS3  : Yes
-	\li XB360: No
+	\li XB360: Yes
 	*/
 	NX_SBF_VISUALIZATION	  = (1<<4),
 
@@ -182,7 +182,7 @@ enum NxSoftBodyFlag
 	NX_SBF_HARDWARE           = (1<<10),
 
 	/**
-	\brief Enable/disable center of mass damping of internal velocities.
+	\brief Enable/disable center of mass damping of internal velocities. 
 
 	This flag only has an effect if the flag NX_SBF_DAMPING is set. If set, 
 	the global rigid body modes (translation and rotation) are extracted from damping. 
@@ -200,15 +200,14 @@ enum NxSoftBodyFlag
 	NX_SBF_COMDAMPING		  = (1<<11),
 
 	/**
-	Not supported in current release.
 	\brief If the flag NX_SBF_VALIDBOUNDS is set, soft body particles outside the volume
 	defined by NxSoftBodyDesc.validBounds are automatically removed from the simulation. 
 
 	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : No
-	\li PS3  : No
-	\li XB360: No
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxSoftBodyDesc.validBounds
 	*/
@@ -224,15 +223,50 @@ enum NxSoftBodyFlag
 	radius of the soft body and the particle radius of the fluid, so tuning 
 	these parameters might improve the performance significantly.
 
+	Note: The current implementation does not obey the NxScene::setGroupCollisionFlag
+	settings. If NX_SBF_FLUID_COLLISION is set, collisions will take place even if
+	collisions between the groups that the corresponding soft body and fluid belong to are
+	disabled.
+
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
 	\li PS3  : Yes
-	\li XB360: No
+	\li XB360: Yes
 
 	@see NxSoftBodyDesc.fluidCollisionResponseCoefficient
 	*/
 	NX_SBF_FLUID_COLLISION    = (1<<13),
+
+	/**
+	\brief Disable continuous collision detection with dynamic actors. 
+	Dynamic actors are handled as static ones.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NX_SBF_DISABLE_DYNAMIC_CCD  = (1<<14),
+
+	/**
+	\brief Moves soft body partially in the frame of the attached actor. 
+
+	This feature is useful when the soft body is attached to a fast moving shape.
+	In that case the soft body adheres to the shape it is attached to while only 
+	velocities below the parameter minAdhereVelocity are used for secondary effects.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxSoftBodyDesc.minAdhereVelocity
+	*/
+	NX_SBF_ADHERE  = (1<<15),
+
 };
 
 /*----------------------------------------------------------------------------*/
@@ -286,7 +320,7 @@ One split is represented by a pair of tetrahedron indices and a pair of face ind
 The tetrahedra indices can be used to locate the vertex index quadruple belonging to 
 the two mesh tetrahedra involved in split.
 
-Each pair is guaranteed to be reported only once.
+Each pair is garantueed to be reported only once.
 */
 class NxSoftBodySplitPairData
 {
@@ -502,10 +536,10 @@ public:
 	/**
 	\brief Defines a factor for the impulse transfer from the soft body to attached rigid bodies.
 
-	Only has an effect if the mode of the attachment is set to NX_SBF_COLLISION_TWOWAY.
+	Only has an effect if the mode of the attachment is set to NX_SOFTBODY_ATTACHMENT_TWOWAY.
 
 	<b>Default:</b> 0.2 <br>
-	<b>Range:</b> [0,inf)
+	<b>Range:</b> [0,1]
 	
 	@see NxSoftBody.attachToShape NxSoftBody.attachToCollidingShapes NxSoftBody.attachVertexToShape NxSoftBody.setAttachmentResponseCoefficient()
 	*/
@@ -532,6 +566,8 @@ public:
 	<b>Default:</b> 1.0 <br>
 	<b>Range:</b> [0,inf)
 	
+	Note: Large values can cause instabilities
+
 	@see NxSoftBodyDesc.flags NxSoftBodyDesc.fromFluidResponseCoefficient
 	*/
 	NxReal toFluidResponseCoefficient;
@@ -543,10 +579,28 @@ public:
 
 	<b>Default:</b> 1.0 <br>
 	<b>Range:</b> [0,inf)
-	
+
+	Note: Large values can cause instabilities
+
 	@see NxSoftBodyDesc.flags NxSoftBodyDesc.toFluidResponseCoefficient
 	*/
 	NxReal fromFluidResponseCoefficient;
+
+	/**
+	\brief If the NX_SBF_ADHERE flag is set the soft body moves partially in the frame 
+	of the attached actor. 
+
+	This feature is useful when the soft body is attached to a fast moving shape.
+	In that case the soft body adheres to the shape it is attached to while only 
+	velocities below the parameter minAdhereVelocity are used for secondary effects.
+
+	<b>Default:</b> 1.0
+	<b>Range:</b> [0,inf)
+
+	@see NX_SBF_ADHERE
+	*/ 
+
+	NxReal minAdhereVelocity;
 
 	/**
 	\brief Number of solver iterations. 
@@ -628,6 +682,13 @@ public:
 	@see NxGroupsMask NxSoftBody.setGroupsMask() NxSoftBody.getGroupsMask()
 	*/
 	NxGroupsMask groupsMask;
+
+	/**
+	\brief Force Field Material Index, index != 0 has to be created.
+
+	<b>Default:</b> 0
+	*/
+	NxU16 forceFieldMaterial;
 
 	/**
 	\brief If the flag NX_SBF_VALIDBOUNDS is set, this variable defines the volume
@@ -735,6 +796,7 @@ NX_INLINE void NxSoftBodyDesc::setToDefault()
 	collisionResponseCoefficient = 0.2f;
 	toFluidResponseCoefficient = 1.0f;
 	fromFluidResponseCoefficient = 1.0f;
+	minAdhereVelocity = 1.0f;
 	flags = NX_SBF_GRAVITY | NX_SBF_VOLUME_CONSERVATION;
     solverIterations = 5;
 	wakeUpCounter = NX_SLEEP_INTERVAL;
@@ -751,6 +813,7 @@ NX_INLINE void NxSoftBodyDesc::setToDefault()
   	userData = NULL;
 	name = NULL;
 	compartment = NULL;
+	forceFieldMaterial = 0;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -771,12 +834,12 @@ NX_INLINE bool NxSoftBodyDesc::isValid() const
 	if(dampingCoefficient < 0.0f || dampingCoefficient > 1.0f) return false;
     if(collisionResponseCoefficient < 0.0f) return false;
 	if(wakeUpCounter < 0.0f) return false;
-	if(attachmentResponseCoefficient < 0.0f) return false;
+	if(attachmentResponseCoefficient < 0.0f || attachmentResponseCoefficient > 1.0f) return false;
 	if(toFluidResponseCoefficient < 0.0f) return false;
 	if(fromFluidResponseCoefficient < 0.0f) return false;
+	if(minAdhereVelocity < 0.0f) return false;
 	if(relativeGridSpacing < 0.01f) return false;
 	if(collisionGroup >= 32) return false; // We only support 32 different collision groups
-	if(compartment && (!(flags & NX_SBF_HARDWARE))) return false; //only hw soft bodies can go in compartments
 	return true;
 }
 

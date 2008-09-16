@@ -13,6 +13,23 @@
 
 #include "NxShape.h"
 
+
+/**
+\brief Describes the compartment types a rigid body shape might interact with
+*/
+enum NxShapeCompartmentType
+	{
+	NX_COMPARTMENT_SW_RIGIDBODY		= (1<<0),	//!< Software rigid body compartment
+	NX_COMPARTMENT_HW_RIGIDBODY		= (1<<1),	//!< Hardware rigid body compartment
+	NX_COMPARTMENT_SW_FLUID			= (1<<2),	//!< Software fluid compartment
+	NX_COMPARTMENT_HW_FLUID			= (1<<3),	//!< Hardware fluid compartment
+	NX_COMPARTMENT_SW_CLOTH			= (1<<4),	//!< Software cloth compartment
+	NX_COMPARTMENT_HW_CLOTH			= (1<<5),	//!< Hardware cloth compartment
+	NX_COMPARTMENT_SW_SOFTBODY		= (1<<6),	//!< Software softbody compartment
+	NX_COMPARTMENT_HW_SOFTBODY		= (1<<7),	//!< Hardware softbody compartment
+	};
+
+
 /**
 \brief Descriptor for #NxShape class. 
 
@@ -218,6 +235,30 @@ class NxShapeDesc
 	*/
 	NxGroupsMask			groupsMask;
 
+	/**
+	\brief A combination of ::NxShapeCompartmentType values.
+
+	Defines which compartment types the shape should not interact with.
+
+	\note This member is ignored in the following cases:
+
+	\li Explicitly adding the shape, i.e., its actor, to a rigid body compartment.
+	\li Attaching the shape to a fluid emitter.
+	\li Attaching the shape to a cloth.
+	\li Attaching the shape to a soft body.
+
+	<b>Default:</b> 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : No
+	\li XB360: Yes
+
+	@see NxShape.setNonInteractingCompartmentTypes() NxShapeCompartmentType
+	*/
+	NxU32					nonInteractingCompartmentTypes;
+
 	NX_INLINE virtual		~NxShapeDesc();
 	
 	/**
@@ -260,7 +301,7 @@ NX_INLINE NxShapeDesc::~NxShapeDesc()
 NX_INLINE void NxShapeDesc::setToDefault()
 	{
 	localPose.id();
-	shapeFlags			= NX_SF_VISUALIZATION;
+	shapeFlags			= NX_SF_VISUALIZATION | NX_SF_CLOTH_TWOWAY | NX_SF_SOFTBODY_TWOWAY;
 	group				= 0;
 	materialIndex		= 0;
 	ccdSkeleton		= NULL;
@@ -273,6 +314,7 @@ NX_INLINE void NxShapeDesc::setToDefault()
 	groupsMask.bits1	= 0;
 	groupsMask.bits2	= 0;
 	groupsMask.bits3	= 0;
+	nonInteractingCompartmentTypes = 0;
 	}
 
 NX_INLINE bool NxShapeDesc::isValid() const
@@ -281,8 +323,6 @@ NX_INLINE bool NxShapeDesc::isValid() const
 		return false;
 	if(group>=32)
 		return false;	// We only support 32 different groups
-	if(shapeFlags&0xffff0000)
-		return false;	// Only 16-bit flags supported here
 	if(type >= NX_SHAPE_COUNT)
 		return false;
 	if(materialIndex==0xffff)

@@ -52,9 +52,10 @@
 		NxReal y = (e*a) - (d*b);
 		NxReal z = x + y - ac_bb;
 
-		// Same as: if(x>0.0f && y>0.0f && z<0.0f)	return TRUE;
-		//			else							return FALSE;
-		return (( NX_IR(z) & ~(NX_IR(x)|NX_IR(y)) ) & NX_SIGN_BITMASK);
+		if ((x > 0.0f) && (y > 0.0f) && (z < 0.0f))
+			return NX_TRUE;
+		else
+			return NX_FALSE;
 		}
 
 	/**
@@ -100,9 +101,10 @@
 		NxReal y = (e*a) - (d*b);
 		NxReal z = x + y - ac_bb;
 
-		// Same as: if(x>0.0f && y>0.0f && z<0.0f)	return TRUE;
-		//			else							return FALSE;
-		return (( NX_IR(z) & ~(NX_IR(x)|NX_IR(y)) ) & NX_SIGN_BITMASK);
+		if ((x > 0.0f) && (y > 0.0f) && (z < 0.0f))
+			return NX_TRUE;
+		else
+			return NX_FALSE;
 		}
 
 //}

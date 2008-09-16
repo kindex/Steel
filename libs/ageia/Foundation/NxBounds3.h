@@ -304,8 +304,10 @@ NX_INLINE void NxBounds3::setCenterExtents(const NxVec3& c, const NxVec3& e)
 
 NX_INLINE void NxBounds3::scale(NxF32 scale)
 	{
-	min *= scale;
-	max *= scale;
+	NxVec3 center, extents;
+	getCenter(center);
+	getExtents(extents);
+	setCenterExtents(center, extents * scale);
 	}
 
 NX_INLINE void NxBounds3::fatten(NxReal distance)

@@ -246,6 +246,8 @@ enum NxSDKCreateError
 #include "NxSimpleTypes.h"
 #include "NxAssert.h"
 
+#define	NX_SIGN_BITMASK		0x80000000
+
 #define NX_DEBUG_MALLOC 0
 
 // Don't use inline for alloca !!!

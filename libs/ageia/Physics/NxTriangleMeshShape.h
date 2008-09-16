@@ -148,7 +148,7 @@ class NxTriangleMeshShape: public NxShape
 
 	\param[in] bounds Bounds to test against. In object or world space depending on #NxQueryFlags. <b>Range:</b> See #NxBounds3
 	\param[in] flags Controls if the bounds are in object or world space and if we return first contact only. See #NxQueryFlags.
-	\param[in] callback Used to return triangles whicj intersect the AABB
+	\param[in] callback Used to return triangles which intersect the AABB
 	\return True if there is an overlap.
 
 	<b>Platform:</b>

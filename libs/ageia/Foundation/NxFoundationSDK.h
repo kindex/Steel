@@ -78,7 +78,7 @@ class NxFoundationSDK
 	*/
 	virtual NxRemoteDebugger* getRemoteDebugger() = 0;
 
-	/**
+	/*
 	creates a profiling zone.  At the moment this is not needed by the user.
 	*/
 	//virtual NxProfilingZone* createProfilingZone(const char * x) = 0;

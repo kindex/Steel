@@ -89,6 +89,12 @@
 	#error Unknown platform!
 #endif
 
+union NxU32F32
+{
+	NxU32 u;
+	NxF32 f;
+};
+
 #if __APPLE__
     NX_COMPILE_TIME_ASSERT(sizeof(bool)==4);    // PPC has 4 byte bools
 #else

@@ -839,6 +839,41 @@ class NxShape
 	*/
 	virtual		const NxGroupsMask		getGroupsMask()	const = 0;
 
+		/**
+	\brief Returns which compartment types the shape should not interact with.
+
+	\return A combination of ::NxShapeCompartmentType values.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : No
+	\li XB360: Yes
+
+	@see setNonInteractingCompartmentTypes() NxShapeCompartmentType
+	*/
+	virtual		NxU32				getNonInteractingCompartmentTypes() const = 0;
+
+	/**
+	\brief Sets which compartment types the shape should not interact with.
+
+	The shape will not interact with objects that belong to a compartment of the specified types.
+
+	\note See #NxShapeDesc::nonInteractingCompartmentTypes for limitations.
+
+	\param[in] compartmentTypes A combination of ::NxShapeCompartmentType values.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : No
+	\li XB360: Yes
+
+	@see getNonInteractingCompartmentTypes() NxShapeCompartmentType
+	*/
+	virtual		void				setNonInteractingCompartmentTypes(NxU32 compartmentTypes) = 0;
+
+
 				void*					userData;	//!< user can assign this to whatever, usually to create a 1:1 relationship with a user object.
 				void*					appData;	//!< used internally, do not change.
 	};

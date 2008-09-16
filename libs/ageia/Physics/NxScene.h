@@ -25,11 +25,6 @@
 class NxUserFluidContactReport;
 #endif
 
-#if NX_USE_IMPLICIT_SCREEN_SURFACE_API
-class NxImplicitScreenMesh;
-class NxImplicitScreenMeshDesc;
-#endif
-
 #if NX_USE_CLOTH_API
 #include "cloth/NxCloth.h"
 #include "cloth/NxClothMesh.h"
@@ -62,6 +57,10 @@ class NxPhysicsSDK;
 
 class NxForceField;
 class NxForceFieldDesc;
+class NxForceFieldLinearKernel;
+class NxForceFieldLinearKernelDesc;
+class NxForceFieldShapeGroup;
+class NxForceFieldShapeGroupDesc;
 
 /**
 \brief Struct used by NxScene::getPairFlagArray().
@@ -196,7 +195,7 @@ enum NxSweepFlags
  */
 struct NxSweepQueryHit
 	{
-	NxF32		t;					//!< Distance to hit
+	NxF32		t;					//!< Distance to hit expressed as a percentage of the source motion vector ([0,1] coeff)
 	NxShape*	hitShape;			//!< Hit shape
 	NxShape*	sweepShape;			//!< Only nonzero when using NxActor::linearSweep. Shape from NxActor that hits the hitShape.
 	void*		userData;			//!< User-defined data
@@ -241,7 +240,7 @@ enum NxProfileZoneName
 	NX_PZ_PPU1_SIMULATE,
 	NX_PZ_PPU2_SIMULATE,
 	NX_PZ_PPU3_SIMULATE,
-	NX_PZ_TOTAL_SIMULATION = 0x10,	//!< Clock start is in client thread, just before scene thread was kicked off; clock end is when client calls fetchResults().
+	NX_PZ_TOTAL_SIMULATION = 0x10,	//!< Clock start is in client thread, just before scene thread was kicked off; clock end is in simulation thread when it finishes.
 	};
 
 
@@ -546,7 +545,7 @@ class NxScene
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
@@ -564,13 +563,13 @@ class NxScene
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see createForceField NxForceField
 	*/
-	virtual void						releaseForceField(NxForceField& forceField) = 0;
+		virtual void						releaseForceField(NxForceField& forceField) = 0;
 
 	/**
 	\brief Gets the number of force fields in the scene.
@@ -579,11 +578,11 @@ class NxScene
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 	*/
-	virtual	NxU32						getNbForceFields()		const	= 0;
+	virtual	NxU32					getNbForceFields()		const	= 0;
 
 	/**
 	\brief Gets the force fields in the scene.
@@ -592,12 +591,239 @@ class NxScene
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 	*/
+	virtual	NxForceField**			getForceFields()				= 0;
 
-	virtual	NxForceField**				getForceFields()				= 0;
+	/**
+	\brief creates a forcefield kernel which uses the same linear function as pre 2.8 force fields
+
+	\param[in] kernelDesc The linear kernel desc to use to create a linear kernel for force fields. See #NxForceFieldLinearKernelDesc.
+	\return NxForceFieldLinearKernel. See #NxForceFieldLinearKernel
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual	NxForceFieldLinearKernel*	createForceFieldLinearKernel(const NxForceFieldLinearKernelDesc& kernelDesc)	= 0;
+
+	/**
+	\brief releases a linear force field kernel
+	\param[in] kernel to be released.
+	\return NxForceFieldLinearKernel. See #NxForceFieldLinearKernel
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual	void						releaseForceFieldLinearKernel(NxForceFieldLinearKernel& kernel)							= 0;
+
+	/**
+	\brief Returns the number of linear kernels in the scene. 
+
+	\return number of linear kernels in the scene.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxU32						getNbForceFieldLinearKernels() const													= 0; 
+
+	/**
+	\brief Restarts the linear kernels iterator so that the next call to getNextForceFieldLinearKernel(). 
+
+	\return The first shape group in the force scene.  
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual void						resetForceFieldLinearKernelsIterator()													= 0; 
+
+	/**
+	\brief Retrieves the next linear kernel when iterating. 
+
+	\return NxForceFieldLinearKernel  
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxForceFieldLinearKernel*	getNextForceFieldLinearKernel()															= 0; 
+
+	/**
+	\brief Creates a new force field shape group.  
+
+	\param[in] desc The force field group descriptor. See #NxForceFieldShapeGroupDesc.
+	\return NxForceFieldShapeGroup. See #NxForceFieldShapeGroup
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxForceFieldShapeGroup*		createForceFieldShapeGroup(const NxForceFieldShapeGroupDesc& desc)						= 0;
+	
+	/**
+	\brief Releases a force field shape group.
+
+	\param[in] group The group which is to be relased. See #NxForceFieldShapeGroup.
+	
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual void						releaseForceFieldShapeGroup(NxForceFieldShapeGroup& group)									= 0;
+
+	/**
+	\brief Returns the number of shape groups in the scene.
+
+	\return The number of shape groups in the scene.
+	
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxU32						getNbForceFieldShapeGroups() const														= 0; 
+
+	/**
+	\brief Restarts the shape groups iterator so that the next call to getNextForceFieldShapeGroup() returns the first shape group in the force scene. 
+	
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual void						resetForceFieldShapeGroupsIterator()													= 0; 
+
+	/**
+	\brief Retrieves the next shape group when iterating.
+	\return NxForceFieldShapeGroup. See #NxForceFieldShapeGroup
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxForceFieldShapeGroup*		getNextForceFieldShapeGroup()															= 0; 
+
+	/**
+	\brief Creates a new variety index for force fields to access the scaling table, creates a new row in the scaling table.
+	\return NxForceFieldVariety. See #NxForceFieldVariety & #setForceFieldScale 
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxForceFieldVariety			createForceFieldVariety()																= 0;
+	
+	/**
+	\brief Returns the highest allocated force field variety.
+	\return Highest variety index See #NxForceFieldVariety
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxForceFieldVariety			getHighestForceFieldVariety() const														= 0;
+
+	/**
+	\brief Releases a forcefield variety index and the related row in the scaling table.
+	\param[in] mat The variery index to release.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual void						releaseForceFieldVariety(NxForceFieldVariety var)										= 0;
+
+	/**
+	\brief Creates a new index for objects(actor, fluid, cloth, softbody) to access the scaling table, creates a new column in the scaling table.
+	\return NxForceFieldMaterial See #NxForceFieldMaterial
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxForceFieldMaterial		createForceFieldMaterial()																= 0;
+
+	/**
+	\brief Returns the highest allocated force field material.
+	\return The highest allocated force field material. See #NxForceFieldMaterial
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxForceFieldMaterial		getHighestForceFieldMaterial() const													= 0;
+
+	/**
+	\brief Releases a forcefield material index and the related column in the scaling table.
+	\param[in] mat The material index to release.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual void						releaseForceFieldMaterial(NxForceFieldMaterial mat)										= 0;
+
+	/**
+	\brief Get the scaling value for a given variety/material pair.
+	\return The scaling value for a given variety/material pair.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual	NxReal						getForceFieldScale(NxForceFieldVariety var, NxForceFieldMaterial mat)					= 0;
+
+	/**
+	\brief Set the scaling value for a given variety/material pair.
+	\param[in] var A Variety index.
+	\param[in] mat A Material index.
+	\param[in] val The value to set at the variety/material coordinate in the table. Setting the value to big or to low may cause invalid floats in the kernel output.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual	void						setForceFieldScale(NxForceFieldVariety var, NxForceFieldMaterial mat, NxReal val)		= 0;
+
 	/**
 	\brief Creates a new NxMaterial.
 
@@ -667,7 +893,7 @@ class NxScene
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxCompartment, getCompartmentArray()
@@ -958,7 +1184,10 @@ class NxScene
 
 	NX_NOTIFY_ON_START_TOUCH
 	NX_NOTIFY_ON_END_TOUCH	
-	NX_NOTIFY_ON_TOUCH		
+	NX_NOTIFY_ON_TOUCH
+	NX_NOTIFY_ON_START_TOUCH_FORCE_THRESHOLD
+	NX_NOTIFY_ON_END_TOUCH_FORCE_THRESHOLD
+	NX_NOTIFY_ON_TOUCH_FORCE_THRESHOLD
 	NX_NOTIFY_ON_IMPACT		
 	NX_NOTIFY_ON_ROLL		
 	NX_NOTIFY_ON_SLIDE	
@@ -1786,8 +2015,8 @@ class NxScene
 	\param[in] callback User fluid notification callback. See #NxFluidUserNotify.
 
 	<b>Platform:</b>
-	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PC SW: No
+	\li PPU  : No
 	\li PS3  : No
 	\li XB360: No
 
@@ -1802,8 +2031,8 @@ class NxScene
 	\return The current user fluid notify pointer. See #NxFluidUserNotify.
 
 	<b>Platform:</b>
-	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PC SW: No
+	\li PPU  : No
 	\li PS3  : No
 	\li XB360: No
 
@@ -1812,6 +2041,72 @@ class NxScene
 	virtual NxFluidUserNotify*			getFluidUserNotify() const = 0;
 
 #endif //NX_USE_FLUID_API
+
+#if NX_USE_CLOTH_API
+	/**
+	\brief Sets a user notify object which receives special simulation events when they occur.
+
+	\param[in] callback User cloth notification callback. See #NxClothUserNotify.
+
+	<b>Platform:</b>
+	\li PC SW: No
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: No
+
+	@see NxClothUserNotify getClothUserNotify
+	*/
+	virtual void						setClothUserNotify(NxClothUserNotify* callback) = 0;
+
+
+	/**
+	\brief Retrieves the NxClothUserNotify pointer set with setClothUserNotify().
+
+	\return The current user cloth notify pointer. See #NxClothUserNotify.
+
+	<b>Platform:</b>
+	\li PC SW: No
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: No
+
+	@see NxClothUserNotify setClothUserNotify()
+	*/
+	virtual NxClothUserNotify*			getClothUserNotify() const = 0;
+#endif //NX_USE_CLOTH_API
+
+#if NX_USE_SOFTBODY_API
+	/**
+	\brief Sets a user notify object which receives special simulation events when they occur.
+
+	\param[in] callback User softbody notification callback. See #NxSoftBodyUserNotify.
+
+	<b>Platform:</b>
+	\li PC SW: No
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: No
+
+	@see NxSoftBodyUserNotify getSoftBodyUserNotify
+	*/
+	virtual void						setSoftBodyUserNotify(NxSoftBodyUserNotify* callback) = 0;
+
+
+	/**
+	\brief Retrieves the NxSoftBodyUserNotify pointer set with setSoftBodyUserNotify().
+
+	\return The current user softbody notify pointer. See #NxSoftBodyUserNotify.
+
+	<b>Platform:</b>
+	\li PC SW: No
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: No
+
+	@see NxSoftBodyUserNotify setSoftBodyUserNotify()
+	*/
+	virtual NxSoftBodyUserNotify*		getSoftBodyUserNotify() const = 0;
+#endif //NX_USE_SOFTBODY_API
 
 	/**
 	\brief Sets a user callback object, which receives callbacks on all contacts generated for specified actors.
@@ -2493,10 +2788,10 @@ class NxScene
 	\return The new fluid.
 	
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see releaseFluid()
 	*/
@@ -2513,10 +2808,10 @@ class NxScene
 	\param[in] fluid Fluid to release.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see createFluid()
 	*/
@@ -2528,10 +2823,10 @@ class NxScene
 	\return the number of fluids.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see getFluids()
 	*/
@@ -2545,10 +2840,10 @@ class NxScene
 	\return An array of fluid objects belonging to this scene.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see getNbFluids()
 	*/
@@ -2557,9 +2852,9 @@ class NxScene
 
 	/**
 	\brief Pre-cooks all triangles from static NxTriangleMeshShapes of the scene which are intersecting with the given bounds.
-
+	
 	The pre-cooking will only be valid for Fluids which share the specified parameters (see NxFluidDesc)
-
+	
 	\param[in] bounds The volume whose contents should be pre-cooked
 	\param[in] packetSizeMultiplier
 	\param[in] restParticlesPerMeter 
@@ -2567,92 +2862,17 @@ class NxScene
 	\param[in] motionLimitMultiplier
 	\param[in] collisionDistanceMultiplier
 	\param[in] compartment The specific compartment to perform the pre-cooking for.
+	\param[in] forceStrictCookingFormat Forces specified cooking parameters. Otherwise they might internaly be reinterpreted depending on created fluids. Not implemented yet.
 
 	\return Operation succeeded.
 	@see NxFluidDesc
 	*/
-	virtual bool						cookFluidMeshHotspot(const NxBounds3& bounds, NxU32 packetSizeMultiplier, NxReal restParticlesPerMeter, NxReal kernelRadiusMultiplier, NxReal motionLimitMultiplier, NxReal collisionDistanceMultiplier, NxCompartment* compartment = NULL) = 0;
+	virtual bool						cookFluidMeshHotspot(const NxBounds3& bounds, NxU32 packetSizeMultiplier, NxReal restParticlesPerMeter, NxReal kernelRadiusMultiplier, NxReal motionLimitMultiplier, NxReal collisionDistanceMultiplier, NxCompartment* compartment = NULL, bool forceStrictCookingFormat = false) = 0;
 
 #endif
 //@}
 /************************************************************************************************/
 	
-/** @name Implicit Screen Surface, Deprecated
-*/
-//@{
-
-#if NX_USE_IMPLICIT_SCREEN_SURFACE_API 
-	
-	/**
-	\brief Deprecated: Creates an implicit screen surface for user-defined particles in this scene. 
-	
-	NxImplicitScreenMeshDesc::isValid() must return true.
-
-	\param[in] surfaceDesc Description of the implicit screen surface object to create. See #NxImplicitScreenMeshDesc.
-	\return The new implicit screen surface.
-	
-	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
-
-	@see releaseImplicitScreenMesh()
-	*/
-	virtual NxImplicitScreenMesh*					createImplicitScreenMesh(const NxImplicitScreenMeshDesc& surfaceDesc) = 0;
-
-	/**
-	\brief Deprecated: Deletes the specified implicit screen surface. 
-	
-	The implicit screen surface must be in this scene.
-	Do not keep a reference to the deleted instance.
-	Avoid release calls while the scene is simulating (in between simulate() and fetchResults() calls).
-
-	\param[in] implicitScreenMesh implicit screen surface ImplicitScreenMesh to release.
-
-	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
-
-	@see createImplicitScreenMesh()
-	*/
-	virtual void						releaseImplicitScreenMesh(NxImplicitScreenMesh& implicitScreenMesh)			= 0;
-
-	/**
-	\brief Deprecated: Get the number of implicit screen surfaces belonging to the scene.
-
-	\return the number of implicit screen surfaces.
-
-	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
-
-	@see getImplicitScreenMeshes()
-	*/
-	virtual	NxU32						getNbImplicitScreenMeshes()		const		= 0;
-
-	/**
-	\brief Deprecated: Get an array of implicit screen surfaces belonging to the scene.
-
-	\return an array of implicit screen surface pointers with size getNbImplicitScreenMeshes().
-
-	\return An array of implicit screen surface objects belonging to this scene.
-
-	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
-
-	@see getNbImplicitScreenMeshes()
-	*/
-	virtual	NxImplicitScreenMesh**					getImplicitScreenMeshes()						= 0;
-#endif
-
 //@}
 /************************************************************************************************/
 /** @name Cloth
@@ -2670,7 +2890,7 @@ class NxScene
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc NxCloth
@@ -2687,7 +2907,7 @@ class NxScene
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxCloth
@@ -2700,7 +2920,7 @@ class NxScene
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getCloths()
@@ -2715,7 +2935,7 @@ class NxScene
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getNbCloths()
@@ -2741,7 +2961,7 @@ class NxScene
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxSoftBodyDesc NxSoftBody
@@ -2758,7 +2978,7 @@ class NxScene
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxSoftBody
@@ -2771,7 +2991,7 @@ class NxScene
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getSoftBodies()
@@ -2786,7 +3006,7 @@ class NxScene
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getNbSoftBodies()
@@ -3082,6 +3302,70 @@ class NxScene
 	*/
 	virtual	bool			releaseSceneQuery(NxSceneQuery& query)			= 0;
 	//~ BATCHED_RAYCASTS
+
+	/**
+	\brief Sets the rebuild rate of the dynamic tree pruning structure.
+
+	\param[in] dynamicTreeRebuildRateHint Rebuild rate of the dynamic tree pruning structure.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxSceneDesc.dynamicTreeRebuildRateHint getDynamicTreeRebuildRateHint()
+	*/
+	virtual	void			setDynamicTreeRebuildRateHint(NxU32 dynamicTreeRebuildRateHint) = 0;
+
+	/**
+	\brief Retrieves the rebuild rate of the dynamic tree pruning structure.
+
+	\return The rebuild rate of the dyamic tree pruning structure.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxSceneDesc.dynamicTreeRebuildRateHint setDynamicTreeRebuildRateHint()
+	*/
+	virtual NxU32			getDynamicTreeRebuildRateHint() const = 0;
+
+	/**
+	\brief Sets the number of actors required to spawn a separate rigid body solver thread.
+
+	\note If internal multi threading is disabled (see #NX_SF_ENABLE_MULTITHREAD) this call will
+	have no effect.
+
+	\param[in] solverBatchSize Number of actors required to spawn a separate rigid body solver thread.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Not applicable
+	\li PS3  : Not applicable
+	\li XB360: Yes
+
+	@see NxSceneDesc.solverBatchSize getSolverBatchSize()
+	*/
+	virtual	void			setSolverBatchSize(NxU32 solverBatchSize) = 0;
+
+	/**
+	\brief Retrieves the number of actors required to spawn a separate rigid body solver thread.
+
+	\return Current number of actors required to spawn a separate rigid body solver thread.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Not applicable
+	\li PS3  : Not applicable
+	\li XB360: Yes
+
+	@see NxSceneDesc.solverBatchSize setSolverBatchSize()
+	*/
+	virtual NxU32			getSolverBatchSize() const = 0;
+
 
 	void*	userData;	//!< user can assign this to whatever, usually to create a 1:1 relationship with a user object.
 	void*	extLink;	//!< reserved for linkage with other Ageia components. Applications and SDK should not modify

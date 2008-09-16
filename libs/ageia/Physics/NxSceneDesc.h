@@ -65,8 +65,9 @@ enum NxSimulationType
 	You need to define "maxBounds", "subdivisionLevel" and "upAxis" to use this structure.
 
 	NX_PRUNING_DYNAMIC_AABB_TREE usually provides the fastest queries. However there is a
-	constant per-frame management cost associated with this structure. You do not need to define
-	extra parameters to use it.
+	constant per-frame management cost associated with this structure. You have the option to
+	give a hint on how much work should be done per frame by setting the parameter
+	#NxSceneDesc::dynamicTreeRebuildRateHint.
 
 	NX_PRUNING_STATIC_AABB_TREE is typically used for static objects. It is the same as the
 	dynamic AABB tree, without the per-frame overhead. This is the default choice for static
@@ -81,6 +82,50 @@ enum NxPruningStructure
 	NX_PRUNING_DYNAMIC_AABB_TREE,	//!< Using a dynamic AABB tree
 	NX_PRUNING_STATIC_AABB_TREE,	//!< Using a static AABB tree
 	};
+
+/**
+\brief Selects a broadphase type.
+*/
+enum NxBroadPhaseType
+{
+	/**
+	\brief A sweep-and-prune (SAP) algorithm to find pairs of potentially colliding shapes.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+    NX_BP_TYPE_SAP_SINGLE,
+
+	/**
+	\brief A multi sweep-and-prune algorithm to find pairs of potentially colliding shapes.
+	
+	Uses a configurable 2D grid to divide the scene space into cells. The potentially overlapping 
+	shape pairs are detected in each cell and the information is merged together. This approach
+	is usually faster than NX_BP_TYPE_SAP_SINGLE in scenarios with many shapes and a high creation/deletion
+	rate of shapes. However, the amount of memory required is considerably higher depending on the
+	number of grid cells used.
+
+	\note The following extra parameters need to be defined:
+	\li NxSceneDesc.maxBounds
+	\li NxSceneDesc.upAxis
+	\li NxSceneDesc.nbGridCellsX
+	\li NxSceneDesc.nbGridCellsY
+
+	\n
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: Yes
+
+	@see NxSceneDesc.bpType
+	*/
+    NX_BP_TYPE_SAP_MULTI,
+};
 
 enum NxSceneFlags
 	{
@@ -246,7 +291,7 @@ enum NxSceneFlags
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: No
 	*/
 	NX_SF_SEQUENTIAL_PRIMARY			=0x80*2,
@@ -263,8 +308,8 @@ enum NxSceneFlags
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	NX_SF_FLUID_PERFORMANCE_HINT		=0x80*4,
 	
@@ -272,6 +317,8 @@ enum NxSceneFlags
 
 class NxUserNotify;
 class NxFluidUserNotify;
+class NxClothUserNotify;
+class NxSoftBodyUserNotify;
 class NxUserContactModify;
 class NxUserTriggerReport;
 class NxUserContactReport;
@@ -358,14 +405,44 @@ class NxSceneDesc
 	<b>Default:</b> NULL
 
 	<b>Platform:</b>
-	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PC SW: No
+	\li PPU  : No
 	\li PS3  : No
 	\li XB360: No
 
 	@see NxFluidUserNotify NxScene.setFluidUserNotify() NxScene.getFluidUserNotify()
 	*/
 	NxFluidUserNotify*		fluidUserNotify;
+
+	/**
+	\brief Possible notification callback for cloths
+
+	<b>Default:</b> NULL
+
+	<b>Platform:</b>
+	\li PC SW: No
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: No
+
+	@see NxClothUserNotify NxScene.setClothUserNotify() NxScene.getClothUserNotify()
+	*/
+	NxClothUserNotify*		clothUserNotify;
+
+	/**
+	\brief Possible notification callback for softBodys
+
+	<b>Default:</b> NULL
+
+	<b>Platform:</b>
+	\li PC SW: No
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: No
+
+	@see NxSoftBodyUserNotify NxScene.setSoftBodyUserNotify() NxScene.getSoftBodyUserNotify()
+	*/
+	NxSoftBodyUserNotify*	softBodyUserNotify;
 
 	/**
 	\brief Possible asynchronous callback for contact modification
@@ -608,7 +685,7 @@ class NxSceneDesc
 	\li PC SW: Yes
 	\li PPU  : Yes
 	\li PS3  : Yes
-	\li XB360: Yes
+	\li XB360: No
 	*/
 	NxThreadPriority		simThreadPriority;
 
@@ -683,13 +760,11 @@ class NxSceneDesc
 
 	The default is normal priority.
 
-	\note Background worker threads are always assigned low priority.
-
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
 	\li PS3  : No
-	\li XB360: Yes
+	\li XB360: No
 	*/
 	NxThreadPriority		workerThreadPriority;
 
@@ -717,9 +792,10 @@ class NxSceneDesc
 	/**
 	\brief Sets the number of SDK managed threads which will be processing background tasks.
 
-	For example the SDK may need to preprocess data to be sent to the PhysX card.
+	For example scene queries can run on these threads or the SDK may need to preprocess data to be sent to the 
+	PhysX card.
 
-	This member is ignored if the application takes over control of the work allocation with a custom scheduler.
+	This member must be set to 0 if the application takes over control of the work allocation with a custom scheduler.
 
 	<b>Default:</b> 0
 
@@ -732,6 +808,19 @@ class NxSceneDesc
 	@see customScheduler
 	*/
 	NxU32					backgroundThreadCount;
+
+	/**
+	\brief Sets the thread priority of the SDK created background threads
+
+	The default is normal priority.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : No
+	\li XB360: No
+	*/
+	NxThreadPriority		backgroundThreadPriority;
 
 	/**
 	\brief Allows the user to specify which (logical) processor to allocate SDK background threads.
@@ -788,6 +877,31 @@ class NxSceneDesc
 	NxPruningStructure		dynamicStructure;
 
 	/**
+	\brief Hint for how much work should be done per simulation frame to rebuild the pruning structure.
+
+	This parameter gives a hint on the distribution of the workload for rebuilding the dynamic AABB tree
+	pruning structure #NX_PRUNING_DYNAMIC_AABB_TREE. It specifies the desired number of simulation frames
+	the rebuild process should take. Higher values will decrease the workload per frame but the pruning
+	structure will get more and more outdated the longer the rebuild takes (which can make
+	scene queries less efficient).
+
+	\note Only used for #NX_PRUNING_DYNAMIC_AABB_TREE pruning structure.
+
+	\note This parameter gives only a hint. The rebuild process might still take more or less time depending on the
+	      number of objects involved.
+
+	<b>Range:</b> [5, inf]<br>
+	<b>Default:</b> 100
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxU32					dynamicTreeRebuildRateHint;
+
+	/**
 	\brief Will be copied to NxScene::userData
 
 	<b>Default:</b> NULL
@@ -799,6 +913,69 @@ class NxSceneDesc
 	\li XB360: Yes
 	*/
 	void*					userData;
+
+	/**
+	\brief Defines which type of broadphase to use.
+
+	<b>Default:</b> NX_BP_TYPE_SAP_SINGLE
+
+	@see NxBroadPhaseType
+	*/
+	NxBroadPhaseType		bpType;
+
+	/**
+	\brief Defines the number of broadphase cells along the grid x-axis.
+
+	\note Must be power of two. Max is 8 at the moment. The broadphase type must be set to NX_BP_TYPE_SAP_MULTI 
+	for this parameter to have an effect.
+
+	<b>Default:</b> 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: Yes
+
+	@see NxSceneDesc.bpType
+	*/
+	NxU32					nbGridCellsX;
+
+	/**
+	\brief Defines the number of broadphase cells along the grid y-axis.
+
+	\note Must be power of two. Max is 8 at the moment. The broadphase type must be set to NX_BP_TYPE_SAP_MULTI 
+	for this parameter to have an effect.
+
+	<b>Default:</b> 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: Yes
+
+	@see NxSceneDesc.bpType
+	*/
+	NxU32					nbGridCellsY;
+
+	/**
+	\brief Defines the number of actors required to spawn a separate rigid body solver thread.
+
+	\note Internal multi threading must be enabled (see #NX_SF_ENABLE_MULTITHREAD) for this member to have
+	any effect.
+
+	<b>Default:</b> 32
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Not applicable
+	\li PS3  : Not applicable
+	\li XB360: Yes
+
+	@see NxScene.setSolverBatchSize() NxScene.getSolverBatchSize()
+	*/
+	NxU32					solverBatchSize;
 
 	/**
 	\brief constructor sets to default (no gravity, no ground plane, collision detection on).
@@ -827,6 +1004,8 @@ NX_INLINE void NxSceneDesc::setToDefault()
 	gravity.zero();
 	userNotify				= NULL;
 	fluidUserNotify			= NULL;
+	clothUserNotify			= NULL;
+	softBodyUserNotify		= NULL;
 	userTriggerReport		= NULL;
 	userContactReport		= NULL;
 	userContactModify		= NULL;
@@ -851,6 +1030,7 @@ NX_INLINE void NxSceneDesc::setToDefault()
 	subdivisionLevel		= 5;
 	staticStructure			= NX_PRUNING_STATIC_AABB_TREE;
 	dynamicStructure		= NX_PRUNING_NONE;
+	dynamicTreeRebuildRateHint = 100;
 
 	internalThreadCount		= 0;
 	backgroundThreadCount	= 0;
@@ -861,15 +1041,33 @@ NX_INLINE void NxSceneDesc::setToDefault()
 
 	workerThreadStackSize	= 0;
 	workerThreadPriority	= NX_TP_NORMAL;
-
+	backgroundThreadPriority= NX_TP_NORMAL;
 
 	simThreadMask			= 0;
 	threadMask				= 0;
 	backgroundThreadMask	= 0;
+
+	bpType					= NX_BP_TYPE_SAP_SINGLE;
+	nbGridCellsX			= 0;
+	nbGridCellsY			= 0;
+
+	solverBatchSize			= 32;
 	}
+
+NX_INLINE bool NxIsPowerOfTwo(NxU32 n)	{ return ((n&(n-1))==0);	}
 
 NX_INLINE bool NxSceneDesc::isValid() const
 	{
+	if(bpType==NX_BP_TYPE_SAP_MULTI)
+		{
+		if(!nbGridCellsX || !NxIsPowerOfTwo(nbGridCellsX) || nbGridCellsX>8)
+			return false;
+		if(!nbGridCellsY || !NxIsPowerOfTwo(nbGridCellsY) || nbGridCellsY>8)
+			return false;
+		if(!maxBounds)
+			return false;
+		}
+
 	if(maxTimestep <= 0 || maxIter < 1 || timeStepMethod > NX_NUM_TIMESTEP_METHODS)
 		return false;
 	if(boundsPlanes && !maxBounds)
@@ -888,6 +1086,9 @@ NX_INLINE bool NxSceneDesc::isValid() const
 				return false;
 			}
 		}
+
+	if (dynamicTreeRebuildRateHint < 5)
+		return false;
 
 	if((customScheduler!=NULL)&&(internalThreadCount>0))
 		return false;

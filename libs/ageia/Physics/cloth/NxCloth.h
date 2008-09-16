@@ -38,7 +38,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc
@@ -53,7 +53,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.clothMesh
@@ -68,7 +68,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.bendingStiffness getBendingStiffness()
@@ -83,7 +83,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.bendingStiffness setBendingStiffness()
@@ -100,7 +100,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.stretchingStiffness getStretchingStiffness()
@@ -115,7 +115,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.stretchingStiffness setStretchingStiffness()
@@ -130,7 +130,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.dampingCoefficient getDampingCoefficient()
@@ -145,7 +145,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 	
 	@see NxClothDesc.dampingCoefficient setDampingCoefficient()
@@ -160,7 +160,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.friction getFriction()
@@ -175,7 +175,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 	
 	@see NxClothDesc.friction setFriction()
@@ -190,7 +190,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.pressure getPressure()
@@ -205,7 +205,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.pressure setPressure()
@@ -220,7 +220,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.tearFactor getTearFactor()
@@ -235,7 +235,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.tearFactor setTearFactor()
@@ -250,7 +250,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.attachmentTearFactor getAttachmentTearFactor()
@@ -265,7 +265,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.attachmentTearFactor setAttachmentTearFactor()
@@ -280,7 +280,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.thickness getThickness()
@@ -295,7 +295,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.thickness setThickness()
@@ -310,7 +310,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.density
@@ -328,7 +328,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.relativeGridSpacing
@@ -343,7 +343,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.solverIterations setSolverIterations()
@@ -358,7 +358,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.solverIterations getSolverIterations()
@@ -373,7 +373,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxBounds3
@@ -392,7 +392,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothAttachmentFlag freeVertex() attachToCollidingShapes()
@@ -410,7 +410,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothAttachmentFlag NxClothDesc.attachmentTearFactor NxClothDesc.attachmentResponseCoefficient freeVertex()
@@ -427,7 +427,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothAttachmentFlag NxClothDesc.attachmentTearFactor NxClothDesc.attachmentResponseCoefficient freeVertex() attachToShape()
@@ -445,7 +445,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxShape freeVertex() NxClothAttachmentFlag attachToShape()
@@ -461,7 +461,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothAttachmentFlag NxClothDesc.attachmentTearFactor NxClothDesc.attachmentResponseCoefficient freeVertex() attachToShape()
@@ -476,7 +476,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see attachVertexToGlobalPosition() attachVertexToShape() detachFromShape()
@@ -489,15 +489,15 @@ public:
 	If this method is called for some vertex, the cloth solver will, during a time
 	period of length expirationTime, assign a different weight to the vertex
 	while internal cloth constraints (i.e. bending & stretching) are being resolved.
-	
+
 	With a high dominanceWeight, the modified vertex will force neighboring vertices
 	to strongly accommodate their positions while its own is kept fairly constant. 
 	The reverse holds for smaller dominanceWeights. 
-	
+
 	Using a dominanceWeight of +infinity has a similar effect as temporarily attaching 
 	the vertex to a global position. However, unlike using attachments, the velocity 
 	of the vertex is kept intact when using this method.
-	
+
 	\note The current implementation will not support the full range of dominanceWeights.
 	All dominanceWeights > 0.0 are treated equally as being +infinity.
 
@@ -513,7 +513,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see attachVertexToGlobalPosition()
@@ -528,7 +528,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getVertexAttachmentShape() getVertexAttachmentPosition()
@@ -545,7 +545,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getVertexAttachmentStatus() getVertexAttachmentPosition()
@@ -563,7 +563,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getVertexAttachmentStatus() getVertexAttachmentShape()
@@ -606,8 +606,8 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	*/
 	virtual void attachToCore(NxActor *actor, NxReal impulseThreshold, NxReal penetrationDepth = 0.0f, NxReal maxDeformationDistance = 0.0f) = 0;
@@ -636,7 +636,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 	*/
 	virtual bool tearVertex(const NxU32 vertexId, const NxVec3 &normal) = 0;
@@ -653,7 +653,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 	*/
 	virtual bool raycast(const NxRay& worldRay, NxVec3 &hit, NxU32 &vertexId) = 0;
@@ -666,7 +666,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxCollisionGroup
@@ -681,7 +681,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxCollisionGroup
@@ -696,7 +696,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getGroupsMask() NxGroupsMask
@@ -711,7 +711,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see setGroupsMask() NxGroupsMask
@@ -726,7 +726,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxMeshData NxClothDesc.meshData
@@ -741,7 +741,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxMeshData setMeshData() NxClothDesc.meshData
@@ -759,7 +759,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.validBounds getValidBounds() NxBounds3
@@ -774,7 +774,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.validBounds setValidBounds() NxBounds3
@@ -790,7 +790,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getPosition() setPositions() getPositions() setVelocity() getVelocity() getNumberOfParticles()
@@ -808,7 +808,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getPositions() setVelocities() getVelocities() getNumberOfParticles()
@@ -823,7 +823,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see setPosition() setPositions() getPositions() setVelocity() getVelocity() getNumberOfParticles()
@@ -841,7 +841,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see setPositions() setVelocities() getVelocities() getNumberOfParticles()
@@ -857,7 +857,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see setPosition() getPosition() getVelocity() setVelocities() getVelocities()  getNumberOfParticles()
@@ -875,7 +875,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getVelocities() setPositions() getPositions() getNumberOfParticles()
@@ -890,7 +890,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see setPosition() getPosition() setVelocity() setVelocities() getVelocities()  getNumberOfParticles()
@@ -908,7 +908,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see setVelocities() setPositions() getPositions() getNumberOfParticles()
@@ -921,7 +921,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see setVelocities() getVelocities() setPositions() getPositions() 
@@ -934,7 +934,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getShapePointers() setShapePointers() saveStateToStream() loadStateFromStream()
@@ -947,7 +947,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getNumberOfParticles()
@@ -963,7 +963,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see queryShapePointers() setShapePointers() saveStateToStream() loadStateFromStream()
@@ -979,7 +979,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see queryShapePointers() getShapePointers() saveStateToStream() loadStateFromStream()
@@ -1001,7 +1001,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see loadStateFromStream() queryShapePointers() getShapePointers() setShapePointers() 
@@ -1020,7 +1020,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see saveStateToStream() queryShapePointers() getShapePointers() setShapePointers() 
@@ -1035,7 +1035,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.collisionResponseCoefficient getCollisionResponseCoefficient()
@@ -1050,7 +1050,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.collisionResponseCoefficient setCollisionResponseCoefficient()
@@ -1065,7 +1065,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.attachmentResponseCoefficient getAttachmentResponseCoefficient()
@@ -1080,7 +1080,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.attachmentResponseCoefficient setAttachmentResponseCoefficient()
@@ -1095,8 +1095,8 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxClothDesc.fromFluidResponseCoefficient getFromFluidResponseCoefficient()
 	*/
@@ -1110,8 +1110,8 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxClothDesc.fromFluidResponseCoefficient setFromFluidResponseCoefficient()
 	*/
@@ -1125,8 +1125,8 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxClothDesc.toFluidResponseCoefficient getToFluidResponseCoefficient()
 	*/
@@ -1140,8 +1140,8 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxClothDesc.toFluidResponseCoefficient setToFluidResponseCoefficient()
 	*/
@@ -1155,7 +1155,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.externalAcceleration getExternalAcceleration()
@@ -1170,12 +1170,52 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.externalAcceleration setExternalAcceleration()
 	*/
 	virtual NxVec3 getExternalAcceleration() const = 0;
+
+	/**
+	\brief If the NX_CLF_ADHERE flag is set the cloth moves partially in the frame 
+	of the attached actor. 
+
+	This feature is useful when the cloth is attached to a fast moving character.
+	In that case the cloth adheres to the shape it is attached to while only 
+	velocities below the parameter minAdhereVelocity are used for secondary effects.
+
+	\param[in] velocity The minimal velocity for cloth to adhere (unit length / s)
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxClothDesc.minAdhereVelocity getMinAdhereVelocity()
+	*/
+	virtual void setMinAdhereVelocity(NxReal velocity) = 0;
+
+	/**
+	\brief If the NX_CLF_ADHERE flag is set the cloth moves partially in the frame 
+	of the attached actor. 
+
+	This feature is useful when the cloth is attached to a fast moving character.
+	In that case the cloth adheres to the shape it is attached to while only 
+	velocities below the parameter minAdhereVelocity are used for secondary effects.
+
+	\return Returns the minimal velocity for cloth to adhere (unit length / s)
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxClothDesc.minAdhereVelocity setMinAdhereVelocity()
+	*/
+	virtual NxReal getMinAdhereVelocity() const = 0;
 
 	/**
 	\brief Sets an acceleration acting normal to the cloth surface at each vertex.
@@ -1185,7 +1225,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.windAcceleration getWindAcceleration()
@@ -1200,7 +1240,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.windAcceleration setWindAcceleration()
@@ -1222,7 +1262,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see isSleeping() getSleepLinearVelocity() wakeUp() putToSleep()
@@ -1241,7 +1281,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see isSleeping() getSleepLinearVelocity() wakeUp() putToSleep() setSleepLinearVelocity()
@@ -1261,7 +1301,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see isSleeping() getSleepLinearVelocity() wakeUp() putToSleep()
@@ -1279,7 +1319,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see isSleeping() getSleepLinearVelocity() putToSleep()
@@ -1294,7 +1334,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see isSleeping() getSleepLinearVelocity() wakeUp()
@@ -1309,7 +1349,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.flags NxClothFlag getFlags()
@@ -1324,7 +1364,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxClothDesc.flags NxClothFlag setFlags()
@@ -1342,7 +1382,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see getName()
@@ -1366,7 +1406,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxForceMode 
@@ -1391,7 +1431,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxForceMode 
@@ -1416,7 +1456,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxForceMode 
@@ -1439,7 +1479,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxBounds3 NxClothDesc NxMeshData
@@ -1469,7 +1509,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see setName()
@@ -1490,6 +1530,44 @@ public:
 	@see NxCompartment
 	*/
 	virtual NxCompartment *			getCompartment() const = 0;
+
+	/**
+	\brief Get the PPU simulation time.
+
+	This method returns the time taken to simulate the fluid on the PPU in units
+	which are proportional to time but whose units are otherwise unspecified.
+
+	\return the simulation time
+	<b>Platform:</b>
+	\li PC SW: No
+	\li PPU  : Yes
+	\li PS3  : No
+	\li XB360: No
+
+	*/
+    virtual		NxU32			    getPPUTime()									const	= 0;
+
+	/**
+	\brief Retrieves the actor's force field material index, default index is 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxForceFieldMaterial	getForceFieldMaterial() const = 0;
+
+	/**
+	\brief Sets the actor's force field material index, default index is 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual void					setForceFieldMaterial(NxForceFieldMaterial)  = 0;
 
 	//public variables:
 public:

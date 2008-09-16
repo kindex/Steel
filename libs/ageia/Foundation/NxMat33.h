@@ -80,26 +80,42 @@ class NxMat33
 	//low level data access, single or double precision, with eventual translation:
 	//for dense 9 element data
 	NX_INLINE void setRowMajor(const NxF32 *);
+	NX_INLINE void setRowMajor(const NxF32 d[][3]);
 	NX_INLINE void setColumnMajor(const NxF32 *);
+	NX_INLINE void setColumnMajor(const NxF32 d[][3]);
 	NX_INLINE void getRowMajor(NxF32 *) const;
+	NX_INLINE void getRowMajor(NxF32 d[][3]) const;
 	NX_INLINE void getColumnMajor(NxF32 *) const;
+	NX_INLINE void getColumnMajor(NxF32 d[][3]) const;
 
 	NX_INLINE void setRowMajor(const NxF64 *);
+	NX_INLINE void setRowMajor(const NxF64 d[][3]);
 	NX_INLINE void setColumnMajor(const NxF64 *);
+	NX_INLINE void setColumnMajor(const NxF64 d[][3]);
 	NX_INLINE void getRowMajor(NxF64 *) const;
+	NX_INLINE void getRowMajor(NxF64 d[][3]) const;
 	NX_INLINE void getColumnMajor(NxF64 *) const;
+	NX_INLINE void getColumnMajor(NxF64 d[][3]) const;
 
 
 	//for loose 4-padded data.
 	NX_INLINE void setRowMajorStride4(const NxF32 *);
+	NX_INLINE void setRowMajorStride4(const NxF32 d[][4]);
 	NX_INLINE void setColumnMajorStride4(const NxF32 *);
+	NX_INLINE void setColumnMajorStride4(const NxF32 d[][4]);
 	NX_INLINE void getRowMajorStride4(NxF32 *) const;
+	NX_INLINE void getRowMajorStride4(NxF32 d[][4]) const;
 	NX_INLINE void getColumnMajorStride4(NxF32 *) const;
+	NX_INLINE void getColumnMajorStride4(NxF32 d[][4]) const;
 
 	NX_INLINE void setRowMajorStride4(const NxF64 *);
+	NX_INLINE void setRowMajorStride4(const NxF64 d[][4]);
 	NX_INLINE void setColumnMajorStride4(const NxF64 *);
+	NX_INLINE void setColumnMajorStride4(const NxF64 d[][4]);
 	NX_INLINE void getRowMajorStride4(NxF64 *) const;
+	NX_INLINE void getRowMajorStride4(NxF64 d[][4]) const;
 	NX_INLINE void getColumnMajorStride4(NxF64 *) const;
+	NX_INLINE void getColumnMajorStride4(NxF64 d[][4]) const;
 
 
 	NX_INLINE void setRow(int row, const NxVec3 &);
@@ -386,6 +402,23 @@ NX_INLINE void NxMat33::setRowMajor(const NxF32* d)
 	}
 
 
+NX_INLINE void NxMat33::setRowMajor(const NxF32 d[][3])
+	{
+	//we are also row major, so this is a direct copy
+	data.s._11 = (NxReal)d[0][0];
+	data.s._12 = (NxReal)d[0][1];
+	data.s._13 = (NxReal)d[0][2];
+
+	data.s._21 = (NxReal)d[1][0];
+	data.s._22 = (NxReal)d[1][1];
+	data.s._23 = (NxReal)d[1][2];
+
+	data.s._31 = (NxReal)d[2][0];
+	data.s._32 = (NxReal)d[2][1];
+	data.s._33 = (NxReal)d[2][2];
+	}
+
+
 NX_INLINE void NxMat33::setColumnMajor(const NxF32* d)
 	{
 	//we are column major, so copy transposed.
@@ -400,6 +433,23 @@ NX_INLINE void NxMat33::setColumnMajor(const NxF32* d)
 	data.s._31 = (NxReal)d[2];
 	data.s._32 = (NxReal)d[5];
 	data.s._33 = (NxReal)d[8];
+	}
+
+
+NX_INLINE void NxMat33::setColumnMajor(const NxF32 d[][3])
+	{
+	//we are column major, so copy transposed.
+	data.s._11 = (NxReal)d[0][0];
+	data.s._12 = (NxReal)d[1][0];
+	data.s._13 = (NxReal)d[2][0];
+
+	data.s._21 = (NxReal)d[0][1];
+	data.s._22 = (NxReal)d[1][1];
+	data.s._23 = (NxReal)d[2][1];
+
+	data.s._31 = (NxReal)d[0][2];
+	data.s._32 = (NxReal)d[1][2];
+	data.s._33 = (NxReal)d[2][2];
 	}
 
 
@@ -420,6 +470,23 @@ NX_INLINE void NxMat33::getRowMajor(NxF32* d) const
 	}
 
 
+NX_INLINE void NxMat33::getRowMajor(NxF32 d[][3]) const
+	{
+	//we are also row major, so this is a direct copy
+	d[0][0] = (NxF32)data.s._11;
+	d[0][1] = (NxF32)data.s._12;
+	d[0][2] = (NxF32)data.s._13;
+
+	d[1][0] = (NxF32)data.s._21;
+	d[1][1] = (NxF32)data.s._22;
+	d[1][2] = (NxF32)data.s._23;
+
+	d[2][0] = (NxF32)data.s._31;
+	d[2][1] = (NxF32)data.s._32;
+	d[2][2] = (NxF32)data.s._33;
+	}
+
+
 NX_INLINE void NxMat33::getColumnMajor(NxF32* d) const
 	{
 	//we are column major, so copy transposed.
@@ -434,6 +501,23 @@ NX_INLINE void NxMat33::getColumnMajor(NxF32* d) const
 	d[2] = (NxF32)data.s._31;
 	d[5] = (NxF32)data.s._32;
 	d[8] = (NxF32)data.s._33;
+	}
+
+
+NX_INLINE void NxMat33::getColumnMajor(NxF32 d[][3]) const
+	{
+	//we are column major, so copy transposed.
+	d[0][0] = (NxF32)data.s._11;
+	d[1][0] = (NxF32)data.s._12;
+	d[2][0] = (NxF32)data.s._13;
+
+	d[0][1] = (NxF32)data.s._21;
+	d[1][1] = (NxF32)data.s._22;
+	d[2][1] = (NxF32)data.s._23;
+
+	d[0][2] = (NxF32)data.s._31;
+	d[1][2] = (NxF32)data.s._32;
+	d[2][2] = (NxF32)data.s._33;
 	}
 
 
@@ -455,6 +539,23 @@ NX_INLINE void NxMat33::setRowMajorStride4(const NxF32* d)
 	}
 
 
+NX_INLINE void NxMat33::setRowMajorStride4(const NxF32 d[][4])
+	{
+	//we are also row major, so this is a direct copy
+	data.s._11 = (NxReal)d[0][0];
+	data.s._12 = (NxReal)d[0][1];
+	data.s._13 = (NxReal)d[0][2];
+
+	data.s._21 = (NxReal)d[1][0];
+	data.s._22 = (NxReal)d[1][1];
+	data.s._23 = (NxReal)d[1][2];
+
+	data.s._31 = (NxReal)d[2][0];
+	data.s._32 = (NxReal)d[2][1];
+	data.s._33 = (NxReal)d[2][2];
+	}
+
+
 NX_INLINE void NxMat33::setColumnMajorStride4(const NxF32* d)
 	{
 	//we are column major, so copy transposed.
@@ -470,6 +571,23 @@ NX_INLINE void NxMat33::setColumnMajorStride4(const NxF32* d)
 	data.s._31 = (NxReal)d[2];
 	data.s._32 = (NxReal)d[6];
 	data.s._33 = (NxReal)d[10];
+	}
+
+
+NX_INLINE void NxMat33::setColumnMajorStride4(const NxF32 d[][4])
+	{
+	//we are column major, so copy transposed.
+	data.s._11 = (NxReal)d[0][0];
+	data.s._12 = (NxReal)d[1][0];
+	data.s._13 = (NxReal)d[2][0];
+
+	data.s._21 = (NxReal)d[0][1];
+	data.s._22 = (NxReal)d[1][1];
+	data.s._23 = (NxReal)d[2][1];
+
+	data.s._31 = (NxReal)d[0][2];
+	data.s._32 = (NxReal)d[1][2];
+	data.s._33 = (NxReal)d[2][2];
 	}
 
 
@@ -491,6 +609,23 @@ NX_INLINE void NxMat33::getRowMajorStride4(NxF32* d) const
 	}
 
 
+NX_INLINE void NxMat33::getRowMajorStride4(NxF32 d[][4]) const
+	{
+	//we are also row major, so this is a direct copy
+	d[0][0] = (NxF32)data.s._11;
+	d[0][1] = (NxF32)data.s._12;
+	d[0][2] = (NxF32)data.s._13;
+
+	d[1][0] = (NxF32)data.s._21;
+	d[1][1] = (NxF32)data.s._22;
+	d[1][2] = (NxF32)data.s._23;
+
+	d[2][0] = (NxF32)data.s._31;
+	d[2][1] = (NxF32)data.s._32;
+	d[2][2] = (NxF32)data.s._33;
+	}
+
+
 NX_INLINE void NxMat33::getColumnMajorStride4(NxF32* d) const
 	{
 	//we are column major, so copy transposed.
@@ -506,6 +641,23 @@ NX_INLINE void NxMat33::getColumnMajorStride4(NxF32* d) const
 	d[2] = (NxF32)data.s._31;
 	d[6] = (NxF32)data.s._32;
 	d[10]= (NxF32)data.s._33;
+	}
+
+
+NX_INLINE void NxMat33::getColumnMajorStride4(NxF32 d[][4]) const
+	{
+	//we are column major, so copy transposed.
+	d[0][0] = (NxF32)data.s._11;
+	d[1][0] = (NxF32)data.s._12;
+	d[2][0] = (NxF32)data.s._13;
+
+	d[0][1] = (NxF32)data.s._21;
+	d[1][1] = (NxF32)data.s._22;
+	d[2][1] = (NxF32)data.s._23;
+
+	d[0][2] = (NxF32)data.s._31;
+	d[1][2] = (NxF32)data.s._32;
+	d[2][2] = (NxF32)data.s._33;
 	}
 
 
@@ -526,6 +678,23 @@ NX_INLINE void NxMat33::setRowMajor(const NxF64*d)
 	}
 
 
+NX_INLINE void NxMat33::setRowMajor(const NxF64 d[][3])
+	{
+	//we are also row major, so this is a direct copy
+	data.s._11 = (NxReal)d[0][0];
+	data.s._12 = (NxReal)d[0][1];
+	data.s._13 = (NxReal)d[0][2];
+
+	data.s._21 = (NxReal)d[1][0];
+	data.s._22 = (NxReal)d[1][1];
+	data.s._23 = (NxReal)d[1][2];
+
+	data.s._31 = (NxReal)d[2][0];
+	data.s._32 = (NxReal)d[2][1];
+	data.s._33 = (NxReal)d[2][2];
+	}
+
+
 NX_INLINE void NxMat33::setColumnMajor(const NxF64*d)
 	{
 	//we are column major, so copy transposed.
@@ -540,6 +709,23 @@ NX_INLINE void NxMat33::setColumnMajor(const NxF64*d)
 	data.s._31 = (NxReal)d[2];
 	data.s._32 = (NxReal)d[5];
 	data.s._33 = (NxReal)d[8];
+	}
+
+
+NX_INLINE void NxMat33::setColumnMajor(const NxF64 d[][3])
+	{
+	//we are column major, so copy transposed.
+	data.s._11 = (NxReal)d[0][0];
+	data.s._12 = (NxReal)d[1][0];
+	data.s._13 = (NxReal)d[2][0];
+
+	data.s._21 = (NxReal)d[0][1];
+	data.s._22 = (NxReal)d[1][1];
+	data.s._23 = (NxReal)d[2][1];
+
+	data.s._31 = (NxReal)d[0][2];
+	data.s._32 = (NxReal)d[1][2];
+	data.s._33 = (NxReal)d[2][2];
 	}
 
 
@@ -560,6 +746,23 @@ NX_INLINE void NxMat33::getRowMajor(NxF64*d) const
 	}
 
 
+NX_INLINE void NxMat33::getRowMajor(NxF64 d[][3]) const
+	{
+	//we are also row major, so this is a direct copy
+	d[0][0] = (NxF64)data.s._11;
+	d[0][1] = (NxF64)data.s._12;
+	d[0][2] = (NxF64)data.s._13;
+
+	d[1][0] = (NxF64)data.s._21;
+	d[1][1] = (NxF64)data.s._22;
+	d[1][2] = (NxF64)data.s._23;
+
+	d[2][0] = (NxF64)data.s._31;
+	d[2][1] = (NxF64)data.s._32;
+	d[2][2] = (NxF64)data.s._33;
+	}
+
+
 NX_INLINE void NxMat33::getColumnMajor(NxF64*d) const
 	{
 	//we are column major, so copy transposed.
@@ -574,6 +777,23 @@ NX_INLINE void NxMat33::getColumnMajor(NxF64*d) const
 	d[2] = (NxF64)data.s._31;
 	d[5] = (NxF64)data.s._32;
 	d[8] = (NxF64)data.s._33;
+	}
+
+
+NX_INLINE void NxMat33::getColumnMajor(NxF64 d[][3]) const
+	{
+	//we are column major, so copy transposed.
+	d[0][0] = (NxF64)data.s._11;
+	d[1][0] = (NxF64)data.s._12;
+	d[2][0] = (NxF64)data.s._13;
+
+	d[0][1] = (NxF64)data.s._21;
+	d[1][1] = (NxF64)data.s._22;
+	d[2][1] = (NxF64)data.s._23;
+
+	d[0][2] = (NxF64)data.s._31;
+	d[1][2] = (NxF64)data.s._32;
+	d[2][2] = (NxF64)data.s._33;
 	}
 
 
@@ -595,6 +815,23 @@ NX_INLINE void NxMat33::setRowMajorStride4(const NxF64*d)
 	}
 
 
+NX_INLINE void NxMat33::setRowMajorStride4(const NxF64 d[][4])
+	{
+	//we are also row major, so this is a direct copy
+	data.s._11 = (NxReal)d[0][0];
+	data.s._12 = (NxReal)d[0][1];
+	data.s._13 = (NxReal)d[0][2];
+
+	data.s._21 = (NxReal)d[1][0];
+	data.s._22 = (NxReal)d[1][1];
+	data.s._23 = (NxReal)d[1][2];
+
+	data.s._31 = (NxReal)d[2][0];
+	data.s._32 = (NxReal)d[2][1];
+	data.s._33 = (NxReal)d[2][2];
+	}
+
+
 NX_INLINE void NxMat33::setColumnMajorStride4(const NxF64*d)
 	{
 	//we are column major, so copy transposed.
@@ -610,6 +847,23 @@ NX_INLINE void NxMat33::setColumnMajorStride4(const NxF64*d)
 	data.s._31 = (NxReal)d[2];
 	data.s._32 = (NxReal)d[6];
 	data.s._33 = (NxReal)d[10];
+	}
+
+
+NX_INLINE void NxMat33::setColumnMajorStride4(const NxF64 d[][4])
+	{
+	//we are column major, so copy transposed.
+	data.s._11 = (NxReal)d[0][0];
+	data.s._12 = (NxReal)d[1][0];
+	data.s._13 = (NxReal)d[2][0];
+
+	data.s._21 = (NxReal)d[0][1];
+	data.s._22 = (NxReal)d[1][1];
+	data.s._23 = (NxReal)d[2][1];
+
+	data.s._31 = (NxReal)d[0][2];
+	data.s._32 = (NxReal)d[1][2];
+	data.s._33 = (NxReal)d[2][2];
 	}
 
 
@@ -631,6 +885,23 @@ NX_INLINE void NxMat33::getRowMajorStride4(NxF64*d) const
 	}
 
 
+NX_INLINE void NxMat33::getRowMajorStride4(NxF64 d[][4]) const
+	{
+	//we are also row major, so this is a direct copy
+	d[0][0] = (NxF64)data.s._11;
+	d[0][1] = (NxF64)data.s._12;
+	d[0][2] = (NxF64)data.s._13;
+
+	d[1][0] = (NxF64)data.s._21;
+	d[1][1] = (NxF64)data.s._22;
+	d[1][2] = (NxF64)data.s._23;
+
+	d[2][0] = (NxF64)data.s._31;
+	d[2][1] = (NxF64)data.s._32;
+	d[2][2] = (NxF64)data.s._33;
+	}
+
+
 NX_INLINE void NxMat33::getColumnMajorStride4(NxF64*d) const
 
 	{
@@ -647,6 +918,23 @@ NX_INLINE void NxMat33::getColumnMajorStride4(NxF64*d) const
 	d[2] = (NxF64)data.s._31;
 	d[6] = (NxF64)data.s._32;
 	d[10]= (NxF64)data.s._33;
+	}
+
+
+NX_INLINE void NxMat33::getColumnMajorStride4(NxF64 d[][4]) const
+	{
+	//we are column major, so copy transposed.
+	d[0][0] = (NxF64)data.s._11;
+	d[1][0] = (NxF64)data.s._12;
+	d[2][0] = (NxF64)data.s._13;
+
+	d[0][1] = (NxF64)data.s._21;
+	d[1][1] = (NxF64)data.s._22;
+	d[2][1] = (NxF64)data.s._23;
+
+	d[0][2] = (NxF64)data.s._31;
+	d[1][2] = (NxF64)data.s._32;
+	d[2][2] = (NxF64)data.s._33;
 	}
 
 
@@ -748,34 +1036,36 @@ NX_INLINE const NxReal & NxMat33::operator() (int row, int col) const
 
 NX_INLINE bool NxMat33::isIdentity() const
 	{
-	if(NX_IR(data.s._11)!=NX_IEEE_1_0)	return false;
-	if(NX_IR(data.s._12))				return false;
-	if(NX_IR(data.s._13))				return false;
+	if(data.s._11 != 1.0f)		return false;
+	if(data.s._12 != 0.0f)		return false;
+	if(data.s._13 != 0.0f)		return false;
 
-	if(NX_IR(data.s._21))				return false;
-	if(NX_IR(data.s._22)!=NX_IEEE_1_0)	return false;
-	if(NX_IR(data.s._23))				return false;
+	if(data.s._21 != 0.0f)		return false;
+	if(data.s._22 != 1.0f)		return false;
+	if(data.s._23 != 0.0f)		return false;
 
-	if(NX_IR(data.s._31))				return false;
-	if(NX_IR(data.s._32))				return false;
-	if(NX_IR(data.s._33)!=NX_IEEE_1_0)	return false;
+	if(data.s._31 != 0.0f)		return false;
+	if(data.s._32 != 0.0f)		return false;
+	if(data.s._33 != 1.0f)		return false;
+
 	return true;
 	}
 
 
 NX_INLINE bool NxMat33::isZero() const
 	{
-	if(NX_IR(data.s._11))	return false;
-	if(NX_IR(data.s._12))	return false;
-	if(NX_IR(data.s._13))	return false;
+	if(data.s._11 != 0.0f)		return false;
+	if(data.s._12 != 0.0f)		return false;
+	if(data.s._13 != 0.0f)		return false;
 
-	if(NX_IR(data.s._21))	return false;
-	if(NX_IR(data.s._22))	return false;
-	if(NX_IR(data.s._23))	return false;
+	if(data.s._21 != 0.0f)		return false;
+	if(data.s._22 != 0.0f)		return false;
+	if(data.s._23 != 0.0f)		return false;
 
-	if(NX_IR(data.s._31))	return false;
-	if(NX_IR(data.s._32))	return false;
-	if(NX_IR(data.s._33))	return false;
+	if(data.s._31 != 0.0f)		return false;
+	if(data.s._32 != 0.0f)		return false;
+	if(data.s._33 != 0.0f)		return false;
+
 	return true;
 	}
 

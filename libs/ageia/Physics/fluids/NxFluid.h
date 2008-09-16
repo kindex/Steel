@@ -20,16 +20,6 @@ class NxFluidEmitterDesc;
 class NxFluidEmitter;
 class NxCompartment;
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-// Added for Fast Fluid Surface Generation (Unique ID: FAST_FLUID_SURFACE_GENERATION)
-// Date: 2006-1-24 
-// St.Louis
-// Methods to manage the fast fluid surface mesh. ---New 2D Method
-//////////////////////////////////////////////////////////////////////////////////////////////////
-class NxImplicitScreenMesh;
-class NxImplicitScreenMeshDesc;
-
-
 /**
 \brief The fluid class represents the main module for the particle based fluid simulation.
 SPH (Smoothed Particle Hydrodynamics) is used to animate the particles.
@@ -95,10 +85,10 @@ class NxFluid
 	\return The new fluid.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidEmitter
 	*/
@@ -113,10 +103,10 @@ class NxFluid
 	\param emitter The emitter to release.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		void				releaseEmitter(NxFluidEmitter& emitter)							= 0;
 
@@ -126,10 +116,10 @@ class NxFluid
 	\return The number of emitters.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		NxU32				getNbEmitters()									const	= 0;
 
@@ -139,58 +129,13 @@ class NxFluid
 	\return An array of fluid emitter pointers.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		NxFluidEmitter**	getEmitters()									const	= 0;
 //@}
-/************************************************************************************************/
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-// 
-// Deprecated
-//
-// Added for Fast Fluid Surface Generation (Unique ID: FAST_FLUID_SURFACE_GENERATION)
-// Date: 2006-1-24 
-// St.Louis
-// Methods to manage the fast fluid surface mesh. ---New 2D Method
-//////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-/** @name Implicit Screen Surface Mesh
-*/
-//@{
-
-	/**
-    \brief Deprecated: Creates a surface mesh for this fluid relative to a given viewing matrix.
-
-NxImplicitScreenMeshDesc::isValid() must return true. Because the mesh is only valid from a single viewpoint, each fluid may have several screen surfaces.
-
-\return The new implicit screen mesh.
-
-@see NxImplicitMesh
-*/
-virtual NxImplicitScreenMesh*   createScreenSurfaceMesh(const NxImplicitScreenMeshDesc&)= 0;
-/**
-\brief Deprecated: Deletes a screen surface mesh.
-
-Do not keep a reference to the deleted instance.
-*/	
-virtual	    void	            releaseScreenSurfaceMesh(NxImplicitScreenMesh&)  = 0;
-/**
-\brief Deprecated: Returns the number of screen surface meshes for this fluid.
-
-\return The number of screen surface meshes.
-*/	
-virtual NxU32                	getNbScreenSurfaceMeshes()                              const = 0;
-/**
-\brief Deprecated: Returns an array of surface pointers with size getNbScreenSurfaceMeshes().
-
-\return An array of screen surface pointers.
-*/
-virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                                const = 0;
-/************************************************************************************************/
 
 /** @name Particle Manipulation
 */
@@ -200,27 +145,37 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\brief Adds particles to the simulation specified with the user buffer wrapper.
 	
 	The SDK only accesses the wrapped buffers until the function returns.
+	The limit for adding particles is 4096 new particles per timestep.
+	This method can be called several times. Each call writes particle ids to the 
+	particle creation id buffer, if the user has registered one with either 
+	NxFluidDesc::particleCreationIdWriteData or 
+	NxFluid::setParticleCreationIdWriteData(const NxParticleIdData&). User particle and packet 
+	buffers are also updated accordingly. By default particle ids get overwritten with each call. 
+	Optionally the caller can choose to have the ids be appended instead. Note that the particle 
+	creation id buffer gets always overwritten on NxScene::fetchResults().
 
 	\param pData Structure describing the particles to add.
+	\param appendIds selects particle appending or overwriting.
+	\return number of successfully created particles. 
 
 	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : Yes (max 4096 new Particles per timestep)
-	\li PS3  : No
-	\li XB360: No
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxParticleData
 	*/
-	virtual		void 				addParticles(const NxParticleData& pData)						= 0;
+	virtual		NxU32 				addParticles(const NxParticleData& pData, bool appendIds = false)						= 0;
 
 	/**
 	\brief Removes all particles from the simulation.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		void				removeAllParticles()											= 0;
 
@@ -230,10 +185,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param pData The descriptor for the buffers to write the particle data to.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxParticleData
 	*/
@@ -245,10 +200,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The particle write data.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxParticleData  The descriptor for the buffers to write the particle data to.
 	*/
@@ -260,10 +215,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param iData The descriptor for the buffers to write the particle IDs to.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxParticleIdData
 	*/
@@ -275,10 +230,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The particle ID write data.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxParticleIdData  The descriptor for the buffers to write the particle IDs to.
 	*/
@@ -290,10 +245,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param iData The descriptor for the buffers to write the particle IDs to.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxParticleIdData
 	*/
@@ -305,10 +260,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The particle ID write data.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxParticleIdData  The descriptor for the buffers to write the particle IDs to.
 	*/
@@ -328,6 +283,26 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	*/
 	virtual		void 				setNumReserveParticles(NxU32)									= 0;
 
+
+ 	/**
+	\brief Gets the bound on the maximum number of particles currently allowed in the fluid. 
+	  
+	@see setCurrentParticleLimit
+	*/
+	virtual		NxU32 				getCurrentParticleLimit()								const	= 0;
+
+ 	/**
+	\brief Sets a bound on the maximum number of particles in the fluid.
+
+	The value defaults to maxParticles, which is its maximum legal value. If it is lowered below
+	the number of particles currently in the fluid, the oldest particles will be deleted to bring down 
+	the number. This attribute is only effective if the NX_FF_PRIORITY_MODE flag is set on the fluid.
+
+	*/
+	virtual		void 				setCurrentParticleLimit(NxU32)									= 0;
+
+
+
 	/**
 	\brief Updates particles for one simulation frame.
 	
@@ -341,10 +316,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param pData The descriptor for the buffers to write the fluid packet data to.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidPacketData
 	*/
@@ -354,10 +329,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\brief Returns a copy of the wrapper which was set by setFluidPacketData().
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidPacketData
 	*/
@@ -377,10 +352,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The simulation method.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidSimulationMethod
 	*/
@@ -395,10 +370,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	unstable simulation state.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidSimulationMethod
 	*/
@@ -410,10 +385,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The fluid stiffness.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.stiffness
 	*/
@@ -425,10 +400,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param stiff The new fluid stiffness.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.stiffness
 	*/
@@ -440,10 +415,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The viscosity  of the fluid.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.viscosity
 	*/
@@ -455,14 +430,44 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param visc The new viscosity of the fluid.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.viscosity
 	*/
 	virtual		void 				setViscosity(NxReal visc)									= 0;
+
+	/**
+	\brief Returns the fluid surfaceTension.
+
+	\return The surfaceTension  of the fluid.
+
+	<b>Platform:</b>
+	\li PC SW: No
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: No
+
+	@see NxFluidDesc.surfaceTension
+	*/
+	virtual		NxReal				getSurfaceTension()								const	= 0;
+
+	/**
+	\brief Sets the fluid surfaceTension (must be nonnegative).
+
+	\param surfaceTension The new surfaceTension of the fluid.
+
+	<b>Platform:</b>
+	\li PC SW: No
+	\li PPU  : No
+	\li PS3  : No
+	\li XB360: No
+
+	@see NxFluidDesc.surfaceTension
+	*/
+	virtual		void 				setSurfaceTension(NxReal surfaceTension)				= 0;
 
 	/**
 	\brief Returns the fluid damping.
@@ -470,10 +475,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The fluid damping.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.damping
 	*/
@@ -485,10 +490,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param damp The new fluid damping.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.damping
 	*/
@@ -501,7 +506,7 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 
 	<b>Platform:</b>
 	\li PC SW: No
-	\li PPU  : Yes
+	\li PPU  : No
 	\li PS3  : No
 	\li XB360: No
 
@@ -518,7 +523,7 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 
 	<b>Platform:</b>
 	\li PC SW: No
-	\li PPU  : Yes
+	\li PPU  : No
 	\li PS3  : No
 	\li XB360: No
 
@@ -534,10 +539,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The external acceleration applied to particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.externalAcceleration
 	*/
@@ -549,14 +554,44 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param acceleration External acceleration to apply to particles.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.externalAcceleration getExternalAcceleration()
 	*/
 	virtual		void 				setExternalAcceleration(const NxVec3&acceleration)				= 0;
+
+	/**
+	\brief Returns the plane the fluid particles are projected to.
+
+	\return The particle projection plane.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NX_FF_PROJECT_TO_PLANE NxFluidDesc.projectionPlane
+	*/
+	virtual		NxPlane				getProjectionPlane()									const	= 0;
+
+	/**
+	\brief Sets the plane the fluid particles are projected to.
+
+	\param plane Particle projection plane.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NX_FF_PROJECT_TO_PLANE NxFluidDesc.projectionPlane
+	*/
+	virtual		void 				setProjectionPlane(const NxPlane& plane)						= 0;
 //@}
 /************************************************************************************************/
 
@@ -570,10 +605,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The collision method.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidCollisionMethod
 	*/
@@ -585,210 +620,206 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	Can be set to a combination of NX_F_STATIC and NX_F_DYNAMIC.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidCollisionMethod
 	*/
 	virtual		void				setCollisionMethod(NxU32 collMethod)				= 0;
 
 	/**
-	\brief Returns the fluid collision restitution used for collision with static actors.
+	\brief Returns the restitution used for collision with static shapes.
 
 	\return The static collision restitution.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
-	@see NxFluidDesc.staticCollisionRestitution
+	@see NxFluidDesc.restitutionForStaticShapes
 	*/
-	virtual		NxReal				getStaticCollisionRestitution()					const	= 0;
+	virtual		NxReal				getRestitutionForStaticShapes()					const	= 0;
 
 	/**
-	\brief Sets the fluid collision restitution used for collision with static actors.
+	\brief Sets the restitution used for collision with static shapes.
 	
 	Must be between 0 and 1.
 
-	\param rest The new static collision restitution.
+	\param rest The new restitution for static shapes.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
-	@see NxFluidDesc.staticCollisionRestitution
+	@see NxFluidDesc.restitutionForStaticShapes
 	*/
-	virtual		void 				setStaticCollisionRestitution(NxReal rest)					= 0;
+	virtual		void 				setRestitutionForStaticShapes(NxReal rest)					= 0;
 
 	/**
-	\brief Returns the fluid collision adhesion (friction) used for collision with static actors.
+	\brief Returns the dynamic friction used for collision with static shapes.
 
-	\return The static collision adhesion.
+	\return The dynamic friction used for static shapes.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
-	@see NxFluidDesc.staticCollisionAdhesion
+	@see NxFluidDesc.dynamicFrictionForStaticShapes
 	*/
-	virtual		NxReal				getStaticCollisionAdhesion()					const	= 0;
+	virtual		NxReal				getDynamicFrictionForStaticShapes()					const	= 0;
 
 	/**
-	\brief Sets the fluid collision adhesion (friction) used for collision with static actors.
+	\brief Sets the dynamic friction used for collision with static actors.
 	
 	Must be between 0 and 1.
 
-	\param adhesion The new static collision adhesion
+	\param adhesion The new dynamic friction used for static shapes
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
-	@see NxFluidDesc.staticCollisionAdhesion
+	@see NxFluidDesc.dynamicFrictionForStaticShapes
 	*/
-	virtual		void 				setStaticCollisionAdhesion(NxReal adhesion)						= 0;
+	virtual		void 				setDynamicFrictionForStaticShapes(NxReal friction)			= 0;
 
 	/**
-	\brief Returns the fluid collision attraction used for collision with static actors.
+	\brief Returns the static friction used for collision with static shapes.
 
-	\return The static collision attraction.
+	This feature is currently unimplemented! 
 
-	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
-
-	@see NxFluidDesc.staticCollisionAttraction
 	*/
-	virtual		NxReal				getStaticCollisionAttraction()							const	= 0;
+	virtual		NxReal				getStaticFrictionForStaticShapes()					const	= 0;
 
 	/**
-	\brief Sets the fluid collision attraction used for collision with static actors.
+	\brief Sets the static friction used for collision with static actors.
 	
-	Must be positive.
+	This feature is currently unimplemented! 
 
-	\param rest The new static collision attraction.
-
-	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
-
-	Experimental feature.
-
-	@see NxFluidDesc.staticCollisionAttraction
 	*/
-	virtual		void 				setStaticCollisionAttraction(NxReal attraction)					= 0;
+	virtual		void 				setStaticFrictionForStaticShapes(NxReal friction)			= 0;
 
 	/**
-	\brief Returns the fluid collision restitution used for collision with dynamic actors.
+	\brief Returns the attraction used for collision with static actors.
 
-	\return The dynamic collision resitution.
-
-	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
-
-	@see NxFluidDesc.dynamicCollisionRestitution
+	This feature is currently unimplemented! 
+	
 	*/
-	virtual		NxReal				getDynamicCollisionRestitution()				const	= 0;
+	virtual		NxReal				getAttractionForStaticShapes()						const	= 0;
 
 	/**
-	\brief Sets the fluid collision restitution used for collision with dynamic actors.
+	\brief Sets the attraction used for collision with static actors.
+	
+	This feature is currently unimplemented! 
+
+	*/
+	virtual		void 				setAttractionForStaticShapes(NxReal attraction)					= 0;
+
+	/**
+	\brief Returns the restitution used for collision with dynamic actors.
+
+	\return The collision resitution for dynamic shapes.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxFluidDesc.restitutionForDynamicShapes
+	*/
+	virtual		NxReal				getRestitutionForDynamicShapes()				const	= 0;
+
+	/**
+	\brief Sets the restitution used for collision with dynamic actors.
 	
 	Must be between 0 and 1.
 
-	\param rest The new dynamic collision restitution.
+	\param rest The new collision restitution for dynamic shapes.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
-	@see NxFluidDesc.dynamicCollisionRestitution
+	@see NxFluidDesc.restitutionForDynamicShapes
 	*/
-	virtual		void 				setDynamicCollisionRestitution(NxReal rest)					= 0;
+	virtual		void 				setRestitutionForDynamicShapes(NxReal rest)				= 0;
 
 	/**
-	\brief Returns the fluid collision adhesion (friction) used for collision with dynamic actors.
+	\brief Returns the dynamic friction used for collision with dynamic shapes.
 
-	\return The dynamic collision adhesion.
+	\return The dynamic friction used for dynamic shapes.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
-	@see NxFluidDesc.dynamicCollisionAdhesion
+	@see NxFluidDesc.dynamicFrictionForDynamicShapes
 	*/
-	virtual		NxReal				getDynamicCollisionAdhesion()					const	= 0;
+	virtual		NxReal				getDynamicFrictionForDynamicShapes()			const	= 0;
 
 	/**
-	\brief Sets the fluid collision adhesion (friction) used for collision with dynamic actors.
+	\brief Sets the dynamic friction used for collision with dynamic shapes.
 	
 	Must be between 0 and 1.
 	
-	\param adhesion The new dynamic collision adhesion.
+	\param friction The new dynamic friciton used for dynamic shapes.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
-	@see NxFluidDesc.dynamicCollisionAdhesion
+	@see NxFluidDesc.dynamicFrictionForDynamicShapes
 	*/
-	virtual		void 				setDynamicCollisionAdhesion(NxReal adhesion)						= 0;
+	virtual		void 				setDynamicFrictionForDynamicShapes(NxReal friction)		= 0;
 
 	/**
-	\brief Returns the fluid collision attraction used for collision with dynamic actors.
+	\brief Returns the static friction used for collision with dynamic shapes.
 
-	\return The dynamic collision attraction.
+	This feature is currently unimplemented! 
 
-	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
-
-	@see NxFluidDesc.dynamicCollisionAttraction
 	*/
-	virtual		NxReal				getDynamicCollisionAttraction()								const	= 0;
+	virtual		NxReal				getStaticFrictionForDynamicShapes()			const	= 0;
 
 	/**
-	\brief Sets the fluid collision attraction used for collision with dynamic actors.
+	\brief Sets the static friction used for collision with dynamic shapes.
 	
-	Must be positive.
+	This feature is currently unimplemented! 
 
-	\param rest The new dynamic collision attraction.
-
-	<b>Platform:</b>
-	\li PC SW: No
-	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
-
-	Experimental feature.
-
-	@see NxFluidDesc.dynamicCollisionAttraction
 	*/
-	virtual		void 				setDynamicCollisionAttraction(NxReal attraction)					= 0;
+	virtual		void 				setStaticFrictionForDynamicShapes(NxReal friction)		= 0;
+
+	/**
+	\brief Returns the attraction used for collision with dynamic actors.
+
+	This feature is currently unimplemented! 
+	
+	*/
+	virtual		NxReal				getAttractionForDynamicShapes()					const	= 0;
+
+	/**
+	\brief Sets the attraction used for collision with dynamic actors.
+	
+	This feature is currently unimplemented! 
+
+	*/
+	virtual		void 				setAttractionForDynamicShapes(NxReal attraction)		= 0;
 
 	/**
 	\brief Sets the collision response coefficient.
@@ -796,10 +827,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param[in] coefficient The collision response coefficient (0 or greater).
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.collisionResponseCoefficient getCollisionResponseCoefficient()
 	*/
@@ -811,10 +842,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The collision response coefficient.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.collisionResponseCoefficient setCollisionResponseCoefficient()
 	*/
@@ -832,10 +863,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param val New flag value.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.flags
 	*/
@@ -848,10 +879,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The current flag value.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.flags
 	*/
@@ -863,9 +894,9 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return Owner Scene.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: No
 
 	@see NxScene
@@ -884,10 +915,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return Max number of particles for this fluid.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.maxParticles
 	*/
@@ -900,10 +931,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The kernel radius multiplier.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.kernelRadiusMultiplier
 	*/
@@ -935,10 +966,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The packet size multiplier.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		NxU32				getPacketSizeMultiplier()					const	= 0;
 
@@ -948,10 +979,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return Rest particles per meter.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.restParticlesPerMeter
 	*/
@@ -963,10 +994,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return Rest density.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc.restDensity
 	*/
@@ -980,10 +1011,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return Rest particle distance.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		NxReal				getRestParticleDistance()					const	= 0;
 
@@ -994,10 +1025,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return Particle mass.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see getRestParticleDistance()
 	@see getRestDensity()
@@ -1010,10 +1041,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param[in] collisionGroup The collision group for this fluid.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxCollisionGroup
 	*/
@@ -1025,10 +1056,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The collision group this fluid belongs to.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxCollisionGroup
 	*/
@@ -1040,10 +1071,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param[in] groupsMask The group mask to set for the fluid.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see getGroupsMask() NxGroupsMask
 	*/
@@ -1055,10 +1086,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The group mask for the fluid.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see setGroupsMask() NxGroupsMask
 	*/
@@ -1071,10 +1102,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param dest Used to store the world bounds.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual		void				getWorldBounds(NxBounds3& dest)				const	= 0;
 //@}
@@ -1092,10 +1123,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return True on success.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc
 	*/
@@ -1112,15 +1143,32 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return True on success.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxFluidDesc
 	@see saveEmittersToDesc
 	*/
 	virtual		bool				saveToDesc(NxFluidDescBase &desc)				const	= 0;
+
+	/**
+	\brief Get the PPU simulation time.
+
+	This method returns the time taken to simulate the fluid on the PPU in units
+	which are proportional to time but whose units are otherwise unspecified.
+
+	\return the simulation time
+	<b>Platform:</b>
+	\li SW   : No
+	\li PPU  : Yes
+	\li PS3  : No
+	\li XB360: No
+
+	*/
+
+    virtual		NxU32			    getPPUTime()									const	= 0;
 
 //@}
 /************************************************************************************************/
@@ -1134,10 +1182,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\param name The new name.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual	void			setName(const char* name)		= 0;
 
@@ -1147,10 +1195,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return The current name.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	virtual	const char*		getName()			const	= 0;
 
@@ -1161,15 +1209,39 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	the default fluid compartment, otherwise the simulation compartment.
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 
 	@see NxCompartment
 	*/
 	virtual NxCompartment *			getCompartment() const = 0;
 
+
+/************************************************************************************************/
+
+	/**
+	\brief Retrieves the actor's force field material index, default index is 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual NxForceFieldMaterial	getForceFieldMaterial() const = 0;
+
+	/**
+	\brief Sets the actor's force field material index, default index is 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	virtual void					setForceFieldMaterial(NxForceFieldMaterial)  = 0;
 
 /************************************************************************************************/
 
@@ -1180,10 +1252,10 @@ virtual NxImplicitScreenMesh** 	getScreenSurfaceMeshes()                        
 	\return True if the resulting fluid descriptor is valid. 
 
 	<b>Platform:</b>
-	\li PC SW: No
+	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
-	\li XB360: No
+	\li PS3  : Yes
+	\li XB360: Yes
 	*/
 	NX_INLINE	bool		saveEmittersToFluidDesc(NxFluidDesc &desc);
 

@@ -26,9 +26,11 @@ enum NxShapesType;
 /**
 \brief Specifies the nature of the query object.
 
-In synchronous mode, queries are executed immediately (not batched). You do not need to call the 'execute' function in this mode.
+In synchronous mode, a call to NxSceneQuery::execute() will block and batched queries are executed
+immediately.
 
-In asynchronous mode, queries are batched inside the query object, and performed later after a call to NxSceneQuery::execute().
+In asynchronous mode, a call to NxSceneQuery::execute() will not block and batched queries are executed
+at any point between calling NxSceneQuery::execute() and NxSceneQuery::finish() returning true.
 
 Note: This is a new feature in 2.7.0, and there are still some issues that will be fixed in a future version:
 * cullShapes() does not work in asynchronous mode
@@ -40,7 +42,7 @@ Note: This is a new feature in 2.7.0, and there are still some issues that will 
 enum NxSceneQueryExecuteMode
 	{
 	NX_SQE_SYNCHRONOUS,			//!< Execute queries in synchronous mode.
-	NX_SQE_ASYNCHRONOUS,		//!< Execute queries in asynchronous mode.
+	NX_SQE_ASYNCHRONOUS,		//!< Execute queries in asynchronous mode. WARNING: NxSceneDesc::backgroundThreadCount must be at least 1 for this to work.
 
 	NX_SQE_FORCE_DWORD	=	0x7fffffff
 	};
@@ -163,6 +165,9 @@ class NxSceneQueryDesc
 	/**
 	\brief The method used to execute the queries. ie synchronous or asynchronous.
 
+	WARNING: NxSceneDesc::backgroundThreadCount must be at least 1 for the asynchronous mode to work,
+	         else the queries will be processed in synchronous mode.
+
 	@see NxSceneQueryExecuteMode NxSceneQuery
 	*/
 	NxSceneQueryExecuteMode		executeMode;
@@ -203,9 +208,13 @@ class NxSceneQuery
 	virtual	NxSceneQueryExecuteMode	getExecuteMode()			= 0;
 
 	/**
-	\brief Executes batched queries. Only used in NX_SQE_ASYNCHRONOUS mode.
+	\brief Executes batched queries.
 
-	The batched queries can be executed at any point between calling execute() and  finish() returning true.
+	In the synchronous mode the batched queries are executed immediately. In the asynchronous mode
+	they can be executed at any point between calling execute() and finish() returning true.
+
+	WARNING: NxSceneDesc::backgroundThreadCount must be at least 1 for the asynchronous mode to work,
+	         else the queries will be processed in synchronous mode.
 
 	@see finish()
 	*/
@@ -226,13 +235,10 @@ class NxSceneQuery
 	*/
 	virtual	bool					finish(bool block=false)	= 0;
 
-	//scene query calls identical to the ones in scene that batch up calls 
-
 	/**
 	\brief Check if a ray intersects any shape.
 
-	In synchronous mode this function returns true if the ray intersects a shape, in async mode this function 
-	returns false and calls the query report callback when the batched of queries are executed.
+	This function returns false and calls the query report callback when the batched queries are executed.
 
 	See #NxScene::raycastAnyShape() for more details.
 	*/
@@ -241,8 +247,7 @@ class NxSceneQuery
 	/**
 	\brief Check if a sphere overlaps shapes.
 
-	In synchronous mode this function returns true if the sphere intersects a shape, in async mode this function 
-	returns false and calls the query report callback when the batched queries are executed.
+	This function returns false and calls the query report callback when the batched queries are executed.
 
 	See #NxScene::checkOverlapSphere() for more details.
 	*/
@@ -251,8 +256,7 @@ class NxSceneQuery
 	/**
 	\brief Check if a AABB overlaps shapes.
 
-	In synchronous mode this function returns true if the AABB intersects a shape, in async mode this function 
-	returns false and calls the query report callback when the batched queries are executed.
+	This function returns false and calls the query report callback when the batched queries are executed.
 
 	See #NxScene::checkOverlapAABB() for more details.
 	*/
@@ -261,8 +265,7 @@ class NxSceneQuery
 	/**
 	\brief Check if an OBB overlaps shapes.
 	
-	In synchronous mode this function returns true if the OBB intersects a shape, in async mode this function 
-	returns false and calls the query report callback when the batched queries are executed.
+	This function returns false and calls the query report callback when the batched queries are executed.
 
 	See #NxScene::checkOverlapOBB() for more details.
 	*/
@@ -271,8 +274,7 @@ class NxSceneQuery
 	/**
 	\brief Check if a capsule overlaps shapes.
 	
-	In synchronous mode this function returns true if the capsule intersects a shape, in async mode this function 
-	returns false and calls the query report callback when the batched queries are executed.
+	This function returns false and calls the query report callback when the batched queries are executed.
 
 	See #NxScene::checkOverlapCapsule() for more details.
 	*/
@@ -281,8 +283,7 @@ class NxSceneQuery
 	/**
 	\brief Find the closest ray/shape intersection.
 
-	In synchronous mode this function returns a shape pointer, in async mode this function returns NULL and 
-	calls the query report callback when the batched queries are executed.
+	This function returns NULL and calls the query report callback when the batched queries are executed.
 
 	See #NxScene::raycastClosestShape() for more details.
 	*/
@@ -291,19 +292,16 @@ class NxSceneQuery
 	/**
 	\brief Find all the shapes which a ray intersects.
 
-	In synchronous mode this function returns the number of shapes, in async mode this function returns 0 and 
-	calls the query report callback when the batched queries are executed.
+	This function returns 0 and	calls the query report callback when the batched queries are executed.
 
 	See #NxScene::raycastAllShapes() for more details.
 	*/
 	virtual NxU32					raycastAllShapes		(const NxRay& worldRay, NxShapesType shapesType, NxU32 groups=0xffffffff, NxReal maxDist=NX_MAX_F32, NxU32 hintFlags=0xffffffff, const NxGroupsMask* groupsMask=NULL, void* userData=NULL) const = 0;
 
-	//shape list or shape callbacks:  in synchronous mode, these return the number of  hits.  In async mode the return value is 0. 
 	/**
 	\brief Find all shapes which overlap a sphere.
 
-	In synchronous mode this function returns the number of shapes, in async mode this function returns 0 and 
-	calls the query report callback when the batched queries are executed.
+	This function returns 0 and	calls the query report callback when the batched queries are executed.
 
 	See #NxScene::overlapSphereShapes() for more details.
 	*/
@@ -312,8 +310,7 @@ class NxSceneQuery
 	/**
 	\brief Find all shapes which overlap an AABB.
 	
-	In synchronous mode this function returns the number of shapes, in async mode this function returns 0 and 
-	calls the query report callback when the batched queries are executed.
+	This function returns 0 and	calls the query report callback when the batched queries are executed.
 
 	See #NxScene::overlapAABBShapes() for more details.
 	*/
@@ -322,8 +319,7 @@ class NxSceneQuery
 	/**
 	\brief Find all shapes which overlap an OBB.
 
-	In synchronous mode this function returns the number of shapes, in async mode this function returns 0 and 
-	calls the query report callback when the batched queries are executed.
+	This function returns 0 and calls the query report callback when the batched queries are executed.
 
 
 	See #NxScene::overlapOBBShapes() for more details.
@@ -333,8 +329,7 @@ class NxSceneQuery
 	/**
 	\brief Find all shapes which overlap a capsule.
 
-	In synchronous mode this function returns the number of shapes, in async mode this function returns 0 and 
-	calls the query report callback when the batched queries are executed.
+	This function returns 0 and calls the query report callback when the batched queries are executed.
 	
 	See #NxScene::overlapCapsuleShapes() for more details.
 	*/
@@ -343,8 +338,7 @@ class NxSceneQuery
 	/**
 	\brief Find the set of shapes which are in the negative half space of a number of planes.
 
-	In synchronous mode this function returns the number of shapes, in async mode this function returns 0 and 
-	calls the query report callback when the batched queries are executed.
+	This function returns 0 and	calls the query report callback when the batched queries are executed.
 
 	See #NxScene::cullShapes() for more details.
 	*/
@@ -354,8 +348,7 @@ class NxSceneQuery
 	/**
 	\brief Perform a linear OBB sweep.
 	
-	In synchronous mode this function returns the number of shapes, in async mode this function returns 0 and 
-	calls the query report callback when the batched queries are executed.
+	This function returns 0 and calls the query report callback when the batched queries are executed.
 
 	See #NxScene::linearOBBSweep() for more details.
 	*/
@@ -364,8 +357,7 @@ class NxSceneQuery
 	/**
 	\brief Perform a linear capsule sweep.
 	
-	In synchronous mode this function returns the number of shapes, in async mode this function returns 0 and 
-	calls the query report callback when the batched queries are executed.
+	This function returns 0 and	calls the query report callback when the batched queries are executed.
 
 	See #NxScene::linearCapsuleSweep() for more details.
 	*/

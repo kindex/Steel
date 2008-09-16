@@ -162,7 +162,7 @@
 										NxU32 groups, NxF32 min_dist,
 										NxU32& collision_flags,
 										const NxGroupsMask* groupsMask,
-										bool apply_ubi_fix
+										bool constrainedClimbingMode
 										);
 
 				bool				DoSweepTest(

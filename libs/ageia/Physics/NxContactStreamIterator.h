@@ -464,7 +464,10 @@ NX_INLINE bool NxContactStreamIterator::goNextPoint()
 		NxU32 is32bits = binary & NX_SIGN_BITMASK;
 		binary |= NX_SIGN_BITMASK;	// PT: separation is always negative, but the sign bit is used
 									// for other purposes in the stream.
-		separation = NX_FR(binary);
+		// To avoid strict-aliasing warnings on gcc, unions are used to read from the stream.
+		// Note: You will still get a warning if gcc -Wstrict-aliasing=2 is used but this is a false positive.
+		NxU32F32* sep = reinterpret_cast<NxU32F32*>(&binary);
+		separation = sep->f;
 
 		if (shapeFlags & NX_SF_POINT_CONTACT_FORCE)
 			pointNormalForce = reinterpret_cast<const NxReal *>(stream++);

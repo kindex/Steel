@@ -674,7 +674,7 @@ class NxActor
 	callbacks to be called again for any pairs involving this actor. Use this method
 	when you wish to change the filtering policy of an actor that may already be in contact
 	with other actors.
-
+	
 	@see NxUserActorPairFiltering
 	*/
 	virtual		void			resetUserActorPairFiltering() = 0;
@@ -1169,6 +1169,8 @@ class NxActor
 	\param[in] density Density scale factor of the shapes belonging to the actor. <b>Range:</b> [0,inf)
 	\param[in] totalMass Total mass of the actor(or zero). <b>Range:</b> [0,inf)
 
+	\return True if successful.
+
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
@@ -1177,7 +1179,7 @@ class NxActor
 
 	@see NxActorDesc NxBodyDesc NxBodyDesc.mass NxActorDesc.density NxActorDesc.lockCOM
 	*/
-	virtual		void			updateMassFromShapes(NxReal density, NxReal totalMass)		= 0;
+	virtual		bool			updateMassFromShapes(NxReal density, NxReal totalMass)		= 0;
 
 //@}
 /************************************************************************************************/
@@ -2179,14 +2181,19 @@ class NxActor
 	*/
 	virtual		NxU32			getSolverIterationCount() const = 0;
 
-/************************************************************************************************/
-
 	/**
-	\brief Recalculate adaptive force counters.
+	\brief Retrieves the force threshold for contact reports.
 
-	Force the internal counters that affect adaptive force to be recalculated.
+	The contact report threshold is a force threshold. If the force between 
+	two actors exceeds this threshold for either of the two actors, a contact report 
+	will be generated according to the union of both actors' contact report threshold flags.
+	See #getContactReportFlags().
 
-	The actor must be dynamic.
+	The actor must be dynamic. The threshold used for a collision between a dynamic actor
+	and the static environment is the threshold of the dynamic actor, and all contacts with
+	static actors are summed to find the total normal force.
+
+	\return Force threshold for contact reports.
 
 	<b>Platform:</b>
 	\li PC SW: Yes
@@ -2194,11 +2201,82 @@ class NxActor
 	\li PS3  : Yes
 	\li XB360: Yes
 
+	@see setContactReportThreshold getContactReportFlags NxContactPairFlag NxBodyDesc::contactReportThreshold
 	*/
-	virtual		void			recomputeAdaptiveForceCounters() = 0;
+	virtual NxReal					getContactReportThreshold() const = 0;
 
-/************************************************************************************************/
+	/**
+	\brief Sets the force threshold for contact reports.
 
+	See #getContactReportThreshold().
+
+	The actor must be dynamic.
+
+	\param[in] threshold Force threshold for contact reports. <b>Range:</b> (0,inf)
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see getContactReportThreshold getContactReportFlags NxContactPairFlag NxBodyDesc::contactReportThreshold
+	*/
+	virtual void					setContactReportThreshold(NxReal threshold) = 0;
+
+	/**
+	\brief Retrieves the actor's contact report flags.
+
+	See #setContactReportFlags().
+
+	\return The contact reporting flags associated with this actor.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see setContactReportFlags NxContactPairFlag NxActorDesc::contactReportFlags
+	*/
+	virtual NxU32					getContactReportFlags() const = 0;
+
+	/**
+	\brief Sets the actor's contact report flags.
+
+	These flags are used to determine the kind of report that is generated for interactions with other
+	actors.
+
+	The following flags are permitted:
+
+	NX_NOTIFY_ON_START_TOUCH
+	NX_NOTIFY_ON_END_TOUCH
+	NX_NOTIFY_ON_TOUCH	
+	NX_NOTIFY_ON_IMPACT
+	NX_NOTIFY_ON_ROLL
+	NX_NOTIFY_ON_SLIDE
+	NX_NOTIFY_FORCE
+	NX_NOTIFY_ON_START_TOUCH_FORCE_THRESHOLD
+	NX_NOTIFY_ON_END_TOUCH_FORCE_THRESHOLD
+	NX_NOTIFY_ON_TOUCH_FORCE_THRESHOLD
+
+	Please note: If the actor is part of an interacting pair for which the contact report generation
+	is controlled already through any other mechanism (for example by use of NxScene::setActorPairFlags)
+	then the union of all the specified contact report flags will be used to generate the report.
+
+	See #getContactReportFlags().
+
+	\param[in] flags Flags to control contact reporting. See #NxContactPairFlag.
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see getContactReportFlags NxContactPairFlag NxActorDesc::contactReportFlags
+	*/
+	virtual void					setContactReportFlags(NxU32 flags) = 0;
 
 #if NX_SUPPORT_SWEEP_API
 	/**
@@ -2246,6 +2324,30 @@ class NxActor
 	@see NxCompartment
 	*/
 	virtual NxCompartment *			getCompartment() const = 0;
+
+	/**
+	\brief Retrieves the actor's force field material index, default index is 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	*/
+	virtual NxForceFieldMaterial	getForceFieldMaterial() const = 0;
+
+	/**
+	\brief Sets the actor's force field material index, default index is 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	*/
+	virtual void					setForceFieldMaterial(NxForceFieldMaterial)  = 0;
 
 	//public variables:
 				void*			userData;	//!< user can assign this to whatever, usually to create a 1:1 relationship with a user object.

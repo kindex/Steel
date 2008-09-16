@@ -196,6 +196,28 @@ class NxActorDescBase
 	NxDominanceGroup dominanceGroup;	
 
 	/**
+	\brief Combination of ::NxContactPairFlag flags
+
+	<b>Default:</b> 0
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes
+	\li PS3  : Yes
+	\li XB360: Yes
+
+	@see NxActor::setContactReportFlags()
+	*/
+	NxU32					contactReportFlags;
+	
+	/**
+	\brief Force Field Material Index, index != 0 has to be created.
+
+	<b>Default:</b> 0
+	*/
+	NxU16					forceFieldMaterial;
+
+	/**
 	\brief Will be copied to NxActor::userData
 
 	<b>Default:</b> NULL
@@ -396,6 +418,8 @@ NX_INLINE void NxActorDescBase::setToDefault()
 	name		= NULL;
 	group		= 0;
 	dominanceGroup = 0;
+	contactReportFlags = 0;
+	forceFieldMaterial = 0;
 	compartment = NULL;
 	}
 

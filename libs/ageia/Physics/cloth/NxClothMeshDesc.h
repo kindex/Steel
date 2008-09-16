@@ -27,6 +27,17 @@ enum NxClothMeshFlags
 	These flags for clothMeshes extend the set of flags defined in NxMeshFlags.
 	*/
 	NX_CLOTH_MESH_TEARABLE	=	(1<<8),
+	/**
+	\brief Welds close vertices.
+
+	If this flag is set, the cooker maps close vertices (i.e. vertices closer than
+	NxClothMeshDesc.weldingDistance) to a single internal vertex.
+	This is useful when more than one vertex at the same location is used for handling
+	multiple texture coordinates. With welding, the mesh does not fall apart when simulated.
+
+	@see NxClothMeshDesc.weldingDistance
+	*/
+	NX_CLOTH_MESH_WELD_VERTICES = (1<<9),
 	};
 
 /**
@@ -83,6 +94,18 @@ public:
 	const void* vertexFlags;
 
 	/**
+	\brief For welding close vertices.
+
+	If the NX_CLOTH_MESH_WELD_VERTICES flag is set, the cooker maps close vertices 
+	(i.e. vertices closer than NxClothMeshDesc.weldingDistance) to a single internal vertex.
+	This is useful when more than one vertex at the same location is used for handling
+	multiple texture coordinates. With welding, the mesh does not fall apart when simulated.
+
+	@see NxClothMeshFlags
+	*/
+	NxReal weldingDistance;
+
+	/**
 	\brief Constructor sets to default.
 	*/
 	NX_INLINE NxClothMeshDesc();
@@ -114,6 +137,7 @@ NX_INLINE void NxClothMeshDesc::setToDefault()
 	vertexFlagStrideBytes	= sizeof(NxU32);
 	vertexMasses			= NULL;
 	vertexFlags				= NULL;
+	weldingDistance			= 0.0f;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -123,6 +147,8 @@ NX_INLINE bool NxClothMeshDesc::isValid() const
 	if(vertexMasses && (vertexMassStrideBytes < sizeof(NxReal)))
 		return false;
 	if(vertexFlags && (vertexFlagStrideBytes < sizeof(NxU32)))
+		return false;
+	if(weldingDistance < 0.0f)
 		return false;
 
 	return NxSimpleTriangleMesh::isValid();

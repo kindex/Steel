@@ -38,7 +38,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxSoftBodyMeshDesc
@@ -51,7 +51,7 @@ public:
 	<b>Platform:</b>
 	\li PC SW: Yes
 	\li PPU  : Yes
-	\li PS3  : No
+	\li PS3  : Yes
 	\li XB360: Yes
 
 	@see NxSoftBody

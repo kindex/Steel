@@ -78,7 +78,7 @@ public:
 	virtual void			updateControllers() = 0;
 
 	/**
-	\brief Retrieves debug data
+	\brief Retrieves debug data. Note that debug rendering is not enabled until this method is called.
 	*/
 	virtual	NxDebugRenderable	getDebugData()		= 0;
 

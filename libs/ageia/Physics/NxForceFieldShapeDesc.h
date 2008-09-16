@@ -13,32 +13,13 @@
 
 #include "Nxp.h"
 
-
-/**
- \brief flags for NxForceFieldShape
- 
-
-<b>Platform:</b>
-\li PC SW: Yes
-\li PPU  : Yes
-\li PS3  : Yes
-\li XB360: Yes
-
- @see NxForceFieldShape NxForceFieldShapeDesc
-*/
-enum NxForceFieldShapeFlags 
-	{ 
-	NX_FFS_EXCLUDE	 		= (1<<0),	//!< this is an exclude volume
-	};
-
-
 /**
  \brief Descriptor class for NxForceFieldShape
  
 
 <b>Platform:</b>
 \li PC SW: Yes
-\li PPU  : Yes
+\li PPU  : Yes [SW fallback]
 \li PS3  : Yes
 \li XB360: Yes
 
@@ -53,8 +34,19 @@ class NxForceFieldShapeDesc
 	NxShapeType type;
 
 	public:
-	NxMat34  pose;				//!< force field to shape transform
-	NxU32 flags;				//!< various force field shape flags
+	
+	/**
+	\brief shape's pose
+
+	<b>Default:</b> Identity
+
+	<b>Platform:</b>
+	\li PC SW: Yes
+	\li PPU  : Yes [SW fallback]
+	\li PS3  : Yes
+	\li XB360: Yes
+	*/
+	NxMat34  pose;
 
 	
 	/**
@@ -64,7 +56,7 @@ class NxForceFieldShapeDesc
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 	*/
@@ -77,7 +69,7 @@ class NxForceFieldShapeDesc
 
 	<b>Platform:</b>
 	\li PC SW: Yes
-	\li PPU  : Yes
+	\li PPU  : Yes [SW fallback]
 	\li PS3  : Yes
 	\li XB360: Yes
 	*/
@@ -130,7 +122,6 @@ NX_INLINE NxForceFieldShapeDesc::~NxForceFieldShapeDesc()
 NX_INLINE void NxForceFieldShapeDesc::setToDefault()
 	{
 	pose.id();
-	flags = 0;
 
 	name = NULL;
 	userData = NULL;

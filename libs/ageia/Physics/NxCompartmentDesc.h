@@ -33,7 +33,7 @@ enum NxDeviceCode
 	// ...
 
 	NX_DC_CPU = 0xffff0000,						//!< Compartment is to be simulated on CPU
-	NX_DC_PPU_AUTO_ASSIGN = 0xffff0001,			//!< Compartment is to be simulated on a processor (PPU or CPU) chosen by the HSM for best performance.
+	NX_DC_PPU_AUTO_ASSIGN = 0xffff0001,			//!< Compartment is to be simulated on a processor (PPU or CPU) chosen by the HSM for best performance (CPU is only used in the absence of a PPU).
 	};
 
 
@@ -87,8 +87,6 @@ class NxCompartmentDesc
 			deviceCode != NX_DC_CPU)
 			return false;
 		if (timeScale < 0.0f)
-			return false;
-		if (deviceCode == NX_DC_CPU && type == NX_SCT_CLOTH)
 			return false;
 		return (type <= NX_SCT_CLOTH) && (gridHashCellSize > 0.0f);
 		}

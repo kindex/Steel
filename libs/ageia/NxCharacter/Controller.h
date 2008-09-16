@@ -56,7 +56,7 @@ class Controller //: public NxAllocateable
 	// Internal methods
 			bool						setPos(const NxExtendedVec3& pos);
 			void						setCollision(bool enabled);
-			void						move(SweptVolume& volume, const NxVec3& disp, NxU32 activeGroups, NxF32 minDist, NxU32& collisionFlags, NxF32 sharpness, const NxGroupsMask* groupsMask, bool apply_ubi_fix);
+			void						move(SweptVolume& volume, const NxVec3& disp, NxU32 activeGroups, NxF32 minDist, NxU32& collisionFlags, NxF32 sharpness, const NxGroupsMask* groupsMask, bool constrainedClimbingMode);
 			void						setInteraction(NxCCTInteractionFlag flag)	{ interactionFlag = flag;	}
 			NxCCTInteractionFlag		getInteraction()					const	{ return interactionFlag;	}
 	};

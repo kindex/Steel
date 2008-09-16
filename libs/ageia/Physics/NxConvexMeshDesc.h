@@ -54,18 +54,6 @@ enum NxConvexFlags
 	NX_CF_INFLATE_CONVEX	=	(1<<3),
 
 	/**
-	\brief Uses legacy hull algorithm, which doesn't inflate convex according to skin width
-
-	\note This flag is only used in combination with NX_CF_COMPUTE_CONVEX, and must not be used for convex meshes to be simulated in HW.
-
-	\deprecated This cooking method is not compatible with the PhysX HW simulation and should not be used.
-	\warning Legacy function
-
-	@see NxCookingParams
-	*/
-	NX_CF_USE_LEGACY_COOKER	=	(1<<4),
-
-	/**
 	\brief Instructs cooking to save normals uncompressed.  The cooked hull data will be larger, but will load faster.
 
 	@see NxCookingParams
