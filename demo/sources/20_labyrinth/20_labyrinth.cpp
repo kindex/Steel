@@ -105,7 +105,7 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 
 	if (!initAgeia())
 	{
-		abort_init("ageia", "Cannot init Ageia");
+		abort_init("PhysX", "Cannot init PhysX");
 		return false;
 	}
 	
@@ -761,10 +761,10 @@ bool GameLabyrinth::initAgeia()
 	physicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, NULL, new ErrorStream(), desc, &errorCode);
 	if (physicsSDK == NULL) 
 	{
-		error("ageia", std::string("SDK create error (") + IntToStr(errorCode) + " - " + getNxSDKCreateError(errorCode) + ").");
+		error("PhysX", std::string("SDK create error (") + IntToStr(errorCode) + " - " + getNxSDKCreateError(errorCode) + ").");
 		if (errorCode == NXCE_PHYSX_NOT_FOUND)
 		{
-			MessageBox(NULL, "Ageia PhysX drivers was not found. Download it from http://ageia.com/", "Fatal Error", 0);
+			MessageBox(NULL, "NVIDIA PhysX drivers was not found. Download it from http://developer.nvidia.com/", "Fatal Error", 0);
 		}
 		return false;
 	}
@@ -776,7 +776,7 @@ bool GameLabyrinth::initAgeia()
 
 	physicsSDK->setParameter(NX_SKIN_WIDTH, conf->getf("physic.skin_width", 0.00f));
 
-	log_msg("ageia", "Ageia connected");
+	log_msg("PhysX", "PhysX connected");
 	return true;
 }
 
@@ -794,7 +794,7 @@ bool GameLabyrinth::createPhysicWorld()
 	ageia_scene = physicsSDK->createScene(sceneDesc);
 	if (ageia_scene == NULL) 
 	{
-		error("ageia", "Unable to create a PhysX scene");
+		error("PhysX", "Unable to create a PhysX scene");
 		return false;
 	}
 
@@ -839,7 +839,7 @@ void GameLabyrinth::exitAgeia()
 		NxReleasePhysicsSDK(physicsSDK);
 		physicsSDK = NULL;
 
-		log_msg("ageia", "Ageia exited");
+		log_msg("PhysX", "PhysX exited");
 	}
 }
 

@@ -962,7 +962,7 @@ bool OpenGL_Engine::init(Config* _conf, Input *input)
 			}
 			if (flags.maxLightsInShader <= 0)
 			{
-				log_msg("warning opengl glsl", "Your video driver supports GLSL, but it cannot compile default shader. Swithing to mutitexture renderer (OepnGL 1.3)");
+				log_msg("warning opengl glsl", "Your video driver supports GLSL, but it cannot compile default shader. Switching to multitexture renderer (OepnGL 1.3)");
 			}
 			else
 			{

@@ -7,7 +7,7 @@
 	License:
 		Steel Engine License
 	Description:
-		Ageia test
+		PhysX test
  ************************************************************/
 #include "23_ageia_tech.h"
 #include "../19_ps/particle_calculator.h"
@@ -139,7 +139,7 @@ bool GameAgeiatech::init(Config& _conf, Input& _input)
 	}
 	if (!initAgeia())
 	{
-		abort_init("ageia", "Cannot init Ageia");
+		abort_init("PhysX", "Cannot init PhysX");
 		return false;
 	}
 
@@ -208,7 +208,7 @@ bool GameAgeiatech::initAgeia()
 	physicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, NULL, new ErrorStream(), desc, &errorCode);
 	if (physicsSDK == NULL) 
 	{
-		error("ageia", std::string("SDK create error (") + IntToStr(errorCode) + " - " + getNxSDKCreateError(errorCode) + ").");
+		error("PhysX", std::string("SDK create error (") + IntToStr(errorCode) + " - " + getNxSDKCreateError(errorCode) + ").");
 		return false;
 	}
 #if SAMPLES_USE_VRD
@@ -225,7 +225,7 @@ bool GameAgeiatech::initAgeia()
 	globalScene = scene = physicsSDK->createScene(sceneDesc);
 	if (scene == NULL) 
 	{
-		error("ageia", "Unable to create a PhysX scene");
+		error("PhysX", "Unable to create a PhysX scene");
 		return false;
 	}
 
@@ -235,7 +235,7 @@ bool GameAgeiatech::initAgeia()
 	defaultMaterial->setStaticFriction(0.5f);
 	defaultMaterial->setDynamicFriction(0.5f);
 
-	log_msg("ageia", "Ageia connected");
+	log_msg("PhysX", "PhysX connected");
 
 	return true;
 }
@@ -257,7 +257,7 @@ void GameAgeiatech::exitAgeia()
 		NxReleasePhysicsSDK(physicsSDK);
 		physicsSDK = NULL;
 
-		log_msg("ageia", "Ageia exited");
+		log_msg("PhysX", "PhysX exited");
 	}
 }
 

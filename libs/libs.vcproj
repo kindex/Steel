@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../libs/ageia/Foundation;../libs/ageia/Physics;../libs/ageia/Cooking;../libs/ageia/PhysXLoader;../libs/ageia/SampleCommonCode;."
+				AdditionalIncludeDirectories="../libs/PhysX/Foundation;../libs/PhysX/Physics;../libs/PhysX/Cooking;../libs/PhysX/PhysXLoader;../libs/PhysX/SampleCommonCode;."
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -104,7 +104,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../libs/ageia/Foundation;../libs/ageia/Physics;../libs/ageia/Cooking;../libs/ageia/PhysXLoader;../libs/ageia/SampleCommonCode;."
+				AdditionalIncludeDirectories="../libs/PhysX/Foundation;../libs/PhysX/Physics;../libs/PhysX/Cooking;../libs/PhysX/PhysXLoader;../libs/PhysX/SampleCommonCode;."
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -162,17 +162,17 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="ageia"
+			Name="PhysX"
 			>
 			<Filter
 				Name="SampleCommonCode"
 				>
 				<File
-					RelativePath=".\ageia\SampleCommonCode\Stream.cpp"
+					RelativePath=".\PhysX\SampleCommonCode\Stream.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\SampleCommonCode\Stream.h"
+					RelativePath=".\PhysX\SampleCommonCode\Stream.h"
 					>
 				</File>
 			</Filter>
@@ -180,15 +180,15 @@
 				Name="Cooking"
 				>
 				<File
-					RelativePath=".\ageia\Cooking\fw-convex-cooker.h"
+					RelativePath=".\PhysX\Cooking\fw-convex-cooker.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Cooking\Nxc.h"
+					RelativePath=".\PhysX\Cooking\Nxc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Cooking\NxCooking.h"
+					RelativePath=".\PhysX\Cooking\NxCooking.h"
 					>
 				</File>
 			</Filter>
@@ -196,167 +196,163 @@
 				Name="Foundation"
 				>
 				<File
-					RelativePath=".\ageia\Foundation\Nx.h"
+					RelativePath=".\PhysX\Foundation\Nx.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\Nx12F32.h"
+					RelativePath=".\PhysX\Foundation\Nx12F32.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\Nx16F32.h"
+					RelativePath=".\PhysX\Foundation\Nx16F32.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\Nx9F32.h"
+					RelativePath=".\PhysX\Foundation\Nx9F32.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxAllocatorDefault.h"
+					RelativePath=".\PhysX\Foundation\NxAllocatorDefault.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxArray.h"
+					RelativePath=".\PhysX\Foundation\NxArray.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxAssert.h"
+					RelativePath=".\PhysX\Foundation\NxAssert.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxBitField.h"
+					RelativePath=".\PhysX\Foundation\NxBitField.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxBounds3.h"
+					RelativePath=".\PhysX\Foundation\NxBounds3.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxBox.h"
+					RelativePath=".\PhysX\Foundation\NxBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxBuildNumber.h"
+					RelativePath=".\PhysX\Foundation\NxBuildNumber.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxCapsule.h"
+					RelativePath=".\PhysX\Foundation\NxCapsule.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxDebugRenderable.h"
+					RelativePath=".\PhysX\Foundation\NxDebugRenderable.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxException.h"
+					RelativePath=".\PhysX\Foundation\NxException.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\Nxf.h"
+					RelativePath=".\PhysX\Foundation\Nxf.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxFoundation.h"
+					RelativePath=".\PhysX\Foundation\NxFoundation.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxFoundationSDK.h"
+					RelativePath=".\PhysX\Foundation\NxFoundationSDK.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxFPU.h"
+					RelativePath=".\PhysX\Foundation\NxI16Vec3.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxI16Vec3.h"
+					RelativePath=".\PhysX\Foundation\NxMat33.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxMat33.h"
+					RelativePath=".\PhysX\Foundation\NxMat34.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxMat34.h"
+					RelativePath=".\PhysX\Foundation\NxMath.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxMath.h"
+					RelativePath=".\PhysX\Foundation\NxPlane.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxPlane.h"
+					RelativePath=".\PhysX\Foundation\NxPool.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxPool.h"
+					RelativePath=".\PhysX\Foundation\NxProfiler.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxProfiler.h"
+					RelativePath=".\PhysX\Foundation\NxQuat.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxQuat.h"
+					RelativePath=".\PhysX\Foundation\NxQuickSort.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxQuickSort.h"
+					RelativePath=".\PhysX\Foundation\NxRay.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxRay.h"
+					RelativePath=".\PhysX\Foundation\NxRemoteDebugger.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxRemoteDebugger.h"
+					RelativePath=".\PhysX\Foundation\NxSegment.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxSegment.h"
+					RelativePath=".\PhysX\Foundation\NxSimpleTriangleMesh.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxSimpleTriangleMesh.h"
+					RelativePath=".\PhysX\Foundation\NxSimpleTypes.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxSimpleTypes.h"
+					RelativePath=".\PhysX\Foundation\NxSphere.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxSphere.h"
+					RelativePath=".\PhysX\Foundation\NxStream.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxStream.h"
+					RelativePath=".\PhysX\Foundation\NxUserAllocator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxUserAllocator.h"
+					RelativePath=".\PhysX\Foundation\NxUserAllocatorDefault.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxUserAllocatorDefault.h"
+					RelativePath=".\PhysX\Foundation\NxUserOutputStream.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxUserOutputStream.h"
+					RelativePath=".\PhysX\Foundation\NxUtilities.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxUtilities.h"
+					RelativePath=".\PhysX\Foundation\NxVec3.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxVec3.h"
+					RelativePath=".\PhysX\Foundation\NxVersionNumber.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Foundation\NxVersionNumber.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ageia\Foundation\NxVolumeIntegration.h"
+					RelativePath=".\PhysX\Foundation\NxVolumeIntegration.h"
 					>
 				</File>
 			</Filter>
@@ -364,87 +360,71 @@
 				Name="NxCharacter"
 				>
 				<File
-					RelativePath=".\ageia\NxCharacter\BoxController.h"
+					RelativePath=".\PhysX\NxCharacter\BoxController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\CapsuleController.h"
+					RelativePath=".\PhysX\NxCharacter\CapsuleController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\CCTAllocator.h"
+					RelativePath=".\PhysX\NxCharacter\CCTAllocator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\CCTDebugRenderer.h"
+					RelativePath=".\PhysX\NxCharacter\CCTDebugRenderer.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\CharacterController.h"
+					RelativePath=".\PhysX\NxCharacter\CharacterController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\CharacterControllerManager.h"
+					RelativePath=".\PhysX\NxCharacter\CharacterControllerManager.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\Controller.h"
+					RelativePath=".\PhysX\NxCharacter\Controller.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\ControllerManager.h"
+					RelativePath=".\PhysX\NxCharacter\ControllerManager.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\NxBoxController.h"
+					RelativePath=".\PhysX\NxCharacter\NxBoxController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\NxCapsuleController.h"
+					RelativePath=".\PhysX\NxCharacter\NxCapsuleController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\NxCharacter.h"
+					RelativePath=".\PhysX\NxCharacter\NxCharacter.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\NxController.h"
+					RelativePath=".\PhysX\NxCharacter\NxController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\NxControllerManager.h"
+					RelativePath=".\PhysX\NxCharacter\NxControllerManager.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\NxExtended.h"
+					RelativePath=".\PhysX\NxCharacter\NxExtended.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\SweptBox.h"
+					RelativePath=".\PhysX\NxCharacter\SweptBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\SweptCapsule.h"
+					RelativePath=".\PhysX\NxCharacter\SweptCapsule.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\NxCharacter\SweptVolume.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="NxExtensions"
-				>
-				<File
-					RelativePath=".\ageia\NxExtensions\nxextension.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ageia\NxExtensions\NxExtensions.h"
-					>
-				</File>
-				<File
-					RelativePath=".\ageia\NxExtensions\NxExtensionScreenSurface.h"
+					RelativePath=".\PhysX\NxCharacter\SweptVolume.h"
 					>
 				</File>
 			</Filter>
@@ -452,466 +432,514 @@
 				Name="Physics"
 				>
 				<File
-					RelativePath=".\ageia\Physics\NxActor.h"
+					RelativePath=".\PhysX\Physics\NxActor.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxActorDesc.h"
+					RelativePath=".\PhysX\Physics\NxActorDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxAllocateable.h"
+					RelativePath=".\PhysX\Physics\NxAllocateable.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxBodyDesc.h"
+					RelativePath=".\PhysX\Physics\NxBodyDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxBoxForceFieldShape.h"
+					RelativePath=".\PhysX\Physics\NxBoxForceFieldShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxBoxForceFieldShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxBoxForceFieldShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxBoxShape.h"
+					RelativePath=".\PhysX\Physics\NxBoxShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxBoxShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxBoxShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxCapsuleForceFieldShape.h"
+					RelativePath=".\PhysX\Physics\NxCapsuleForceFieldShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxCapsuleForceFieldShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxCapsuleForceFieldShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxCapsuleShape.h"
+					RelativePath=".\PhysX\Physics\NxCapsuleShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxCapsuleShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxCapsuleShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxCCDSkeleton.h"
+					RelativePath=".\PhysX\Physics\NxCCDSkeleton.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxCompartment.h"
+					RelativePath=".\PhysX\Physics\NxClothUserNotify.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxCompartmentDesc.h"
+					RelativePath=".\PhysX\Physics\NxCompartment.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxContactStreamIterator.h"
+					RelativePath=".\PhysX\Physics\NxCompartmentDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxConvexForceFieldShape.h"
+					RelativePath=".\PhysX\Physics\NxContactStreamIterator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxConvexForceFieldShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxConvexForceFieldShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxConvexHull.h"
+					RelativePath=".\PhysX\Physics\NxConvexForceFieldShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxConvexMesh.h"
+					RelativePath=".\PhysX\Physics\NxConvexMesh.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxConvexMeshDesc.h"
+					RelativePath=".\PhysX\Physics\NxConvexMeshDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxConvexShape.h"
+					RelativePath=".\PhysX\Physics\NxConvexShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxConvexShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxConvexShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxCylindricalJoint.h"
+					RelativePath=".\PhysX\Physics\NxCylindricalJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxCylindricalJointDesc.h"
+					RelativePath=".\PhysX\Physics\NxCylindricalJointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxD6Joint.h"
+					RelativePath=".\PhysX\Physics\NxD6Joint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxD6JointDesc.h"
+					RelativePath=".\PhysX\Physics\NxD6JointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxDistanceJoint.h"
+					RelativePath=".\PhysX\Physics\NxDistanceJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxDistanceJointDesc.h"
+					RelativePath=".\PhysX\Physics\NxDistanceJointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxEffector.h"
+					RelativePath=".\PhysX\Physics\NxEffector.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxEffectorDesc.h"
+					RelativePath=".\PhysX\Physics\NxEffectorDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxExportedUtils.h"
+					RelativePath=".\PhysX\Physics\NxExportedUtils.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxFixedJoint.h"
+					RelativePath=".\PhysX\Physics\NxExpression.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxFixedJointDesc.h"
+					RelativePath=".\PhysX\Physics\NxFixedJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxFluidUserNotify.h"
+					RelativePath=".\PhysX\Physics\NxFixedJointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxForceField.h"
+					RelativePath=".\PhysX\Physics\NxFluidUserNotify.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxForceFieldDesc.h"
+					RelativePath=".\PhysX\Physics\NxForceField.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxForceFieldShape.h"
+					RelativePath=".\PhysX\Physics\NxForceFieldDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxForceFieldShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxForceFieldKernel.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxHeightField.h"
+					RelativePath=".\PhysX\Physics\NxForceFieldKernelDefs.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxHeightFieldDesc.h"
+					RelativePath=".\PhysX\Physics\NxForceFieldLinearKernel.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxHeightFieldSample.h"
+					RelativePath=".\PhysX\Physics\NxForceFieldLinearKernelDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxHeightFieldShape.h"
+					RelativePath=".\PhysX\Physics\NxForceFieldShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxHeightFieldShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxForceFieldShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxInertiaTensor.h"
+					RelativePath=".\PhysX\Physics\NxForceFieldShapeGroup.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxInterface.h"
+					RelativePath=".\PhysX\Physics\NxForceFieldShapeGroupDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxInterfaceStats.h"
+					RelativePath=".\PhysX\Physics\NxHeightField.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxIntersectionBoxBox.h"
+					RelativePath=".\PhysX\Physics\NxHeightFieldDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxIntersectionPointTriangle.h"
+					RelativePath=".\PhysX\Physics\NxHeightFieldSample.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxIntersectionRayPlane.h"
+					RelativePath=".\PhysX\Physics\NxHeightFieldShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxIntersectionRaySphere.h"
+					RelativePath=".\PhysX\Physics\NxHeightFieldShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxIntersectionRayTriangle.h"
+					RelativePath=".\PhysX\Physics\NxHwParser.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxIntersectionSegmentBox.h"
+					RelativePath=".\PhysX\Physics\NxHwTarget.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxIntersectionSegmentCapsule.h"
+					RelativePath=".\PhysX\Physics\NxInertiaTensor.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxIntersectionSweptSpheres.h"
+					RelativePath=".\PhysX\Physics\NxInterface.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxJoint.h"
+					RelativePath=".\PhysX\Physics\NxInterfaceStats.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxJointDesc.h"
+					RelativePath=".\PhysX\Physics\NxIntersectionBoxBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxJointLimitDesc.h"
+					RelativePath=".\PhysX\Physics\NxIntersectionPointTriangle.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxJointLimitPairDesc.h"
+					RelativePath=".\PhysX\Physics\NxIntersectionRayPlane.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxJointLimitSoftDesc.h"
+					RelativePath=".\PhysX\Physics\NxIntersectionRaySphere.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxJointLimitSoftPairDesc.h"
+					RelativePath=".\PhysX\Physics\NxIntersectionRayTriangle.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxMaterial.h"
+					RelativePath=".\PhysX\Physics\NxIntersectionSegmentBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxMaterialDesc.h"
+					RelativePath=".\PhysX\Physics\NxIntersectionSegmentCapsule.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxMeshData.h"
+					RelativePath=".\PhysX\Physics\NxIntersectionSweptSpheres.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxMotorDesc.h"
+					RelativePath=".\PhysX\Physics\NxJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\Nxp.h"
+					RelativePath=".\PhysX\Physics\NxJointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPhysics.h"
+					RelativePath=".\PhysX\Physics\NxJointLimitDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPhysicsSDK.h"
+					RelativePath=".\PhysX\Physics\NxJointLimitPairDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPlaneShape.h"
+					RelativePath=".\PhysX\Physics\NxJointLimitSoftDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPlaneShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxJointLimitSoftPairDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPMap.h"
+					RelativePath=".\PhysX\Physics\NxMaterial.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPointInPlaneJoint.h"
+					RelativePath=".\PhysX\Physics\NxMaterialDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPointInPlaneJointDesc.h"
+					RelativePath=".\PhysX\Physics\NxMeshData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPointOnLineJoint.h"
+					RelativePath=".\PhysX\Physics\NxMotorDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPointOnLineJointDesc.h"
+					RelativePath=".\PhysX\Physics\Nxp.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPrismaticJoint.h"
+					RelativePath=".\PhysX\Physics\NxPhysics.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPrismaticJointDesc.h"
+					RelativePath=".\PhysX\Physics\NxPhysicsSDK.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPulleyJoint.h"
+					RelativePath=".\PhysX\Physics\NxPlaneShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxPulleyJointDesc.h"
+					RelativePath=".\PhysX\Physics\NxPlaneShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxRevoluteJoint.h"
+					RelativePath=".\PhysX\Physics\NxPMap.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxRevoluteJointDesc.h"
+					RelativePath=".\PhysX\Physics\NxPointInPlaneJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxScene.h"
+					RelativePath=".\PhysX\Physics\NxPointInPlaneJointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSceneDesc.h"
+					RelativePath=".\PhysX\Physics\NxPointOnLineJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSceneQuery.h"
+					RelativePath=".\PhysX\Physics\NxPointOnLineJointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSceneStats.h"
+					RelativePath=".\PhysX\Physics\NxPrismaticJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSceneStats2.h"
+					RelativePath=".\PhysX\Physics\NxPrismaticJointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxScheduler.h"
+					RelativePath=".\PhysX\Physics\NxPulleyJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxShape.h"
+					RelativePath=".\PhysX\Physics\NxPulleyJointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxRevoluteJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSmoothNormals.h"
+					RelativePath=".\PhysX\Physics\NxRevoluteJointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSphereForceFieldShape.h"
+					RelativePath=".\PhysX\Physics\NxScene.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSphereForceFieldShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxSceneDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSphereShape.h"
+					RelativePath=".\PhysX\Physics\NxSceneQuery.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSphereShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxSceneStats.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSphericalJoint.h"
+					RelativePath=".\PhysX\Physics\NxSceneStats2.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSphericalJointDesc.h"
+					RelativePath=".\PhysX\Physics\NxScheduler.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSpringAndDamperEffector.h"
+					RelativePath=".\PhysX\Physics\NxShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSpringAndDamperEffectorDesc.h"
+					RelativePath=".\PhysX\Physics\NxShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxSpringDesc.h"
+					RelativePath=".\PhysX\Physics\NxSmoothNormals.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxTriangle.h"
+					RelativePath=".\PhysX\Physics\NxSoftBodyUserNotify.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxTriangleMesh.h"
+					RelativePath=".\PhysX\Physics\NxSphereForceFieldShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxTriangleMeshDesc.h"
+					RelativePath=".\PhysX\Physics\NxSphereForceFieldShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxTriangleMeshShape.h"
+					RelativePath=".\PhysX\Physics\NxSphereShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxTriangleMeshShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxSphereShapeDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxUserContactReport.h"
+					RelativePath=".\PhysX\Physics\NxSphericalJoint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxUserEntityReport.h"
+					RelativePath=".\PhysX\Physics\NxSphericalJointDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxUserNotify.h"
+					RelativePath=".\PhysX\Physics\NxSpringAndDamperEffector.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxUserRaycastReport.h"
+					RelativePath=".\PhysX\Physics\NxSpringAndDamperEffectorDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxUtilLib.h"
+					RelativePath=".\PhysX\Physics\NxSpringDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxWheelShape.h"
+					RelativePath=".\PhysX\Physics\NxSwTarget.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\Physics\NxWheelShapeDesc.h"
+					RelativePath=".\PhysX\Physics\NxTargets.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxTriangle.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxTriangleMesh.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxTriangleMeshDesc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxTriangleMeshShape.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxTriangleMeshShapeDesc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxUserContactReport.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxUserEntityReport.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxUserNotify.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxUserRaycastReport.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxUtilLib.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxWheelShape.h"
+					>
+				</File>
+				<File
+					RelativePath=".\PhysX\Physics\NxWheelShapeDesc.h"
 					>
 				</File>
 				<Filter
 					Name="cloth"
 					>
 					<File
-						RelativePath=".\ageia\Physics\cloth\NxCloth.h"
+						RelativePath=".\PhysX\Physics\cloth\NxCloth.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\cloth\NxClothDesc.h"
+						RelativePath=".\PhysX\Physics\cloth\NxClothDesc.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\cloth\NxClothMesh.h"
+						RelativePath=".\PhysX\Physics\cloth\NxClothMesh.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\cloth\NxClothMeshDesc.h"
+						RelativePath=".\PhysX\Physics\cloth\NxClothMeshDesc.h"
 						>
 					</File>
 				</Filter>
@@ -919,43 +947,35 @@
 					Name="fluids"
 					>
 					<File
-						RelativePath=".\ageia\Physics\fluids\NxFluid.h"
+						RelativePath=".\PhysX\Physics\fluids\NxFluid.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\fluids\NxFluidDesc.h"
+						RelativePath=".\PhysX\Physics\fluids\NxFluidDesc.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\fluids\NxFluidEmitter.h"
+						RelativePath=".\PhysX\Physics\fluids\NxFluidEmitter.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\fluids\NxFluidEmitterDesc.h"
+						RelativePath=".\PhysX\Physics\fluids\NxFluidEmitterDesc.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\fluids\NxFluidPacketData.h"
+						RelativePath=".\PhysX\Physics\fluids\NxFluidPacketData.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\fluids\NxImplicitScreenMesh.h"
+						RelativePath=".\PhysX\Physics\fluids\NxParticleData.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\fluids\NxImplicitScreenMeshDesc.h"
+						RelativePath=".\PhysX\Physics\fluids\NxParticleIdData.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\fluids\NxParticleData.h"
-						>
-					</File>
-					<File
-						RelativePath=".\ageia\Physics\fluids\NxParticleIdData.h"
-						>
-					</File>
-					<File
-						RelativePath=".\ageia\Physics\fluids\NxParticleUpdateData.h"
+						RelativePath=".\PhysX\Physics\fluids\NxParticleUpdateData.h"
 						>
 					</File>
 				</Filter>
@@ -963,19 +983,19 @@
 					Name="softbody"
 					>
 					<File
-						RelativePath=".\ageia\Physics\softbody\NxSoftBody.h"
+						RelativePath=".\PhysX\Physics\softbody\NxSoftBody.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\softbody\NxSoftBodyDesc.h"
+						RelativePath=".\PhysX\Physics\softbody\NxSoftBodyDesc.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\softbody\NxSoftBodyMesh.h"
+						RelativePath=".\PhysX\Physics\softbody\NxSoftBodyMesh.h"
 						>
 					</File>
 					<File
-						RelativePath=".\ageia\Physics\softbody\NxSoftBodyMeshDesc.h"
+						RelativePath=".\PhysX\Physics\softbody\NxSoftBodyMeshDesc.h"
 						>
 					</File>
 				</Filter>
@@ -984,11 +1004,11 @@
 				Name="PhysXLoader"
 				>
 				<File
-					RelativePath=".\ageia\PhysXLoader\PhysXLoader.h"
+					RelativePath=".\PhysX\PhysXLoader\PhysXLoader.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ageia\PhysXLoader\Win32RegistryAccess.h"
+					RelativePath=".\PhysX\PhysXLoader\Win32RegistryAccess.h"
 					>
 				</File>
 			</Filter>
