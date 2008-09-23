@@ -31,7 +31,7 @@ class NxScene;
 typedef std::set<GameObject*> GameObjectSet;
 
 enum LabyrinthSoundID { WIN, LOSS };
-#define SoundCount 2
+const int SoundCount = 2;
 
 class GameLabyrinth: public GameFreeScene
 {
@@ -80,6 +80,22 @@ private:
     std::string     client_winner;
     TagVector       character_starts;
     std::string     game_chat;
+
+    class FullScreenMessage : public GameObject
+    {
+    public:
+        bool supportsInterface(IN OUT Engine&, IN const InterfaceId interface_id)
+        {
+            return interface_id == INTERFACE_GRAPH;
+        }
+        bool updateInformation(IN OUT Engine&, IN const InterfaceId);
+        void process(const ProcessInfo&) {}
+
+        bool InitFromConfig(Config&) { return false; }
+        Config* getConfig() const { return NULL;}
+
+        std::string message;
+    } full_screen_message;
 
     std::map<uid, Character*> character_index;
     Character* findCharacter(uid character_id);

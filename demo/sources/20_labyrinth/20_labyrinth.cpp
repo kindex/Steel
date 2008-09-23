@@ -555,7 +555,6 @@ void GameLabyrinth::processPhysic()
 		ageia_scene->simulate(timeInfo.frameLength);
 		ageia_scene->flushStream();
 		ageia_scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
-
 	}
 }
 
@@ -710,6 +709,23 @@ std::string GameLabyrinth::getWindowCaption()
 
 void GameLabyrinth::draw(GraphEngine& graph)
 {
+    if (game_state == GAME_END)
+    {
+        if (client_winner.empty())
+        {
+            full_screen_message.message = " *** YOU ARE THE WINNER *** ";
+        }
+        else
+        {
+            full_screen_message.message = " *** THE WINNER IS " + client_winner + " *** ";
+        }
+    }
+    else
+    {
+        full_screen_message.message.clear();
+    }
+
+
     if (cameraMode == C_FIXED && active_character != NULL)
     {
         cameraPenalty += info.timeInfo.frameLength;
@@ -956,7 +972,9 @@ NxActor* GameLabyrinth::ageiaCreateBox(const GraphObjectBox& box, const ObjectPo
 
 	actorDesc.density = 10;
     actorDesc.globalPose = tonx(position);
-	return ageia_scene->createActor(actorDesc);	
+    NxActor* actor = ageia_scene->createActor(actorDesc);
+    actor->userData = (void*)&box;
+	return actor;
 }
 
 void GameLabyrinth::ageiaDeleteCharacter(Character& character)
@@ -1015,6 +1033,7 @@ void GameLabyrinth::bind(GraphEngine& engine)
     }
 
     engine.inject(&console);
+    engine.inject(&full_screen_message);
 
     updateVisibleObjects(engine);
 }
@@ -1315,6 +1334,32 @@ void GameLabyrinth::processAudio()
 		}
     }
 
-
 	return;
+}
+
+
+bool GameLabyrinth::FullScreenMessage::updateInformation(IN OUT Engine& engine, IN const InterfaceId interface_id)
+{
+	if (interface_id == INTERFACE_GRAPH)
+	{
+        GraphInterface& gengine = *dynamic_cast<GraphInterface*>(&engine);
+
+        GraphTextVector tv;
+        float height = 0.15f;
+
+        GraphText text(message, 
+                       ObjectPosition::createTranslationMatrix(v3(0.0, 0.2f, 0)),
+                       POSITION_SCREEN,
+                       v2(height, height),
+                       SPRITE_ALIGN_SCREEN,
+                       GraphText::ALIGN_CENTER,
+                       resFont.add("/font/arial"),
+                       color4f(1.0, 0.0, 1.0));
+        tv.push_back(text);
+
+        gengine.setGraphText(tv);
+
+		return true;
+	}
+	return false;
 }
