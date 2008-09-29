@@ -1179,12 +1179,13 @@ void GameLabyrinth::updateVisibleObjects(GraphEngine& engine)
 void GameLabyrinth::processAudio()
 {
     // Loading all sounds
-    for (int id = WIN; id <= SoundCount; id++)
+    for (int id = 0; id < SoundCount; id++)
     {
-        LabyrinthSoundMap::iterator it = labyrinthSounds.find(static_cast<LabyrinthSoundID>(id));
+        LabyrinthSoundMap::iterator it = labyrinthSounds.find(/*static_cast<LabyrinthSoundID>(id)*/LabyrinthSoundID[id]);
         if (it == labyrinthSounds.end())
 	    {
-		    AudioObject* snd = loadAudioObject(*conf, "sounds.win");
+            std::string refStr = (std::string)("sounds.") + LabyrinthSoundID[id];//static_cast<LabyrinthSoundID>(id);
+		    AudioObject* snd = loadAudioObject(*conf, refStr);
 
 		    SimpleSound* sndAudioObject = dynamic_cast<SimpleSound*>(snd);
 		    if (sndAudioObject == NULL)
@@ -1194,7 +1195,7 @@ void GameLabyrinth::processAudio()
 		    }
 		    else
 		    {
-                labyrinthSounds[static_cast<LabyrinthSoundID>(id)] = sndAudioObject;
+                labyrinthSounds[/*static_cast<LabyrinthSoundID>(id)*/LabyrinthSoundID[id]] = sndAudioObject;
                 //delete sndAudioObject;
                 sndAudioObject = NULL;
 		    }
@@ -1209,19 +1210,20 @@ void GameLabyrinth::processAudio()
 				if (client_winner.empty())
 				{
 					// winner sound playing
-                    LabyrinthSoundMap::iterator it = labyrinthSounds.find(WIN);
+                    LabyrinthSoundMap::iterator it = labyrinthSounds.find("WIN");
+                    
                     if (it != labyrinthSounds.end())
 					{
-                        audioEngine->soundPlay(labyrinthSounds[WIN]->originalSound);
+                        audioEngine->soundPlay(labyrinthSounds["WIN"]->originalSound);
 					}
 				}
 				else
 				{
 					// looser sound playing
-                    LabyrinthSoundMap::iterator it = labyrinthSounds.find(LOSS);
+                    LabyrinthSoundMap::iterator it = labyrinthSounds.find("LOSS");
 					if (it != labyrinthSounds.end())
 					{
-				        audioEngine->soundPlay(labyrinthSounds[LOSS]->originalSound);
+				        audioEngine->soundPlay(labyrinthSounds["LOSS"]->originalSound);
 					}
 				}
 			}
@@ -1233,19 +1235,19 @@ void GameLabyrinth::processAudio()
 				if (winner == active_character)
 				{
 					// winner sound playing
-                    LabyrinthSoundMap::iterator it = labyrinthSounds.find(WIN);
+                    LabyrinthSoundMap::iterator it = labyrinthSounds.find("WIN");
                     if (it != labyrinthSounds.end())
 					{
-                        audioEngine->soundPlay(labyrinthSounds[WIN]->originalSound);
+                        audioEngine->soundPlay(labyrinthSounds["WIN"]->originalSound);
 					}
 				}
 				else
 				{
 					// looser sound playing
-					LabyrinthSoundMap::iterator it = labyrinthSounds.find(LOSS);
+					LabyrinthSoundMap::iterator it = labyrinthSounds.find("LOSS");
 					if (it != labyrinthSounds.end())
 					{
-				        audioEngine->soundPlay(labyrinthSounds[LOSS]->originalSound);
+				        audioEngine->soundPlay(labyrinthSounds["LOSS"]->originalSound);
 					}
 				}
 			}

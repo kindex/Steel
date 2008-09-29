@@ -30,8 +30,10 @@ class NxPhysicsSDK;
 class NxScene;
 typedef std::set<GameObject*> GameObjectSet;
 
-enum LabyrinthSoundID { WIN, LOSS };
+//enum LabyrinthSoundID { WIN, LOSS };
 const int SoundCount = 2;
+
+const std::string LabyrinthSoundID[] = {"WIN", "LOSS"};
 
 class GameLabyrinth: public GameFreeScene
 {
@@ -68,7 +70,8 @@ private:
 	//SimpleSound* winAudioObject;
 	SimpleSound* lossAudioObject;
     // TODO: introduce map LabyrinthSounds
-    typedef std::map<LabyrinthSoundID, SimpleSound*> LabyrinthSoundMap;
+    //typedef std::map<LabyrinthSoundID, SimpleSound*> LabyrinthSoundMap;
+    typedef std::map<std::string, SimpleSound*> LabyrinthSoundMap;
     LabyrinthSoundMap labyrinthSounds;
 
 // -------------------- Game --------------------
