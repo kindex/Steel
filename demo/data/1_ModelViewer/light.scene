@@ -1,0 +1,6 @@
+{
+class = 'light'
+k = 0.1
+linearAttenuation = 0.07
+maxDistance = 100
+}

@@ -1,0 +1,26 @@
+		{
+			class = 'std'
+			blend = 0
+			
+			diffuse_map =
+			{ 
+				image = 'wall01d'
+			}
+
+			normal_map = 
+			{
+				image = 'wall01n'
+			}
+			specular_map = 
+			{
+				image = 'wall01s'
+				power = 20
+				k = 7
+			}
+
+			texCoordsScale = (1 1 1)
+			catchShadows = 1
+			dropShadows = 1
+			ambient_k = 0.5
+		}
+

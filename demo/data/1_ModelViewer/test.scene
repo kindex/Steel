@@ -1,0 +1,10 @@
+{
+	class = 'combiner'
+	enabled=1
+
+	graph = 
+	{
+		class = 'model'
+		file = 'wall01'
+	} // graph
+} // combiner
