@@ -118,10 +118,6 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 		(this->*FlushOpenGL_Window)();
     }
 
-	GLbitfield clear = 0;
-	if (conf->getb("clearColor", true))	clear |= GL_COLOR_BUFFER_BIT;
-	if (conf->getb("clearDepth", true))	clear |= GL_DEPTH_BUFFER_BIT;
-
 // ------------ Draw Scene ---------------
 
     if (flags.posteffect && posteffects.empty())
@@ -135,6 +131,9 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
 
     if (!flags.posteffect || posteffects.empty() || !flags.glsl)
     {
+	    GLbitfield clear = 0;
+	    if (conf->getb("clearColor", true))	clear |= GL_COLOR_BUFFER_BIT;
+	    if (conf->getb("clearDepth", true))	clear |= GL_DEPTH_BUFFER_BIT;
 	    if (clear)
 	    {
 		    glClear(clear);
@@ -144,15 +143,15 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
     }
     else
     {
-        // Draw 3D scene.
-        glEnable(GL_DEPTH_TEST);
-     //   glDepthFunc(GL_LESS);
-
-        bindFrame(scene_frame);
+	    GLbitfield clear = 0;
+	    if (conf->getb("clearDepth", true))	clear |= GL_DEPTH_BUFFER_BIT;
 	    if (clear)
 	    {
 		    glClear(clear);
 	    }
+
+        glEnable(GL_DEPTH_TEST);
+        bindFrame(scene_frame);
 
 	    render();
 	    renderDebug();
@@ -1114,6 +1113,12 @@ void OpenGL_Engine::createPosteffects()
 
     scene_frame = createFrameBuffer("scene");
 
+    if (scene_frame == NULL)
+    {
+        deletePosteffects();
+        return;
+    }
+
     for EACH(PosteffectVector, posteffects, posteffect)
     {
         Config* input_conf = posteffect->conf->find("input");
@@ -1343,7 +1348,7 @@ void OpenGL_Engine::setupVariables()
 //	flags.transparent = conf->getb("transparent", true);
 	flags.bump = conf->getb("bump", true);
 	flags.shadows = conf->getb("shadows", true);
-	flags.posteffect = conf->getb("posteffect", true);
+    flags.posteffect = conf->getb("posteffect", true) && GL_EXTENSION_FRAMEBUFFER && GL_EXTENSION_GLSL;
 
 	flags.drawWire = conf->getb("drawWire", false) && DrawWire != NULL;
 	flags.drawLines = conf->getb("drawLines", false) && DrawLines != NULL;

@@ -12,7 +12,7 @@ bool createFrame(Frame* surface, bool depth, bool fp, bool linear)
     // create a color texture
     glGenTextures(1, &surface->texture);
     glBindTexture(GL_TEXTURE_2D, surface->texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, surface->width, surface->height, 0, GL_RGBA, type, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, surface->width, surface->height, 0, internalFormat, type, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -47,7 +47,11 @@ bool createFrame(Frame* surface, bool depth, bool fp, bool linear)
     {
         glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, surface->depth);
     }
-    checkFBO();
+    if (!checkFBO())
+    {
+        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+        return false;
+    }
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
     if (glGetError() != 0)
     {
@@ -68,7 +72,7 @@ void deleteFrame(Frame* frame)
     }
 }
 
-void checkFBO()
+bool checkFBO()
 {
     char enums[][20] =
     {
@@ -85,9 +89,12 @@ void checkFBO()
     GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
     if (status == GL_FRAMEBUFFER_COMPLETE_EXT)
     {
-        return;
+        return true;
     }
 
     status -= GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT;
     error("opengl", std::string("incomplete framebuffer object due to ") + enums[status]);
+
+    GL_EXTENSION_FRAMEBUFFER = false;
+    return false;
 }

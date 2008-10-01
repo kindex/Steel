@@ -25,4 +25,4 @@ struct Frame
 
 bool createFrame(Frame*, bool depth, bool fp, bool linear);
 void deleteFrame(Frame*);
-void checkFBO();
+bool checkFBO();

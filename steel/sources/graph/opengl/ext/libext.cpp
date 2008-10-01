@@ -41,6 +41,7 @@ bool GL_EXTENSION_DOT3 = false;
 bool GL_EXTENSION_TEXTURE_CUBE_MAP = false;
 bool GL_EXTENSION_TEXTURE_NON2POWER = false;
 bool GL_EXTENSION_GLSL = false;
+bool GL_EXTENSION_FRAMEBUFFER = false;
 
 
 int GL_EXTENSION_MAX_VERTEX_UNIFORM_COMPONENTS;
@@ -586,7 +587,7 @@ void OpenGL_ExtensionsInit()
 		OpenGL_ExtensionsIsSupported("GL_ARB_vertex_shader") &&
 		OpenGL_ExtensionsIsSupported("GL_ARB_fragment_shader");
 
-	if(GL_EXTENSION_GLSL)
+    if(GL_EXTENSION_GLSL)
 	{
 		glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS_ARB, &GL_EXTENSION_MAX_VERTEX_UNIFORM_COMPONENTS);
 	    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS_ARB, &GL_EXTENSION_MAX_VERTEX_ATTRIBS);
@@ -597,6 +598,8 @@ void OpenGL_ExtensionsInit()
 		glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS_ARB, &GL_EXTENSION_MAX_FRAGMENT_UNIFORM_COMPONENTS);
 		glGetIntegerv(GL_MAX_TEXTURE_COORDS_ARB, &GL_EXTENSION_MAX_TEXTURE_COORDS);
 	}
+
+	GL_EXTENSION_FRAMEBUFFER = OpenGL_ExtensionsIsSupported("GL_EXT_framebuffer_object");
 
     glBindFramebufferEXT = (PFNGLBINDFRAMEBUFFEREXTPROC)getProcAddress("glBindFramebufferEXT");
     glBindRenderbufferEXT = (PFNGLBINDRENDERBUFFEREXTPROC)getProcAddress("glBindRenderbufferEXT");
