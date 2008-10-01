@@ -20,6 +20,9 @@
 
 enum CharacterState { IDLE, MOVING };
 
+const int CHARACTER_SOUNDS_AMOUNT = 3;
+const std::string CHARACTER_SOUND_ID[] = {"IDLE", "START", "MOVE"};
+
 class NxActor;
 class Input;
 
@@ -82,10 +85,8 @@ private:
     std::string    name;
 
 	// sounds
-	AudioObject* idleSound;
-	AudioObject* startSound;
-    AudioObject* moveSound;
-    // TODO: Introduce map CharacterSounds
+    typedef std::map<std::string, SimpleSound*> CharacterSoundMap;
+    CharacterSoundMap characterSounds;
 
     CharacterState state;
 };

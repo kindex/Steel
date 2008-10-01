@@ -31,9 +31,6 @@ Character::Character():
     clientId(0),
     position_is_set(false),
     smoke(NULL),
-	idleSound(NULL),
-	startSound(NULL),
-    moveSound(NULL),
     state(IDLE)
 {}
 

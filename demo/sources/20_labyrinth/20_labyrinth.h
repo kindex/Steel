@@ -30,10 +30,8 @@ class NxPhysicsSDK;
 class NxScene;
 typedef std::set<GameObject*> GameObjectSet;
 
-//enum LabyrinthSoundID { WIN, LOSS };
-const int SoundCount = 2;
-
-const std::string LabyrinthSoundID[] = {"WIN", "LOSS"};
+const int LABYRINTH_SOUNDS_AMOUNT = 2;
+const std::string LABYRINTH_SOUND_ID[] = {"WIN", "LOSS"};
 
 class GameLabyrinth: public GameFreeScene
 {
@@ -67,10 +65,7 @@ private:
     CellVisibilitySet current_sell_set;
     bool              createLabyrinth();
     void              updateVisibleObjects(GraphEngine&);
-	//SimpleSound* winAudioObject;
-	SimpleSound* lossAudioObject;
-    // TODO: introduce map LabyrinthSounds
-    //typedef std::map<LabyrinthSoundID, SimpleSound*> LabyrinthSoundMap;
+   
     typedef std::map<std::string, SimpleSound*> LabyrinthSoundMap;
     LabyrinthSoundMap labyrinthSounds;
 
