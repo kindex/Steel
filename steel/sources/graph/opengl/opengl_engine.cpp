@@ -143,15 +143,15 @@ bool OpenGL_Engine::process(IN const ProcessInfo& _info)
     }
     else
     {
+        glEnable(GL_DEPTH_TEST);
+        bindFrame(scene_frame);
+
 	    GLbitfield clear = 0;
 	    if (conf->getb("clearDepth", true))	clear |= GL_DEPTH_BUFFER_BIT;
 	    if (clear)
 	    {
 		    glClear(clear);
 	    }
-
-        glEnable(GL_DEPTH_TEST);
-        bindFrame(scene_frame);
 
 	    render();
 	    renderDebug();
