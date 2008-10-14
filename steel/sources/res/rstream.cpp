@@ -89,5 +89,11 @@ bool rstream::open(const std::string& s, const std::string& ext, ios_base::openm
 	std::ifstream::open(name.c_str(), _Mode | std::ios::in);
 
 	failed = false;
-	return true;
+
+	if(fail())
+	{
+		failed = true;
+		return false;
+	}
+	else return true;
 }
