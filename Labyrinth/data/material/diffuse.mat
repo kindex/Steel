@@ -1,0 +1,24 @@
+#
+{
+class = 'std'
+blend = 0
+
+texCoordsRotation = 0.0
+texCoordsScale = (1 1 1)
+texCoordsTranslation = (0 0 0)
+
+diffuse_map =
+{ 
+	k = 1.0
+}
+
+specular_map = 
+{
+	power = 10
+	k = 0.5
+}
+emission_map = 
+{
+	k = 1
+}
+}

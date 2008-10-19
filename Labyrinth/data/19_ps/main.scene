@@ -1,0 +1,73 @@
+# Main scene 
+{
+class = 'combiner'
+objects = 
+(
+
+[ps.scene#] { emitter = {	origin = (0 0 2) } }
+//[ps.scene#] { emitter = {	origin = (0 0 4.3) } }
+//[ps.scene#] { emitter = {	origin = (0.0 -0.0 5.5) } }
+
+//[ps.scene#] { emitter = {	origin = (0.4 -0.5 3.7) } }
+//[ps.scene#] { emitter = {	origin = (0.4 -0.5 3.9) } }
+//[ps.scene#] { emitter = {	origin = (0.4 -0.5 4.1) } }
+
+{
+class = 'combiner'
+enabled=1
+polyhedraPhysicSameAsGraph = 1
+origin = (0 +0.50 0)
+
+graph = 
+{
+class = 'model'
+file = 'Def_box_7'
+
+	material = 
+	{
+		class = 'std'
+		blend = 0
+		dropShadows = 0
+		diffuse_map =
+		{ 
+			image = '/GALVPLAT'
+			texCoordsRotation = 0.0
+			texCoordsScale = (1 1 1)
+			texCoordsTranslation = (0 0 0)
+			k = 10
+		}
+	}
+
+}
+}
+
+{
+class = 'combiner'
+enabled=0
+
+graph = 
+{
+	class = 'box'
+	size = (1 1 1)
+
+	material = 
+	{
+		class = 'std'
+		blend = 1
+		dropShadows = 0
+		diffuse_map =
+		{ 
+			image = '/none'
+			texCoordsRotation = 0.0
+			texCoordsScale = (1 1 1)
+			texCoordsTranslation = (0 0 0)
+			k = 10
+		}
+	}
+
+}
+}
+
+
+) // objects
+} // scene

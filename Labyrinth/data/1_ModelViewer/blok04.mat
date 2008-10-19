@@ -1,0 +1,26 @@
+#
+		{
+			class = 'std'
+			blend = 0
+			
+			diffuse_map =
+			{ 
+				image = 'blok04d'
+			}
+			normal_map = 
+			{
+				image = 'blok04n'
+			}
+			specular_map = 
+			{
+				image = 'blok04s'
+				power = 15
+				k = 4
+			}
+
+			texCoordsScale = (1 1 1)
+			catchShadows = 1
+			dropShadows = 1
+			ambient_k = 0.5
+		}
+

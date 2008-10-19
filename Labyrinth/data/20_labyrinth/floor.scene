@@ -1,0 +1,37 @@
+//
+{
+	class = 'combiner'
+	enabled=1
+
+	graph = 
+	{
+		class = 'box'
+		size = (1 1 1)
+		material = 
+		{
+			class = 'std'
+			blend = 0
+			
+			diffuse_map =
+			{ 
+				image = 'medflr1_med_d'
+			}
+
+			normal_map = 
+			{
+				image = 'medflr1_local'
+			}
+			specular_map = 
+			{
+				image = 'medflr1_med_s'
+				power = 20
+				k = 14
+			}
+
+			texCoordsScale = (5 5 5)
+			catchShadows = 1
+			dropShadows = 1
+			ambient_k = 0.5
+		}
+	} // graph
+} // combiner

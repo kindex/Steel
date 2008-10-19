@@ -1,0 +1,22 @@
+# Main scene 
+{
+class = 'combiner'
+objects = 
+(
+
+[1.scene#]{origin = (10 0 0)}
+[2.scene#]{origin = (26 8 -6)}
+[3.scene#]{origin = (10 5 0)}
+[4.scene#]{origin = (10 -5 0)}
+[5.scene#]{origin = (10 0 -5)}
+[6.scene#]{origin = (10 0 3)}
+[7.scene#]{origin = (5 2 -2)}
+[8.scene#]{origin = (4 5 0)}
+
+[light.scene#]{origin = (10 7 3)}
+[light.scene#]{origin = (10 -7 3)}
+[light.scene#]{origin = (10 0 5)}
+[light.scene#]{origin = (-10 -10 0)}
+
+) // objects
+} // scene

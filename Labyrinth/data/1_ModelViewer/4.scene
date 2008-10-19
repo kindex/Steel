@@ -1,0 +1,25 @@
+{
+	class = 'combiner'
+	position_kind = 'local'
+	transformation = 
+	{
+		class = 'transformation_list'
+		transformations = 
+		(
+			{
+				class = 'rotation'
+				rotationAxis = (0 0 1)
+				speed = 0.5
+			}
+		)
+	}
+	graph = 
+		{
+			class = 'model'
+			file = 'model02'
+		}
+
+}
+
+
+

@@ -1,0 +1,27 @@
+# Main scene 
+{
+class = 'combiner'
+objects = 
+(
+
+[sky.scene#] {}
+
+{
+class = 'combiner'
+audio = 
+	{
+		class = 'simple';
+		position = (0 0 0);
+		file = 'Delerium_-_Dark_Star';
+		gain = 1.0;
+		pitch = 1.0;
+		isLoop = 1;
+		rolloffFactor = 0.0;
+		sourceRelative = 1;
+		delay = 0
+	} // audio
+}
+
+
+) // objects
+} // scene

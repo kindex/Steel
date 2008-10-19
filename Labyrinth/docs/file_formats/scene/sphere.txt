@@ -1,0 +1,12 @@
+﻿Demo::Sphere
+
+Сфера, разрущающаяся со временем (нужня для тестов)
+
+class = 'sphere'
+origin	v3
+
+size	float	size of sphere	[1.0]
+height	int	height segments	[12]
+radius	int	redius segments	[16]
+
+material material

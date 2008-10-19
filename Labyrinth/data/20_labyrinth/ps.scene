@@ -1,0 +1,39 @@
+//
+{
+	class = 'ps'
+	emitter = {
+		class = 'simple'
+		particle_size = 0.19
+		init_size = 1
+		emitter_size = 0.09
+		emitter_type = 'serial'
+		born_interval = 0.03
+		limit_count = 200
+		velocity = (0 0 1)
+		random_velocity = (0.2 0.2 0)
+		life_time = 3
+		origin = (1 1 0.7)
+	}
+	renderer = {
+		class = 'sprite'
+		life_blend = 1
+		material = {
+			class = 'std'
+			blend = 1
+			diffuse_map =
+			{ 
+				image = '/19_ps/wsmoke'
+				k = 1
+			}
+		}
+	}
+	animator = {
+		class = 'simple'
+		wind = (0.05 0 0.2)
+
+		particle = {
+			friction_k=7
+			friction_power=2
+		}
+	}
+}
