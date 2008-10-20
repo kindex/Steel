@@ -15,6 +15,7 @@
 #include "res_image.h"
 #include "bmp.h"
 #include "tga.h"
+#include "jpeg.h"
 
 
 // Image filename:
@@ -29,6 +30,10 @@ Image* createBitmap(const std::string& filename)
 		return r;
 	}
 	if ((r = createTGA(filename))!= NULL)
+	{
+		return r;
+	}
+	if ((r = createJPEG(filename))!= NULL)
 	{
 		return r;
 	}
