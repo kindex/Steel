@@ -1,5 +1,4 @@
-#ifndef ERRORSTREAM_H
-#define ERRORSTREAM_H
+#pragma once
 
 #include "nxuseroutputstream.h"
 
@@ -13,5 +12,3 @@ public:
 
 const char* getNxSDKCreateError(const NxSDKCreateError& errorCode);
 
-
-#endif

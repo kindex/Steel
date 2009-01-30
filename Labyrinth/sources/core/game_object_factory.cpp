@@ -12,16 +12,12 @@
  ************************************************************/
 #include <steel.h>
 #include "game_object_factory.h"
-#include "objects/sphere.h"
-#include "objects/tag.h"
+#include "../objects/tag.h"
 //#include "18_weapon/kar98k.h"
-#include "20_labyrinth/character.h"
-#include "23_ageia_tech/ageia_ps.h"
+#include "../labyrinth/character.h"
 
 GameObject* DemoGameObjectFactory::createGameObject(IN const std::string& className) const
 {
-	if (className == "sphere")	return new Sphere;
-	//if (className == "kar98k")	return new Kar98k;
 	if (className == "character")	return new Character;
 	if (className == "tag")	return new Tag;
 
@@ -30,8 +26,6 @@ GameObject* DemoGameObjectFactory::createGameObject(IN const std::string& classN
 
 ParticleAnimator* DemoGameObjectFactory::createParticleAnimator(IN const std::string& className) const
 {
-	if (className == "AgeiaPsAnimator")	return new AgeiaPsAnimator;
-
 	return GameObjectFactory::createParticleAnimator(className);
 }
 

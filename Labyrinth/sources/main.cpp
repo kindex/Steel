@@ -11,6 +11,7 @@
 		плагины, содержит главный цикл игры.
  ************************************************************/
 #include <steel.h>
+#include "labyrinth/labyrinth.h"
 #include <common/logger.h>
 #include <common/timer.h>
 #include <common/system_info.h>
@@ -21,10 +22,9 @@
 #include <audio/openal_engine.h>
 #include <res/config/config_parser.h>
 #include <objects/console.h>
-#include "main.h"
-#include "game_factory.h"
 #include <input/input_win.h>
 #include <direct.h>
+#include "main.h"
 
 /*
 If you cannot find file svn.inc, just install python from http://python.org/
@@ -33,7 +33,7 @@ It contains two constants like:
 static const unsigned int SVN_REVISION = XXX;
 static const char SVN_DATE[] = "DATE";
 */
-#include "svn.inc"
+#include "svn.h"
 
 using namespace std;
 
@@ -134,14 +134,8 @@ int main(int argc, char *argv[])
         }
     }
 // ******************* GAME *************************
-	GameFactory gameFactory;
-	Game* game = gameFactory.createGame(steelConfig->gets("game_class"));
-	if (game == NULL)
-	{
-		error("core config fatal", "Unknown game class '" + steelConfig->gets("game_class") + "'");
-		return 5;
-	}
-
+	GameLabyrinth* game = new GameLabyrinth;
+	
 	if (!game->init(*steelConfig, *input))
 	{
 		return 6;
@@ -150,7 +144,7 @@ int main(int argc, char *argv[])
 	game->bind(*graph);
 	if (audio != NULL)
 	{
-		game->bind(*audio);
+		game->bind (*audio);
 		game->insonify(*audio); // TODO: ?
 	}
 

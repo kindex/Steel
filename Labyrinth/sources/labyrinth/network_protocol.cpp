@@ -13,6 +13,9 @@
 #include <common/logger.h>
 #include <cassert>
 
+#include "../svn.h"
+const NetworkPacket::ProtocolVersion PROTOCOL_VERSION = SVN_REVISION;
+
 /*
 uint32 string_count
 array*string_count

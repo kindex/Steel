@@ -1,5 +1,5 @@
 ﻿/*id*********************************************************
-	Unit: Demo
+	Unit: Core
 	Part of: DiVision intro
 	(C) DiVision, 2004-2006
 	Authors:

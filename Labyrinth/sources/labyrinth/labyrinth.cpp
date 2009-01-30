@@ -11,7 +11,7 @@
  ************************************************************/
 
 #include <enet/enet.h>
-#include "20_labyrinth.h"
+#include "labyrinth.h"
 #include <common/logger.h>
 #include <engine/visitor.h>
 #include <res/res_main.h>
@@ -24,10 +24,11 @@
 #include <NxPhysics.h>
 #include <NxCooking.h>
 #include <Stream.h>
-#include "../23_ageia_tech/error_stream.h"
+#include "../physic/error_stream.h"
 #include "../main.h"
 #include "steel_nx.h"
 #include <algorithm>
+#include "../svn.h"
 
 class AgeiaInjector : public Visitor
 {
@@ -1030,6 +1031,24 @@ void GameLabyrinth::bind(GraphEngine& engine)
     engine.inject(&full_screen_message);
 
     updateVisibleObjects(engine);
+}
+
+void GameLabyrinth::bind(AudioEngine& engine)
+{
+    GameFreeScene::bind(engine);
+    
+    for EACH(CharacterVector, characters, it)
+    {
+        engine.inject(**it);
+    }
+
+    if (floor != NULL)
+    {
+        engine.inject(*floor);
+    }
+
+    engine.inject(console);
+    engine.inject(full_screen_message);
 }
 
 Character* GameLabyrinth::findCharacter(uid character_id)

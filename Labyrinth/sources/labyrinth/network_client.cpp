@@ -11,7 +11,7 @@
  ************************************************************/
 
 #include <enet/enet.h>
-#include "20_labyrinth.h"
+#include "labyrinth.h"
 #include <common/logger.h>
 #include <res/res_main.h>
 #include <res/config/config_parser.h>
@@ -22,7 +22,6 @@
 #include <NxPhysics.h>
 #include <NxCooking.h>
 #include <Stream.h>
-#include "../23_ageia_tech/error_stream.h"
 #include "../main.h"
 #include "steel_nx.h"
 
@@ -185,14 +184,14 @@ void GameLabyrinth::clientReceiveS_INIT(NetworkPacket* packet, size_t dataLength
 {
     assert(dataLength == sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_Init));
     assert(server.client_state == CONNECTING);
-    if (NetworkPacket::PROTOCOL_VERSION == packet->data.s_init.protocol_version)
+    if (PROTOCOL_VERSION == packet->data.s_init.protocol_version)
     {
         clientSendC_INIT();
         server.client_state = LOADING_WORLD;
     }
     else
     {
-        log_msg("net", "Disconnecting from server because it uses different protocol version. Our: " + IntToStr(NetworkPacket::PROTOCOL_VERSION) + ". Server: " + IntToStr(packet->data.s_init.protocol_version));
+        log_msg("net", "Disconnecting from server because it uses different protocol version. Our: " + IntToStr(PROTOCOL_VERSION) + ". Server: " + IntToStr(packet->data.s_init.protocol_version));
         clientDisconnectFromServer();
     }
 }
@@ -203,7 +202,7 @@ void GameLabyrinth::clientSendC_INIT()
     size_t packet_size = sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::C_Init);
     NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
     packet->kind = NetworkPacket::C_INIT;
-    packet->data.c_init.protocol_version = NetworkPacket::PROTOCOL_VERSION;
+    packet->data.c_init.protocol_version = PROTOCOL_VERSION;
 
     size_t new_packet_size = NetworkPacket::setupNetworkPacketString(packet, packet_size, conf->gets("net.name", "noname01"));
 

@@ -10,10 +10,9 @@
 		Labyrinth Game main unit
  ************************************************************/
 
-#ifndef _20_LABYRINTH_H_
-#define _20_LABYRINTH_H_
+#pragma once
 
-#include "../game_free_scene.h"
+#include "../core/game_free_scene.h"
 #include "labyrinth_generator.h"
 #include "character.h"
 #include "network_protocol.h"
@@ -46,6 +45,7 @@ public:
     std::string getWindowCaption();
 	void draw(GraphEngine&);
 	void bind(GraphEngine&);
+	void bind(AudioEngine&);
 	void processAudio();
 
     friend class AgeiaInjector;
@@ -225,4 +225,3 @@ private:
 
 #define net_assert(expr) { if (!(expr)) { error("net", "illegal packet"); return; } }
 
-#endif

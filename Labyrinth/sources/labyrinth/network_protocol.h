@@ -13,7 +13,6 @@
 #ifndef _NETWORK_PROTOCOL_H_
 #define _NETWORK_PROTOCOL_H_
 
-#include "../svn.inc"
 #include "character.h"
 #include <common/containers/string_vector.h>
 #include <engine/id_generator.h>
@@ -32,7 +31,6 @@ enum GameState
 struct NetworkPacket
 {
     typedef unsigned int ProtocolVersion;
-    static const ProtocolVersion PROTOCOL_VERSION = SVN_REVISION;
 
     enum PacketKind
     {
@@ -108,5 +106,6 @@ struct NetworkPacket
 }; // struct NetworkPacket
 
 std::string to_string(const ENetAddress&);
+extern const NetworkPacket::ProtocolVersion PROTOCOL_VERSION;
 
 #endif

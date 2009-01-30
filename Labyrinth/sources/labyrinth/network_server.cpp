@@ -11,7 +11,7 @@
  ************************************************************/
 
 #include <enet/enet.h>
-#include "20_labyrinth.h"
+#include "labyrinth.h"
 #include <common/logger.h>
 #include <res/res_main.h>
 #include <res/config/config_parser.h>
@@ -22,7 +22,7 @@
 #include <NxPhysics.h>
 #include <NxCooking.h>
 #include <Stream.h>
-#include "../23_ageia_tech/error_stream.h"
+#include "../physic/error_stream.h"
 #include "../main.h"
 #include "steel_nx.h"
 
@@ -160,7 +160,7 @@ void GameLabyrinth::serverSendS_INIT(Client* client)
     size_t packet_size = sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::S_Init);
     NetworkPacket* packet = (NetworkPacket*)malloc(packet_size);
     packet->kind = NetworkPacket::S_INIT;
-    packet->data.s_init.protocol_version = NetworkPacket::PROTOCOL_VERSION;
+    packet->data.s_init.protocol_version = PROTOCOL_VERSION;
 
     ENetPacket* enet_packet = enet_packet_create(packet,
                                                  packet_size,
@@ -246,7 +246,7 @@ void GameLabyrinth::serverReceiveC_INIT(Client* client, NetworkPacket* packet, s
     size_t packet_size = sizeof(NetworkPacket::PacketKind) + sizeof(NetworkPacket::Format::C_Init);
     assert(dataLength >= packet_size);
     assert(client->state == CONNECTING);
-    if (packet->data.c_init.protocol_version == NetworkPacket::PROTOCOL_VERSION)
+    if (packet->data.c_init.protocol_version == PROTOCOL_VERSION)
     {
         client->name = packet->extractString(packet_size, dataLength);
         serverSendWorld(client);
@@ -254,7 +254,7 @@ void GameLabyrinth::serverReceiveC_INIT(Client* client, NetworkPacket* packet, s
     }
     else
     {
-        log_msg("net", "Disconnecting client because it uses different protocol version. Our: " + IntToStr(NetworkPacket::PROTOCOL_VERSION) + ". Server: " + IntToStr(packet->data.c_init.protocol_version));
+        log_msg("net", "Disconnecting client because it uses different protocol version. Our: " + IntToStr(PROTOCOL_VERSION) + ". Server: " + IntToStr(packet->data.c_init.protocol_version));
         serverDisconnectClient(client);
     }
 }

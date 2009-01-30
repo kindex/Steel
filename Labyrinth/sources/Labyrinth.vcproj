@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="Labyrinth"
 	ProjectGUID="{562E1337-B6F2-4AD3-92D0-21EB32B7EC60}"
 	RootNamespace="demo"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -76,13 +77,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../../steel.res/sdk/steel_lib/steel.VS8.lib_$(ConfigurationName).lib ../../../steel.res/sdk/libs/openal/openal32.lib ../../../steel.res/sdk/libs/openal/eaxguid.lib ../../../steel.res/sdk/libs/openal/eax.lib ../../../steel.res/sdk/libs/ogg/ogg.lib ../../../steel.res/sdk/libs/ogg/vorbisfile.lib ../../../steel.res/sdk/libs/PhysX/NxCharacter.lib ../../../steel.res/sdk/libs/PhysX/NxCooking.lib ../../../steel.res/sdk/libs/PhysX/PhysXLoader.lib opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB ws2_32.lib WinMM.lib"
+				AdditionalDependencies="../../../steel.res/sdk/steel_lib/steel.VS8.lib_$(ConfigurationName).lib ../../../steel.res/sdk/libs/openal/openal32.lib ../../../steel.res/sdk/libs/openal/eaxguid.lib ../../../steel.res/sdk/libs/openal/eax.lib ../../../steel.res/sdk/libs/ogg/ogg.lib ../../../steel.res/sdk/libs/ogg/vorbisfile.lib ../../../steel.res/sdk/libs/PhysX/NxCharacter.lib ../../../steel.res/sdk/libs/PhysX/NxCooking.lib ../../../steel.res/sdk/libs/PhysX/PhysXLoader.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB ws2_32.lib WinMM.lib"
 				OutputFile="..\bin/$(SolutionName).VS8.$(ConfigurationName).exe"
 				Version="1.1.0"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				ProgramDatabaseFile="$(IntDir)/$(TargetName).pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -104,9 +107,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -170,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../../steel.res/sdk/steel_lib/steel.VS8.lib_$(ConfigurationName).lib ../../../steel.res/sdk/steel_lib/libs.VS8.lib_$(ConfigurationName).lib ../../../steel.res/sdk/libs/openal/openal32.lib ../../../steel.res/sdk/libs/openal/eaxguid.lib ../../../steel.res/sdk/libs/openal/eax.lib ../../../steel.res/sdk/libs/ogg/ogg.lib ../../../steel.res/sdk/libs/ogg/vorbisfile.lib ../../../steel.res/sdk/libs/PhysX/NxCharacter.lib ../../../steel.res/sdk/libs/PhysX/NxCooking.lib ../../../steel.res/sdk/libs/PhysX/PhysXLoader.lib opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB ws2_32.lib WinMM.lib"
+				AdditionalDependencies="../../../steel.res/sdk/steel_lib/steel.VS8.lib_$(ConfigurationName).lib ../../../steel.res/sdk/steel_lib/libs.VS8.lib_$(ConfigurationName).lib ../../../steel.res/sdk/libs/openal/openal32.lib ../../../steel.res/sdk/libs/openal/eaxguid.lib ../../../steel.res/sdk/libs/openal/eax.lib ../../../steel.res/sdk/libs/ogg/ogg.lib ../../../steel.res/sdk/libs/ogg/vorbisfile.lib ../../../steel.res/sdk/libs/PhysX/NxCharacter.lib ../../../steel.res/sdk/libs/PhysX/NxCooking.lib ../../../steel.res/sdk/libs/PhysX/PhysXLoader.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB ws2_32.lib WinMM.lib"
 				ShowProgress="0"
 				OutputFile="..\bin/$(SolutionName).VS8.$(ConfigurationName).exe"
 				Version="1.1.0"
@@ -183,6 +183,8 @@
 				GenerateMapFile="true"
 				SubSystem="2"
 				EntryPointSymbol=""
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -206,9 +208,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -220,34 +219,6 @@
 			Name="sources"
 			>
 			<File
-				RelativePath="..\sources\game.h"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\game_factory.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\game_factory.h"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\game_free_scene.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\game_free_scene.h"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\game_object_factory.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\game_object_factory.h"
-				>
-			</File>
-			<File
 				RelativePath="..\sources\main.cpp"
 				>
 			</File>
@@ -256,18 +227,12 @@
 				>
 			</File>
 			<File
-				RelativePath=".\svn.inc"
+				RelativePath=".\svn.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="svn.py&#x0D;&#x0A;"
-						AdditionalDependencies="../../.svn/entries"
-						Outputs="svn.inc"
-					/>
-				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\svn.h"
+				>
 			</File>
 			<File
 				RelativePath=".\svn.py"
@@ -278,150 +243,94 @@
 				>
 			</File>
 			<Filter
-				Name="23_ageia_tech"
+				Name="core"
 				>
 				<File
-					RelativePath=".\23_ageia_tech\23_ageia_tech.cpp"
+					RelativePath=".\core\game.h"
 					>
 				</File>
 				<File
-					RelativePath=".\23_ageia_tech\23_ageia_tech.h"
+					RelativePath=".\core\game_free_scene.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\23_ageia_tech\ageia_ps.cpp"
+					RelativePath=".\core\game_free_scene.h"
 					>
 				</File>
 				<File
-					RelativePath=".\23_ageia_tech\ageia_ps.h"
+					RelativePath=".\core\game_object_factory.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\23_ageia_tech\error_stream.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\23_ageia_tech\error_stream.h"
+					RelativePath=".\core\game_object_factory.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="20_labyrinth"
+				Name="labyrinth"
 				>
 				<File
-					RelativePath="..\sources\20_labyrinth\20_labyrinth.cpp"
+					RelativePath=".\labyrinth\character.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\sources\20_labyrinth\20_labyrinth.h"
+					RelativePath=".\labyrinth\character.h"
 					>
 				</File>
 				<File
-					RelativePath=".\20_labyrinth\character.cpp"
+					RelativePath=".\labyrinth\labyrinth.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\20_labyrinth\character.h"
+					RelativePath=".\labyrinth\labyrinth.h"
 					>
 				</File>
 				<File
-					RelativePath="..\sources\20_labyrinth\labyrinth_generator.cpp"
+					RelativePath=".\labyrinth\labyrinth_generator.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\sources\20_labyrinth\labyrinth_generator.h"
+					RelativePath=".\labyrinth\labyrinth_generator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\20_labyrinth\network_client.cpp"
+					RelativePath=".\labyrinth\network_client.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\20_labyrinth\network_protocol.cpp"
+					RelativePath=".\labyrinth\network_protocol.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\20_labyrinth\network_protocol.h"
+					RelativePath=".\labyrinth\network_protocol.h"
 					>
 				</File>
 				<File
-					RelativePath=".\20_labyrinth\network_server.cpp"
+					RelativePath=".\labyrinth\network_server.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\20_labyrinth\steel_nx.h"
+					RelativePath=".\labyrinth\steel_nx.h"
 					>
 				</File>
 				<File
-					RelativePath=".\20_labyrinth\visibility_check.cpp"
+					RelativePath=".\labyrinth\visibility_check.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\20_labyrinth\visibility_check.h"
+					RelativePath=".\labyrinth\visibility_check.h"
 					>
 				</File>
-				<Filter
-					Name="data"
-					>
-					<File
-						RelativePath="..\data\20_labyrinth\down.scene"
-						>
-					</File>
-					<File
-						RelativePath="..\data\20_labyrinth\floor.scene"
-						>
-					</File>
-					<File
-						RelativePath="..\data\20_labyrinth\lightEnd.conf"
-						>
-					</File>
-					<File
-						RelativePath="..\data\20_labyrinth\lightSimple.conf"
-						>
-					</File>
-					<File
-						RelativePath="..\data\20_labyrinth\lightStart.conf"
-						>
-					</File>
-					<File
-						RelativePath="..\data\20_labyrinth\main.scene"
-						>
-					</File>
-					<File
-						RelativePath="..\data\20_labyrinth\ps.scene"
-						>
-					</File>
-					<File
-						RelativePath="..\data\20_labyrinth\right.scene"
-						>
-					</File>
-					<File
-						RelativePath="..\data\20_labyrinth\sun.conf"
-						>
-					</File>
-					<File
-						RelativePath="..\data\20_labyrinth\sun_ambient.conf"
-						>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
-				Name="19_ps"
+				Name="physic"
 				>
 				<File
-					RelativePath=".\19_ps\19_game.cpp"
+					RelativePath=".\physic\error_stream.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\19_ps\19_game.h"
-					>
-				</File>
-				<File
-					RelativePath=".\19_ps\particle_calculator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\19_ps\particle_calculator.h"
+					RelativePath=".\physic\error_stream.h"
 					>
 				</File>
 			</Filter>
@@ -431,10 +340,6 @@
 			>
 			<File
 				RelativePath="..\conf\audio.conf"
-				>
-			</File>
-			<File
-				RelativePath="..\conf\demo.conf"
 				>
 			</File>
 			<File
@@ -494,14 +399,46 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="room"
+				Name="labyrinth"
 				>
 				<File
-					RelativePath="..\data\room\room.scene"
+					RelativePath="..\data\20_labyrinth\down.scene"
 					>
 				</File>
 				<File
-					RelativePath="..\data\room\wall.scene"
+					RelativePath="..\data\20_labyrinth\floor.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\lightEnd.conf"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\lightSimple.conf"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\lightStart.conf"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\main.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\ps.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\right.scene"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\sun.conf"
+					>
+				</File>
+				<File
+					RelativePath="..\data\20_labyrinth\sun_ambient.conf"
 					>
 				</File>
 			</Filter>
@@ -509,14 +446,6 @@
 		<Filter
 			Name="objects"
 			>
-			<File
-				RelativePath="..\sources\objects\sphere.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\sources\objects\sphere.h"
-				>
-			</File>
 			<File
 				RelativePath=".\objects\tag.cpp"
 				>

@@ -14,7 +14,6 @@
 #include "game_factory.h"
 #include "game_free_scene.h"
 #include "19_ps/19_game.h"
-#include "20_labyrinth/20_labyrinth.h"
 #include "23_ageia_tech/23_ageia_tech.h"
 
 
@@ -22,7 +21,6 @@ Game* GameFactory::createGame(IN const std::string& className) const
 {
 	if (className == "demo")	    return new GameDemo;
 	if (className == "ps")			return new GamePS;
-	if (className == "labyrinth")	return new GameLabyrinth;
 	if (className == "ageia")		return new GameAgeiatech;
 
 	return NULL;

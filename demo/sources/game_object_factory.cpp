@@ -15,14 +15,12 @@
 #include "objects/sphere.h"
 #include "objects/tag.h"
 #include "18_weapon/kar98k.h"
-#include "20_labyrinth/character.h"
 #include "23_ageia_tech/ageia_ps.h"
 
 GameObject* DemoGameObjectFactory::createGameObject(IN const std::string& className) const
 {
 	if (className == "sphere")	return new Sphere;
 	if (className == "kar98k")	return new Kar98k;
-	if (className == "character")	return new Character;
 	if (className == "tag")	return new Tag;
 
 	return GameObjectFactory::createGameObject(className);
