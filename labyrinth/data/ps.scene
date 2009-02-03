@@ -22,7 +22,7 @@
 			blend = 1
 			diffuse_map =
 			{ 
-				image = '/19_ps/wsmoke'
+				image = '/ps/wsmoke'
 				k = 1
 			}
 		}

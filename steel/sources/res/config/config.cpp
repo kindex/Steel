@@ -98,8 +98,14 @@ std::string ConfigStruct::findKey(const Config* value) const
 Config* Config::find(const std::string& path)
 {
 	Config* result = findInThis(path);
-	if (result == NULL) result = findInTemplate(path);
-	if (result == NULL) result = findInParent(path);
+	if (result == NULL)
+	{
+		result = findInTemplate(path);
+	}
+	if (result == NULL)
+	{
+		result = findInParent(path);
+	}
 	return result;
 }
 

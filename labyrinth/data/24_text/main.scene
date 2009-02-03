@@ -1,9 +1,0 @@
-# Main scene 
-{
-class = 'combiner'
-graph = 
-{
-class = 'text'
-text = 'Steel Engine'
-}
-} // scene

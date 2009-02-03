@@ -1,4 +1,4 @@
-//
+#
 {
 class = 'combiner'
 enabled=1
@@ -15,22 +15,22 @@ graph =
 
 			diffuse_map =
 			{ 
-				image = '/20_labyrinth/Wall_Right/sopanel25a_large'
+				image = '/Wall_Right/sopanel25a_large'
 			}
 
 			normal_map = 
 			{
-				image = '/20_labyrinth/Wall_Right/sopanel25a_large_local'
+				image = '/Wall_Right/sopanel25a_large_local'
 			}
 			specular_map = 
 			{
-				image = '/20_labyrinth/Wall_Right/sopanel25_s'
+				image = '/Wall_Right/sopanel25_s'
 				power = 20
 				k = 14
 			}
 			emission_map = 
 			{
-				image = '/20_labyrinth/Wall_Right/sopanel25neolight_add'
+				image = '/Wall_Right/sopanel25neolight_add'
 				k = 1.2
 			}
 

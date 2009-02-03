@@ -110,7 +110,12 @@ bool GameLabyrinth::init(Config& _conf, Input& _input)
 	
 // network
     std::string net_role_str = conf->gets("net.role", "server");
-    loadScene(conf->find("scene"));
+
+    if (!loadScene(conf->find("scene")))
+	{
+		return false;
+	}
+
 	if (net_role_str == "server")
     {
         if (!serverInit())

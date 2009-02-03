@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
 	// ******************** RES ************************
 	addDataSearchDirectories("../data/");
-	addDataSearchDirectories("../../../steel.res/demo/data/"); // is needed only in developer mode
+	addDataSearchDirectories("../../../steel.res/labyrinth/data/"); // is needed only in developer mode
 	registerResources();
 
 	if (!test())

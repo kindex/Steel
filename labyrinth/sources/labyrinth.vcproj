@@ -18,7 +18,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="..\bin"
-			IntermediateDirectory="..\..\temp\$(SolutionName).VS8.$(ConfigurationName)"
+			IntermediateDirectory="..\..\temp\$(SolutionName).VS9.$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="1"
@@ -77,8 +77,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../../steel.res/sdk/steel_lib/steel.VS8.lib_$(ConfigurationName).lib ../../../steel.res/sdk/libs/openal/openal32.lib ../../../steel.res/sdk/libs/openal/eaxguid.lib ../../../steel.res/sdk/libs/openal/eax.lib ../../../steel.res/sdk/libs/ogg/ogg.lib ../../../steel.res/sdk/libs/ogg/vorbisfile.lib ../../../steel.res/sdk/libs/PhysX/NxCharacter.lib ../../../steel.res/sdk/libs/PhysX/NxCooking.lib ../../../steel.res/sdk/libs/PhysX/PhysXLoader.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB ws2_32.lib WinMM.lib"
-				OutputFile="..\bin/$(SolutionName).VS8.$(ConfigurationName).exe"
+				AdditionalDependencies="../../../steel.res/sdk/steel_lib/steel.VS9.lib_$(ConfigurationName).lib ../../../steel.res/sdk/libs/openal/openal32.lib ../../../steel.res/sdk/libs/openal/eaxguid.lib ../../../steel.res/sdk/libs/openal/eax.lib ../../../steel.res/sdk/libs/ogg/ogg.lib ../../../steel.res/sdk/libs/ogg/vorbisfile.lib ../../../steel.res/sdk/libs/PhysX/NxCharacter.lib ../../../steel.res/sdk/libs/PhysX/NxCooking.lib ../../../steel.res/sdk/libs/PhysX/PhysXLoader.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB ws2_32.lib WinMM.lib"
+				OutputFile="..\bin/$(SolutionName).VS9.$(ConfigurationName).exe"
 				Version="1.1.0"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -115,12 +115,13 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\bin"
-			IntermediateDirectory="..\..\temp\$(SolutionName).VS8.$(ConfigurationName)"
+			IntermediateDirectory="..\..\temp\$(SolutionName).VS9.$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
+			BuildLogFile="$(IntDir)\BuildLog$(ProjectName).htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -152,7 +153,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				PrecompiledHeaderFile="$(IntDir)\steel.pch"
+				PrecompiledHeaderFile="$(IntDir)\steel_$(ProjectName).pch"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
@@ -170,9 +171,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../../steel.res/sdk/steel_lib/steel.VS8.lib_$(ConfigurationName).lib ../../../steel.res/sdk/steel_lib/libs.VS8.lib_$(ConfigurationName).lib ../../../steel.res/sdk/libs/openal/openal32.lib ../../../steel.res/sdk/libs/openal/eaxguid.lib ../../../steel.res/sdk/libs/openal/eax.lib ../../../steel.res/sdk/libs/ogg/ogg.lib ../../../steel.res/sdk/libs/ogg/vorbisfile.lib ../../../steel.res/sdk/libs/PhysX/NxCharacter.lib ../../../steel.res/sdk/libs/PhysX/NxCooking.lib ../../../steel.res/sdk/libs/PhysX/PhysXLoader.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB ws2_32.lib WinMM.lib"
+				AdditionalDependencies="../../../steel.res/sdk/steel_lib/steel.VS9.lib_$(ConfigurationName).lib ../../../steel.res/sdk/steel_lib/libs.VS9.lib_$(ConfigurationName).lib ../../../steel.res/sdk/libs/openal/openal32.lib ../../../steel.res/sdk/libs/openal/eaxguid.lib ../../../steel.res/sdk/libs/openal/eax.lib ../../../steel.res/sdk/libs/ogg/ogg.lib ../../../steel.res/sdk/libs/ogg/vorbisfile.lib ../../../steel.res/sdk/libs/PhysX/NxCharacter.lib ../../../steel.res/sdk/libs/PhysX/NxCooking.lib ../../../steel.res/sdk/libs/PhysX/PhysXLoader.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib user32.lib GDI32.LIB Kernel32.LIB ws2_32.lib WinMM.lib"
 				ShowProgress="0"
-				OutputFile="..\bin/$(SolutionName).VS8.$(ConfigurationName).exe"
+				OutputFile="..\bin/$(SolutionName).VS9.$(ConfigurationName).exe"
 				Version="1.1.0"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -398,50 +399,6 @@
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="labyrinth"
-				>
-				<File
-					RelativePath="..\data\20_labyrinth\down.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\floor.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\lightEnd.conf"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\lightSimple.conf"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\lightStart.conf"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\main.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\ps.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\right.scene"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\sun.conf"
-					>
-				</File>
-				<File
-					RelativePath="..\data\20_labyrinth\sun_ambient.conf"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="objects"
@@ -455,6 +412,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\ClassDiagram1.cd"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
