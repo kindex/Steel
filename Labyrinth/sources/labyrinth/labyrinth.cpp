@@ -1,7 +1,7 @@
 /*id*********************************************************
 	Unit: Labyrinth Game
 	Part of: DiVision intro
-	(C) DiVision, 2007-2008
+	(C) DiVision, 2007-2009
 	Authors:
 		* KindeX [Andrey Ivanov, kindexz@gmail.com, http://wiki.kindex.lv]
 	License:
@@ -591,6 +591,11 @@ void GameLabyrinth::handleEventKeyDown(const std::string& key)
     {
         processChatKey(key);
     }
+
+	if (key == "j" && active_character != NULL)
+	{
+		active_character->jump();
+	}
 
     else if (key == "f7")
     {

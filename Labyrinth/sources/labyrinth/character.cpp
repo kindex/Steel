@@ -69,6 +69,28 @@ bool Character::updateInformation(IN OUT Engine& engine, IN const InterfaceId id
     return false;
 }
 
+void Character::jump()
+{
+		//if (input->isPressed("j")){
+		//	if(jumpinprogress != true)
+		//	{
+		//		// check if character collide with a wall
+		//		//if(physic_object->isDynamic() || 
+		//		//(a->getActor()->isDynamic() || b->getActor()->isDynamic())        && NxScene::getGroupCollisionFlag(a->getGroup(), b->getGroup())        && (!(NxScene::getShapePairFlags(a,b) & NX_IGNORE_PAIR))
+
+		//		jump = true;
+		//		//jumpinprogress = true;
+		//	}
+		//}
+		//else {
+		//	jump = false;
+		//	jumpinprogress = false;
+		//}
+
+	NxVec3 vecJump(0, 0, 20);
+	physic_object->addForce(vecJump);
+}
+
 void Character::process(const ProcessInfo& info)
 {
 	static bool jump = false;
@@ -85,21 +107,7 @@ void Character::process(const ProcessInfo& info)
         if (input->isPressed("s")) dir += v3(-1,  0, 0);
         if (input->isPressed("a")) dir += v3( 0, +1, 0);
         if (input->isPressed("d")) dir += v3( 0, -1, 0);
-		if (input->isPressed("j")){
-			if(jumpinprogress != true){
-				// check if character collide with a wall
-				//if(physic_object->isDynamic() || 
-				//(a->getActor()->isDynamic() || b->getActor()->isDynamic())        && NxScene::getGroupCollisionFlag(a->getGroup(), b->getGroup())        && (!(NxScene::getShapePairFlags(a,b) & NX_IGNORE_PAIR))
-
-				jump = true;
-				//jumpinprogress = true;
-			}
-		}
-		else {
-			jump = false;
-			jumpinprogress = false;
-		}
-        if ((dir.getSquaredLength() != 0 && physic_object != NULL) || jump)
+        if (dir.getSquaredLength() != 0 && physic_object != NULL)
         {
             v3 direction2 = direction;
             direction2.z = 0;
@@ -113,12 +121,6 @@ void Character::process(const ProcessInfo& info)
 
             NxVec3 old_vec = physic_object->getLinearVelocity();
             physic_object->setLinearVelocity(old_vec + gForceStrength*tonx(forceDirection));
-			if(jump && !jumpinprogress)
-			{
-				jumpinprogress = true;
-				NxVec3 vecJump(0,0,20);
-				physic_object->addForce(vecJump);
-			}
             state = MOVING;
         }
         else

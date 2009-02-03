@@ -56,6 +56,7 @@ public:
     void setAngularMomentum(const v3&);
     void setDirection(const v3&);
     void setInput(Input*);
+	void jump();
 
     enum Owner
     {
