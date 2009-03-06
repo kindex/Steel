@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using moora_client.Game;
 
 namespace moora_client
 {
@@ -19,26 +20,14 @@ namespace moora_client
 
         private Random rnd = new Random((int)DateTime.Now.Ticks);
         private Pen myPen = new Pen(Color.Red);
+        World world;
 
         public MainForm()
         {
+            world = new World();
+
             InitializeComponent();
         }
-
-        //private void InitializeComponent()
-        //{
-        //    this.SuspendLayout();
-        //    // 
-        //    // MainForm
-        //    // 
-        //    this.ClientSize = new System.Drawing.Size(292, 273);
-        //    this.Name = "MainForm";
-        //    this.Text = "Moora";
-        //    this.Load += new System.EventHandler(this.MainForm_Load);
-        //    this.ResumeLayout(false);
-
-        //}
-
 
         private void InitializeComponent()
         {
@@ -57,6 +46,7 @@ namespace moora_client
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
+            this.splitContainer1.Panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.splitContainer1_Panel1_PreviewKeyDown);
             this.splitContainer1.Panel1.Resize += new System.EventHandler(this.splitContainer1_Panel1_Resize);
             // 
             // splitContainer1.Panel2
@@ -119,28 +109,27 @@ namespace moora_client
                 System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
             Graphics xGraph;
-            int k;
-            int r;     // radius of circle
-            int x, y;  // center coordinates of circle
 
             xGraph = Graphics.FromImage(DrawArea);
+            world.Draw(xGraph);
 
-            // Create solid brush.
-            SolidBrush Brush = new SolidBrush(Color.Red);
-            for (k = 1; k < 40; k++)
-            {
-                // radius for circle, max 1/2 the width of the form
-                r = rnd.Next(0, (this.Width / 2));
-                x = rnd.Next(0, this.Width);
-                y = rnd.Next(0, this.Height);
+            //// Create solid brush.
+            //SolidBrush Brush = new SolidBrush(Color.Red);
+            //for (int k = 1; k < 40; k++)
+            //{
+            //    // radius for circle, max 1/2 the width of the form
+            //    int r = rnd.Next(0, (this.Width / 2));
+            //    int x = rnd.Next(0, this.Width);
+            //    int y = rnd.Next(0, this.Height);
 
-                Brush.Color = Color.FromArgb(
-                  (rnd.Next(0, 255)),
-                  (rnd.Next(0, 255)),
-                  (rnd.Next(0, 255)));
-                // convert centerX, centerY, radius to bounding rectangle
-                xGraph.FillEllipse(Brush, x - r, y - r, r, r);
-            }
+            //    Brush.Color = Color.FromArgb(
+            //      (rnd.Next(0, 255)),
+            //      (rnd.Next(0, 255)),
+            //      (rnd.Next(0, 255)));
+            //    // convert centerX, centerY, radius to bounding rectangle
+            //    xGraph.FillEllipse(Brush, x - r, y - r, r, r);
+            //}
+
             xGraph.Dispose();
 
             this.Invalidate();
@@ -171,6 +160,14 @@ namespace moora_client
         private void button1_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void splitContainer1_Panel1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
         }
     }
 }
