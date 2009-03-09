@@ -26,14 +26,14 @@ namespace moora_client.Game
             graph.FillEllipse(Brush, (int)(World.x_size * position.X) - r/2, (int)(World.y_size * position.Y) - r/2, r, r);
 
             Pen pen = new Pen(Color.Green);
-            Point a = new Point(CellX*World.x_size, CellY*World.x_size);
-            Point b = new Point((CellX + 1) * World.x_size, CellY * World.x_size);
-            Point c = new Point((CellX + 1) * World.x_size, (CellY+1)* World.x_size);
-            Point d = new Point((CellX + 0) * World.x_size, (CellY+1) * World.x_size);
-            graph.DrawLine(pen, a, b);
-            graph.DrawLine(pen, b, c);
-            graph.DrawLine(pen, c, d);
-            graph.DrawLine(pen, d, a);
+            //Point a = new Point(CellX*World.x_size, CellY*World.x_size);
+            //Point b = new Point((CellX + 1) * World.x_size, CellY * World.x_size);
+            //Point c = new Point((CellX + 1) * World.x_size, (CellY+1)* World.x_size);
+            //Point d = new Point((CellX + 0) * World.x_size, (CellY+1) * World.x_size);
+            //graph.DrawLine(pen, a, b);
+            //graph.DrawLine(pen, b, c);
+            //graph.DrawLine(pen, c, d);
+            //graph.DrawLine(pen, d, a);
 
             Vector2 prev = position;
             foreach (Vector2 p in path)

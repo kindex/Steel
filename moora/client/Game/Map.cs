@@ -21,10 +21,9 @@ namespace moora_client.Game
         Cell[,] _map;
         Terrain terrain;
 
-        public Map(int x, int y, Terrain terrain)
+        public Map(int x, int y, Terrain terrain, Random rnd)
         {
             this.terrain = terrain;
-            Random rnd = new Random();
 
             _map = new Cell[x, y];
             for (int i = 0; i < x; i++)

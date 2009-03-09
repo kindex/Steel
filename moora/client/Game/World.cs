@@ -17,9 +17,25 @@ namespace moora_client.Game
 
         public World()
         {
-            terrain = new Terrain("../../Resources/terrain");
-            map = new Map(21, 18, terrain);
-            character = new Character(7, 5, map);
+            Random rnd = new Random();
+            List<string> dirs = new List<string>();
+            dirs.Add("../../Resources/terrain");
+            dirs.Add("Resources/terrain");
+
+            terrain = new Terrain(dirs);
+            map = new Map(21, 18, terrain, rnd);
+
+            int char_x;
+            int char_y;
+
+            do
+            {
+                char_x = rnd.Next(0, map.X);
+                char_y = rnd.Next(0, map.Y);
+            }
+            while (map.getTerrain(char_x, char_y) != TerrainType.Sand);
+
+            character = new Character(char_x, char_y, map);
         }
 
         public void Draw(Graphics graph)

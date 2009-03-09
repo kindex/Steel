@@ -24,11 +24,11 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.character_y_frac = new System.Windows.Forms.Label();
+            this.character_x_frac = new System.Windows.Forms.Label();
             this.character_y = new System.Windows.Forms.Label();
             this.character_x = new System.Windows.Forms.Label();
             this.CloseButton = new System.Windows.Forms.Button();
-            this.character_x_frac = new System.Windows.Forms.Label();
-            this.character_y_frac = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -45,6 +45,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(103, 573);
             this.panel1.TabIndex = 0;
+            // 
+            // character_y_frac
+            // 
+            this.character_y_frac.AutoSize = true;
+            this.character_y_frac.Location = new System.Drawing.Point(65, 35);
+            this.character_y_frac.Name = "character_y_frac";
+            this.character_y_frac.Size = new System.Drawing.Size(35, 13);
+            this.character_y_frac.TabIndex = 4;
+            this.character_y_frac.Text = "label1";
+            // 
+            // character_x_frac
+            // 
+            this.character_x_frac.AutoSize = true;
+            this.character_x_frac.Location = new System.Drawing.Point(65, 9);
+            this.character_x_frac.Name = "character_x_frac";
+            this.character_x_frac.Size = new System.Drawing.Size(35, 13);
+            this.character_x_frac.TabIndex = 3;
+            this.character_x_frac.Text = "label1";
             // 
             // character_y
             // 
@@ -78,24 +96,6 @@
             this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
             this.CloseButton.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CloseButton_KeyPress);
             // 
-            // character_x_frac
-            // 
-            this.character_x_frac.AutoSize = true;
-            this.character_x_frac.Location = new System.Drawing.Point(65, 9);
-            this.character_x_frac.Name = "character_x_frac";
-            this.character_x_frac.Size = new System.Drawing.Size(35, 13);
-            this.character_x_frac.TabIndex = 3;
-            this.character_x_frac.Text = "label1";
-            // 
-            // character_y_frac
-            // 
-            this.character_y_frac.AutoSize = true;
-            this.character_y_frac.Location = new System.Drawing.Point(65, 35);
-            this.character_y_frac.Name = "character_y_frac";
-            this.character_y_frac.Size = new System.Drawing.Size(35, 13);
-            this.character_y_frac.TabIndex = 4;
-            this.character_y_frac.Text = "label1";
-            // 
             // timer1
             // 
             this.timer1.Interval = 30;
@@ -110,7 +110,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Moora Client";
+            this.Text = "Moora Client (C) DiVision 2009";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
             this.Closed += new System.EventHandler(this.Form1_Closed);

@@ -43,13 +43,22 @@ namespace moora_client.Game
 
         List<TerrainImage> terrain_images = new List<TerrainImage>();
 
-        public Terrain(string path)
+        public Terrain(List<string> directories)
         {
-            DirectoryInfo di = new DirectoryInfo(path);
-            FileInfo[] rgFiles = di.GetFiles("*.png");
-            foreach (FileInfo fi in rgFiles)
+            foreach (string dir in directories)
             {
-                terrain_images.Add(new TerrainImage(path, fi.Name));
+                try
+                {
+                    DirectoryInfo di = new DirectoryInfo(dir);
+                    FileInfo[] rgFiles = di.GetFiles("*.png");
+                    foreach (FileInfo fi in rgFiles)
+                    {
+                        terrain_images.Add(new TerrainImage(dir, fi.Name));
+                    }
+                }
+                catch (System.IO.DirectoryNotFoundException)
+                {
+                }
             }
         }
 
