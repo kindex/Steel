@@ -8,16 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using moora_client.Game;
+using System.Drawing.Drawing2D;
 
 namespace moora_client
 {
     public partial class MainForm : Form
     {
-        private Bitmap DrawArea;  // make a persistent drawing area
-
-        // Required designer variable
-        //private System.ComponentModel.Container components = null;
-
         private Random rnd = new Random((int)DateTime.Now.Ticks);
         private Pen myPen = new Pen(Color.Red);
         World world;
@@ -29,109 +25,13 @@ namespace moora_client
             InitializeComponent();
         }
 
-        private void InitializeComponent()
-        {
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.CloseButton = new System.Windows.Forms.Button();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
-            this.splitContainer1.Panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.splitContainer1_Panel1_PreviewKeyDown);
-            this.splitContainer1.Panel1.Resize += new System.EventHandler(this.splitContainer1_Panel1_Resize);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.CloseButton);
-            this.splitContainer1.Size = new System.Drawing.Size(792, 573);
-            this.splitContainer1.SplitterDistance = 690;
-            this.splitContainer1.TabIndex = 0;
-            // 
-            // CloseButton
-            // 
-            this.CloseButton.Location = new System.Drawing.Point(11, 12);
-            this.CloseButton.Name = "CloseButton";
-            this.CloseButton.Size = new System.Drawing.Size(75, 23);
-            this.CloseButton.TabIndex = 0;
-            this.CloseButton.Text = "Close";
-            this.CloseButton.UseVisualStyleBackColor = true;
-            this.CloseButton.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // MainForm
-            // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(792, 573);
-            this.Controls.Add(this.splitContainer1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.Name = "MainForm";
-            this.Text = "Moora Client";
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
-            this.Closed += new System.EventHandler(this.Form1_Closed);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainForm_KeyPress);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.ResumeLayout(false);
-            this.ResumeLayout(false);
-
-        }
-
         // free up resources on program exit
         private void Form1_Closed(object sender, System.EventArgs e)
         {
-            DrawArea.Dispose();
-        }
-
-        // paint event
-        private void Form1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-        {
-            Graphics xGraph;
-
-            xGraph = e.Graphics;
-            xGraph.DrawImage(DrawArea, 0, 0, DrawArea.Width, DrawArea.Height);
-            xGraph.Dispose();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            DrawArea = new Bitmap(
-                this.splitContainer1.Panel1.Width,
-                this.splitContainer1.Panel1.Height,
-                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-
-            Graphics xGraph;
-
-            xGraph = Graphics.FromImage(DrawArea);
-            world.Draw(xGraph);
-
-            //// Create solid brush.
-            //SolidBrush Brush = new SolidBrush(Color.Red);
-            //for (int k = 1; k < 40; k++)
-            //{
-            //    // radius for circle, max 1/2 the width of the form
-            //    int r = rnd.Next(0, (this.Width / 2));
-            //    int x = rnd.Next(0, this.Width);
-            //    int y = rnd.Next(0, this.Height);
-
-            //    Brush.Color = Color.FromArgb(
-            //      (rnd.Next(0, 255)),
-            //      (rnd.Next(0, 255)),
-            //      (rnd.Next(0, 255)));
-            //    // convert centerX, centerY, radius to bounding rectangle
-            //    xGraph.FillEllipse(Brush, x - r, y - r, r, r);
-            //}
-
-            xGraph.Dispose();
-
             this.Invalidate();
         }
 
@@ -143,31 +43,42 @@ namespace moora_client
             }
         }
 
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        private void splitContainer1_Panel1_Click(object sender, EventArgs e)
         {
-            Graphics xGraph;
-
-            xGraph = e.Graphics;
-            xGraph.DrawImage(DrawArea, 0, 0, DrawArea.Width, DrawArea.Height);
-            xGraph.Dispose();
+            System.Windows.Forms.MouseEventArgs args = (System.Windows.Forms.MouseEventArgs)e;
+            world.Click(args.X, args.Y);
+            this.Invalidate(true);
         }
 
-        private void splitContainer1_Panel1_Resize(object sender, EventArgs e)
+        private void RedrawButton_Click(object sender, EventArgs e)
         {
-            MainForm_Load(sender, e);
+            this.Invalidate(true);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void MainForm_Paint(object sender, PaintEventArgs e)
+        {
+            world.Draw(e.Graphics);
+            float x = world.character.X;
+            float y = world.character.Y;
+            character_x.Text = ((int)x).ToString();
+            character_y.Text = ((int)y).ToString();
+            character_x_frac.Text = "." + ((int)(100.0f * (x - (int)x))).ToString();
+            character_y_frac.Text = "." + ((int)(100.0f * (y - (int)y))).ToString();
+        }
+
+        private void CloseButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void splitContainer1_Panel1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void CloseButton_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
-            {
-                Close();
-            }
+            MainForm_KeyPress(sender, e);
+        }
+
+        private void character_y_frac_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

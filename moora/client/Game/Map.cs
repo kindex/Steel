@@ -8,14 +8,6 @@ namespace moora_client.Game
 {
     class Map
     {
-        public enum TerrainType
-        {
-            None,
-            Water,
-            Sand,
-            Any
-        }
-
         public class Cell
         {
             public TerrainType terrain;

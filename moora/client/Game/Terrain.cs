@@ -7,12 +7,20 @@ using System.Drawing;
 
 namespace moora_client.Game
 {
+    public enum TerrainType
+    {
+        None,
+        Water,
+        Sand,
+        Any
+    }
+
     class Terrain
     {
         public class TerrainImage
         {
             public string filename;
-            public Map.TerrainType[] mask = new Map.TerrainType[9];
+            public TerrainType[] mask = new TerrainType[9];
             public Bitmap image;
 
             public TerrainImage(string path, string filename)
@@ -25,9 +33,9 @@ namespace moora_client.Game
                     char c = filename[i];
                     switch (c)
                     {
-                        case 's': mask[i] = Map.TerrainType.Sand; break;
-                        case 'w': mask[i] = Map.TerrainType.Water; break;
-                        case '_': mask[i] = Map.TerrainType.Any; break;
+                        case 's': mask[i] = TerrainType.Sand; break;
+                        case 'w': mask[i] = TerrainType.Water; break;
+                        case '_': mask[i] = TerrainType.Any; break;
                     }
                 }
             }
@@ -59,7 +67,7 @@ namespace moora_client.Game
 
         public Bitmap GetImage(Map map, int x, int y)
         {
-            Map.TerrainType[] find = new Map.TerrainType[9];
+            TerrainType[] find = new TerrainType[9];
             for (int i = 0; i < 9; i++)
             {
                 find[i] = map.getTerrain(x + directions[i].X, y + directions[i].Y);
@@ -70,7 +78,7 @@ namespace moora_client.Game
                 bool fit = true;
                 for (int i = 0; i < 9; i++)
                 {
-                    fit = fit && (t.mask[i] == Map.TerrainType.Any || t.mask[i] == find[i]);
+                    fit = fit && (t.mask[i] == TerrainType.Any || t.mask[i] == find[i]);
                 }
 
                 if (fit)

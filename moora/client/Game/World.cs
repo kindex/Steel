@@ -12,15 +12,15 @@ namespace moora_client.Game
         public Terrain terrain;
         public Map map;
         public Character character;
-        const int x_size = 32;
-        const int y_size = 32;
+        public static readonly int x_size = 32;
+        public static readonly int y_size = 32;
 
         public World()
         {
             terrain = new Terrain("../../Resources/terrain");
             map = new Map(21, 18, terrain);
+            character = new Character(5, 5);
         }
-
 
         public void Draw(Graphics graph)
         {
@@ -35,7 +35,12 @@ namespace moora_client.Game
                     }
                 }
             }
+            character.Draw(graph);
+        }
 
+        public void Click(int x, int y)
+        {
+            character.MoveTo((float)x / x_size, (float)y / y_size);
         }
     }
 }
