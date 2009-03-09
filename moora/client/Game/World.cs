@@ -19,7 +19,7 @@ namespace moora_client.Game
         {
             terrain = new Terrain("../../Resources/terrain");
             map = new Map(21, 18, terrain);
-            character = new Character(5, 5);
+            character = new Character(7, 5, map);
         }
 
         public void Draw(Graphics graph)

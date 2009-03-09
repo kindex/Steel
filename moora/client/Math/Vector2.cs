@@ -34,8 +34,15 @@ namespace moora_client.Game
 
         public Vector2 GetNormalized()
         {
-            float len = (float)(1.0 / Math.Sqrt(X * X + Y * Y));
-            return new Vector2(X*len, Y*len);
+            float len = (float)(Math.Sqrt(X * X + Y * Y));
+            if (len == 0)
+            {
+                return Zero;
+            }
+            else
+            {
+                return new Vector2(X / len, Y / len);
+            }
         }
 
         public float Length

@@ -24,7 +24,7 @@ namespace moora_client.Game
         public Map(int x, int y, Terrain terrain)
         {
             this.terrain = terrain;
-            Random rnd = new Random(2);
+            Random rnd = new Random();
 
             _map = new Cell[x, y];
             for (int i = 0; i < x; i++)
@@ -105,6 +105,7 @@ namespace moora_client.Game
                 }
             }
             while (changed);
+            ClearImageCache();
         }
 
         public Cell getCell(int x, int y)
