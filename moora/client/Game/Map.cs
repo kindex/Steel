@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace moora_client.Game
 {
@@ -26,10 +27,12 @@ namespace moora_client.Game
         }
 
         Cell[,] _map;
+        Terrain terrain;
 
-        public Map(int x, int y)
+        public Map(int x, int y, Terrain terrain)
         {
-            Random rnd = new Random(0);
+            this.terrain = terrain;
+            Random rnd = new Random(2);
 
             _map = new Cell[x, y];
             for (int i = 0; i < x; i++)
@@ -49,6 +52,7 @@ namespace moora_client.Game
             }
 
             bool changed;
+
             do
             {
                 changed = false;
@@ -85,6 +89,24 @@ namespace moora_client.Game
                          && getTerrain(i + 1, j - 1) != TerrainType.Water)
                         {
                             SetTerrain(i, j, getTerrain(i - 1, j + 1));
+                            changed = true;
+                        }
+                    }
+                }
+            }
+            while (changed);
+
+            do
+            {
+                changed = false;
+                ClearImageCache();
+                for (int i = 0; i < x && !changed; i++)
+                {
+                    for (int j = 0; j < y && !changed; j++)
+                    {
+                        if (GetImage(i, j) == null)
+                        {
+                            SetTerrain(i, j, TerrainType.Sand);
                             changed = true;
                         }
                     }
@@ -133,5 +155,27 @@ namespace moora_client.Game
 
         public int X { get {return _map.GetLength(0); } }
         public int Y { get { return _map.GetLength(1); } }
+
+        Dictionary<Point, Bitmap> image_cache = new Dictionary<Point, Bitmap>();
+
+        public void ClearImageCache()
+        {
+            image_cache.Clear();
+        }
+
+        public Bitmap GetImage(int x, int y)
+        {
+            Point key = new Point(x, y);
+            if (image_cache.ContainsKey(key))
+            {
+                return image_cache[key];
+            }
+
+            Bitmap result = terrain.GetImage(this, x, y);
+            image_cache[key] = result;
+
+            return result;
+        }
+
     }
 }

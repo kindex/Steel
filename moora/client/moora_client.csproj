@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Game\Character.cs" />
     <Compile Include="Game\Map.cs" />
+    <Compile Include="Game\Terrain.cs" />
     <Compile Include="Game\World.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
