@@ -22,12 +22,14 @@
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.character_y = new System.Windows.Forms.Label();
             this.character_x = new System.Windows.Forms.Label();
             this.CloseButton = new System.Windows.Forms.Button();
             this.character_x_frac = new System.Windows.Forms.Label();
             this.character_y_frac = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,7 +95,11 @@
             this.character_y_frac.Size = new System.Drawing.Size(35, 13);
             this.character_y_frac.TabIndex = 4;
             this.character_y_frac.Text = "label1";
-            this.character_y_frac.Click += new System.EventHandler(this.character_y_frac_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 30;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // MainForm
             // 
@@ -122,6 +128,7 @@
         private System.Windows.Forms.Label character_x;
         private System.Windows.Forms.Label character_y_frac;
         private System.Windows.Forms.Label character_x_frac;
+        private System.Windows.Forms.Timer timer1;
 
         #region Windows Form Designer generated code
 

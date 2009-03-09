@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 using moora_client.Game;
 using System.Drawing.Drawing2D;
+using System.Diagnostics;
 
 namespace moora_client
 {
@@ -17,12 +18,17 @@ namespace moora_client
         private Random rnd = new Random((int)DateTime.Now.Ticks);
         private Pen myPen = new Pen(Color.Red);
         World world;
+        double invFreq = 1.0 / (double)Stopwatch.Frequency;
+        long time;
 
         public MainForm()
         {
             world = new World();
 
             InitializeComponent();
+
+            time = Stopwatch.GetTimestamp();
+            timer1.Start();
         }
 
         // free up resources on program exit
@@ -62,8 +68,21 @@ namespace moora_client
             float y = world.character.Y;
             character_x.Text = ((int)x).ToString();
             character_y.Text = ((int)y).ToString();
-            character_x_frac.Text = "." + ((int)(100.0f * (x - (int)x))).ToString();
-            character_y_frac.Text = "." + ((int)(100.0f * (y - (int)y))).ToString();
+            int fx = ((int)(100.0f * (x - (int)x)));
+            int fy = ((int)(100.0f * (y - (int)y)));
+            string sfx = fx.ToString();
+            if (sfx.Length < 2)
+            {
+                sfx = "0" + sfx;
+            }
+            string sfy = fy.ToString();
+            if (sfy.Length < 2)
+            {
+                sfy = "0" + sfy;
+            }
+
+            character_x_frac.Text = "." + sfx;
+            character_y_frac.Text = "." + sfy;
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
@@ -76,9 +95,15 @@ namespace moora_client
             MainForm_KeyPress(sender, e);
         }
 
-        private void character_y_frac_Click(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
+            long current = Stopwatch.GetTimestamp();
+            long delta = current - time;
+            float deltaTime = (float)(delta * invFreq);
+            time = current;
 
+            world.Update(deltaTime);
+            this.Invalidate(true);
         }
     }
 }

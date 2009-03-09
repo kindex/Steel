@@ -42,5 +42,10 @@ namespace moora_client.Game
         {
             character.MoveTo((float)x / x_size, (float)y / y_size);
         }
+
+        public void Update(float deltaTime)
+        {
+            character.Update(deltaTime);
+        }
     }
 }
