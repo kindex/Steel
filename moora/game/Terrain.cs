@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using System.Drawing;
 
 namespace Game
 {
@@ -15,18 +14,30 @@ namespace Game
         Any
     }
 
+    public struct Point
+    {
+        public int X;
+        public int Y;
+
+        public Point(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+    }
+
     public class Terrain
     {
         public class TerrainImage
         {
             public string filename;
             public TerrainType[] mask = new TerrainType[9];
-            public Bitmap image;
+            public string image;
 
             public TerrainImage(string path, string filename)
             {
                 this.filename = filename;
-                this.image = new System.Drawing.Bitmap(Path.Combine(path, filename));
+                this.image = Path.Combine(path, filename);
 
                 for (int i = 0; i < 9; i++)
                 {
@@ -74,7 +85,7 @@ namespace Game
                              new Point(-1, 0)
                          };
 
-        public Bitmap GetImage(Map map, int x, int y)
+        public string GetImage(Map map, int x, int y)
         {
             TerrainType[] find = new TerrainType[9];
             for (int i = 0; i < 9; i++)

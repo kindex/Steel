@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
 
 namespace Game
 {
@@ -148,14 +147,14 @@ namespace Game
         public int X { get {return _map.GetLength(0); } }
         public int Y { get { return _map.GetLength(1); } }
 
-        Dictionary<Point, Bitmap> image_cache = new Dictionary<Point, Bitmap>();
+        Dictionary<Point, string> image_cache = new Dictionary<Point, string>();
 
         public void ClearImageCache()
         {
             image_cache.Clear();
         }
 
-        public Bitmap GetImage(int x, int y)
+        public string GetImage(int x, int y)
         {
             Point key = new Point(x, y);
             if (image_cache.ContainsKey(key))
@@ -163,7 +162,7 @@ namespace Game
                 return image_cache[key];
             }
 
-            Bitmap result = terrain.GetImage(this, x, y);
+            string result = terrain.GetImage(this, x, y);
             image_cache[key] = result;
 
             return result;

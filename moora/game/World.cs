@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
 using System.IO;
 
 namespace Game
@@ -36,22 +35,6 @@ namespace Game
             while (map.getTerrain(char_x, char_y) != TerrainType.Sand);
 
             character = new Character(char_x, char_y, map);
-        }
-
-        public void Draw(Graphics graph)
-        {
-            for (int x = 0; x < map.X; x++)
-            {
-                for (int y = 0; y < map.Y; y++)
-                {
-                    Bitmap image = map.GetImage(x, y);
-                    if (image != null)
-                    {
-                        graph.DrawImage(image, new Point(x*x_size, y*y_size));
-                    }
-                }
-            }
-            character.Draw(graph);
         }
 
         public void Click(int x, int y)

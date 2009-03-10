@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
 using Game.Math;
 
 namespace Game
 {
     public class Character
     {
+        public Vector2 Position { get { return position; } }
+        public List<Vector2> Path { get { return path; } }
+
         Vector2 position;
         Vector2 destination;
         List<Vector2> path = new List<Vector2>();
@@ -18,31 +20,6 @@ namespace Game
         {
             destination = position = new Vector2(x + 0.5f, y + 0.5f);
             this.map = map;
-        }
-
-        public void Draw(Graphics graph)
-        {
-            SolidBrush Brush = new SolidBrush(Color.Red);
-            int r = 16;
-            graph.FillEllipse(Brush, (int)(World.x_size * position.X) - r/2, (int)(World.y_size * position.Y) - r/2, r, r);
-
-            Pen pen = new Pen(Color.Green);
-            //Point a = new Point(CellX*World.x_size, CellY*World.x_size);
-            //Point b = new Point((CellX + 1) * World.x_size, CellY * World.x_size);
-            //Point c = new Point((CellX + 1) * World.x_size, (CellY+1)* World.x_size);
-            //Point d = new Point((CellX + 0) * World.x_size, (CellY+1) * World.x_size);
-            //graph.DrawLine(pen, a, b);
-            //graph.DrawLine(pen, b, c);
-            //graph.DrawLine(pen, c, d);
-            //graph.DrawLine(pen, d, a);
-
-            Vector2 prev = position;
-            foreach (Vector2 p in path)
-            {
-                graph.DrawLine(pen, new Point((int)(prev.X * World.x_size), (int)(prev.Y * World.x_size)),
-                    new Point((int)(p.X * World.x_size), (int)(p.Y * World.x_size)));
-                prev = p;
-            }
         }
 
         public float X { get { return position.X; } }
@@ -113,7 +90,6 @@ namespace Game
             int dx = System.Math.Abs(CellX - destx);
             int dy = System.Math.Abs(CellY - desty);
 
-//            if (dx == 0 && dy <= 1 || dx <= 1 && dy == 0)
             if (dx == 0 && dy == 0)
             {
                 destination = new Vector2(nx, ny);

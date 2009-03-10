@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using Game;
+using Game.Math;
 
 namespace moora_client
 {
@@ -61,9 +62,59 @@ namespace moora_client
             this.Invalidate(true);
         }
 
+        Dictionary<string, Bitmap> images = new Dictionary<string, Bitmap>();
+
+        Bitmap getImage(string name)
+        {
+            if (images.ContainsKey(name))
+            {
+                return images[name];
+            }
+            else
+            {
+                return images[name] = new Bitmap(name);
+            }
+        }
+
+        void Character_Draw(Character character, Graphics graph)
+        {
+            SolidBrush Brush = new SolidBrush(Color.Red);
+            int r = 16;
+            graph.FillEllipse(Brush, (int)(World.x_size * character.X) - r / 2, (int)(World.y_size * character.Y) - r / 2, r, r);
+
+            Pen pen = new Pen(Color.Green);
+
+            Vector2 prev = character.Position;
+            foreach (Vector2 p in character.Path)
+            {
+                graph.DrawLine(pen, new System.Drawing.Point((int)(prev.X * World.x_size), (int)(prev.Y * World.x_size)),
+                    new System.Drawing.Point((int)(p.X * World.x_size), (int)(p.Y * World.x_size)));
+                prev = p;
+            }
+        }
+
+        private void World_Draw(World world, Graphics graph)
+        {
+            for (int x = 0; x < world.map.X; x++)
+            {
+                for (int y = 0; y < world.map.Y; y++)
+                {
+                    string image = world.map.GetImage(x, y);
+                    if (image != "")
+                    {
+                        Bitmap bitmap = getImage(image);
+                        graph.DrawImage(bitmap, new System.Drawing.Point(x * World.x_size, y * World.y_size));
+                    }
+                }
+            }
+
+            Character_Draw(world.character, graph);
+        }
+
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
-            world.Draw(e.Graphics);
+            World_Draw(world, e.Graphics);
+
             float x = world.character.X;
             float y = world.character.Y;
             character_x.Text = ((int)x).ToString();

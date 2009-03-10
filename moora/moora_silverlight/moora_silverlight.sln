@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moora_silverlight", "moora_silverlight.csproj", "{6F0695E4-BA64-49C0-9642-1A0E47C8F800}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game_silverlight", "..\game\game_silverlight.csproj", "{36D43957-7D37-4622-8FD1-CD59C133A176}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F0695E4-BA64-49C0-9642-1A0E47C8F800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F0695E4-BA64-49C0-9642-1A0E47C8F800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F0695E4-BA64-49C0-9642-1A0E47C8F800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F0695E4-BA64-49C0-9642-1A0E47C8F800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36D43957-7D37-4622-8FD1-CD59C133A176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36D43957-7D37-4622-8FD1-CD59C133A176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36D43957-7D37-4622-8FD1-CD59C133A176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36D43957-7D37-4622-8FD1-CD59C133A176}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
