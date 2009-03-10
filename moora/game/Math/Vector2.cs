@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace moora_client.Game
+namespace Game.Math
 {
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public struct Vector2 : IEquatable<Vector2>
@@ -20,7 +20,7 @@ namespace moora_client.Game
 
         public void Normalize()
         {
-            float len = (float)(1.0 / Math.Sqrt(X * X + Y * Y));
+            float len = (float)(1.0 / System.Math.Sqrt(X * X + Y * Y));
             X *= len;
             Y *= len;
         }
@@ -34,7 +34,7 @@ namespace moora_client.Game
 
         public Vector2 GetNormalized()
         {
-            float len = (float)(Math.Sqrt(X * X + Y * Y));
+            float len = (float)(System.Math.Sqrt(X * X + Y * Y));
             if (len == 0)
             {
                 return Zero;
@@ -49,7 +49,7 @@ namespace moora_client.Game
         {
             get
             {
-                return (float)Math.Sqrt(X * X + Y * Y);
+                return (float)System.Math.Sqrt(X * X + Y * Y);
             }
         }
 

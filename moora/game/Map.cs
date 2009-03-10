@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace moora_client.Game
+namespace Game
 {
-    class Map
+    public class Map
     {
         public class Cell
         {

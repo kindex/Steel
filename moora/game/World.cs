@@ -5,9 +5,9 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 
-namespace moora_client.Game
+namespace Game
 {
-    class World
+    public class World
     {
         public Terrain terrain;
         public Map map;

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using Game.Math;
 
-namespace moora_client.Game
+namespace Game
 {
-    class Character
+    public class Character
     {
         Vector2 position;
         Vector2 destination;
@@ -109,8 +110,8 @@ namespace moora_client.Game
         {
             int destx = GetCellX(nx);
             int desty = GetCellX(ny);
-            int dx = Math.Abs(CellX - destx);
-            int dy = Math.Abs(CellY - desty);
+            int dx = System.Math.Abs(CellX - destx);
+            int dy = System.Math.Abs(CellY - desty);
 
 //            if (dx == 0 && dy <= 1 || dx <= 1 && dy == 0)
             if (dx == 0 && dy == 0)
@@ -161,7 +162,7 @@ namespace moora_client.Game
                                      && y + d.Y < map.Y
                                      && map.getTerrain(x + d.X, y + d.Y) == TerrainType.Sand)
                                     {
-                                        float speed = GetSpeed(map.getTerrain(x, y)) * (float)Math.Sqrt(d.X * d.X + d.Y * d.Y);
+                                        float speed = GetSpeed(map.getTerrain(x, y)) * (float)System.Math.Sqrt(d.X * d.X + d.Y * d.Y);
                                         if (w[x + d.X, y + d.Y] > w[x, y] + speed)
                                         {
                                             w[x + d.X, y + d.Y] = w[x, y] + speed;

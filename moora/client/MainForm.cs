@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
-using moora_client.Game;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
+using Game;
 
 namespace moora_client
 {

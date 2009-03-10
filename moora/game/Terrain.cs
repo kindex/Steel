@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 
-namespace moora_client.Game
+namespace Game
 {
     public enum TerrainType
     {
@@ -15,7 +15,7 @@ namespace moora_client.Game
         Any
     }
 
-    class Terrain
+    public class Terrain
     {
         public class TerrainImage
         {
