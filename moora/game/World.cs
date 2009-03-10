@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+#if SILVERLIGHT
+using System.Windows.Controls;
+using System.Windows.Media;
+#endif
 
 namespace Game
 {
@@ -18,9 +22,12 @@ namespace Game
         {
             Random rnd = new Random();
             List<string> dirs = new List<string>();
-            dirs.Add("../../Resources/terrain");
+#if SILVERLIGHT
+            dirs.Add("file://K:/Projects/steel/moora/Resources/terrain");
+#else
+            dirs.Add("../../../Resources/terrain");
             dirs.Add("Resources/terrain");
-
+#endif
             terrain = new Terrain(dirs);
             map = new Map(21, 18, terrain, rnd);
 
@@ -46,5 +53,54 @@ namespace Game
         {
             character.Update(deltaTime);
         }
+
+#if SILVERLIGHT
+        public void StartDraw(Canvas canvas)
+        {
+            canvas.Children.Clear();
+
+            for (int x = 0; x < map.X; x++)
+            {
+                for (int y = 0; y < map.Y; y++)
+                {
+                    string image = map.GetImage(x, y);
+                    Image img = new Image();
+                    img.Source = ImageLibrary.getImage(image);
+
+                    TranslateTransform t = new TranslateTransform();
+                    t.X = x * x_size;
+                    t.Y = y * y_size;
+
+                    img.RenderTransform = t;
+
+                    canvas.Children.Add(img);
+                }
+            }
+            character.StartDraw(canvas);
+        }
+
+        public void ReDraw()
+        {
+            character.ReDraw();
+        }
+
+#else
+        public void Draw(System.Drawing.Graphics graph)
+        {
+            for (int x = 0; x < map.X; x++)
+            {
+                for (int y = 0; y < map.Y; y++)
+                {
+                    string image = map.GetImage(x, y);
+                    System.Drawing.Bitmap bitmap = ImageLibrary.getImage(image);
+                    if (bitmap != null)
+                    {
+                        graph.DrawImage(bitmap, new System.Drawing.Point(x * x_size, y * y_size));
+                    }
+                }
+            }
+            character.Draw(graph);
+        }
+#endif
     }
 }

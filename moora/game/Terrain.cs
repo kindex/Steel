@@ -37,7 +37,8 @@ namespace Game
             public TerrainImage(string path, string filename)
             {
                 this.filename = filename;
-                this.image = Path.Combine(path, filename);
+                //this.image = Path.Combine(path, filename);
+                this.image = path + "/" + filename;
 
                 for (int i = 0; i < 9; i++)
                 {
@@ -70,6 +71,29 @@ namespace Game
                 catch (System.IO.DirectoryNotFoundException)
                 {
                 }
+                catch (System.MethodAccessException)
+                {
+                    terrain_images.Clear();
+                    terrain_images.Add(new TerrainImage(dir, "s________.png"));
+                    terrain_images.Add(new TerrainImage(dir, "w_s_s_www.png"));
+                    terrain_images.Add(new TerrainImage(dir, "w_s_www_s.png"));
+                    terrain_images.Add(new TerrainImage(dir, "w_s_wwwww.png"));
+                    terrain_images.Add(new TerrainImage(dir, "w_www_s_s.png"));
+                    terrain_images.Add(new TerrainImage(dir, "w_wwwww_s.png"));
+                    terrain_images.Add(new TerrainImage(dir, "wswwwwwww.png"));
+                    terrain_images.Add(new TerrainImage(dir, "www_s_s_w.png"));
+                    terrain_images.Add(new TerrainImage(dir, "www_s_www.png"));
+                    terrain_images.Add(new TerrainImage(dir, "wwwswwwww.png"));
+                    terrain_images.Add(new TerrainImage(dir, "wwwww_s_w.png"));
+                    terrain_images.Add(new TerrainImage(dir, "wwwwwswww.png"));
+                    terrain_images.Add(new TerrainImage(dir, "wwwwwwwsw.png"));
+                    terrain_images.Add(new TerrainImage(dir, "wwwwwwwww.png"));
+                }
+            }
+
+            if (terrain_images.Count == 0)
+            {
+                throw new Exception("No terrain images");
             }
         }
 

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Character.cs" />
+    <Compile Include="ImageLibrary.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

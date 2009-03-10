@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     Width="400" Height="300">
     <Grid x:Name="LayoutRoot" Background="White">
-        <TextBlock Text="Hello"></TextBlock>
-        <Canvas x:Name="MainForm"></Canvas>
+        <TextBlock Text="Moora silverlight"></TextBlock>
+        <Canvas x:Name="MainForm" MouseLeftButtonDown="MainForm_MouseLeftButtonDown">
+        </Canvas>
     </Grid>
 </UserControl>

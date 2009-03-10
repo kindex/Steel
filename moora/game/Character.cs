@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Game.Math;
+#if SILVERLIGHT
+using System.Windows.Controls;
+using System.Windows.Media;
+#endif
 
 namespace Game
 {
@@ -184,5 +188,57 @@ namespace Game
                 }
             }
         }
+
+#if SILVERLIGHT
+        System.Windows.Shapes.Polyline graph_character;
+        System.Windows.Shapes.Polyline graph_path;
+
+        public void StartDraw(Canvas canvas)
+        {
+            graph_path = new System.Windows.Shapes.Polyline();
+            graph_path.Stroke = new SolidColorBrush(Colors.Green);
+            graph_path.StrokeThickness = 1;
+            canvas.Children.Add(graph_path);
+
+            graph_character = new System.Windows.Shapes.Polyline();
+            graph_character.Stroke = new SolidColorBrush(Colors.Red);
+            graph_character.StrokeThickness = 10;
+            graph_character.Points.Add(new System.Windows.Point(X * World.x_size - 4, Y * World.y_size - 4));
+            graph_character.Points.Add(new System.Windows.Point(X * World.x_size + 4, Y * World.y_size + 4));
+            canvas.Children.Add(graph_character);
+        }
+
+        public void ReDraw()
+        {
+            graph_character.Points.Clear();
+            graph_character.Points.Add(new System.Windows.Point(X * World.x_size - 4, Y * World.y_size - 4));
+            graph_character.Points.Add(new System.Windows.Point(X * World.x_size + 4, Y * World.y_size + 4));
+
+            graph_path.Points.Clear();
+
+            graph_path.Points.Add(new System.Windows.Point(X * World.x_size, Y * World.y_size));
+            foreach (Vector2 p in path)
+            {
+                graph_path.Points.Add(new System.Windows.Point(p.X * World.x_size, p.Y * World.y_size));
+            }
+        }
+#else
+        public void Draw(System.Drawing.Graphics graph)
+        {
+            System.Drawing.SolidBrush Brush = new System.Drawing.SolidBrush(System.Drawing.Color.Red);
+            int r = 16;
+            graph.FillEllipse(Brush, (int)(World.x_size * position.X) - r/2, (int)(World.y_size * position.Y) - r/2, r, r);
+
+            System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.Green);
+
+            Vector2 prev = position;
+            foreach (Vector2 p in path)
+            {
+                graph.DrawLine(pen, new System.Drawing.Point((int)(prev.X * World.x_size), (int)(prev.Y * World.x_size)),
+                    new System.Drawing.Point((int)(p.X * World.x_size), (int)(p.Y * World.x_size)));
+                prev = p;
+            }
+        }
+#endif
     }
 }
