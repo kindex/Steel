@@ -10,7 +10,6 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using Game;
-using Game.Math;
 
 namespace moora_client
 {

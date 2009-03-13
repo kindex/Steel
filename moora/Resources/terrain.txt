@@ -1,0 +1,10 @@
+_ any
+s Sand
+w Water
+g Grass
+n Snow
+l Lava
+r Rock
+p Swamp
+r Rough
+t Subterrnian

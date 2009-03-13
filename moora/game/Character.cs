@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Game.Math;
 #if SILVERLIGHT
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -91,6 +90,15 @@ namespace Game
         {
             int destx = GetCellX(nx);
             int desty = GetCellX(ny);
+
+            if (destx < 0
+             || desty < 0
+             || destx >= map.X
+             || desty >= map.Y)
+            {
+                return;
+            }
+
             int dx = System.Math.Abs(CellX - destx);
             int dy = System.Math.Abs(CellY - desty);
 

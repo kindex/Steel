@@ -5,25 +5,16 @@ using System.Text;
 
 namespace Game
 {
-    public class Map
+    public class RandomMap : Map
     {
-        public class Cell
+        public RandomMap(int x, int y, Terrain terrain, Random rnd)
+            : base(terrain)
         {
-            public TerrainType terrain;
-
-            public Cell(TerrainType terrain)
-            {
-                this.terrain = terrain;
-            }
+            GenerateRandomMap(x, y, rnd);
         }
 
-        Cell[,] _map;
-        Terrain terrain;
-
-        public Map(int x, int y, Terrain terrain, Random rnd)
+        void GenerateRandomMap(int x, int y, Random rnd)
         {
-            this.terrain = terrain;
-
             _map = new Cell[x, y];
             for (int i = 0; i < x; i++)
             {
@@ -105,68 +96,5 @@ namespace Game
             while (changed);
             ClearImageCache();
         }
-
-        public Cell getCell(int x, int y)
-        {
-            return _map[x, y];
-        }
-
-        void SetTerrain(int x, int y, TerrainType terrain)
-        {
-            _map[x, y] = new Cell(terrain);
-        }
-
-        public TerrainType getTerrain(int x, int y)
-        {
-            if (x == -1)
-            {
-                return getTerrain(0, y);
-            }
-            else if (y == -1)
-            {
-                return getTerrain(x, 0);
-            }
-            else if (x == X)
-            {
-                return getTerrain(x - 1, y);
-            }
-            else if (y == Y)
-            {
-                return getTerrain(y, y - 1);
-            }
-            else if (x < 0 || x >= X || y < 0 || y >= Y)
-            {
-                return TerrainType.None;
-            }
-            else
-            {
-                return _map[x, y].terrain;
-            }
-        }
-
-        public int X { get {return _map.GetLength(0); } }
-        public int Y { get { return _map.GetLength(1); } }
-
-        Dictionary<Point, string> image_cache = new Dictionary<Point, string>();
-
-        public void ClearImageCache()
-        {
-            image_cache.Clear();
-        }
-
-        public string GetImage(int x, int y)
-        {
-            Point key = new Point(x, y);
-            if (image_cache.ContainsKey(key))
-            {
-                return image_cache[key];
-            }
-
-            string result = terrain.GetImage(this, x, y);
-            image_cache[key] = result;
-
-            return result;
-        }
-
     }
 }

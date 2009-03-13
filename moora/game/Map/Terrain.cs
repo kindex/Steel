@@ -11,6 +11,13 @@ namespace Game
         None,
         Water,
         Sand,
+        Grass,
+        Snow,
+        Lava,
+        Rock,
+        Swamp,
+        Rough,
+        Subterrnian,
         Any
     }
 
@@ -28,6 +35,30 @@ namespace Game
 
     public class Terrain
     {
+        //public static char TerrainToChar(TerrainType terrain)
+        //{
+        //    switch (terrain)
+        //    {
+        //    }
+        //}
+
+        public static TerrainType CharToTerrain(char c)
+        {
+            switch (c)
+            {
+                case 's': return TerrainType.Sand;
+                case 'w': return TerrainType.Water;
+                case 'g': return TerrainType.Grass;
+                case 'n': return TerrainType.Snow;
+                case 'l': return TerrainType.Lava;
+                case 'p': return TerrainType.Swamp;
+                case 'r': return TerrainType.Rough;
+                case 't': return TerrainType.Subterrnian;
+                case '_': return TerrainType.Any;
+                default: return TerrainType.None;
+            }
+        }
+
         public class TerrainImage
         {
             public string filename;
@@ -37,18 +68,11 @@ namespace Game
             public TerrainImage(string path, string filename)
             {
                 this.filename = filename;
-                //this.image = Path.Combine(path, filename);
                 this.image = path + "/" + filename;
 
                 for (int i = 0; i < 9; i++)
                 {
-                    char c = filename[i];
-                    switch (c)
-                    {
-                        case 's': mask[i] = TerrainType.Sand; break;
-                        case 'w': mask[i] = TerrainType.Water; break;
-                        case '_': mask[i] = TerrainType.Any; break;
-                    }
+                    mask[i] = CharToTerrain(filename[i]);
                 }
             }
         }
@@ -115,6 +139,10 @@ namespace Game
             for (int i = 0; i < 9; i++)
             {
                 find[i] = map.getTerrain(x + directions[i].X, y + directions[i].Y);
+                if (find[i] == TerrainType.None)
+                {
+                    find[i] = find[0];
+                }
             }
 
             foreach (TerrainImage t in terrain_images)

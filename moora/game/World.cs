@@ -24,20 +24,44 @@ namespace Game
             List<string> dirs = new List<string>();
 #if SILVERLIGHT
             dirs.Add("file://K:/Projects/steel/moora/Resources/terrain");
+//            dirs.Add("http://division.kindex.lv/moora/terrain");
 #else
             dirs.Add("../../../Resources/terrain");
             dirs.Add("Resources/terrain");
 #endif
             terrain = new Terrain(dirs);
-            map = new Map(21, 18, terrain, rnd);
+//            map = new RandomMap(21, 18, terrain, rnd);
+
+            List<string> file = new List<string>();
+//            { "www", "wsw", "www" };
+
+            using (StreamReader SR = new StreamReader("../../../Resources/map.txt"))
+            {
+                for (;;)
+                {
+                    string s = SR.ReadLine();
+                    if (s == null)
+                    {
+                        break;
+                    }
+                    file.Add(s);
+                }
+            }
+
+            map = new FileMap(terrain, file);
 
             int char_x;
             int char_y;
 
+            int try_number = 0;
             do
             {
                 char_x = rnd.Next(0, map.X);
                 char_y = rnd.Next(0, map.Y);
+                if (try_number++ > 1000)
+                {
+                    break;
+                }
             }
             while (map.getTerrain(char_x, char_y) != TerrainType.Sand);
 
@@ -92,10 +116,13 @@ namespace Game
                 for (int y = 0; y < map.Y; y++)
                 {
                     string image = map.GetImage(x, y);
-                    System.Drawing.Bitmap bitmap = ImageLibrary.getImage(image);
-                    if (bitmap != null)
+                    if (image != null)
                     {
-                        graph.DrawImage(bitmap, new System.Drawing.Point(x * x_size, y * y_size));
+                        System.Drawing.Bitmap bitmap = ImageLibrary.getImage(image);
+                        if (bitmap != null)
+                        {
+                            graph.DrawImage(bitmap, new System.Drawing.Point(x * x_size, y * y_size));
+                        }
                     }
                 }
             }

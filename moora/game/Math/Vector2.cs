@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.Math
+namespace Game
 {
     [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public struct Vector2 : IEquatable<Vector2>
