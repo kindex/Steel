@@ -35,12 +35,7 @@ namespace Game
 
     public class Terrain
     {
-        //public static char TerrainToChar(TerrainType terrain)
-        //{
-        //    switch (terrain)
-        //    {
-        //    }
-        //}
+        Random rnd;
 
         public static TerrainType CharToTerrain(char c)
         {
@@ -79,8 +74,9 @@ namespace Game
 
         List<TerrainImage> terrain_images = new List<TerrainImage>();
 
-        public Terrain(List<string> directories)
+        public Terrain(List<string> directories, Random rnd)
         {
+            this.rnd = rnd;
             foreach (string dir in directories)
             {
                 try
@@ -145,6 +141,8 @@ namespace Game
                 }
             }
 
+            List<TerrainImage> fitTerrain = new List<TerrainImage>();
+
             foreach (TerrainImage t in terrain_images)
             {
                 bool fit = true;
@@ -155,11 +153,18 @@ namespace Game
 
                 if (fit)
                 {
-                    return t.image;
+                    fitTerrain.Add(t);
                 }
             }
 
-            return null;
+            if (fitTerrain.Count != 0)
+            {
+                return fitTerrain[ rnd.Next(0, fitTerrain.Count) ].image;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

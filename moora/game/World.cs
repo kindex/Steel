@@ -29,7 +29,7 @@ namespace Game
             dirs.Add("../../../Resources/terrain");
             dirs.Add("Resources/terrain");
 #endif
-            terrain = new Terrain(dirs);
+            terrain = new Terrain(dirs, rnd);
 //            map = new RandomMap(21, 18, terrain, rnd);
 
             List<string> file = new List<string>();
