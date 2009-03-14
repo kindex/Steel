@@ -74,18 +74,19 @@ namespace Game
 
         List<TerrainImage> terrain_images = new List<TerrainImage>();
 
-        public Terrain(List<string> directories, Random rnd)
+        public Terrain(Random rnd)
         {
             this.rnd = rnd;
-            foreach (string dir in directories)
+            foreach (string dir in Res.SearchPath.Paths)
             {
                 try
                 {
-                    DirectoryInfo di = new DirectoryInfo(dir);
+                    string current_dir = dir + "/terrain";
+                    DirectoryInfo di = new DirectoryInfo(current_dir);
                     FileInfo[] rgFiles = di.GetFiles("*.png");
                     foreach (FileInfo fi in rgFiles)
                     {
-                        terrain_images.Add(new TerrainImage(dir, fi.Name));
+                        terrain_images.Add(new TerrainImage(current_dir, fi.Name));
                     }
                 }
                 catch (System.IO.DirectoryNotFoundException)

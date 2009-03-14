@@ -8,7 +8,7 @@
     <ProjectGuid>{5606918D-6630-485A-91E2-72354B9ABCC5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>game</RootNamespace>
+    <RootNamespace>Game</RootNamespace>
     <AssemblyName>game</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -47,13 +47,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Character.cs" />
-    <Compile Include="ImageLibrary.cs" />
     <Compile Include="Map\FileMap.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\RandomMap.cs" />
     <Compile Include="Map\Terrain.cs" />
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Res\ImageLibrary.cs" />
+    <Compile Include="Res\SearchPath.cs" />
+    <Compile Include="Res\TextFile.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

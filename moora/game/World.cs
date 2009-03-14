@@ -21,32 +21,18 @@ namespace Game
         public World()
         {
             Random rnd = new Random();
-            List<string> dirs = new List<string>();
+            
 #if SILVERLIGHT
             dirs.Add("file://K:/Projects/steel/moora/Resources/terrain");
 //            dirs.Add("http://division.kindex.lv/moora/terrain");
 #else
-            dirs.Add("../../../Resources/terrain");
-            dirs.Add("Resources/terrain");
+            Res.SearchPath.addPath("../../../Resources");
+            Res.SearchPath.addPath("Resources");
 #endif
-            terrain = new Terrain(dirs, rnd);
+            terrain = new Terrain(rnd);
 //            map = new RandomMap(21, 18, terrain, rnd);
 
-            List<string> file = new List<string>();
-//            { "www", "wsw", "www" };
-
-            using (StreamReader SR = new StreamReader("../../../Resources/map.txt"))
-            {
-                for (;;)
-                {
-                    string s = SR.ReadLine();
-                    if (s == null)
-                    {
-                        break;
-                    }
-                    file.Add(s);
-                }
-            }
+            List<string> file = Res.TextFile.GetTextFile("map.txt");
 
             map = new FileMap(terrain, file);
 

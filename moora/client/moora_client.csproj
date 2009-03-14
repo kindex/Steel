@@ -126,9 +126,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\game\game.csproj">
+    <ProjectReference Include="..\game\Game.csproj">
       <Project>{5606918D-6630-485A-91E2-72354B9ABCC5}</Project>
-      <Name>game</Name>
+      <Name>Game</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

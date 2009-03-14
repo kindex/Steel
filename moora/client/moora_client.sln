@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moora_client", "moora_client.csproj", "{D6DF44E4-7498-4B06-9FA7-526995BCC24C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game", "..\game\game.csproj", "{5606918D-6630-485A-91E2-72354B9ABCC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "..\game\Game.csproj", "{5606918D-6630-485A-91E2-72354B9ABCC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
