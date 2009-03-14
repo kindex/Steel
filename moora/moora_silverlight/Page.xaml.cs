@@ -25,7 +25,7 @@ namespace moora_silverlight
         {
             InitializeComponent();
 
-            try
+            //try
             {
                 world = new World();
                 world.StartDraw(MainForm);
@@ -36,10 +36,10 @@ namespace moora_silverlight
                 last_time = DateTime.Now;
                 timer.Start();
             }
-            catch (Exception e)
-            {
-                string error = e.ToString();
-            }
+            //catch (Exception e)
+            //{
+            //    string error = e.ToString();
+            //}
         }
 
         void timer_Completed(object sender, EventArgs e)

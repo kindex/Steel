@@ -1,4 +1,5 @@
 _ any
+d Dirt
 s Sand
 w Water
 g Grass

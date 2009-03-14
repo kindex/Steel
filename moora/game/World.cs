@@ -23,7 +23,7 @@ namespace Game
             Random rnd = new Random();
             
 #if SILVERLIGHT
-            dirs.Add("file://K:/Projects/steel/moora/Resources/terrain");
+            Res.SearchPath.addPath("file://K:/Projects/steel/moora/Resources");
 //            dirs.Add("http://division.kindex.lv/moora/terrain");
 #else
             Res.SearchPath.addPath("../../../Resources");

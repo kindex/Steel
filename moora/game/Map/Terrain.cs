@@ -10,6 +10,7 @@ namespace Game
     {
         None,
         Water,
+        Dirt,
         Sand,
         Grass,
         Snow,
@@ -43,6 +44,7 @@ namespace Game
             {
                 case 's': return TerrainType.Sand;
                 case 'w': return TerrainType.Water;
+                case 'd': return TerrainType.Dirt;
                 case 'g': return TerrainType.Grass;
                 case 'n': return TerrainType.Snow;
                 case 'l': return TerrainType.Lava;
@@ -95,20 +97,21 @@ namespace Game
                 catch (System.MethodAccessException)
                 {
                     terrain_images.Clear();
-                    terrain_images.Add(new TerrainImage(dir, "s________.png"));
-                    terrain_images.Add(new TerrainImage(dir, "w_s_s_www.png"));
-                    terrain_images.Add(new TerrainImage(dir, "w_s_www_s.png"));
-                    terrain_images.Add(new TerrainImage(dir, "w_s_wwwww.png"));
-                    terrain_images.Add(new TerrainImage(dir, "w_www_s_s.png"));
-                    terrain_images.Add(new TerrainImage(dir, "w_wwwww_s.png"));
-                    terrain_images.Add(new TerrainImage(dir, "wswwwwwww.png"));
-                    terrain_images.Add(new TerrainImage(dir, "www_s_s_w.png"));
-                    terrain_images.Add(new TerrainImage(dir, "www_s_www.png"));
-                    terrain_images.Add(new TerrainImage(dir, "wwwswwwww.png"));
-                    terrain_images.Add(new TerrainImage(dir, "wwwww_s_w.png"));
-                    terrain_images.Add(new TerrainImage(dir, "wwwwwswww.png"));
-                    terrain_images.Add(new TerrainImage(dir, "wwwwwwwsw.png"));
-                    terrain_images.Add(new TerrainImage(dir, "wwwwwwwww.png"));
+                    string cdir = dir + "/terrain";
+                    terrain_images.Add(new TerrainImage(cdir, "s________.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "w_s_s_www.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "w_s_www_s.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "w_s_wwwww.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "w_www_s_s.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "w_wwwww_s.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "wswwwwwww.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "www_s_s_w.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "www_s_www.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "wwwswwwww.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "wwwww_s_w.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "wwwwwswww.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "wwwwwwwsw.png"));
+                    terrain_images.Add(new TerrainImage(cdir, "wwwwwwwww.png"));
                 }
             }
 
@@ -130,6 +133,36 @@ namespace Game
                              new Point(-1, 0)
                          };
 
+        TerrainType getTerrainReleay(TerrainType cell, TerrainType border)
+        {
+            switch (cell)
+            {
+                case TerrainType.Water:
+                    if (border != cell)
+                    {
+                        return TerrainType.Sand;
+                    }
+                    break;
+
+                case TerrainType.Grass:
+                case TerrainType.Snow:
+                case TerrainType.Swamp:
+                case TerrainType.Subterrnian:
+                case TerrainType.Lava:
+                case TerrainType.Rock:
+                    if (border == TerrainType.Sand || border == TerrainType.Rock || border == TerrainType.Water)
+                    {
+                        return TerrainType.Sand;
+                    }
+                    if (border != cell)
+                    {
+                        return TerrainType.Dirt;
+                    }
+                    break;
+            }
+            return border;
+        }
+
         public string GetImage(Map map, int x, int y)
         {
             TerrainType[] find = new TerrainType[9];
@@ -139,6 +172,11 @@ namespace Game
                 if (find[i] == TerrainType.None)
                 {
                     find[i] = find[0];
+                }
+
+                if (i >= 1)
+                {
+                    find[i] = getTerrainReleay(find[0], find[i]);
                 }
             }
 

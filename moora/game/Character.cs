@@ -78,9 +78,21 @@ namespace Game
             {
                 case TerrainType.None:
                 case TerrainType.Water:
+                case TerrainType.Rock:
                     return 0.0f;
                 case TerrainType.Sand:
-                    return 10.0f;
+                case TerrainType.Snow:
+                    return 1.0f;
+                case TerrainType.Dirt:
+                    return 1.5f;
+                case TerrainType.Rough:
+                case TerrainType.Grass:
+                case TerrainType.Lava:
+                    return 2.0f;
+                case TerrainType.Swamp:
+                    return 0.4f;
+                case TerrainType.Subterrnian:
+                    return 3.0f;
                 default:
                     return 0.0f;
             }
@@ -147,16 +159,19 @@ namespace Game
                                     if (x + d.X >=0
                                      && x + d.X < map.X
                                      && y + d.Y >=0
-                                     && y + d.Y < map.Y
-                                     && map.getTerrain(x + d.X, y + d.Y) == TerrainType.Sand)
+                                     && y + d.Y < map.Y)
                                     {
-                                        float speed = GetSpeed(map.getTerrain(x, y)) * (float)System.Math.Sqrt(d.X * d.X + d.Y * d.Y);
-                                        if (w[x + d.X, y + d.Y] > w[x, y] + speed)
+                                        float speed = GetSpeed(map.getTerrain(x, y));
+                                        if (speed > 0)
                                         {
-                                            w[x + d.X, y + d.Y] = w[x, y] + speed;
-                                            from[x + d.X, y + d.Y] = new Point(x, y);
+                                            float time = 1.0f / speed * (float)System.Math.Sqrt(d.X * d.X + d.Y * d.Y);
+                                            if (w[x + d.X, y + d.Y] > w[x, y] + time)
+                                            {
+                                                w[x + d.X, y + d.Y] = w[x, y] + time;
+                                                from[x + d.X, y + d.Y] = new Point(x, y);
 
-                                            changed = true;
+                                                changed = true;
+                                            }
                                         }
                                     }
                                 }
