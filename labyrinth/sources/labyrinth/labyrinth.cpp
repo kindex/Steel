@@ -29,6 +29,7 @@
 #include "steel_nx.h"
 #include <algorithm>
 #include "../svn.h"
+#include <iterator>
 
 class AgeiaInjector : public Visitor
 {

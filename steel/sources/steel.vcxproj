@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="lib_debug|Win32">
+      <Configuration>lib_debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="lib_release|Win32">
+      <Configuration>lib_release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="test_debug|Win32">
+      <Configuration>test_debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>Steel Engine</ProjectName>
+    <ProjectGuid>{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}</ProjectGuid>
+    <RootNamespace>Steel Engine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='test_debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='test_debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">..\..\..\steel.res\sdk\steel_lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">..\..\temp\$(SolutionName).VS10.$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">..\..\../steel.res/sdk\steel_lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">..\..\temp\$(SolutionName).VS10.$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='test_debug|Win32'">..\..\temp\$(SolutionName).VS10.$(Configuration)\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='test_debug|Win32'">..\..\temp\$(SolutionName).VS10.$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='test_debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='test_debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='test_debug|Win32'" />
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">steel.VS10.lib_debug</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">steel.VS10.lib_release</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/steel.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions> /wd4996 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;STEEL_COMPILER_VERSION=80;LIB_STEEL;LIB_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>$(IntDir)steel.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x1009</Culture>
+    </ResourceCompile>
+    <Lib />
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">
+    <Midl>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions> /wd4996 /MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>..\..\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;LIB_OPENAL;LIB_STEEL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <PrecompiledHeaderOutputFile>$(IntDir)steel.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x1009</Culture>
+    </ResourceCompile>
+    <Lib />
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='test_debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/steel.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions> /wd4996 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;STEEL_COMPILER_VERSION=80;LIB_STEEL;LIB_OPENAL;TESTING=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>$(IntDir)steel.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x1009</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>../../../steel.res/sdk/libs/openal/openal32.lib;../../../steel.res/sdk/libs/openal/eaxguid.lib;../../../steel.res/sdk/libs/openal/eax.lib;../../../steel.res/sdk/libs/ogg/ogg.lib;../../../steel.res/sdk/libs/ogg/vorbisfile.lib;opengl32.lib;glu32.lib;glaux.lib;odbc32.lib;odbccp32.lib;user32.lib;GDI32.LIB;Kernel32.LIB;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="audio\audio_engine.cpp" />
+    <ClCompile Include="audio\openal_engine.cpp" />
+    <ClCompile Include="audio\sound.cpp" />
+    <ClCompile Include="common\logger.cpp" />
+    <ClCompile Include="common\system_info.cpp" />
+    <ClCompile Include="common\timer.cpp" />
+    <ClCompile Include="common\utils.cpp" />
+    <ClCompile Include="common\win_info.cpp" />
+    <ClCompile Include="common\test_common\test_svector.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="common\containers\string_dict.cpp" />
+    <ClCompile Include="engine\engine.cpp" />
+    <ClCompile Include="engine\game_object.cpp" />
+    <ClCompile Include="graph\graph_engine.cpp" />
+    <ClCompile Include="graph\material.cpp" />
+    <ClCompile Include="graph\opengl\opengl_10.cpp" />
+    <ClCompile Include="graph\opengl\opengl_11.cpp" />
+    <ClCompile Include="graph\opengl\opengl_13.cpp" />
+    <ClCompile Include="graph\opengl\opengl_15.cpp" />
+    <ClCompile Include="graph\opengl\opengl_20.cpp" />
+    <ClCompile Include="graph\opengl\opengl_engine.cpp" />
+    <ClCompile Include="graph\opengl\opengl_glsl.cpp" />
+    <ClCompile Include="graph\opengl\opengl_interface.cpp" />
+    <ClCompile Include="graph\opengl\opengl_private.cpp" />
+    <ClCompile Include="graph\opengl\opengl_sdl_engine.cpp" />
+    <ClCompile Include="graph\opengl\opengl_win_engine.cpp" />
+    <ClCompile Include="graph\opengl\ext\frame_buffer.cpp" />
+    <ClCompile Include="graph\opengl\ext\libext.cpp" />
+    <ClCompile Include="graph\opengl\ext\normalisation_cube_map.cpp" />
+    <ClCompile Include="input\input.cpp" />
+    <ClCompile Include="input\input_sdl.cpp" />
+    <ClCompile Include="input\input_win.cpp" />
+    <ClCompile Include="math\aabb.cpp" />
+    <ClCompile Include="math\line.cpp" />
+    <ClCompile Include="math\maths.cpp" />
+    <ClCompile Include="math\matrix33.cpp" />
+    <ClCompile Include="math\matrix34.cpp" />
+    <ClCompile Include="math\plane.cpp" />
+    <ClCompile Include="math\sprite.cpp" />
+    <ClCompile Include="math\vector2d.cpp" />
+    <ClCompile Include="math\vector3d.cpp" />
+    <ClCompile Include="math\test_math\test_math.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="objects\console.cpp" />
+    <ClCompile Include="objects\game_object_factory.cpp" />
+    <ClCompile Include="objects\light.cpp" />
+    <ClCompile Include="objects\ps\animator.cpp" />
+    <ClCompile Include="objects\ps\emitter.cpp" />
+    <ClCompile Include="objects\ps\particle_system.cpp" />
+    <ClCompile Include="objects\ps\ps_renderer.cpp" />
+    <ClCompile Include="objects\combiner\audio_object.cpp" />
+    <ClCompile Include="objects\combiner\combiner.cpp" />
+    <ClCompile Include="objects\combiner\graph_object.cpp" />
+    <ClCompile Include="objects\combiner\audio\audio_list.cpp" />
+    <ClCompile Include="objects\combiner\audio\simple_sound.cpp" />
+    <ClCompile Include="objects\transformation\movement.cpp" />
+    <ClCompile Include="objects\transformation\rotation.cpp" />
+    <ClCompile Include="objects\transformation\scaler.cpp" />
+    <ClCompile Include="objects\transformation\transformation.cpp" />
+    <ClCompile Include="objects\transformation\transformation_list.cpp" />
+    <ClCompile Include="res\res_collection.cpp" />
+    <ClCompile Include="res\res_main.cpp" />
+    <ClCompile Include="res\rstream.cpp" />
+    <ClCompile Include="res\image\bmp.cpp" />
+    <ClCompile Include="res\image\image.cpp" />
+    <ClCompile Include="res\image\jpeg.cpp" />
+    <ClCompile Include="res\image\res_image.cpp" />
+    <ClCompile Include="res\image\tga.cpp" />
+    <ClCompile Include="res\image\bmp\bmp_load.cpp">
+      <StructMemberAlignment Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">1Byte</StructMemberAlignment>
+      <StructMemberAlignment Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">1Byte</StructMemberAlignment>
+      <StructMemberAlignment Condition="'$(Configuration)|$(Platform)'=='test_debug|Win32'">1Byte</StructMemberAlignment>
+    </ClCompile>
+    <ClCompile Include="res\model\3ds.cpp" />
+    <ClCompile Include="res\model\bones.cpp" />
+    <ClCompile Include="res\model\model.cpp" />
+    <ClCompile Include="res\text\text.cpp" />
+    <ClCompile Include="res\text\text_file.cpp" />
+    <ClCompile Include="res\text\text_string.cpp" />
+    <ClCompile Include="res\audio\audio.cpp" />
+    <ClCompile Include="res\audio\ogg.cpp" />
+    <ClCompile Include="res\audio\wav.cpp" />
+    <ClCompile Include="res\config\config.cpp" />
+    <ClCompile Include="res\config\config_collection.cpp" />
+    <ClCompile Include="res\config\config_parser.cpp" />
+    <ClCompile Include="res\config\config_setup.cpp" />
+    <ClCompile Include="res\config\test_config\test_config.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="res\test_res\test_res.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="res\font\font.cpp" />
+    <ClCompile Include="res\font\font_text.cpp" />
+    <ClCompile Include="test\test_main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="test\tester.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="audio\audio_engine.h" />
+    <ClInclude Include="audio\audio_interface.h" />
+    <ClInclude Include="audio\openal_engine.h" />
+    <ClInclude Include="audio\sound.h" />
+    <ClInclude Include="audio\openal\openal_types.h" />
+    <ClInclude Include="common\cast.h" />
+    <ClInclude Include="common\containers.h" />
+    <ClInclude Include="common\logger.h" />
+    <ClInclude Include="common\pvector.h" />
+    <ClInclude Include="common\svector.h" />
+    <ClInclude Include="common\system_info.h" />
+    <ClInclude Include="common\timer.h" />
+    <ClInclude Include="common\types.h" />
+    <ClInclude Include="common\utils.h" />
+    <ClInclude Include="common\win_info.h" />
+    <ClInclude Include="common\test_common\test_svector.h" />
+    <ClInclude Include="common\containers\set_maker.h" />
+    <ClInclude Include="common\containers\string_dict.h" />
+    <ClInclude Include="common\containers\string_vector.h" />
+    <ClInclude Include="engine\engine.h" />
+    <ClInclude Include="engine\engine_types.h" />
+    <ClInclude Include="engine\game_object.h" />
+    <ClInclude Include="engine\helper.h" />
+    <ClInclude Include="engine\id_generator.h" />
+    <ClInclude Include="engine\interface.h" />
+    <ClInclude Include="engine\visitor.h" />
+    <ClInclude Include="graph\graph_engine.h" />
+    <ClInclude Include="graph\graph_interface.h" />
+    <ClInclude Include="graph\graph_types.h" />
+    <ClInclude Include="graph\material.h" />
+    <ClInclude Include="graph\opengl\opengl_engine.h" />
+    <ClInclude Include="graph\opengl\opengl_glsl.h" />
+    <ClInclude Include="graph\opengl\opengl_private.h" />
+    <ClInclude Include="graph\opengl\ext\frame_buffer.h" />
+    <ClInclude Include="graph\opengl\ext\libext.h" />
+    <ClInclude Include="graph\opengl\ext\normalisation_cube_map.h" />
+    <ClInclude Include="input\game_input.h" />
+    <ClInclude Include="input\input.h" />
+    <ClInclude Include="input\input_win.h" />
+    <ClInclude Include="math\aabb.h" />
+    <ClInclude Include="math\line.h" />
+    <ClInclude Include="math\maths.h" />
+    <ClInclude Include="math\matrix33.h" />
+    <ClInclude Include="math\matrix34.h" />
+    <ClInclude Include="math\plane.h" />
+    <ClInclude Include="math\sprite.h" />
+    <ClInclude Include="math\vector2d.h" />
+    <ClInclude Include="math\vector3d.h" />
+    <CustomBuildStep Include="math\test_math\test_math.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <ClInclude Include="objects\console.h" />
+    <ClInclude Include="objects\game_object_factory.h" />
+    <ClInclude Include="objects\light.h" />
+    <ClInclude Include="objects\ps\animator.h" />
+    <ClInclude Include="objects\ps\emitter.h" />
+    <ClInclude Include="objects\ps\particle_system.h" />
+    <ClInclude Include="objects\ps\ps_renderer.h" />
+    <ClInclude Include="objects\combiner\audio_object.h" />
+    <ClInclude Include="objects\combiner\combiner.h" />
+    <ClInclude Include="objects\combiner\graph_object.h" />
+    <ClInclude Include="objects\combiner\audio\audio_list.h" />
+    <ClInclude Include="objects\combiner\audio\simple_sound.h" />
+    <ClInclude Include="objects\transformation\movement.h" />
+    <ClInclude Include="objects\transformation\rotation.h" />
+    <ClInclude Include="objects\transformation\scaler.h" />
+    <ClInclude Include="objects\transformation\transformation.h" />
+    <ClInclude Include="objects\transformation\transformation_list.h" />
+    <ClInclude Include="res\res.h" />
+    <ClInclude Include="res\res_collection.h" />
+    <ClInclude Include="res\res_main.h" />
+    <ClInclude Include="res\rstream.h" />
+    <ClInclude Include="res\image\bmp.h" />
+    <ClInclude Include="res\image\image.h" />
+    <ClInclude Include="res\image\jpeg.h" />
+    <ClInclude Include="res\image\res_image.h" />
+    <ClInclude Include="res\image\tga.h" />
+    <ClInclude Include="res\model\3ds.h" />
+    <ClInclude Include="res\model\bones.h" />
+    <ClInclude Include="res\model\lightwave.h" />
+    <ClInclude Include="res\model\model.h" />
+    <ClInclude Include="res\text\text.h" />
+    <ClInclude Include="res\text\text_file.h" />
+    <ClInclude Include="res\text\text_string.h" />
+    <ClInclude Include="res\audio\audio.h" />
+    <ClInclude Include="res\audio\ogg.h" />
+    <ClInclude Include="res\audio\wav.h" />
+    <ClInclude Include="res\config\config.h" />
+    <ClInclude Include="res\config\config_collection.h" />
+    <ClInclude Include="res\config\config_parser.h" />
+    <ClInclude Include="res\config\config_setup.h" />
+    <ClInclude Include="res\config\test_config\test_config.h" />
+    <ClInclude Include="res\test_res\test_res.h" />
+    <ClInclude Include="res\font\font.h" />
+    <ClInclude Include="res\font\font_text.h" />
+    <ClInclude Include="test\tester.h" />
+    <ClInclude Include="steel.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

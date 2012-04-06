@@ -232,8 +232,11 @@ bool ObjectPSRenderer::updateInformation(IN OUT Engine& engine, IN const Interfa
             gengine->setCurrentObject(it->object, interfaceId);
             gengine->setPositionKind(POSITION_GLOBAL);
             ObjectPosition pos = ObjectPosition::getIdentity();
-            pos.setTranslation(set->particles[index]->position);
-            gengine->setPosition(pos);
+			if (set->particles.size() > index)
+			{
+				pos.setTranslation(set->particles[index]->position);
+				gengine->setPosition(pos);
+			}
 
             index++;
         }

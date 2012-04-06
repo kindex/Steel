@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="lib_debug|Win32">
+      <Configuration>lib_debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="lib_release|Win32">
+      <Configuration>lib_release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1B5C8103-B2D8-4E29-9837-DB1DCADCF1FF}</ProjectGuid>
+    <RootNamespace>libs</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">..\..\steel.res\sdk\steel_lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">..\temp\$(SolutionName).VS10.$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">..\..\steel.res\sdk\libs\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">..\temp\$(SolutionName).VS10.$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'" />
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">libs.VS10.lib_debug</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">libs.VS10.lib_release</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='lib_debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../libs/PhysX/Foundation;../libs/PhysX/Physics;../libs/PhysX/Cooking;../libs/PhysX/PhysXLoader;../libs/PhysX/SampleCommonCode;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='lib_release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../libs/PhysX/Foundation;../libs/PhysX/Physics;../libs/PhysX/Cooking;../libs/PhysX/PhysXLoader;../libs/PhysX/SampleCommonCode;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="opengl\glext.h" />
+    <ClInclude Include="opengl\glxext.h" />
+    <ClInclude Include="opengl\wglext.h" />
+    <ClInclude Include="PhysX\SampleCommonCode\Stream.h" />
+    <ClInclude Include="PhysX\Cooking\fw-convex-cooker.h" />
+    <ClInclude Include="PhysX\Cooking\Nxc.h" />
+    <ClInclude Include="PhysX\Cooking\NxCooking.h" />
+    <ClInclude Include="PhysX\Foundation\Nx.h" />
+    <ClInclude Include="PhysX\Foundation\Nx12F32.h" />
+    <ClInclude Include="PhysX\Foundation\Nx16F32.h" />
+    <ClInclude Include="PhysX\Foundation\Nx9F32.h" />
+    <ClInclude Include="PhysX\Foundation\NxAllocatorDefault.h" />
+    <ClInclude Include="PhysX\Foundation\NxArray.h" />
+    <ClInclude Include="PhysX\Foundation\NxAssert.h" />
+    <ClInclude Include="PhysX\Foundation\NxBitField.h" />
+    <ClInclude Include="PhysX\Foundation\NxBounds3.h" />
+    <ClInclude Include="PhysX\Foundation\NxBox.h" />
+    <ClInclude Include="PhysX\Foundation\NxBuildNumber.h" />
+    <ClInclude Include="PhysX\Foundation\NxCapsule.h" />
+    <ClInclude Include="PhysX\Foundation\NxDebugRenderable.h" />
+    <ClInclude Include="PhysX\Foundation\NxException.h" />
+    <ClInclude Include="PhysX\Foundation\Nxf.h" />
+    <ClInclude Include="PhysX\Foundation\NxFoundation.h" />
+    <ClInclude Include="PhysX\Foundation\NxFoundationSDK.h" />
+    <ClInclude Include="PhysX\Foundation\NxI16Vec3.h" />
+    <ClInclude Include="PhysX\Foundation\NxMat33.h" />
+    <ClInclude Include="PhysX\Foundation\NxMat34.h" />
+    <ClInclude Include="PhysX\Foundation\NxMath.h" />
+    <ClInclude Include="PhysX\Foundation\NxPlane.h" />
+    <ClInclude Include="PhysX\Foundation\NxPool.h" />
+    <ClInclude Include="PhysX\Foundation\NxProfiler.h" />
+    <ClInclude Include="PhysX\Foundation\NxQuat.h" />
+    <ClInclude Include="PhysX\Foundation\NxQuickSort.h" />
+    <ClInclude Include="PhysX\Foundation\NxRay.h" />
+    <ClInclude Include="PhysX\Foundation\NxRemoteDebugger.h" />
+    <ClInclude Include="PhysX\Foundation\NxSegment.h" />
+    <ClInclude Include="PhysX\Foundation\NxSimpleTriangleMesh.h" />
+    <ClInclude Include="PhysX\Foundation\NxSimpleTypes.h" />
+    <ClInclude Include="PhysX\Foundation\NxSphere.h" />
+    <ClInclude Include="PhysX\Foundation\NxStream.h" />
+    <ClInclude Include="PhysX\Foundation\NxUserAllocator.h" />
+    <ClInclude Include="PhysX\Foundation\NxUserAllocatorDefault.h" />
+    <ClInclude Include="PhysX\Foundation\NxUserOutputStream.h" />
+    <ClInclude Include="PhysX\Foundation\NxUtilities.h" />
+    <ClInclude Include="PhysX\Foundation\NxVec3.h" />
+    <ClInclude Include="PhysX\Foundation\NxVersionNumber.h" />
+    <ClInclude Include="PhysX\Foundation\NxVolumeIntegration.h" />
+    <ClInclude Include="PhysX\NxCharacter\BoxController.h" />
+    <ClInclude Include="PhysX\NxCharacter\CapsuleController.h" />
+    <ClInclude Include="PhysX\NxCharacter\CCTAllocator.h" />
+    <ClInclude Include="PhysX\NxCharacter\CCTDebugRenderer.h" />
+    <ClInclude Include="PhysX\NxCharacter\CharacterController.h" />
+    <ClInclude Include="PhysX\NxCharacter\CharacterControllerManager.h" />
+    <ClInclude Include="PhysX\NxCharacter\Controller.h" />
+    <ClInclude Include="PhysX\NxCharacter\ControllerManager.h" />
+    <ClInclude Include="PhysX\NxCharacter\NxBoxController.h" />
+    <ClInclude Include="PhysX\NxCharacter\NxCapsuleController.h" />
+    <ClInclude Include="PhysX\NxCharacter\NxCharacter.h" />
+    <ClInclude Include="PhysX\NxCharacter\NxController.h" />
+    <ClInclude Include="PhysX\NxCharacter\NxControllerManager.h" />
+    <ClInclude Include="PhysX\NxCharacter\NxExtended.h" />
+    <ClInclude Include="PhysX\NxCharacter\SweptBox.h" />
+    <ClInclude Include="PhysX\NxCharacter\SweptCapsule.h" />
+    <ClInclude Include="PhysX\NxCharacter\SweptVolume.h" />
+    <ClInclude Include="PhysX\Physics\NxActor.h" />
+    <ClInclude Include="PhysX\Physics\NxActorDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxAllocateable.h" />
+    <ClInclude Include="PhysX\Physics\NxBodyDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxBoxForceFieldShape.h" />
+    <ClInclude Include="PhysX\Physics\NxBoxForceFieldShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxBoxShape.h" />
+    <ClInclude Include="PhysX\Physics\NxBoxShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxCapsuleForceFieldShape.h" />
+    <ClInclude Include="PhysX\Physics\NxCapsuleForceFieldShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxCapsuleShape.h" />
+    <ClInclude Include="PhysX\Physics\NxCapsuleShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxCCDSkeleton.h" />
+    <ClInclude Include="PhysX\Physics\NxClothUserNotify.h" />
+    <ClInclude Include="PhysX\Physics\NxCompartment.h" />
+    <ClInclude Include="PhysX\Physics\NxCompartmentDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxContactStreamIterator.h" />
+    <ClInclude Include="PhysX\Physics\NxConvexForceFieldShape.h" />
+    <ClInclude Include="PhysX\Physics\NxConvexForceFieldShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxConvexMesh.h" />
+    <ClInclude Include="PhysX\Physics\NxConvexMeshDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxConvexShape.h" />
+    <ClInclude Include="PhysX\Physics\NxConvexShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxCylindricalJoint.h" />
+    <ClInclude Include="PhysX\Physics\NxCylindricalJointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxD6Joint.h" />
+    <ClInclude Include="PhysX\Physics\NxD6JointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxDistanceJoint.h" />
+    <ClInclude Include="PhysX\Physics\NxDistanceJointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxEffector.h" />
+    <ClInclude Include="PhysX\Physics\NxEffectorDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxExportedUtils.h" />
+    <ClInclude Include="PhysX\Physics\NxExpression.h" />
+    <ClInclude Include="PhysX\Physics\NxFixedJoint.h" />
+    <ClInclude Include="PhysX\Physics\NxFixedJointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxFluidUserNotify.h" />
+    <ClInclude Include="PhysX\Physics\NxForceField.h" />
+    <ClInclude Include="PhysX\Physics\NxForceFieldDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxForceFieldKernel.h" />
+    <ClInclude Include="PhysX\Physics\NxForceFieldKernelDefs.h" />
+    <ClInclude Include="PhysX\Physics\NxForceFieldLinearKernel.h" />
+    <ClInclude Include="PhysX\Physics\NxForceFieldLinearKernelDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxForceFieldShape.h" />
+    <ClInclude Include="PhysX\Physics\NxForceFieldShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxForceFieldShapeGroup.h" />
+    <ClInclude Include="PhysX\Physics\NxForceFieldShapeGroupDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxHeightField.h" />
+    <ClInclude Include="PhysX\Physics\NxHeightFieldDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxHeightFieldSample.h" />
+    <ClInclude Include="PhysX\Physics\NxHeightFieldShape.h" />
+    <ClInclude Include="PhysX\Physics\NxHeightFieldShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxHwParser.h" />
+    <ClInclude Include="PhysX\Physics\NxHwTarget.h" />
+    <ClInclude Include="PhysX\Physics\NxInertiaTensor.h" />
+    <ClInclude Include="PhysX\Physics\NxInterface.h" />
+    <ClInclude Include="PhysX\Physics\NxInterfaceStats.h" />
+    <ClInclude Include="PhysX\Physics\NxIntersectionBoxBox.h" />
+    <ClInclude Include="PhysX\Physics\NxIntersectionPointTriangle.h" />
+    <ClInclude Include="PhysX\Physics\NxIntersectionRayPlane.h" />
+    <ClInclude Include="PhysX\Physics\NxIntersectionRaySphere.h" />
+    <ClInclude Include="PhysX\Physics\NxIntersectionRayTriangle.h" />
+    <ClInclude Include="PhysX\Physics\NxIntersectionSegmentBox.h" />
+    <ClInclude Include="PhysX\Physics\NxIntersectionSegmentCapsule.h" />
+    <ClInclude Include="PhysX\Physics\NxIntersectionSweptSpheres.h" />
+    <ClInclude Include="PhysX\Physics\NxJoint.h" />
+    <ClInclude Include="PhysX\Physics\NxJointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxJointLimitDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxJointLimitPairDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxJointLimitSoftDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxJointLimitSoftPairDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxMaterial.h" />
+    <ClInclude Include="PhysX\Physics\NxMaterialDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxMeshData.h" />
+    <ClInclude Include="PhysX\Physics\NxMotorDesc.h" />
+    <ClInclude Include="PhysX\Physics\Nxp.h" />
+    <ClInclude Include="PhysX\Physics\NxPhysics.h" />
+    <ClInclude Include="PhysX\Physics\NxPhysicsSDK.h" />
+    <ClInclude Include="PhysX\Physics\NxPlaneShape.h" />
+    <ClInclude Include="PhysX\Physics\NxPlaneShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxPMap.h" />
+    <ClInclude Include="PhysX\Physics\NxPointInPlaneJoint.h" />
+    <ClInclude Include="PhysX\Physics\NxPointInPlaneJointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxPointOnLineJoint.h" />
+    <ClInclude Include="PhysX\Physics\NxPointOnLineJointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxPrismaticJoint.h" />
+    <ClInclude Include="PhysX\Physics\NxPrismaticJointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxPulleyJoint.h" />
+    <ClInclude Include="PhysX\Physics\NxPulleyJointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxRevoluteJoint.h" />
+    <ClInclude Include="PhysX\Physics\NxRevoluteJointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxScene.h" />
+    <ClInclude Include="PhysX\Physics\NxSceneDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxSceneQuery.h" />
+    <ClInclude Include="PhysX\Physics\NxSceneStats.h" />
+    <ClInclude Include="PhysX\Physics\NxSceneStats2.h" />
+    <ClInclude Include="PhysX\Physics\NxScheduler.h" />
+    <ClInclude Include="PhysX\Physics\NxShape.h" />
+    <ClInclude Include="PhysX\Physics\NxShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxSmoothNormals.h" />
+    <ClInclude Include="PhysX\Physics\NxSoftBodyUserNotify.h" />
+    <ClInclude Include="PhysX\Physics\NxSphereForceFieldShape.h" />
+    <ClInclude Include="PhysX\Physics\NxSphereForceFieldShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxSphereShape.h" />
+    <ClInclude Include="PhysX\Physics\NxSphereShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxSphericalJoint.h" />
+    <ClInclude Include="PhysX\Physics\NxSphericalJointDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxSpringAndDamperEffector.h" />
+    <ClInclude Include="PhysX\Physics\NxSpringAndDamperEffectorDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxSpringDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxSwTarget.h" />
+    <ClInclude Include="PhysX\Physics\NxTargets.h" />
+    <ClInclude Include="PhysX\Physics\NxTriangle.h" />
+    <ClInclude Include="PhysX\Physics\NxTriangleMesh.h" />
+    <ClInclude Include="PhysX\Physics\NxTriangleMeshDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxTriangleMeshShape.h" />
+    <ClInclude Include="PhysX\Physics\NxTriangleMeshShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\NxUserContactReport.h" />
+    <ClInclude Include="PhysX\Physics\NxUserEntityReport.h" />
+    <ClInclude Include="PhysX\Physics\NxUserNotify.h" />
+    <ClInclude Include="PhysX\Physics\NxUserRaycastReport.h" />
+    <ClInclude Include="PhysX\Physics\NxUtilLib.h" />
+    <ClInclude Include="PhysX\Physics\NxWheelShape.h" />
+    <ClInclude Include="PhysX\Physics\NxWheelShapeDesc.h" />
+    <ClInclude Include="PhysX\Physics\cloth\NxCloth.h" />
+    <ClInclude Include="PhysX\Physics\cloth\NxClothDesc.h" />
+    <ClInclude Include="PhysX\Physics\cloth\NxClothMesh.h" />
+    <ClInclude Include="PhysX\Physics\cloth\NxClothMeshDesc.h" />
+    <ClInclude Include="PhysX\Physics\fluids\NxFluid.h" />
+    <ClInclude Include="PhysX\Physics\fluids\NxFluidDesc.h" />
+    <ClInclude Include="PhysX\Physics\fluids\NxFluidEmitter.h" />
+    <ClInclude Include="PhysX\Physics\fluids\NxFluidEmitterDesc.h" />
+    <ClInclude Include="PhysX\Physics\fluids\NxFluidPacketData.h" />
+    <ClInclude Include="PhysX\Physics\fluids\NxParticleData.h" />
+    <ClInclude Include="PhysX\Physics\fluids\NxParticleIdData.h" />
+    <ClInclude Include="PhysX\Physics\fluids\NxParticleUpdateData.h" />
+    <ClInclude Include="PhysX\Physics\softbody\NxSoftBody.h" />
+    <ClInclude Include="PhysX\Physics\softbody\NxSoftBodyDesc.h" />
+    <ClInclude Include="PhysX\Physics\softbody\NxSoftBodyMesh.h" />
+    <ClInclude Include="PhysX\Physics\softbody\NxSoftBodyMeshDesc.h" />
+    <ClInclude Include="PhysX\PhysXLoader\PhysXLoader.h" />
+    <ClInclude Include="PhysX\PhysXLoader\Win32RegistryAccess.h" />
+    <ClInclude Include="openal\al.h" />
+    <ClInclude Include="openal\alc.h" />
+    <ClInclude Include="openal\eax.h" />
+    <ClInclude Include="openal\efx-creative.h" />
+    <ClInclude Include="openal\EFX-Util.h" />
+    <ClInclude Include="openal\efx.h" />
+    <ClInclude Include="openal\xram.h" />
+    <ClInclude Include="enet\callbacks.h" />
+    <ClInclude Include="enet\enet.h" />
+    <ClInclude Include="enet\list.h" />
+    <ClInclude Include="enet\protocol.h" />
+    <ClInclude Include="enet\time.h" />
+    <ClInclude Include="enet\types.h" />
+    <ClInclude Include="enet\unix.h" />
+    <ClInclude Include="enet\utility.h" />
+    <ClInclude Include="enet\win32.h" />
+    <ClInclude Include="jpeg\cderror.h" />
+    <ClInclude Include="jpeg\cdjpeg.h" />
+    <ClInclude Include="jpeg\jchuff.h" />
+    <ClInclude Include="jpeg\jconfig.h" />
+    <ClInclude Include="jpeg\jdct.h" />
+    <ClInclude Include="jpeg\jdhuff.h" />
+    <ClInclude Include="jpeg\jerror.h" />
+    <ClInclude Include="jpeg\jinclude.h" />
+    <ClInclude Include="jpeg\jmemsys.h" />
+    <ClInclude Include="jpeg\jmorecfg.h" />
+    <ClInclude Include="jpeg\jpegint.h" />
+    <ClInclude Include="jpeg\jpeglib.h" />
+    <ClInclude Include="jpeg\jversion.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PhysX\SampleCommonCode\Stream.cpp" />
+    <ClCompile Include="enet\callbacks.c" />
+    <ClCompile Include="enet\host.c" />
+    <ClCompile Include="enet\list.c" />
+    <ClCompile Include="enet\packet.c" />
+    <ClCompile Include="enet\peer.c" />
+    <ClCompile Include="enet\protocol.c" />
+    <ClCompile Include="enet\unix.c" />
+    <ClCompile Include="enet\win32.c" />
+    <ClCompile Include="jpeg\jarrsrc.cpp" />
+    <ClCompile Include="jpeg\jcapimin.cpp" />
+    <ClCompile Include="jpeg\jcapistd.cpp" />
+    <ClCompile Include="jpeg\jccoefct.cpp" />
+    <ClCompile Include="jpeg\jccolor.cpp" />
+    <ClCompile Include="jpeg\jcdctmgr.cpp" />
+    <ClCompile Include="jpeg\jchuff.cpp" />
+    <ClCompile Include="jpeg\jcinit.cpp" />
+    <ClCompile Include="jpeg\jcmainct.cpp" />
+    <ClCompile Include="jpeg\jcmarker.cpp" />
+    <ClCompile Include="jpeg\jcmaster.cpp" />
+    <ClCompile Include="jpeg\jcomapi.cpp" />
+    <ClCompile Include="jpeg\jcparam.cpp" />
+    <ClCompile Include="jpeg\jcphuff.cpp" />
+    <ClCompile Include="jpeg\jcprepct.cpp" />
+    <ClCompile Include="jpeg\jcsample.cpp" />
+    <ClCompile Include="jpeg\jctrans.cpp" />
+    <ClCompile Include="jpeg\jdapimin.cpp" />
+    <ClCompile Include="jpeg\jdapistd.cpp" />
+    <ClCompile Include="jpeg\jdatadst.cpp" />
+    <ClCompile Include="jpeg\jdatasrc.cpp" />
+    <ClCompile Include="jpeg\jdcoefct.cpp" />
+    <ClCompile Include="jpeg\jdcolor.cpp" />
+    <ClCompile Include="jpeg\jddctmgr.cpp" />
+    <ClCompile Include="jpeg\jdhuff.cpp" />
+    <ClCompile Include="jpeg\jdinput.cpp" />
+    <ClCompile Include="jpeg\jdmainct.cpp" />
+    <ClCompile Include="jpeg\jdmarker.cpp" />
+    <ClCompile Include="jpeg\jdmaster.cpp" />
+    <ClCompile Include="jpeg\jdmerge.cpp" />
+    <ClCompile Include="jpeg\jdphuff.cpp" />
+    <ClCompile Include="jpeg\jdpostct.cpp" />
+    <ClCompile Include="jpeg\jdsample.cpp" />
+    <ClCompile Include="jpeg\jdtrans.cpp" />
+    <ClCompile Include="jpeg\jerror.cpp" />
+    <ClCompile Include="jpeg\jfdctflt.cpp" />
+    <ClCompile Include="jpeg\jfdctfst.cpp" />
+    <ClCompile Include="jpeg\jfdctint.cpp" />
+    <ClCompile Include="jpeg\jidctflt.cpp" />
+    <ClCompile Include="jpeg\jidctfst.cpp" />
+    <ClCompile Include="jpeg\jidctint.cpp" />
+    <ClCompile Include="jpeg\jidctred.cpp" />
+    <ClCompile Include="jpeg\jmemmgr.cpp" />
+    <ClCompile Include="jpeg\jmemnobs.cpp" />
+    <ClCompile Include="jpeg\jquant1.cpp" />
+    <ClCompile Include="jpeg\jquant2.cpp" />
+    <ClCompile Include="jpeg\jutils.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

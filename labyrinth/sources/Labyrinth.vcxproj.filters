@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sources">
+      <UniqueIdentifier>{dbbbfff8-b963-4101-a284-421a3e069ad5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\core">
+      <UniqueIdentifier>{e0613b3b-6c92-42ea-9e69-dc25a9b81824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\labyrinth">
+      <UniqueIdentifier>{207e8e40-b80e-4f34-83db-0fda97e228df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\physic">
+      <UniqueIdentifier>{7aa1733d-b31e-4f57-a3e8-d990458de294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="conf">
+      <UniqueIdentifier>{20ecbac4-6fb2-4a53-8e89-f789bd503c44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{10d41ee3-ffc8-4d68-84c3-458129bb4fe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data\material">
+      <UniqueIdentifier>{28d2c9e2-5760-4c28-870e-5a952e080a94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects">
+      <UniqueIdentifier>{b23f4604-a077-434a-9c1a-2df06c8227e1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="svn.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="core\game_free_scene.cpp">
+      <Filter>sources\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\game_object_factory.cpp">
+      <Filter>sources\core</Filter>
+    </ClCompile>
+    <ClCompile Include="labyrinth\character.cpp">
+      <Filter>sources\labyrinth</Filter>
+    </ClCompile>
+    <ClCompile Include="labyrinth\labyrinth.cpp">
+      <Filter>sources\labyrinth</Filter>
+    </ClCompile>
+    <ClCompile Include="labyrinth\labyrinth_generator.cpp">
+      <Filter>sources\labyrinth</Filter>
+    </ClCompile>
+    <ClCompile Include="labyrinth\network_client.cpp">
+      <Filter>sources\labyrinth</Filter>
+    </ClCompile>
+    <ClCompile Include="labyrinth\network_protocol.cpp">
+      <Filter>sources\labyrinth</Filter>
+    </ClCompile>
+    <ClCompile Include="labyrinth\network_server.cpp">
+      <Filter>sources\labyrinth</Filter>
+    </ClCompile>
+    <ClCompile Include="labyrinth\visibility_check.cpp">
+      <Filter>sources\labyrinth</Filter>
+    </ClCompile>
+    <ClCompile Include="physic\error_stream.cpp">
+      <Filter>sources\physic</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\tag.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="svn.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="core\game.h">
+      <Filter>sources\core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\game_free_scene.h">
+      <Filter>sources\core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\game_object_factory.h">
+      <Filter>sources\core</Filter>
+    </ClInclude>
+    <ClInclude Include="labyrinth\character.h">
+      <Filter>sources\labyrinth</Filter>
+    </ClInclude>
+    <ClInclude Include="labyrinth\labyrinth.h">
+      <Filter>sources\labyrinth</Filter>
+    </ClInclude>
+    <ClInclude Include="labyrinth\labyrinth_generator.h">
+      <Filter>sources\labyrinth</Filter>
+    </ClInclude>
+    <ClInclude Include="labyrinth\network_protocol.h">
+      <Filter>sources\labyrinth</Filter>
+    </ClInclude>
+    <ClInclude Include="labyrinth\steel_nx.h">
+      <Filter>sources\labyrinth</Filter>
+    </ClInclude>
+    <ClInclude Include="labyrinth\visibility_check.h">
+      <Filter>sources\labyrinth</Filter>
+    </ClInclude>
+    <ClInclude Include="physic\error_stream.h">
+      <Filter>sources\physic</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\tag.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="svn.py">
+      <Filter>sources</Filter>
+    </None>
+    <None Include="..\conf\audio.conf">
+      <Filter>conf</Filter>
+    </None>
+    <None Include="..\conf\input.conf">
+      <Filter>conf</Filter>
+    </None>
+    <None Include="..\conf\labyrinth.conf">
+      <Filter>conf</Filter>
+    </None>
+    <None Include="..\conf\opengl.conf">
+      <Filter>conf</Filter>
+    </None>
+    <None Include="..\conf\ps.conf">
+      <Filter>conf</Filter>
+    </None>
+    <None Include="..\data\flashlight.conf">
+      <Filter>data</Filter>
+    </None>
+    <None Include="..\data\light.conf">
+      <Filter>data</Filter>
+    </None>
+    <None Include="..\data\material\debug.frag">
+      <Filter>data\material</Filter>
+    </None>
+    <None Include="..\data\material\debug.vert">
+      <Filter>data\material</Filter>
+    </None>
+    <None Include="..\data\material\shadow.frag">
+      <Filter>data\material</Filter>
+    </None>
+    <None Include="..\data\material\shadow.vert">
+      <Filter>data\material</Filter>
+    </None>
+    <None Include="..\data\material\std.frag">
+      <Filter>data\material</Filter>
+    </None>
+    <None Include="..\data\material\std.vert">
+      <Filter>data\material</Filter>
+    </None>
+  </ItemGroup>
+</Project>

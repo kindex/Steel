@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sources">
+      <UniqueIdentifier>{fc1b8079-8b05-4dd5-823f-b1bba24ca085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\18_weapon">
+      <UniqueIdentifier>{c56e2643-fc2a-486b-845a-6773b4b7b6f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\19_ps">
+      <UniqueIdentifier>{db18106a-bffc-4e1c-b522-26d20c1bcf07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\19_ps\data">
+      <UniqueIdentifier>{a5233779-ba01-4b9a-894a-8d12dee32707}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\23_ageia_tech">
+      <UniqueIdentifier>{9b04bc62-4fe4-41bf-b396-45b3fa9e0ee4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\23_ageia_tech\data">
+      <UniqueIdentifier>{69f8e605-27c6-4f8c-8468-69b472aff742}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\21_shadows">
+      <UniqueIdentifier>{acbd3d5b-ada3-41f1-8eea-277f0db7c92f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\09_demo">
+      <UniqueIdentifier>{bd69794f-2398-42ca-9671-86e0668c7304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\17_intro">
+      <UniqueIdentifier>{4506c78f-afa0-4833-8a43-82bb42ba4afe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="conf">
+      <UniqueIdentifier>{30ccf366-c11b-4f29-83ae-23fe5f76a71d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\19_ps\data\material">
+      <UniqueIdentifier>{2f1ce1a8-36d7-4e20-96fe-6963074249c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\19_ps\data\room">
+      <UniqueIdentifier>{1c84704f-c8cc-4198-b6f4-0573ffd7b02d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects">
+      <UniqueIdentifier>{4e0c3cb2-b214-4c48-b967-533c43a612b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources\PhysX">
+      <UniqueIdentifier>{1e8d7fe6-6afa-488f-9773-27a713083e96}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="game_factory.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="game_free_scene.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="game_object_factory.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>sources</Filter>
+    </ClInclude>
+    <ClInclude Include="18_weapon\kar98k.h">
+      <Filter>sources\18_weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="19_ps\19_game.h">
+      <Filter>sources\19_ps</Filter>
+    </ClInclude>
+    <ClInclude Include="19_ps\particle_calculator.h">
+      <Filter>sources\19_ps</Filter>
+    </ClInclude>
+    <ClInclude Include="23_ageia_tech\23_ageia_tech.h">
+      <Filter>sources\23_ageia_tech</Filter>
+    </ClInclude>
+    <ClInclude Include="23_ageia_tech\ageia_ps.h">
+      <Filter>sources\23_ageia_tech</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\sphere.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\tag.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\physx.h">
+      <Filter>sources\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\error_stream.h">
+      <Filter>sources\PhysX</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="game_factory.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="game_free_scene.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="game_object_factory.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="18_weapon\kar98k.cpp">
+      <Filter>sources\18_weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="19_ps\19_game.cpp">
+      <Filter>sources\19_ps</Filter>
+    </ClCompile>
+    <ClCompile Include="19_ps\particle_calculator.cpp">
+      <Filter>sources\19_ps</Filter>
+    </ClCompile>
+    <ClCompile Include="23_ageia_tech\23_ageia_tech.cpp">
+      <Filter>sources\23_ageia_tech</Filter>
+    </ClCompile>
+    <ClCompile Include="23_ageia_tech\ageia_ps.cpp">
+      <Filter>sources\23_ageia_tech</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\sphere.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\tag.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysX\physx.cpp">
+      <Filter>sources\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysX\error_stream.cpp">
+      <Filter>sources\PhysX</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\data\19_ps\main.scene">
+      <Filter>sources\19_ps\data</Filter>
+    </None>
+    <None Include="..\data\19_ps\ps.scene">
+      <Filter>sources\19_ps\data</Filter>
+    </None>
+    <None Include="..\data\23_ageia_tech\main.scene">
+      <Filter>sources\23_ageia_tech\data</Filter>
+    </None>
+    <None Include="..\data\21_shadows\main.scene">
+      <Filter>sources\21_shadows</Filter>
+    </None>
+    <None Include="..\data\09_demo\main.scene">
+      <Filter>sources\09_demo</Filter>
+    </None>
+    <None Include="..\data\09_demo\room.scene">
+      <Filter>sources\09_demo</Filter>
+    </None>
+    <None Include="..\data\17_intro\1.mat">
+      <Filter>sources\17_intro</Filter>
+    </None>
+    <None Include="..\data\17_intro\division.scene">
+      <Filter>sources\17_intro</Filter>
+    </None>
+    <None Include="..\data\17_intro\light.scene">
+      <Filter>sources\17_intro</Filter>
+    </None>
+    <None Include="..\data\17_intro\main.scene">
+      <Filter>sources\17_intro</Filter>
+    </None>
+    <None Include="..\data\17_intro\steel.scene">
+      <Filter>sources\17_intro</Filter>
+    </None>
+    <None Include="..\conf\audio.conf">
+      <Filter>conf</Filter>
+    </None>
+    <None Include="..\conf\demo.conf">
+      <Filter>conf</Filter>
+    </None>
+    <None Include="..\conf\input.conf">
+      <Filter>conf</Filter>
+    </None>
+    <None Include="..\conf\opengl.conf">
+      <Filter>conf</Filter>
+    </None>
+    <None Include="..\conf\ps.conf">
+      <Filter>conf</Filter>
+    </None>
+    <None Include="..\data\flashlight.conf">
+      <Filter>sources\19_ps\data</Filter>
+    </None>
+    <None Include="..\data\light.conf">
+      <Filter>sources\19_ps\data</Filter>
+    </None>
+    <None Include="..\data\material\debug.frag">
+      <Filter>sources\19_ps\data\material</Filter>
+    </None>
+    <None Include="..\data\material\debug.vert">
+      <Filter>sources\19_ps\data\material</Filter>
+    </None>
+    <None Include="..\data\material\shadow.frag">
+      <Filter>sources\19_ps\data\material</Filter>
+    </None>
+    <None Include="..\data\material\shadow.vert">
+      <Filter>sources\19_ps\data\material</Filter>
+    </None>
+    <None Include="..\data\material\std.frag">
+      <Filter>sources\19_ps\data\material</Filter>
+    </None>
+    <None Include="..\data\material\std.vert">
+      <Filter>sources\19_ps\data\material</Filter>
+    </None>
+    <None Include="..\data\room\room.scene">
+      <Filter>sources\19_ps\data\room</Filter>
+    </None>
+    <None Include="..\data\room\wall.scene">
+      <Filter>sources\19_ps\data\room</Filter>
+    </None>
+  </ItemGroup>
+</Project>

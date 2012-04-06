@@ -5,7 +5,6 @@
 	{
 		class = 'simple'
 		particle_size = 0.0509
-		//particle_size = 0.0509
 
 		init_size = 0
 		emitter_size = 0.6

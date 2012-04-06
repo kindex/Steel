@@ -1,2 +1,2 @@
 cd bin
-start demo.VS8.Release.exe [../conf/ps.conf#] { }
+start demo.exe [../conf/ps.conf#] { }

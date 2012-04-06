@@ -11,6 +11,7 @@
  ************************************************************/
 #include "23_ageia_tech.h"
 #include "../19_ps/particle_calculator.h"
+#include "../physx/physx.h"
 #include <common/logger.h>
 #include <engine/visitor.h>
 #include <res/res_main.h>
@@ -20,10 +21,6 @@
 #include <NxPhysics.h>
 #include <NxCooking.h>
 #include <Stream.h>
-#include "error_stream.h"
-
-NxScene* globalScene = NULL;
-
 
 class GraphObjectVisitor : public Visitor
 {
@@ -46,7 +43,6 @@ private:
 };
 
 GameAgeiatech::GameAgeiatech() :
-	physicsSDK(NULL),
 	scene(NULL)
 {}
 
@@ -137,7 +133,7 @@ bool GameAgeiatech::init(Config& _conf, Input& _input)
 	{
 		return false;
 	}
-	if (!initAgeia())
+	if (!(scene = initAgeia(global_gravity)))
 	{
 		abort_init("PhysX", "Cannot init PhysX");
 		return false;
@@ -200,64 +196,9 @@ void GameAgeiatech::handleEventKeyDown(const std::string& key)
     }
 }
 
-bool GameAgeiatech::initAgeia()
-{
-	// Initialize PhysicsSDK
-	NxPhysicsSDKDesc desc;
-	NxSDKCreateError errorCode = NXCE_NO_ERROR;
-	physicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, NULL, new ErrorStream(), desc, &errorCode);
-	if (physicsSDK == NULL) 
-	{
-		error("PhysX", std::string("SDK create error (") + IntToStr(errorCode) + " - " + getNxSDKCreateError(errorCode) + ").");
-		return false;
-	}
-#if SAMPLES_USE_VRD
-	// The settings for the VRD host and port are found in SampleCommonCode/SamplesVRDSettings.h
-	if (gPhysicsSDK->getFoundationSDK().getRemoteDebugger())
-		gPhysicsSDK->getFoundationSDK().getRemoteDebugger()->connect(SAMPLES_VRD_HOST, SAMPLES_VRD_PORT, SAMPLES_VRD_EVENTMASK);
-#endif
-
-	physicsSDK->setParameter(NX_SKIN_WIDTH, 0.00001f);
-
-	// Create a scene
-	NxSceneDesc sceneDesc;
-	sceneDesc.gravity	= NxVec3(global_gravity.x, global_gravity.y, global_gravity.z);
-	globalScene = scene = physicsSDK->createScene(sceneDesc);
-	if (scene == NULL) 
-	{
-		error("PhysX", "Unable to create a PhysX scene");
-		return false;
-	}
-
-	// Set default material
-	NxMaterial* defaultMaterial = scene->getMaterialFromIndex(0);
-	defaultMaterial->setRestitution(0.0f);
-	defaultMaterial->setStaticFriction(0.5f);
-	defaultMaterial->setDynamicFriction(0.5f);
-
-	log_msg("PhysX", "PhysX connected");
-
-	return true;
-}
 
 GameAgeiatech::~GameAgeiatech()
 {
 	exitAgeia();
-}
-
-void GameAgeiatech::exitAgeia()
-{
-	if (physicsSDK != NULL)
-	{
-		if (scene != NULL)
-		{
-			physicsSDK->releaseScene(*scene);
-		}
-		globalScene = scene = NULL;
-		NxReleasePhysicsSDK(physicsSDK);
-		physicsSDK = NULL;
-
-		log_msg("PhysX", "PhysX exited");
-	}
 }
 

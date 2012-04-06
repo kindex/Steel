@@ -1,0 +1,921 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="opengl">
+      <UniqueIdentifier>{e246a136-04b2-457e-abfc-9a5a6758550e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX">
+      <UniqueIdentifier>{2ea81e0a-41da-4221-b8f0-630873612020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\SampleCommonCode">
+      <UniqueIdentifier>{0cbd1859-e2d3-47c1-a5c9-85bf977be538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\Cooking">
+      <UniqueIdentifier>{79b6777e-a015-47fe-9f36-27e22553dad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\Foundation">
+      <UniqueIdentifier>{76093f35-5c7c-41ae-a0f8-09bcf249a200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\NxCharacter">
+      <UniqueIdentifier>{158cfcc5-b982-4221-9401-2ba8c128c642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\Physics">
+      <UniqueIdentifier>{25d1d8ae-2147-401c-a2aa-cc0d90d6eab7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\Physics\cloth">
+      <UniqueIdentifier>{9a20874f-d2fe-4b0f-bb9b-d0dfe6e1c004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\Physics\fluids">
+      <UniqueIdentifier>{9aacd64f-6fb7-4a2f-8cce-c0a979026b1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\Physics\softbody">
+      <UniqueIdentifier>{ef681101-95c9-425e-804d-a6fce508dd3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\PhysXLoader">
+      <UniqueIdentifier>{bc84b777-8811-44c8-a03c-a83996e5f43b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="openal">
+      <UniqueIdentifier>{10128666-60d7-4f94-9fdf-97ca0646b6cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="enet">
+      <UniqueIdentifier>{72272794-691c-4a96-bd40-a6c5a985963d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jpeg">
+      <UniqueIdentifier>{573f9326-76e2-4da7-8d89-72e209c86c00}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="opengl\glext.h">
+      <Filter>opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl\glxext.h">
+      <Filter>opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl\wglext.h">
+      <Filter>opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\SampleCommonCode\Stream.h">
+      <Filter>PhysX\SampleCommonCode</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Cooking\fw-convex-cooker.h">
+      <Filter>PhysX\Cooking</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Cooking\Nxc.h">
+      <Filter>PhysX\Cooking</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Cooking\NxCooking.h">
+      <Filter>PhysX\Cooking</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\Nx.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\Nx12F32.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\Nx16F32.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\Nx9F32.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxAllocatorDefault.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxArray.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxAssert.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxBitField.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxBounds3.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxBox.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxBuildNumber.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxCapsule.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxDebugRenderable.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxException.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\Nxf.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxFoundation.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxFoundationSDK.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxI16Vec3.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxMat33.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxMat34.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxMath.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxPlane.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxPool.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxProfiler.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxQuat.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxQuickSort.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxRay.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxRemoteDebugger.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxSegment.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxSimpleTriangleMesh.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxSimpleTypes.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxSphere.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxStream.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxUserAllocator.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxUserAllocatorDefault.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxUserOutputStream.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxUtilities.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxVec3.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxVersionNumber.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Foundation\NxVolumeIntegration.h">
+      <Filter>PhysX\Foundation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\BoxController.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\CapsuleController.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\CCTAllocator.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\CCTDebugRenderer.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\CharacterController.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\CharacterControllerManager.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\Controller.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\ControllerManager.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\NxBoxController.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\NxCapsuleController.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\NxCharacter.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\NxController.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\NxControllerManager.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\NxExtended.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\SweptBox.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\SweptCapsule.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\NxCharacter\SweptVolume.h">
+      <Filter>PhysX\NxCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxActor.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxActorDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxAllocateable.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxBodyDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxBoxForceFieldShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxBoxForceFieldShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxBoxShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxBoxShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxCapsuleForceFieldShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxCapsuleForceFieldShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxCapsuleShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxCapsuleShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxCCDSkeleton.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxClothUserNotify.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxCompartment.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxCompartmentDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxContactStreamIterator.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxConvexForceFieldShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxConvexForceFieldShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxConvexMesh.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxConvexMeshDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxConvexShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxConvexShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxCylindricalJoint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxCylindricalJointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxD6Joint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxD6JointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxDistanceJoint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxDistanceJointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxEffector.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxEffectorDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxExportedUtils.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxExpression.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxFixedJoint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxFixedJointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxFluidUserNotify.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxForceField.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxForceFieldDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxForceFieldKernel.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxForceFieldKernelDefs.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxForceFieldLinearKernel.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxForceFieldLinearKernelDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxForceFieldShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxForceFieldShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxForceFieldShapeGroup.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxForceFieldShapeGroupDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxHeightField.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxHeightFieldDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxHeightFieldSample.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxHeightFieldShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxHeightFieldShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxHwParser.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxHwTarget.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxInertiaTensor.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxInterface.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxInterfaceStats.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxIntersectionBoxBox.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxIntersectionPointTriangle.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxIntersectionRayPlane.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxIntersectionRaySphere.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxIntersectionRayTriangle.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxIntersectionSegmentBox.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxIntersectionSegmentCapsule.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxIntersectionSweptSpheres.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxJoint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxJointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxJointLimitDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxJointLimitPairDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxJointLimitSoftDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxJointLimitSoftPairDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxMaterial.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxMaterialDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxMeshData.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxMotorDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\Nxp.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPhysics.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPhysicsSDK.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPlaneShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPlaneShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPMap.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPointInPlaneJoint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPointInPlaneJointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPointOnLineJoint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPointOnLineJointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPrismaticJoint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPrismaticJointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPulleyJoint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxPulleyJointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxRevoluteJoint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxRevoluteJointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxScene.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSceneDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSceneQuery.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSceneStats.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSceneStats2.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxScheduler.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSmoothNormals.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSoftBodyUserNotify.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSphereForceFieldShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSphereForceFieldShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSphereShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSphereShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSphericalJoint.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSphericalJointDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSpringAndDamperEffector.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSpringAndDamperEffectorDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSpringDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxSwTarget.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxTargets.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxTriangle.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxTriangleMesh.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxTriangleMeshDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxTriangleMeshShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxTriangleMeshShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxUserContactReport.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxUserEntityReport.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxUserNotify.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxUserRaycastReport.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxUtilLib.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxWheelShape.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\NxWheelShapeDesc.h">
+      <Filter>PhysX\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\cloth\NxCloth.h">
+      <Filter>PhysX\Physics\cloth</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\cloth\NxClothDesc.h">
+      <Filter>PhysX\Physics\cloth</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\cloth\NxClothMesh.h">
+      <Filter>PhysX\Physics\cloth</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\cloth\NxClothMeshDesc.h">
+      <Filter>PhysX\Physics\cloth</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\fluids\NxFluid.h">
+      <Filter>PhysX\Physics\fluids</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\fluids\NxFluidDesc.h">
+      <Filter>PhysX\Physics\fluids</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\fluids\NxFluidEmitter.h">
+      <Filter>PhysX\Physics\fluids</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\fluids\NxFluidEmitterDesc.h">
+      <Filter>PhysX\Physics\fluids</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\fluids\NxFluidPacketData.h">
+      <Filter>PhysX\Physics\fluids</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\fluids\NxParticleData.h">
+      <Filter>PhysX\Physics\fluids</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\fluids\NxParticleIdData.h">
+      <Filter>PhysX\Physics\fluids</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\fluids\NxParticleUpdateData.h">
+      <Filter>PhysX\Physics\fluids</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\softbody\NxSoftBody.h">
+      <Filter>PhysX\Physics\softbody</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\softbody\NxSoftBodyDesc.h">
+      <Filter>PhysX\Physics\softbody</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\softbody\NxSoftBodyMesh.h">
+      <Filter>PhysX\Physics\softbody</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\Physics\softbody\NxSoftBodyMeshDesc.h">
+      <Filter>PhysX\Physics\softbody</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\PhysXLoader\PhysXLoader.h">
+      <Filter>PhysX\PhysXLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX\PhysXLoader\Win32RegistryAccess.h">
+      <Filter>PhysX\PhysXLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="openal\al.h">
+      <Filter>openal</Filter>
+    </ClInclude>
+    <ClInclude Include="openal\alc.h">
+      <Filter>openal</Filter>
+    </ClInclude>
+    <ClInclude Include="openal\eax.h">
+      <Filter>openal</Filter>
+    </ClInclude>
+    <ClInclude Include="openal\efx-creative.h">
+      <Filter>openal</Filter>
+    </ClInclude>
+    <ClInclude Include="openal\EFX-Util.h">
+      <Filter>openal</Filter>
+    </ClInclude>
+    <ClInclude Include="openal\efx.h">
+      <Filter>openal</Filter>
+    </ClInclude>
+    <ClInclude Include="openal\xram.h">
+      <Filter>openal</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\callbacks.h">
+      <Filter>enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\enet.h">
+      <Filter>enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\list.h">
+      <Filter>enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\protocol.h">
+      <Filter>enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\time.h">
+      <Filter>enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\types.h">
+      <Filter>enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\unix.h">
+      <Filter>enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\utility.h">
+      <Filter>enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\win32.h">
+      <Filter>enet</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\cderror.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\cdjpeg.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jchuff.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jconfig.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jdct.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jdhuff.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jerror.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jinclude.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jmemsys.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jmorecfg.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jpegint.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jpeglib.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="jpeg\jversion.h">
+      <Filter>jpeg</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PhysX\SampleCommonCode\Stream.cpp">
+      <Filter>PhysX\SampleCommonCode</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\callbacks.c">
+      <Filter>enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\host.c">
+      <Filter>enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\list.c">
+      <Filter>enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\packet.c">
+      <Filter>enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\peer.c">
+      <Filter>enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\protocol.c">
+      <Filter>enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\unix.c">
+      <Filter>enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\win32.c">
+      <Filter>enet</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jarrsrc.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcapimin.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcapistd.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jccoefct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jccolor.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcdctmgr.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jchuff.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcinit.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcmainct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcmarker.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcmaster.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcomapi.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcparam.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcphuff.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcprepct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jcsample.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jctrans.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdapimin.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdapistd.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdatadst.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdatasrc.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdcoefct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdcolor.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jddctmgr.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdhuff.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdinput.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdmainct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdmarker.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdmaster.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdmerge.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdphuff.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdpostct.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdsample.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jdtrans.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jerror.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jfdctflt.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jfdctfst.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jfdctint.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jidctflt.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jidctfst.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jidctint.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jidctred.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jmemmgr.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jmemnobs.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jquant1.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jquant2.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="jpeg\jutils.cpp">
+      <Filter>jpeg</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

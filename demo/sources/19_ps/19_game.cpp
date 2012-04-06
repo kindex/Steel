@@ -11,6 +11,7 @@
  ************************************************************/
 
 #include "19_game.h"
+#include "../physx/physx.h"
 #include "particle_calculator.h"
 #include <common/logger.h>
 #include <engine/visitor.h>
@@ -45,6 +46,12 @@ bool GamePS::init(Config& _conf, Input& _input)
     global_gravity = _conf.getv3("physic.global_gravity", v3(0.0f, 0.0f, -9.8f));
 
     boundingModel = loadGraphObject(_conf, "boundingModel");
+
+	if (!initAgeia(global_gravity))
+	{
+		abort_init("PhysX", "Cannot init PhysX");
+		return false;
+	}
 
 	return true;
 }

@@ -1,15 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Steel Engine", "..\..\steel\sources\steel.vcproj", "{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Steel Engine", "..\..\steel\sources\steel.vcxproj", "{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libs", "..\..\libs\libs.vcproj", "{1B5C8103-B2D8-4E29-9837-DB1DCADCF1FF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libs", "..\..\libs\libs.vcxproj", "{1B5C8103-B2D8-4E29-9837-DB1DCADCF1FF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Labyrinth", "Labyrinth.vcproj", "{562E1337-B6F2-4AD3-92D0-21EB32B7EC60}"
-	ProjectSection(ProjectDependencies) = postProject
-		{1B5C8103-B2D8-4E29-9837-DB1DCADCF1FF} = {1B5C8103-B2D8-4E29-9837-DB1DCADCF1FF}
-		{2A1DAFDF-179B-4152-BA3A-1FE91D2406BE} = {2A1DAFDF-179B-4152-BA3A-1FE91D2406BE}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Labyrinth", "Labyrinth.vcxproj", "{562E1337-B6F2-4AD3-92D0-21EB32B7EC60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

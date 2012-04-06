@@ -33,7 +33,7 @@ size_t ReadOgg(void *ptr, size_t size, size_t nmemb, void *datasource)
 {
 	istream *File = reinterpret_cast<istream*>(datasource);
 	File->read((char *)ptr, size * nmemb);
-	return File->gcount();
+	return (size_t)File->gcount();
 }
 
 int SeekOgg(void *datasource, ogg_int64_t offset, int whence)
@@ -55,7 +55,7 @@ int SeekOgg(void *datasource, ogg_int64_t offset, int whence)
 long TellOgg(void *datasource)
 {
 	istream *File = reinterpret_cast<istream*>(datasource);
-	return File->tellg();
+	return (long)File->tellg();
 }
 
 int CloseOgg(void *datasource)

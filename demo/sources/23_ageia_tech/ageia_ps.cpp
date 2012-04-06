@@ -12,6 +12,7 @@
 
 #include "ageia_ps.h"
 #include "23_ageia_tech.h"
+#include "../physx/physx.h"
 #include <nxscene.h>
 #include <nxactor.h>
 #include <NxSphereShapeDesc.h>
@@ -48,7 +49,7 @@ void AgeiaPsAnimator::process(IN const ProcessInfo& info)
 			continue;
 		}
 
-		int index = ((int)actor->userData)-1;
+		size_t index = (size_t)((int)actor->userData)-1;
 
 		float glMat[16];
 		actor->getGlobalPose().getColumnMajor44(glMat);
@@ -63,7 +64,10 @@ void AgeiaPsAnimator::process(IN const ProcessInfo& info)
 			}
 		}
 
-		set->particles[index]->position = v3(glMat[3 * 4 + 0], glMat[3 * 4 + 1], glMat[3 * 4 + 2]);
+		if (index < set->particles.size())
+		{
+			set->particles[index]->position = v3(glMat[3 * 4 + 0], glMat[3 * 4 + 1], glMat[3 * 4 + 2]);
+		}
 	}
 }
 

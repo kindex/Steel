@@ -17,12 +17,8 @@
 
 #include <objects/combiner/graph_object.h>
 
-class NxPhysicsSDK;
-class NxScene;
 class NxActor;
-class NxTriangleMeshDesc;
-
-extern NxScene* globalScene;
+class NxScene;
 
 class GameAgeiatech: public GamePS
 {
@@ -36,11 +32,8 @@ public:
     friend class GraphObjectVisitor;
 
 private:
-	bool initAgeia();
-	void exitAgeia();
     NxActor* createSurface(const GraphObject& object);
 
-	NxPhysicsSDK*	physicsSDK;
 	NxScene*		scene;
 };
 

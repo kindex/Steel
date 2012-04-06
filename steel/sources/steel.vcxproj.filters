@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="audio">
+      <UniqueIdentifier>{08130932-2534-4b03-ad01-eae700b6ef7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="audio\openal">
+      <UniqueIdentifier>{c8a8db8a-5576-4456-a387-1bd3c178ede9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{cb724029-a515-4667-99c3-45d854543fc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\test_common">
+      <UniqueIdentifier>{35e64af1-268b-4268-964d-9b318d132cf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\containers">
+      <UniqueIdentifier>{8352d4a9-b79b-4c3a-ab09-27366bbe6329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{ecf5125a-eaab-4fd1-b638-db3eec36c4eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graph">
+      <UniqueIdentifier>{3fd37d44-c15b-42ba-947b-66f269bcd683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graph\OpenGL">
+      <UniqueIdentifier>{e424c0fd-cce0-4df0-968f-de497f0da544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graph\OpenGL\ext">
+      <UniqueIdentifier>{5b5cd5e7-24bb-47ed-82d8-c48f0db3aece}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="input">
+      <UniqueIdentifier>{1e788e88-bc09-4969-b6c2-3bc85fc33b9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{7e739d67-738d-4816-96c3-c697c2b475dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math\test_math">
+      <UniqueIdentifier>{6587e71c-fd9f-4ca2-9ab4-cf0799c80b48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects">
+      <UniqueIdentifier>{c93e185b-1673-4893-a070-3a3c3124c42d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects\ps">
+      <UniqueIdentifier>{1e09bc11-424f-4643-a4bf-053551e237ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects\combiner">
+      <UniqueIdentifier>{6c484109-e9cb-4c82-a8cb-f683a51f7912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects\combiner\audio">
+      <UniqueIdentifier>{fe1d00ab-f355-4d6e-82ce-a45fadd1ad90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects\transformation">
+      <UniqueIdentifier>{5741391e-8bdf-4ba2-8029-b2e63e66e02c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{99050115-e4cb-4ab2-bfff-38f26bf45e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\image">
+      <UniqueIdentifier>{51b4441d-1183-4f1d-bbd4-ab9712b42d66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\image\bmp">
+      <UniqueIdentifier>{36ffd1cb-c0af-48b6-93d1-ee4f682c2576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\model">
+      <UniqueIdentifier>{026ed396-2ab7-4efa-9152-531c835120e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\text">
+      <UniqueIdentifier>{ac02b718-5f54-4bf2-beaf-c1ff2b67c661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\audio">
+      <UniqueIdentifier>{6b1c46e4-1d58-4765-a86d-cf6dcf92e8e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\config">
+      <UniqueIdentifier>{7fb08890-0a87-470b-a995-3a918d348917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\config\test_config">
+      <UniqueIdentifier>{02d81193-1634-4665-9881-454007bf4058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\test_res">
+      <UniqueIdentifier>{403059f6-1339-4b52-b9c2-3f256fda7d35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\font">
+      <UniqueIdentifier>{2f747d28-432f-4fc7-9a28-71e72297d305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{960e86cb-0577-4cdd-9934-14240ed5df30}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="audio\audio_engine.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="audio\openal_engine.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="audio\sound.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="common\logger.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\system_info.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\timer.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\utils.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\win_info.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\test_common\test_svector.cpp">
+      <Filter>common\test_common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\containers\string_dict.cpp">
+      <Filter>common\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\engine.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\game_object.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\graph_engine.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\material.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_10.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_11.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_13.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_15.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_20.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_engine.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_glsl.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_interface.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_private.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_sdl_engine.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\opengl_win_engine.cpp">
+      <Filter>graph\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\ext\frame_buffer.cpp">
+      <Filter>graph\OpenGL\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\ext\libext.cpp">
+      <Filter>graph\OpenGL\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\opengl\ext\normalisation_cube_map.cpp">
+      <Filter>graph\OpenGL\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="input\input.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="input\input_sdl.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="input\input_win.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="math\aabb.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\line.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\maths.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\matrix33.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\matrix34.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\plane.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\sprite.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\vector2d.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\vector3d.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\test_math\test_math.cpp">
+      <Filter>math\test_math</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\console.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\game_object_factory.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\light.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\ps\animator.cpp">
+      <Filter>objects\ps</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\ps\emitter.cpp">
+      <Filter>objects\ps</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\ps\particle_system.cpp">
+      <Filter>objects\ps</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\ps\ps_renderer.cpp">
+      <Filter>objects\ps</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\combiner\audio_object.cpp">
+      <Filter>objects\combiner</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\combiner\combiner.cpp">
+      <Filter>objects\combiner</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\combiner\graph_object.cpp">
+      <Filter>objects\combiner</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\combiner\audio\audio_list.cpp">
+      <Filter>objects\combiner\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\combiner\audio\simple_sound.cpp">
+      <Filter>objects\combiner\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\transformation\movement.cpp">
+      <Filter>objects\transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\transformation\rotation.cpp">
+      <Filter>objects\transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\transformation\scaler.cpp">
+      <Filter>objects\transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\transformation\transformation.cpp">
+      <Filter>objects\transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\transformation\transformation_list.cpp">
+      <Filter>objects\transformation</Filter>
+    </ClCompile>
+    <ClCompile Include="res\res_collection.cpp">
+      <Filter>res</Filter>
+    </ClCompile>
+    <ClCompile Include="res\res_main.cpp">
+      <Filter>res</Filter>
+    </ClCompile>
+    <ClCompile Include="res\rstream.cpp">
+      <Filter>res</Filter>
+    </ClCompile>
+    <ClCompile Include="res\image\bmp.cpp">
+      <Filter>res\image</Filter>
+    </ClCompile>
+    <ClCompile Include="res\image\image.cpp">
+      <Filter>res\image</Filter>
+    </ClCompile>
+    <ClCompile Include="res\image\jpeg.cpp">
+      <Filter>res\image</Filter>
+    </ClCompile>
+    <ClCompile Include="res\image\res_image.cpp">
+      <Filter>res\image</Filter>
+    </ClCompile>
+    <ClCompile Include="res\image\tga.cpp">
+      <Filter>res\image</Filter>
+    </ClCompile>
+    <ClCompile Include="res\image\bmp\bmp_load.cpp">
+      <Filter>res\image\bmp</Filter>
+    </ClCompile>
+    <ClCompile Include="res\model\3ds.cpp">
+      <Filter>res\model</Filter>
+    </ClCompile>
+    <ClCompile Include="res\model\bones.cpp">
+      <Filter>res\model</Filter>
+    </ClCompile>
+    <ClCompile Include="res\model\model.cpp">
+      <Filter>res\model</Filter>
+    </ClCompile>
+    <ClCompile Include="res\text\text.cpp">
+      <Filter>res\text</Filter>
+    </ClCompile>
+    <ClCompile Include="res\text\text_file.cpp">
+      <Filter>res\text</Filter>
+    </ClCompile>
+    <ClCompile Include="res\text\text_string.cpp">
+      <Filter>res\text</Filter>
+    </ClCompile>
+    <ClCompile Include="res\audio\audio.cpp">
+      <Filter>res\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="res\audio\ogg.cpp">
+      <Filter>res\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="res\audio\wav.cpp">
+      <Filter>res\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="res\config\config.cpp">
+      <Filter>res\config</Filter>
+    </ClCompile>
+    <ClCompile Include="res\config\config_collection.cpp">
+      <Filter>res\config</Filter>
+    </ClCompile>
+    <ClCompile Include="res\config\config_parser.cpp">
+      <Filter>res\config</Filter>
+    </ClCompile>
+    <ClCompile Include="res\config\config_setup.cpp">
+      <Filter>res\config</Filter>
+    </ClCompile>
+    <ClCompile Include="res\config\test_config\test_config.cpp">
+      <Filter>res\config\test_config</Filter>
+    </ClCompile>
+    <ClCompile Include="res\test_res\test_res.cpp">
+      <Filter>res\test_res</Filter>
+    </ClCompile>
+    <ClCompile Include="res\font\font.cpp">
+      <Filter>res\font</Filter>
+    </ClCompile>
+    <ClCompile Include="res\font\font_text.cpp">
+      <Filter>res\font</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_main.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\tester.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="audio\audio_engine.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="audio\audio_interface.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="audio\openal_engine.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="audio\sound.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="audio\openal\openal_types.h">
+      <Filter>audio\openal</Filter>
+    </ClInclude>
+    <ClInclude Include="common\cast.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\containers.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\logger.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pvector.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\svector.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\system_info.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\timer.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\types.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\utils.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\win_info.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\test_common\test_svector.h">
+      <Filter>common\test_common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\containers\set_maker.h">
+      <Filter>common\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="common\containers\string_dict.h">
+      <Filter>common\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="common\containers\string_vector.h">
+      <Filter>common\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\engine.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\engine_types.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\game_object.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\helper.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\id_generator.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\interface.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\visitor.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="graph\graph_engine.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="graph\graph_interface.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="graph\graph_types.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="graph\material.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="graph\opengl\opengl_engine.h">
+      <Filter>graph\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="graph\opengl\opengl_glsl.h">
+      <Filter>graph\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="graph\opengl\opengl_private.h">
+      <Filter>graph\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="graph\opengl\ext\frame_buffer.h">
+      <Filter>graph\OpenGL\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="graph\opengl\ext\libext.h">
+      <Filter>graph\OpenGL\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="graph\opengl\ext\normalisation_cube_map.h">
+      <Filter>graph\OpenGL\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="input\game_input.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="input\input.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="input\input_win.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="math\aabb.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\line.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\maths.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\matrix33.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\matrix34.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\plane.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\sprite.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\vector2d.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\vector3d.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\console.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\game_object_factory.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\light.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\ps\animator.h">
+      <Filter>objects\ps</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\ps\emitter.h">
+      <Filter>objects\ps</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\ps\particle_system.h">
+      <Filter>objects\ps</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\ps\ps_renderer.h">
+      <Filter>objects\ps</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\combiner\audio_object.h">
+      <Filter>objects\combiner</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\combiner\combiner.h">
+      <Filter>objects\combiner</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\combiner\graph_object.h">
+      <Filter>objects\combiner</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\combiner\audio\audio_list.h">
+      <Filter>objects\combiner\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\combiner\audio\simple_sound.h">
+      <Filter>objects\combiner\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\transformation\movement.h">
+      <Filter>objects\transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\transformation\rotation.h">
+      <Filter>objects\transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\transformation\scaler.h">
+      <Filter>objects\transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\transformation\transformation.h">
+      <Filter>objects\transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\transformation\transformation_list.h">
+      <Filter>objects\transformation</Filter>
+    </ClInclude>
+    <ClInclude Include="res\res.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="res\res_collection.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="res\res_main.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="res\rstream.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="res\image\bmp.h">
+      <Filter>res\image</Filter>
+    </ClInclude>
+    <ClInclude Include="res\image\image.h">
+      <Filter>res\image</Filter>
+    </ClInclude>
+    <ClInclude Include="res\image\jpeg.h">
+      <Filter>res\image</Filter>
+    </ClInclude>
+    <ClInclude Include="res\image\res_image.h">
+      <Filter>res\image</Filter>
+    </ClInclude>
+    <ClInclude Include="res\image\tga.h">
+      <Filter>res\image</Filter>
+    </ClInclude>
+    <ClInclude Include="res\model\3ds.h">
+      <Filter>res\model</Filter>
+    </ClInclude>
+    <ClInclude Include="res\model\bones.h">
+      <Filter>res\model</Filter>
+    </ClInclude>
+    <ClInclude Include="res\model\lightwave.h">
+      <Filter>res\model</Filter>
+    </ClInclude>
+    <ClInclude Include="res\model\model.h">
+      <Filter>res\model</Filter>
+    </ClInclude>
+    <ClInclude Include="res\text\text.h">
+      <Filter>res\text</Filter>
+    </ClInclude>
+    <ClInclude Include="res\text\text_file.h">
+      <Filter>res\text</Filter>
+    </ClInclude>
+    <ClInclude Include="res\text\text_string.h">
+      <Filter>res\text</Filter>
+    </ClInclude>
+    <ClInclude Include="res\audio\audio.h">
+      <Filter>res\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="res\audio\ogg.h">
+      <Filter>res\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="res\audio\wav.h">
+      <Filter>res\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="res\config\config.h">
+      <Filter>res\config</Filter>
+    </ClInclude>
+    <ClInclude Include="res\config\config_collection.h">
+      <Filter>res\config</Filter>
+    </ClInclude>
+    <ClInclude Include="res\config\config_parser.h">
+      <Filter>res\config</Filter>
+    </ClInclude>
+    <ClInclude Include="res\config\config_setup.h">
+      <Filter>res\config</Filter>
+    </ClInclude>
+    <ClInclude Include="res\config\test_config\test_config.h">
+      <Filter>res\config\test_config</Filter>
+    </ClInclude>
+    <ClInclude Include="res\test_res\test_res.h">
+      <Filter>res\test_res</Filter>
+    </ClInclude>
+    <ClInclude Include="res\font\font.h">
+      <Filter>res\font</Filter>
+    </ClInclude>
+    <ClInclude Include="res\font\font_text.h">
+      <Filter>res\font</Filter>
+    </ClInclude>
+    <ClInclude Include="test\tester.h">
+      <Filter>test</Filter>
+    </ClInclude>
+    <ClInclude Include="steel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="math\test_math\test_math.h">
+      <Filter>math\test_math</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+</Project>

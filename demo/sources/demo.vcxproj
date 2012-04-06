@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A18FE575-A5E4-47C1-9612-DFE7DBD9B84C}</ProjectGuid>
+    <RootNamespace>demo</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\temp\$(SolutionName).VS10.$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\temp\$(SolutionName).VS10.$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/steel.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions> /wd4996 /MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\steel\sources;..\..\libs;../../libs/PhysX/Foundation;../../libs/PhysX/Physics;../../libs/PhysX/Cooking;../../libs/PhysX/PhysXLoader;../..\libs\PhysX\SampleCommonCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;LIB_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>$(IntDir)steel.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x1009</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>../../../steel.res/sdk/steel_lib/steel.VS10.lib_$(Configuration).lib;../../../steel.res/sdk/libs/openal/openal32.lib;../../../steel.res/sdk/libs/openal/eaxguid.lib;../../../steel.res/sdk/libs/openal/eax.lib;../../../steel.res/sdk/libs/ogg/ogg.lib;../../../steel.res/sdk/libs/ogg/vorbisfile.lib;../../../steel.res/sdk/libs/PhysX/NxCharacter.lib;../../../steel.res/sdk/libs/PhysX/NxCooking.lib;../../../steel.res/sdk/libs/PhysX/PhysXLoader.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;user32.lib;GDI32.LIB;Kernel32.LIB;ws2_32.lib;WinMM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Version>1.1.0</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>..\temp/steel.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/steel.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions> /wd4996 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\steel\sources;..\..\libs;../../libs/PhysX/Foundation;../../libs/PhysX/Physics;../../libs/PhysX/Cooking;../../libs/PhysX/PhysXLoader;../..\libs\PhysX\SampleCommonCode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;STEEL_COMPILER=1;STEEL_OS=1;STEEL_COMPILER_VERSION=80;LIB_OPENAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>$(IntDir)steel.pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x1009</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>../../../steel.res/sdk/steel_lib/steel.VS10.lib_$(Configuration).lib;../../../steel.res/sdk/steel_lib/libs.VS10.lib_$(Configuration).lib;../../../steel.res/sdk/libs/openal/openal32.lib;../../../steel.res/sdk/libs/openal/eaxguid.lib;../../../steel.res/sdk/libs/openal/eax.lib;../../../steel.res/sdk/libs/ogg/ogg.lib;../../../steel.res/sdk/libs/ogg/vorbisfile.lib;../../../steel.res/sdk/libs/PhysX/NxCharacter.lib;../../../steel.res/sdk/libs/PhysX/NxCooking.lib;../../../steel.res/sdk/libs/PhysX/PhysXLoader.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;user32.lib;GDI32.LIB;Kernel32.LIB;ws2_32.lib;WinMM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <Version>1.1.0</Version>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>..\temp/steel.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="game.h" />
+    <ClInclude Include="game_factory.h" />
+    <ClInclude Include="game_free_scene.h" />
+    <ClInclude Include="game_object_factory.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="18_weapon\kar98k.h" />
+    <ClInclude Include="19_ps\19_game.h" />
+    <ClInclude Include="19_ps\particle_calculator.h" />
+    <ClInclude Include="23_ageia_tech\23_ageia_tech.h" />
+    <ClInclude Include="23_ageia_tech\ageia_ps.h" />
+    <ClInclude Include="objects\sphere.h" />
+    <ClInclude Include="objects\tag.h" />
+    <ClInclude Include="PhysX\error_stream.h" />
+    <ClInclude Include="PhysX\physx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="game_factory.cpp" />
+    <ClCompile Include="game_free_scene.cpp" />
+    <ClCompile Include="game_object_factory.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="PhysX\error_stream.cpp" />
+    <ClCompile Include="PhysX\physx.cpp" />
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="18_weapon\kar98k.cpp" />
+    <ClCompile Include="19_ps\19_game.cpp" />
+    <ClCompile Include="19_ps\particle_calculator.cpp" />
+    <ClCompile Include="23_ageia_tech\23_ageia_tech.cpp" />
+    <ClCompile Include="23_ageia_tech\ageia_ps.cpp" />
+    <ClCompile Include="objects\sphere.cpp" />
+    <ClCompile Include="objects\tag.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\data\19_ps\main.scene" />
+    <None Include="..\data\19_ps\ps.scene" />
+    <None Include="..\data\23_ageia_tech\main.scene" />
+    <None Include="..\data\21_shadows\main.scene" />
+    <None Include="..\data\09_demo\main.scene" />
+    <None Include="..\data\09_demo\room.scene" />
+    <None Include="..\data\17_intro\1.mat" />
+    <None Include="..\data\17_intro\division.scene" />
+    <None Include="..\data\17_intro\light.scene" />
+    <None Include="..\data\17_intro\main.scene" />
+    <None Include="..\data\17_intro\steel.scene" />
+    <None Include="..\conf\audio.conf" />
+    <None Include="..\conf\demo.conf" />
+    <None Include="..\conf\input.conf" />
+    <None Include="..\conf\opengl.conf" />
+    <None Include="..\conf\ps.conf" />
+    <None Include="..\data\flashlight.conf" />
+    <None Include="..\data\light.conf" />
+    <None Include="..\data\material\debug.frag" />
+    <None Include="..\data\material\debug.vert" />
+    <None Include="..\data\material\shadow.frag" />
+    <None Include="..\data\material\shadow.vert" />
+    <None Include="..\data\material\std.frag" />
+    <None Include="..\data\material\std.vert" />
+    <None Include="..\data\room\room.scene" />
+    <None Include="..\data\room\wall.scene" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\libs\libs.vcxproj">
+      <Project>{1b5c8103-b2d8-4e29-9837-db1dcadcf1ff}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\steel\sources\steel.vcxproj">
+      <Project>{2a1dafdf-179b-4152-ba3a-1fe91d2406be}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
