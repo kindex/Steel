@@ -1,0 +1,11 @@
+Steel Engine License
+(C) DiVision 2004-2008
+
+Everybody can use the sources under this license for non-comercial purposes.
+If you use it, please notify project owner Andrey Pelipenko by email (kindexz@gmail.com).
+For comercial use the permission of the project owner is needed.
+
+This program comes absolutely without any warranty.
+You may use this software only on your own risk, so we do not take any responsibility.
+
+All rights reserved only for copyrighted (c) products by Division.
