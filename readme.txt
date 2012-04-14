@@ -24,5 +24,10 @@ Tester
 * Kuzmi4 [Andrey Movlyaiko, andrey.movlyaiko@gmail.com]
 Sound programmer
 
-* Leon
-Programmer
+Special thanks to:
+* Leon / Programmer
+* Kane [J. Anton, kane@mail.berlios.de] / Programmer
+* FDF / Gamedesigner
+* Wormboy / Gamedesigner
+* Bond / Architect
+* Dark Sirius / Tester
