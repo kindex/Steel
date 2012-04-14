@@ -29,7 +29,7 @@ namespace Game.Res
                     }
                     return result;
                 }
-                catch (System.IO.DirectoryNotFoundException e)
+                catch (System.IO.DirectoryNotFoundException)
                 {
                 }
             }
